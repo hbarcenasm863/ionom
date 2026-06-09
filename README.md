@@ -1,0 +1,2 @@
+# ionom
+nomenclatura inorgánica 
