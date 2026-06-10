@@ -162,6 +162,7 @@ footer a:hover{text-decoration:underline}
     <a href="generador.html">⚙️ <span class="full">Generador</span></a>
     <a href="nomenClash.html">⚔️ <span class="full">NomenClash</span></a>
   </div>
+  <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
 </nav>
 
 <div class="app">
@@ -305,16 +306,6 @@ footer a:hover{text-decoration:underline}
 
 </div>
 
-<!-- PWA Install Button -->
-<div id="pwa-install-banner" style="display:none;position:fixed;bottom:20px;right:20px;z-index:99;background:#0d4a73;color:#fff;padding:16px 20px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2);max-width:320px;font-family:Arial,sans-serif">
-  <div style="font-size:14px;font-weight:700;margin-bottom:12px">📱 Descargar IonNom</div>
-  <div style="font-size:12px;margin-bottom:14px;color:rgba(255,255,255,0.9)">Accede a toda la app incluso sin internet</div>
-  <div style="display:flex;gap:10px">
-    <button id="pwa-install-btn" style="flex:1;padding:10px;background:#fcd34d;color:#0d4a73;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">Instalar</button>
-    <button onclick="document.getElementById('pwa-install-banner').style.display='none'" style="flex:1;padding:10px;background:rgba(255,255,255,0.2);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">Después</button>
-  </div>
-</div>
-
 <!-- iOS Install Instructions Modal -->
 <div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px">
   <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
@@ -345,56 +336,45 @@ if ('serviceWorker' in navigator) {
 
 // PWA Install Handler
 let deferredPrompt;
-const installBtn = document.getElementById('pwa-install-btn');
-const installBanner = document.getElementById('pwa-install-banner');
+const navInstallBtn = document.getElementById('pwa-install-nav-btn');
 const iosModal = document.getElementById('ios-modal');
+
+// Detect iOS
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+// Handle install click
+function handleInstallClick() {
+  if (isIOS()) {
+    // Show iOS instructions for iOS
+    iosModal.style.display = 'flex';
+  } else {
+    // Install directly for Android/PC
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('IonNom instalado');
+        }
+        deferredPrompt = null;
+        navInstallBtn.style.display = 'none';
+      });
+    }
+  }
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-
-  // Detect device
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-  if (isIOS) {
-    // Show iOS instructions
-    installBanner.style.display = 'block';
-    installBtn.textContent = '📖 Instrucciones iOS';
-    installBtn.onclick = () => {
-      installBanner.style.display = 'none';
-      iosModal.style.display = 'flex';
-    };
-  } else {
-    // Show install button for Android/PC
-    installBanner.style.display = 'block';
-    installBtn.onclick = () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('IonNom instalado');
-          }
-          deferredPrompt = null;
-          installBanner.style.display = 'none';
-        });
-      }
-    };
-  }
+  navInstallBtn.style.display = 'block';
 });
 
 window.addEventListener('appinstalled', () => {
   console.log('IonNom PWA instalada');
   deferredPrompt = null;
-  installBanner.style.display = 'none';
+  navInstallBtn.style.display = 'none';
 });
-
-// Hide banner after 5 seconds if not interacted
-setTimeout(() => {
-  if (installBanner.style.display === 'block') {
-    const btn = installBanner.querySelector('button:last-child');
-    if (btn) btn.textContent = 'Cerrar';
-  }
-}, 5000);
 </script>
 
 </body>
