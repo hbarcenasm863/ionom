@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<title>IonNom — Generador de Ejercicios</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{
+  --cat:#d97706;--cat-b:#fef3c7;
+  --an:#0369a1;--an-b:#e0f2fe;
+  --oh:#7c3aed;--oh-b:#ede9fe;
+  --ox:#0f766e;--ox-b:#ccfbf1;
+  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
+  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
+  --r:16px;--rs:10px;
+  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
+  --sh:0 3px 18px rgba(26,110,168,.10);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
+.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
+.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:8px;transition:background .15s}
+.nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;flex-direction:column;padding:40px 20px}
+.screen.active{display:flex}
+
+#s-form{align-items:center;justify-content:flex-start}
+#s-form::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,#0d2d42 0%,#0d4a73 55%,#0a3d5e 100%);pointer-events:none}
+
+.form-container{position:relative;z-index:1;max-width:520px;width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:var(--r);padding:32px;text-align:left;color:#fff}
+
+.form-title{font-size:1.8rem;font-weight:700;margin-bottom:24px;color:#fff}
+.form-group{margin-bottom:24px}
+.form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px;display:block}
+.form-select{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.5)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.form-select:focus{outline:none;border-color:rgba(217,119,6,.8);background-color:rgba(217,119,6,.1)}
+
+.form-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem}
+.form-input::placeholder{color:rgba(255,255,255,.3)}
+
+.btn-gen{width:100%;padding:15px;background:var(--cat);color:#fff;border:none;border-radius:var(--rs);font-family:var(--sans);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:16px}
+.btn-gen:hover{background:#b8860b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,119,6,.4)}
+
+#s-preview{background:var(--bg);padding:40px 20px;overflow-y:auto}
+.preview-container{max-width:900px;margin:0 auto}
+.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.preview-title{font-size:1.6rem;font-weight:700}
+.btn-pdf{padding:12px 20px;background:#16a34a;color:#fff;border:none;border-radius:var(--rs);font-weight:700;cursor:pointer;font-size:.9rem;transition:all .2s}
+.btn-pdf:hover{background:#15803d;transform:translateY(-2px)}
+.btn-back{padding:10px 16px;background:rgba(0,0,0,.1);color:var(--tx);border:none;border-radius:var(--rs);font-weight:600;cursor:pointer;font-size:.85rem}
+.btn-back:hover{background:rgba(0,0,0,.15)}
+
+/* Exercise cards */
+.exercise-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px;margin-bottom:20px;box-shadow:var(--sh)}
+.ex-num{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
+
+.ex-type-1 .ex-formula{font-size:1.8rem;font-weight:700;color:var(--cat);margin-bottom:16px;font-family:'Courier New',monospace}
+.ex-type-1 .ex-prompt{font-size:.9rem;color:var(--dim);margin-bottom:16px}
+.ex-type-1 .ex-blank{border-bottom:2px solid var(--dimmer);height:24px;margin-top:8px}
+
+.ex-type-2 .ex-name{font-size:1.1rem;font-weight:700;color:var(--an);margin-bottom:16px;font-style:italic}
+.ex-type-2 .ex-prompt{font-size:.9rem;color:var(--dim);margin-bottom:16px}
+.ex-type-2 .ex-blank{border-bottom:2px solid var(--dimmer);height:24px;margin-top:8px}
+
+.ex-type-3{padding:0}
+.table-wrapper{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-bottom:12px}
+th,td{padding:12px 8px;text-align:left;border:1px solid var(--brd);font-size:.9rem}
+th{background:rgba(13,74,115,.08);font-weight:700;color:var(--dimmer)}
+td{height:40px}
+td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
+
+.PDF-section{padding:24px;break-inside:avoid}
+
+@media print{
+  body{background:#fff}
+  .site-nav,.preview-header,.btn-pdf,.btn-back{display:none}
+  #s-preview{padding:0}
+  .preview-container{max-width:100%}
+  .exercise-card{page-break-inside:avoid;border:1px solid #ccc;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="site-nav">
+  <a href="index.html" class="nav-brand"><em>IonNom</em></a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="teoria.html">Teoría</a>
+    <a href="funciones.html">🧪 Funciones</a>
+    <a href="juego.html">Juego</a>
+    <a href="generador.html" class="active">⚙️ Generador</a>
+  </div>
+</div>
+
+<!-- FORM SCREEN -->
+<div class="screen active" id="s-form">
+  <div class="form-container">
+    <h1 class="form-title">⚙️ Generador de Ejercicios</h1>
+
+    <div class="form-group">
+      <label class="form-label">Grupo funcional</label>
+      <select id="inp-group" class="form-select">
+        <option value="">Selecciona un grupo...</option>
+        <option value="all">Todos los grupos</option>
+        <option value="ox-bas">Óxidos básicos</option>
+        <option value="anhid">Anhídridos</option>
+        <option value="hidru">Hidruros metálicos</option>
+        <option value="ac-hid">Ácidos hídricos</option>
+        <option value="base">Bases / Hidróxidos</option>
+        <option value="ac-ox">Ácidos oxácidos</option>
+        <option value="sal-bin">Sales binarias</option>
+        <option value="sal-ox">Sales oxigenadas</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tipo de ejercicio</label>
+      <select id="inp-type" class="form-select">
+        <option value="">Selecciona un tipo...</option>
+        <option value="formula-to-name">Nombrar moléculas (fórmula → nombre)</option>
+        <option value="name-to-formula">De nombre a fórmula</option>
+        <option value="table-complete">Completar tabla de datos</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Cantidad de ejercicios</label>
+      <input type="number" id="inp-count" class="form-input" min="3" max="20" value="5" placeholder="3 a 20">
+    </div>
+
+    <button class="btn-gen" onclick="generateExercises()">Generar Ejercicios</button>
+  </div>
+</div>
+
+<!-- PREVIEW SCREEN -->
+<div class="screen" id="s-preview">
+  <div class="preview-container">
+    <div class="preview-header">
+      <h2 class="preview-title" id="prev-title"></h2>
+      <div>
+        <button class="btn-pdf" onclick="exportToPDF()">📄 Descargar PDF</button>
+        <button class="btn-back" onclick="backToForm()">← Atrás</button>
+      </div>
+    </div>
+    <div id="exercises-container"></div>
+  </div>
+</div>
+
+<script>
+// BANK DATA (from juego.html with group field)
+const BANK = {
+  easy: {
+    binary: [
+      {formula:'Na₂O',trad:['óxido de sodio'],stock:[],sist:['monóxido de disodio'],ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'O²⁻ × 1'}],tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'Na tiene valencia fija +1. El compuesto es metal + oxígeno → óxido.',group:'ox-bas'},
+      {formula:'MgO',trad:['óxido de magnesio'],stock:[],sist:['óxido de magnesio'],ions:[{t:'cat',l:'Mg²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],hint:'Mg tiene valencia fija +2. Metal + O₂ = óxido.',group:'ox-bas'},
+      {formula:'CaO',trad:['óxido de calcio'],stock:[],sist:['óxido de calcio'],ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],hint:'Ca tiene valencia +2. Es un óxido básico (metal + oxígeno).',group:'ox-bas'},
+      {formula:'Al₂O₃',trad:['óxido de aluminio'],stock:[],sist:['trióxido de dialuminio'],ions:[{t:'cat',l:'Al³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],hint:'Al tiene valencia +3. Verifica la carga: 2(+3) + 3(−2) = 0.',group:'ox-bas'},
+      {formula:'NaCl',trad:['cloruro de sodio'],stock:[],sist:['cloruro de sodio'],ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'Cl⁻'}],tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'Cl⁻ → cloruro. Na⁺ → sodio. Anión + "de" + catión.',group:'sal-bin'},
+      {formula:'CaCl₂',trad:['cloruro de calcio'],stock:[],sist:['dicloruro de calcio'],ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'Cl⁻ × 2'}],tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],hint:'Cl → cloruro. Ca²⁺ → calcio. No se indica la cantidad en nomenclatura de valencias fijas.',group:'sal-bin'},
+      {formula:'AlBr₃',trad:['bromuro de aluminio'],stock:[],sist:['tribromuro de aluminio'],ions:[{t:'cat',l:'Al³⁺'},{t:'an',l:'Br⁻ × 3'}],tokens:[{w:'bromuro',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],hint:'Br → bromuro. Al tiene valencia fija +3.',group:'sal-bin'},
+      {formula:'Na₂S',trad:['sulfuro de sodio'],stock:[],sist:['sulfuro de disodio'],ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'S²⁻'}],tokens:[{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'S²⁻ → sulfuro. Na → sodio.',group:'sal-bin'},
+      {formula:'SO₃',trad:['anhídrido sulfúrico','óxido de azufre VI'],stock:['óxido de azufre VI'],sist:['trióxido de azufre'],ions:[{t:'an',l:'S no metal'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'anhídrido',t:'ox'},{w:'sulfúrico',t:'cat'}],hint:'No metal + O → anhídrido. S tiene EO = +6 → -ico → anhídrido sulfúrico.',group:'anhid'},
+      {formula:'Cl₂O',trad:['anhídrido cloroso'],stock:[],sist:['monóxido de dicloro'],ions:[{t:'an',l:'Cl no metal'},{t:'an',l:'O'}],tokens:[{w:'anhídrido',t:'ox'},{w:'cloroso',t:'cat'}],hint:'Cl con EO +1 (el menor) → -oso → cloroso → anhídrido cloroso.',group:'anhid'},
+      {formula:'P₂O₅',trad:['anhídrido fosfórico'],stock:[],sist:['pentaóxido de difósforo'],ions:[{t:'an',l:'P no metal'},{t:'an',l:'O × 5'}],tokens:[{w:'anhídrido',t:'ox'},{w:'fosfórico',t:'cat'}],hint:'P con EO +5 (mayor para P) → -ico → fosfórico → anhídrido fosfórico.',group:'anhid'},
+    ],
+    ternary: [
+      {formula:'NaOH',trad:['hidróxido de sodio'],stock:[],sist:['hidróxido de sodio'],ions:[{t:'cat',l:'Na⁺'},{t:'oh',l:'OH⁻'}],tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'OH⁻ siempre se llama hidróxido. Metal + OH → base.',group:'base'},
+      {formula:'Ca(OH)₂',trad:['hidróxido de calcio'],stock:[],sist:['dihidróxido de calcio'],ions:[{t:'cat',l:'Ca²⁺'},{t:'oh',l:'OH⁻ × 2'}],tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],hint:'Ca²⁺ necesita 2 OH⁻ para equilibrar. Sigue siendo "hidróxido de calcio".',group:'base'},
+      {formula:'KOH',trad:['hidróxido de potasio'],stock:[],sist:['hidróxido de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'oh',l:'OH⁻'}],tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'K tiene valencia +1. K + OH → hidróxido de potasio.',group:'base'},
+      {formula:'Al(OH)₃',trad:['hidróxido de aluminio'],stock:[],sist:['trihidróxido de aluminio'],ions:[{t:'cat',l:'Al³⁺'},{t:'oh',l:'OH⁻ × 3'}],tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],hint:'Al³⁺ con 3 OH⁻. Hidróxido de aluminio (anfótero).',group:'base'},
+      {formula:'HCl',trad:['ácido clorhídrico'],stock:[],sist:['cloruro de hidrógeno'],ions:[{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],tokens:[{w:'ácido',t:'cat'},{w:'clorhídrico',t:'an'}],hint:'Ácido sin oxígeno: ácido + nombre del anión con sufijo -hídrico.',group:'ac-hid'},
+      {formula:'H₂SO₄',trad:['ácido sulfúrico'],stock:[],sist:['ácido sulfúrico'],ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],tokens:[{w:'ácido',t:'cat'},{w:'sulfúrico',t:'ox'}],hint:'H + SO₄²⁻ (sulfato). Ácido oxácido: ácido + nombre del anión.',group:'ac-ox'},
+      {formula:'HNO₃',trad:['ácido nítrico'],stock:[],sist:['ácido nítrico'],ions:[{t:'cat',l:'H⁺'},{t:'ox',l:'NO₃⁻'}],tokens:[{w:'ácido',t:'cat'},{w:'nítrico',t:'ox'}],hint:'H + NO₃⁻ (nitrato). Oxoanión nitrato → ácido nítrico.',group:'ac-ox'},
+      {formula:'NaClO',trad:['hipoclorito de sodio'],stock:[],sist:['hipoclorito de sodio'],ions:[{t:'cat',l:'Na⁺'},{t:'ox',l:'ClO⁻'}],tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'ClO⁻ = hipoclorito. Nombre: oxoanión + de + catión.',group:'sal-ox'},
+      {formula:'Na₂SO₄',trad:['sulfato de sodio'],stock:[],sist:['sulfato de disodio'],ions:[{t:'cat',l:'Na⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],tokens:[{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'SO₄²⁻ = sulfato. Metal valencia fija: sulfato + de + metal.',group:'sal-ox'},
+      {formula:'Ca(NO₃)₂',trad:['nitrato de calcio'],stock:[],sist:['dinitrato de calcio'],ions:[{t:'cat',l:'Ca²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],hint:'NO₃⁻ = nitrato. Ca²⁺ necesita 2 nitratos. Nombre: nitrato de calcio.',group:'sal-ox'},
+    ]
+  },
+  medium: {
+    binary: [
+      {formula:'FeCl₂',trad:['cloruro ferroso'],stock:['cloruro de hierro II','cloruro de hierro (II)'],sist:['dicloruro de hierro'],ions:[{t:'cat',l:'Fe²⁺ (EO=+2)'},{t:'an',l:'Cl⁻ × 2'}],tokens:[{w:'cloruro',t:'an'},{w:'ferroso',t:'cat'}],hint:'Fe tiene 2 valencias (+2 y +3). EO=+2 es la menor → sufijo -oso → ferroso.',group:'sal-bin'},
+      {formula:'FeCl₃',trad:['cloruro férrico'],stock:['cloruro de hierro III','cloruro de hierro (III)'],sist:['tricloruro de hierro'],ions:[{t:'cat',l:'Fe³⁺ (EO=+3)'},{t:'an',l:'Cl⁻ × 3'}],tokens:[{w:'cloruro',t:'an'},{w:'férrico',t:'cat'}],hint:'EO=+3 es la mayor valencia del Fe → sufijo -ico → férrico.',group:'sal-bin'},
+      {formula:'FeO',trad:['óxido ferroso'],stock:['óxido de hierro II','óxido de hierro (II)'],sist:['óxido de hierro'],ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'ferroso',t:'cat'}],hint:'Fe²⁺ = EO menor → -oso → ferroso. Compuesto: óxido ferroso.',group:'ox-bas'},
+      {formula:'Fe₂O₃',trad:['óxido férrico'],stock:['óxido de hierro III','óxido de hierro (III)'],sist:['trióxido de dihierro'],ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'óxido',t:'an'},{w:'férrico',t:'cat'}],hint:'Fe³⁺ = EO mayor → -ico → férrico. Verifica: 2(+3)+3(−2)=0.',group:'ox-bas'},
+      {formula:'Cu₂O',trad:['óxido cuproso'],stock:['óxido de cobre I','óxido de cobre (I)'],sist:['óxido de dícobre'],ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'cuproso',t:'cat'}],hint:'Cu con EO=+1 (menor) → -oso → cuproso.',group:'ox-bas'},
+      {formula:'CuO',trad:['óxido cúprico'],stock:['óxido de cobre II','óxido de cobre (II)'],sist:['óxido de cobre'],ions:[{t:'cat',l:'Cu²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'cúprico',t:'cat'}],hint:'Cu con EO=+2 (mayor) → -ico → cúprico.',group:'ox-bas'},
+      {formula:'PbO',trad:['óxido plumboso'],stock:['óxido de plomo II','óxido de plomo (II)'],sist:['óxido de plomo'],ions:[{t:'cat',l:'Pb²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'plumboso',t:'cat'}],hint:'Pb²⁺ (EO menor) → -oso → plumboso.',group:'ox-bas'},
+      {formula:'PbO₂',trad:['óxido plúmbico'],stock:['óxido de plomo IV','óxido de plomo (IV)'],sist:['dióxido de plomo'],ions:[{t:'cat',l:'Pb⁴⁺'},{t:'an',l:'O²⁻ × 2'}],tokens:[{w:'óxido',t:'an'},{w:'plúmbico',t:'cat'}],hint:'Pb⁴⁺ (EO mayor de Pb) → -ico → plúmbico.',group:'ox-bas'},
+      {formula:'SnCl₂',trad:['cloruro estannoso'],stock:['cloruro de estaño II','cloruro de estaño (II)'],sist:['dicloruro de estaño'],ions:[{t:'cat',l:'Sn²⁺'},{t:'an',l:'Cl⁻ × 2'}],tokens:[{w:'cloruro',t:'an'},{w:'estannoso',t:'cat'}],hint:'Sn²⁺ (EO menor del estaño) → -oso → estannoso.',group:'sal-bin'},
+      {formula:'SnCl₄',trad:['cloruro estánnico'],stock:['cloruro de estaño IV','cloruro de estaño (IV)'],sist:['tetracloruro de estaño'],ions:[{t:'cat',l:'Sn⁴⁺'},{t:'an',l:'Cl⁻ × 4'}],tokens:[{w:'cloruro',t:'an'},{w:'estánnico',t:'cat'}],hint:'Sn⁴⁺ (EO mayor del estaño) → -ico → estánnico.',group:'sal-bin'},
+    ],
+    ternary: [
+      {formula:'FeSO₄',trad:['sulfato ferroso'],stock:['sulfato de hierro II','sulfato de hierro (II)'],sist:['sulfato de hierro'],ions:[{t:'cat',l:'Fe²⁺'},{t:'ox',l:'SO₄²⁻'}],tokens:[{w:'sulfato',t:'ox'},{w:'ferroso',t:'cat'}],hint:'SO₄²⁻ = sulfato. Fe²⁺ (menor) → ferroso → sulfato ferroso.',group:'sal-ox'},
+      {formula:'Fe₂(SO₄)₃',trad:['sulfato férrico'],stock:['sulfato de hierro III','sulfato de hierro (III)'],sist:['trisulfato de dihierro'],ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'ox',l:'SO₄²⁻ × 3'}],tokens:[{w:'sulfato',t:'ox'},{w:'férrico',t:'cat'}],hint:'Fe³⁺ (mayor) → -ico → férrico → sulfato férrico.',group:'sal-ox'},
+      {formula:'CuSO₄',trad:['sulfato cúprico'],stock:['sulfato de cobre II','sulfato de cobre (II)'],sist:['sulfato de cobre'],ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'SO₄²⁻'}],tokens:[{w:'sulfato',t:'ox'},{w:'cúprico',t:'cat'}],hint:'Cu²⁺ = EO mayor → cúprico → sulfato cúprico.',group:'sal-ox'},
+      {formula:'Fe(OH)₂',trad:['hidróxido ferroso'],stock:['hidróxido de hierro II','hidróxido de hierro (II)'],sist:['dihidróxido de hierro'],ions:[{t:'cat',l:'Fe²⁺'},{t:'oh',l:'OH⁻ × 2'}],tokens:[{w:'hidróxido',t:'oh'},{w:'ferroso',t:'cat'}],hint:'OH⁻ = hidróxido. Fe²⁺ → ferroso → hidróxido ferroso.',group:'base'},
+      {formula:'Fe(OH)₃',trad:['hidróxido férrico'],stock:['hidróxido de hierro III','hidróxido de hierro (III)'],sist:['trihidróxido de hierro'],ions:[{t:'cat',l:'Fe³⁺'},{t:'oh',l:'OH⁻ × 3'}],tokens:[{w:'hidróxido',t:'oh'},{w:'férrico',t:'cat'}],hint:'Fe³⁺ → férrico → hidróxido férrico.',group:'base'},
+      {formula:'Cu(OH)₂',trad:['hidróxido cúprico'],stock:['hidróxido de cobre II','hidróxido de cobre (II)'],sist:['dihidróxido de cobre'],ions:[{t:'cat',l:'Cu²⁺'},{t:'oh',l:'OH⁻ × 2'}],tokens:[{w:'hidróxido',t:'oh'},{w:'cúprico',t:'cat'}],hint:'Cu²⁺ → cúprico → hidróxido cúprico.',group:'base'},
+      {formula:'Cu(NO₃)₂',trad:['nitrato cúprico'],stock:['nitrato de cobre II','nitrato de cobre (II)'],sist:['dinitrato de cobre'],ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],tokens:[{w:'nitrato',t:'ox'},{w:'cúprico',t:'cat'}],hint:'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico.',group:'sal-ox'},
+    ]
+  },
+  hard: {
+    binary: [
+      {formula:'MnO',trad:['óxido manganoso'],stock:['óxido de manganeso II','óxido de manganeso (II)'],sist:['óxido de manganeso'],ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.',group:'ox-bas'},
+      {formula:'MnO₂',trad:['óxido mangánico','dióxido de manganeso'],stock:['óxido de manganeso IV','óxido de manganeso (IV)'],sist:['dióxido de manganeso'],ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],hint:'Mn con EO=+4. En sistemática: di-óxido de manganeso.',group:'ox-bas'},
+      {formula:'Mn₂O₇',trad:['anhídrido permangánico'],stock:['óxido de manganeso VII','óxido de manganeso (VII)'],sist:['heptaóxido de dimanganeso'],ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.',group:'anhid'},
+      {formula:'Cr₂O₃',trad:['óxido crómico'],stock:['óxido de cromo III','óxido de cromo (III)'],sist:['trióxido de dicromo'],ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.',group:'ox-bas'},
+      {formula:'CrO₃',trad:['anhídrido crómico'],stock:['óxido de cromo VI','óxido de cromo (VI)'],sist:['trióxido de cromo'],ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.',group:'anhid'},
+    ],
+    ternary: [
+      {formula:'KMnO₄',trad:['permanganato de potasio'],stock:['permanganato de potasio'],sist:['tetraoxomanganato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.',group:'sal-ox'},
+      {formula:'K₂CrO₄',trad:['cromato de potasio'],stock:['cromato de potasio'],sist:['tetraoxocromato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.',group:'sal-ox'},
+      {formula:'K₂Cr₂O₇',trad:['dicromato de potasio'],stock:['dicromato de potasio'],sist:['heptaoxodicroomato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.',group:'sal-ox'},
+      {formula:'KClO₃',trad:['clorato de potasio'],stock:['clorato de potasio'],sist:['trioxoclorato(V) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₃⁻'}],tokens:[{w:'clorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.',group:'sal-ox'},
+      {formula:'KClO₄',trad:['perclorato de potasio'],stock:['perclorato de potasio'],sist:['tetraoxoclorato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₄⁻'}],tokens:[{w:'perclorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.',group:'sal-ox'},
+      {formula:'KClO',trad:['hipoclorito de potasio'],stock:['hipoclorito de potasio'],sist:['oxoclorato(I) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.',group:'sal-ox'},
+    ]
+  }
+};
+
+// Group labels
+const GROUP_LABELS = {
+  'ox-bas': 'Óxidos básicos',
+  'anhid': 'Anhídridos',
+  'hidru': 'Hidruros metálicos',
+  'ac-hid': 'Ácidos hídricos',
+  'base': 'Bases / Hidróxidos',
+  'ac-ox': 'Ácidos oxácidos',
+  'sal-bin': 'Sales binarias',
+  'sal-ox': 'Sales oxigenadas'
+};
+
+// Generate exercises
+function generateExercises(){
+  const group = document.getElementById('inp-group').value;
+  const type = document.getElementById('inp-type').value;
+  const count = parseInt(document.getElementById('inp-count').value) || 5;
+
+  if(!group || !type){
+    alert('Por favor selecciona grupo y tipo de ejercicio');
+    return;
+  }
+
+  // Get all compounds
+  let compounds = [];
+  Object.keys(BANK).forEach(level => {
+    compounds = compounds.concat(BANK[level].binary);
+    compounds = compounds.concat(BANK[level].ternary);
+  });
+
+  // Filter by group
+  if(group !== 'all'){
+    compounds = compounds.filter(c => c.group === group);
+  }
+
+  if(compounds.length === 0){
+    alert('No hay compuestos disponibles para este grupo');
+    return;
+  }
+
+  // Shuffle and pick
+  compounds.sort(() => Math.random() - 0.5);
+  const selected = compounds.slice(0, Math.min(count, compounds.length));
+
+  // Generate HTML
+  const typeLabel = {
+    'formula-to-name': 'Nombrar moléculas',
+    'name-to-formula': 'De nombre a fórmula',
+    'table-complete': 'Completar tabla'
+  }[type];
+
+  const groupLabel = GROUP_LABELS[group] || 'Todos los grupos';
+  document.getElementById('prev-title').textContent = `${typeLabel} — ${groupLabel}`;
+
+  let html = '';
+  if(type === 'formula-to-name'){
+    html = generateFormulaToName(selected);
+  } else if(type === 'name-to-formula'){
+    html = generateNameToFormula(selected);
+  } else if(type === 'table-complete'){
+    html = generateTableComplete(selected);
+  }
+
+  document.getElementById('exercises-container').innerHTML = html;
+  showScreen('s-preview');
+}
+
+function generateFormulaToName(compounds){
+  let html = '';
+  compounds.forEach((c, i) => {
+    html += `
+      <div class="exercise-card ex-type-1 PDF-section">
+        <div class="ex-num">Ejercicio ${i+1}</div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto? (puedes usar cualquier sistema)</div>
+        <div class="ex-formula">${c.formula}</div>
+        <div class="ex-blank"></div>
+      </div>
+    `;
+  });
+  return html;
+}
+
+function generateNameToFormula(compounds){
+  let html = '';
+  compounds.forEach((c, i) => {
+    const name = c.trad[0];
+    html += `
+      <div class="exercise-card ex-type-2 PDF-section">
+        <div class="ex-num">Ejercicio ${i+1}</div>
+        <div class="ex-prompt">Escribe la fórmula del compuesto</div>
+        <div class="ex-name">${name}</div>
+        <div class="ex-blank"></div>
+      </div>
+    `;
+  });
+  return html;
+}
+
+function generateTableComplete(compounds){
+  // Create chunks of 3-4 compounds per table
+  const tableSize = 4;
+  let html = '';
+  for(let t = 0; t < compounds.length; t += tableSize){
+    const chunk = compounds.slice(t, t + tableSize);
+    const tableNum = Math.floor(t / tableSize) + 1;
+
+    html += `<div class="exercise-card ex-type-3 PDF-section">
+      <div class="ex-num">Tabla ${tableNum}</div>
+      <div class="ex-prompt">Completa la tabla con la información faltante</div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:35%">Fórmula</th>
+              <th style="width:65%">Nombre (Tradicional)</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+    chunk.forEach((c, idx) => {
+      const isFormulaBlank = idx % 2 === 0;
+      html += `<tr>
+        <td class="${isFormulaBlank ? 'cell-blank' : ''}">${isFormulaBlank ? '' : c.formula}</td>
+        <td class="${!isFormulaBlank ? 'cell-blank' : ''}">${!isFormulaBlank ? '' : c.trad[0]}</td>
+      </tr>`;
+    });
+
+    html += `</tbody></table></div></div>`;
+  }
+  return html;
+}
+
+function backToForm(){
+  showScreen('s-form');
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function exportToPDF(){
+  const element = document.getElementById('exercises-container');
+  const opt = {
+    margin: 10,
+    filename: 'ejercicios-nomenclatura.pdf',
+    image: {type: 'jpeg', quality: 0.98},
+    html2canvas: {scale: 2},
+    jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4'}
+  };
+  html2pdf().set(opt).from(element).save();
+}
+</script>
+
+</body>
+</html>
