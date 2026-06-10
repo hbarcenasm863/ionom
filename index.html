@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d4a73">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IonNom">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230d4a73' width='100' height='100'/><text x='50' y='50' font-size='60' font-weight='bold' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>">
 <title>IonNom — Nomenclatura Inorgánica</title>
 <style>
 :root{
@@ -300,10 +305,97 @@ footer a:hover{text-decoration:underline}
 
 </div>
 
+<!-- PWA Install Button -->
+<div id="pwa-install-banner" style="display:none;position:fixed;bottom:20px;right:20px;z-index:99;background:#0d4a73;color:#fff;padding:16px 20px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2);max-width:320px;font-family:Arial,sans-serif">
+  <div style="font-size:14px;font-weight:700;margin-bottom:12px">📱 Descargar IonNom</div>
+  <div style="font-size:12px;margin-bottom:14px;color:rgba(255,255,255,0.9)">Accede a toda la app incluso sin internet</div>
+  <div style="display:flex;gap:10px">
+    <button id="pwa-install-btn" style="flex:1;padding:10px;background:#fcd34d;color:#0d4a73;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">Instalar</button>
+    <button onclick="document.getElementById('pwa-install-banner').style.display='none'" style="flex:1;padding:10px;background:rgba(255,255,255,0.2);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">Después</button>
+  </div>
+</div>
+
+<!-- iOS Install Instructions Modal -->
+<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
+    <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>
+    <div style="font-size:12px;color:#666;margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
+    <ol style="font-size:13px;line-height:1.8;color:#333;margin:0 0 20px;padding-left:20px">
+      <li>Toca el icono de compartir <strong>⬆️</strong></li>
+      <li>Desplázate y busca "Añadir a pantalla de inicio"</li>
+      <li>Toca "Añadir" en la esquina superior derecha</li>
+      <li>¡Listo! IonNom aparecerá en tu home</li>
+    </ol>
+    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:#0d4a73;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
+  </div>
+</div>
+
 <footer>
   <p><a href="index.html">IonNom</a> © 2026 Harvey Bárcenas Morales · Colegio Rufino José Cuervo I.E.D.<br>
   Licenciado bajo <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></p>
 </footer>
+
+<script>
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => {
+    console.log('IonNom PWA: Service Worker registrado');
+  }).catch(err => console.log('IonNom PWA: Error en SW', err));
+}
+
+// PWA Install Handler
+let deferredPrompt;
+const installBtn = document.getElementById('pwa-install-btn');
+const installBanner = document.getElementById('pwa-install-banner');
+const iosModal = document.getElementById('ios-modal');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Detect device
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if (isIOS) {
+    // Show iOS instructions
+    installBanner.style.display = 'block';
+    installBtn.textContent = '📖 Instrucciones iOS';
+    installBtn.onclick = () => {
+      installBanner.style.display = 'none';
+      iosModal.style.display = 'flex';
+    };
+  } else {
+    // Show install button for Android/PC
+    installBanner.style.display = 'block';
+    installBtn.onclick = () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('IonNom instalado');
+          }
+          deferredPrompt = null;
+          installBanner.style.display = 'none';
+        });
+      }
+    };
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('IonNom PWA instalada');
+  deferredPrompt = null;
+  installBanner.style.display = 'none';
+});
+
+// Hide banner after 5 seconds if not interacted
+setTimeout(() => {
+  if (installBanner.style.display === 'block') {
+    const btn = installBanner.querySelector('button:last-child');
+    if (btn) btn.textContent = 'Cerrar';
+  }
+}, 5000);
+</script>
 
 </body>
 </html>
