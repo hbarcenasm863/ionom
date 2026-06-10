@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d4a73">
-<title>IonNom — Juego de Nomenclatura</title>
+<title>IonNom — Juego</title>
+<script src="banco.js"></script>
 <style>
 :root{
   --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
@@ -26,12 +27,10 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-
-/* SCREENS */
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex}
 
-/* ── NAV (shared) ── */
+/* NAV */
 .site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
 .nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
 .nav-brand em{color:#fcd34d;font-style:normal}
@@ -40,106 +39,38 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
 .nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
 
-/* ════════════════════
-   PORTADA
-════════════════════ */
-#s-portada{
-  background:linear-gradient(145deg,#0d2d42 0%,#0d4a73 55%,#0a3d5e 100%);
-  align-items:center;justify-content:flex-start;
-  position:relative;overflow-x:hidden;overflow-y:auto;
-  padding:40px 0;
-}
-#s-portada::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 40%,rgba(217,119,6,.14),transparent),
-    radial-gradient(ellipse 60% 60% at 80% 70%,rgba(3,105,161,.15),transparent);
-  pointer-events:none;
-}
-.portada-inner{
-  text-align:center;position:relative;z-index:1;
-  padding:0 24px;max-width:520px;width:100%;
-}
-.portada-badge{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);
-  color:#fcd34d;font-size:.72rem;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;padding:5px 14px;border-radius:100px;
-  margin-bottom:20px;
-}
-.portada-title{
-  font-family:var(--serif);font-size:3rem;font-weight:700;
-  font-style:italic;color:#fff;line-height:1.1;margin-bottom:8px;
-  letter-spacing:-.04em;
-}
+/* PORTADA */
+#s-portada{background:linear-gradient(145deg,#0d2d42 0%,#0d4a73 55%,#0a3d5e 100%);align-items:center;justify-content:flex-start;position:relative;overflow-x:hidden;overflow-y:auto;padding:40px 0}
+#s-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 40%,rgba(217,119,6,.14),transparent),radial-gradient(ellipse 60% 60% at 80% 70%,rgba(3,105,161,.15),transparent);pointer-events:none}
+.portada-inner{text-align:center;position:relative;z-index:1;padding:0 24px;max-width:560px;width:100%;margin:auto}
+.portada-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:#fcd34d;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.portada-title{font-family:var(--serif);font-size:3rem;font-weight:700;font-style:italic;color:#fff;line-height:1.1;margin-bottom:8px;letter-spacing:-.04em}
 .portada-title em{color:#fcd34d;font-style:normal}
-.portada-sub{font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:32px}
+.portada-sub{font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:22px}
+.portada-types{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+.pt-chip{padding:5px 13px;border-radius:100px;font-size:.7rem;font-weight:700;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.07)}
 
-/* Chips color */
-.portada-colors{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
-.pc{padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:700;border:1.5px solid}
-.pc.cat{color:#fcd34d;border-color:#fcd34d;background:rgba(217,119,6,.18)}
-.pc.an{color:#93c5fd;border-color:#93c5fd;background:rgba(3,105,161,.18)}
-.pc.oh{color:#c4b5fd;border-color:#c4b5fd;background:rgba(124,58,237,.18)}
-.pc.ox{color:#5eead4;border-color:#5eead4;background:rgba(15,118,110,.18)}
+/* Group grid */
+.group-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.group-btn{padding:14px 10px;border-radius:var(--rs);border:2px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-family:var(--sans);cursor:pointer;transition:all .2s;text-align:center;line-height:1.3}
+.group-btn .gb-icon{font-size:1.25rem;display:block;margin-bottom:4px}
+.group-btn .gb-name{display:block;font-size:.8rem;font-weight:800}
+.group-btn .gb-sub{display:block;font-size:.62rem;color:rgba(255,255,255,.5);margin-top:2px}
+.group-btn:hover,.group-btn:focus{background:rgba(255,255,255,.13);border-color:rgba(217,119,6,.6);transform:translateY(-2px);outline:none}
+.group-btn.full{grid-column:1/-1;background:rgba(217,119,6,.14);border-color:rgba(217,119,6,.4)}
+.group-btn.full:hover{background:rgba(217,119,6,.24)}
 
-/* Config form inside portada */
-.portada-form{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:var(--r);padding:24px;margin-bottom:20px;text-align:left}
-.form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:6px;display:block}
-.form-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;margin-bottom:16px}
-.form-input:focus{outline:none;border-color:rgba(217,119,6,.8);background:rgba(217,119,6,.1)}
-.form-input::placeholder{color:rgba(255,255,255,.3)}
-.form-select{appearance:none;-webkit-appearance:none;width:100%;padding:11px 36px 11px 14px;background-color:rgba(255,255,255,.06);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.5)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;margin-bottom:16px;cursor:pointer}
-.form-select:focus{outline:none;border-color:rgba(217,119,6,.8);background-color:rgba(217,119,6,.1)}
-.form-select option{background:#0d2d42;color:#fff}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-/* Modo buttons */
-.modo-row{display:flex;gap:10px;margin-bottom:20px}
-.modo-btn{
-  flex:1;padding:12px 8px;border-radius:var(--rs);
-  border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);
-  color:rgba(255,255,255,.65);font-family:var(--sans);
-  font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;
-}
-.modo-btn .mb-icon{font-size:1.4rem;display:block;margin-bottom:4px}
-.modo-btn .mb-label{display:block;font-size:.75rem;font-weight:800;color:#fff}
-.modo-btn .mb-sub{display:block;font-size:.6rem;color:rgba(255,255,255,.5);margin-top:2px}
-.modo-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
-.modo-btn.sel-mc{background:rgba(3,105,161,.3);border-color:#38bdf8}
-.modo-btn.sel-write{background:rgba(217,119,6,.25);border-color:#fcd34d}
-
-/* Grupo funcional selector */
-.grupo-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.grupo-btn{padding:5px 11px;border-radius:100px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-family:var(--sans);font-size:.71rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
-.grupo-btn:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.1)}
-.grupo-btn.gact{border-color:#fcd34d;background:rgba(217,119,6,.22);color:#fcd34d}
-
-.btn-start{
-  width:100%;padding:15px;background:var(--cat);color:#fff;
-  border:none;border-radius:var(--rs);font-family:var(--sans);
-  font-size:.95rem;font-weight:800;cursor:pointer;
-  transition:all .2s;letter-spacing:.02em;
-}
-.btn-start:hover{background:var(--cat-t);transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,119,6,.4)}
-
-/* ════════════════════
-   GAME SCREEN
-════════════════════ */
+/* GAME */
 #s-game{background:var(--bg);overflow-y:auto}
-.game-hdr{
-  background:linear-gradient(90deg,#0d2d42,#0d4a73);
-  padding:12px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0;
-}
+.game-hdr{background:linear-gradient(90deg,#0d2d42,#0d4a73);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;font-style:italic;color:#fff}
 .gh-logo em{color:#fcd34d;font-style:normal}
-.gh-prog{flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
+.gh-center{flex:1;display:flex;flex-direction:column;gap:4px}
+.gh-prog{height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
 .gh-progfill{height:100%;background:linear-gradient(90deg,var(--cat),var(--an));transition:width .4s ease;border-radius:3px}
-.gh-score{font-family:var(--mono);font-size:.88rem;font-weight:700;color:#fcd34d;white-space:nowrap}
-
+.gh-pts{font-size:.62rem;color:rgba(255,255,255,.55);text-align:right;margin-top:1px}
+.gh-score{font-family:var(--mono);font-size:.95rem;font-weight:700;color:#fcd34d;white-space:nowrap}
 .game-body{max-width:620px;margin:0 auto;padding:24px 18px 80px;width:100%}
-
-/* Stats bar */
 .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px}
 .stat-box{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:12px;text-align:center;box-shadow:var(--sh)}
 .stat-val{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--cat)}
@@ -147,124 +78,79 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* Question card */
 .q-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 26px;margin-bottom:18px;box-shadow:var(--sh)}
-.q-meta{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
-.q-formula{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--cat-t);letter-spacing:.02em;margin-bottom:8px;line-height:1}
+.q-meta{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
+.q-formula{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--cat-t);letter-spacing:.02em;margin-bottom:12px;line-height:1}
 .q-prompt{font-size:.88rem;color:var(--dim);margin-bottom:20px;line-height:1.55}
 
-/* Ion type indicator */
-.q-ions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.ion-chip{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700;border:1.5px solid}
-.ion-chip.cat{background:var(--cat-b);border-color:var(--cat);color:var(--cat-t)}
-.ion-chip.an{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
-.ion-chip.oh{background:var(--oh-b);border-color:var(--oh);color:var(--oh-t)}
-.ion-chip.ox{background:var(--ox-b);border-color:var(--ox);color:var(--ox-t)}
-.ion-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cat .ion-dot{background:var(--cat)}.an .ion-dot{background:var(--an)}
-.oh .ion-dot{background:var(--oh)}.ox .ion-dot{background:var(--ox)}
-
-/* MC options */
-.mc-opts{display:grid;gap:10px;margin-bottom:16px}
-.mc-opt{
-  width:100%;padding:14px 18px;
-  background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);
-  color:var(--tx);font-family:var(--sans);font-size:.88rem;font-weight:600;
-  text-align:left;cursor:pointer;transition:all .2s;
-}
-.mc-opt:hover{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
-.mc-opt.selected{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
+/* MC */
+.mc-opts{display:grid;gap:10px;margin-bottom:4px}
+.mc-opt{width:100%;padding:14px 18px;background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);color:var(--tx);font-family:var(--sans);font-size:.88rem;font-weight:600;text-align:left;cursor:pointer;transition:all .2s}
+.mc-opt:hover:not(.disabled){border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
 .mc-opt.correct{border-color:var(--ok);background:var(--okb);color:#14532d;cursor:default}
 .mc-opt.wrong{border-color:var(--err);background:var(--errb);color:var(--err);cursor:default}
-.mc-opt.disabled{pointer-events:none;opacity:.55}
+.mc-opt.disabled{pointer-events:none;opacity:.5}
 
-/* Write mode */
-.write-input{
-  width:100%;padding:13px 16px;
-  background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);
-  color:var(--tx);font-family:var(--sans);font-size:.92rem;
-  transition:border-color .2s;margin-bottom:12px;
-}
+/* Write */
+.write-input{width:100%;padding:13px 16px;background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);color:var(--tx);font-family:var(--sans);font-size:.92rem;transition:border-color .2s;margin-bottom:12px}
 .write-input:focus{outline:none;border-color:var(--cat);background:var(--cat-b)}
 .write-input.shake{animation:shake .3s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-
-.btn-submit{
-  padding:12px 28px;background:var(--an);color:#fff;border:none;
-  border-radius:100px;font-family:var(--sans);font-size:.88rem;font-weight:800;
-  cursor:pointer;transition:all .2s;
-}
+.write-btns{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-submit{padding:12px 28px;background:var(--an);color:#fff;border:none;border-radius:100px;font-family:var(--sans);font-size:.88rem;font-weight:800;cursor:pointer;transition:all .2s}
 .btn-submit:hover{background:var(--an-t);transform:translateY(-1px)}
-.btn-hint{
-  padding:11px 22px;background:var(--bg);color:var(--dim);
-  border:2px solid var(--brd);border-radius:100px;
-  font-family:var(--sans);font-size:.82rem;font-weight:700;
-  cursor:pointer;transition:all .2s;margin-left:8px;
-}
+.btn-hint{padding:11px 20px;background:var(--bg);color:var(--dim);border:2px solid var(--brd);border-radius:100px;font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-hint:hover{border-color:var(--cat);color:var(--cat)}
 
+/* Drag */
+.drag-name{display:flex;flex-wrap:wrap;gap:7px;align-items:center;padding:12px 14px;background:var(--bg);border:2px dashed var(--brd);border-radius:var(--rs);margin-bottom:16px;min-height:48px}
+.drag-word{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--tx)}
+.drag-slot{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:38px;border:2px dashed var(--an);border-radius:8px;background:var(--an-b);cursor:pointer;transition:all .2s;font-family:var(--mono);font-size:.85rem;font-weight:700;color:#9ca3af;padding:0 10px}
+.drag-slot.filled{border-style:solid;background:var(--cat-b);border-color:var(--cat);color:var(--cat-t)}
+.drag-slot.ok{border-color:var(--ok)!important;background:var(--okb)!important;color:#14532d!important}
+.drag-slot.err{border-color:var(--err)!important;background:var(--errb)!important;color:var(--err)!important}
+.drag-bank{display:flex;flex-wrap:wrap;gap:8px}
+.drag-chip{padding:8px 14px;border-radius:8px;border:2px solid var(--brd);background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;user-select:none}
+.drag-chip:hover{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
+.drag-chip.sel{border-color:var(--an);background:var(--an-b);color:var(--an-t);transform:scale(1.05)}
+.drag-chip.used{opacity:.3;pointer-events:none}
+
 /* Feedback */
-.feedback{padding:14px 16px;border-radius:var(--rs);font-size:.86rem;margin-top:14px;border-left:4px solid;display:none;animation:fadeIn .25s ease}
+.feedback{padding:14px 16px;border-radius:var(--rs);font-size:.86rem;margin-top:14px;border-left:4px solid;display:none;animation:fadeIn .25s ease;line-height:1.6}
 .feedback.show{display:block}
 .feedback.ok{background:var(--okb);border-color:var(--ok);color:#14532d}
 .feedback.err{background:var(--errb);border-color:var(--err);color:var(--err)}
 .feedback.tip{background:var(--warnb);border-color:var(--warn);color:var(--cat-t)}
 .feedback.reveal{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fb-alts{font-size:.78rem;margin-top:8px;opacity:.9;line-height:2}
+.fb-hint{margin-top:8px;padding:8px 10px;background:rgba(0,0,0,.06);border-radius:6px;font-size:.78rem;line-height:1.6;font-style:italic;border-left:3px solid rgba(0,0,0,.12)}
 
-/* Name breakdown in feedback */
-.name-breakdown{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:flex-end}
-.nb-token{display:flex;flex-direction:column;align-items:center;gap:3px}
-.nb-word{font-family:var(--mono);font-size:.88rem;font-weight:700;padding:3px 8px;border-radius:5px;line-height:1}
-.nb-word.cat{background:var(--cat-b);color:var(--cat-t);border:1px solid var(--cat)}
-.nb-word.an{background:var(--an-b);color:var(--an-t);border:1px solid var(--an)}
-.nb-word.oh{background:var(--oh-b);color:var(--oh-t);border:1px solid var(--oh)}
-.nb-word.ox{background:var(--ox-b);color:var(--ox-t);border:1px solid var(--ox)}
-.nb-word.neu{background:#f0f4fa;color:var(--dim);border:1px solid var(--brd)}
-.nb-lbl{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
-.nb-lbl.cat{color:var(--cat-t)}.nb-lbl.an{color:var(--an-t)}.nb-lbl.oh{color:var(--oh-t)}.nb-lbl.ox{color:var(--ox-t)}.nb-lbl.neu{color:var(--dimmer)}
-.fb-why{margin-top:10px;padding:8px 10px;background:rgba(0,0,0,.06);border-radius:6px;font-size:.78rem;line-height:1.6;font-style:italic;border-left:3px solid rgba(0,0,0,.15)}
-
-/* ════════════════════
-   RESULT SCREEN
-════════════════════ */
+/* RESULT */
 #s-result{background:var(--bg);overflow-y:auto}
 .result-body{max-width:620px;margin:0 auto;padding:28px 18px 80px}
-.result-card{
-  background:linear-gradient(135deg,#0d2d42,#0d4a73);
-  border-radius:var(--r);padding:32px;text-align:center;
-  margin-bottom:24px;color:#fff;box-shadow:var(--sh2);
-  position:relative;overflow:hidden;
-}
+.result-card{background:linear-gradient(135deg,#0d2d42,#0d4a73);border-radius:var(--r);padding:32px;text-align:center;margin-bottom:24px;color:#fff;box-shadow:var(--sh2);position:relative;overflow:hidden}
 .result-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(217,119,6,.15),transparent);pointer-events:none}
 .medal{font-size:4.5rem;display:block;margin-bottom:12px;animation:bounce .6s ease}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .result-level{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:6px}
-.result-grade{font-family:var(--serif);font-size:3.5rem;font-weight:700;font-style:italic;color:#fcd34d;line-height:1;margin-bottom:6px}
+.result-grade{font-family:var(--serif);font-size:3.2rem;font-weight:700;font-style:italic;color:#fcd34d;line-height:1;margin-bottom:6px}
 .result-msg{font-size:.88rem;color:rgba(255,255,255,.75);line-height:1.65}
-
 .result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
 .rs-box{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:14px;text-align:center;box-shadow:var(--sh)}
 .rs-val{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--cat)}
 .rs-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-top:3px}
-
 .btn-row{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap}
 .btn-print{flex:1;min-width:140px;padding:13px;background:var(--an);color:#fff;border:none;border-radius:100px;font-family:var(--sans);font-size:.88rem;font-weight:800;cursor:pointer;transition:all .2s}
 .btn-print:hover{background:var(--an-t);transform:translateY(-1px)}
 .btn-retry{flex:1;min-width:140px;padding:13px;background:var(--bg);color:var(--dim);border:2px solid var(--brd);border-radius:100px;font-family:var(--sans);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-retry:hover{border-color:var(--cat);color:var(--cat)}
 
-/* CERTIFICATE */
-.cert{
-  background:linear-gradient(135deg,#fffbeb,#f8faff);
-  border:3px solid #0d2d42;border-radius:4px;padding:36px;
-  max-width:560px;margin:0 auto 24px;color:#0d2d42;
-  font-family:var(--serif);text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.2);page-break-inside:avoid;
-}
+/* CERT */
+.cert{background:linear-gradient(135deg,#fffbeb,#f8faff);border:3px solid #0d2d42;border-radius:4px;padding:36px;max-width:560px;margin:0 auto 24px;color:#0d2d42;font-family:var(--serif);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);page-break-inside:avoid}
 .cert-hdr{font-size:10px;letter-spacing:3px;color:#3a5568;margin-bottom:20px;font-weight:700;text-transform:uppercase;font-family:var(--sans)}
 .cert-title{font-size:28px;font-weight:700;color:#0d2d42;margin-bottom:6px;letter-spacing:-.02em}
 .cert-sub{font-size:12px;color:#4b7ca0;margin-bottom:28px;font-style:italic;font-family:var(--sans)}
 .cert-body{margin-bottom:24px;line-height:2;font-size:14px;color:#2a3f52}
-.cert-name{font-size:18px;font-weight:700;border-bottom:2px solid #0d2d42;padding-bottom:6px;margin:8px auto;display:inline-block;min-width:200px}
 .cert-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;font-size:11px;font-family:var(--sans)}
 .cert-stat{padding:10px;border:1px solid #bae6fd;border-radius:6px;background:#fff}
 .cert-stat-val{font-size:16px;font-weight:700;color:#0d2d42;margin-bottom:2px}
@@ -273,28 +159,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .cert-sig-line{border-top:2px solid #0d2d42;padding-top:6px}
 .cert-footer{font-size:9px;color:#3a5568;margin-top:20px;border-top:1px solid #bae6fd;padding-top:10px;font-family:var(--sans);line-height:1.6}
 
-/* PRINT */
-@media print{
-  .site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}
-  #s-result{display:block!important}
-  body{background:#fff}
-  .cert{box-shadow:none;border-color:#000}
-}
-
-@media(max-width:520px){
-  .portada-title{font-size:2.2rem}
-  .portada-form{padding:18px}
-  .form-row{grid-template-columns:1fr}
-  .result-stats{grid-template-columns:1fr 1fr}
-  .btn-row{flex-direction:column}
-  .stats-row{grid-template-columns:1fr 1fr 1fr}
-  .cert-sigs{grid-template-columns:1fr;gap:20px}
-}
+@media print{.site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}#s-result{display:block!important}body{background:#fff}.cert{box-shadow:none;border-color:#000}}
+@media(max-width:520px){.portada-title{font-size:2.2rem}.group-grid{grid-template-columns:1fr 1fr}.result-stats{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.cert-sigs{grid-template-columns:1fr;gap:20px}}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════ PORTADA ════════════════════ -->
+<!-- ═══════════════ PORTADA ═══════════════ -->
 <div id="s-portada" class="screen active">
   <nav class="site-nav">
     <a href="index.html" class="nav-brand">⚛ <em>Ion</em>Nom</a>
@@ -308,108 +179,102 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
     <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
   </nav>
-
-  <div class="portada-inner" style="margin:auto">
+  <div class="portada-inner">
     <div class="portada-badge">⚛ Nomenclatura Inorgánica</div>
     <div class="portada-title">Ion<em>Nom</em></div>
-    <div class="portada-sub">Practica los tres sistemas de nomenclatura — Tradicional, Stock e IUPAC — con compuestos reales y retroalimentación instantánea.</div>
-
-    <div class="portada-colors">
-      <span class="pc cat">① Catión</span>
-      <span class="pc an">② Anión</span>
-      <span class="pc oh">③ OH⁻</span>
-      <span class="pc ox">④ Oxoanión</span>
+    <div class="portada-sub">Elige un grupo funcional para comenzar.<br>10 preguntas variadas · 20 puntos posibles.</div>
+    <div class="portada-types">
+      <span class="pt-chip">🔵 Opción múltiple</span>
+      <span class="pt-chip">✏️ Escritura libre</span>
+      <span class="pt-chip">⚡ Estado de oxidación</span>
+      <span class="pt-chip">🧩 Completar nombre</span>
     </div>
-
-    <div class="portada-form">
-      <div class="form-row">
-        <div>
-          <label class="form-label">Nivel</label>
-          <select id="inp-level" class="form-input form-select">
-            <option value="">Selecciona…</option>
-            <option value="easy">Fácil — Valencia fija</option>
-            <option value="medium">Intermedio — Doble valencia</option>
-            <option value="hard">Experto — Oxoaniones complejos</option>
-          </select>
-        </div>
-        <div>
-          <label class="form-label">Tipo</label>
-          <select id="inp-type" class="form-input form-select">
-            <option value="">Selecciona…</option>
-            <option value="binary">Binarios (óxidos, sales)</option>
-            <option value="ternary">Ternarios (ácidos, bases, sales ox.)</option>
-            <option value="mixed">Mixto (aleatorio)</option>
-          </select>
-        </div>
-      </div>
-
-      <label class="form-label">Grupo funcional</label>
-      <div class="grupo-row">
-        <button class="grupo-btn gact" data-g="all"    onclick="selectGrupo('all')">Todos</button>
-        <button class="grupo-btn" data-g="ox-bas"  onclick="selectGrupo('ox-bas')">Óxidos básicos</button>
-        <button class="grupo-btn" data-g="anhid"   onclick="selectGrupo('anhid')">Anhídridos</button>
-        <button class="grupo-btn" data-g="hidru"   onclick="selectGrupo('hidru')">Hidruros</button>
-        <button class="grupo-btn" data-g="ac-hid"  onclick="selectGrupo('ac-hid')">Ácidos hídricos</button>
-        <button class="grupo-btn" data-g="base"    onclick="selectGrupo('base')">Bases</button>
-        <button class="grupo-btn" data-g="ac-ox"   onclick="selectGrupo('ac-ox')">Ácidos oxácidos</button>
-        <button class="grupo-btn" data-g="sal-bin" onclick="selectGrupo('sal-bin')">Sales binarias</button>
-        <button class="grupo-btn" data-g="sal-ox"  onclick="selectGrupo('sal-ox')">Sales oxigenadas</button>
-      </div>
-
-      <label class="form-label">Modo de pregunta</label>
-      <div class="modo-row">
-        <button class="modo-btn sel-mc" id="btn-mc" onclick="selectMode('mc')">
-          <span class="mb-icon">🔵</span>
-          <span class="mb-label">Opción múltiple</span>
-          <span class="mb-sub">Elige entre 4 opciones</span>
-        </button>
-        <button class="modo-btn" id="btn-write" onclick="selectMode('write')">
-          <span class="mb-icon">✏️</span>
-          <span class="mb-label">Escritura libre</span>
-          <span class="mb-sub">Escribe el nombre completo</span>
-        </button>
-      </div>
-
-      <button class="btn-start" onclick="startGame()">▶ Comenzar Sesión</button>
+    <div class="group-grid">
+      <button class="group-btn full" onclick="startGame('all')">
+        <span class="gb-icon">🔬</span>
+        <span class="gb-name">Todos los grupos</span>
+        <span class="gb-sub">Mezcla completa</span>
+      </button>
+      <button class="group-btn" onclick="startGame('ox-anh')">
+        <span class="gb-icon">💨</span>
+        <span class="gb-name">Óxidos y Anhídridos</span>
+        <span class="gb-sub">Básicos + ácidos</span>
+      </button>
+      <button class="group-btn" onclick="startGame('hidru')">
+        <span class="gb-icon">⚗️</span>
+        <span class="gb-name">Hidruros</span>
+        <span class="gb-sub">Metal + H⁻</span>
+      </button>
+      <button class="group-btn" onclick="startGame('ac-hid')">
+        <span class="gb-icon">🧪</span>
+        <span class="gb-name">Ácidos hídricos</span>
+        <span class="gb-sub">Sin oxígeno</span>
+      </button>
+      <button class="group-btn" onclick="startGame('base')">
+        <span class="gb-icon">🟣</span>
+        <span class="gb-name">Bases</span>
+        <span class="gb-sub">Hidróxidos</span>
+      </button>
+      <button class="group-btn" onclick="startGame('ac-ox')">
+        <span class="gb-icon">⚡</span>
+        <span class="gb-name">Ácidos oxácidos</span>
+        <span class="gb-sub">Con oxoanión</span>
+      </button>
+      <button class="group-btn" onclick="startGame('sal-bin')">
+        <span class="gb-icon">🔵</span>
+        <span class="gb-name">Sales binarias</span>
+        <span class="gb-sub">Metal + halógeno/S</span>
+      </button>
+      <button class="group-btn" onclick="startGame('sal-ox')">
+        <span class="gb-icon">🟠</span>
+        <span class="gb-name">Sales oxigenadas</span>
+        <span class="gb-sub">Con oxoanión</span>
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════ GAME ════════════════════ -->
+<!-- ═══════════════ GAME ═══════════════ -->
 <div id="s-game" class="screen">
   <div class="game-hdr">
     <span class="gh-logo">Ion<em>Nom</em></span>
-    <div class="gh-prog"><div class="gh-progfill" id="g-prog" style="width:0%"></div></div>
-    <span class="gh-score" id="g-score">0 pts</span>
+    <div class="gh-center">
+      <div class="gh-prog"><div class="gh-progfill" id="g-prog" style="width:0%"></div></div>
+      <div class="gh-pts" id="g-pts">0 / 20 pts</div>
+    </div>
+    <span class="gh-score" id="g-qnum">Q 1/10</span>
   </div>
-
   <div class="game-body">
     <div class="stats-row">
       <div class="stat-box"><div class="stat-val" id="g-correct">0</div><div class="stat-lbl">Correctas</div></div>
       <div class="stat-box"><div class="stat-val" id="g-attempts">0</div><div class="stat-lbl">Intentos</div></div>
-      <div class="stat-box"><div class="stat-val" id="g-eff">0%</div><div class="stat-lbl">Eficiencia</div></div>
+      <div class="stat-box"><div class="stat-val" id="g-eff">—</div><div class="stat-lbl">Eficiencia</div></div>
     </div>
-
     <div class="q-card">
-      <div class="q-meta" id="q-meta">Pregunta 1 de 5</div>
+      <div class="q-meta" id="q-meta"></div>
       <div class="q-formula" id="q-formula"></div>
-      <div class="q-ions" id="q-ions"></div>
       <div class="q-prompt" id="q-prompt"></div>
-      <div id="q-mc-area"></div>
-      <div id="q-write-area" style="display:none">
-        <input id="q-input" class="write-input" type="text" placeholder="Escribe el nombre del compuesto…" autocomplete="off" onkeydown="if(event.key==='Enter')submitWrite()">
-        <div style="display:flex;align-items:center;gap:8px">
+      <div id="area-mc" style="display:none"><div class="mc-opts" id="q-mc-opts"></div></div>
+      <div id="area-write" style="display:none">
+        <input id="q-input" class="write-input" type="text" autocomplete="off"
+          placeholder="Escribe el nombre del compuesto…"
+          onkeydown="if(event.key==='Enter')submitWrite()">
+        <div class="write-btns">
           <button class="btn-submit" onclick="submitWrite()">Enviar →</button>
           <button class="btn-hint" id="btn-hint-el" onclick="showHint()">💡 Pista</button>
         </div>
       </div>
+      <div id="area-ox" style="display:none"><div class="mc-opts" id="q-ox-opts"></div></div>
+      <div id="area-drag" style="display:none">
+        <div class="drag-name" id="drag-name"></div>
+        <div class="drag-bank" id="drag-bank"></div>
+      </div>
     </div>
-
     <div class="feedback" id="feedback"></div>
   </div>
 </div>
 
-<!-- ════════════════════ RESULT ════════════════════ -->
+<!-- ═══════════════ RESULT ═══════════════ -->
 <div id="s-result" class="screen">
   <nav class="site-nav">
     <a href="index.html" class="nav-brand">⚛ <em>Ion</em>Nom</a>
@@ -423,584 +288,438 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
     <button style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
   </nav>
-
   <div class="result-body">
     <div class="result-card">
       <span class="medal" id="r-medal">🥇</span>
-      <div class="result-level" id="r-level">Experto</div>
-      <div class="result-grade" id="r-grade">5.00</div>
+      <div class="result-level" id="r-level"></div>
+      <div class="result-grade" id="r-grade"></div>
       <div class="result-msg" id="r-msg"></div>
     </div>
-
     <div class="result-stats">
       <div class="rs-box"><div class="rs-val" id="r-correct">0</div><div class="rs-lbl">Correctas</div></div>
-      <div class="rs-box"><div class="rs-val" id="r-attempts">0</div><div class="rs-lbl">Intentos totales</div></div>
       <div class="rs-box"><div class="rs-val" id="r-score">0</div><div class="rs-lbl">Puntos</div></div>
+      <div class="rs-box"><div class="rs-val" id="r-pct">0%</div><div class="rs-lbl">Porcentaje</div></div>
     </div>
-
     <div class="btn-row">
       <button class="btn-print" onclick="window.print()">🖨 Imprimir certificado</button>
-      <button class="btn-retry" onclick="resetGame()">↻ Intentar nuevamente</button>
+      <button class="btn-retry" onclick="resetGame()">↻ Otra sesión</button>
     </div>
-
     <div id="cert-container"></div>
   </div>
 </div>
 
 <script>
-// ── BANCO DE PREGUNTAS ──
-// tokens: array de {word, type} para renderizar el nombre con colores
-// trad: nombres válidos tradicional | stock: Stock | hint: pista contextual
-const BANK = {
-  easy: {
-    binary: [
-      { formula:'Na₂O', trad:['óxido de sodio'], stock:[], sist:['monóxido de disodio'],
-        ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'O²⁻ × 1'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'Na tiene valencia fija +1. El compuesto es metal + oxígeno → óxido.', group:'ox-bas' },
-      { formula:'MgO', trad:['óxido de magnesio'], stock:[], sist:['óxido de magnesio'],
-        ions:[{t:'cat',l:'Mg²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],
-        hint:'Mg tiene valencia fija +2. Metal + O₂ = óxido.', group:'ox-bas' },
-      { formula:'CaO', trad:['óxido de calcio'], stock:[], sist:['óxido de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Ca tiene valencia +2. Es un óxido básico (metal + oxígeno).', group:'ox-bas' },
-      { formula:'Al₂O₃', trad:['óxido de aluminio'], stock:[], sist:['trióxido de dialuminio'],
-        ions:[{t:'cat',l:'Al³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Al tiene valencia +3. Verifica la carga: 2(+3) + 3(−2) = 0.', group:'ox-bas' },
-      { formula:'NaCl', trad:['cloruro de sodio'], stock:[], sist:['cloruro de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'Cl⁻'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'Cl⁻ → cloruro. Na⁺ → sodio. Anión + "de" + catión.', group:'sal-bin' },
-      { formula:'CaCl₂', trad:['cloruro de calcio'], stock:[], sist:['dicloruro de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Cl → cloruro. Ca²⁺ → calcio. No se indica la cantidad en nomenclatura de valencias fijas.', group:'sal-bin' },
-      { formula:'AlBr₃', trad:['bromuro de aluminio'], stock:[], sist:['tribromuro de aluminio'],
-        ions:[{t:'cat',l:'Al³⁺'},{t:'an',l:'Br⁻ × 3'}],
-        tokens:[{w:'bromuro',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Br → bromuro. Al tiene valencia fija +3.', group:'sal-bin' },
-      { formula:'Na₂S', trad:['sulfuro de sodio'], stock:[], sist:['sulfuro de disodio'],
-        ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'S²⁻ → sulfuro. Na → sodio.', group:'sal-bin' },
-      { formula:'NaH', trad:['hidruro de sodio'], stock:[], sist:['hidruro de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'H⁻'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'H con EO = −1 en hidruros metálicos. Igual en los 3 sistemas: hidruro de sodio.', group:'hidru' },
-      { formula:'CaH₂', trad:['hidruro de calcio'], stock:[], sist:['hidruro de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'H⁻ × 2'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Ca tiene valencia fija +2. 2 H⁻ equilibran la carga. Nombre: hidruro de calcio.', group:'hidru' },
-      { formula:'SO₃', trad:['anhídrido sulfúrico','óxido de azufre VI'], stock:['óxido de azufre VI'], sist:['trióxido de azufre'],
-        ions:[{t:'an',l:'S no metal'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'sulfúrico',t:'cat'}],
-        hint:'No metal + O → anhídrido. S tiene EO = +6 → -ico → anhídrido sulfúrico.', group:'anhid' },
-      { formula:'Cl₂O', trad:['anhídrido cloroso'], stock:[], sist:['monóxido de dicloro'],
-        ions:[{t:'an',l:'Cl no metal'},{t:'an',l:'O'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'cloroso',t:'cat'}],
-        hint:'Cl con EO +1 (el menor) → -oso → cloroso → anhídrido cloroso.', group:'anhid' },
-      { formula:'P₂O₅', trad:['anhídrido fosfórico'], stock:[], sist:['pentaóxido de difósforo'],
-        ions:[{t:'an',l:'P no metal'},{t:'an',l:'O × 5'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'fosfórico',t:'cat'}],
-        hint:'P con EO +5 (mayor para P) → -ico → fosfórico → anhídrido fosfórico.', group:'anhid' },
-    ],
-    ternary: [
-      { formula:'NaOH', trad:['hidróxido de sodio'], stock:[], sist:['hidróxido de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'oh',l:'OH⁻'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'OH⁻ siempre se llama hidróxido. Metal + OH → base.', group:'base' },
-      { formula:'Ca(OH)₂', trad:['hidróxido de calcio'], stock:[], sist:['dihidróxido de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Ca²⁺ necesita 2 OH⁻ para equilibrar. Sigue siendo "hidróxido de calcio".', group:'base' },
-      { formula:'KOH', trad:['hidróxido de potasio'], stock:[], sist:['hidróxido de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'oh',l:'OH⁻'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'K tiene valencia +1. K + OH → hidróxido de potasio.', group:'base' },
-      { formula:'Al(OH)₃', trad:['hidróxido de aluminio'], stock:[], sist:['trihidróxido de aluminio'],
-        ions:[{t:'cat',l:'Al³⁺'},{t:'oh',l:'OH⁻ × 3'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Al³⁺ con 3 OH⁻. Hidróxido de aluminio (anfótero).', group:'base' },
-      { formula:'HCl', trad:['ácido clorhídrico'], stock:[], sist:['cloruro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'clorhídrico',t:'an'}],
-        hint:'Ácido sin oxígeno: ácido + nombre del anión con sufijo -hídrico.', group:'ac-hid' },
-      { formula:'H₂S', trad:['ácido sulfhídrico'], stock:[], sist:['sulfuro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'sulfhídrico',t:'an'}],
-        hint:'H₂S en solución acuosa = ácido sulfhídrico. La "h" intercalada: sulf-h-ídrico viene de hidrógeno.', group:'ac-hid' },
-      { formula:'H₂SO₄', trad:['ácido sulfúrico'], stock:[], sist:['ácido sulfúrico'],
-        ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'sulfúrico',t:'ox'}],
-        hint:'H + SO₄²⁻ (sulfato). Ácido oxácido: ácido + nombre del anión.', group:'ac-ox' },
-      { formula:'HNO₃', trad:['ácido nítrico'], stock:[], sist:['ácido nítrico'],
-        ions:[{t:'cat',l:'H⁺'},{t:'ox',l:'NO₃⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'nítrico',t:'ox'}],
-        hint:'H + NO₃⁻ (nitrato). Oxoanión nitrato → ácido nítrico.', group:'ac-ox' },
-      { formula:'NaClO', trad:['hipoclorito de sodio'], stock:[], sist:['hipoclorito de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'ox',l:'ClO⁻'}],
-        tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'ClO⁻ = hipoclorito. Nombre: oxoanión + de + catión.', group:'sal-ox' },
-      { formula:'Na₂SO₄', trad:['sulfato de sodio'], stock:[], sist:['sulfato de disodio'],
-        ions:[{t:'cat',l:'Na⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Metal valencia fija: sulfato + de + metal.', group:'sal-ox' },
-      { formula:'Ca(NO₃)₂', trad:['nitrato de calcio'], stock:[], sist:['dinitrato de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Ca²⁺ necesita 2 nitratos. Nombre: nitrato de calcio.', group:'sal-ox' },
-    ]
-  },
-  medium: {
-    binary: [
-      { formula:'FeCl₂', trad:['cloruro ferroso'], stock:['cloruro de hierro II','cloruro de hierro (II)'], sist:['dicloruro de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺ (EO=+2)'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'Fe tiene 2 valencias (+2 y +3). EO=+2 es la menor → sufijo -oso → ferroso.', group:'sal-bin' },
-      { formula:'FeCl₃', trad:['cloruro férrico'], stock:['cloruro de hierro III','cloruro de hierro (III)'], sist:['tricloruro de hierro'],
-        ions:[{t:'cat',l:'Fe³⁺ (EO=+3)'},{t:'an',l:'Cl⁻ × 3'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'EO=+3 es la mayor valencia del Fe → sufijo -ico → férrico.', group:'sal-bin' },
-      { formula:'FeO', trad:['óxido ferroso'], stock:['óxido de hierro II','óxido de hierro (II)'], sist:['óxido de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'Fe²⁺ = EO menor → -oso → ferroso. Compuesto: óxido ferroso.', group:'ox-bas' },
-      { formula:'Fe₂O₃', trad:['óxido férrico'], stock:['óxido de hierro III','óxido de hierro (III)'], sist:['trióxido de dihierro'],
-        ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'óxido',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ = EO mayor → -ico → férrico. Verifica: 2(+3)+3(−2)=0.', group:'ox-bas' },
-      { formula:'Cu₂O', trad:['óxido cuproso'], stock:['óxido de cobre I','óxido de cobre (I)'], sist:['óxido de dícobre'],
-        ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'cuproso',t:'cat'}],
-        hint:'Cu con EO=+1 (menor) → -oso → cuproso.', group:'ox-bas' },
-      { formula:'CuO', trad:['óxido cúprico'], stock:['óxido de cobre II','óxido de cobre (II)'], sist:['óxido de cobre'],
-        ions:[{t:'cat',l:'Cu²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'cúprico',t:'cat'}],
-        hint:'Cu con EO=+2 (mayor) → -ico → cúprico.', group:'ox-bas' },
-      { formula:'PbO', trad:['óxido plumboso'], stock:['óxido de plomo II','óxido de plomo (II)'], sist:['óxido de plomo'],
-        ions:[{t:'cat',l:'Pb²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'plumboso',t:'cat'}],
-        hint:'Pb²⁺ (EO menor) → -oso → plumboso.', group:'ox-bas' },
-      { formula:'PbO₂', trad:['óxido plúmbico'], stock:['óxido de plomo IV','óxido de plomo (IV)'], sist:['dióxido de plomo'],
-        ions:[{t:'cat',l:'Pb⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
-        tokens:[{w:'óxido',t:'an'},{w:'plúmbico',t:'cat'}],
-        hint:'Pb⁴⁺ (EO mayor de Pb) → -ico → plúmbico.', group:'ox-bas' },
-      { formula:'SnCl₂', trad:['cloruro estannoso'], stock:['cloruro de estaño II','cloruro de estaño (II)'], sist:['dicloruro de estaño'],
-        ions:[{t:'cat',l:'Sn²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'estannoso',t:'cat'}],
-        hint:'Sn²⁺ (EO menor del estaño) → -oso → estannoso.', group:'sal-bin' },
-      { formula:'SnCl₄', trad:['cloruro estánnico'], stock:['cloruro de estaño IV','cloruro de estaño (IV)'], sist:['tetracloruro de estaño'],
-        ions:[{t:'cat',l:'Sn⁴⁺'},{t:'an',l:'Cl⁻ × 4'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'estánnico',t:'cat'}],
-        hint:'Sn⁴⁺ (EO mayor del estaño) → -ico → estánnico.', group:'sal-bin' },
-      { formula:'FeH₂', trad:['hidruro ferroso'], stock:['hidruro de hierro (II)'], sist:['dihidruro de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'H⁻ × 2'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'Fe²⁺ (EO menor) → -oso → ferroso → hidruro ferroso. Stock: hidruro de hierro (II).', group:'hidru' },
-    ],
-    ternary: [
-      { formula:'FeSO₄', trad:['sulfato ferroso'], stock:['sulfato de hierro II','sulfato de hierro (II)'], sist:['sulfato de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'ferroso',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Fe²⁺ (menor) → ferroso → sulfato ferroso.', group:'sal-ox' },
-      { formula:'Fe₂(SO₄)₃', trad:['sulfato férrico'], stock:['sulfato de hierro III','sulfato de hierro (III)'], sist:['trisulfato de dihierro'],
-        ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'ox',l:'SO₄²⁻ × 3'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ (mayor) → -ico → férrico → sulfato férrico.', group:'sal-ox' },
-      { formula:'CuSO₄', trad:['sulfato cúprico'], stock:['sulfato de cobre II','sulfato de cobre (II)'], sist:['sulfato de cobre'],
-        ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'cúprico',t:'cat'}],
-        hint:'Cu²⁺ = EO mayor → cúprico → sulfato cúprico.', group:'sal-ox' },
-      { formula:'Fe(OH)₂', trad:['hidróxido ferroso'], stock:['hidróxido de hierro II','hidróxido de hierro (II)'], sist:['dihidróxido de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'ferroso',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Fe²⁺ → ferroso → hidróxido ferroso.', group:'base' },
-      { formula:'Fe(OH)₃', trad:['hidróxido férrico'], stock:['hidróxido de hierro III','hidróxido de hierro (III)'], sist:['trihidróxido de hierro'],
-        ions:[{t:'cat',l:'Fe³⁺'},{t:'oh',l:'OH⁻ × 3'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ → férrico → hidróxido férrico.', group:'base' },
-      { formula:'Cu(OH)₂', trad:['hidróxido cúprico'], stock:['hidróxido de cobre II','hidróxido de cobre (II)'], sist:['dihidróxido de cobre'],
-        ions:[{t:'cat',l:'Cu²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'cúprico',t:'cat'}],
-        hint:'Cu²⁺ → cúprico → hidróxido cúprico.', group:'base' },
-      { formula:'Cu(NO₃)₂', trad:['nitrato cúprico'], stock:['nitrato de cobre II','nitrato de cobre (II)'], sist:['dinitrato de cobre'],
-        ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'cúprico',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico.', group:'sal-ox' },
-    ]
-  },
-  hard: {
-    binary: [
-      { formula:'MnO', trad:['óxido manganoso'], stock:['óxido de manganeso II','óxido de manganeso (II)'], sist:['óxido de manganeso'],
-        ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],
-        hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.', group:'ox-bas' },
-      { formula:'MnO₂', trad:['óxido mangánico','dióxido de manganeso'], stock:['óxido de manganeso IV','óxido de manganeso (IV)'], sist:['dióxido de manganeso'],
-        ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
-        tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],
-        hint:'Mn con EO=+4. En sistemática: di-óxido de manganeso.', group:'ox-bas' },
-      { formula:'Mn₂O₇', trad:['anhídrido permangánico'], stock:['óxido de manganeso VII','óxido de manganeso (VII)'], sist:['heptaóxido de dimanganeso'],
-        ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],
-        hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.', group:'anhid' },
-      { formula:'Cr₂O₃', trad:['óxido crómico'], stock:['óxido de cromo III','óxido de cromo (III)'], sist:['trióxido de dicromo'],
-        ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],
-        hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.', group:'ox-bas' },
-      { formula:'CrO₃', trad:['anhídrido crómico'], stock:['óxido de cromo VI','óxido de cromo (VI)'], sist:['trióxido de cromo'],
-        ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],
-        hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.', group:'anhid' },
-    ],
-    ternary: [
-      { formula:'KMnO₄', trad:['permanganato de potasio'], stock:['permanganato de potasio'], sist:['tetraoxomanganato(VII) de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],
-        tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.', group:'sal-ox' },
-      { formula:'K₂CrO₄', trad:['cromato de potasio'], stock:['cromato de potasio'], sist:['tetraoxocromato(VI) de dipotasio'],
-        ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],
-        tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.', group:'sal-ox' },
-      { formula:'K₂Cr₂O₇', trad:['dicromato de potasio'], stock:['dicromato de potasio'], sist:['heptaoxodicroomato(VI) de dipotasio'],
-        ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],
-        tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.', group:'sal-ox' },
-      { formula:'KClO₃', trad:['clorato de potasio'], stock:['clorato de potasio'], sist:['trioxoclorato(V) de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₃⁻'}],
-        tokens:[{w:'clorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.', group:'sal-ox' },
-      { formula:'KClO₄', trad:['perclorato de potasio'], stock:['perclorato de potasio'], sist:['tetraoxoclorato(VII) de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₄⁻'}],
-        tokens:[{w:'perclorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.', group:'sal-ox' },
-      { formula:'KClO', trad:['hipoclorito de potasio'], stock:['hipoclorito de potasio'], sist:['oxoclorato(I) de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],
-        tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.', group:'sal-ox' },
-    ]
-  }
-};
+// ── Helpers ──
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function norm(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').replace(/\s+/g,' ').trim();
+}
+function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
-// Pistas generales por nivel
-const LEVEL_HINTS = {
-  easy:['Catión (metal) + anión → anión + "de" + metal','Para óxidos metálicos: óxido de [metal]','Para bases: hidróxido de [metal]','Para sales binarias: [anión]-uro de [metal]','Para oxisales: [oxoanión] de [metal]'],
-  medium:['EO menor → sufijo -oso | EO mayor → sufijo -ico','Calcula el EO: suma de todos los EO en molécula neutra = 0','Fe: +2 (ferroso) / +3 (férrico) | Cu: +1 (cuproso) / +2 (cúprico)','Pb: +2 (plumboso) / +4 (plúmbico) | Sn: +2 (estannoso) / +4 (estánnico)','Stock: escribe el EO con número romano entre paréntesis'],
-  hard:['Oxoaniones de Cl: hipoclorito(+1)→clorito(+3)→clorato(+5)→perclorato(+7)','Mn tiene 5 EO: +2 (manganoso), +3 (sin nombre trad.), +4 (mangánico), +6 (manganato en oxoanión), +7 (permanganato/permangánico)','Cr: +2 (cromoso), +3 (crómico), +6 se comporta como no metal → anhídrido crómico / cromato','En iones complejos memoriza: MnO₄⁻ permanganato, CrO₄²⁻ cromato, Cr₂O₇²⁻ dicromato','Para anhídridos: no metal con EO alto actúa como formador de ácido → prefijo per- para EO máximo']
-};
+// ── Inline fallback (used only if banco.js fails) ──
+const MINI=[
+  {formula:'NaCl',group:'sal-bin',trad:['cloruro de sodio'],stock:[],sist:['monocloruro de sodio'],hint:'Na⁺ + Cl⁻'},
+  {formula:'CaO',group:'ox-bas',trad:['óxido de calcio'],stock:[],sist:['monóxido de calcio'],hint:'Ca²⁺ + O²⁻'},
+  {formula:'NaOH',group:'base',trad:['hidróxido de sodio'],stock:[],sist:['hidróxido de sodio'],hint:'Na⁺ + OH⁻'},
+  {formula:'H₂SO₄',group:'ac-ox',trad:['ácido sulfúrico'],stock:['ácido tetraoxosulfúrico (VI)'],sist:['ácido sulfúrico'],hint:'H + SO₄²⁻'},
+  {formula:'FeCl₂',group:'sal-bin',trad:['cloruro ferroso'],stock:['cloruro de hierro (II)'],sist:['dicloruro de hierro'],hint:'Fe²⁺ EO menor → ferroso'},
+  {formula:'FeCl₃',group:'sal-bin',trad:['cloruro férrico'],stock:['cloruro de hierro (III)'],sist:['tricloruro de hierro'],hint:'Fe³⁺ EO mayor → férrico'},
+  {formula:'Al₂O₃',group:'ox-bas',trad:['óxido de aluminio'],stock:[],sist:['trióxido de dialuminio'],hint:'Al³⁺ fijo'},
+  {formula:'HCl',group:'ac-hid',trad:['ácido clorhídrico'],stock:['cloruro de hidrógeno'],sist:['cloruro de hidrógeno'],hint:'HX en solución → ácido Xhídrico'},
+  {formula:'H₂S',group:'ac-hid',trad:['ácido sulfhídrico'],stock:['sulfuro de hidrógeno'],sist:['sulfuro de dihidrógeno'],hint:'S²⁻ → sulfhídrico'},
+  {formula:'SO₂',group:'anhid',trad:['anhídrido sulfuroso'],stock:['óxido de azufre (IV)'],sist:['dióxido de azufre'],hint:'S EO +4 → sulfuroso'},
+];
 
-// ── ESTADO ──
-let ST = {
-  level:'', type:'', mode:'mc', group:'all',
-  questions:[], currentIdx:0,
-  score:0, correct:0, totalAttempts:0, attempts:0,
-  sessionStart:null, sessionEnd:null
-};
-
-function selectGrupo(g){
-  ST.group = g;
-  document.querySelectorAll('.grupo-btn').forEach(b => b.classList.toggle('gact', b.dataset.g === g));
-  // When a specific group is chosen, default type to mixed if not yet set
-  if(g !== 'all'){
-    const t = document.getElementById('inp-type');
-    if(!t.value) t.value = 'mixed';
-  }
+function getPool(group){
+  const all=(typeof BANCO!=='undefined')?BANCO:MINI;
+  if(group==='ox-anh') return all.filter(c=>c.group==='ox-bas'||c.group==='anhid');
+  if(group!=='all') return all.filter(c=>c.group===group);
+  return all;
 }
 
-function selectMode(m){
-  ST.mode = m;
-  document.getElementById('btn-mc').className = 'modo-btn' + (m==='mc'?' sel-mc':'');
-  document.getElementById('btn-write').className = 'modo-btn' + (m==='write'?' sel-write':'');
+// ── EO extraction from Stock name ──
+const ROMAN={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7};
+function extractEO(q){
+  if(!q.stock||!q.stock[0]) return null;
+  const m=q.stock[0].match(/de\s+(\w+)\s*\(([IVX]+)\)/i);
+  if(!m) return null;
+  const eo=ROMAN[m[2].toUpperCase()];
+  return eo ? {metal:m[1],eo,roman:m[2].toUpperCase()} : null;
 }
 
-function startGame(){
-  const level = document.getElementById('inp-level').value;
-  let type  = document.getElementById('inp-type').value;
-  // If a specific group is selected, allow empty type (defaults to mixed)
-  if(ST.group !== 'all' && !type) type = 'mixed';
-  if(!level||!type){ alert('Por favor selecciona nivel y tipo de compuesto'); return; }
-
-  ST.level = level; ST.type = type;
-  ST.sessionStart = new Date();
-  ST.score = 0; ST.correct = 0; ST.totalAttempts = 0; ST.currentIdx = 0; ST.attempts = 0;
-
-  let pool = [];
-  const bank = BANK[level];
-  if(type==='mixed') pool = [...bank.binary,...bank.ternary];
-  else pool = bank[type];
-
-  // Filter by functional group
-  if(ST.group && ST.group !== 'all'){
-    const filtered = pool.filter(q => q.group === ST.group);
-    if(filtered.length >= 2) pool = filtered;
-    // If fewer than 2 entries in this group at this level, fall back to full pool
-  }
-
-  // Fisher-Yates shuffle, no repetition within a session
-  function shuffle(arr){
-    const a = [...arr];
-    for(let i = a.length - 1; i > 0; i--){
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
+// ── Drag builder ──
+const TRIVIAL=new Set(['de','del','y','e','o','a','el','la','los','las','con','un','una']);
+function buildDrag(q, pool){
+  const name=(q.stock&&q.stock[0])?q.stock[0]:q.trad[0];
+  const label=(q.stock&&q.stock[0])?'Stock':'Tradicional';
+  const parts=name.split(/\s+/);
+  const keyIdx=parts.reduce((a,w,i)=>{
+    if(!TRIVIAL.has(w.toLowerCase())&&!/^\([IVX]+\)$/.test(w)&&w.length>1) a.push(i);
     return a;
-  }
-  ST.questions = shuffle(pool).slice(0, Math.min(5, pool.length));
-  loadQuestion();
+  },[]);
+  if(!keyIdx.length) return null;
+  const nb=Math.min(keyIdx.length>=3&&parts.length>=4?2:1, keyIdx.length);
+  const blankIdx=shuffle(keyIdx).slice(0,nb); blankIdx.sort((a,b)=>a-b);
+  const answers=blankIdx.map(i=>parts[i]);
+  const display=parts.map((w,i)=>blankIdx.includes(i)?{blank:true,ans:w}:{blank:false,word:w});
+  const allWords=[];
+  pool.forEach(c=>{
+    if(c.formula===q.formula) return;
+    const n=(c.stock&&c.stock[0])?c.stock[0]:c.trad[0];
+    n.split(/\s+/).forEach(w=>{
+      if(!TRIVIAL.has(w.toLowerCase())&&!/^\([IVX]+\)$/.test(w)&&w.length>1&&!answers.includes(w)) allWords.push(w);
+    });
+  });
+  const distractors=shuffle([...new Set(allWords)]).slice(0,Math.max(2,4-nb));
+  return {display,answers,chips:shuffle([...answers,...distractors]),label,nb};
+}
+
+// ── State ──
+let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
+const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag'];
+let nextTimer=null;
+
+function startGame(group){
+  ST.group=group;
+  const pool=getPool(group);
+  if(!pool.length){alert('No hay compuestos para este grupo.');return;}
+  let base=shuffle(pool);
+  while(base.length<10) base=base.concat(shuffle(pool));
+  const compounds=base.slice(0,10);
+  const types=shuffle([...TYPE_POOL]);
+  ST.questions=compounds.map((q,i)=>{
+    let t=types[i];
+    if(t==='write-stock'&&!(q.stock&&q.stock[0])) t='write-any';
+    if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
+    if(t==='ox-state'&&!extractEO(q)) t='mc';
+    if(t==='drag'&&!buildDrag(q,pool)) t='mc';
+    return {...q,qtype:t};
+  });
+  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
   showScreen('s-game');
+  loadQuestion();
 }
 
 function loadQuestion(){
-  if(ST.currentIdx >= ST.questions.length){ endGame(); return; }
-  const q = ST.questions[ST.currentIdx];
-  ST.attempts = 0;
-
-  // Progress
-  const pct = (ST.currentIdx / ST.questions.length) * 100;
-  document.getElementById('g-prog').style.width = pct + '%';
-  document.getElementById('g-score').textContent = ST.score + ' pts';
-  updateGameStats();
-
-  document.getElementById('q-meta').textContent = `Pregunta ${ST.currentIdx+1} de ${ST.questions.length}`;
-  document.getElementById('q-formula').textContent = q.formula;
-
-  // Ion chips
-  const ionsHtml = (q.ions||[]).map(ion =>
-    `<span class="ion-chip ${ion.t}"><span class="ion-dot"></span>${ion.l}</span>`
-  ).join('');
-  document.getElementById('q-ions').innerHTML = ionsHtml;
-
-  const systems = ['Tradicional','Stock','IUPAC'];
-  const sysNames = [q.trad[0], (q.stock[0]||q.trad[0]), (q.sist||[q.trad[0]])[0]];
-  document.getElementById('q-prompt').textContent = '¿Cómo se llama este compuesto? (cualquier sistema es válido)';
-
-  // Hide feedback
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback'; fb.innerHTML = '';
-
-  if(ST.mode === 'mc') loadMC(q);
-  else loadWrite(q);
+  if(ST.idx>=ST.questions.length){endGame();return;}
+  clearTimeout(nextTimer);
+  const q=ST.questions[ST.idx];
+  ST.qtype=q.qtype; ST.attempts=0;
+  const pct=(ST.idx/ST.questions.length)*100;
+  document.getElementById('g-prog').style.width=pct+'%';
+  document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
+  document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/10';
+  updateStats();
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre'};
+  document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 10 · ${typeLabels[q.qtype]||''}`;
+  document.getElementById('q-formula').textContent=q.formula;
+  const fb=document.getElementById('feedback');
+  fb.className='feedback';fb.innerHTML='';
+  ['area-mc','area-write','area-ox','area-drag'].forEach(id=>document.getElementById(id).style.display='none');
+  if(q.qtype==='mc') renderMC(q);
+  else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
+  else if(q.qtype==='ox-state') renderOx(q);
+  else if(q.qtype==='drag') renderDrag(q);
 }
 
-function loadMC(q){
-  document.getElementById('q-mc-area').style.display = '';
-  document.getElementById('q-write-area').style.display = 'none';
-
-  // Build options: correct + 3 others from same level
-  const allNames = getAllNames(ST.level);
-  const correct = q.trad[0];
-  const distractors = shuffle(allNames.filter(n => !isCorrect(n, q))).slice(0,3);
-  const opts = shuffle([correct, ...distractors]);
-
-  const html = opts.map((opt,i) =>
-    `<button class="mc-opt" onclick="checkMC('${esc(opt)}', this)">${opt}</button>`
-  ).join('');
-  document.getElementById('q-mc-area').innerHTML = `<div class="mc-opts">${html}</div>`;
-}
-
-function esc(s){ return s.replace(/'/g,"&#39;"); }
-
-function getAllNames(level){
-  const bank = BANK[level];
-  const names = [];
-  [...bank.binary,...bank.ternary].forEach(c => {
-    names.push(...c.trad);
-    if(c.stock) names.push(...c.stock);
-    if(c.sist) names.push(...c.sist);
+// ── MC ──
+function renderMC(q){
+  document.getElementById('q-prompt').textContent='¿Cómo se llama este compuesto? (cualquier nomenclatura válida)';
+  document.getElementById('area-mc').style.display='';
+  const allValid=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
+  const correct=allValid[Math.floor(Math.random()*allValid.length)]||q.trad[0];
+  const pool=getPool(ST.group);
+  const distPool=[];
+  pool.forEach(c=>{
+    if(c.formula===q.formula) return;
+    [...(c.trad||[]),...(c.stock||[]),...(c.sist||[])].forEach(n=>{if(n&&!isCorrect(n,q,'any'))distPool.push(n);});
   });
-  return [...new Set(names)];
+  const distractors=shuffle([...new Set(distPool)]).slice(0,3);
+  while(distractors.length<3) distractors.push('—');
+  const opts=shuffle([correct,...distractors.slice(0,3)]);
+  document.getElementById('q-mc-opts').innerHTML=opts.map(o=>
+    `<button class="mc-opt" onclick="checkMC(this)">${o}</button>`
+  ).join('');
 }
 
-function checkMC(chosen, el){
-  const q = ST.questions[ST.currentIdx];
-  ST.attempts++; ST.totalAttempts++;
-
-  // Disable all options
-  document.querySelectorAll('.mc-opt').forEach(b => b.classList.add('disabled'));
-
-  if(isCorrect(chosen, q)){
+function checkMC(el){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(isCorrect(el.textContent,q,'any')){
     el.classList.add('correct');
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    showFeedback('ok', `✓ ¡Correcto! +${pts} puntos`, q);
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
     scheduleNext(1800);
   } else {
     el.classList.add('wrong');
-    // Highlight correct
-    document.querySelectorAll('.mc-opt').forEach(b=>{
-      if(isCorrect(b.textContent, q)) b.classList.add('correct');
-    });
-    showFeedback('err', `✗ Incorrecto. La respuesta correcta es:`, q);
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(isCorrect(b.textContent,q,'any'))b.classList.add('correct');});
+    showFeedback('err','✗ Incorrecto.',q);
     scheduleNext(3000);
   }
-  updateGameStats();
+  updateStats();
 }
 
-function loadWrite(q){
-  document.getElementById('q-mc-area').style.display = 'none';
-  document.getElementById('q-write-area').style.display = '';
-  const inp = document.getElementById('q-input');
-  inp.value = ''; inp.className = 'write-input'; inp.disabled = false;
-  inp.focus();
-  document.getElementById('btn-hint-el').style.display = '';
+// ── Write ──
+function renderWrite(q){
+  const prompts={'write-any':'Escribe el nombre de este compuesto (cualquier sistema de nomenclatura).','write-stock':'Escribe el nombre en nomenclatura <strong>Stock</strong>.','write-sist':'Escribe el nombre en nomenclatura <strong>Sistemática</strong>.'};
+  document.getElementById('q-prompt').innerHTML=prompts[q.qtype];
+  document.getElementById('area-write').style.display='';
+  const inp=document.getElementById('q-input');
+  inp.value='';inp.className='write-input';inp.disabled=false;
+  document.getElementById('btn-hint-el').style.display='';
+  setTimeout(()=>inp.focus(),80);
 }
 
 function submitWrite(){
-  const q = ST.questions[ST.currentIdx];
-  const val = document.getElementById('q-input').value.trim();
+  const q=ST.questions[ST.idx];
+  const val=document.getElementById('q-input').value.trim();
   if(!val) return;
-
-  ST.attempts++; ST.totalAttempts++;
-  const ok = isCorrect(val, q);
-
-  if(ok){
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    showFeedback('ok', `✓ ¡Correcto! +${pts} puntos`, q);
-    document.getElementById('q-input').disabled = true;
+  const mode=ST.qtype==='write-stock'?'stock':ST.qtype==='write-sist'?'sist':'any';
+  ST.attempts++;ST.totalAttempts++;
+  if(isCorrect(val,q,mode)){
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    document.getElementById('q-input').disabled=true;
+    showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
     scheduleNext(1800);
-  } else if(ST.attempts < 3){
-    const inp = document.getElementById('q-input');
+  } else if(ST.attempts<3){
+    const inp=document.getElementById('q-input');
     inp.classList.add('shake');
     setTimeout(()=>inp.classList.remove('shake'),320);
-    showFeedback('err', `✗ Intento ${ST.attempts} — intenta de nuevo`, null, true);
+    showFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null,true);
   } else {
-    document.getElementById('q-input').disabled = true;
-    document.getElementById('btn-hint-el').style.display = 'none';
-    showFeedback('reveal', '3 intentos agotados. La respuesta era:', q);
+    document.getElementById('q-input').disabled=true;
+    document.getElementById('btn-hint-el').style.display='none';
+    showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
     scheduleNext(3500);
   }
-  updateGameStats();
+  updateStats();
 }
 
 function showHint(){
-  const q = ST.questions[ST.currentIdx];
-  const hints = LEVEL_HINTS[ST.level];
-  const hint = q.hint || hints[Math.floor(Math.random()*hints.length)];
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback tip show';
-  fb.innerHTML = '💡 <strong>Pista:</strong> ' + hint;
+  const q=ST.questions[ST.idx];
+  document.getElementById('feedback').className='feedback tip show';
+  document.getElementById('feedback').innerHTML='💡 <strong>Pista:</strong> '+(q.hint||'Revisa el estado de oxidación y el grupo funcional.');
 }
 
-function isCorrect(input, q){
-  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').trim();
-  const ni = norm(input);
-  return [...q.trad,...(q.stock||[]),...(q.sist||[])].some(v => norm(v)===ni);
-}
-
-function showFeedback(type, msg, q, skipBreakdown=false){
-  const fb = document.getElementById('feedback');
-  let html = `<strong>${msg}</strong>`;
-  if(q && !skipBreakdown){
-    html += buildBreakdown(q);
-  }
-  fb.className = `feedback ${type} show`;
-  fb.innerHTML = html;
-}
-
-function buildBreakdown(q){
-  const tokens = q.tokens || [];
-  if(!tokens.length) return '';
-  const words = tokens.map(t =>
-    `<div class="nb-token"><span class="nb-word ${t.t}">${t.w}</span><span class="nb-lbl ${t.t}">${tokenLabel(t.t,q)}</span></div>`
+// ── Ox-state ──
+function renderOx(q){
+  const info=extractEO(q);
+  if(!info){renderMC(q);return;}
+  document.getElementById('q-prompt').textContent=`¿Cuál es el estado de oxidación del ${info.metal} en este compuesto?`;
+  document.getElementById('area-ox').style.display='';
+  const allR=['I','II','III','IV','V','VI','VII'];
+  const wrongs=shuffle(allR.filter(r=>r!==info.roman)).slice(0,3);
+  const opts=shuffle([info.roman,...wrongs]);
+  document.getElementById('q-ox-opts').innerHTML=opts.map(r=>
+    `<button class="mc-opt" onclick="checkOx(this,'${r}','${info.roman}')">+${ROMAN[r]} (${r})</button>`
   ).join('');
-  const alts = [];
-  if(q.trad[0]) alts.push(`Tradicional: <em>${q.trad[0]}</em>`);
-  if(q.stock && q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
-  if(q.sist && q.sist[0]) alts.push(`IUPAC: <em>${q.sist[0]}</em>`);
-  const why = q.hint ? `<div class="fb-why">💡 ${q.hint}</div>` : '';
-  return `<div class="name-breakdown">${words}</div><div style="font-size:.78rem;margin-top:8px;color:inherit;opacity:.85">${alts.join(' · ')}</div>${why}`;
 }
 
-function tokenLabel(t, q){
-  const map = {cat:'① Catión',an:'② Anión',oh:'③ OH⁻',ox:'④ Oxoanión',neu:''};
-  return map[t]||'';
+function checkOx(el,chosen,correct){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(chosen===correct){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:1;
+    ST.score+=pts;ST.correct++;
+    showFeedback('ok',`✓ Estado de oxidación ${correct} (+${ROMAN[correct]}). +${pts} punto${pts!==1?'s':''}`,q);
+    scheduleNext(1800);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>{if(b.textContent.includes('('+correct+')'))b.classList.add('correct');});
+    showFeedback('err',`✗ El estado de oxidación correcto es ${correct} (+${ROMAN[correct]}).`,q);
+    scheduleNext(3000);
+  }
+  updateStats();
 }
 
-let nextTimer = null;
+// ── Drag ──
+function renderDrag(q){
+  const pool=getPool(ST.group);
+  const info=buildDrag(q,pool);
+  if(!info){renderMC(q);return;}
+  document.getElementById('q-prompt').textContent=`Toca las palabras para completar el nombre (${info.label}).`;
+  document.getElementById('area-drag').style.display='';
+  ST.dragSt={answers:info.answers,nb:info.nb,placed:new Array(info.nb).fill(null),sel:null,locked:false};
+  let slotCount=0;
+  document.getElementById('drag-name').innerHTML=info.display.map(p=>{
+    if(p.blank){const si=slotCount++;return `<span class="drag-slot" id="dslot-${si}" onclick="clickSlot(${si})">···</span>`;}
+    return `<span class="drag-word">${p.word}</span>`;
+  }).join(' ');
+  document.getElementById('drag-bank').innerHTML=info.chips.map((w,i)=>
+    `<button class="drag-chip" id="dchip-${i}" onclick="clickChip(${i},'${esc(w)}')">${w}</button>`
+  ).join('');
+}
+
+function clickChip(idx,word){
+  const ds=ST.dragSt;
+  if(!ds||ds.locked) return;
+  const el=document.getElementById('dchip-'+idx);
+  if(!el||el.classList.contains('used')) return;
+  if(ds.sel===idx){ds.sel=null;el.classList.remove('sel');return;}
+  if(ds.sel!==null){const prev=document.getElementById('dchip-'+ds.sel);if(prev)prev.classList.remove('sel');}
+  ds.sel=idx;el.classList.add('sel');
+  const empty=ds.placed.findIndex(v=>v===null);
+  if(empty!==-1) clickSlot(empty);
+}
+
+function clickSlot(si){
+  const ds=ST.dragSt;
+  if(!ds||ds.locked) return;
+  if(ds.placed[si]!==null&&ds.sel===null){
+    const {ci}=ds.placed[si];
+    ds.placed[si]=null;
+    const chip=document.getElementById('dchip-'+ci);
+    if(chip){chip.classList.remove('used');chip.style.pointerEvents='';}
+    const slot=document.getElementById('dslot-'+si);
+    slot.textContent='···';slot.classList.remove('filled');
+    return;
+  }
+  if(ds.sel===null) return;
+  const ci=ds.sel;
+  const chipEl=document.getElementById('dchip-'+ci);
+  const word=chipEl.textContent;
+  if(ds.placed[si]!==null){
+    const old=ds.placed[si];
+    const oldChip=document.getElementById('dchip-'+old.ci);
+    if(oldChip){oldChip.classList.remove('used');oldChip.style.pointerEvents='';}
+  }
+  ds.placed[si]={ci,word};
+  chipEl.classList.remove('sel');chipEl.classList.add('used');chipEl.style.pointerEvents='none';
+  ds.sel=null;
+  const slotEl=document.getElementById('dslot-'+si);
+  slotEl.textContent=word;slotEl.classList.add('filled');
+  if(ds.placed.every(v=>v!==null)) checkDrag();
+}
+
+function checkDrag(){
+  const q=ST.questions[ST.idx];
+  const ds=ST.dragSt;
+  ST.attempts++;ST.totalAttempts++;
+  const ok=ds.placed.every((p,i)=>norm(p.word)===norm(ds.answers[i]));
+  if(ok){
+    ds.locked=true;
+    document.querySelectorAll('.drag-slot').forEach(s=>s.classList.add('ok'));
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    scheduleNext(1800);
+  } else {
+    document.querySelectorAll('.drag-slot').forEach((s,i)=>{
+      s.classList.remove('ok','err');
+      s.classList.add(norm(ds.placed[i]?.word||'')===norm(ds.answers[i])?'ok':'err');
+    });
+    if(ST.attempts>=3){
+      ds.locked=true;
+      document.querySelectorAll('.drag-chip').forEach(b=>b.style.pointerEvents='none');
+      showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
+      scheduleNext(3500);
+    } else {
+      showFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null,true);
+      setTimeout(()=>{
+        ds.placed=new Array(ds.nb).fill(null);ds.sel=null;
+        document.querySelectorAll('.drag-slot').forEach(s=>{s.textContent='···';s.classList.remove('filled','ok','err');});
+        document.querySelectorAll('.drag-chip').forEach(b=>{b.classList.remove('used','sel');b.style.pointerEvents='';});
+        document.getElementById('feedback').className='feedback';
+      },1400);
+    }
+  }
+  updateStats();
+}
+
+// ── isCorrect ──
+function isCorrect(input,q,mode){
+  const ni=norm(input);
+  if(mode==='stock') return (q.stock||[]).some(v=>norm(v)===ni);
+  if(mode==='sist') return (q.sist||[]).some(v=>norm(v)===ni);
+  return [...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].some(v=>norm(v)===ni);
+}
+
+// ── Feedback ──
+function showFeedback(type,msg,q,noAlts=false){
+  let html=`<strong>${msg}</strong>`;
+  if(q&&!noAlts){
+    const alts=[];
+    if(q.trad&&q.trad[0]) alts.push(`Tradicional: <em>${q.trad[0]}</em>`);
+    if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
+    if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
+    if(alts.length) html+=`<div class="fb-alts">${alts.join(' · ')}</div>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+  }
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${type} show`;
+  fb.innerHTML=html;
+}
+
+function updateStats(){
+  document.getElementById('g-correct').textContent=ST.correct;
+  document.getElementById('g-attempts').textContent=ST.totalAttempts;
+  const done=Math.min(ST.idx+1,10);
+  document.getElementById('g-eff').textContent=done>0?Math.round((ST.correct/done)*100)+'%':'—';
+  document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
+}
+
 function scheduleNext(ms){
   clearTimeout(nextTimer);
-  nextTimer = setTimeout(()=>{
-    ST.currentIdx++;
-    loadQuestion();
-  }, ms);
+  nextTimer=setTimeout(()=>{ST.idx++;loadQuestion();},ms);
 }
 
-function updateGameStats(){
-  document.getElementById('g-correct').textContent = ST.correct;
-  document.getElementById('g-attempts').textContent = ST.totalAttempts;
-  const eff = ST.currentIdx>0 ? Math.round((ST.correct/(ST.currentIdx+1))*100) : 0;
-  document.getElementById('g-eff').textContent = eff + '%';
-  document.getElementById('g-score').textContent = ST.score + ' pts';
-}
-
-// ── END ──
+// ── End ──
 function endGame(){
-  ST.sessionEnd = new Date();
-  const pct = (ST.correct / ST.questions.length) * 100;
-  const grade = ((pct/100)*5).toFixed(2);
-  let medal='🔰', level='Principiante';
+  const pct=Math.round((ST.score/20)*100);
+  const grade=((ST.score/20)*5).toFixed(2);
+  let medal='🔰',level='Principiante';
   if(pct>=90){medal='🥇';level='Experto';}
   else if(pct>=70){medal='🥈';level='Avanzado';}
   else if(pct>=50){medal='🥉';level='En Progreso';}
-
-  document.getElementById('r-medal').textContent = medal;
-  document.getElementById('r-level').textContent = level;
-  document.getElementById('r-grade').textContent = grade + ' / 5.0';
-  document.getElementById('r-msg').textContent = `Respondiste ${ST.correct} de ${ST.questions.length} preguntas correctamente con ${ST.totalAttempts} intentos en total.`;
-  document.getElementById('r-correct').textContent = ST.correct;
-  document.getElementById('r-attempts').textContent = ST.totalAttempts;
-  document.getElementById('r-score').textContent = ST.score;
-
-  generateCert(grade, level);
+  document.getElementById('r-medal').textContent=medal;
+  document.getElementById('r-level').textContent=level;
+  document.getElementById('r-grade').textContent=ST.score+' / 20 pts';
+  document.getElementById('r-msg').textContent=`Respondiste ${ST.correct} de 10 preguntas con ${ST.totalAttempts} intentos totales.`;
+  document.getElementById('r-correct').textContent=ST.correct+'/10';
+  document.getElementById('r-score').textContent=ST.score+'/20';
+  document.getElementById('r-pct').textContent=pct+'%';
+  generateCert(grade,level);
   showScreen('s-result');
 }
 
-function generateCert(grade, level){
-  const now = ST.sessionEnd;
-  const dateStr = now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const timeStr = now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-  const levelLabels = {easy:'Fácil',medium:'Intermedio',hard:'Experto'};
-  const typeLabels = {binary:'Compuestos Binarios',ternary:'Compuestos Ternarios',mixed:'Mixto'};
-  const modeLabels = {mc:'Opción múltiple',write:'Escritura libre'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas'};
 
-  document.getElementById('cert-container').innerHTML = `
+function generateCert(grade,level){
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('cert-container').innerHTML=`
     <div class="cert" id="print-cert">
       <div class="cert-hdr">Colegio Rufino José Cuervo I.E.D.</div>
       <div class="cert-title">Certificado de Logro</div>
-      <div class="cert-sub">En Nomenclatura Inorgánica · IonNom</div>
-      <div class="cert-body">
-        <p>Esta sesión de práctica fue completada</p>
-        <p>demostrando un nivel de desempeño: <strong>${level}</strong></p>
-      </div>
+      <div class="cert-sub">Nomenclatura Inorgánica · IonNom</div>
+      <div class="cert-body"><p>Esta sesión de práctica fue completada</p><p>con nivel de desempeño: <strong>${level}</strong></p></div>
       <div class="cert-stats">
-        <div class="cert-stat"><div class="cert-stat-val">${ST.correct}/${ST.questions.length}</div><div class="cert-stat-lbl">Preguntas correctas</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${grade}</div><div class="cert-stat-lbl">Calificación (sobre 5.0)</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${levelLabels[ST.level]}</div><div class="cert-stat-lbl">Nivel de dificultad</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${typeLabels[ST.type]||ST.type}</div><div class="cert-stat-lbl">Tipo de ejercicio</div></div>
+        <div class="cert-stat"><div class="cert-stat-val">${ST.correct}/10</div><div class="cert-stat-lbl">Respuestas correctas</div></div>
+        <div class="cert-stat"><div class="cert-stat-val">${ST.score}/20</div><div class="cert-stat-lbl">Puntos obtenidos</div></div>
+        <div class="cert-stat"><div class="cert-stat-val">${grade}</div><div class="cert-stat-lbl">Calificación / 5.0</div></div>
+        <div class="cert-stat"><div class="cert-stat-val">${GROUP_LABELS[ST.group]||ST.group}</div><div class="cert-stat-lbl">Grupo funcional</div></div>
       </div>
       <div class="cert-sigs">
         <div><div class="cert-sig-line"></div><p>Firma del estudiante</p></div>
         <div><div class="cert-sig-line"></div><p>Docente responsable</p></div>
       </div>
-      <div class="cert-footer">
-        Fecha: ${dateStr} · Hora: ${timeStr}<br>
-        IonNom © 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0
-      </div>
+      <div class="cert-footer">Fecha: ${dateStr}<br>IonNom © 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</div>
     </div>`;
 }
 
 function resetGame(){
   clearTimeout(nextTimer);
-  const prevGroup = ST.group || 'all';
-  ST = {level:'',type:'',mode:ST.mode,group:prevGroup,questions:[],currentIdx:0,score:0,correct:0,totalAttempts:0,attempts:0,sessionStart:null,sessionEnd:null};
-  document.getElementById('inp-level').value='';
-  document.getElementById('inp-type').value='';
-  document.getElementById('cert-container').innerHTML='';
-  // Restore group button highlight
-  document.querySelectorAll('.grupo-btn').forEach(b => b.classList.toggle('gact', b.dataset.g === prevGroup));
+  ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
   showScreen('s-portada');
 }
 
