@@ -772,7 +772,7 @@ function loadWrite(q){
   document.getElementById('q-mc-area').style.display = 'none';
   document.getElementById('q-write-area').style.display = '';
   const inp = document.getElementById('q-input');
-  inp.value = ''; inp.className = 'write-input';
+  inp.value = ''; inp.className = 'write-input'; inp.disabled = false;
   inp.focus();
   document.getElementById('btn-hint-el').style.display = '';
 }
