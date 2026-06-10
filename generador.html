@@ -316,10 +316,19 @@ function generateExercises(){
     return;
   }
 
-  // Shuffle — repeat pool if count > available compounds
-  compounds.sort(() => Math.random() - 0.5);
-  let pool = compounds;
-  while(pool.length < count) pool = pool.concat([...compounds].sort(() => Math.random() - 0.5));
+  // Fisher-Yates shuffle
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Shuffle without repetition; only cycle if count > available
+  let pool = shuffle(compounds);
+  while(pool.length < count) pool = pool.concat(shuffle(compounds));
   const selected = pool.slice(0, count);
 
   // Generate HTML
