@@ -304,6 +304,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <a href="generador.html">⚙️</a>
       <a href="nomenClash.html">⚔️</a>
     </div>
+    <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
   </nav>
 
   <div class="portada-inner" style="margin:auto">
@@ -418,6 +419,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <a href="generador.html">⚙️</a>
       <a href="nomenClash.html">⚔️</a>
     </div>
+    <button style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
   </nav>
 
   <div class="result-body">
@@ -997,6 +999,48 @@ function showScreen(id){
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
+
+// PWA Install Handler
+let deferredPrompt;
+const navInstallBtn = document.getElementById('pwa-install-nav-btn');
+const iosModal = document.getElementById('ios-modal');
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+function handleInstallClick() {
+  if (isIOS()) {
+    iosModal.style.display = 'flex';
+  } else if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      navInstallBtn.style.display = 'none';
+    });
+  }
+}
+if (isIOS()) navInstallBtn.style.display = 'block';
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); deferredPrompt = e; navInstallBtn.style.display = 'block';
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null; navInstallBtn.style.display = 'none';
+});
 </script>
+
+<!-- iOS Install Instructions Modal -->
+<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
+    <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>
+    <div style="font-size:12px;color:#666;margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
+    <ol style="font-size:13px;line-height:1.8;color:#333;margin:0 0 20px;padding-left:20px">
+      <li>Toca el icono de compartir <strong>⬆️</strong></li>
+      <li>Desplázate y busca "Añadir a pantalla de inicio"</li>
+      <li>Toca "Añadir" en la esquina superior derecha</li>
+      <li>¡Listo! IonNom aparecerá en tu home</li>
+    </ol>
+    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:#0d4a73;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
+  </div>
+</div>
 </body>
 </html>

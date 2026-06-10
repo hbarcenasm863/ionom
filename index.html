@@ -307,7 +307,7 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <!-- iOS Install Instructions Modal -->
-<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px">
+<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
   <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
     <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>
     <div style="font-size:12px;color:#666;margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
@@ -362,6 +362,11 @@ function handleInstallClick() {
       });
     }
   }
+}
+
+// Always show the button on iOS (beforeinstallprompt never fires there)
+if (isIOS()) {
+  navInstallBtn.style.display = 'block';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
