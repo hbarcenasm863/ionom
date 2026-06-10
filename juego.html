@@ -107,6 +107,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .modo-btn.sel-mc{background:rgba(3,105,161,.3);border-color:#38bdf8}
 .modo-btn.sel-write{background:rgba(217,119,6,.25);border-color:#fcd34d}
 
+/* Grupo funcional selector */
+.grupo-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.grupo-btn{padding:5px 11px;border-radius:100px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-family:var(--sans);font-size:.71rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
+.grupo-btn:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.1)}
+.grupo-btn.gact{border-color:#fcd34d;background:rgba(217,119,6,.22);color:#fcd34d}
+
 .btn-start{
   width:100%;padding:15px;background:var(--cat);color:#fff;
   border:none;border-radius:var(--rs);font-family:var(--sans);
@@ -333,6 +339,19 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         </div>
       </div>
 
+      <label class="form-label">Grupo funcional</label>
+      <div class="grupo-row">
+        <button class="grupo-btn gact" data-g="all"    onclick="selectGrupo('all')">Todos</button>
+        <button class="grupo-btn" data-g="ox-bas"  onclick="selectGrupo('ox-bas')">Óxidos básicos</button>
+        <button class="grupo-btn" data-g="anhid"   onclick="selectGrupo('anhid')">Anhídridos</button>
+        <button class="grupo-btn" data-g="hidru"   onclick="selectGrupo('hidru')">Hidruros</button>
+        <button class="grupo-btn" data-g="ac-hid"  onclick="selectGrupo('ac-hid')">Ácidos hídricos</button>
+        <button class="grupo-btn" data-g="base"    onclick="selectGrupo('base')">Bases</button>
+        <button class="grupo-btn" data-g="ac-ox"   onclick="selectGrupo('ac-ox')">Ácidos oxácidos</button>
+        <button class="grupo-btn" data-g="sal-bin" onclick="selectGrupo('sal-bin')">Sales binarias</button>
+        <button class="grupo-btn" data-g="sal-ox"  onclick="selectGrupo('sal-ox')">Sales oxigenadas</button>
+      </div>
+
       <label class="form-label">Modo de pregunta</label>
       <div class="modo-row">
         <button class="modo-btn sel-mc" id="btn-mc" onclick="selectMode('mc')">
@@ -432,89 +451,101 @@ const BANK = {
       { formula:'Na₂O', trad:['óxido de sodio'], stock:[], sist:['monóxido de disodio'],
         ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'O²⁻ × 1'}],
         tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'Na tiene valencia fija +1. El compuesto es metal + oxígeno → óxido.' },
+        hint:'Na tiene valencia fija +1. El compuesto es metal + oxígeno → óxido.', group:'ox-bas' },
       { formula:'MgO', trad:['óxido de magnesio'], stock:[], sist:['óxido de magnesio'],
         ions:[{t:'cat',l:'Mg²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],
-        hint:'Mg tiene valencia fija +2. Metal + O₂ = óxido.' },
+        hint:'Mg tiene valencia fija +2. Metal + O₂ = óxido.', group:'ox-bas' },
       { formula:'CaO', trad:['óxido de calcio'], stock:[], sist:['óxido de calcio'],
         ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Ca tiene valencia +2. Es un óxido básico (metal + oxígeno).' },
+        hint:'Ca tiene valencia +2. Es un óxido básico (metal + oxígeno).', group:'ox-bas' },
       { formula:'Al₂O₃', trad:['óxido de aluminio'], stock:[], sist:['trióxido de dialuminio'],
         ions:[{t:'cat',l:'Al³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Al tiene valencia +3. Verifica la carga: 2(+3) + 3(−2) = 0.' },
+        hint:'Al tiene valencia +3. Verifica la carga: 2(+3) + 3(−2) = 0.', group:'ox-bas' },
       { formula:'NaCl', trad:['cloruro de sodio'], stock:[], sist:['cloruro de sodio'],
         ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'Cl⁻'}],
         tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'Cl⁻ → cloruro. Na⁺ → sodio. Anión + "de" + catión.' },
+        hint:'Cl⁻ → cloruro. Na⁺ → sodio. Anión + "de" + catión.', group:'sal-bin' },
       { formula:'CaCl₂', trad:['cloruro de calcio'], stock:[], sist:['dicloruro de calcio'],
         ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'Cl⁻ × 2'}],
         tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Cl → cloruro. Ca²⁺ → calcio. No se indica la cantidad en nomenclatura de valencias fijas.' },
+        hint:'Cl → cloruro. Ca²⁺ → calcio. No se indica la cantidad en nomenclatura de valencias fijas.', group:'sal-bin' },
       { formula:'AlBr₃', trad:['bromuro de aluminio'], stock:[], sist:['tribromuro de aluminio'],
         ions:[{t:'cat',l:'Al³⁺'},{t:'an',l:'Br⁻ × 3'}],
         tokens:[{w:'bromuro',t:'an'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Br → bromuro. Al tiene valencia fija +3.' },
+        hint:'Br → bromuro. Al tiene valencia fija +3.', group:'sal-bin' },
       { formula:'Na₂S', trad:['sulfuro de sodio'], stock:[], sist:['sulfuro de disodio'],
         ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'S²⁻'}],
         tokens:[{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'S²⁻ → sulfuro. Na → sodio.' },
+        hint:'S²⁻ → sulfuro. Na → sodio.', group:'sal-bin' },
+      { formula:'NaH', trad:['hidruro de sodio'], stock:[], sist:['hidruro de sodio'],
+        ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'H⁻'}],
+        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+        hint:'H con EO = −1 en hidruros metálicos. Igual en los 3 sistemas: hidruro de sodio.', group:'hidru' },
+      { formula:'CaH₂', trad:['hidruro de calcio'], stock:[], sist:['hidruro de calcio'],
+        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'H⁻ × 2'}],
+        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+        hint:'Ca tiene valencia fija +2. 2 H⁻ equilibran la carga. Nombre: hidruro de calcio.', group:'hidru' },
       { formula:'SO₃', trad:['anhídrido sulfúrico','óxido de azufre VI'], stock:['óxido de azufre VI'], sist:['trióxido de azufre'],
         ions:[{t:'an',l:'S no metal'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'sulfúrico',t:'cat'}],
-        hint:'No metal + O → anhídrido. S tiene EO = +6 → -ico → anhídrido sulfúrico.' },
+        hint:'No metal + O → anhídrido. S tiene EO = +6 → -ico → anhídrido sulfúrico.', group:'anhid' },
       { formula:'Cl₂O', trad:['anhídrido cloroso'], stock:[], sist:['monóxido de dicloro'],
         ions:[{t:'an',l:'Cl no metal'},{t:'an',l:'O'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'cloroso',t:'cat'}],
-        hint:'Cl con EO +1 (el menor) → -oso → cloroso → anhídrido cloroso.' },
+        hint:'Cl con EO +1 (el menor) → -oso → cloroso → anhídrido cloroso.', group:'anhid' },
       { formula:'P₂O₅', trad:['anhídrido fosfórico'], stock:[], sist:['pentaóxido de difósforo'],
         ions:[{t:'an',l:'P no metal'},{t:'an',l:'O × 5'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'fosfórico',t:'cat'}],
-        hint:'P con EO +5 (mayor para P) → -ico → fosfórico → anhídrido fosfórico.' },
+        hint:'P con EO +5 (mayor para P) → -ico → fosfórico → anhídrido fosfórico.', group:'anhid' },
     ],
     ternary: [
       { formula:'NaOH', trad:['hidróxido de sodio'], stock:[], sist:['hidróxido de sodio'],
         ions:[{t:'cat',l:'Na⁺'},{t:'oh',l:'OH⁻'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'OH⁻ siempre se llama hidróxido. Metal + OH → base.' },
+        hint:'OH⁻ siempre se llama hidróxido. Metal + OH → base.', group:'base' },
       { formula:'Ca(OH)₂', trad:['hidróxido de calcio'], stock:[], sist:['dihidróxido de calcio'],
         ions:[{t:'cat',l:'Ca²⁺'},{t:'oh',l:'OH⁻ × 2'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Ca²⁺ necesita 2 OH⁻ para equilibrar. Sigue siendo "hidróxido de calcio".' },
+        hint:'Ca²⁺ necesita 2 OH⁻ para equilibrar. Sigue siendo "hidróxido de calcio".', group:'base' },
       { formula:'KOH', trad:['hidróxido de potasio'], stock:[], sist:['hidróxido de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'oh',l:'OH⁻'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'K tiene valencia +1. K + OH → hidróxido de potasio.' },
+        hint:'K tiene valencia +1. K + OH → hidróxido de potasio.', group:'base' },
       { formula:'Al(OH)₃', trad:['hidróxido de aluminio'], stock:[], sist:['trihidróxido de aluminio'],
         ions:[{t:'cat',l:'Al³⁺'},{t:'oh',l:'OH⁻ × 3'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
-        hint:'Al³⁺ con 3 OH⁻. Hidróxido de aluminio (anfótero).' },
+        hint:'Al³⁺ con 3 OH⁻. Hidróxido de aluminio (anfótero).', group:'base' },
       { formula:'HCl', trad:['ácido clorhídrico'], stock:[], sist:['cloruro de hidrógeno'],
         ions:[{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],
         tokens:[{w:'ácido',t:'cat'},{w:'clorhídrico',t:'an'}],
-        hint:'Ácido sin oxígeno: ácido + nombre del anión con sufijo -hídrico.' },
+        hint:'Ácido sin oxígeno: ácido + nombre del anión con sufijo -hídrico.', group:'ac-hid' },
+      { formula:'H₂S', trad:['ácido sulfhídrico'], stock:[], sist:['sulfuro de hidrógeno'],
+        ions:[{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
+        tokens:[{w:'ácido',t:'cat'},{w:'sulfhídrico',t:'an'}],
+        hint:'H₂S en solución acuosa = ácido sulfhídrico. La "h" intercalada: sulf-h-ídrico viene de hidrógeno.', group:'ac-hid' },
       { formula:'H₂SO₄', trad:['ácido sulfúrico'], stock:[], sist:['ácido sulfúrico'],
         ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'ácido',t:'cat'},{w:'sulfúrico',t:'ox'}],
-        hint:'H + SO₄²⁻ (sulfato). Ácido oxácido: ácido + nombre del anión.' },
+        hint:'H + SO₄²⁻ (sulfato). Ácido oxácido: ácido + nombre del anión.', group:'ac-ox' },
       { formula:'HNO₃', trad:['ácido nítrico'], stock:[], sist:['ácido nítrico'],
         ions:[{t:'cat',l:'H⁺'},{t:'ox',l:'NO₃⁻'}],
         tokens:[{w:'ácido',t:'cat'},{w:'nítrico',t:'ox'}],
-        hint:'H + NO₃⁻ (nitrato). Oxoanión nitrato → ácido nítrico.' },
+        hint:'H + NO₃⁻ (nitrato). Oxoanión nitrato → ácido nítrico.', group:'ac-ox' },
       { formula:'NaClO', trad:['hipoclorito de sodio'], stock:[], sist:['hipoclorito de sodio'],
         ions:[{t:'cat',l:'Na⁺'},{t:'ox',l:'ClO⁻'}],
         tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'ClO⁻ = hipoclorito. Nombre: oxoanión + de + catión.' },
+        hint:'ClO⁻ = hipoclorito. Nombre: oxoanión + de + catión.', group:'sal-ox' },
       { formula:'Na₂SO₄', trad:['sulfato de sodio'], stock:[], sist:['sulfato de disodio'],
         ions:[{t:'cat',l:'Na⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Metal valencia fija: sulfato + de + metal.' },
+        hint:'SO₄²⁻ = sulfato. Metal valencia fija: sulfato + de + metal.', group:'sal-ox' },
       { formula:'Ca(NO₃)₂', trad:['nitrato de calcio'], stock:[], sist:['dinitrato de calcio'],
         ions:[{t:'cat',l:'Ca²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
         tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Ca²⁺ necesita 2 nitratos. Nombre: nitrato de calcio.' },
+        hint:'NO₃⁻ = nitrato. Ca²⁺ necesita 2 nitratos. Nombre: nitrato de calcio.', group:'sal-ox' },
     ]
   },
   medium: {
@@ -522,73 +553,77 @@ const BANK = {
       { formula:'FeCl₂', trad:['cloruro ferroso'], stock:['cloruro de hierro II','cloruro de hierro (II)'], sist:['dicloruro de hierro'],
         ions:[{t:'cat',l:'Fe²⁺ (EO=+2)'},{t:'an',l:'Cl⁻ × 2'}],
         tokens:[{w:'cloruro',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'Fe tiene 2 valencias (+2 y +3). EO=+2 es la menor → sufijo -oso → ferroso.' },
+        hint:'Fe tiene 2 valencias (+2 y +3). EO=+2 es la menor → sufijo -oso → ferroso.', group:'sal-bin' },
       { formula:'FeCl₃', trad:['cloruro férrico'], stock:['cloruro de hierro III','cloruro de hierro (III)'], sist:['tricloruro de hierro'],
         ions:[{t:'cat',l:'Fe³⁺ (EO=+3)'},{t:'an',l:'Cl⁻ × 3'}],
         tokens:[{w:'cloruro',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'EO=+3 es la mayor valencia del Fe → sufijo -ico → férrico.' },
+        hint:'EO=+3 es la mayor valencia del Fe → sufijo -ico → férrico.', group:'sal-bin' },
       { formula:'FeO', trad:['óxido ferroso'], stock:['óxido de hierro II','óxido de hierro (II)'], sist:['óxido de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'Fe²⁺ = EO menor → -oso → ferroso. Compuesto: óxido ferroso.' },
+        hint:'Fe²⁺ = EO menor → -oso → ferroso. Compuesto: óxido ferroso.', group:'ox-bas' },
       { formula:'Fe₂O₃', trad:['óxido férrico'], stock:['óxido de hierro III','óxido de hierro (III)'], sist:['trióxido de dihierro'],
         ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ = EO mayor → -ico → férrico. Verifica: 2(+3)+3(−2)=0.' },
+        hint:'Fe³⁺ = EO mayor → -ico → férrico. Verifica: 2(+3)+3(−2)=0.', group:'ox-bas' },
       { formula:'Cu₂O', trad:['óxido cuproso'], stock:['óxido de cobre I','óxido de cobre (I)'], sist:['óxido de dícobre'],
         ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'cuproso',t:'cat'}],
-        hint:'Cu con EO=+1 (menor) → -oso → cuproso.' },
+        hint:'Cu con EO=+1 (menor) → -oso → cuproso.', group:'ox-bas' },
       { formula:'CuO', trad:['óxido cúprico'], stock:['óxido de cobre II','óxido de cobre (II)'], sist:['óxido de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'cúprico',t:'cat'}],
-        hint:'Cu con EO=+2 (mayor) → -ico → cúprico.' },
+        hint:'Cu con EO=+2 (mayor) → -ico → cúprico.', group:'ox-bas' },
       { formula:'PbO', trad:['óxido plumboso'], stock:['óxido de plomo II','óxido de plomo (II)'], sist:['óxido de plomo'],
         ions:[{t:'cat',l:'Pb²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'plumboso',t:'cat'}],
-        hint:'Pb²⁺ (EO menor) → -oso → plumboso.' },
+        hint:'Pb²⁺ (EO menor) → -oso → plumboso.', group:'ox-bas' },
       { formula:'PbO₂', trad:['óxido plúmbico'], stock:['óxido de plomo IV','óxido de plomo (IV)'], sist:['dióxido de plomo'],
         ions:[{t:'cat',l:'Pb⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
         tokens:[{w:'óxido',t:'an'},{w:'plúmbico',t:'cat'}],
-        hint:'Pb⁴⁺ (EO mayor de Pb) → -ico → plúmbico.' },
+        hint:'Pb⁴⁺ (EO mayor de Pb) → -ico → plúmbico.', group:'ox-bas' },
       { formula:'SnCl₂', trad:['cloruro estannoso'], stock:['cloruro de estaño II','cloruro de estaño (II)'], sist:['dicloruro de estaño'],
         ions:[{t:'cat',l:'Sn²⁺'},{t:'an',l:'Cl⁻ × 2'}],
         tokens:[{w:'cloruro',t:'an'},{w:'estannoso',t:'cat'}],
-        hint:'Sn²⁺ (EO menor del estaño) → -oso → estannoso.' },
+        hint:'Sn²⁺ (EO menor del estaño) → -oso → estannoso.', group:'sal-bin' },
       { formula:'SnCl₄', trad:['cloruro estánnico'], stock:['cloruro de estaño IV','cloruro de estaño (IV)'], sist:['tetracloruro de estaño'],
         ions:[{t:'cat',l:'Sn⁴⁺'},{t:'an',l:'Cl⁻ × 4'}],
         tokens:[{w:'cloruro',t:'an'},{w:'estánnico',t:'cat'}],
-        hint:'Sn⁴⁺ (EO mayor del estaño) → -ico → estánnico.' },
+        hint:'Sn⁴⁺ (EO mayor del estaño) → -ico → estánnico.', group:'sal-bin' },
+      { formula:'FeH₂', trad:['hidruro ferroso'], stock:['hidruro de hierro (II)'], sist:['dihidruro de hierro'],
+        ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'H⁻ × 2'}],
+        tokens:[{w:'hidruro',t:'an'},{w:'ferroso',t:'cat'}],
+        hint:'Fe²⁺ (EO menor) → -oso → ferroso → hidruro ferroso. Stock: hidruro de hierro (II).', group:'hidru' },
     ],
     ternary: [
       { formula:'FeSO₄', trad:['sulfato ferroso'], stock:['sulfato de hierro II','sulfato de hierro (II)'], sist:['sulfato de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'ferroso',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Fe²⁺ (menor) → ferroso → sulfato ferroso.' },
+        hint:'SO₄²⁻ = sulfato. Fe²⁺ (menor) → ferroso → sulfato ferroso.', group:'sal-ox' },
       { formula:'Fe₂(SO₄)₃', trad:['sulfato férrico'], stock:['sulfato de hierro III','sulfato de hierro (III)'], sist:['trisulfato de dihierro'],
         ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'ox',l:'SO₄²⁻ × 3'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ (mayor) → -ico → férrico → sulfato férrico.' },
+        hint:'Fe³⁺ (mayor) → -ico → férrico → sulfato férrico.', group:'sal-ox' },
       { formula:'CuSO₄', trad:['sulfato cúprico'], stock:['sulfato de cobre II','sulfato de cobre (II)'], sist:['sulfato de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'cúprico',t:'cat'}],
-        hint:'Cu²⁺ = EO mayor → cúprico → sulfato cúprico.' },
+        hint:'Cu²⁺ = EO mayor → cúprico → sulfato cúprico.', group:'sal-ox' },
       { formula:'Fe(OH)₂', trad:['hidróxido ferroso'], stock:['hidróxido de hierro II','hidróxido de hierro (II)'], sist:['dihidróxido de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'oh',l:'OH⁻ × 2'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'ferroso',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Fe²⁺ → ferroso → hidróxido ferroso.' },
+        hint:'OH⁻ = hidróxido. Fe²⁺ → ferroso → hidróxido ferroso.', group:'base' },
       { formula:'Fe(OH)₃', trad:['hidróxido férrico'], stock:['hidróxido de hierro III','hidróxido de hierro (III)'], sist:['trihidróxido de hierro'],
         ions:[{t:'cat',l:'Fe³⁺'},{t:'oh',l:'OH⁻ × 3'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ → férrico → hidróxido férrico.' },
+        hint:'Fe³⁺ → férrico → hidróxido férrico.', group:'base' },
       { formula:'Cu(OH)₂', trad:['hidróxido cúprico'], stock:['hidróxido de cobre II','hidróxido de cobre (II)'], sist:['dihidróxido de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'oh',l:'OH⁻ × 2'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'cúprico',t:'cat'}],
-        hint:'Cu²⁺ → cúprico → hidróxido cúprico.' },
+        hint:'Cu²⁺ → cúprico → hidróxido cúprico.', group:'base' },
       { formula:'Cu(NO₃)₂', trad:['nitrato cúprico'], stock:['nitrato de cobre II','nitrato de cobre (II)'], sist:['dinitrato de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
         tokens:[{w:'nitrato',t:'ox'},{w:'cúprico',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico.' },
+        hint:'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico.', group:'sal-ox' },
     ]
   },
   hard: {
@@ -596,49 +631,49 @@ const BANK = {
       { formula:'MnO', trad:['óxido manganoso'], stock:['óxido de manganeso II','óxido de manganeso (II)'], sist:['óxido de manganeso'],
         ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],
-        hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.' },
+        hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.', group:'ox-bas' },
       { formula:'MnO₂', trad:['óxido mangánico','dióxido de manganeso'], stock:['óxido de manganeso IV','óxido de manganeso (IV)'], sist:['dióxido de manganeso'],
         ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
         tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],
-        hint:'Mn con EO=+4. En sistemática: di-óxido de manganeso.' },
+        hint:'Mn con EO=+4. En sistemática: di-óxido de manganeso.', group:'ox-bas' },
       { formula:'Mn₂O₇', trad:['anhídrido permangánico'], stock:['óxido de manganeso VII','óxido de manganeso (VII)'], sist:['heptaóxido de dimanganeso'],
         ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],
-        hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.' },
+        hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.', group:'anhid' },
       { formula:'Cr₂O₃', trad:['óxido crómico'], stock:['óxido de cromo III','óxido de cromo (III)'], sist:['trióxido de dicromo'],
         ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],
-        hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.' },
+        hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.', group:'ox-bas' },
       { formula:'CrO₃', trad:['anhídrido crómico'], stock:['óxido de cromo VI','óxido de cromo (VI)'], sist:['trióxido de cromo'],
         ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],
-        hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.' },
+        hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.', group:'anhid' },
     ],
     ternary: [
       { formula:'KMnO₄', trad:['permanganato de potasio'], stock:['permanganato de potasio'], sist:['tetraoxomanganato(VII) de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],
         tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.' },
+        hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.', group:'sal-ox' },
       { formula:'K₂CrO₄', trad:['cromato de potasio'], stock:['cromato de potasio'], sist:['tetraoxocromato(VI) de dipotasio'],
         ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],
         tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.' },
+        hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.', group:'sal-ox' },
       { formula:'K₂Cr₂O₇', trad:['dicromato de potasio'], stock:['dicromato de potasio'], sist:['heptaoxodicroomato(VI) de dipotasio'],
         ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],
         tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.' },
+        hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.', group:'sal-ox' },
       { formula:'KClO₃', trad:['clorato de potasio'], stock:['clorato de potasio'], sist:['trioxoclorato(V) de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₃⁻'}],
         tokens:[{w:'clorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.' },
+        hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.', group:'sal-ox' },
       { formula:'KClO₄', trad:['perclorato de potasio'], stock:['perclorato de potasio'], sist:['tetraoxoclorato(VII) de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₄⁻'}],
         tokens:[{w:'perclorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.' },
+        hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.', group:'sal-ox' },
       { formula:'KClO', trad:['hipoclorito de potasio'], stock:['hipoclorito de potasio'], sist:['oxoclorato(I) de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],
         tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.' },
+        hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.', group:'sal-ox' },
     ]
   }
 };
@@ -652,11 +687,21 @@ const LEVEL_HINTS = {
 
 // ── ESTADO ──
 let ST = {
-  level:'', type:'', mode:'mc',
+  level:'', type:'', mode:'mc', group:'all',
   questions:[], currentIdx:0,
   score:0, correct:0, totalAttempts:0, attempts:0,
   sessionStart:null, sessionEnd:null
 };
+
+function selectGrupo(g){
+  ST.group = g;
+  document.querySelectorAll('.grupo-btn').forEach(b => b.classList.toggle('gact', b.dataset.g === g));
+  // When a specific group is chosen, default type to mixed if not yet set
+  if(g !== 'all'){
+    const t = document.getElementById('inp-type');
+    if(!t.value) t.value = 'mixed';
+  }
+}
 
 function selectMode(m){
   ST.mode = m;
@@ -666,20 +711,29 @@ function selectMode(m){
 
 function startGame(){
   const level = document.getElementById('inp-level').value;
-  const type  = document.getElementById('inp-type').value;
-  if(!level||!type){ alert('Por favor selecciona nivel y tipo'); return; }
+  let type  = document.getElementById('inp-type').value;
+  // If a specific group is selected, allow empty type (defaults to mixed)
+  if(ST.group !== 'all' && !type) type = 'mixed';
+  if(!level||!type){ alert('Por favor selecciona nivel y tipo de compuesto'); return; }
 
   ST.level = level; ST.type = type;
   ST.sessionStart = new Date();
-  ST.score = 0; ST.correct = 0; ST.totalAttempts = 0; ST.currentIdx = 0;
+  ST.score = 0; ST.correct = 0; ST.totalAttempts = 0; ST.currentIdx = 0; ST.attempts = 0;
 
   let pool = [];
   const bank = BANK[level];
   if(type==='mixed') pool = [...bank.binary,...bank.ternary];
   else pool = bank[type];
 
-  // Shuffle and pick 5
-  ST.questions = [...pool].sort(()=>Math.random()-.5).slice(0,5);
+  // Filter by functional group
+  if(ST.group && ST.group !== 'all'){
+    const filtered = pool.filter(q => q.group === ST.group);
+    if(filtered.length >= 2) pool = filtered;
+    // If fewer than 2 entries in this group at this level, fall back to full pool
+  }
+
+  // Shuffle and pick up to 5 (or all if pool is smaller)
+  ST.questions = [...pool].sort(()=>Math.random()-.5).slice(0, Math.min(5, pool.length));
   loadQuestion();
   showScreen('s-game');
 }
@@ -926,10 +980,13 @@ function generateCert(grade, level){
 
 function resetGame(){
   clearTimeout(nextTimer);
-  ST = {level:'',type:'',mode:ST.mode,questions:[],currentIdx:0,score:0,correct:0,totalAttempts:0,attempts:0,sessionStart:null,sessionEnd:null};
+  const prevGroup = ST.group || 'all';
+  ST = {level:'',type:'',mode:ST.mode,group:prevGroup,questions:[],currentIdx:0,score:0,correct:0,totalAttempts:0,attempts:0,sessionStart:null,sessionEnd:null};
   document.getElementById('inp-level').value='';
   document.getElementById('inp-type').value='';
   document.getElementById('cert-container').innerHTML='';
+  // Restore group button highlight
+  document.querySelectorAll('.grupo-btn').forEach(b => b.classList.toggle('gact', b.dataset.g === prevGroup));
   showScreen('s-portada');
 }
 
