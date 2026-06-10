@@ -42,8 +42,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .form-title{font-size:1.8rem;font-weight:700;margin-bottom:24px;color:#fff}
 .form-group{margin-bottom:24px}
 .form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px;display:block}
-.form-select{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.5)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
-.form-select:focus{outline:none;border-color:rgba(217,119,6,.8);background-color:rgba(217,119,6,.1)}
+.form-select{width:100%;padding:11px 14px;background:#0d2d42;border:1.5px solid rgba(255,255,255,.25);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
+.form-select option{background:#0d2d42;color:#fff}
+.form-select:focus{outline:none;border-color:#fcd34d;background:#0a3d5e}
+.form-select:hover{border-color:rgba(255,255,255,.45)}
 
 .form-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem}
 .form-input::placeholder{color:rgba(255,255,255,.3)}
@@ -149,7 +151,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
 
     <div class="form-group">
       <label class="form-label">Cantidad de ejercicios</label>
-      <input type="number" id="inp-count" class="form-input" min="3" max="20" value="5" placeholder="3 a 20">
+      <input type="number" id="inp-count" class="form-input" min="3" max="50" value="10" placeholder="3 a 50">
     </div>
 
     <button class="btn-gen" onclick="generateExercises()">Generar Ejercicios</button>
@@ -170,9 +172,10 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
   </div>
 </div>
 
+<script src="banco.js"></script>
 <script>
-// BANK DATA (from juego.html with group field)
-const BANK = {
+// BANK_FALLBACK — used only if banco.js fails to load
+const BANK_FALLBACK = {
   easy: {
     binary: [
       {formula:'Na₂O',trad:['óxido de sodio'],stock:[],sist:['monóxido de disodio'],ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'O²⁻ × 1'}],tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],hint:'Na tiene valencia fija +1. El compuesto es metal + oxígeno → óxido.',group:'ox-bas'},
@@ -246,6 +249,17 @@ const BANK = {
   }
 };
 
+// Use BANCO from banco.js if available, otherwise flatten BANK_FALLBACK
+function getAllCompounds(){
+  if(typeof BANCO !== 'undefined') return BANCO;
+  let arr = [];
+  Object.keys(BANK_FALLBACK).forEach(lv => {
+    arr = arr.concat(BANK_FALLBACK[lv].binary || []);
+    arr = arr.concat(BANK_FALLBACK[lv].ternary || []);
+  });
+  return arr;
+}
+
 // Group labels
 const GROUP_LABELS = {
   'ox-bas': 'Óxidos básicos',
@@ -289,12 +303,8 @@ function generateExercises(){
     return;
   }
 
-  // Get all compounds
-  let compounds = [];
-  Object.keys(BANK).forEach(level => {
-    compounds = compounds.concat(BANK[level].binary);
-    compounds = compounds.concat(BANK[level].ternary);
-  });
+  // Get all compounds from BANCO (banco.js) or fallback
+  let compounds = getAllCompounds();
 
   // Filter by group
   if(group !== 'all'){
@@ -302,13 +312,15 @@ function generateExercises(){
   }
 
   if(compounds.length === 0){
-    alert('No hay compuestos disponibles para este grupo');
+    alert('No hay compuestos disponibles para este grupo. Prueba con otro grupo o nivel.');
     return;
   }
 
-  // Shuffle and pick
+  // Shuffle — repeat pool if count > available compounds
   compounds.sort(() => Math.random() - 0.5);
-  const selected = compounds.slice(0, Math.min(count, compounds.length));
+  let pool = compounds;
+  while(pool.length < count) pool = pool.concat([...compounds].sort(() => Math.random() - 0.5));
+  const selected = pool.slice(0, count);
 
   // Generate HTML
   const typeLabel = {
