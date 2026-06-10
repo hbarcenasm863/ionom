@@ -138,6 +138,16 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
     </div>
 
     <div class="form-group">
+      <label class="form-label">Sistema de nomenclatura</label>
+      <select id="inp-sistema" class="form-select">
+        <option value="all">Todos (mezcla)</option>
+        <option value="trad">Solo Tradicional</option>
+        <option value="stock">Solo Stock</option>
+        <option value="sist">Solo IUPAC / Sistemática</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label class="form-label">Cantidad de ejercicios</label>
       <input type="number" id="inp-count" class="form-input" min="3" max="20" value="5" placeholder="3 a 20">
     </div>
@@ -248,10 +258,30 @@ const GROUP_LABELS = {
   'sal-ox': 'Sales oxigenadas'
 };
 
+// Pick a name from the compound based on desired system
+// Returns {name, system, label}
+function pickName(c, sistema){
+  const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'IUPAC'};
+  let candidates = [];
+  if(sistema === 'all'){
+    if(c.trad && c.trad[0]) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
+    if(c.stock && c.stock[0]) candidates.push({name:c.stock[0], system:'stock', label:'Stock'});
+    if(c.sist && c.sist[0]) candidates.push({name:c.sist[0], system:'sist', label:'IUPAC'});
+    if(!candidates.length) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  } else {
+    const arr = c[sistema] || [];
+    if(arr[0]) return {name:arr[0], system:sistema, label:SYS_LABEL[sistema]};
+    // Fallback to trad if this system not available for compound
+    return {name:c.trad[0], system:'trad', label:'Tradicional'};
+  }
+}
+
 // Generate exercises
 function generateExercises(){
   const group = document.getElementById('inp-group').value;
   const type = document.getElementById('inp-type').value;
+  const sistema = document.getElementById('inp-sistema').value;
   const count = parseInt(document.getElementById('inp-count').value) || 5;
 
   if(!group || !type){
@@ -288,25 +318,26 @@ function generateExercises(){
     'table-complete': 'Completar tabla'
   }[type];
 
+  const sistemaLabel = {all:'Todos los sistemas', trad:'Tradicional', stock:'Stock', sist:'IUPAC'}[sistema];
   const groupLabel = GROUP_LABELS[group] || 'Todos los grupos';
-  document.getElementById('prev-title').textContent = `${typeLabel} — ${groupLabel}`;
+  document.getElementById('prev-title').textContent = `${typeLabel} — ${groupLabel} — ${sistemaLabel}`;
 
   let html = '';
   if(type === 'all'){
-    html = generateDiverseExercises(selected);
+    html = generateDiverseExercises(selected, sistema);
   } else if(type === 'formula-to-name'){
-    html = generateFormulaToName(selected);
+    html = generateFormulaToName(selected, sistema);
   } else if(type === 'name-to-formula'){
-    html = generateNameToFormula(selected);
+    html = generateNameToFormula(selected, sistema);
   } else if(type === 'table-complete'){
-    html = generateTableComplete(selected);
+    html = generateTableComplete(selected, sistema);
   }
 
   document.getElementById('exercises-container').innerHTML = html;
   showScreen('s-preview');
 }
 
-function generateDiverseExercises(compounds){
+function generateDiverseExercises(compounds, sistema){
   const third = Math.floor(compounds.length / 3);
   const part1 = compounds.slice(0, third);
   const part2 = compounds.slice(third, third * 2);
@@ -315,105 +346,111 @@ function generateDiverseExercises(compounds){
   let html = '';
   let exNum = 1;
 
-  // Tipo 1: Fórmula a nombre
   html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--an);margin-bottom:16px">Sección 1: Nombrar moléculas (fórmula → nombre)</h3>';
   part1.forEach((c) => {
+    const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-1 PDF-section">
         <div class="ex-num">Ejercicio ${exNum++}</div>
-        <div class="ex-prompt">¿Cómo se llama este compuesto?</div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an);font-weight:700">[${sys.label}]</span></div>
         <div class="ex-formula">${c.formula}</div>
         <div class="ex-blank"></div>
-      </div>
-    `;
+      </div>`;
   });
   html += '</div>';
 
-  // Tipo 2: Nombre a fórmula
   html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--cat);margin-bottom:16px">Sección 2: De nombre a fórmula</h3>';
   part2.forEach((c) => {
-    const name = c.trad[0];
+    const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-2 PDF-section">
         <div class="ex-num">Ejercicio ${exNum++}</div>
-        <div class="ex-prompt">Escribe la fórmula</div>
-        <div class="ex-name">${name}</div>
+        <div class="ex-prompt">Escribe la fórmula <span style="font-size:.75rem;color:var(--cat);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-name">${sys.name}</div>
         <div class="ex-blank"></div>
-      </div>
-    `;
+      </div>`;
   });
   html += '</div>';
 
-  // Tipo 3: Completar tabla
   html += '<div style="margin-bottom:32px"><h3 style="font-size:.95rem;font-weight:800;color:var(--ox);margin-bottom:16px">Sección 3: Completar tabla</h3>';
-  html += '<div class="exercise-card ex-type-3 PDF-section"><div class="table-wrapper"><table><thead><tr><th style="width:35%">Fórmula</th><th style="width:65%">Nombre (Tradicional)</th></tr></thead><tbody>';
-  part3.forEach((c, idx) => {
-    const isFormulaBlank = idx % 2 === 0;
-    html += `<tr><td class="${isFormulaBlank ? 'cell-blank' : ''}">${isFormulaBlank ? '' : c.formula}</td><td class="${!isFormulaBlank ? 'cell-blank' : ''}">${!isFormulaBlank ? '' : c.trad[0]}</td></tr>`;
-  });
-  html += '</tbody></table></div></div></div>';
+  html += buildTable(part3, sistema);
+  html += '</div>';
 
   return html;
 }
 
-function generateFormulaToName(compounds){
+function generateFormulaToName(compounds, sistema){
   let html = '';
   compounds.forEach((c, i) => {
+    const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-1 PDF-section">
         <div class="ex-num">Ejercicio ${i+1}</div>
-        <div class="ex-prompt">¿Cómo se llama este compuesto? (puedes usar cualquier sistema)</div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an);font-weight:700">[${sys.label}]</span></div>
         <div class="ex-formula">${c.formula}</div>
         <div class="ex-blank"></div>
-      </div>
-    `;
+      </div>`;
   });
   return html;
 }
 
-function generateNameToFormula(compounds){
+function generateNameToFormula(compounds, sistema){
   let html = '';
   compounds.forEach((c, i) => {
-    const name = c.trad[0];
+    const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-2 PDF-section">
         <div class="ex-num">Ejercicio ${i+1}</div>
-        <div class="ex-prompt">Escribe la fórmula del compuesto</div>
-        <div class="ex-name">${name}</div>
+        <div class="ex-prompt">Escribe la fórmula del compuesto <span style="font-size:.75rem;color:var(--cat);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-name">${sys.name}</div>
         <div class="ex-blank"></div>
-      </div>
-    `;
+      </div>`;
   });
   return html;
 }
 
-function generateTableComplete(compounds){
-  // Create chunks of 3-4 compounds per table
+function generateTableComplete(compounds, sistema){
+  return buildTable(compounds, sistema);
+}
+
+function buildTable(compounds, sistema){
+  // Multi-nomenclature table: columns depend on selected sistema
   const tableSize = 4;
   let html = '';
+
+  const showStock = (sistema === 'all' || sistema === 'stock');
+  const showSist  = (sistema === 'all' || sistema === 'sist');
+  const showTrad  = (sistema === 'all' || sistema === 'trad');
+
   for(let t = 0; t < compounds.length; t += tableSize){
     const chunk = compounds.slice(t, t + tableSize);
     const tableNum = Math.floor(t / tableSize) + 1;
 
+    // Column headers
+    let headers = `<th style="width:18%">Fórmula</th>`;
+    if(showTrad)  headers += `<th>Tradicional</th>`;
+    if(showStock) headers += `<th>Stock</th>`;
+    if(showSist)  headers += `<th>IUPAC</th>`;
+
     html += `<div class="exercise-card ex-type-3 PDF-section">
       <div class="ex-num">Tabla ${tableNum}</div>
       <div class="ex-prompt">Completa la tabla con la información faltante</div>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:35%">Fórmula</th>
-              <th style="width:65%">Nombre (Tradicional)</th>
-            </tr>
-          </thead>
-          <tbody>`;
+      <div class="table-wrapper"><table><thead><tr>${headers}</tr></thead><tbody>`;
+
+    // Decide which cells are blank: rotate which column per row
+    const cols = [];
+    if(showTrad)  cols.push('trad');
+    if(showStock) cols.push('stock');
+    if(showSist)  cols.push('sist');
+    const allCols = ['formula', ...cols];
 
     chunk.forEach((c, idx) => {
-      const isFormulaBlank = idx % 2 === 0;
-      html += `<tr>
-        <td class="${isFormulaBlank ? 'cell-blank' : ''}">${isFormulaBlank ? '' : c.formula}</td>
-        <td class="${!isFormulaBlank ? 'cell-blank' : ''}">${!isFormulaBlank ? '' : c.trad[0]}</td>
-      </tr>`;
+      const blankCol = allCols[idx % allCols.length];
+      let row = `<td class="${blankCol==='formula'?'cell-blank':''}">${blankCol==='formula' ? '' : c.formula}</td>`;
+      if(showTrad)  row += `<td class="${blankCol==='trad'?'cell-blank':''}">${blankCol==='trad' ? '' : (c.trad[0]||'—')}</td>`;
+      if(showStock) row += `<td class="${blankCol==='stock'?'cell-blank':''}">${blankCol==='stock' ? '' : (c.stock&&c.stock[0]||'—')}</td>`;
+      if(showSist)  row += `<td class="${blankCol==='sist'?'cell-blank':''}">${blankCol==='sist' ? '' : (c.sist&&c.sist[0]||'—')}</td>`;
+      html += `<tr>${row}</tr>`;
     });
 
     html += `</tbody></table></div></div>`;
