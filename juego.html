@@ -1000,17 +1000,16 @@ function showScreen(id){
   window.scrollTo(0,0);
 }
 
-// PWA Install Handler
+// PWA Install Handler — modal only opens on button click, never on load
 let deferredPrompt;
 const navInstallBtn = document.getElementById('pwa-install-nav-btn');
-const iosModal = document.getElementById('ios-modal');
 
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent);
 }
 function handleInstallClick() {
   if (isIOS()) {
-    iosModal.style.display = 'flex';
+    document.getElementById('ios-modal').style.display = 'flex';
   } else if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(() => {
@@ -1028,7 +1027,7 @@ window.addEventListener('appinstalled', () => {
 });
 </script>
 
-<!-- iOS Install Instructions Modal -->
+<!-- iOS Install Instructions Modal — starts hidden, shown only on button click -->
 <div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
   <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
     <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>

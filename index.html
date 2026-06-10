@@ -334,37 +334,27 @@ if ('serviceWorker' in navigator) {
   }).catch(err => console.log('IonNom PWA: Error en SW', err));
 }
 
-// PWA Install Handler
+// PWA Install Handler — modal only opens on button click, never on load
 let deferredPrompt;
 const navInstallBtn = document.getElementById('pwa-install-nav-btn');
-const iosModal = document.getElementById('ios-modal');
 
-// Detect iOS
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent);
 }
 
-// Handle install click
 function handleInstallClick() {
   if (isIOS()) {
-    // Show iOS instructions for iOS
-    iosModal.style.display = 'flex';
-  } else {
-    // Install directly for Android/PC
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('IonNom instalado');
-        }
-        deferredPrompt = null;
-        navInstallBtn.style.display = 'none';
-      });
-    }
+    document.getElementById('ios-modal').style.display = 'flex';
+  } else if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt = null;
+      navInstallBtn.style.display = 'none';
+    });
   }
 }
 
-// Always show the button on iOS (beforeinstallprompt never fires there)
+// Show button on iOS (beforeinstallprompt never fires there)
 if (isIOS()) {
   navInstallBtn.style.display = 'block';
 }

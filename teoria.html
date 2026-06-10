@@ -720,20 +720,19 @@ function switchTab(idx){
   document.querySelectorAll('.tab-cont').forEach((c,i)=>c.classList.toggle('act',i===idx));
 }
 
-// PWA Install Handler
+// PWA Install Handler — modal only opens on button click, never on load
 let deferredPrompt;
 const navInstallBtn = document.getElementById('pwa-install-nav-btn');
-const iosModal = document.getElementById('ios-modal');
 
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent);
 }
 function handleInstallClick() {
   if (isIOS()) {
-    iosModal.style.display = 'flex';
+    document.getElementById('ios-modal').style.display = 'flex';
   } else if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
+    deferredPrompt.userChoice.then(() => {
       deferredPrompt = null;
       navInstallBtn.style.display = 'none';
     });
