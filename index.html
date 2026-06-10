@@ -123,6 +123,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .rs-title{font-size:.88rem;font-weight:800;margin-bottom:2px}
 .rs-desc{font-size:.72rem;line-height:1.45;opacity:.8}
 
+/* Real-world strip */
+.rw-section{margin-bottom:28px}
+.rw-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--dimmer);margin-bottom:10px}
+.rw-row{display:flex;gap:8px;flex-wrap:wrap}
+.rw-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 14px;min-width:120px;flex:1;box-shadow:var(--sh)}
+.rw-formula{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--cat-t);margin-bottom:2px}
+.rw-name{font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:1px}
+.rw-use{font-size:.68rem;color:var(--dimmer);line-height:1.4}
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
@@ -159,6 +167,18 @@ footer a:hover{text-decoration:underline}
     <span class="ft an">② Azul · Anión simple</span>
     <span class="ft oh">③ Violeta · OH⁻</span>
     <span class="ft ox">④ Teal · Oxoanión</span>
+  </div>
+</div>
+
+<div class="rw-section">
+  <div class="rw-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
+  <div class="rw-row">
+    <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
+    <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
+    <div class="rw-card"><div class="rw-formula">Fe₂O₃</div><div class="rw-name">Óxido de hierro (III)</div><div class="rw-use">Herrumbre · óxido del hierro</div></div>
+    <div class="rw-card"><div class="rw-formula">NaHCO₃</div><div class="rw-name">Bicarbonato de sodio</div><div class="rw-use">Levante en repostería · antiácido</div></div>
+    <div class="rw-card"><div class="rw-formula">Ca(OH)₂</div><div class="rw-name">Hidróxido de calcio</div><div class="rw-use">Cal apagada · lechada de cal</div></div>
+    <div class="rw-card"><div class="rw-formula">KMnO₄</div><div class="rw-name">Permanganato de potasio</div><div class="rw-use">Desinfectante · tratamiento de agua</div></div>
   </div>
 </div>
 
@@ -234,7 +254,7 @@ footer a:hover{text-decoration:underline}
     </div>
     <div class="mod-bottom">
       <div class="mod-chips">
-        <span class="mc">5 temas</span>
+        <span class="mc">6 temas</span>
         <span class="mc">Trad · Stock · IUPAC</span>
       </div>
       <span class="mod-arrow">→</span>

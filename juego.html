@@ -213,6 +213,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .nb-word.neu{background:#f0f4fa;color:var(--dim);border:1px solid var(--brd)}
 .nb-lbl{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .nb-lbl.cat{color:var(--cat-t)}.nb-lbl.an{color:var(--an-t)}.nb-lbl.oh{color:var(--oh-t)}.nb-lbl.ox{color:var(--ox-t)}.nb-lbl.neu{color:var(--dimmer)}
+.fb-why{margin-top:10px;padding:8px 10px;background:rgba(0,0,0,.06);border-radius:6px;font-size:.78rem;line-height:1.6;font-style:italic;border-left:3px solid rgba(0,0,0,.15)}
 
 /* ════════════════════
    RESULT SCREEN
@@ -605,7 +606,7 @@ const BANK = {
       { formula:'Cr₂O₃', trad:['óxido crómico'], stock:['óxido de cromo III','óxido de cromo (III)'], sist:['trióxido de dicromo'],
         ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],
-        hint:'Cr³⁺ (EO mayor habitual del cromo) → -ico → crómico → óxido crómico.' },
+        hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.' },
       { formula:'CrO₃', trad:['anhídrido crómico'], stock:['óxido de cromo VI','óxido de cromo (VI)'], sist:['trióxido de cromo'],
         ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],
@@ -644,7 +645,7 @@ const BANK = {
 const LEVEL_HINTS = {
   easy:['Catión (metal) + anión → anión + "de" + metal','Para óxidos metálicos: óxido de [metal]','Para bases: hidróxido de [metal]','Para sales binarias: [anión]-uro de [metal]','Para oxisales: [oxoanión] de [metal]'],
   medium:['EO menor → sufijo -oso | EO mayor → sufijo -ico','Calcula el EO: suma de todos los EO en molécula neutra = 0','Fe: +2 (ferroso) / +3 (férrico) | Cu: +1 (cuproso) / +2 (cúprico)','Pb: +2 (plumboso) / +4 (plúmbico) | Sn: +2 (estannoso) / +4 (estánnico)','Stock: escribe el EO con número romano entre paréntesis'],
-  hard:['Oxoaniones de Cl: hipoclorito(+1)→clorito(+3)→clorato(+5)→perclorato(+7)','Mn: +2 manganoso, +4 mangánico, +7 permanganato','Cr: +3 crómico, +6 cromato/dicromato/anhídrido crómico','En iones complejos memoriza: MnO₄⁻ permanganato, CrO₄²⁻ cromato, Cr₂O₇²⁻ dicromato','Para anhídridos: no metal con EO alto actúa como formador de ácido']
+  hard:['Oxoaniones de Cl: hipoclorito(+1)→clorito(+3)→clorato(+5)→perclorato(+7)','Mn tiene 5 EO: +2 (manganoso), +3 (sin nombre trad.), +4 (mangánico), +6 (manganato en oxoanión), +7 (permanganato/permangánico)','Cr: +2 (cromoso), +3 (crómico), +6 se comporta como no metal → anhídrido crómico / cromato','En iones complejos memoriza: MnO₄⁻ permanganato, CrO₄²⁻ cromato, Cr₂O₇²⁻ dicromato','Para anhídridos: no metal con EO alto actúa como formador de ácido → prefijo per- para EO máximo']
 };
 
 // ── ESTADO ──
@@ -839,7 +840,8 @@ function buildBreakdown(q){
   if(q.trad[0]) alts.push(`Tradicional: <em>${q.trad[0]}</em>`);
   if(q.stock && q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
   if(q.sist && q.sist[0]) alts.push(`IUPAC: <em>${q.sist[0]}</em>`);
-  return `<div class="name-breakdown">${words}</div><div style="font-size:.78rem;margin-top:8px;color:inherit;opacity:.85">${alts.join(' · ')}</div>`;
+  const why = q.hint ? `<div class="fb-why">💡 ${q.hint}</div>` : '';
+  return `<div class="name-breakdown">${words}</div><div style="font-size:.78rem;margin-top:8px;color:inherit;opacity:.85">${alts.join(' · ')}</div>${why}`;
 }
 
 function tokenLabel(t, q){
