@@ -130,6 +130,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
       <label class="form-label">Tipo de ejercicio</label>
       <select id="inp-type" class="form-select">
         <option value="">Selecciona un tipo...</option>
+        <option value="all">Todos (diversos)</option>
         <option value="formula-to-name">Nombrar moléculas (fórmula → nombre)</option>
         <option value="name-to-formula">De nombre a fórmula</option>
         <option value="table-complete">Completar tabla de datos</option>
@@ -281,6 +282,7 @@ function generateExercises(){
 
   // Generate HTML
   const typeLabel = {
+    'all': 'Ejercicios diversos',
     'formula-to-name': 'Nombrar moléculas',
     'name-to-formula': 'De nombre a fórmula',
     'table-complete': 'Completar tabla'
@@ -290,7 +292,9 @@ function generateExercises(){
   document.getElementById('prev-title').textContent = `${typeLabel} — ${groupLabel}`;
 
   let html = '';
-  if(type === 'formula-to-name'){
+  if(type === 'all'){
+    html = generateDiverseExercises(selected);
+  } else if(type === 'formula-to-name'){
     html = generateFormulaToName(selected);
   } else if(type === 'name-to-formula'){
     html = generateNameToFormula(selected);
@@ -300,6 +304,56 @@ function generateExercises(){
 
   document.getElementById('exercises-container').innerHTML = html;
   showScreen('s-preview');
+}
+
+function generateDiverseExercises(compounds){
+  const third = Math.floor(compounds.length / 3);
+  const part1 = compounds.slice(0, third);
+  const part2 = compounds.slice(third, third * 2);
+  const part3 = compounds.slice(third * 2);
+
+  let html = '';
+  let exNum = 1;
+
+  // Tipo 1: Fórmula a nombre
+  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--an);margin-bottom:16px">Sección 1: Nombrar moléculas (fórmula → nombre)</h3>';
+  part1.forEach((c) => {
+    html += `
+      <div class="exercise-card ex-type-1 PDF-section">
+        <div class="ex-num">Ejercicio ${exNum++}</div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto?</div>
+        <div class="ex-formula">${c.formula}</div>
+        <div class="ex-blank"></div>
+      </div>
+    `;
+  });
+  html += '</div>';
+
+  // Tipo 2: Nombre a fórmula
+  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--cat);margin-bottom:16px">Sección 2: De nombre a fórmula</h3>';
+  part2.forEach((c) => {
+    const name = c.trad[0];
+    html += `
+      <div class="exercise-card ex-type-2 PDF-section">
+        <div class="ex-num">Ejercicio ${exNum++}</div>
+        <div class="ex-prompt">Escribe la fórmula</div>
+        <div class="ex-name">${name}</div>
+        <div class="ex-blank"></div>
+      </div>
+    `;
+  });
+  html += '</div>';
+
+  // Tipo 3: Completar tabla
+  html += '<div style="margin-bottom:32px"><h3 style="font-size:.95rem;font-weight:800;color:var(--ox);margin-bottom:16px">Sección 3: Completar tabla</h3>';
+  html += '<div class="exercise-card ex-type-3 PDF-section"><div class="table-wrapper"><table><thead><tr><th style="width:35%">Fórmula</th><th style="width:65%">Nombre (Tradicional)</th></tr></thead><tbody>';
+  part3.forEach((c, idx) => {
+    const isFormulaBlank = idx % 2 === 0;
+    html += `<tr><td class="${isFormulaBlank ? 'cell-blank' : ''}">${isFormulaBlank ? '' : c.formula}</td><td class="${!isFormulaBlank ? 'cell-blank' : ''}">${!isFormulaBlank ? '' : c.trad[0]}</td></tr>`;
+  });
+  html += '</tbody></table></div></div></div>';
+
+  return html;
 }
 
 function generateFormulaToName(compounds){
