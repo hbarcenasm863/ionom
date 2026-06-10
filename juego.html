@@ -124,6 +124,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .fb-alts{font-size:.78rem;margin-top:8px;opacity:.9;line-height:2}
 .fb-hint{margin-top:8px;padding:8px 10px;background:rgba(0,0,0,.06);border-radius:6px;font-size:.78rem;line-height:1.6;font-style:italic;border-left:3px solid rgba(0,0,0,.12)}
+.btn-next{display:block;width:100%;margin-top:14px;padding:13px;background:var(--an);color:#fff;border:none;border-radius:var(--rs);font-family:var(--sans);font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;text-align:center}
+.btn-next:hover{background:var(--an-t);transform:translateY(-1px)}
 
 /* RESULT */
 #s-result{background:var(--bg);overflow-y:auto}
@@ -382,7 +384,6 @@ function buildDrag(q, pool){
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
 const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag'];
-let nextTimer=null;
 
 function startGame(group){
   ST.group=group;
@@ -407,7 +408,6 @@ function startGame(group){
 
 function loadQuestion(){
   if(ST.idx>=ST.questions.length){endGame();return;}
-  clearTimeout(nextTimer);
   const q=ST.questions[ST.idx];
   ST.qtype=q.qtype; ST.attempts=0;
   const pct=(ST.idx/ST.questions.length)*100;
@@ -668,9 +668,14 @@ function updateStats(){
   document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
 }
 
-function scheduleNext(ms){
-  clearTimeout(nextTimer);
-  nextTimer=setTimeout(()=>{ST.idx++;loadQuestion();},ms);
+function scheduleNext(_ms){
+  // Show "Siguiente" button instead of auto-advancing
+  const fb=document.getElementById('feedback');
+  const btn=document.createElement('button');
+  btn.className='btn-next';
+  btn.textContent='Siguiente pregunta →';
+  btn.onclick=()=>{ST.idx++;loadQuestion();};
+  fb.appendChild(btn);
 }
 
 // ── End ──
@@ -718,7 +723,6 @@ function generateCert(grade,level){
 }
 
 function resetGame(){
-  clearTimeout(nextTimer);
   ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
   showScreen('s-portada');
 }
