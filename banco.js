@@ -1855,6 +1855,304 @@ const BANCO = [
     hint: 'ClO₃⁻ = clorato. Ca²⁺ → calcio. Ca²⁺ + 2ClO₃⁻ → Ca(ClO₃)₂.'
   },
 
+  // ── ÓXIDOS BÁSICOS (banco adicional) ──
+  {
+    formula: 'Hg₂O',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido mercurioso'],
+    stock: ['óxido de mercurio (I)'],
+    sist: ['monóxido de dimercurio'],
+    hint: 'Hg⁺ (EO menor) → mercurioso. 2Hg⁺ + O²⁻ → Hg₂O.'
+  },
+  {
+    formula: 'PtO',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido platinoso'],
+    stock: ['óxido de platino (II)'],
+    sist: ['monóxido de platino'],
+    hint: 'Pt²⁺ (EO menor) → platinoso. Pt²⁺ + O²⁻ → PtO.'
+  },
+  {
+    formula: 'PtO₂',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido platínico'],
+    stock: ['óxido de platino (IV)'],
+    sist: ['dióxido de platino'],
+    hint: 'Pt⁴⁺ (EO mayor) → platínico. Pt⁴⁺ + 2O²⁻ → PtO₂.'
+  },
+  {
+    formula: 'CrO',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido cromoso'],
+    stock: ['óxido de cromo (II)'],
+    sist: ['monóxido de cromo'],
+    hint: 'Cr²⁺ (EO menor) → cromoso. Cr²⁺ + O²⁻ → CrO.'
+  },
+
+  // ── ANHÍDRIDOS (banco adicional) ──
+  {
+    formula: 'Br₂O₃',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido bromoso'],
+    stock: ['óxido de bromo (III)'],
+    sist: ['trióxido de dibromo'],
+    hint: 'Br en EO +3 → bromoso (prefijo hipo- se omite en el intermedio). 2Br + 3O → Br₂O₃.'
+  },
+  {
+    formula: 'Br₂O₅',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido brómico'],
+    stock: ['óxido de bromo (V)'],
+    sist: ['pentóxido de dibromo'],
+    hint: 'Br en EO +5 → brómico. 2Br + 5O → Br₂O₅.'
+  },
+  {
+    formula: 'Br₂O₇',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido perbrómico'],
+    stock: ['óxido de bromo (VII)'],
+    sist: ['heptóxido de dibromo'],
+    hint: 'Br en EO +7 (máximo) → per…ico. 2Br + 7O → Br₂O₇.'
+  },
+  {
+    formula: 'I₂O',
+    group: 'anhid', level: 'easy',
+    trad: ['anhídrido hipoyodoso'],
+    stock: ['óxido de yodo (I)'],
+    sist: ['monóxido de diyodo'],
+    hint: 'I en EO +1 (mínimo) → hipo…oso. 2I + O → I₂O.'
+  },
+  {
+    formula: 'I₂O₃',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido yodoso'],
+    stock: ['óxido de yodo (III)'],
+    sist: ['trióxido de diyodo'],
+    hint: 'I en EO +3 → yodoso. 2I + 3O → I₂O₃.'
+  },
+  {
+    formula: 'I₂O₇',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido peryódico'],
+    stock: ['óxido de yodo (VII)'],
+    sist: ['heptóxido de diyodo'],
+    hint: 'I en EO +7 (máximo) → per…ico. 2I + 7O → I₂O₇.'
+  },
+  {
+    formula: 'SO',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido hiposulfuroso'],
+    stock: ['óxido de azufre (II)'],
+    sist: ['monóxido de azufre'],
+    hint: 'S en EO +2 (mínimo positivo) → hiposulfuroso. S + O → SO.'
+  },
+  {
+    formula: 'SeO',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido hiposelenioso'],
+    stock: ['óxido de selenio (II)'],
+    sist: ['monóxido de selenio'],
+    hint: 'Se en EO +2 → hiposelenioso. Se + O → SeO.'
+  },
+  {
+    formula: 'TeO₃',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido telúrico'],
+    stock: ['óxido de telurio (VI)'],
+    sist: ['trióxido de telurio'],
+    hint: 'Te en EO +6 → telúrico. Te + 3O → TeO₃.'
+  },
+  {
+    formula: 'B₂O₃',
+    group: 'anhid', level: 'easy',
+    trad: ['anhídrido bórico'],
+    stock: ['óxido de boro (III)'],
+    sist: ['trióxido de diboro'],
+    hint: 'B en EO +3 (fijo) → bórico. 2B + 3O → B₂O₃.'
+  },
+
+  // ── HIDRÓXIDOS (banco adicional) ──
+  {
+    formula: 'CsOH',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido césico'],
+    stock: ['hidróxido de cesio'],
+    sist: ['monohidróxido de cesio'],
+    hint: 'Cs⁺ (valencia fija) + OH⁻ → CsOH; base fuerte del grupo 1.'
+  },
+  {
+    formula: 'Cd(OH)₂',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido cádmico'],
+    stock: ['hidróxido de cadmio'],
+    sist: ['dihidróxido de cadmio'],
+    hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂.'
+  },
+  {
+    formula: 'HgOH',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido mercurioso'],
+    stock: ['hidróxido de mercurio (I)'],
+    sist: ['monohidróxido de dimercurio'],
+    hint: 'Hg⁺ (EO menor) → mercurioso. Hg⁺ + OH⁻ → HgOH.'
+  },
+
+  // ── ÁCIDOS OXÁCIDOS (banco adicional) ──
+  {
+    formula: 'HIO₂',
+    group: 'ac-ox', level: 'medium',
+    trad: ['ácido yodoso'],
+    stock: ['ácido dioxoyódico (III)'],
+    sist: ['dioxoyodato (III) de hidrógeno'],
+    hint: 'I en EO +3 → yodoso (dos oxígenos). H⁺ + IO₂⁻ → HIO₂.'
+  },
+  {
+    formula: 'H₂SO₂',
+    group: 'ac-ox', level: 'medium',
+    trad: ['ácido hiposulfuroso'],
+    stock: ['ácido dioxosulfúrico (II)'],
+    sist: ['dioxosulfato (II) de dihidrógeno'],
+    hint: 'S en EO +2 → hiposulfuroso. 2H⁺ + SO₂²⁻ → H₂SO₂.'
+  },
+  {
+    formula: 'H₂TeO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido telluroso'],
+    stock: ['ácido trioxotelúrico (IV)'],
+    sist: ['trioxotelurato (IV) de dihidrógeno'],
+    hint: 'Te en EO +4 → telluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
+  },
+  {
+    formula: 'HBO₂',
+    group: 'ac-ox', level: 'medium',
+    trad: ['ácido metabórico'],
+    stock: ['ácido dioxobórico (III)'],
+    sist: ['dioxoborato (III) de hidrógeno'],
+    hint: 'Forma meta del ácido bórico (B en EO +3). H⁺ + BO₂⁻ → HBO₂.'
+  },
+  {
+    formula: 'HPO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido metafosfórico'],
+    stock: ['ácido trioxofosfórico (V)'],
+    sist: ['trioxofosfato (V) de hidrógeno'],
+    hint: 'Forma meta del ácido fosfórico (P en EO +5). H⁺ + PO₃⁻ → HPO₃.'
+  },
+  {
+    formula: 'H₄P₂O₇',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido pirofosfórico'],
+    stock: ['ácido heptaoxodifosfórico (V)'],
+    sist: ['heptaoxodifosfato (V) de tetrahidrógeno'],
+    hint: 'Forma piro (dos unidades de fósforo +5 condensadas). 4H⁺ + P₂O₇⁴⁻ → H₄P₂O₇.'
+  },
+
+  // ── SALES BINARIAS (banco adicional) ──
+  {
+    formula: 'LiF',
+    group: 'sal-bin', level: 'easy',
+    trad: ['fluoruro lítico'],
+    stock: ['fluoruro de litio'],
+    sist: ['monofluoruro de litio'],
+    hint: 'Li⁺ (valencia fija) + F⁻ → LiF; sal binaria de flúor y litio.'
+  },
+  {
+    formula: 'BaI₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['yoduro bárico'],
+    stock: ['yoduro de bario'],
+    sist: ['diyoduro de bario'],
+    hint: 'Ba²⁺ (valencia fija) + 2I⁻ → BaI₂.'
+  },
+  {
+    formula: 'AlF₃',
+    group: 'sal-bin', level: 'easy',
+    trad: ['fluoruro alumínico'],
+    stock: ['fluoruro de aluminio'],
+    sist: ['trifluoruro de aluminio'],
+    hint: 'Al³⁺ (valencia fija) + 3F⁻ → AlF₃.'
+  },
+  {
+    formula: 'ZnS',
+    group: 'sal-bin', level: 'easy',
+    trad: ['sulfuro zíncico'],
+    stock: ['sulfuro de zinc'],
+    sist: ['monosulfuro de zinc'],
+    hint: 'Zn²⁺ (valencia fija) + S²⁻ → ZnS.'
+  },
+  {
+    formula: 'Hg₂I₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['yoduro mercurioso'],
+    stock: ['yoduro de mercurio (I)'],
+    sist: ['diyoduro de dimercurio'],
+    hint: 'Hg⁺ (EO menor) → mercurioso. 2Hg⁺ + 2I⁻ → Hg₂I₂.'
+  },
+  {
+    formula: 'HgI₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['yoduro mercúrico'],
+    stock: ['yoduro de mercurio (II)'],
+    sist: ['diyoduro de mercurio'],
+    hint: 'Hg²⁺ (EO mayor) → mercúrico. Hg²⁺ + 2I⁻ → HgI₂.'
+  },
+  {
+    formula: 'PbS₂',
+    group: 'sal-bin', level: 'hard',
+    trad: ['sulfuro plúmbico'],
+    stock: ['sulfuro de plomo (IV)'],
+    sist: ['disulfuro de plomo'],
+    hint: 'Pb⁴⁺ (EO mayor) → plúmbico. Pb⁴⁺ + 2S²⁻ → PbS₂.'
+  },
+  {
+    formula: 'SnF₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['fluoruro estañoso'],
+    stock: ['fluoruro de estaño (II)'],
+    sist: ['difluoruro de estaño'],
+    hint: 'Sn²⁺ (EO menor) → estañoso. Sn²⁺ + 2F⁻ → SnF₂.'
+  },
+  {
+    formula: 'SnF₄',
+    group: 'sal-bin', level: 'hard',
+    trad: ['fluoruro estáñico'],
+    stock: ['fluoruro de estaño (IV)'],
+    sist: ['tetrafluoruro de estaño'],
+    hint: 'Sn⁴⁺ (EO mayor) → estáñico. Sn⁴⁺ + 4F⁻ → SnF₄.'
+  },
+  {
+    formula: 'CoBr₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro cobáltico'],
+    stock: ['bromuro de cobalto (III)'],
+    sist: ['tribromuro de cobalto'],
+    hint: 'Co³⁺ (EO mayor) → cobáltico. Co³⁺ + 3Br⁻ → CoBr₃.'
+  },
+  {
+    formula: 'NiCl₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['cloruro niquélico'],
+    stock: ['cloruro de níquel (III)'],
+    sist: ['tricloruro de níquel'],
+    hint: 'Ni³⁺ (EO mayor) → niquélico. Ni³⁺ + 3Cl⁻ → NiCl₃.'
+  },
+  {
+    formula: 'PtCl₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['cloruro platinoso'],
+    stock: ['cloruro de platino (II)'],
+    sist: ['dicloruro de platino'],
+    hint: 'Pt²⁺ (EO menor) → platinoso. Pt²⁺ + 2Cl⁻ → PtCl₂.'
+  },
+  {
+    formula: 'AuI₃',
+    group: 'sal-bin', level: 'hard',
+    trad: ['yoduro áurico'],
+    stock: ['yoduro de oro (III)'],
+    sist: ['triyoduro de oro'],
+    hint: 'Au³⁺ (EO mayor) → áurico. Au³⁺ + 3I⁻ → AuI₃.'
+  },
+
 ];
 
 // Total: 218 compounds

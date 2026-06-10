@@ -736,8 +736,16 @@ function startGame(){
     // If fewer than 2 entries in this group at this level, fall back to full pool
   }
 
-  // Shuffle and pick up to 5 (or all if pool is smaller)
-  ST.questions = [...pool].sort(()=>Math.random()-.5).slice(0, Math.min(5, pool.length));
+  // Fisher-Yates shuffle, no repetition within a session
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  ST.questions = shuffle(pool).slice(0, Math.min(5, pool.length));
   loadQuestion();
   showScreen('s-game');
 }
@@ -781,8 +789,8 @@ function loadMC(q){
   // Build options: correct + 3 others from same level
   const allNames = getAllNames(ST.level);
   const correct = q.trad[0];
-  const distractors = allNames.filter(n => !isCorrect(n, q)).sort(()=>Math.random()-.5).slice(0,3);
-  const opts = [correct, ...distractors].sort(()=>Math.random()-.5);
+  const distractors = shuffle(allNames.filter(n => !isCorrect(n, q))).slice(0,3);
+  const opts = shuffle([correct, ...distractors]);
 
   const html = opts.map((opt,i) =>
     `<button class="mc-opt" onclick="checkMC('${esc(opt)}', this)">${opt}</button>`
