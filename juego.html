@@ -58,7 +58,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 }
 .portada-inner{
   text-align:center;position:relative;z-index:1;
-  padding:0 24px;max-width:540px;width:100%;
+  padding:0 24px;max-width:520px;width:100%;
 }
 .portada-badge{
   display:inline-flex;align-items:center;gap:7px;
@@ -92,13 +92,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.5)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* Modo buttons — 2×2 grid */
-.modo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-/* 5th mode: full-width */
-.modo-full{width:100%;margin-bottom:20px}
-
+/* Modo buttons */
+.modo-row{display:flex;gap:10px;margin-bottom:20px}
 .modo-btn{
-  width:100%;padding:12px 8px;border-radius:var(--rs);
+  flex:1;padding:12px 8px;border-radius:var(--rs);
   border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);
   color:rgba(255,255,255,.65);font-family:var(--sans);
   font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;
@@ -109,9 +106,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .modo-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
 .modo-btn.sel-mc{background:rgba(3,105,161,.3);border-color:#38bdf8}
 .modo-btn.sel-write{background:rgba(217,119,6,.25);border-color:#fcd34d}
-.modo-btn.sel-completar{background:rgba(124,58,237,.25);border-color:#c4b5fd}
-.modo-btn.sel-drag{background:rgba(15,118,110,.25);border-color:#5eead4}
-.modo-btn.sel-formar{background:rgba(217,119,6,.3);border-color:#fcd34d}
 
 .btn-start{
   width:100%;padding:15px;background:var(--cat);color:#fff;
@@ -134,8 +128,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .gh-prog{flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
 .gh-progfill{height:100%;background:linear-gradient(90deg,var(--cat),var(--an));transition:width .4s ease;border-radius:3px}
 .gh-score{font-family:var(--mono);font-size:.88rem;font-weight:700;color:#fcd34d;white-space:nowrap}
-/* Rapido timer */
-.gh-timer{font-family:var(--mono);font-size:.88rem;font-weight:700;color:#5eead4;white-space:nowrap;display:none}
 
 .game-body{max-width:620px;margin:0 auto;padding:24px 18px 80px;width:100%}
 
@@ -149,7 +141,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .q-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 26px;margin-bottom:18px;box-shadow:var(--sh)}
 .q-meta{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
 .q-formula{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--cat-t);letter-spacing:.02em;margin-bottom:8px;line-height:1}
-.q-name-prompt{font-family:var(--sans);font-size:1.25rem;font-weight:700;color:var(--an-t);margin-bottom:8px;line-height:1.3;word-break:break-word}
 .q-prompt{font-size:.88rem;color:var(--dim);margin-bottom:20px;line-height:1.55}
 
 /* Ion type indicator */
@@ -176,8 +167,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .mc-opt.correct{border-color:var(--ok);background:var(--okb);color:#14532d;cursor:default}
 .mc-opt.wrong{border-color:var(--err);background:var(--errb);color:var(--err);cursor:default}
 .mc-opt.disabled{pointer-events:none;opacity:.55}
-/* Formula MC options use monospace */
-.mc-opt.formula-opt{font-family:var(--mono);font-size:.95rem}
 
 /* Write mode */
 .write-input{
@@ -188,11 +177,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 }
 .write-input:focus{outline:none;border-color:var(--cat);background:var(--cat-b)}
 .write-input.shake{animation:shake .3s ease}
-/* Formula input uses monospace */
-.formula-input{
-  font-family:var(--mono);font-size:1.1rem;letter-spacing:.04em;
-}
-.formula-input:focus{border-color:var(--an);background:var(--an-b)}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
 .btn-submit{
@@ -208,16 +192,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   cursor:pointer;transition:all .2s;margin-left:8px;
 }
 .btn-hint:hover{border-color:var(--cat);color:var(--cat)}
-
-/* Keyboard helper for formar mode */
-.kbd-helper{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;margin-top:-4px}
-.kbd-key{
-  padding:6px 11px;background:rgba(3,105,161,.1);border:1.5px solid var(--an);
-  border-radius:6px;font-family:var(--mono);font-size:.9rem;font-weight:700;
-  color:var(--an-t);cursor:pointer;transition:all .15s;line-height:1;
-}
-.kbd-key:hover{background:var(--an-b);transform:translateY(-1px)}
-.kbd-key:active{transform:translateY(0)}
 
 /* Feedback */
 .feedback{padding:14px 16px;border-radius:var(--rs);font-size:.86rem;margin-top:14px;border-left:4px solid;display:none;animation:fadeIn .25s ease}
@@ -239,14 +213,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .nb-word.neu{background:#f0f4fa;color:var(--dim);border:1px solid var(--brd)}
 .nb-lbl{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .nb-lbl.cat{color:var(--cat-t)}.nb-lbl.an{color:var(--an-t)}.nb-lbl.oh{color:var(--oh-t)}.nb-lbl.ox{color:var(--ox-t)}.nb-lbl.neu{color:var(--dimmer)}
-
-/* Rapido: timer ring */
-.timer-ring-wrap{display:flex;justify-content:center;margin-bottom:16px}
-.timer-ring{width:60px;height:60px;position:relative}
-.timer-ring svg{transform:rotate(-90deg)}
-.timer-ring circle.bg{fill:none;stroke:var(--brd);stroke-width:5}
-.timer-ring circle.prog{fill:none;stroke:var(--ox);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .1s linear,stroke .3s}
-.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--ox-t)}
+.fb-why{margin-top:10px;padding:8px 10px;background:rgba(0,0,0,.06);border-radius:6px;font-size:.78rem;line-height:1.6;font-style:italic;border-left:3px solid rgba(0,0,0,.15)}
 
 /* ════════════════════
    RESULT SCREEN
@@ -298,42 +265,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .cert-sig-line{border-top:2px solid #0d2d42;padding-top:6px}
 .cert-footer{font-size:9px;color:#3a5568;margin-top:20px;border-top:1px solid #bae6fd;padding-top:10px;font-family:var(--sans);line-height:1.6}
 
-/* ── COMPLETAR mode ── */
-.blank-input{display:inline-block;width:120px;border:none;border-bottom:2.5px solid var(--cat);background:transparent;font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--cat-t);padding:2px 4px;outline:none;vertical-align:middle;transition:border-color .2s}
-.blank-input:focus{border-color:var(--an)}
-.blank-input.shake{animation:shake .3s ease}
-.token-display{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 0;font-size:.95rem}
-.tok{font-family:var(--mono);font-size:.92rem;font-weight:700;padding:4px 10px;border-radius:6px;border:1.5px solid}
-.tok.cat{background:var(--cat-b);color:var(--cat-t);border-color:var(--cat)}
-.tok.an{background:var(--an-b);color:var(--an-t);border-color:var(--an)}
-.tok.oh{background:var(--oh-b);color:var(--oh-t);border-color:var(--oh)}
-.tok.ox{background:var(--ox-b);color:var(--ox-t);border-color:var(--ox)}
-.tok.neu{background:#f0f4fa;color:var(--dim);border-color:var(--brd)}
-
-/* ── DRAG mode ── */
-.drag-bank{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;border:2px dashed var(--brd);border-radius:var(--rs);margin-bottom:14px;background:rgba(13,74,115,.03)}
-.drag-tile{padding:6px 12px;border-radius:8px;font-family:var(--mono);font-size:.88rem;font-weight:700;cursor:grab;border:2px solid;user-select:none;transition:transform .15s,opacity .15s}
-.drag-tile:active{cursor:grabbing;opacity:.8;transform:scale(1.05)}
-.drag-tile.cat{background:var(--cat-b);color:var(--cat-t);border-color:var(--cat)}
-.drag-tile.an{background:var(--an-b);color:var(--an-t);border-color:var(--an)}
-.drag-tile.oh{background:var(--oh-b);color:var(--oh-t);border-color:var(--oh)}
-.drag-tile.ox{background:var(--ox-b);color:var(--ox-t);border-color:var(--ox)}
-.drag-tile.neu{background:#f0f4fa;color:var(--dim);border-color:var(--brd)}
-.drag-tile.in-slot{cursor:default}
-.drag-tile.dragging-clone{position:fixed;z-index:999;pointer-events:none;opacity:.9}
-.drop-zone{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;border:2px solid var(--an-b);border-radius:var(--rs);background:var(--an-b);margin-bottom:14px}
-.drop-zone.shake{animation:shake .3s ease}
-.drop-slot{min-width:80px;min-height:42px;border:2px dashed var(--an);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--an);font-weight:700;transition:background .15s}
-.drop-slot.drag-over{background:rgba(3,105,161,.12)}
-.drop-slot.correct{border-color:var(--ok);background:var(--okb)}
-.drop-slot.wrong{border-color:var(--err);background:var(--errb)}
-
-/* ── FORMAR mode ── */
-.formar-prompt{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--dim);margin-bottom:14px;padding:10px 14px;background:#f8f5f0;border-radius:var(--rs);border-left:4px solid var(--ox)}
-.sub-keyboard{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.sub-key{padding:8px 12px;background:var(--bg);border:2px solid var(--brd);border-radius:6px;font-family:var(--mono);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;color:var(--dim)}
-.sub-key:hover{border-color:var(--cat);color:var(--cat-t);background:var(--cat-b)}
-
 /* PRINT */
 @media print{
   .site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}
@@ -346,7 +277,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   .portada-title{font-size:2.2rem}
   .portada-form{padding:18px}
   .form-row{grid-template-columns:1fr}
-  .modo-grid{grid-template-columns:1fr 1fr}
   .result-stats{grid-template-columns:1fr 1fr}
   .btn-row{flex-direction:column}
   .stats-row{grid-template-columns:1fr 1fr 1fr}
@@ -403,38 +333,16 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
 
       <label class="form-label">Modo de pregunta</label>
-      <!-- Row 1: modes 1–2 -->
-      <div class="modo-grid" style="margin-bottom:10px">
+      <div class="modo-row">
         <button class="modo-btn sel-mc" id="btn-mc" onclick="selectMode('mc')">
           <span class="mb-icon">🔵</span>
           <span class="mb-label">Opción múltiple</span>
-          <span class="mb-sub">Elige el nombre</span>
+          <span class="mb-sub">Elige entre 4 opciones</span>
         </button>
         <button class="modo-btn" id="btn-write" onclick="selectMode('write')">
           <span class="mb-icon">✏️</span>
           <span class="mb-label">Escritura libre</span>
-          <span class="mb-sub">Escribe el nombre</span>
-        </button>
-      </div>
-      <!-- Row 2: modes 3–4 -->
-      <div class="modo-grid" style="margin-bottom:10px">
-        <button class="modo-btn" id="btn-completar" onclick="selectMode('completar')">
-          <span class="mb-icon">📝</span>
-          <span class="mb-label">Completar</span>
-          <span class="mb-sub">Una palabra falta en el nombre</span>
-        </button>
-        <button class="modo-btn" id="btn-drag" onclick="selectMode('drag')">
-          <span class="mb-icon">🔀</span>
-          <span class="mb-label">Ordenar</span>
-          <span class="mb-sub">Arrastra las palabras al orden correcto</span>
-        </button>
-      </div>
-      <!-- Mode 5: full-width -->
-      <div class="modo-full">
-        <button class="modo-btn" id="btn-formar" onclick="selectMode('formar')" style="padding:14px 8px">
-          <span class="mb-icon">🧪</span>
-          <span class="mb-label">Formar moléculas</span>
-          <span class="mb-sub">Dado el nombre, escribe la fórmula</span>
+          <span class="mb-sub">Escribe el nombre completo</span>
         </button>
       </div>
 
@@ -448,7 +356,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <div class="game-hdr">
     <span class="gh-logo">Ion<em>Nom</em></span>
     <div class="gh-prog"><div class="gh-progfill" id="g-prog" style="width:0%"></div></div>
-    <span class="gh-timer" id="g-timer">10</span>
     <span class="gh-score" id="g-score">0 pts</span>
   </div>
 
@@ -461,76 +368,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
     <div class="q-card">
       <div class="q-meta" id="q-meta">Pregunta 1 de 5</div>
-      <!-- Formula display (mc, write, rapido) -->
-      <div class="q-formula" id="q-formula" style="display:none"></div>
-      <!-- Name display (reverse, formar) -->
-      <div class="q-name-prompt" id="q-name-prompt" style="display:none"></div>
+      <div class="q-formula" id="q-formula"></div>
       <div class="q-ions" id="q-ions"></div>
       <div class="q-prompt" id="q-prompt"></div>
-
-      <!-- MC options (mc, rapido, reverse) -->
       <div id="q-mc-area"></div>
-
-      <!-- Write name area (write mode) -->
       <div id="q-write-area" style="display:none">
         <input id="q-input" class="write-input" type="text" placeholder="Escribe el nombre del compuesto…" autocomplete="off" onkeydown="if(event.key==='Enter')submitWrite()">
         <div style="display:flex;align-items:center;gap:8px">
           <button class="btn-submit" onclick="submitWrite()">Enviar →</button>
           <button class="btn-hint" id="btn-hint-el" onclick="showHint()">💡 Pista</button>
-        </div>
-      </div>
-
-      <!-- Formar formula area (formar mode) -->
-      <div id="q-formar-area" style="display:none">
-        <div class="kbd-helper" id="kbd-helper">
-          <button class="kbd-key" onclick="insertChar('₂')">₂</button>
-          <button class="kbd-key" onclick="insertChar('₃')">₃</button>
-          <button class="kbd-key" onclick="insertChar('₄')">₄</button>
-          <button class="kbd-key" onclick="insertChar('₅')">₅</button>
-          <button class="kbd-key" onclick="insertChar('₆')">₆</button>
-          <button class="kbd-key" onclick="insertChar('₇')">₇</button>
-          <button class="kbd-key" onclick="insertChar('⁺')">⁺</button>
-          <button class="kbd-key" onclick="insertChar('⁻')">⁻</button>
-          <button class="kbd-key" onclick="insertChar('(')"> ( </button>
-          <button class="kbd-key" onclick="insertChar(')')"> ) </button>
-        </div>
-        <input id="q-formar-input" class="write-input formula-input" type="text" placeholder="Ej: Fe₂(SO₄)₃  o  Fe2(SO4)3" autocomplete="off" onkeydown="if(event.key==='Enter')submitFormar()">
-        <div style="display:flex;align-items:center;gap:8px;margin-top:0">
-          <button class="btn-submit" onclick="submitFormar()">Enviar →</button>
-          <button class="btn-hint" id="btn-formar-hint-el" onclick="showHint()">💡 Pista</button>
-        </div>
-      </div>
-
-      <!-- Completar area (completar mode) -->
-      <div id="q-completar-area" style="display:none">
-        <div class="token-display" id="completar-tokens"></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <button class="btn-submit" onclick="submitCompletar()">Verificar →</button>
-          <button class="btn-hint" id="btn-completar-hint-el" onclick="showHint()">💡 Pista</button>
-        </div>
-      </div>
-
-      <!-- Drag area (drag mode) -->
-      <div id="q-drag-area" style="display:none">
-        <label class="form-label" style="color:var(--dimmer);margin-bottom:6px">Banco de palabras</label>
-        <div class="drag-bank" id="drag-bank"></div>
-        <label class="form-label" style="color:var(--dimmer);margin-bottom:6px">Ordena aquí</label>
-        <div class="drop-zone" id="drop-zone"></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <button class="btn-submit" id="btn-drag-verify" onclick="submitDrag()" style="display:none">Verificar →</button>
-          <button class="btn-hint" id="btn-drag-hint-el" onclick="showHint()">💡 Pista</button>
-        </div>
-      </div>
-
-      <!-- Rapido timer ring -->
-      <div class="timer-ring-wrap" id="timer-ring-wrap" style="display:none">
-        <div class="timer-ring">
-          <svg width="60" height="60" viewBox="0 0 60 60">
-            <circle class="bg" cx="30" cy="30" r="25"/>
-            <circle class="prog" id="timer-prog" cx="30" cy="30" r="25"
-              stroke-dasharray="157" stroke-dashoffset="0"/>
-          </svg>
-          <div class="timer-num" id="timer-num">10</div>
         </div>
       </div>
     </div>
@@ -577,8 +423,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <script>
 // ── BANCO DE PREGUNTAS ──
 // tokens: array de {word, type} para renderizar el nombre con colores
-// trad: nombres válidos tradicional | stock: Stock | sist: IUPAC
-// formula: fórmula química canónica (usada en modo "formar")
+// trad: nombres válidos tradicional | stock: Stock | hint: pista contextual
 const BANK = {
   easy: {
     binary: [
@@ -614,62 +459,18 @@ const BANK = {
         ions:[{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'S²⁻'}],
         tokens:[{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
         hint:'S²⁻ → sulfuro. Na → sodio.' },
-      { formula:'K₂O', trad:['óxido de potasio'], stock:[], sist:['monóxido de dipotasio'],
-        ions:[{t:'cat',l:'K⁺ × 2'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'K tiene valencia fija +1. Metal + oxígeno → óxido de potasio.' },
-      { formula:'BaO', trad:['óxido de bario'], stock:[], sist:['óxido de bario'],
-        ions:[{t:'cat',l:'Ba²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'bario',t:'cat'}],
-        hint:'Ba tiene valencia fija +2. Metal + O → óxido de bario.' },
-      { formula:'Li₂O', trad:['óxido de litio'], stock:[], sist:['monóxido de dilitio'],
-        ions:[{t:'cat',l:'Li⁺ × 2'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
-        hint:'Li tiene valencia fija +1. Verifica: 2(+1)+1(−2)=0.' },
-      { formula:'ZnO', trad:['óxido de zinc'], stock:[], sist:['óxido de zinc'],
-        ions:[{t:'cat',l:'Zn²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'zinc',t:'cat'}],
-        hint:'Zn tiene valencia fija +2. Metal + oxígeno → óxido de zinc.' },
-      { formula:'KCl', trad:['cloruro de potasio'], stock:[], sist:['cloruro de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'an',l:'Cl⁻'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'Cl⁻ → cloruro. K⁺ → potasio.' },
-      { formula:'MgCl₂', trad:['cloruro de magnesio'], stock:[], sist:['dicloruro de magnesio'],
-        ions:[{t:'cat',l:'Mg²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],
-        hint:'Mg²⁺ necesita 2 Cl⁻. Sigue siendo cloruro de magnesio.' },
-      { formula:'CaF₂', trad:['fluoruro de calcio'], stock:[], sist:['difluoruro de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'F⁻ × 2'}],
-        tokens:[{w:'fluoruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'F⁻ → fluoruro. Ca²⁺ necesita 2 fluoruros.' },
-      { formula:'NaF', trad:['fluoruro de sodio'], stock:[], sist:['fluoruro de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'F⁻'}],
-        tokens:[{w:'fluoruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'F⁻ → fluoruro. Na⁺ → sodio.' },
-      { formula:'KBr', trad:['bromuro de potasio'], stock:[], sist:['bromuro de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'an',l:'Br⁻'}],
-        tokens:[{w:'bromuro',t:'an'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'Br⁻ → bromuro. K⁺ → potasio.' },
-      { formula:'AgCl', trad:['cloruro de plata'], stock:[], sist:['cloruro de plata'],
-        ions:[{t:'cat',l:'Ag⁺'},{t:'an',l:'Cl⁻'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'plata',t:'cat'}],
-        hint:'Ag tiene valencia fija +1. Cl⁻ → cloruro → cloruro de plata.' },
-      { formula:'ZnS', trad:['sulfuro de zinc'], stock:[], sist:['sulfuro de zinc'],
-        ions:[{t:'cat',l:'Zn²⁺'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'zinc',t:'cat'}],
-        hint:'S²⁻ → sulfuro. Zn²⁺ → zinc. Verifica: (+2)+(−2)=0.' },
-      { formula:'NaH', trad:['hidruro de sodio'], stock:[], sist:['hidruro de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'an',l:'H⁻'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'Con un metal, el H actúa como H⁻ (hidruro). Na⁺ → sodio.' },
-      { formula:'CaH₂', trad:['hidruro de calcio'], stock:[], sist:['dihidruro de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'an',l:'H⁻ × 2'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'H⁻ = hidruro. Ca²⁺ necesita 2 hidruros.' },
-      { formula:'LiH', trad:['hidruro de litio'], stock:[], sist:['hidruro de litio'],
-        ions:[{t:'cat',l:'Li⁺'},{t:'an',l:'H⁻'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
-        hint:'H⁻ = hidruro. Li⁺ → litio.' },
+      { formula:'SO₃', trad:['anhídrido sulfúrico','óxido de azufre VI'], stock:['óxido de azufre VI'], sist:['trióxido de azufre'],
+        ions:[{t:'an',l:'S no metal'},{t:'an',l:'O²⁻ × 3'}],
+        tokens:[{w:'anhídrido',t:'ox'},{w:'sulfúrico',t:'cat'}],
+        hint:'No metal + O → anhídrido. S tiene EO = +6 → -ico → anhídrido sulfúrico.' },
+      { formula:'Cl₂O', trad:['anhídrido cloroso'], stock:[], sist:['monóxido de dicloro'],
+        ions:[{t:'an',l:'Cl no metal'},{t:'an',l:'O'}],
+        tokens:[{w:'anhídrido',t:'ox'},{w:'cloroso',t:'cat'}],
+        hint:'Cl con EO +1 (el menor) → -oso → cloroso → anhídrido cloroso.' },
+      { formula:'P₂O₅', trad:['anhídrido fosfórico'], stock:[], sist:['pentaóxido de difósforo'],
+        ions:[{t:'an',l:'P no metal'},{t:'an',l:'O × 5'}],
+        tokens:[{w:'anhídrido',t:'ox'},{w:'fosfórico',t:'cat'}],
+        hint:'P con EO +5 (mayor para P) → -ico → fosfórico → anhídrido fosfórico.' },
     ],
     ternary: [
       { formula:'NaOH', trad:['hidróxido de sodio'], stock:[], sist:['hidróxido de sodio'],
@@ -688,18 +489,10 @@ const BANK = {
         ions:[{t:'cat',l:'Al³⁺'},{t:'oh',l:'OH⁻ × 3'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
         hint:'Al³⁺ con 3 OH⁻. Hidróxido de aluminio (anfótero).' },
-      { formula:'HCl', trad:['ácido clorhídrico'], stock:['cloruro de hidrógeno'], sist:['cloruro de hidrógeno'],
+      { formula:'HCl', trad:['ácido clorhídrico'], stock:[], sist:['cloruro de hidrógeno'],
         ions:[{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],
         tokens:[{w:'ácido',t:'cat'},{w:'clorhídrico',t:'an'}],
-        hint:'Hidrácido: ácido + raíz + -hídrico. En disolución: ácido clorhídrico. Gas puro: cloruro de hidrógeno.' },
-      { formula:'HBr', trad:['ácido bromhídrico'], stock:['bromuro de hidrógeno'], sist:['bromuro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺'},{t:'an',l:'Br⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'bromhídrico',t:'an'}],
-        hint:'Br⁻ = bromuro. Hidrácido: ácido brom-hídrico.' },
-      { formula:'H₂S', trad:['ácido sulfhídrico'], stock:['sulfuro de hidrógeno'], sist:['sulfuro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'sulfhídrico',t:'an'}],
-        hint:'S²⁻ = sulfuro. H₂S gas: sulfuro de hidrógeno. En agua: ácido sulfhídrico.' },
+        hint:'Ácido sin oxígeno: ácido + nombre del anión con sufijo -hídrico.' },
       { formula:'H₂SO₄', trad:['ácido sulfúrico'], stock:[], sist:['ácido sulfúrico'],
         ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'ácido',t:'cat'},{w:'sulfúrico',t:'ox'}],
@@ -720,91 +513,23 @@ const BANK = {
         ions:[{t:'cat',l:'Ca²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
         tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
         hint:'NO₃⁻ = nitrato. Ca²⁺ necesita 2 nitratos. Nombre: nitrato de calcio.' },
-      { formula:'Mg(OH)₂', trad:['hidróxido de magnesio'], stock:[], sist:['dihidróxido de magnesio'],
-        ions:[{t:'cat',l:'Mg²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Mg²⁺ necesita 2 OH⁻ → hidróxido de magnesio.' },
-      { formula:'Ba(OH)₂', trad:['hidróxido de bario'], stock:[], sist:['dihidróxido de bario'],
-        ions:[{t:'cat',l:'Ba²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'bario',t:'cat'}],
-        hint:'Ba²⁺ necesita 2 OH⁻ → hidróxido de bario.' },
-      { formula:'HF', trad:['ácido fluorhídrico'], stock:['fluoruro de hidrógeno'], sist:['fluoruro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺'},{t:'an',l:'F⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'fluorhídrico',t:'an'}],
-        hint:'Hidrácido: ácido + raíz + -hídrico. F⁻ = fluoruro → ácido fluorhídrico.' },
-      { formula:'HI', trad:['ácido yodhídrico'], stock:['yoduro de hidrógeno'], sist:['yoduro de hidrógeno'],
-        ions:[{t:'cat',l:'H⁺'},{t:'an',l:'I⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'yodhídrico',t:'an'}],
-        hint:'I⁻ = yoduro. Hidrácido: ácido yod-hídrico.' },
-      { formula:'H₂SO₃', trad:['ácido sulfuroso'], stock:[], sist:['ácido sulfuroso'],
-        ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'SO₃²⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'sulfuroso',t:'ox'}],
-        hint:'SO₃²⁻ = sulfito (S EO=+4). Su ácido es el ácido sulfuroso (-oso).' },
-      { formula:'HNO₂', trad:['ácido nitroso'], stock:[], sist:['ácido nitroso'],
-        ions:[{t:'cat',l:'H⁺'},{t:'ox',l:'NO₂⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'nitroso',t:'ox'}],
-        hint:'NO₂⁻ = nitrito (N EO=+3). Su ácido es el ácido nitroso (-oso).' },
-      { formula:'K₂SO₄', trad:['sulfato de potasio'], stock:[], sist:['sulfato de dipotasio'],
-        ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. K⁺ valencia fija → sulfato de potasio.' },
-      { formula:'NaNO₃', trad:['nitrato de sodio'], stock:[], sist:['nitrato de sodio'],
-        ions:[{t:'cat',l:'Na⁺'},{t:'ox',l:'NO₃⁻'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Na⁺ → sodio.' },
-      { formula:'AgNO₃', trad:['nitrato de plata'], stock:[], sist:['nitrato de plata'],
-        ions:[{t:'cat',l:'Ag⁺'},{t:'ox',l:'NO₃⁻'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'plata',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Ag valencia fija +1 → nitrato de plata.' },
-      { formula:'KNO₃', trad:['nitrato de potasio'], stock:[], sist:['nitrato de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'NO₃⁻'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. K⁺ → potasio.' },
-      { formula:'Na₂CO₃', trad:['carbonato de sodio'], stock:[], sist:['carbonato de disodio'],
-        ions:[{t:'cat',l:'Na⁺ × 2'},{t:'ox',l:'CO₃²⁻'}],
-        tokens:[{w:'carbonato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'CO₃²⁻ = carbonato. Na⁺ necesita 2 → carbonato de sodio.' },
-      { formula:'CaCO₃', trad:['carbonato de calcio'], stock:[], sist:['carbonato de calcio'],
-        ions:[{t:'cat',l:'Ca²⁺'},{t:'ox',l:'CO₃²⁻'}],
-        tokens:[{w:'carbonato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'CO₃²⁻ = carbonato. Ca²⁺ → carbonato de calcio (la caliza).' },
-      { formula:'BaSO₄', trad:['sulfato de bario'], stock:[], sist:['sulfato de bario'],
-        ions:[{t:'cat',l:'Ba²⁺'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'bario',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Ba²⁺ → sulfato de bario.' },
-      { formula:'Na₂SO₃', trad:['sulfito de sodio'], stock:[], sist:['sulfito de disodio'],
-        ions:[{t:'cat',l:'Na⁺ × 2'},{t:'ox',l:'SO₃²⁻'}],
-        tokens:[{w:'sulfito',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-        hint:'SO₃²⁻ = sulfito (S EO=+4). Na⁺ necesita 2 → sulfito de sodio.' },
-      { formula:'K₃PO₄', trad:['fosfato de potasio'], stock:[], sist:['fosfato de tripotasio'],
-        ions:[{t:'cat',l:'K⁺ × 3'},{t:'ox',l:'PO₄³⁻'}],
-        tokens:[{w:'fosfato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'PO₄³⁻ = fosfato. K⁺ necesita 3 → fosfato de potasio.' },
-      { formula:'Ca₃(PO₄)₂', trad:['fosfato de calcio'], stock:[], sist:['fosfato de tricalcio'],
-        ions:[{t:'cat',l:'Ca²⁺ × 3'},{t:'ox',l:'PO₄³⁻ × 2'}],
-        tokens:[{w:'fosfato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-        hint:'Equilibra cargas: 3(+2)=2(−3) → Ca₃(PO₄)₂. Fosfato de calcio.' },
-      { formula:'KClO₂', trad:['clorito de potasio'], stock:[], sist:['clorito de potasio'],
-        ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₂⁻'}],
-        tokens:[{w:'clorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'ClO₂⁻ = clorito (Cl EO=+3, sufijo -ito). K⁺ → potasio.' },
     ]
   },
   medium: {
     binary: [
-      { formula:'FeCl₂', trad:['cloruro ferroso'], stock:['cloruro de hierro (II)'], sist:['dicloruro de hierro'],
+      { formula:'FeCl₂', trad:['cloruro ferroso'], stock:['cloruro de hierro II','cloruro de hierro (II)'], sist:['dicloruro de hierro'],
         ions:[{t:'cat',l:'Fe²⁺ (EO=+2)'},{t:'an',l:'Cl⁻ × 2'}],
         tokens:[{w:'cloruro',t:'an'},{w:'ferroso',t:'cat'}],
         hint:'Fe tiene 2 valencias (+2 y +3). EO=+2 es la menor → sufijo -oso → ferroso.' },
-      { formula:'FeCl₃', trad:['cloruro férrico'], stock:['cloruro de hierro (III)'], sist:['tricloruro de hierro'],
+      { formula:'FeCl₃', trad:['cloruro férrico'], stock:['cloruro de hierro III','cloruro de hierro (III)'], sist:['tricloruro de hierro'],
         ions:[{t:'cat',l:'Fe³⁺ (EO=+3)'},{t:'an',l:'Cl⁻ × 3'}],
         tokens:[{w:'cloruro',t:'an'},{w:'férrico',t:'cat'}],
         hint:'EO=+3 es la mayor valencia del Fe → sufijo -ico → férrico.' },
-      { formula:'FeO', trad:['óxido ferroso'], stock:['óxido de hierro (II)'], sist:['óxido de hierro'],
+      { formula:'FeO', trad:['óxido ferroso'], stock:['óxido de hierro II','óxido de hierro (II)'], sist:['óxido de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'ferroso',t:'cat'}],
         hint:'Fe²⁺ = EO menor → -oso → ferroso. Compuesto: óxido ferroso.' },
-      { formula:'Fe₂O₃', trad:['óxido férrico'], stock:['óxido de hierro (III)'], sist:['trióxido de dihierro'],
+      { formula:'Fe₂O₃', trad:['óxido férrico'], stock:['óxido de hierro III','óxido de hierro (III)'], sist:['trióxido de dihierro'],
         ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'férrico',t:'cat'}],
         hint:'Fe³⁺ = EO mayor → -ico → férrico. Verifica: 2(+3)+3(−2)=0.' },
@@ -812,226 +537,82 @@ const BANK = {
         ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'cuproso',t:'cat'}],
         hint:'Cu con EO=+1 (menor) → -oso → cuproso.' },
-      { formula:'CuO', trad:['óxido cúprico'], stock:['óxido de cobre (II)'], sist:['óxido de cobre'],
+      { formula:'CuO', trad:['óxido cúprico'], stock:['óxido de cobre II','óxido de cobre (II)'], sist:['óxido de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'cúprico',t:'cat'}],
         hint:'Cu con EO=+2 (mayor) → -ico → cúprico.' },
-      { formula:'PbO', trad:['óxido plumboso'], stock:['óxido de plomo (II)'], sist:['óxido de plomo'],
+      { formula:'PbO', trad:['óxido plumboso'], stock:['óxido de plomo II','óxido de plomo (II)'], sist:['óxido de plomo'],
         ions:[{t:'cat',l:'Pb²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'plumboso',t:'cat'}],
         hint:'Pb²⁺ (EO menor) → -oso → plumboso.' },
-      { formula:'PbO₂', trad:['óxido plúmbico'], stock:['óxido de plomo (IV)'], sist:['dióxido de plomo'],
+      { formula:'PbO₂', trad:['óxido plúmbico'], stock:['óxido de plomo IV','óxido de plomo (IV)'], sist:['dióxido de plomo'],
         ions:[{t:'cat',l:'Pb⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
         tokens:[{w:'óxido',t:'an'},{w:'plúmbico',t:'cat'}],
         hint:'Pb⁴⁺ (EO mayor de Pb) → -ico → plúmbico.' },
-      { formula:'SnCl₂', trad:['cloruro estannoso'], stock:['cloruro de estaño (II)'], sist:['dicloruro de estaño'],
+      { formula:'SnCl₂', trad:['cloruro estannoso'], stock:['cloruro de estaño II','cloruro de estaño (II)'], sist:['dicloruro de estaño'],
         ions:[{t:'cat',l:'Sn²⁺'},{t:'an',l:'Cl⁻ × 2'}],
         tokens:[{w:'cloruro',t:'an'},{w:'estannoso',t:'cat'}],
         hint:'Sn²⁺ (EO menor del estaño) → -oso → estannoso.' },
-      { formula:'SnCl₄', trad:['cloruro estánnico'], stock:['cloruro de estaño (IV)'], sist:['tetracloruro de estaño'],
+      { formula:'SnCl₄', trad:['cloruro estánnico'], stock:['cloruro de estaño IV','cloruro de estaño (IV)'], sist:['tetracloruro de estaño'],
         ions:[{t:'cat',l:'Sn⁴⁺'},{t:'an',l:'Cl⁻ × 4'}],
         tokens:[{w:'cloruro',t:'an'},{w:'estánnico',t:'cat'}],
         hint:'Sn⁴⁺ (EO mayor del estaño) → -ico → estánnico.' },
-      { formula:'FeS', trad:['sulfuro ferroso'], stock:['sulfuro de hierro (II)'], sist:['sulfuro de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'sulfuro',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'S²⁻ = sulfuro. Fe²⁺ (menor) → -oso → ferroso.' },
-      { formula:'Fe₂S₃', trad:['sulfuro férrico'], stock:['sulfuro de hierro (III)'], sist:['trisulfuro de dihierro'],
-        ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'an',l:'S²⁻ × 3'}],
-        tokens:[{w:'sulfuro',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ (mayor) → -ico → férrico. Verifica: 2(+3)+3(−2)=0.' },
-      { formula:'CuCl', trad:['cloruro cuproso'], stock:['cloruro de cobre (I)'], sist:['cloruro de cobre'],
-        ions:[{t:'cat',l:'Cu⁺'},{t:'an',l:'Cl⁻'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'cuproso',t:'cat'}],
-        hint:'Cu⁺ (EO=+1, menor) → -oso → cuproso.' },
-      { formula:'CuCl₂', trad:['cloruro cúprico'], stock:['cloruro de cobre (II)'], sist:['dicloruro de cobre'],
-        ions:[{t:'cat',l:'Cu²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'cúprico',t:'cat'}],
-        hint:'Cu²⁺ (EO=+2, mayor) → -ico → cúprico.' },
-      { formula:'Cu₂S', trad:['sulfuro cuproso'], stock:['sulfuro de cobre (I)'], sist:['sulfuro de dícobre'],
-        ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'an',l:'S²⁻'}],
-        tokens:[{w:'sulfuro',t:'an'},{w:'cuproso',t:'cat'}],
-        hint:'Cu⁺ (menor) → -oso → cuproso. Verifica: 2(+1)+(−2)=0.' },
-      { formula:'PbCl₂', trad:['cloruro plumboso'], stock:['cloruro de plomo (II)'], sist:['dicloruro de plomo'],
-        ions:[{t:'cat',l:'Pb²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'plumboso',t:'cat'}],
-        hint:'Pb²⁺ (EO menor) → -oso → plumboso.' },
-      { formula:'HgO', trad:['óxido mercúrico'], stock:['óxido de mercurio (II)'], sist:['óxido de mercurio'],
-        ions:[{t:'cat',l:'Hg²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'mercúrico',t:'cat'}],
-        hint:'Hg²⁺ (EO mayor) → -ico → mercúrico.' },
-      { formula:'Hg₂O', trad:['óxido mercurioso'], stock:['óxido de mercurio (I)'], sist:['óxido de dimercurio'],
-        ions:[{t:'cat',l:'Hg⁺ × 2'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'mercurioso',t:'cat'}],
-        hint:'Hg⁺ (EO menor) → -oso → mercurioso.' },
-      { formula:'CoO', trad:['óxido cobaltoso'], stock:['óxido de cobalto (II)'], sist:['óxido de cobalto'],
-        ions:[{t:'cat',l:'Co²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'cobaltoso',t:'cat'}],
-        hint:'Co²⁺ (EO menor) → -oso → cobaltoso.' },
-      { formula:'Co₂O₃', trad:['óxido cobáltico'], stock:['óxido de cobalto (III)'], sist:['trióxido de dicobalto'],
-        ions:[{t:'cat',l:'Co³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'óxido',t:'an'},{w:'cobáltico',t:'cat'}],
-        hint:'Co³⁺ (EO mayor) → -ico → cobáltico. Verifica: 2(+3)+3(−2)=0.' },
-      { formula:'NiO', trad:['óxido de níquel'], stock:['óxido de níquel (II)'], sist:['óxido de níquel'],
-        ions:[{t:'cat',l:'Ni²⁺'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'óxido',t:'an'},{w:'de',t:'neu'},{w:'níquel',t:'cat'}],
-        hint:'Ni se usa habitualmente con EO=+2 → óxido de níquel.' },
-      { formula:'FeH₂', trad:['hidruro ferroso'], stock:['hidruro de hierro (II)'], sist:['dihidruro de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'an',l:'H⁻ × 2'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'ferroso',t:'cat'}],
-        hint:'H⁻ = hidruro. Fe²⁺ (menor) → -oso → ferroso.' },
-      { formula:'FeH₃', trad:['hidruro férrico'], stock:['hidruro de hierro (III)'], sist:['trihidruro de hierro'],
-        ions:[{t:'cat',l:'Fe³⁺'},{t:'an',l:'H⁻ × 3'}],
-        tokens:[{w:'hidruro',t:'an'},{w:'férrico',t:'cat'}],
-        hint:'H⁻ = hidruro. Fe³⁺ (mayor) → -ico → férrico.' },
-      { formula:'MnCl₂', trad:['cloruro manganoso'], stock:['cloruro de manganeso (II)'], sist:['dicloruro de manganeso'],
-        ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'manganoso',t:'cat'}],
-        hint:'Mn²⁺ (EO menor) → -oso → manganoso.' },
-      { formula:'CrCl₃', trad:['cloruro crómico'], stock:['cloruro de cromo (III)'], sist:['tricloruro de cromo'],
-        ions:[{t:'cat',l:'Cr³⁺'},{t:'an',l:'Cl⁻ × 3'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'crómico',t:'cat'}],
-        hint:'Cr³⁺ (EO mayor habitual) → -ico → crómico.' },
     ],
     ternary: [
-      { formula:'FeSO₄', trad:['sulfato ferroso'], stock:['sulfato de hierro (II)'], sist:['sulfato de hierro'],
+      { formula:'FeSO₄', trad:['sulfato ferroso'], stock:['sulfato de hierro II','sulfato de hierro (II)'], sist:['sulfato de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'ferroso',t:'cat'}],
         hint:'SO₄²⁻ = sulfato. Fe²⁺ (menor) → ferroso → sulfato ferroso.' },
-      { formula:'Fe₂(SO₄)₃', trad:['sulfato férrico'], stock:['sulfato de hierro (III)'], sist:['trisulfato de dihierro'],
+      { formula:'Fe₂(SO₄)₃', trad:['sulfato férrico'], stock:['sulfato de hierro III','sulfato de hierro (III)'], sist:['trisulfato de dihierro'],
         ions:[{t:'cat',l:'Fe³⁺ × 2'},{t:'ox',l:'SO₄²⁻ × 3'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'férrico',t:'cat'}],
         hint:'Fe³⁺ (mayor) → -ico → férrico → sulfato férrico.' },
-      { formula:'CuSO₄', trad:['sulfato cúprico'], stock:['sulfato de cobre (II)'], sist:['sulfato de cobre'],
+      { formula:'CuSO₄', trad:['sulfato cúprico'], stock:['sulfato de cobre II','sulfato de cobre (II)'], sist:['sulfato de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'SO₄²⁻'}],
         tokens:[{w:'sulfato',t:'ox'},{w:'cúprico',t:'cat'}],
         hint:'Cu²⁺ = EO mayor → cúprico → sulfato cúprico.' },
-      { formula:'Fe(OH)₂', trad:['hidróxido ferroso'], stock:['hidróxido de hierro (II)'], sist:['dihidróxido de hierro'],
+      { formula:'Fe(OH)₂', trad:['hidróxido ferroso'], stock:['hidróxido de hierro II','hidróxido de hierro (II)'], sist:['dihidróxido de hierro'],
         ions:[{t:'cat',l:'Fe²⁺'},{t:'oh',l:'OH⁻ × 2'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'ferroso',t:'cat'}],
         hint:'OH⁻ = hidróxido. Fe²⁺ → ferroso → hidróxido ferroso.' },
-      { formula:'Fe(OH)₃', trad:['hidróxido férrico'], stock:['hidróxido de hierro (III)'], sist:['trihidróxido de hierro'],
+      { formula:'Fe(OH)₃', trad:['hidróxido férrico'], stock:['hidróxido de hierro III','hidróxido de hierro (III)'], sist:['trihidróxido de hierro'],
         ions:[{t:'cat',l:'Fe³⁺'},{t:'oh',l:'OH⁻ × 3'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'férrico',t:'cat'}],
         hint:'Fe³⁺ → férrico → hidróxido férrico.' },
-      { formula:'Cu(OH)₂', trad:['hidróxido cúprico'], stock:['hidróxido de cobre (II)'], sist:['dihidróxido de cobre'],
+      { formula:'Cu(OH)₂', trad:['hidróxido cúprico'], stock:['hidróxido de cobre II','hidróxido de cobre (II)'], sist:['dihidróxido de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'oh',l:'OH⁻ × 2'}],
         tokens:[{w:'hidróxido',t:'oh'},{w:'cúprico',t:'cat'}],
         hint:'Cu²⁺ → cúprico → hidróxido cúprico.' },
-      { formula:'Cu(NO₃)₂', trad:['nitrato cúprico'], stock:['nitrato de cobre (II)'], sist:['dinitrato de cobre'],
+      { formula:'Cu(NO₃)₂', trad:['nitrato cúprico'], stock:['nitrato de cobre II','nitrato de cobre (II)'], sist:['dinitrato de cobre'],
         ions:[{t:'cat',l:'Cu²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
         tokens:[{w:'nitrato',t:'ox'},{w:'cúprico',t:'cat'}],
         hint:'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico.' },
-      { formula:'Fe(NO₃)₂', trad:['nitrato ferroso'], stock:['nitrato de hierro (II)'], sist:['dinitrato de hierro'],
-        ions:[{t:'cat',l:'Fe²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'ferroso',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Fe²⁺ (menor) → ferroso → nitrato ferroso.' },
-      { formula:'Fe(NO₃)₃', trad:['nitrato férrico'], stock:['nitrato de hierro (III)'], sist:['trinitrato de hierro'],
-        ions:[{t:'cat',l:'Fe³⁺'},{t:'ox',l:'NO₃⁻ × 3'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'férrico',t:'cat'}],
-        hint:'Fe³⁺ + 3 NO₃⁻. Fe³⁺ (mayor) → -ico → férrico.' },
-      { formula:'Cu₂SO₄', trad:['sulfato cuproso'], stock:['sulfato de cobre (I)'], sist:['sulfato de dícobre'],
-        ions:[{t:'cat',l:'Cu⁺ × 2'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'cuproso',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Cu⁺ (menor) → cuproso. 2(+1)+(−2)=0.' },
-      { formula:'Pb(NO₃)₂', trad:['nitrato plumboso'], stock:['nitrato de plomo (II)'], sist:['dinitrato de plomo'],
-        ions:[{t:'cat',l:'Pb²⁺'},{t:'ox',l:'NO₃⁻ × 2'}],
-        tokens:[{w:'nitrato',t:'ox'},{w:'plumboso',t:'cat'}],
-        hint:'NO₃⁻ = nitrato. Pb²⁺ (menor) → plumboso → nitrato plumboso.' },
-      { formula:'Pb(OH)₂', trad:['hidróxido plumboso'], stock:['hidróxido de plomo (II)'], sist:['dihidróxido de plomo'],
-        ions:[{t:'cat',l:'Pb²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'plumboso',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Pb²⁺ (menor) → plumboso → hidróxido plumboso.' },
-      { formula:'Zn(OH)₂', trad:['hidróxido de zinc'], stock:['hidróxido de zinc (II)'], sist:['dihidróxido de zinc'],
-        ions:[{t:'cat',l:'Zn²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'zinc',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Zn²⁺ necesita 2 OH⁻ → hidróxido de zinc.' },
-      { formula:'Hg(OH)₂', trad:['hidróxido mercúrico'], stock:['hidróxido de mercurio (II)'], sist:['dihidróxido de mercurio'],
-        ions:[{t:'cat',l:'Hg²⁺'},{t:'oh',l:'OH⁻ × 2'}],
-        tokens:[{w:'hidróxido',t:'oh'},{w:'mercúrico',t:'cat'}],
-        hint:'OH⁻ = hidróxido. Hg²⁺ (mayor) → mercúrico → hidróxido mercúrico.' },
     ]
   },
   hard: {
     binary: [
-      { formula:'MnO', trad:['óxido manganoso'], stock:['óxido de manganeso (II)'], sist:['óxido de manganeso'],
+      { formula:'MnO', trad:['óxido manganoso'], stock:['óxido de manganeso II','óxido de manganeso (II)'], sist:['óxido de manganeso'],
         ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],
         tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],
-        hint:'Mn tiene 5 valencias (+2,+3,+4,+6,+7). EO=+2 (el menor habitual) → -oso → manganoso.' },
-      { formula:'Mn₂O₃', trad:[], stock:['óxido de manganeso (III)'], sist:['trióxido de dimanganeso'],
-        ions:[{t:'cat',l:'Mn³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'trióxido',t:'an'},{w:'de',t:'neu'},{w:'dimanganeso',t:'cat'}],
-        hint:'Mn con EO=+3 NO tiene nombre tradicional binario claro — se usa Stock u IUPAC. Verifica: 2(+3)+3(−2)=0.' },
-      { formula:'MnO₂', trad:['óxido mangánico'], stock:['óxido de manganeso (IV)'], sist:['dióxido de manganeso'],
+        hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.' },
+      { formula:'MnO₂', trad:['óxido mangánico','dióxido de manganeso'], stock:['óxido de manganeso IV','óxido de manganeso (IV)'], sist:['dióxido de manganeso'],
         ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],
-        tokens:[{w:'óxido',t:'an'},{w:'mangánico',t:'cat'}],
-        hint:'EO=+4 (valencia media del Mn) → sufijo -ico → mangánico. Stock: manganeso (IV).' },
-      { formula:'Mn₂O₇', trad:['anhídrido permangánico'], stock:['óxido de manganeso (VII)'], sist:['heptaóxido de dimanganeso'],
+        tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],
+        hint:'Mn con EO=+4. En sistemática: di-óxido de manganeso.' },
+      { formula:'Mn₂O₇', trad:['anhídrido permangánico'], stock:['óxido de manganeso VII','óxido de manganeso (VII)'], sist:['heptaóxido de dimanganeso'],
         ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],
         hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.' },
-      { formula:'Cr₂O₃', trad:['óxido crómico'], stock:['óxido de cromo (III)'], sist:['trióxido de dicromo'],
+      { formula:'Cr₂O₃', trad:['óxido crómico'], stock:['óxido de cromo III','óxido de cromo (III)'], sist:['trióxido de dicromo'],
         ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],
-        hint:'Cr³⁺ (EO mayor habitual del cromo) → -ico → crómico → óxido crómico.' },
-      { formula:'CrO₃', trad:['anhídrido crómico'], stock:['óxido de cromo (VI)'], sist:['trióxido de cromo'],
+        hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.' },
+      { formula:'CrO₃', trad:['anhídrido crómico'], stock:['óxido de cromo VI','óxido de cromo (VI)'], sist:['trióxido de cromo'],
         ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],
         tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],
         hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.' },
-      { formula:'SO₂', trad:['anhídrido sulfuroso'], stock:['óxido de azufre (IV)'], sist:['dióxido de azufre'],
-        ions:[{t:'an',l:'S (EO=+4)'},{t:'an',l:'O²⁻ × 2'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'sulfuroso',t:'cat'}],
-        hint:'S con EO=+4 (el menor de S) → -oso → sulfuroso → anhídrido sulfuroso.' },
-      { formula:'SO₃', trad:['anhídrido sulfúrico'], stock:['óxido de azufre (VI)'], sist:['trióxido de azufre'],
-        ions:[{t:'an',l:'S (EO=+6)'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'sulfúrico',t:'cat'}],
-        hint:'S con EO=+6 (el mayor de S) → -ico → sulfúrico → anhídrido sulfúrico.' },
-      { formula:'N₂O₃', trad:['anhídrido nitroso'], stock:['óxido de nitrógeno (III)'], sist:['trióxido de dinitrógeno'],
-        ions:[{t:'an',l:'N (EO=+3)'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'nitroso',t:'cat'}],
-        hint:'N con EO=+3 (el menor de N en óxidos ácidos) → -oso → nitroso → anhídrido nitroso.' },
-      { formula:'N₂O₅', trad:['anhídrido nítrico'], stock:['óxido de nitrógeno (V)'], sist:['pentaóxido de dinitrógeno'],
-        ions:[{t:'an',l:'N (EO=+5)'},{t:'an',l:'O²⁻ × 5'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'nítrico',t:'cat'}],
-        hint:'N con EO=+5 (el mayor de N) → -ico → nítrico → anhídrido nítrico. Anhídrido del HNO₃.' },
-      { formula:'P₂O₅', trad:['anhídrido fosfórico'], stock:['óxido de fósforo (V)'], sist:['pentaóxido de difósforo'],
-        ions:[{t:'an',l:'P (EO=+5)'},{t:'an',l:'O²⁻ × 5'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'fosfórico',t:'cat'}],
-        hint:'P con EO=+5 (mayor del P) → -ico → fosfórico → anhídrido fosfórico.' },
-      { formula:'Cl₂O', trad:['anhídrido hipocloroso'], stock:['óxido de cloro (I)'], sist:['monóxido de dicloro'],
-        ions:[{t:'an',l:'Cl (EO=+1)'},{t:'an',l:'O²⁻'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'hipocloroso',t:'cat'}],
-        hint:'Cl con EO=+1 (mínimo) → prefijo hipo- + -oso → hipocloroso → anhídrido hipocloroso.' },
-      { formula:'Cl₂O₇', trad:['anhídrido perclórico'], stock:['óxido de cloro (VII)'], sist:['heptaóxido de dicloro'],
-        ions:[{t:'an',l:'Cl (EO=+7)'},{t:'an',l:'O²⁻ × 7'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'perclórico',t:'cat'}],
-        hint:'Cl con EO=+7 (máximo) → prefijo per- + -ico → perclórico → anhídrido perclórico.' },
-      { formula:'Hg₂Cl₂', trad:['cloruro mercurioso'], stock:['cloruro de mercurio (I)'], sist:['dicloruro de dimercurio'],
-        ions:[{t:'cat',l:'Hg₂²⁺'},{t:'an',l:'Cl⁻ × 2'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'mercurioso',t:'cat'}],
-        hint:'¡Excepción! Hg(I) forma el catión dinuclear Hg₂²⁺. Hg EO=+1 → -oso → mercurioso.' },
-      { formula:'As₂O₃', trad:['anhídrido arsenioso'], stock:['óxido de arsénico (III)'], sist:['trióxido de diarsénico'],
-        ions:[{t:'an',l:'As (EO=+3)'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'arsenioso',t:'cat'}],
-        hint:'As con EO=+3 (el menor) → -oso → arsenioso → anhídrido arsenioso.' },
-      { formula:'As₂O₅', trad:['anhídrido arsénico'], stock:['óxido de arsénico (V)'], sist:['pentaóxido de diarsénico'],
-        ions:[{t:'an',l:'As (EO=+5)'},{t:'an',l:'O²⁻ × 5'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'arsénico',t:'cat'}],
-        hint:'As con EO=+5 (el mayor) → -ico → arsénico → anhídrido arsénico.' },
-      { formula:'Cl₂O₃', trad:['anhídrido cloroso'], stock:['óxido de cloro (III)'], sist:['trióxido de dicloro'],
-        ions:[{t:'an',l:'Cl (EO=+3)'},{t:'an',l:'O²⁻ × 3'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'cloroso',t:'cat'}],
-        hint:'Cl con EO=+3 → -oso → cloroso → anhídrido cloroso.' },
-      { formula:'Cl₂O₅', trad:['anhídrido clórico'], stock:['óxido de cloro (V)'], sist:['pentaóxido de dicloro'],
-        ions:[{t:'an',l:'Cl (EO=+5)'},{t:'an',l:'O²⁻ × 5'}],
-        tokens:[{w:'anhídrido',t:'ox'},{w:'clórico',t:'cat'}],
-        hint:'Cl con EO=+5 → -ico → clórico → anhídrido clórico.' },
     ],
     ternary: [
-      { formula:'K₂MnO₄', trad:['manganato de potasio'], stock:['manganato de potasio'], sist:['tetraoxomanganato(VI) de dipotasio'],
-        ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'MnO₄²⁻'}],
-        tokens:[{w:'manganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-        hint:'MnO₄²⁻ = manganato (Mn EO=+6). Distinto de permanganato (Mn EO=+7). K→potasio.' },
       { formula:'KMnO₄', trad:['permanganato de potasio'], stock:['permanganato de potasio'], sist:['tetraoxomanganato(VII) de potasio'],
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],
         tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
@@ -1040,7 +621,7 @@ const BANK = {
         ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],
         tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
         hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.' },
-      { formula:'K₂Cr₂O₇', trad:['dicromato de potasio'], stock:['dicromato de potasio'], sist:['heptaoxodicromato(VI) de dipotasio'],
+      { formula:'K₂Cr₂O₇', trad:['dicromato de potasio'], stock:['dicromato de potasio'], sist:['heptaoxodicroomato(VI) de dipotasio'],
         ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],
         tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
         hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.' },
@@ -1056,26 +637,6 @@ const BANK = {
         ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],
         tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
         hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.' },
-      { formula:'MnCl₄', trad:['cloruro mangánico'], stock:['cloruro de manganeso (IV)'], sist:['tetracloruro de manganeso'],
-        ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'Cl⁻ × 4'}],
-        tokens:[{w:'cloruro',t:'an'},{w:'mangánico',t:'cat'}],
-        hint:'Mn⁴⁺ → -ico → mangánico (igual sufijo que MnO₂). Verifica: (+4)+4(−1)=0.' },
-      { formula:'H₂CrO₄', trad:['ácido crómico'], stock:[], sist:['ácido crómico'],
-        ions:[{t:'cat',l:'H⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'crómico',t:'ox'}],
-        hint:'CrO₄²⁻ = cromato (Cr EO=+6). Su oxácido es el ácido crómico.' },
-      { formula:'HMnO₄', trad:['ácido permangánico'], stock:[], sist:['ácido permangánico'],
-        ions:[{t:'cat',l:'H⁺'},{t:'ox',l:'MnO₄⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'permangánico',t:'ox'}],
-        hint:'MnO₄⁻ = permanganato (Mn EO=+7, per-). Su oxácido es el ácido permangánico.' },
-      { formula:'H₃AsO₄', trad:['ácido arsénico'], stock:[], sist:['ácido arsénico'],
-        ions:[{t:'cat',l:'H⁺ × 3'},{t:'ox',l:'AsO₄³⁻'}],
-        tokens:[{w:'ácido',t:'cat'},{w:'arsénico',t:'ox'}],
-        hint:'AsO₄³⁻ = arseniato (As EO=+5). Su oxácido es el ácido arsénico.' },
-      { formula:'MnSO₄', trad:['sulfato manganoso'], stock:['sulfato de manganeso (II)'], sist:['sulfato de manganeso'],
-        ions:[{t:'cat',l:'Mn²⁺'},{t:'ox',l:'SO₄²⁻'}],
-        tokens:[{w:'sulfato',t:'ox'},{w:'manganoso',t:'cat'}],
-        hint:'SO₄²⁻ = sulfato. Mn²⁺ (menor) → manganoso → sulfato manganoso.' },
     ]
   }
 };
@@ -1084,7 +645,7 @@ const BANK = {
 const LEVEL_HINTS = {
   easy:['Catión (metal) + anión → anión + "de" + metal','Para óxidos metálicos: óxido de [metal]','Para bases: hidróxido de [metal]','Para sales binarias: [anión]-uro de [metal]','Para oxisales: [oxoanión] de [metal]'],
   medium:['EO menor → sufijo -oso | EO mayor → sufijo -ico','Calcula el EO: suma de todos los EO en molécula neutra = 0','Fe: +2 (ferroso) / +3 (férrico) | Cu: +1 (cuproso) / +2 (cúprico)','Pb: +2 (plumboso) / +4 (plúmbico) | Sn: +2 (estannoso) / +4 (estánnico)','Stock: escribe el EO con número romano entre paréntesis'],
-  hard:['Oxoaniones de Cl: hipoclorito(+1)→clorito(+3)→clorato(+5)→perclorato(+7)','Mn: +2 manganoso, +4 mangánico, +7 permanganato','Cr: +3 crómico, +6 cromato/dicromato/anhídrido crómico','En iones complejos memoriza: MnO₄⁻ permanganato, CrO₄²⁻ cromato, Cr₂O₇²⁻ dicromato','Para anhídridos: no metal con EO alto actúa como formador de ácido']
+  hard:['Oxoaniones de Cl: hipoclorito(+1)→clorito(+3)→clorato(+5)→perclorato(+7)','Mn tiene 5 EO: +2 (manganoso), +3 (sin nombre trad.), +4 (mangánico), +6 (manganato en oxoanión), +7 (permanganato/permangánico)','Cr: +2 (cromoso), +3 (crómico), +6 se comporta como no metal → anhídrido crómico / cromato','En iones complejos memoriza: MnO₄⁻ permanganato, CrO₄²⁻ cromato, Cr₂O₇²⁻ dicromato','Para anhídridos: no metal con EO alto actúa como formador de ácido → prefijo per- para EO máximo']
 };
 
 // ── ESTADO ──
@@ -1095,18 +656,10 @@ let ST = {
   sessionStart:null, sessionEnd:null
 };
 
-// ── RAPIDO TIMER STATE ──
-let rapidoTimer = null;
-let rapidoSecsLeft = 10;
-
-// ── MODE SELECTION ──
 function selectMode(m){
   ST.mode = m;
-  const modes = ['mc','write','completar','drag','formar'];
-  modes.forEach(id => {
-    const btn = document.getElementById('btn-'+id);
-    if(btn) btn.className = 'modo-btn' + (m===id?' sel-'+id:'');
-  });
+  document.getElementById('btn-mc').className = 'modo-btn' + (m==='mc'?' sel-mc':'');
+  document.getElementById('btn-write').className = 'modo-btn' + (m==='write'?' sel-write':'');
 }
 
 function startGame(){
@@ -1125,11 +678,6 @@ function startGame(){
 
   // Shuffle and pick 5
   ST.questions = [...pool].sort(()=>Math.random()-.5).slice(0,5);
-
-  // Show/hide rapido timer in header
-  const timerEl = document.getElementById('g-timer');
-  timerEl.style.display = ST.mode==='rapido' ? '' : 'none';
-
   loadQuestion();
   showScreen('s-game');
 }
@@ -1139,453 +687,70 @@ function loadQuestion(){
   const q = ST.questions[ST.currentIdx];
   ST.attempts = 0;
 
-  // Stop any running timers
-  stopRapidoTimer();
-
   // Progress
   const pct = (ST.currentIdx / ST.questions.length) * 100;
   document.getElementById('g-prog').style.width = pct + '%';
   document.getElementById('g-score').textContent = ST.score + ' pts';
   updateGameStats();
 
-  document.getElementById('q-meta').textContent =
-    `Pregunta ${ST.currentIdx+1} de ${ST.questions.length}`;
+  document.getElementById('q-meta').textContent = `Pregunta ${ST.currentIdx+1} de ${ST.questions.length}`;
+  document.getElementById('q-formula').textContent = q.formula;
 
-  // Hide both display areas first
-  document.getElementById('q-formula').style.display = 'none';
-  document.getElementById('q-name-prompt').style.display = 'none';
-
-  // Ion chips — hide in 'formar' (name is shown instead of formula)
-  const showIons = (ST.mode !== 'formar');
-  const ionsHtml = showIons
-    ? (q.ions||[]).map(ion =>
-        `<span class="ion-chip ${ion.t}"><span class="ion-dot"></span>${ion.l}</span>`
-      ).join('')
-    : '';
+  // Ion chips
+  const ionsHtml = (q.ions||[]).map(ion =>
+    `<span class="ion-chip ${ion.t}"><span class="ion-dot"></span>${ion.l}</span>`
+  ).join('');
   document.getElementById('q-ions').innerHTML = ionsHtml;
+
+  const systems = ['Tradicional','Stock','IUPAC'];
+  const sysNames = [q.trad[0], (q.stock[0]||q.trad[0]), (q.sist||[q.trad[0]])[0]];
+  document.getElementById('q-prompt').textContent = '¿Cómo se llama este compuesto? (cualquier sistema es válido)';
 
   // Hide feedback
   const fb = document.getElementById('feedback');
   fb.className = 'feedback'; fb.innerHTML = '';
 
-  // Hide all answer areas
-  document.getElementById('q-mc-area').style.display = 'none';
-  document.getElementById('q-mc-area').innerHTML = '';
-  document.getElementById('q-write-area').style.display = 'none';
-  document.getElementById('q-formar-area').style.display = 'none';
-  document.getElementById('q-completar-area').style.display = 'none';
-  document.getElementById('q-drag-area').style.display = 'none';
-  document.getElementById('timer-ring-wrap').style.display = 'none';
-
-  if(ST.mode === 'mc'){
-    loadMC(q);
-  } else if(ST.mode === 'write'){
-    loadWrite(q);
-  } else if(ST.mode === 'completar'){
-    loadCompletar(q);
-  } else if(ST.mode === 'drag'){
-    loadDrag(q);
-  } else if(ST.mode === 'formar'){
-    loadFormar(q);
-  }
+  if(ST.mode === 'mc') loadMC(q);
+  else loadWrite(q);
 }
 
-// Helper: get the token array used for completar/drag.
-// Uses q.tokens if present; otherwise splits sist[0] into neutral tokens.
-function getNameTokens(q){
-  if(q.tokens && q.tokens.length) return q.tokens.map(t => ({w:t.w, t:t.t}));
-  const base = (q.trad && q.trad[0]) ? q.trad[0] : (q.sist && q.sist[0]) ? q.sist[0] : q.formula;
-  return base.split(/\s+/).map(w => ({w, t:'neu'}));
-}
-
-// ── MODE: MC (formula → pick name) ──
 function loadMC(q){
-  document.getElementById('q-formula').textContent = q.formula;
-  document.getElementById('q-formula').style.display = '';
   document.getElementById('q-mc-area').style.display = '';
-  document.getElementById('q-prompt').textContent = '¿Cómo se llama este compuesto? (cualquier sistema es válido)';
+  document.getElementById('q-write-area').style.display = 'none';
 
+  // Build options: correct + 3 others from same level
   const allNames = getAllNames(ST.level);
   const correct = q.trad[0];
-  const distractors = allNames.filter(n => !isCorrectName(n, q)).sort(()=>Math.random()-.5).slice(0,3);
+  const distractors = allNames.filter(n => !isCorrect(n, q)).sort(()=>Math.random()-.5).slice(0,3);
   const opts = [correct, ...distractors].sort(()=>Math.random()-.5);
 
-  const html = opts.map(opt =>
+  const html = opts.map((opt,i) =>
     `<button class="mc-opt" onclick="checkMC('${esc(opt)}', this)">${opt}</button>`
   ).join('');
   document.getElementById('q-mc-area').innerHTML = `<div class="mc-opts">${html}</div>`;
 }
 
-// ── MODE: WRITE (formula → type name) ──
-function loadWrite(q){
-  document.getElementById('q-formula').textContent = q.formula;
-  document.getElementById('q-formula').style.display = '';
-  document.getElementById('q-write-area').style.display = '';
-  document.getElementById('q-prompt').textContent = '¿Cómo se llama este compuesto? (cualquier sistema es válido)';
-  const inp = document.getElementById('q-input');
-  inp.value = ''; inp.className = 'write-input'; inp.disabled = false;
-  inp.placeholder = 'Escribe el nombre del compuesto…';
-  inp.focus();
-  document.getElementById('btn-hint-el').style.display = '';
-}
+function esc(s){ return s.replace(/'/g,"&#39;"); }
 
-// ── MODE: REVERSE (name → pick formula) ──
-function loadReverse(q){
-  document.getElementById('q-name-prompt').textContent = q.trad[0];
-  document.getElementById('q-name-prompt').style.display = '';
-  document.getElementById('q-mc-area').style.display = '';
-  document.getElementById('q-prompt').textContent = '¿Cuál es la fórmula química de este compuesto?';
-
-  const allFormulas = getAllFormulas(ST.level);
-  const correct = q.formula;
-  const distractors = allFormulas.filter(f => normalFormula(f) !== normalFormula(correct))
-    .sort(()=>Math.random()-.5).slice(0,3);
-  const opts = [correct, ...distractors].sort(()=>Math.random()-.5);
-
-  const html = opts.map(opt =>
-    `<button class="mc-opt formula-opt" onclick="checkReverse('${esc(opt)}', this)">${opt}</button>`
-  ).join('');
-  document.getElementById('q-mc-area').innerHTML = `<div class="mc-opts">${html}</div>`;
-}
-
-// ── MODE: RAPIDO (formula → pick name, timed 10 s) ──
-function loadRapido(q){
-  document.getElementById('q-formula').textContent = q.formula;
-  document.getElementById('q-formula').style.display = '';
-  document.getElementById('q-mc-area').style.display = '';
-  document.getElementById('timer-ring-wrap').style.display = '';
-  document.getElementById('q-prompt').textContent = '¡Rápido! ¿Cómo se llama este compuesto?';
-
-  const allNames = getAllNames(ST.level);
-  const correct = q.trad[0];
-  const distractors = allNames.filter(n => !isCorrectName(n, q)).sort(()=>Math.random()-.5).slice(0,3);
-  const opts = [correct, ...distractors].sort(()=>Math.random()-.5);
-
-  const html = opts.map(opt =>
-    `<button class="mc-opt" onclick="checkRapido('${esc(opt)}', this)">${opt}</button>`
-  ).join('');
-  document.getElementById('q-mc-area').innerHTML = `<div class="mc-opts">${html}</div>`;
-
-  startRapidoTimer(q);
-}
-
-function startRapidoTimer(q){
-  const TOTAL = 10;
-  rapidoSecsLeft = TOTAL;
-  const numEl = document.getElementById('timer-num');
-  const progEl = document.getElementById('timer-prog');
-  const headerEl = document.getElementById('g-timer');
-  const circumference = 2 * Math.PI * 25; // r=25 → 157
-
-  function updateRing(){
-    const frac = rapidoSecsLeft / TOTAL;
-    const offset = circumference * (1 - frac);
-    progEl.style.strokeDashoffset = offset;
-    // Color shift: green → amber → red
-    if(frac > 0.5) progEl.style.stroke = '#0f766e';
-    else if(frac > 0.25) progEl.style.stroke = '#d97706';
-    else progEl.style.stroke = '#dc2626';
-    numEl.textContent = rapidoSecsLeft;
-    headerEl.textContent = rapidoSecsLeft + 's';
-  }
-  updateRing();
-
-  rapidoTimer = setInterval(()=>{
-    rapidoSecsLeft--;
-    updateRing();
-    if(rapidoSecsLeft <= 0){
-      stopRapidoTimer();
-      // Time up — count as wrong
-      ST.totalAttempts++;
-      document.querySelectorAll('.mc-opt').forEach(b=>{
-        b.classList.add('disabled');
-        if(isCorrectName(b.textContent, q)) b.classList.add('correct');
-      });
-      showFeedback('err','⏱ Tiempo agotado. La respuesta correcta era:', q);
-      updateGameStats();
-      scheduleNext(3000);
-    }
-  }, 1000);
-}
-
-function stopRapidoTimer(){
-  if(rapidoTimer){ clearInterval(rapidoTimer); rapidoTimer = null; }
-}
-
-// ── MODE: FORMAR (name → type formula) ──
-function loadFormar(q){
-  // Show a random valid name
-  const allNames = [...q.trad,...(q.stock||[]),...(q.sist||[])].filter(Boolean);
-  const shownName = allNames[Math.floor(Math.random()*allNames.length)];
-  document.getElementById('q-name-prompt').textContent = shownName;
-  document.getElementById('q-name-prompt').style.display = '';
-  document.getElementById('q-formar-area').style.display = '';
-  document.getElementById('q-prompt').textContent = 'Escribe la fórmula química (unidad fórmula) de este compuesto.';
-
-  const inp = document.getElementById('q-formar-input');
-  inp.value = ''; inp.className = 'write-input formula-input'; inp.disabled = false;
-  inp.focus();
-  document.getElementById('btn-formar-hint-el').style.display = '';
-}
-
-// Keyboard helper: insert character at cursor position
-function insertChar(ch){
-  const inp = document.getElementById('q-formar-input');
-  const start = inp.selectionStart;
-  const end = inp.selectionEnd;
-  inp.value = inp.value.slice(0,start) + ch + inp.value.slice(end);
-  inp.selectionStart = inp.selectionEnd = start + ch.length;
-  inp.focus();
-}
-
-// Formula normalization:
-// strips subscript digits (₀₁₂₃₄₅₆₇₈₉ → 0-9), strips superscript ⁺⁻,
-// removes spaces, lowercases, then compares
-function normalFormula(s){
-  if(!s) return '';
-  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
-  const supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
-  let r = '';
-  for(const c of s){
-    if(subMap[c]) r += subMap[c];
-    else if(supMap[c]) r += supMap[c];
-    else r += c;
-  }
-  return r.replace(/\s+/g,'').toLowerCase();
-}
-
-function isCorrectFormula(input, q){
-  return normalFormula(input) === normalFormula(q.formula);
-}
-
-// Normalize a single word for accent-insensitive comparison
-function normWord(s){
-  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
-}
-
-// ── MODE: COMPLETAR (fill the missing word) ──
-let completarState = null;
-function loadCompletar(q){
-  document.getElementById('q-formula').textContent = q.formula;
-  document.getElementById('q-formula').style.display = '';
-  document.getElementById('q-completar-area').style.display = '';
-  document.getElementById('q-prompt').textContent = 'Completa la palabra que falta en el nombre del compuesto.';
-  document.getElementById('btn-completar-hint-el').style.display = '';
-
-  const tokens = getNameTokens(q);
-  // Pick the most interesting blank: prefer cat or ox, never neu.
-  let blankIdx = tokens.findIndex(t => t.t === 'cat' || t.t === 'ox');
-  if(blankIdx === -1) blankIdx = tokens.findIndex(t => t.t !== 'neu');
-  if(blankIdx === -1) blankIdx = 0;
-
-  completarState = { tokens, blankIdx, answer: tokens[blankIdx].w };
-
-  const cont = document.getElementById('completar-tokens');
-  cont.innerHTML = tokens.map((t,i) => {
-    if(i === blankIdx){
-      return `<input class="blank-input" id="completar-input" type="text" autocomplete="off" placeholder="?" onkeydown="if(event.key==='Enter')submitCompletar()">`;
-    }
-    return `<span class="tok ${t.t}">${t.w}</span>`;
-  }).join('');
-  const inp = document.getElementById('completar-input');
-  if(inp){ inp.disabled = false; setTimeout(()=>inp.focus(),50); }
-}
-
-function submitCompletar(){
-  const q = ST.questions[ST.currentIdx];
-  const inp = document.getElementById('completar-input');
-  if(!inp) return;
-  const val = inp.value.trim();
-  if(!val) return;
-
-  ST.attempts++; ST.totalAttempts++;
-  const ok = normWord(val) === normWord(completarState.answer);
-
-  if(ok){
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    inp.disabled = true;
-    inp.style.borderColor = 'var(--ok)'; inp.style.color = 'var(--ok)';
-    showFeedback('ok', `✓ ¡Correcto! +${pts} puntos`, q);
-    scheduleNext(1800);
-  } else if(ST.attempts < 3){
-    inp.classList.add('shake');
-    setTimeout(()=>inp.classList.remove('shake'),320);
-    inp.select();
-    showFeedback('err', `✗ Intento ${ST.attempts} — vuelve a intentar`, null, true);
-  } else {
-    inp.disabled = true;
-    document.getElementById('btn-completar-hint-el').style.display = 'none';
-    showFeedback('reveal', `3 intentos agotados. La palabra era: <strong>${completarState.answer}</strong>`, q);
-    scheduleNext(3500);
-  }
-  updateGameStats();
-}
-
-// ── MODE: DRAG (order the words) ──
-let dragState = null;
-function loadDrag(q){
-  document.getElementById('q-formula').textContent = q.formula;
-  document.getElementById('q-formula').style.display = '';
-  document.getElementById('q-drag-area').style.display = '';
-  document.getElementById('q-prompt').textContent = 'Arrastra las palabras al orden correcto para formar el nombre.';
-  document.getElementById('btn-drag-hint-el').style.display = '';
-  document.getElementById('btn-drag-verify').style.display = 'none';
-
-  const tokens = getNameTokens(q);
-  // slots[i] = tile index currently in slot i (or null)
-  dragState = { tokens, slots: new Array(tokens.length).fill(null), verified:false };
-
-  renderDrag();
-}
-
-function renderDrag(){
-  const tokens = dragState.tokens;
-  const bank = document.getElementById('drag-bank');
-  const zone = document.getElementById('drop-zone');
-
-  // Bank: tiles not currently placed. Keep a stable shuffled order computed once.
-  if(!dragState.bankOrder){
-    dragState.bankOrder = tokens.map((_,i)=>i).sort(()=>Math.random()-.5);
-  }
-  const placed = new Set(dragState.slots.filter(v=>v!==null));
-  bank.innerHTML = dragState.bankOrder.filter(i => !placed.has(i)).map(i =>
-    `<div class="drag-tile ${tokens[i].t}" draggable="true" data-idx="${i}" data-loc="bank">${tokens[i].w}</div>`
-  ).join('') || '<span style="font-size:.75rem;color:var(--dimmer)">(vacío)</span>';
-
-  // Drop zone slots
-  zone.innerHTML = dragState.slots.map((tileIdx,slotIdx) => {
-    if(tileIdx === null){
-      return `<div class="drop-slot" data-slot="${slotIdx}">${slotIdx+1}</div>`;
-    }
-    return `<div class="drop-slot" data-slot="${slotIdx}"><div class="drag-tile in-slot ${tokens[tileIdx].t}" draggable="true" data-idx="${tileIdx}" data-loc="slot" data-slot="${slotIdx}">${tokens[tileIdx].w}</div></div>`;
-  }).join('');
-
-  attachDragHandlers();
-
-  // Show verify button once all slots filled
-  const allFilled = dragState.slots.every(v=>v!==null);
-  document.getElementById('btn-drag-verify').style.display = allFilled ? '' : 'none';
-}
-
-function placeTile(tileIdx, slotIdx){
-  // Remove tile from any slot it currently occupies
-  const prev = dragState.slots.indexOf(tileIdx);
-  if(prev !== -1) dragState.slots[prev] = null;
-  // If target slot occupied, send that tile back to bank
-  // (just clear it; it returns to bank automatically)
-  dragState.slots[slotIdx] = tileIdx;
-  // reset verification colors
-  dragState.verified = false;
-  document.querySelectorAll('.drop-slot').forEach(s=>s.classList.remove('correct','wrong'));
-  renderDrag();
-}
-
-function removeTile(tileIdx){
-  const prev = dragState.slots.indexOf(tileIdx);
-  if(prev !== -1) dragState.slots[prev] = null;
-  renderDrag();
-}
-
-let dragTouchClone = null, dragTouchIdx = null;
-function attachDragHandlers(){
-  document.querySelectorAll('#q-drag-area .drag-tile').forEach(tile => {
-    const idx = parseInt(tile.dataset.idx,10);
-    // HTML5 drag
-    tile.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('text/plain', String(idx));
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    // Click a placed tile to remove it
-    if(tile.dataset.loc === 'slot'){
-      tile.addEventListener('click', () => removeTile(idx));
-    }
-    // Touch support
-    tile.addEventListener('touchstart', e => {
-      dragTouchIdx = idx;
-      const t = e.touches[0];
-      dragTouchClone = tile.cloneNode(true);
-      dragTouchClone.classList.add('dragging-clone');
-      dragTouchClone.style.left = (t.clientX-30)+'px';
-      dragTouchClone.style.top  = (t.clientY-18)+'px';
-      document.body.appendChild(dragTouchClone);
-    }, {passive:true});
-    tile.addEventListener('touchmove', e => {
-      if(!dragTouchClone) return;
-      const t = e.touches[0];
-      dragTouchClone.style.left = (t.clientX-30)+'px';
-      dragTouchClone.style.top  = (t.clientY-18)+'px';
-      e.preventDefault();
-    }, {passive:false});
-    tile.addEventListener('touchend', e => {
-      if(dragTouchClone){ dragTouchClone.remove(); dragTouchClone = null; }
-      const t = e.changedTouches[0];
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      const slotEl = el ? el.closest('.drop-slot') : null;
-      if(slotEl && dragTouchIdx !== null){
-        placeTile(dragTouchIdx, parseInt(slotEl.dataset.slot,10));
-      }
-      dragTouchIdx = null;
-    });
+function getAllNames(level){
+  const bank = BANK[level];
+  const names = [];
+  [...bank.binary,...bank.ternary].forEach(c => {
+    names.push(...c.trad);
+    if(c.stock) names.push(...c.stock);
+    if(c.sist) names.push(...c.sist);
   });
-
-  document.querySelectorAll('#drop-zone .drop-slot').forEach(slot => {
-    slot.addEventListener('dragover', e => { e.preventDefault(); slot.classList.add('drag-over'); });
-    slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
-    slot.addEventListener('drop', e => {
-      e.preventDefault();
-      slot.classList.remove('drag-over');
-      const tileIdx = parseInt(e.dataTransfer.getData('text/plain'),10);
-      if(!isNaN(tileIdx)) placeTile(tileIdx, parseInt(slot.dataset.slot,10));
-    });
-  });
+  return [...new Set(names)];
 }
 
-function submitDrag(){
-  const q = ST.questions[ST.currentIdx];
-  const tokens = dragState.tokens;
-  if(dragState.slots.some(v=>v===null)) return;
-
-  ST.attempts++; ST.totalAttempts++;
-
-  // Correct if word in each slot matches the token at that position
-  let allOk = true;
-  const slotEls = document.querySelectorAll('#drop-zone .drop-slot');
-  dragState.slots.forEach((tileIdx, slotIdx) => {
-    const ok = tokens[tileIdx].w === tokens[slotIdx].w;
-    if(!ok) allOk = false;
-    if(slotEls[slotIdx]) slotEls[slotIdx].classList.add(ok ? 'correct' : 'wrong');
-  });
-
-  if(allOk){
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    document.getElementById('btn-drag-verify').style.display = 'none';
-    document.querySelectorAll('#q-drag-area .drag-tile').forEach(t=>t.setAttribute('draggable','false'));
-    showFeedback('ok', `✓ ¡Correcto! +${pts} puntos`, q);
-    scheduleNext(2000);
-  } else {
-    const zone = document.getElementById('drop-zone');
-    zone.classList.add('shake');
-    setTimeout(()=>zone.classList.remove('shake'),320);
-    const correctName = tokens.map(t=>t.w).join(' ');
-    if(ST.attempts < 3){
-      showFeedback('err', `✗ Intento ${ST.attempts} — algunas palabras están mal ubicadas.`, null, true);
-    } else {
-      document.getElementById('btn-drag-hint-el').style.display = 'none';
-      showFeedback('reveal', `3 intentos agotados. El orden correcto es: <strong>${correctName}</strong>`, q);
-      scheduleNext(3500);
-    }
-  }
-  updateGameStats();
-}
-
-// ── SUBMIT HANDLERS ──
 function checkMC(chosen, el){
   const q = ST.questions[ST.currentIdx];
   ST.attempts++; ST.totalAttempts++;
+
+  // Disable all options
   document.querySelectorAll('.mc-opt').forEach(b => b.classList.add('disabled'));
-  if(isCorrectName(chosen, q)){
+
+  if(isCorrect(chosen, q)){
     el.classList.add('correct');
     const pts = ST.attempts===1?10:ST.attempts===2?5:2;
     ST.score += pts; ST.correct++;
@@ -1593,8 +758,9 @@ function checkMC(chosen, el){
     scheduleNext(1800);
   } else {
     el.classList.add('wrong');
+    // Highlight correct
     document.querySelectorAll('.mc-opt').forEach(b=>{
-      if(isCorrectName(b.textContent, q)) b.classList.add('correct');
+      if(isCorrect(b.textContent, q)) b.classList.add('correct');
     });
     showFeedback('err', `✗ Incorrecto. La respuesta correcta es:`, q);
     scheduleNext(3000);
@@ -1602,48 +768,13 @@ function checkMC(chosen, el){
   updateGameStats();
 }
 
-function checkReverse(chosen, el){
-  const q = ST.questions[ST.currentIdx];
-  ST.attempts++; ST.totalAttempts++;
-  document.querySelectorAll('.mc-opt').forEach(b => b.classList.add('disabled'));
-  if(normalFormula(chosen) === normalFormula(q.formula)){
-    el.classList.add('correct');
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    showFeedback('ok', `✓ ¡Correcto! +${pts} puntos`, q);
-    scheduleNext(1800);
-  } else {
-    el.classList.add('wrong');
-    document.querySelectorAll('.mc-opt').forEach(b=>{
-      if(normalFormula(b.textContent) === normalFormula(q.formula)) b.classList.add('correct');
-    });
-    showFeedback('err', `✗ Incorrecto. La fórmula correcta es: <strong style="font-family:var(--mono)">${q.formula}</strong>`, null);
-    scheduleNext(3000);
-  }
-  updateGameStats();
-}
-
-function checkRapido(chosen, el){
-  const q = ST.questions[ST.currentIdx];
-  stopRapidoTimer();
-  ST.attempts++; ST.totalAttempts++;
-  document.querySelectorAll('.mc-opt').forEach(b => b.classList.add('disabled'));
-  if(isCorrectName(chosen, q)){
-    el.classList.add('correct');
-    // Bonus points for speed
-    const bonus = rapidoSecsLeft >= 7 ? 15 : rapidoSecsLeft >= 4 ? 10 : 6;
-    ST.score += bonus; ST.correct++;
-    showFeedback('ok', `✓ ¡Correcto! +${bonus} puntos (${10-rapidoSecsLeft}s)`, q);
-    scheduleNext(1800);
-  } else {
-    el.classList.add('wrong');
-    document.querySelectorAll('.mc-opt').forEach(b=>{
-      if(isCorrectName(b.textContent, q)) b.classList.add('correct');
-    });
-    showFeedback('err', `✗ Incorrecto. La respuesta correcta es:`, q);
-    scheduleNext(3000);
-  }
-  updateGameStats();
+function loadWrite(q){
+  document.getElementById('q-mc-area').style.display = 'none';
+  document.getElementById('q-write-area').style.display = '';
+  const inp = document.getElementById('q-input');
+  inp.value = ''; inp.className = 'write-input';
+  inp.focus();
+  document.getElementById('btn-hint-el').style.display = '';
 }
 
 function submitWrite(){
@@ -1652,7 +783,7 @@ function submitWrite(){
   if(!val) return;
 
   ST.attempts++; ST.totalAttempts++;
-  const ok = isCorrectName(val, q);
+  const ok = isCorrect(val, q);
 
   if(ok){
     const pts = ST.attempts===1?10:ST.attempts===2?5:2;
@@ -1674,37 +805,6 @@ function submitWrite(){
   updateGameStats();
 }
 
-function submitFormar(){
-  const q = ST.questions[ST.currentIdx];
-  const val = document.getElementById('q-formar-input').value.trim();
-  if(!val) return;
-
-  ST.attempts++; ST.totalAttempts++;
-  const ok = isCorrectFormula(val, q);
-
-  if(ok){
-    const pts = ST.attempts===1?10:ST.attempts===2?5:2;
-    ST.score += pts; ST.correct++;
-    showFeedback('ok', `✓ ¡Correcto! La fórmula es <strong style="font-family:var(--mono)">${q.formula}</strong>. +${pts} puntos`, q);
-    document.getElementById('q-formar-input').disabled = true;
-    scheduleNext(2000);
-  } else if(ST.attempts < 3){
-    const inp = document.getElementById('q-formar-input');
-    inp.classList.add('shake');
-    setTimeout(()=>inp.classList.remove('shake'),320);
-    showFeedback('err', `✗ Intento ${ST.attempts} — revisa los subíndices e intenta de nuevo`, null, true);
-  } else {
-    document.getElementById('q-formar-input').disabled = true;
-    document.getElementById('btn-formar-hint-el').style.display = 'none';
-    showFeedback('reveal',
-      `3 intentos agotados. La fórmula era: <strong style="font-family:var(--mono);font-size:1.1em">${q.formula}</strong>`,
-      q);
-    scheduleNext(3500);
-  }
-  updateGameStats();
-}
-
-// ── HINT ──
 function showHint(){
   const q = ST.questions[ST.currentIdx];
   const hints = LEVEL_HINTS[ST.level];
@@ -1714,31 +814,12 @@ function showHint(){
   fb.innerHTML = '💡 <strong>Pista:</strong> ' + hint;
 }
 
-// ── CORRECTNESS HELPERS ──
-function isCorrectName(input, q){
-  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
-    .replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').trim();
+function isCorrect(input, q){
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').trim();
   const ni = norm(input);
   return [...q.trad,...(q.stock||[]),...(q.sist||[])].some(v => norm(v)===ni);
 }
 
-function getAllNames(level){
-  const bank = BANK[level];
-  const names = [];
-  [...bank.binary,...bank.ternary].forEach(c => {
-    names.push(...c.trad);
-    if(c.stock) names.push(...c.stock);
-    if(c.sist) names.push(...c.sist);
-  });
-  return [...new Set(names)];
-}
-
-function getAllFormulas(level){
-  const bank = BANK[level];
-  return [...bank.binary,...bank.ternary].map(c => c.formula);
-}
-
-// ── FEEDBACK / BREAKDOWN ──
 function showFeedback(type, msg, q, skipBreakdown=false){
   const fb = document.getElementById('feedback');
   let html = `<strong>${msg}</strong>`;
@@ -1751,29 +832,23 @@ function showFeedback(type, msg, q, skipBreakdown=false){
 
 function buildBreakdown(q){
   const tokens = q.tokens || [];
-  let html = '';
-  if(tokens.length){
-    const words = tokens.map(t =>
-      `<div class="nb-token"><span class="nb-word ${t.t}">${t.w}</span><span class="nb-lbl ${t.t}">${tokenLabel(t.t)}</span></div>`
-    ).join('');
-    html += `<div class="name-breakdown">${words}</div>`;
-  }
+  if(!tokens.length) return '';
+  const words = tokens.map(t =>
+    `<div class="nb-token"><span class="nb-word ${t.t}">${t.w}</span><span class="nb-lbl ${t.t}">${tokenLabel(t.t,q)}</span></div>`
+  ).join('');
   const alts = [];
   if(q.trad[0]) alts.push(`Tradicional: <em>${q.trad[0]}</em>`);
   if(q.stock && q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
   if(q.sist && q.sist[0]) alts.push(`IUPAC: <em>${q.sist[0]}</em>`);
-  if(alts.length) html += `<div style="font-size:.78rem;margin-top:8px;color:inherit;opacity:.85">${alts.join(' · ')}</div>`;
-  return html;
+  const why = q.hint ? `<div class="fb-why">💡 ${q.hint}</div>` : '';
+  return `<div class="name-breakdown">${words}</div><div style="font-size:.78rem;margin-top:8px;color:inherit;opacity:.85">${alts.join(' · ')}</div>${why}`;
 }
 
-function tokenLabel(t){
+function tokenLabel(t, q){
   const map = {cat:'① Catión',an:'② Anión',oh:'③ OH⁻',ox:'④ Oxoanión',neu:''};
   return map[t]||'';
 }
 
-function esc(s){ return s.replace(/'/g,"&#39;"); }
-
-// ── NEXT QUESTION TIMER ──
 let nextTimer = null;
 function scheduleNext(ms){
   clearTimeout(nextTimer);
@@ -1793,7 +868,6 @@ function updateGameStats(){
 
 // ── END ──
 function endGame(){
-  stopRapidoTimer();
   ST.sessionEnd = new Date();
   const pct = (ST.correct / ST.questions.length) * 100;
   const grade = ((pct/100)*5).toFixed(2);
@@ -1805,8 +879,7 @@ function endGame(){
   document.getElementById('r-medal').textContent = medal;
   document.getElementById('r-level').textContent = level;
   document.getElementById('r-grade').textContent = grade + ' / 5.0';
-  document.getElementById('r-msg').textContent =
-    `Respondiste ${ST.correct} de ${ST.questions.length} preguntas correctamente con ${ST.totalAttempts} intentos en total.`;
+  document.getElementById('r-msg').textContent = `Respondiste ${ST.correct} de ${ST.questions.length} preguntas correctamente con ${ST.totalAttempts} intentos en total.`;
   document.getElementById('r-correct').textContent = ST.correct;
   document.getElementById('r-attempts').textContent = ST.totalAttempts;
   document.getElementById('r-score').textContent = ST.score;
@@ -1821,7 +894,7 @@ function generateCert(grade, level){
   const timeStr = now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
   const levelLabels = {easy:'Fácil',medium:'Intermedio',hard:'Experto'};
   const typeLabels = {binary:'Compuestos Binarios',ternary:'Compuestos Ternarios',mixed:'Mixto'};
-  const modeLabels = {mc:'Opción múltiple',write:'Escritura libre',completar:'Completar',drag:'Ordenar',formar:'Formar moléculas'};
+  const modeLabels = {mc:'Opción múltiple',write:'Escritura libre'};
 
   document.getElementById('cert-container').innerHTML = `
     <div class="cert" id="print-cert">
@@ -1836,7 +909,7 @@ function generateCert(grade, level){
         <div class="cert-stat"><div class="cert-stat-val">${ST.correct}/${ST.questions.length}</div><div class="cert-stat-lbl">Preguntas correctas</div></div>
         <div class="cert-stat"><div class="cert-stat-val">${grade}</div><div class="cert-stat-lbl">Calificación (sobre 5.0)</div></div>
         <div class="cert-stat"><div class="cert-stat-val">${levelLabels[ST.level]}</div><div class="cert-stat-lbl">Nivel de dificultad</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${modeLabels[ST.mode]||ST.mode}</div><div class="cert-stat-lbl">Modo de juego</div></div>
+        <div class="cert-stat"><div class="cert-stat-val">${typeLabels[ST.type]||ST.type}</div><div class="cert-stat-lbl">Tipo de ejercicio</div></div>
       </div>
       <div class="cert-sigs">
         <div><div class="cert-sig-line"></div><p>Firma del estudiante</p></div>
@@ -1851,7 +924,6 @@ function generateCert(grade, level){
 
 function resetGame(){
   clearTimeout(nextTimer);
-  stopRapidoTimer();
   ST = {level:'',type:'',mode:ST.mode,questions:[],currentIdx:0,score:0,correct:0,totalAttempts:0,attempts:0,sessionStart:null,sessionEnd:null};
   document.getElementById('inp-level').value='';
   document.getElementById('inp-type').value='';

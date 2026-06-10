@@ -107,6 +107,32 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .step-body.oh strong{color:var(--oh-t)}.step-body.ox strong{color:var(--ox-t)}
 .step-body p{font-size:.83rem;color:var(--dim);line-height:1.6;margin:0}
 
+/* MDEC reading steps */
+.mdec-steps{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.mdec-step{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;padding:10px 12px;border-radius:var(--rs);background:var(--bg);border:1.5px solid var(--brd)}
+.mdec-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;flex-shrink:0;color:#fff}
+.mdec-num.cat{background:var(--cat)}.mdec-num.an{background:var(--an)}.mdec-num.oh{background:var(--oh)}.mdec-num.ox{background:var(--ox)}.mdec-num.neu{background:var(--dimmer)}
+.mdec-body strong{font-size:.84rem;display:block;margin-bottom:2px}
+.mdec-body p{font-size:.8rem;color:var(--dim);line-height:1.55;margin:0}
+.mdec-demo{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:14px 16px;margin-top:12px}
+.mdec-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:8px}
+.mdec-token{display:flex;flex-direction:column;align-items:center;gap:3px}
+.mdec-w{font-family:var(--mono);font-size:.9rem;font-weight:700;padding:3px 9px;border-radius:5px;border:1.5px solid}
+.mdec-w.cat{background:var(--cat-b);color:var(--cat-t);border-color:var(--cat)}
+.mdec-w.an{background:var(--an-b);color:var(--an-t);border-color:var(--an)}
+.mdec-w.oh{background:var(--oh-b);color:var(--oh-t);border-color:var(--oh)}
+.mdec-w.ox{background:var(--ox-b);color:var(--ox-t);border-color:var(--ox)}
+.mdec-w.neu{background:#f0f4fa;color:var(--dim);border-color:var(--brd)}
+.mdec-lbl{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.mdec-lbl.cat{color:var(--cat-t)}.mdec-lbl.an{color:var(--an-t)}.mdec-lbl.oh{color:var(--oh-t)}.mdec-lbl.ox{color:var(--ox-t)}.mdec-lbl.neu{color:var(--dimmer)}
+/* Error frecuente box */
+.error-box{background:#fee2e2;border:1.5px solid #fca5a5;border-left:4px solid #dc2626;border-radius:var(--rs);padding:12px 14px;margin:12px 0}
+.error-box strong{color:#991b1b;font-size:.82rem;display:block;margin-bottom:4px}
+.error-box p{font-size:.8rem;color:#7f1d1d;line-height:1.55;margin:0}
+/* Real-world anchor */
+.rw-strip{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.rw-item{background:var(--ox-b);border:1px solid var(--ox);border-radius:var(--rs);padding:6px 10px;font-size:.76rem;color:var(--ox-t)}
+.rw-item strong{display:block;font-family:var(--mono);font-weight:700}
 /* COMPARISON */
 .comp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
 .comp-col{border-radius:var(--rs);padding:14px 16px;border:2px solid}
@@ -200,6 +226,57 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <div class="sect">
+    <h2>Lectura cromática MDEC — paso a paso</h2>
+    <p>El modelo 2+matiz funciona como un sistema de capas: cada capa tiene un color y una función. Para nombrar cualquier compuesto, sigue esta secuencia cromática:</p>
+
+    <div class="mdec-steps">
+      <div class="mdec-step">
+        <div class="mdec-num cat">①</div>
+        <div class="mdec-body"><strong style="color:var(--cat-t)">Identifica el catión [Ámbar]</strong>
+        <p>Primer elemento de la fórmula. Es el metal (o ion positivo). Determina si su valencia es fija o variable. Si es variable, deberás calcular su EO.</p></div>
+      </div>
+      <div class="mdec-step">
+        <div class="mdec-num an">②</div>
+        <div class="mdec-body"><strong style="color:var(--an-t)">Identifica el anión [Azul / Violeta / Teal]</strong>
+        <p>Segundo componente. El color indica el tipo: Azul = anión simple (-uro), Violeta = OH⁻ (hidróxido), Teal = oxoanión (sulfato, nitrato…).</p></div>
+      </div>
+      <div class="mdec-step">
+        <div class="mdec-num neu">③</div>
+        <div class="mdec-body"><strong>Determina el tipo de compuesto</strong>
+        <p>Metal + O²⁻ (Azul) → óxido. Metal + Cl⁻/S²⁻ (Azul) → sal binaria. Metal + OH⁻ (Violeta) → hidróxido/base. Metal + oxoanión (Teal) → sal oxigenada.</p></div>
+      </div>
+      <div class="mdec-step">
+        <div class="mdec-num ox">④</div>
+        <div class="mdec-body"><strong style="color:var(--ox-t)">Construye el nombre (3 sistemas)</strong>
+        <p>Usa el tipo de compuesto y el EO del catión para aplicar las reglas: Tradicional (-oso/-ico), Stock (número romano), IUPAC (prefijos di-/tri-).</p></div>
+      </div>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--dimmer)"><strong>Ejemplo MDEC con Fe₂(SO₄)₃:</strong></p>
+    <div class="mdec-demo">
+      <div class="mdec-row">
+        <div class="mdec-token"><span class="mdec-w ox">sulfato</span><span class="mdec-lbl ox">④ Teal · SO₄²⁻</span></div>
+        <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+        <div class="mdec-token"><span class="mdec-w cat">hierro</span><span class="mdec-lbl cat">① Ámbar · Fe</span></div>
+        <div class="mdec-token"><span class="mdec-w cat">(III)</span><span class="mdec-lbl cat">EO = +3 · Stock</span></div>
+      </div>
+      <div style="font-size:.78rem;color:var(--dim)">
+        <strong>Tradicional:</strong> sulfato <em>férrico</em> (EO mayor de Fe → -ico) &nbsp;·&nbsp;
+        <strong>Stock:</strong> sulfato de hierro <em>(III)</em> &nbsp;·&nbsp;
+        <strong>IUPAC:</strong> <em>trisulfato</em> de <em>di</em>hierro
+      </div>
+    </div>
+
+    <div class="rw-strip">
+      <div class="rw-item"><strong>NaCl</strong>cloruro de sodio = sal de mesa</div>
+      <div class="rw-item"><strong>CaO</strong>óxido de calcio = cal viva</div>
+      <div class="rw-item"><strong>Fe₂O₃</strong>óxido de hierro (III) = herrumbre</div>
+      <div class="rw-item"><strong>NaHCO₃</strong>bicarbonato de sodio = levadura química</div>
+      <div class="rw-item"><strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada</div>
+    </div>
+  </div>
+
+  <div class="sect">
     <h2>Compuestos iónicos: lectura de fórmulas</h2>
     <p>Un compuesto iónico está formado por un catión y un anión. Los subíndices se ajustan para que las cargas se cancelen:</p>
 
@@ -221,7 +298,8 @@ footer a:hover{text-decoration:underline}
       <tr><td>Fe</td><td><code>+2</code> · <code>+3</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
       <tr><td>Cu</td><td><code>+1</code> · <code>+2</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
       <tr><td>Pb</td><td><code>+2</code> · <code>+4</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
-      <tr><td>Mn</td><td><code>+2</code> · <code>+4</code> · <code>+7</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
+      <tr><td>Mn</td><td><code>+2</code> · <code>+3</code> · <code>+4</code> · <code>+6</code> · <code>+7</code></td><td><span class="tag tag-cat">Variable (5 estados)</span></td></tr>
+      <tr><td>Cr</td><td><code>+2</code> · <code>+3</code> · <code>+6</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
     </table>
   </div>
 
@@ -406,6 +484,11 @@ footer a:hover{text-decoration:underline}
       <strong>N₂O₃</strong> → trióxido de dinitrógeno<br>
       <strong>FeCl₃</strong> → tricloruro de hierro (para sales binarias)
     </div>
+
+    <div class="error-box">
+      <strong>❌ Error frecuente: prefijos en sistema equivocado</strong>
+      <p>Los prefijos di-, tri-, tetra- son <strong>exclusivos del sistema IUPAC</strong>. En Tradicional se dice "cloruro férrico" (no "tricloruro"). En Stock se dice "cloruro de hierro (III)" (no "tricloruro"). Mezclar sistemas es el error más común en exámenes.</p>
+    </div>
   </div>
 
 </div>
@@ -485,6 +568,11 @@ footer a:hover{text-decoration:underline}
       <strong>¿Por qué SO₃ se llama "anhídrido" en Tradicional pero "óxido de azufre (VI)" en Stock?</strong><br>
       La nomenclatura Tradicional distingue entre <em>óxidos</em> (metal + O) y <em>anhídridos</em> (no metal + O). Stock e IUPAC unifican ambos bajo la palabra "óxido", usando el número de oxidación o los prefijos para diferenciarlos. En el aula se usan los dos sistemas; es importante reconocer ambas formas.
     </p>
+
+    <div class="error-box">
+      <strong>❌ Error frecuente: -oso/-ico cuando hay más de 2 valencias</strong>
+      <p>La regla -oso/-ico solo funciona cuando el metal tiene <strong>exactamente 2 estados de oxidación</strong> comunes. Para Mn (+2, +3, +4) la nomenclatura Tradicional binaria falla: Mn³⁺ no tiene nombre Tradicional. Para esos casos se usa Stock obligatoriamente. Ver Tab 06 → Excepciones.</p>
+    </div>
   </div>
 
 </div>
@@ -492,160 +580,72 @@ footer a:hover{text-decoration:underline}
 <!-- ── TAB 6: EXCEPCIONES ── -->
 <div class="tab-cont">
 
-  <!-- ── Metales con múltiples valencias ── -->
   <div class="sect">
-    <h2>Metales con muchas valencias: el caso del Mn</h2>
-    <p>La regla <em>-oso / -ico</em> funciona bien para <strong>dos</strong> valencias. El manganeso tiene <strong>cinco</strong> estados de oxidación frecuentes (+2, +3, +4, +6, +7), lo que desborda la nomenclatura tradicional y es el ejemplo perfecto de por qué se creó el sistema Stock.</p>
-
-    <h3>Manganeso (Mn): +2 · +3 · +4 · +6 · +7</h3>
-    <table class="tbl">
-      <tr><th>EO</th><th>Nombre trad.</th><th>Stock</th><th>Compuesto tipo</th><th>Nota</th></tr>
-      <tr><td><code>+2</code></td><td>manganoso</td><td>manganeso (II)</td><td>MnO · MnCl₂ · MnSO₄</td><td>El más estable; -oso</td></tr>
-      <tr><td><code>+3</code></td><td>—</td><td>manganeso (III)</td><td>Mn₂O₃</td><td>Sin nombre trad. binario claro; se usa IUPAC o Stock</td></tr>
-      <tr><td><code>+4</code></td><td>mangánico</td><td>manganeso (IV)</td><td>MnO₂</td><td>-ico para el EO medio más común</td></tr>
-      <tr><td><code>+6</code></td><td>manganato (como oxoanión)</td><td>manganeso (VI)</td><td>K₂MnO₄</td><td>Aparece solo como oxoanión MnO₄²⁻</td></tr>
-      <tr><td><code>+7</code></td><td>permangánico / permanganato</td><td>manganeso (VII)</td><td>Mn₂O₇ · KMnO₄ · MnO₄⁻</td><td>per- indica EO máximo</td></tr>
-    </table>
-
-    <div class="color-box cat">
-      <div class="color-dot"></div>
-      <div>
-        <strong>¿Por qué falla la tradicional con +3 y +6 del Mn?</strong>
-        <span>El sistema -oso/-ico solo discrimina <em>dos</em> estados. Con +2, +3, +4 sería imposible asignar -oso y -ico sin ambigüedad. Por eso en la práctica solo se usan los nombres tradicionales del Mn para +2 (manganoso), +4 (mangánico) y +7 (permangánico), y se recurre a Stock para +3 y +6.</span>
-      </div>
-    </div>
-
-    <div class="color-box an">
-      <div class="color-dot"></div>
-      <div>
-        <strong>Regla general para muchas valencias</strong>
-        <span>Si un metal tiene 4 estados de oxidación, la tradición usa: <em>hipo-…-oso</em> (mín.) · <em>…-oso</em> · <em>…-ico</em> · <em>per-…-ico</em> (máx.). Pero cuando hay 5 o más, <strong>Stock es la única opción práctica</strong>.</span>
-      </div>
-    </div>
-
-    <div class="ejemplo">
-      <strong>Ejemplos con los 5 estados del Mn:</strong><br>
-      MnO → óxido <span class="corr">manganoso</span> · óxido de Mn(II) · óxido de manganeso<br>
-      Mn₂O₃ → <em>sin nombre trad. binario</em> · óxido de Mn(III) · trióxido de <span class="corr">dimanganeso</span><br>
-      MnO₂ → óxido <span class="corr">mangánico</span> · óxido de Mn(IV) · dióxido de manganeso<br>
-      K₂MnO₄ → <span class="corr">manganato</span> de potasio · manganato de K · manganato de dipotasio<br>
-      KMnO₄ → <span class="corr">permanganato</span> de potasio · permanganato de K · permanganato de K
-    </div>
-
-    <h3>Cromo (Cr): +3 · +6</h3>
-    <table class="tbl">
-      <tr><th>EO</th><th>Nombre</th><th>Ejemplo</th></tr>
-      <tr><td><code>+3</code></td><td>crómico (menor habitual)</td><td>Cr₂O₃ → óxido crómico · CrCl₃ → cloruro crómico</td></tr>
-      <tr><td><code>+6</code></td><td>crómico superior → se reconoce por el contexto o se nombra como anhídrido</td><td>CrO₃ → anhídrido crómico · CrO₄²⁻ → cromato · Cr₂O₇²⁻ → dicromato</td></tr>
-    </table>
-    <p>El Cr(VI) forma óxidos con comportamiento de <em>no metal</em>: CrO₃ se llama <strong>anhídrido crómico</strong> en nomenclatura tradicional (no "óxido crómico superior"), porque reacciona con agua dando el ácido crómico.</p>
-  </div>
-
-  <!-- ── Prefijos en oxoácidos ── -->
-  <div class="sect">
-    <h2>Prefijos en oxoácidos: hipo- · — · — · per-</h2>
-    <p>Cuando un no metal tiene <strong>cuatro</strong> estados de oxidación positiva (especialmente los halógenos Cl, Br, I), la nomenclatura tradicional distingue los oxoácidos y sus aniones con un sistema de cuatro niveles:</p>
+    <h2>Manganeso — 5 estados de oxidación</h2>
+    <p>El Mn es el metal de transición más versátil en bachillerato: tiene <strong>5 estados de oxidación comunes</strong>. La nomenclatura Tradicional no puede manejar más de 2 estados con -oso/-ico, por lo que varios compuestos de Mn <em>requieren</em> nomenclatura Stock.</p>
 
     <table class="tbl">
-      <tr><th>Nivel</th><th>EO Cl</th><th>Oxoácido</th><th>Oxoanión</th><th>Patrón</th></tr>
-      <tr><td>Mínimo</td><td><code>+1</code></td><td>ácido <em>hipo</em>cloroso</td><td><em>hipo</em>clorito</td><td>hipo-…-oso · hipo-…-ito</td></tr>
-      <tr><td>Bajo</td><td><code>+3</code></td><td>ácido cloroso</td><td>clorito</td><td>…-oso · …-ito</td></tr>
-      <tr><td>Alto</td><td><code>+5</code></td><td>ácido clórico</td><td>clorato</td><td>…-ico · …-ato</td></tr>
-      <tr><td>Máximo</td><td><code>+7</code></td><td>ácido <em>per</em>clórico</td><td><em>per</em>clorato</td><td>per-…-ico · per-…-ato</td></tr>
+      <tr><th>EO</th><th>Fórmula ejemplo</th><th>Tradicional</th><th>Stock</th><th>IUPAC</th></tr>
+      <tr><td><code>+2</code></td><td>MnO</td><td>óxido manganoso</td><td>óxido de manganeso (II)</td><td>óxido de manganeso</td></tr>
+      <tr><td><code>+3</code></td><td>Mn₂O₃</td><td style="color:var(--err);font-style:italic">— sin nombre —</td><td>óxido de manganeso (III)</td><td>trióxido de dimanganeso</td></tr>
+      <tr><td><code>+4</code></td><td>MnO₂</td><td>óxido mangánico</td><td>óxido de manganeso (IV)</td><td>dióxido de manganeso</td></tr>
+      <tr><td><code>+6</code></td><td>K₂MnO₄</td><td colspan="2">manganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VI) de dipotasio</td></tr>
+      <tr><td><code>+7</code></td><td>KMnO₄</td><td colspan="2">permanganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VII) de potasio</td></tr>
     </table>
 
-    <div class="color-box an">
-      <div class="color-dot"></div>
-      <div>
-        <strong>Regla ácido → anión</strong>
-        <span>El sufijo del ácido se transforma en el sufijo del anión: <em>-oso → -ito</em> · <em>-ico → -ato</em>. Los prefijos <em>hipo-</em> y <em>per-</em> se conservan igual en el anión.</span>
-      </div>
-    </div>
-
-    <h3>Azufre y nitrógeno (dos valencias)</h3>
-    <table class="tbl">
-      <tr><th>EO</th><th>Oxoácido</th><th>Oxoanión</th></tr>
-      <tr><td>S <code>+4</code></td><td>ácido sulfuroso</td><td>sulfito SO₃²⁻</td></tr>
-      <tr><td>S <code>+6</code></td><td>ácido sulfúrico</td><td>sulfato SO₄²⁻</td></tr>
-      <tr><td>N <code>+3</code></td><td>ácido nitroso</td><td>nitrito NO₂⁻</td></tr>
-      <tr><td>N <code>+5</code></td><td>ácido nítrico</td><td>nitrato NO₃⁻</td></tr>
-    </table>
-  </div>
-
-  <!-- ── Mercurio ── -->
-  <div class="sect">
-    <h2>Mercurio: la excepción del catión dinuclear</h2>
-    <p>El mercurio es el único metal común cuyo estado de oxidación <strong>+1 no existe como ion monoatómico</strong>. En lugar de Hg⁺ se forma el catión dinuclear <strong>Hg₂²⁺</strong> (dos átomos de Hg unidos por enlace metálico).</p>
-
-    <table class="tbl">
-      <tr><th>Fórmula</th><th>Catión real</th><th>EO aparente</th><th>Nombre tradicional</th><th>Stock</th></tr>
-      <tr><td><code>Hg₂Cl₂</code></td><td>Hg₂²⁺</td><td>+1 por Hg</td><td>cloruro <em>mercurioso</em></td><td>cloruro de mercurio (I)</td></tr>
-      <tr><td><code>HgCl₂</code></td><td>Hg²⁺</td><td>+2</td><td>cloruro <em>mercúrico</em></td><td>cloruro de mercurio (II)</td></tr>
-      <tr><td><code>Hg₂O</code></td><td>Hg₂²⁺</td><td>+1 por Hg</td><td>óxido <em>mercurioso</em></td><td>óxido de mercurio (I)</td></tr>
-      <tr><td><code>HgO</code></td><td>Hg²⁺</td><td>+2</td><td>óxido <em>mercúrico</em></td><td>óxido de mercurio (II)</td></tr>
-    </table>
-
-    <div class="color-box oh">
-      <div class="color-dot"></div>
-      <div>
-        <strong>Cuidado al formular Hg(I)</strong>
-        <span>Hg₂Cl₂ tiene <em>dos</em> átomos de Hg por cada dos de Cl. El EO del Hg es +1 (cada átomo), pero el catión completo es Hg₂²⁺ con carga global +2, que equilibra los dos Cl⁻.</span>
-      </div>
+    <div class="error-box">
+      <strong>❌ Por qué falla la Tradicional con Mn en +3</strong>
+      <p>El sistema -oso/-ico asigna -oso al estado <em>menor</em> y -ico al <em>mayor</em> dentro de un par. Con Mn, hay tres estados binarios (+2, +3, +4): se asigna +2 → manganoso y +4 → mangánico, pero +3 queda sin nombre. Este es el límite del sistema Tradicional y por ello Stock es indispensable.</p>
     </div>
   </div>
 
-  <!-- ── Anhídridos vs Óxidos ── -->
   <div class="sect">
-    <h2>Anhídridos vs Óxidos de no metal</h2>
-    <p>En nomenclatura <strong>tradicional</strong> se distingue entre:</p>
-    <ul>
-      <li><strong>Óxido</strong>: compuesto de <em>metal</em> + oxígeno → "óxido de [metal]" o con sufijo -oso/-ico.</li>
-      <li><strong>Anhídrido</strong>: compuesto de <em>no metal</em> + oxígeno → "anhídrido [no metal con sufijo]".</li>
-    </ul>
-    <p>En Stock e IUPAC ambos tipos se nombran simplemente como <em>óxido</em>, usando el número romano o los prefijos numéricos para diferenciarlos.</p>
+    <h2>Cromo — comportamiento dual</h2>
+    <p>El Cr presenta un caso especial: en EO = +6 actúa como <strong>no metal</strong>, formando anhídridos y oxoaniones, no óxidos básicos.</p>
 
-    <div class="ejemplo">
-      <strong>SO₃</strong>
-      <br>Tradicional: <span class="corr">anhídrido sulfúrico</span> (S no metal, EO = +6 → -ico)
-      <br>Stock: <span class="corr">óxido de azufre (VI)</span>
-      <br>IUPAC: <span class="corr">trióxido de azufre</span>
-    </div>
-    <div class="ejemplo">
-      <strong>Mn₂O₇</strong>
-      <br>Tradicional: <span class="corr">anhídrido permangánico</span> (Mn actúa como no metal en EO = +7 → per- + -ico)
-      <br>Stock: <span class="corr">óxido de manganeso (VII)</span>
-      <br>IUPAC: <span class="corr">heptaóxido de dimanganeso</span>
-    </div>
-
-    <h3>¿Cuándo un metal "actúa como no metal"?</h3>
-    <p>Cuando el estado de oxidación es muy alto (+6 o superior), algunos metales de transición (Cr, Mn) forman óxidos ácidos que reaccionan con agua para dar oxoácidos. En ese caso la nomenclatura tradicional los trata como anhídridos:</p>
     <table class="tbl">
-      <tr><th>Fórmula</th><th>EO metal</th><th>Nombre tradicional</th></tr>
-      <tr><td><code>CrO₃</code></td><td>+6</td><td>anhídrido crómico</td></tr>
-      <tr><td><code>Mn₂O₇</code></td><td>+7</td><td>anhídrido permangánico</td></tr>
+      <tr><th>EO</th><th>Fórmula</th><th>Tradicional</th><th>Stock</th><th>Observación</th></tr>
+      <tr><td><code>+2</code></td><td>CrO</td><td>óxido cromoso</td><td>óxido de cromo (II)</td><td>Poco común</td></tr>
+      <tr><td><code>+3</code></td><td>Cr₂O₃</td><td>óxido crómico</td><td>óxido de cromo (III)</td><td>Estado más estable y frecuente</td></tr>
+      <tr><td><code>+6</code></td><td>CrO₃</td><td>anhídrido crómico</td><td>óxido de cromo (VI)</td><td>No metal: forma ácido crómico</td></tr>
+      <tr><td><code>+6</code></td><td>CrO₄²⁻</td><td colspan="2">cromato (oxoanión)</td><td>Teal en el modelo 2+matiz</td></tr>
+      <tr><td><code>+6</code></td><td>Cr₂O₇²⁻</td><td colspan="2">dicromato (oxoanión)</td><td>2 Cr por unidad del ion</td></tr>
     </table>
+
+    <p style="font-size:.82rem;color:var(--dimmer)"><strong>Clave:</strong> Cuando el EO es alto, el no metal/metal se vuelve ácido-formador. CrO₃ es anhídrido porque reacciona con agua para dar H₂CrO₄ (ácido crómico). Del mismo modo, SO₃ → H₂SO₄.</p>
   </div>
 
-  <!-- ── Hidruros de no metal ── -->
   <div class="sect">
-    <h2>Hidrácidos: ácidos sin oxígeno</h2>
-    <p>Los hidruros de no metal (H + no metal) se comportan como ácidos en disolución. Su nomenclatura tiene una forma <em>pura</em> (gas o sólido) y una forma <em>ácida</em> (en disolución acuosa):</p>
+    <h2>Mercurio — catión dinuclear Hg₂²⁺</h2>
+    <p>El mercurioso es un caso único en bachillerato: el ion <strong>Hg₂²⁺</strong> está formado por <em>dos</em> átomos de Hg unidos, cada uno con EO = +1.</p>
 
     <table class="tbl">
-      <tr><th>Fórmula</th><th>Gas / sólido</th><th>En disolución (ac.)</th><th>Stock / IUPAC</th></tr>
-      <tr><td><code>HCl</code></td><td>cloruro de hidrógeno</td><td>ácido <em>clorhídrico</em></td><td>cloruro de hidrógeno</td></tr>
-      <tr><td><code>HBr</code></td><td>bromuro de hidrógeno</td><td>ácido <em>bromhídrico</em></td><td>bromuro de hidrógeno</td></tr>
-      <tr><td><code>HI</code></td><td>yoduro de hidrógeno</td><td>ácido <em>yodhídrico</em></td><td>yoduro de hidrógeno</td></tr>
-      <tr><td><code>HF</code></td><td>fluoruro de hidrógeno</td><td>ácido <em>fluorhídrico</em></td><td>fluoruro de hidrógeno</td></tr>
-      <tr><td><code>H₂S</code></td><td>sulfuro de hidrógeno</td><td>ácido <em>sulfhídrico</em></td><td>sulfuro de hidrógeno</td></tr>
+      <tr><th>Fórmula</th><th>Ion</th><th>Tradicional</th><th>Stock</th></tr>
+      <tr><td>Hg₂Cl₂</td><td>Hg₂²⁺ + 2 Cl⁻</td><td>cloruro mercurioso</td><td>cloruro de mercurio (I)</td></tr>
+      <tr><td>HgCl₂</td><td>Hg²⁺ + 2 Cl⁻</td><td>cloruro mercúrico</td><td>cloruro de mercurio (II)</td></tr>
     </table>
 
-    <div class="color-box an">
-      <div class="color-dot"></div>
-      <div>
-        <strong>Patrón del nombre ácido</strong>
-        <span>"ácido" + raíz del no metal + "-hídrico". El sufijo <em>-hídrico</em> indica que el ácido no contiene oxígeno y proviene del hidrógeno.</span>
-      </div>
+    <div class="error-box">
+      <strong>❌ Error frecuente con Hg₂Cl₂</strong>
+      <p>El cloruro mercurioso NO es HgCl (un Hg + un Cl). Es Hg₂Cl₂ porque el ion mercurioso existe solo como par Hg₂²⁺. Al calcular el EO: (2x) + 2(−1) = 0 → x = +1 por átomo, pero son dos átomos formando el catión.</p>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Ácidos hídricos (haluros de hidrógeno)</h2>
+    <p>Cuando el hidrógeno se une a un halógeno o no metal sin oxígeno, forma un <strong>ácido hídrico</strong>. En disolución acuosa se llaman ácidos; en estado gaseoso son anhídridos del ácido.</p>
+
+    <table class="tbl">
+      <tr><th>Fórmula</th><th>Gas (cloruro de hidrógeno)</th><th>Disolución (ácido)</th></tr>
+      <tr><td>HCl(g)</td><td>cloruro de hidrógeno</td><td>ácido clorhídrico</td></tr>
+      <tr><td>HBr(g)</td><td>bromuro de hidrógeno</td><td>ácido bromhídrico</td></tr>
+      <tr><td>HI(g)</td><td>yoduro de hidrógeno</td><td>ácido yodhídrico</td></tr>
+      <tr><td>H₂S(g)</td><td>sulfuro de hidrógeno</td><td>ácido sulfhídrico</td></tr>
+    </table>
+
+    <div class="error-box">
+      <strong>❌ Error frecuente: HCl ≠ "ácido clorídrico"</strong>
+      <p>El nombre correcto es <em>ácido clor<strong>h</strong>ídrico</em> (con h intercalada: clor + h + ídrico). La h viene de "hidrógeno". Aplica igual para HBr → bromhídrico, HI → yodhídrico, H₂S → sulfhídrico.</p>
     </div>
   </div>
 
