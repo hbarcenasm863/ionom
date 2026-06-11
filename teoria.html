@@ -43,15 +43,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
 .page-hdr p{font-size:.88rem;color:var(--dimmer)}
 
-/* TAB SYSTEM */
-.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--brd);overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:0}
-.tab-btn{padding:14px 20px;border:none;background:transparent;color:var(--dimmer);font-family:var(--sans);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
-.tab-btn:hover{color:var(--tx)}
-.tab-btn.act{color:var(--an);border-bottom-color:var(--an)}
-.tab-cont{display:none;padding:28px 0;animation:fadeIn .25s ease}
-.tab-cont.act{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
 /* SECTION CARDS */
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
 .sect h2{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
@@ -146,15 +137,44 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .comp-item{font-family:var(--mono);font-size:.82rem;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.08);color:var(--tx)}
 .comp-item:last-child{border-bottom:none}
 
+/* NEW: SCREEN SYSTEM */
+.screen{display:none}.screen.active{display:block}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:32px 0}
+.card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:28px 20px;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:180px;justify-content:center}
+.card:hover{transform:translateY(-8px);box-shadow:var(--sh2)}
+.card.card-cat{border-color:var(--cat);background:linear-gradient(135deg,var(--cat-b),#fff)}
+.card.card-an{border-color:var(--an);background:linear-gradient(135deg,var(--an-b),#fff)}
+.card.card-oh{border-color:var(--oh);background:linear-gradient(135deg,var(--oh-b),#fff)}
+.card.card-ox{border-color:var(--ox);background:linear-gradient(135deg,var(--ox-b),#fff)}
+.card-icon{font-size:2.8rem}
+.card-title{font-family:var(--serif);font-size:1.05rem;font-weight:800;color:var(--tx)}
+.card-desc{font-size:.78rem;color:var(--dim);line-height:1.5}
+.card-badge{font-size:.62rem;font-weight:800;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--an-b);color:var(--an-t);letter-spacing:.08em}
+.breadcrumb-bar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--an-b);border-radius:var(--rs);margin-bottom:24px;border-left:4px solid var(--an)}
+.btn-volver{padding:7px 14px;background:var(--surf);border:2px solid var(--brd);border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-volver:hover{border-color:var(--an);color:var(--an)}
+#seccion-titulo{font-weight:800;font-size:1rem;color:var(--tx)}
+.breadcrumb-numero{font-size:.7rem;color:var(--dimmer);display:block}
+.nav-footer{display:flex;align-items:center;gap:12px;padding:20px 0;border-top:2px solid var(--brd);margin-top:32px}
+.btn-nav{flex:.4;padding:11px 16px;background:var(--an);color:#fff;border:none;border-radius:var(--rs);font-weight:800;font-size:.85rem;cursor:pointer;transition:all .2s}
+.btn-nav:hover:not(:disabled){background:var(--an-t);transform:translateY(-2px)}
+.btn-nav:disabled{opacity:.35;cursor:not-allowed}
+.progress-indicator{flex-grow:1;display:flex;flex-direction:column;gap:4px;align-items:center}
+.progress-track{width:100%;height:5px;background:var(--brd);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--an),var(--cat));border-radius:3px;transition:width .4s ease}
+#progress-text{font-size:.7rem;font-weight:700;color:var(--dimmer);text-transform:uppercase;letter-spacing:.07em}
+.intro-strip{background:linear-gradient(135deg,#0d4a73,#1a6ea8);color:#fff;border-radius:var(--r);padding:28px 32px;margin-bottom:28px}
+.intro-strip h2{font-family:var(--serif);font-size:1.3rem;margin-bottom:12px;color:#fcd34d}
+.intro-strip p{font-size:.88rem;line-height:1.7;margin-bottom:10px;opacity:.92}
+.intro-strip .lvl-row{display:flex;flex-direction:column;gap:8px;margin:16px 0}
+.intro-strip .lvl{background:rgba(255,255,255,.1);border-left:3px solid var(--cat);border-radius:var(--rs);padding:10px 14px;font-size:.83rem}
+.intro-strip .lvl strong{color:#fcd34d;display:block;margin-bottom:2px}
+@media(max-width:580px){.cards-grid{grid-template-columns:1fr 1fr}.nav-footer{flex-wrap:wrap}.btn-nav{flex:1}.sect{padding:16px 18px}.comp-grid{grid-template-columns:1fr}}
+@media(max-width:380px){.cards-grid{grid-template-columns:1fr}}
+
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
-
-@media(max-width:580px){
-  .sect{padding:16px 18px}
-  .comp-grid{grid-template-columns:1fr}
-  .tab-btn{padding:12px 14px;font-size:.72rem}
-}
 </style>
 </head>
 <body>
@@ -174,522 +194,88 @@ footer a:hover{text-decoration:underline}
 
 <div class="app">
 
-<div class="page-hdr">
-  <h1>Principios de Nomenclatura Inorgánica</h1>
-  <p>Aprende los fundamentos: iones, estados de oxidación, tipos de compuestos y los tres sistemas de nomenclatura</p>
+<!-- ══ SCREEN 1: MENÚ PRINCIPAL ══ -->
+<div id="menu-principal" class="screen active">
+  <div class="page-hdr">
+    <h1>Principios de Nomenclatura Inorgánica</h1>
+    <p>Elige un tema para comenzar — o continúa donde lo dejaste</p>
+  </div>
+
+  <div class="intro-strip">
+    <h2>¿Para qué existe la nomenclatura inorgánica?</h2>
+    <p>La nomenclatura <strong>no es un juego de palabras</strong>. Cada nombre describe qué iones forman el compuesto y en qué proporción. Ejemplo: <strong>FeCl₃</strong></p>
+    <div class="lvl-row">
+      <div class="lvl"><strong>Nivel 1 — Lo que ves:</strong> 1 Fe + 3 Cl</div>
+      <div class="lvl"><strong>Nivel 2 — Lo que significa:</strong> Fe³⁺ + 3 Cl⁻ (el Fe perdió 3 electrones, cada Cl ganó 1)</div>
+      <div class="lvl"><strong>Nivel 3 — Lo que dice el nombre:</strong> «cloruro de hierro (III)» → "cloruro" = Cl⁻ · "de hierro" = catión Fe · "(III)" = EO +3</div>
+    </div>
+    <p style="font-size:.8rem;opacity:.75">La regla de oro: las cargas deben cancelarse. Fe³⁺ (+3) + 3 Cl⁻ (−3) = 0 ✓</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card card-cat" onclick="goToSection(0)">
+      <span class="card-icon">📚</span>
+      <div class="card-title">Conceptos Base</div>
+      <div class="card-desc">Iones, sistema de colores MDEC y lectura cromática paso a paso</div>
+      <span class="card-badge">Fundamental</span>
+    </div>
+    <div class="card card-an" onclick="goToSection(1)">
+      <span class="card-icon">🧮</span>
+      <div class="card-title">Estados de Oxidación</div>
+      <div class="card-desc">Reglas de asignación, cálculo EO y patrón de oxoaniones</div>
+      <span class="card-badge">Intermedio</span>
+    </div>
+    <div class="card card-ox" onclick="goToSection(2)">
+      <span class="card-icon">🔬</span>
+      <div class="card-title">Tipos de Compuestos</div>
+      <div class="card-desc">Binarios, ternarios, definición correcta de anhídridos</div>
+      <span class="card-badge">Fundamental</span>
+    </div>
+    <div class="card card-an" onclick="goToSection(3)">
+      <span class="card-icon">⚗️</span>
+      <div class="card-title">Nomenclatura Sistemática</div>
+      <div class="card-desc">Prefijos numéricos: di-, tri-, tetra-… (nomenclatura IUPAC)</div>
+      <span class="card-badge">Sistemática</span>
+    </div>
+    <div class="card card-cat" onclick="goToSection(4)">
+      <span class="card-icon">💎</span>
+      <div class="card-title">Stock y Tradicional</div>
+      <div class="card-desc">Números romanos y sufijos -oso/-ico para valencia variable</div>
+      <span class="card-badge">Variable</span>
+    </div>
+    <div class="card card-oh" onclick="goToSection(5)">
+      <span class="card-icon">⚠️</span>
+      <div class="card-title">Excepciones</div>
+      <div class="card-desc">Manganeso, cromo, mercurio y los tres tipos de hidruros</div>
+      <span class="card-badge">Avanzado</span>
+    </div>
+    <div class="card card-ox" onclick="goToSection(6)">
+      <span class="card-icon">🔥</span>
+      <div class="card-title">Reactividad</div>
+      <div class="card-desc">De la nomenclatura a las ecuaciones: DBA 3 del MEN Colombia</div>
+      <span class="card-badge">Avanzado</span>
+    </div>
+  </div>
 </div>
 
-<div class="tab-nav">
-  <button class="tab-btn act" onclick="switchTab(0)">01 · Conceptos Base</button>
-  <button class="tab-btn" onclick="switchTab(1)">02 · Estados de Oxidación</button>
-  <button class="tab-btn" onclick="switchTab(2)">03 · Tipos de Compuestos</button>
-  <button class="tab-btn" onclick="switchTab(3)">04 · Sistemática (IUPAC)</button>
-  <button class="tab-btn" onclick="switchTab(4)">05 · Stock y Tradicional</button>
-  <button class="tab-btn" onclick="switchTab(5)">06 · Excepciones</button>
-</div>
-
-<!-- ── TAB 1: CONCEPTOS BASE ── -->
-<div class="tab-cont act">
-
-  <div class="sect">
-    <h2>El sistema de colores 2+matiz</h2>
-    <p>La nomenclatura inorgánica describe compuestos formados por <strong>iones</strong>. En el modelo 2+matiz cada tipo de ion recibe un color fijo, lo que hace visible la estructura del compuesto de un vistazo.</p>
-
-    <div class="color-box cat">
-      <div class="color-dot"></div>
-      <div>
-        <strong>① Ámbar — Catión (metal)</strong>
-        <span>Átomo que pierde electrones y queda con carga positiva. Va <em>primero</em> en fórmula y nombre. Ejemplos: Na⁺, Ca²⁺, Fe³⁺, Cu²⁺, Al³⁺</span>
-      </div>
-    </div>
-
-    <div class="color-box an">
-      <div class="color-dot"></div>
-      <div>
-        <strong>② Azul — Anión simple</strong>
-        <span>No metal que gana electrones. En el nombre recibe la terminación <em>-uro</em>. Forma sales binarias. Ejemplos: Cl⁻ (cloru<strong>ro</strong>), S²⁻ (sulfur<strong>o</strong>), O²⁻ (óxid<strong>o</strong>)</span>
-      </div>
-    </div>
-
-    <div class="color-box oh">
-      <div class="color-dot"></div>
-      <div>
-        <strong>③ Violeta — Grupo OH⁻</strong>
-        <span>El grupo hidroxilo es un anión poliatómico especial. Siempre se llama <em>hidróxido</em>. Forma bases. Ejemplos: NaOH → hidróxido de sodio, Ca(OH)₂ → hidróxido de calcio</span>
-      </div>
-    </div>
-
-    <div class="color-box ox">
-      <div class="color-dot"></div>
-      <div>
-        <strong>④ Teal — Oxoanión</strong>
-        <span>Anión que contiene oxígeno. Tiene nombre propio que hay que memorizar. Forma sales oxigenadas. Ejemplos: SO₄²⁻ (sulfato), NO₃⁻ (nitrato), PO₄³⁻ (fosfato)</span>
-      </div>
+<!-- ══ SCREEN 2: CONTENIDO SECCIÓN ══ -->
+<div id="contenido-seccion" class="screen">
+  <div class="breadcrumb-bar">
+    <button class="btn-volver" onclick="volverAlMenu()">← Volver</button>
+    <div>
+      <span id="seccion-titulo">Conceptos Base</span>
+      <span class="breadcrumb-numero" id="seccion-numero">Sección 1 de 7</span>
     </div>
   </div>
-
-  <div class="sect">
-    <h2>Lectura cromática MDEC — paso a paso</h2>
-    <p>El modelo 2+matiz funciona como un sistema de capas: cada capa tiene un color y una función. Para nombrar cualquier compuesto, sigue esta secuencia cromática:</p>
-
-    <div class="mdec-steps">
-      <div class="mdec-step">
-        <div class="mdec-num cat">①</div>
-        <div class="mdec-body"><strong style="color:var(--cat-t)">Identifica el catión [Ámbar]</strong>
-        <p>Primer elemento de la fórmula. Es el metal (o ion positivo). Determina si su valencia es fija o variable. Si es variable, deberás calcular su EO.</p></div>
-      </div>
-      <div class="mdec-step">
-        <div class="mdec-num an">②</div>
-        <div class="mdec-body"><strong style="color:var(--an-t)">Identifica el anión [Azul / Violeta / Teal]</strong>
-        <p>Segundo componente. El color indica el tipo: Azul = anión simple (-uro), Violeta = OH⁻ (hidróxido), Teal = oxoanión (sulfato, nitrato…).</p></div>
-      </div>
-      <div class="mdec-step">
-        <div class="mdec-num neu">③</div>
-        <div class="mdec-body"><strong>Determina el tipo de compuesto</strong>
-        <p>Metal + O²⁻ (Azul) → óxido. Metal + Cl⁻/S²⁻ (Azul) → sal binaria. Metal + OH⁻ (Violeta) → hidróxido/base. Metal + oxoanión (Teal) → sal oxigenada.</p></div>
-      </div>
-      <div class="mdec-step">
-        <div class="mdec-num ox">④</div>
-        <div class="mdec-body"><strong style="color:var(--ox-t)">Construye el nombre (3 sistemas)</strong>
-        <p>Usa el tipo de compuesto y el EO del catión para aplicar las reglas: Tradicional (-oso/-ico), Stock (número romano), IUPAC (prefijos di-/tri-).</p></div>
-      </div>
+  <div id="seccion-content"></div>
+  <div class="nav-footer">
+    <button id="btn-anterior" class="btn-nav" onclick="navAnterior()">← Anterior</button>
+    <div class="progress-indicator">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <span id="progress-text">1 / 7</span>
     </div>
-
-    <p style="font-size:.82rem;color:var(--dimmer)"><strong>Ejemplo MDEC con Fe₂(SO₄)₃:</strong></p>
-    <div class="mdec-demo">
-      <div class="mdec-row">
-        <div class="mdec-token"><span class="mdec-w ox">sulfato</span><span class="mdec-lbl ox">④ Teal · SO₄²⁻</span></div>
-        <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
-        <div class="mdec-token"><span class="mdec-w cat">hierro</span><span class="mdec-lbl cat">① Ámbar · Fe</span></div>
-        <div class="mdec-token"><span class="mdec-w cat">(III)</span><span class="mdec-lbl cat">EO = +3 · Stock</span></div>
-      </div>
-      <div style="font-size:.78rem;color:var(--dim)">
-        <strong>Tradicional:</strong> sulfato <em>férrico</em> (EO mayor de Fe → -ico) &nbsp;·&nbsp;
-        <strong>Stock:</strong> sulfato de hierro <em>(III)</em> &nbsp;·&nbsp;
-        <strong>IUPAC:</strong> <em>trisulfato</em> de <em>di</em>hierro
-      </div>
-    </div>
-
-    <div class="rw-strip">
-      <div class="rw-item"><strong>NaCl</strong>cloruro de sodio = sal de mesa</div>
-      <div class="rw-item"><strong>CaO</strong>óxido de calcio = cal viva</div>
-      <div class="rw-item"><strong>Fe₂O₃</strong>óxido de hierro (III) = herrumbre</div>
-      <div class="rw-item"><strong>NaHCO₃</strong>bicarbonato de sodio = levadura química</div>
-      <div class="rw-item"><strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada</div>
-    </div>
+    <button id="btn-siguiente" class="btn-nav" onclick="navSiguiente()">Siguiente →</button>
   </div>
-
-  <div class="sect">
-    <h2>Compuestos iónicos: lectura de fórmulas</h2>
-    <p>Un compuesto iónico está formado por un catión y un anión. Los subíndices se ajustan para que las cargas se cancelen:</p>
-
-    <div class="ejemplo">
-      <strong>NaCl</strong> = Na⁺ (×1) + Cl⁻ (×1) · cargas: +1 – 1 = 0 ✓<br>
-      <strong>CaCl₂</strong> = Ca²⁺ (×1) + Cl⁻ (×2) · cargas: +2 – 2 = 0 ✓<br>
-      <strong>Al₂O₃</strong> = Al³⁺ (×2) + O²⁻ (×3) · cargas: +6 – 6 = 0 ✓<br>
-      <strong>Fe₂(SO₄)₃</strong> = Fe³⁺ (×2) + SO₄²⁻ (×3) · cargas: +6 – 6 = 0 ✓
-    </div>
-
-    <h3>Valencias fijas y variables</h3>
-    <p>Los metales del <strong>bloque s</strong> (Na, K, Ca, Mg, Al) tienen valencia fija — siempre la misma. Los metales de <strong>transición</strong> (Fe, Cu, Pb, Mn, Cr) tienen <em>valencia variable</em> y necesitan un sistema que indique cuál se usa.</p>
-
-    <table class="tbl">
-      <tr><th>Metal</th><th>Valencias</th><th>Tipo</th></tr>
-      <tr><td>Na</td><td><code>+1</code></td><td><span class="tag tag-an">Fija</span></td></tr>
-      <tr><td>Ca</td><td><code>+2</code></td><td><span class="tag tag-an">Fija</span></td></tr>
-      <tr><td>Al</td><td><code>+3</code></td><td><span class="tag tag-an">Fija</span></td></tr>
-      <tr><td>Fe</td><td><code>+2</code> · <code>+3</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
-      <tr><td>Cu</td><td><code>+1</code> · <code>+2</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
-      <tr><td>Pb</td><td><code>+2</code> · <code>+4</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
-      <tr><td>Mn</td><td><code>+2</code> · <code>+3</code> · <code>+4</code> · <code>+6</code> · <code>+7</code></td><td><span class="tag tag-cat">Variable (5 estados)</span></td></tr>
-      <tr><td>Cr</td><td><code>+2</code> · <code>+3</code> · <code>+6</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
-    </table>
-  </div>
-
-</div>
-
-<!-- ── TAB 2: ESTADOS DE OXIDACIÓN ── -->
-<div class="tab-cont">
-
-  <div class="sect">
-    <h2>Estados de oxidación (EO)</h2>
-    <p>El estado de oxidación es el número de electrones que un átomo ha perdido, ganado o compartido. Es fundamental para nombrar compuestos de metales con valencia variable.</p>
-
-    <h3>Reglas de asignación</h3>
-    <div class="step-row">
-      <div class="step-n cat">1</div>
-      <div class="step-body cat"><strong>Elemento puro:</strong><p>EO = 0. Ej: Fe(s), O₂(g), Na(s) → todos tienen EO = 0</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n an">2</div>
-      <div class="step-body an"><strong>Ión monoatómico:</strong><p>EO = carga del ión. Ej: Na⁺ → EO = +1 · Fe³⁺ → EO = +3</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n oh">3</div>
-      <div class="step-body oh"><strong>Oxígeno:</strong><p>EO = −2 en casi todos los compuestos. Excepción: en O₂ es 0; en peróxidos (H₂O₂) es −1</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n ox">4</div>
-      <div class="step-body ox"><strong>Hidrógeno:</strong><p>EO = +1 cuando va con no metales. EO = −1 en hidruros metálicos (NaH, CaH₂)</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n cat">5</div>
-      <div class="step-body cat"><strong>Regla de la suma:</strong><p>En molécula neutra: suma de todos los EO = 0. En ión poliátomico: suma = carga del ión</p></div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplos de cálculo</h2>
-
-    <div class="ejemplo">
-      <strong>Fe₂O₃</strong> — ¿cuál es el EO del hierro?<br>
-      Fe: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-      2(<em>x</em>) + 3(−2) = 0<br>
-      2<em>x</em> − 6 = 0 &nbsp;→&nbsp; <span class="corr">x = +3</span><br>
-      ∴ El Fe tiene EO = +3 → es Fe³⁺ (hierro III)
-    </div>
-
-    <div class="ejemplo">
-      <strong>Cu₂O</strong> — ¿cuál es el EO del cobre?<br>
-      Cu: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-      2(<em>x</em>) + 1(−2) = 0<br>
-      2<em>x</em> = +2 &nbsp;→&nbsp; <span class="corr">x = +1</span><br>
-      ∴ El Cu tiene EO = +1 → es Cu⁺ (cobre I)
-    </div>
-
-    <div class="ejemplo">
-      <strong>KMnO₄</strong> — ¿cuál es el EO del manganeso?<br>
-      K: +1 &nbsp;|&nbsp; Mn: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-      +1 + <em>x</em> + 4(−2) = 0<br>
-      <em>x</em> = 8 − 1 &nbsp;→&nbsp; <span class="corr">x = +7</span><br>
-      ∴ El Mn tiene EO = +7 → permanganato
-    </div>
-
-    <div class="ejemplo">
-      <strong>H₂SO₄</strong> — ¿cuál es el EO del azufre?<br>
-      H: +1 &nbsp;|&nbsp; S: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-      2(+1) + <em>x</em> + 4(−2) = 0<br>
-      <em>x</em> = 8 − 2 &nbsp;→&nbsp; <span class="corr">x = +6</span><br>
-      ∴ El S tiene EO = +6 en el ácido sulfúrico
-    </div>
-  </div>
-
-</div>
-
-<!-- ── TAB 3: TIPOS DE COMPUESTOS ── -->
-<div class="tab-cont">
-
-  <div class="sect">
-    <h2>Compuestos binarios (2 elementos)</h2>
-    <table class="tbl">
-      <tr><th>Tipo</th><th>Composición</th><th>Característica</th><th>Ejemplos</th></tr>
-      <tr>
-        <td><strong>Óxidos</strong></td>
-        <td><span class="tag tag-cat">metal</span> + O</td>
-        <td>Metal con oxidación positiva</td>
-        <td><code>Na₂O</code>, <code>CaO</code>, <code>Fe₂O₃</code></td>
-      </tr>
-      <tr>
-        <td><strong>Anhídridos</strong></td>
-        <td><span class="tag tag-an">no metal</span> + O</td>
-        <td>No metal con oxidación positiva</td>
-        <td><code>SO₃</code>, <code>P₂O₅</code>, <code>Cl₂O</code></td>
-      </tr>
-      <tr>
-        <td><strong>Sales binarias</strong></td>
-        <td><span class="tag tag-cat">metal</span> + <span class="tag tag-an">no metal</span></td>
-        <td>Sin oxígeno. Anión termina en -uro</td>
-        <td><code>NaCl</code>, <code>CaF₂</code>, <code>FeCl₃</code></td>
-      </tr>
-      <tr>
-        <td><strong>Hidruros</strong></td>
-        <td><span class="tag tag-cat">metal</span> + H</td>
-        <td>H con EO = −1</td>
-        <td><code>NaH</code>, <code>CaH₂</code></td>
-      </tr>
-    </table>
-
-    <h2>Compuestos ternarios (3 elementos)</h2>
-    <table class="tbl">
-      <tr><th>Tipo</th><th>Estructura</th><th>Identificación</th><th>Ejemplos</th></tr>
-      <tr>
-        <td><strong>Bases / Hidróxidos</strong></td>
-        <td><span class="tag tag-cat">metal</span> + <span class="tag tag-oh">OH⁻</span></td>
-        <td>Contiene grupo OH</td>
-        <td><code>NaOH</code>, <code>Ca(OH)₂</code>, <code>Fe(OH)₃</code></td>
-      </tr>
-      <tr>
-        <td><strong>Ácidos oxácidos</strong></td>
-        <td>H + <span class="tag tag-an">no metal</span> + O</td>
-        <td>Empieza con H, contiene O</td>
-        <td><code>HNO₃</code>, <code>H₂SO₄</code>, <code>H₃PO₄</code></td>
-      </tr>
-      <tr>
-        <td><strong>Sales oxigenadas</strong></td>
-        <td><span class="tag tag-cat">metal</span> + <span class="tag tag-ox">oxoanión</span></td>
-        <td>Metal + anión con O</td>
-        <td><code>Na₂SO₄</code>, <code>Ca(NO₃)₂</code>, <code>KMnO₄</code></td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Oxoaniones principales</h2>
-    <table class="tbl">
-      <tr><th>Fórmula</th><th>Nombre</th><th>Ácido padre</th></tr>
-      <tr><td><code>SO₄²⁻</code></td><td>sulfato</td><td>H₂SO₄ ácido sulfúrico</td></tr>
-      <tr><td><code>SO₃²⁻</code></td><td>sulfito</td><td>H₂SO₃ ácido sulfuroso</td></tr>
-      <tr><td><code>NO₃⁻</code></td><td>nitrato</td><td>HNO₃ ácido nítrico</td></tr>
-      <tr><td><code>NO₂⁻</code></td><td>nitrito</td><td>HNO₂ ácido nitroso</td></tr>
-      <tr><td><code>PO₄³⁻</code></td><td>fosfato</td><td>H₃PO₄ ácido fosfórico</td></tr>
-      <tr><td><code>CO₃²⁻</code></td><td>carbonato</td><td>H₂CO₃ ácido carbónico</td></tr>
-      <tr><td><code>ClO⁻</code></td><td>hipoclorito</td><td>HClO ácido hipocloroso</td></tr>
-      <tr><td><code>ClO₂⁻</code></td><td>clorito</td><td>HClO₂ ácido cloroso</td></tr>
-      <tr><td><code>ClO₃⁻</code></td><td>clorato</td><td>HClO₃ ácido clórico</td></tr>
-      <tr><td><code>ClO₄⁻</code></td><td>perclorato</td><td>HClO₄ ácido perclórico</td></tr>
-      <tr><td><code>CrO₄²⁻</code></td><td>cromato</td><td>H₂CrO₄ ácido crómico</td></tr>
-      <tr><td><code>MnO₄⁻</code></td><td>permanganato</td><td>HMnO₄ ácido permangánico</td></tr>
-    </table>
-  </div>
-
-</div>
-
-<!-- ── TAB 4: SISTEMÁTICA ── -->
-<div class="tab-cont">
-
-  <div class="sect">
-    <h2>Nomenclatura Sistemática / IUPAC</h2>
-    <p>Usa <strong>prefijos numéricos</strong> para indicar la cantidad de átomos de cada elemento. Es la más moderna, no necesita conocer valencias.</p>
-
-    <table class="tbl">
-      <tr><th>#</th><th>Prefijo</th><th>#</th><th>Prefijo</th></tr>
-      <tr><td>1</td><td>(mono) — generalmente omitido</td><td>6</td><td>hexa-</td></tr>
-      <tr><td>2</td><td>di-</td><td>7</td><td>hepta-</td></tr>
-      <tr><td>3</td><td>tri-</td><td>8</td><td>octa-</td></tr>
-      <tr><td>4</td><td>tetra-</td><td>9</td><td>nona-</td></tr>
-      <tr><td>5</td><td>penta-</td><td>10</td><td>deca-</td></tr>
-    </table>
-
-    <h3>Reglas generales</h3>
-    <ol class="sect ol">
-      <li>Se nombra primero el elemento menos electronegativo (el metal o el elemento de la izquierda)</li>
-      <li>Se usa prefijo para indicar la cantidad de átomos de <em>cada</em> elemento</li>
-      <li>Si el prefijo termina en vocal y el nombre empieza en vocal, se omite la vocal del prefijo: <em>mono<del>o</del>xido</em> → <em>monóxido</em></li>
-      <li>El segundo elemento termina en <strong>-uro</strong> (aniones simples) o <strong>-ido</strong> (óxidos, anhídridos)</li>
-    </ol>
-
-    <div class="ejemplo">
-      <strong>CO</strong> → monóxido de carbono (1 O, 1 C)<br>
-      <strong>CO₂</strong> → dióxido de carbono (2 O, 1 C)<br>
-      <strong>SO₃</strong> → trióxido de azufre<br>
-      <strong>P₂O₅</strong> → pentaóxido de difósforo<br>
-      <strong>Cl₂O₇</strong> → heptaóxido de dicloro<br>
-      <strong>N₂O₃</strong> → trióxido de dinitrógeno<br>
-      <strong>FeCl₃</strong> → tricloruro de hierro (para sales binarias)
-    </div>
-
-    <h3>Construye el nombre IUPAC — paso a paso</h3>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>N₂O₃</strong></p>
-    <div class="step-row">
-      <div class="step-n an">1</div>
-      <div class="step-body an"><strong>Cuenta los átomos</strong><p>N₂O₃ tiene 2 átomos de N y 3 átomos de O.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n an">2</div>
-      <div class="step-body an"><strong>Primer elemento (izquierda): N</strong><p>2 átomos → prefijo <em>di-</em> + nitrógeno = <strong>dinitrógeno</strong>.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n an">3</div>
-      <div class="step-body an"><strong>Segundo elemento: O</strong><p>3 átomos → prefijo <em>tri-</em> + óxido = <strong>trióxido</strong>.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n an">4</div>
-      <div class="step-body an"><strong>Ensambla el nombre</strong><p>[segundo] de [primero] → <strong>trióxido de dinitrógeno</strong>.</p></div>
-    </div>
-
-    <div class="error-box">
-      <strong>❌ Error frecuente: prefijos en sistema equivocado</strong>
-      <p>Los prefijos di-, tri-, tetra- son <strong>exclusivos del sistema IUPAC</strong>. En Tradicional se dice "cloruro férrico" (no "tricloruro"). En Stock se dice "cloruro de hierro (III)" (no "tricloruro"). Mezclar sistemas es el error más común en exámenes.</p>
-    </div>
-  </div>
-
-</div>
-
-<!-- ── TAB 5: STOCK Y TRADICIONAL ── -->
-<div class="tab-cont">
-
-  <div class="sect">
-    <h2>Nomenclatura Stock</h2>
-    <p>Indica el <strong>estado de oxidación del metal con números romanos</strong> entre paréntesis, justo después del nombre del metal. Es el estándar internacional actual.</p>
-
-    <div class="ejemplo">
-      <strong>FeCl₂</strong> → cloruro de hierro <span class="corr">(II)</span> &nbsp;[Fe tiene EO = +2]<br>
-      <strong>FeCl₃</strong> → cloruro de hierro <span class="corr">(III)</span> &nbsp;[Fe tiene EO = +3]<br>
-      <strong>Cu₂O</strong> → óxido de cobre <span class="corr">(I)</span> &nbsp;[Cu tiene EO = +1]<br>
-      <strong>CuO</strong> → óxido de cobre <span class="corr">(II)</span> &nbsp;[Cu tiene EO = +2]<br>
-      <strong>PbO₂</strong> → óxido de plomo <span class="corr">(IV)</span> &nbsp;[Pb tiene EO = +4]
-    </div>
-
-    <p>Para metales de valencia fija (Na, Ca, Al…) no se usa número romano porque no hay ambigüedad. El número romano solo aparece cuando el metal puede tener más de una valencia.</p>
-
-    <h3>Construye paso a paso — Tradicional y Stock</h3>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>PbO₂</strong></p>
-    <div class="step-row">
-      <div class="step-n cat">1</div>
-      <div class="step-body cat"><strong>Identifica el tipo</strong><p>Pb (metal) + O → óxido básico.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n cat">2</div>
-      <div class="step-body cat"><strong>Calcula el EO</strong><p>x + 2(−2) = 0 → <strong>EO = +4</strong>.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n cat">3</div>
-      <div class="step-body cat"><strong>Elige el sufijo Tradicional</strong><p>Pb tiene EO = +2 (menor → plumboso) y +4 (mayor → plúmbico). EO = +4 → sufijo <em>-ico</em> → <strong>plúmbico</strong>.</p></div>
-    </div>
-    <div class="step-row">
-      <div class="step-n cat">4</div>
-      <div class="step-body cat"><strong>Ensambla los tres nombres</strong><p><strong>Tradicional:</strong> óxido plúmbico &nbsp;·&nbsp; <strong>Stock:</strong> óxido de plomo (IV) &nbsp;·&nbsp; <strong>IUPAC:</strong> dióxido de plomo.</p></div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Nomenclatura Tradicional (Clásica)</h2>
-    <p>Usa <strong>sufijos</strong> para indicar si el metal está en su valencia menor o mayor. Es más antigua y sigue usándose en algunos contextos hispanohablantes.</p>
-
-    <table class="tbl">
-      <tr><th>Cuando es la valencia…</th><th>Sufijo</th><th>Ejemplo con Fe</th></tr>
-      <tr><td>Menor (la más baja)</td><td><strong>-oso</strong></td><td>ferroso (+2) → cloru<em>ro ferro<strong>so</strong></em></td></tr>
-      <tr><td>Mayor (la más alta)</td><td><strong>-ico</strong></td><td>férrico (+3) → cloru<em>ro fér<strong>rico</strong></em></td></tr>
-    </table>
-
-    <div class="ejemplo">
-      <strong>FeCl₂</strong> → cloruro <span class="corr">ferroso</span> (Fe²⁺ = valencia menor de Fe)<br>
-      <strong>FeCl₃</strong> → cloruro <span class="corr">férrico</span> (Fe³⁺ = valencia mayor de Fe)<br>
-      <strong>Cu₂O</strong> → óxido <span class="corr">cuproso</span> (Cu⁺ = valencia menor de Cu)<br>
-      <strong>CuO</strong> → óxido <span class="corr">cúprico</span> (Cu²⁺ = valencia mayor de Cu)<br>
-      <strong>SnCl₂</strong> → cloruro <span class="corr">estannoso</span> (Sn²⁺)<br>
-      <strong>SnCl₄</strong> → cloruro <span class="corr">estánnico</span> (Sn⁴⁺)
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Comparación de los tres sistemas</h2>
-
-    <div class="comp-grid">
-      <div class="comp-col trad">
-        <div class="comp-col-lbl">Tradicional</div>
-        <div class="comp-item">cloruro ferroso</div>
-        <div class="comp-item">cloruro férrico</div>
-        <div class="comp-item">óxido cuproso</div>
-        <div class="comp-item">óxido cúprico</div>
-        <div class="comp-item">anhídrido sulfúrico</div>
-      </div>
-      <div class="comp-col stock">
-        <div class="comp-col-lbl">Stock</div>
-        <div class="comp-item">cloruro de hierro (II)</div>
-        <div class="comp-item">cloruro de hierro (III)</div>
-        <div class="comp-item">óxido de cobre (I)</div>
-        <div class="comp-item">óxido de cobre (II)</div>
-        <div class="comp-item">óxido de azufre (VI)</div>
-      </div>
-      <div class="comp-col sist">
-        <div class="comp-col-lbl">IUPAC / Sistemática</div>
-        <div class="comp-item">dicloruro de hierro</div>
-        <div class="comp-item">tricloruro de hierro</div>
-        <div class="comp-item">óxido de dícobre</div>
-        <div class="comp-item">óxido de cobre</div>
-        <div class="comp-item">trióxido de azufre</div>
-      </div>
-    </div>
-
-    <p style="font-size:.82rem;color:var(--dimmer);padding-top:4px">
-      <strong>Nota:</strong> La nomenclatura Stock es el estándar internacional recomendado por IUPAC para compuestos de metales con valencia variable. La Tradicional se mantiene en programas de bachillerato hispanoamericano.
-    </p>
-    <p style="font-size:.82rem;color:var(--dimmer);padding-top:8px">
-      <strong>¿Por qué SO₃ se llama "anhídrido" en Tradicional pero "óxido de azufre (VI)" en Stock?</strong><br>
-      La nomenclatura Tradicional distingue entre <em>óxidos</em> (metal + O) y <em>anhídridos</em> (no metal + O). Stock e IUPAC unifican ambos bajo la palabra "óxido", usando el número de oxidación o los prefijos para diferenciarlos. En el aula se usan los dos sistemas; es importante reconocer ambas formas.
-    </p>
-
-    <div class="error-box">
-      <strong>❌ Error frecuente: -oso/-ico cuando hay más de 2 valencias</strong>
-      <p>La regla -oso/-ico solo funciona cuando el metal tiene <strong>exactamente 2 estados de oxidación</strong> comunes. Para Mn (+2, +3, +4) la nomenclatura Tradicional binaria falla: Mn³⁺ no tiene nombre Tradicional. Para esos casos se usa Stock obligatoriamente. Ver Tab 06 → Excepciones.</p>
-    </div>
-  </div>
-
-</div>
-
-<!-- ── TAB 6: EXCEPCIONES ── -->
-<div class="tab-cont">
-
-  <div class="sect">
-    <h2>Manganeso — 5 estados de oxidación</h2>
-    <p>El Mn es el metal de transición más versátil en bachillerato: tiene <strong>5 estados de oxidación comunes</strong>. La nomenclatura Tradicional no puede manejar más de 2 estados con -oso/-ico, por lo que varios compuestos de Mn <em>requieren</em> nomenclatura Stock.</p>
-
-    <table class="tbl">
-      <tr><th>EO</th><th>Fórmula ejemplo</th><th>Tradicional</th><th>Stock</th><th>IUPAC</th></tr>
-      <tr><td><code>+2</code></td><td>MnO</td><td>óxido manganoso</td><td>óxido de manganeso (II)</td><td>óxido de manganeso</td></tr>
-      <tr><td><code>+3</code></td><td>Mn₂O₃</td><td style="color:var(--err);font-style:italic">— sin nombre —</td><td>óxido de manganeso (III)</td><td>trióxido de dimanganeso</td></tr>
-      <tr><td><code>+4</code></td><td>MnO₂</td><td>óxido mangánico</td><td>óxido de manganeso (IV)</td><td>dióxido de manganeso</td></tr>
-      <tr><td><code>+6</code></td><td>K₂MnO₄</td><td colspan="2">manganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VI) de dipotasio</td></tr>
-      <tr><td><code>+7</code></td><td>KMnO₄</td><td colspan="2">permanganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VII) de potasio</td></tr>
-    </table>
-
-    <div class="error-box">
-      <strong>❌ Por qué falla la Tradicional con Mn en +3</strong>
-      <p>El sistema -oso/-ico asigna -oso al estado <em>menor</em> y -ico al <em>mayor</em> dentro de un par. Con Mn, hay tres estados binarios (+2, +3, +4): se asigna +2 → manganoso y +4 → mangánico, pero +3 queda sin nombre. Este es el límite del sistema Tradicional y por ello Stock es indispensable.</p>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Cromo — comportamiento dual</h2>
-    <p>El Cr presenta un caso especial: en EO = +6 actúa como <strong>no metal</strong>, formando anhídridos y oxoaniones, no óxidos básicos.</p>
-
-    <table class="tbl">
-      <tr><th>EO</th><th>Fórmula</th><th>Tradicional</th><th>Stock</th><th>Observación</th></tr>
-      <tr><td><code>+2</code></td><td>CrO</td><td>óxido cromoso</td><td>óxido de cromo (II)</td><td>Poco común</td></tr>
-      <tr><td><code>+3</code></td><td>Cr₂O₃</td><td>óxido crómico</td><td>óxido de cromo (III)</td><td>Estado más estable y frecuente</td></tr>
-      <tr><td><code>+6</code></td><td>CrO₃</td><td>anhídrido crómico</td><td>óxido de cromo (VI)</td><td>No metal: forma ácido crómico</td></tr>
-      <tr><td><code>+6</code></td><td>CrO₄²⁻</td><td colspan="2">cromato (oxoanión)</td><td>Teal en el modelo 2+matiz</td></tr>
-      <tr><td><code>+6</code></td><td>Cr₂O₇²⁻</td><td colspan="2">dicromato (oxoanión)</td><td>2 Cr por unidad del ion</td></tr>
-    </table>
-
-    <p style="font-size:.82rem;color:var(--dimmer)"><strong>Clave:</strong> Cuando el EO es alto, el no metal/metal se vuelve ácido-formador. CrO₃ es anhídrido porque reacciona con agua para dar H₂CrO₄ (ácido crómico). Del mismo modo, SO₃ → H₂SO₄.</p>
-  </div>
-
-  <div class="sect">
-    <h2>Mercurio — catión dinuclear Hg₂²⁺</h2>
-    <p>El mercurioso es un caso único en bachillerato: el ion <strong>Hg₂²⁺</strong> está formado por <em>dos</em> átomos de Hg unidos, cada uno con EO = +1.</p>
-
-    <table class="tbl">
-      <tr><th>Fórmula</th><th>Ion</th><th>Tradicional</th><th>Stock</th></tr>
-      <tr><td>Hg₂Cl₂</td><td>Hg₂²⁺ + 2 Cl⁻</td><td>cloruro mercurioso</td><td>cloruro de mercurio (I)</td></tr>
-      <tr><td>HgCl₂</td><td>Hg²⁺ + 2 Cl⁻</td><td>cloruro mercúrico</td><td>cloruro de mercurio (II)</td></tr>
-    </table>
-
-    <div class="error-box">
-      <strong>❌ Error frecuente con Hg₂Cl₂</strong>
-      <p>El cloruro mercurioso NO es HgCl (un Hg + un Cl). Es Hg₂Cl₂ porque el ion mercurioso existe solo como par Hg₂²⁺. Al calcular el EO: (2x) + 2(−1) = 0 → x = +1 por átomo, pero son dos átomos formando el catión.</p>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Ácidos hídricos (haluros de hidrógeno)</h2>
-    <p>Cuando el hidrógeno se une a un halógeno o no metal sin oxígeno, forma un <strong>ácido hídrico</strong>. En disolución acuosa se llaman ácidos; en estado gaseoso son anhídridos del ácido.</p>
-
-    <table class="tbl">
-      <tr><th>Fórmula</th><th>Gas (cloruro de hidrógeno)</th><th>Disolución (ácido)</th></tr>
-      <tr><td>HCl(g)</td><td>cloruro de hidrógeno</td><td>ácido clorhídrico</td></tr>
-      <tr><td>HBr(g)</td><td>bromuro de hidrógeno</td><td>ácido bromhídrico</td></tr>
-      <tr><td>HI(g)</td><td>yoduro de hidrógeno</td><td>ácido yodhídrico</td></tr>
-      <tr><td>H₂S(g)</td><td>sulfuro de hidrógeno</td><td>ácido sulfhídrico</td></tr>
-    </table>
-
-    <div class="error-box">
-      <strong>❌ Error frecuente: HCl ≠ "ácido clorídrico"</strong>
-      <p>El nombre correcto es <em>ácido clor<strong>h</strong>ídrico</em> (con h intercalada: clor + h + ídrico). La h viene de "hidrógeno". Aplica igual para HBr → bromhídrico, HI → yodhídrico, H₂S → sulfhídrico.</p>
-    </div>
-  </div>
-
 </div>
 
 </div><!-- .app -->
@@ -715,12 +301,719 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
-function switchTab(idx){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('act',i===idx));
-  document.querySelectorAll('.tab-cont').forEach((c,i)=>c.classList.toggle('act',i===idx));
+// ══════════════════════════════════════════
+//  SECCIONES metadata
+// ══════════════════════════════════════════
+const SECCIONES = [
+  {titulo:'Conceptos Base',          icon:'📚', color:'cat'},
+  {titulo:'Estados de Oxidación',    icon:'🧮', color:'an'},
+  {titulo:'Tipos de Compuestos',     icon:'🔬', color:'ox'},
+  {titulo:'Nomenclatura Sistemática',icon:'⚗️', color:'an'},
+  {titulo:'Stock y Tradicional',     icon:'💎', color:'cat'},
+  {titulo:'Excepciones',             icon:'⚠️', color:'oh'},
+  {titulo:'Reactividad',             icon:'🔥', color:'ox'}
+];
+
+// ══════════════════════════════════════════
+//  CONTENIDO — HTML strings por sección
+// ══════════════════════════════════════════
+const CONTENIDO = [];
+
+// ── Sección 0: Conceptos Base ──
+CONTENIDO[0] = `
+<div class="sect">
+  <h2>El sistema de colores 2+matiz</h2>
+  <p>La nomenclatura inorgánica describe compuestos formados por <strong>iones</strong>. En el modelo 2+matiz cada tipo de ion recibe un color fijo, lo que hace visible la estructura del compuesto de un vistazo.</p>
+
+  <div class="color-box cat">
+    <div class="color-dot"></div>
+    <div>
+      <strong>① Ámbar — Catión (metal)</strong>
+      <span>Átomo que pierde electrones y queda con carga positiva. Va <em>primero</em> en fórmula y nombre. Ejemplos: Na⁺, Ca²⁺, Fe³⁺, Cu²⁺, Al³⁺</span>
+    </div>
+  </div>
+
+  <div class="color-box an">
+    <div class="color-dot"></div>
+    <div>
+      <strong>② Azul — Anión simple</strong>
+      <span>No metal que gana electrones. En el nombre recibe la terminación <em>-uro</em>. Forma sales binarias. Ejemplos: Cl⁻ (cloru<strong>ro</strong>), S²⁻ (sulfur<strong>o</strong>), O²⁻ (óxid<strong>o</strong>)</span>
+    </div>
+  </div>
+
+  <div class="color-box oh">
+    <div class="color-dot"></div>
+    <div>
+      <strong>③ Violeta — Grupo OH⁻</strong>
+      <span>El grupo hidroxilo es un anión poliatómico especial. Siempre se llama <em>hidróxido</em>. Forma bases. Ejemplos: NaOH → hidróxido de sodio, Ca(OH)₂ → hidróxido de calcio</span>
+    </div>
+  </div>
+
+  <div class="color-box ox">
+    <div class="color-dot"></div>
+    <div>
+      <strong>④ Teal — Oxoanión</strong>
+      <span>Anión que contiene oxígeno. Tiene nombre propio que hay que memorizar. Forma sales oxigenadas. Ejemplos: SO₄²⁻ (sulfato), NO₃⁻ (nitrato), PO₄³⁻ (fosfato)</span>
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Lectura cromática MDEC — paso a paso</h2>
+  <p>El modelo 2+matiz funciona como un sistema de capas: cada capa tiene un color y una función. Para nombrar cualquier compuesto, sigue esta secuencia cromática:</p>
+
+  <div class="mdec-steps">
+    <div class="mdec-step">
+      <div class="mdec-num cat">①</div>
+      <div class="mdec-body"><strong style="color:var(--cat-t)">Identifica el catión [Ámbar]</strong>
+      <p>Primer elemento de la fórmula. Es el metal (o ion positivo). Determina si su valencia es fija o variable. Si es variable, deberás calcular su EO.</p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num an">②</div>
+      <div class="mdec-body"><strong style="color:var(--an-t)">Identifica el anión [Azul / Violeta / Teal]</strong>
+      <p>Segundo componente. El color indica el tipo: Azul = anión simple (-uro), Violeta = OH⁻ (hidróxido), Teal = oxoanión (sulfato, nitrato…).</p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num neu">③</div>
+      <div class="mdec-body"><strong>Determina el tipo de compuesto</strong>
+      <p>Metal + O²⁻ (Azul) → óxido. Metal + Cl⁻/S²⁻ (Azul) → sal binaria. Metal + OH⁻ (Violeta) → hidróxido/base. Metal + oxoanión (Teal) → sal oxigenada.</p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num ox">④</div>
+      <div class="mdec-body"><strong style="color:var(--ox-t)">Construye el nombre (3 sistemas)</strong>
+      <p>Usa el tipo de compuesto y el EO del catión para aplicar las reglas: Tradicional (-oso/-ico), Stock (número romano), Sistemática/IUPAC (prefijos di-/tri-).</p></div>
+    </div>
+  </div>
+
+  <p style="font-size:.82rem;color:var(--dimmer)"><strong>Ejemplo MDEC con Fe₂(SO₄)₃:</strong></p>
+  <div class="mdec-demo">
+    <div class="mdec-row">
+      <div class="mdec-token"><span class="mdec-w ox">sulfato</span><span class="mdec-lbl ox">④ Teal · SO₄²⁻</span></div>
+      <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+      <div class="mdec-token"><span class="mdec-w cat">hierro</span><span class="mdec-lbl cat">① Ámbar · Fe</span></div>
+      <div class="mdec-token"><span class="mdec-w cat">(III)</span><span class="mdec-lbl cat">EO = +3 · Stock</span></div>
+    </div>
+    <div style="font-size:.78rem;color:var(--dim)">
+      <strong>Tradicional:</strong> sulfato <em>férrico</em> (EO mayor de Fe → -ico) &nbsp;·&nbsp;
+      <strong>Stock:</strong> sulfato de hierro <em>(III)</em> &nbsp;·&nbsp;
+      <strong>Sistemática:</strong> <em>trisulfato</em> de <em>di</em>hierro
+    </div>
+  </div>
+
+  <div class="rw-strip">
+    <div class="rw-item"><strong>NaCl</strong>cloruro de sodio = sal de mesa</div>
+    <div class="rw-item"><strong>CaO</strong>óxido de calcio = cal viva</div>
+    <div class="rw-item"><strong>Fe₂O₃</strong>óxido de hierro (III) = herrumbre</div>
+    <div class="rw-item"><strong>NaHCO₃</strong>bicarbonato de sodio = levadura química</div>
+    <div class="rw-item"><strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada</div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Compuestos iónicos: lectura de fórmulas</h2>
+  <p>Un compuesto iónico está formado por un catión y un anión. Los subíndices se ajustan para que las cargas se cancelen:</p>
+
+  <div class="ejemplo">
+    <strong>NaCl</strong> = Na⁺ (×1) + Cl⁻ (×1) · cargas: +1 – 1 = 0 ✓<br>
+    <strong>CaCl₂</strong> = Ca²⁺ (×1) + Cl⁻ (×2) · cargas: +2 – 2 = 0 ✓<br>
+    <strong>Al₂O₃</strong> = Al³⁺ (×2) + O²⁻ (×3) · cargas: +6 – 6 = 0 ✓<br>
+    <strong>Fe₂(SO₄)₃</strong> = Fe³⁺ (×2) + SO₄²⁻ (×3) · cargas: +6 – 6 = 0 ✓
+  </div>
+
+  <h3>Valencias fijas y variables</h3>
+  <p>Los metales del <strong>bloque s</strong> (Na, K, Ca, Mg, Al) tienen valencia fija — siempre la misma. Los metales de <strong>transición</strong> (Fe, Cu, Pb, Mn, Cr) tienen <em>valencia variable</em> y necesitan un sistema que indique cuál se usa.</p>
+
+  <table class="tbl">
+    <tr><th>Metal</th><th>Valencias</th><th>Tipo</th></tr>
+    <tr><td>Na</td><td><code>+1</code></td><td><span class="tag tag-an">Fija</span></td></tr>
+    <tr><td>Ca</td><td><code>+2</code></td><td><span class="tag tag-an">Fija</span></td></tr>
+    <tr><td>Al</td><td><code>+3</code></td><td><span class="tag tag-an">Fija</span></td></tr>
+    <tr><td>Fe</td><td><code>+2</code> · <code>+3</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
+    <tr><td>Cu</td><td><code>+1</code> · <code>+2</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
+    <tr><td>Pb</td><td><code>+2</code> · <code>+4</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
+    <tr><td>Mn</td><td><code>+2</code> · <code>+3</code> · <code>+4</code> · <code>+6</code> · <code>+7</code></td><td><span class="tag tag-cat">Variable (5 estados)</span></td></tr>
+    <tr><td>Cr</td><td><code>+2</code> · <code>+3</code> · <code>+6</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
+  </table>
+</div>
+`;
+
+// ── Sección 1: Estados de Oxidación ──
+CONTENIDO[1] = `
+<div class="sect">
+  <h2>Estados de oxidación (EO)</h2>
+  <p>El estado de oxidación es el número de electrones que un átomo ha perdido, ganado o compartido. Es fundamental para nombrar compuestos de metales con valencia variable.</p>
+
+  <h3>Reglas de asignación</h3>
+  <div class="step-row">
+    <div class="step-n cat">1</div>
+    <div class="step-body cat"><strong>Elemento puro:</strong><p>EO = 0. Ej: Fe(s), O₂(g), Na(s) → todos tienen EO = 0</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n an">2</div>
+    <div class="step-body an"><strong>Ión monoatómico:</strong><p>EO = carga del ión. Ej: Na⁺ → EO = +1 · Fe³⁺ → EO = +3</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n oh">3</div>
+    <div class="step-body oh"><strong>Oxígeno:</strong><p>EO = −2 en casi todos los compuestos. Excepción: en O₂ es 0; en peróxidos (H₂O₂) es −1</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n ox">4</div>
+    <div class="step-body ox"><strong>Hidrógeno:</strong><p>EO = +1 cuando va con no metales. EO = −1 en hidruros metálicos (NaH, CaH₂)</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n cat">5</div>
+    <div class="step-body cat"><strong>Regla de la suma:</strong><p>En molécula neutra: suma de todos los EO = 0. En ión poliátomico: suma = carga del ión</p></div>
+  </div>
+
+  <div class="color-box oh" style="margin-top:18px">
+    <div class="color-dot"></div>
+    <div>
+      <strong>¿Por qué O = −2?</strong>
+      <span>El oxígeno tiene 6 electrones externos y necesita <strong>2 más</strong> para completar su octeto. Por eso casi siempre su EO = −2: "roba" 2 electrones al átomo vecino. En peróxidos (H₂O₂) solo gana 1 porque hay un enlace O−O donde ningún O puede "robarle" al otro; el resultado es EO = −1 para cada oxígeno.</span>
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Ejemplos de cálculo</h2>
+
+  <div class="ejemplo">
+    <strong>Fe₂O₃</strong> — ¿cuál es el EO del hierro?<br>
+    Fe: <em>x</em> &nbsp;|&nbsp; O: −2<br>
+    2(<em>x</em>) + 3(−2) = 0<br>
+    2<em>x</em> − 6 = 0 &nbsp;→&nbsp; <span class="corr">x = +3</span><br>
+    ∴ El Fe tiene EO = +3 → es Fe³⁺ (hierro III)
+  </div>
+
+  <div class="ejemplo">
+    <strong>Cu₂O</strong> — ¿cuál es el EO del cobre?<br>
+    Cu: <em>x</em> &nbsp;|&nbsp; O: −2<br>
+    2(<em>x</em>) + 1(−2) = 0<br>
+    2<em>x</em> = +2 &nbsp;→&nbsp; <span class="corr">x = +1</span><br>
+    ∴ El Cu tiene EO = +1 → es Cu⁺ (cobre I)
+  </div>
+
+  <div class="ejemplo">
+    <strong>KMnO₄</strong> — ¿cuál es el EO del manganeso?<br>
+    K: +1 &nbsp;|&nbsp; Mn: <em>x</em> &nbsp;|&nbsp; O: −2<br>
+    +1 + <em>x</em> + 4(−2) = 0<br>
+    <em>x</em> = 8 − 1 &nbsp;→&nbsp; <span class="corr">x = +7</span><br>
+    ∴ El Mn tiene EO = +7 → permanganato
+  </div>
+
+  <div class="ejemplo">
+    <strong>H₂SO₄</strong> — ¿cuál es el EO del azufre?<br>
+    H: +1 &nbsp;|&nbsp; S: <em>x</em> &nbsp;|&nbsp; O: −2<br>
+    2(+1) + <em>x</em> + 4(−2) = 0<br>
+    <em>x</em> = 8 − 2 &nbsp;→&nbsp; <span class="corr">x = +6</span><br>
+    ∴ El S tiene EO = +6 en el ácido sulfúrico
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Serie de oxoaniones del cloro</h2>
+  <p>El cloro puede tener varios estados de oxidación cuando se combina con oxígeno. La serie completa muestra cómo el nombre cambia con el EO:</p>
+
+  <table class="tbl">
+    <tr><th>Fórmula</th><th>EO del Cl</th><th>Oxoanión</th><th>Ácido padre</th><th>Prefijo/sufijo</th></tr>
+    <tr><td><code>ClO⁻</code></td><td><code>+1</code></td><td>hipoclorito</td><td>HClO — ácido hipocloroso</td><td>hipo-…-ito (EO más bajo)</td></tr>
+    <tr><td><code>ClO₂⁻</code></td><td><code>+3</code></td><td>clorito</td><td>HClO₂ — ácido cloroso</td><td>…-ito (EO bajo)</td></tr>
+    <tr><td><code>ClO₃⁻</code></td><td><code>+5</code></td><td>clorato</td><td>HClO₃ — ácido clórico</td><td>…-ato (EO alto)</td></tr>
+    <tr><td><code>ClO₄⁻</code></td><td><code>+7</code></td><td>perclorato</td><td>HClO₄ — ácido perclórico</td><td>per-…-ato (EO más alto)</td></tr>
+  </table>
+
+  <div class="color-box ox">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Patrón mnemotécnico</strong>
+      <span><em>hipo…ito → …ito → …ato → per…ato</em>: más oxígenos = mayor EO del Cl = prefijo/sufijo más "largo". Este patrón se repite con bromo (BrO⁻…BrO₄⁻) y yodo (IO⁻…IO₄⁻).</span>
+    </div>
+  </div>
+</div>
+`;
+
+// ── Sección 2: Tipos de Compuestos ──
+CONTENIDO[2] = `
+<div class="sect">
+  <h2>Compuestos binarios (2 elementos)</h2>
+  <table class="tbl">
+    <tr><th>Tipo</th><th>Composición</th><th>Característica</th><th>Ejemplos</th></tr>
+    <tr>
+      <td><strong>Óxidos</strong></td>
+      <td><span class="tag tag-cat">metal</span> + O</td>
+      <td>Metal con oxidación positiva</td>
+      <td><code>Na₂O</code>, <code>CaO</code>, <code>Fe₂O₃</code></td>
+    </tr>
+    <tr>
+      <td><strong>Anhídridos</strong></td>
+      <td><span class="tag tag-an">no metal</span> + O</td>
+      <td>Óxido de no metal que reacciona con agua para dar un ácido oxácido</td>
+      <td><code>SO₃</code>, <code>P₂O₅</code>, <code>Cl₂O₇</code></td>
+    </tr>
+    <tr>
+      <td><strong>Sales binarias</strong></td>
+      <td><span class="tag tag-cat">metal</span> + <span class="tag tag-an">no metal</span></td>
+      <td>Sin oxígeno. Anión termina en -uro</td>
+      <td><code>NaCl</code>, <code>CaF₂</code>, <code>FeCl₃</code></td>
+    </tr>
+    <tr>
+      <td><strong>Hidruros</strong></td>
+      <td><span class="tag tag-cat">metal</span> + H</td>
+      <td>H con EO = −1</td>
+      <td><code>NaH</code>, <code>CaH₂</code></td>
+    </tr>
+  </table>
+
+  <div class="color-box an">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Definición correcta de anhídrido</strong>
+      <span>Un anhídrido es un óxido de no metal que <strong>reacciona con agua para dar un ácido oxácido</strong>. No todos los óxidos de no metales son verdaderos anhídridos: Cl₂O (+1) reacciona débilmente; SO₃ (+6) y Cl₂O₇ (+7) sí son verdaderos anhídridos porque producen ácidos fuertes y estables.</span>
+    </div>
+  </div>
+
+  <h3>Comparación: fuerza de anhídridos del cloro</h3>
+  <table class="tbl">
+    <tr><th>Fórmula</th><th>EO del Cl</th><th>Reacción con H₂O</th><th>Ácido resultante</th><th>Clasificación</th></tr>
+    <tr><td><code>Cl₂O</code></td><td><code>+1</code></td><td>Cl₂O + H₂O → 2 HClO (débil)</td><td>HClO — ácido hipocloroso</td><td style="color:var(--dimmer);font-style:italic">débil — uso limitado</td></tr>
+    <tr><td><code>SO₃</code></td><td><code>+6</code></td><td>SO₃ + H₂O → H₂SO₄</td><td>H₂SO₄ — ácido sulfúrico</td><td style="color:var(--ox-t);font-weight:700">fuerte ✓</td></tr>
+    <tr><td><code>Cl₂O₇</code></td><td><code>+7</code></td><td>Cl₂O₇ + H₂O → 2 HClO₄</td><td>HClO₄ — ácido perclórico</td><td style="color:var(--err);font-weight:700">muy fuerte ✓</td></tr>
+  </table>
+</div>
+
+<div class="sect">
+  <h2>Compuestos ternarios (3 elementos)</h2>
+  <table class="tbl">
+    <tr><th>Tipo</th><th>Estructura</th><th>Identificación</th><th>Ejemplos</th></tr>
+    <tr>
+      <td><strong>Bases / Hidróxidos</strong></td>
+      <td><span class="tag tag-cat">metal</span> + <span class="tag tag-oh">OH⁻</span></td>
+      <td>Contiene grupo OH</td>
+      <td><code>NaOH</code>, <code>Ca(OH)₂</code>, <code>Fe(OH)₃</code></td>
+    </tr>
+    <tr>
+      <td><strong>Ácidos oxácidos</strong></td>
+      <td>H + <span class="tag tag-an">no metal</span> + O</td>
+      <td>Empieza con H, contiene O</td>
+      <td><code>HNO₃</code>, <code>H₂SO₄</code>, <code>H₃PO₄</code></td>
+    </tr>
+    <tr>
+      <td><strong>Sales oxigenadas</strong></td>
+      <td><span class="tag tag-cat">metal</span> + <span class="tag tag-ox">oxoanión</span></td>
+      <td>Metal + anión con O</td>
+      <td><code>Na₂SO₄</code>, <code>Ca(NO₃)₂</code>, <code>KMnO₄</code></td>
+    </tr>
+  </table>
+</div>
+
+<div class="sect">
+  <h2>Oxoaniones principales</h2>
+  <table class="tbl">
+    <tr><th>Fórmula</th><th>Nombre</th><th>Ácido padre</th></tr>
+    <tr><td><code>SO₄²⁻</code></td><td>sulfato</td><td>H₂SO₄ ácido sulfúrico</td></tr>
+    <tr><td><code>SO₃²⁻</code></td><td>sulfito</td><td>H₂SO₃ ácido sulfuroso</td></tr>
+    <tr><td><code>NO₃⁻</code></td><td>nitrato</td><td>HNO₃ ácido nítrico</td></tr>
+    <tr><td><code>NO₂⁻</code></td><td>nitrito</td><td>HNO₂ ácido nitroso</td></tr>
+    <tr><td><code>PO₄³⁻</code></td><td>fosfato</td><td>H₃PO₄ ácido fosfórico</td></tr>
+    <tr><td><code>CO₃²⁻</code></td><td>carbonato</td><td>H₂CO₃ ácido carbónico</td></tr>
+    <tr><td><code>ClO⁻</code></td><td>hipoclorito</td><td>HClO ácido hipocloroso</td></tr>
+    <tr><td><code>ClO₂⁻</code></td><td>clorito</td><td>HClO₂ ácido cloroso</td></tr>
+    <tr><td><code>ClO₃⁻</code></td><td>clorato</td><td>HClO₃ ácido clórico</td></tr>
+    <tr><td><code>ClO₄⁻</code></td><td>perclorato</td><td>HClO₄ ácido perclórico</td></tr>
+    <tr><td><code>CrO₄²⁻</code></td><td>cromato</td><td>H₂CrO₄ ácido crómico</td></tr>
+    <tr><td><code>MnO₄⁻</code></td><td>permanganato</td><td>HMnO₄ ácido permangánico</td></tr>
+  </table>
+</div>
+`;
+
+// ── Sección 3: Nomenclatura Sistemática / IUPAC ──
+CONTENIDO[3] = `
+<div class="sect">
+  <h2>Nomenclatura Sistemática / IUPAC</h2>
+  <p>Usa <strong>prefijos numéricos</strong> para indicar la cantidad de átomos de cada elemento. Es la más moderna, no necesita conocer valencias.</p>
+
+  <table class="tbl">
+    <tr><th>#</th><th>Prefijo</th><th>#</th><th>Prefijo</th></tr>
+    <tr><td>1</td><td>(mono) — generalmente omitido</td><td>6</td><td>hexa-</td></tr>
+    <tr><td>2</td><td>di-</td><td>7</td><td>hepta-</td></tr>
+    <tr><td>3</td><td>tri-</td><td>8</td><td>octa-</td></tr>
+    <tr><td>4</td><td>tetra-</td><td>9</td><td>nona-</td></tr>
+    <tr><td>5</td><td>penta-</td><td>10</td><td>deca-</td></tr>
+  </table>
+
+  <h3>Reglas generales</h3>
+  <ol class="sect ol">
+    <li>Se nombra primero el elemento menos electronegativo (el metal o el elemento de la izquierda)</li>
+    <li>Se usa prefijo para indicar la cantidad de átomos de <em>cada</em> elemento</li>
+    <li>Si el prefijo termina en vocal y el nombre empieza en vocal, se omite la vocal del prefijo: <em>mono<del>o</del>xido</em> → <em>monóxido</em></li>
+    <li>El segundo elemento termina en <strong>-uro</strong> (aniones simples) o <strong>-ido</strong> (óxidos, anhídridos)</li>
+  </ol>
+
+  <div class="ejemplo">
+    <strong>CO</strong> → monóxido de carbono (1 O, 1 C)<br>
+    <strong>CO₂</strong> → dióxido de carbono (2 O, 1 C)<br>
+    <strong>SO₃</strong> → trióxido de azufre<br>
+    <strong>P₂O₅</strong> → pentaóxido de difósforo<br>
+    <strong>Cl₂O₇</strong> → heptaóxido de dicloro<br>
+    <strong>N₂O₃</strong> → trióxido de dinitrógeno<br>
+    <strong>FeCl₃</strong> → tricloruro de hierro (para sales binarias)
+  </div>
+
+  <h3>Construye el nombre Sistemática / IUPAC — paso a paso</h3>
+  <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>N₂O₃</strong></p>
+  <div class="step-row">
+    <div class="step-n an">1</div>
+    <div class="step-body an"><strong>Cuenta los átomos</strong><p>N₂O₃ tiene 2 átomos de N y 3 átomos de O.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n an">2</div>
+    <div class="step-body an"><strong>Primer elemento (izquierda): N</strong><p>2 átomos → prefijo <em>di-</em> + nitrógeno = <strong>dinitrógeno</strong>.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n an">3</div>
+    <div class="step-body an"><strong>Segundo elemento: O</strong><p>3 átomos → prefijo <em>tri-</em> + óxido = <strong>trióxido</strong>.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n an">4</div>
+    <div class="step-body an"><strong>Ensambla el nombre</strong><p>[segundo] de [primero] → <strong>trióxido de dinitrógeno</strong>.</p></div>
+  </div>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente: prefijos en sistema equivocado</strong>
+    <p>Los prefijos di-, tri-, tetra- son <strong>exclusivos del sistema Sistemática / IUPAC</strong>. En Tradicional se dice "cloruro férrico" (no "tricloruro"). En Stock se dice "cloruro de hierro (III)" (no "tricloruro"). Mezclar sistemas es el error más común en exámenes.</p>
+  </div>
+</div>
+`;
+
+// ── Sección 4: Stock y Tradicional ──
+CONTENIDO[4] = `
+<div class="sect">
+  <h2>Nomenclatura Stock</h2>
+  <p>Indica el <strong>estado de oxidación del metal con números romanos</strong> entre paréntesis, justo después del nombre del metal. Es el estándar internacional actual.</p>
+
+  <div class="ejemplo">
+    <strong>FeCl₂</strong> → cloruro de hierro <span class="corr">(II)</span> &nbsp;[Fe tiene EO = +2]<br>
+    <strong>FeCl₃</strong> → cloruro de hierro <span class="corr">(III)</span> &nbsp;[Fe tiene EO = +3]<br>
+    <strong>Cu₂O</strong> → óxido de cobre <span class="corr">(I)</span> &nbsp;[Cu tiene EO = +1]<br>
+    <strong>CuO</strong> → óxido de cobre <span class="corr">(II)</span> &nbsp;[Cu tiene EO = +2]<br>
+    <strong>PbO₂</strong> → óxido de plomo <span class="corr">(IV)</span> &nbsp;[Pb tiene EO = +4]
+  </div>
+
+  <p>Para metales de valencia fija (Na, Ca, Al…) no se usa número romano porque no hay ambigüedad. El número romano solo aparece cuando el metal puede tener más de una valencia.</p>
+
+  <h3>Construye paso a paso — Tradicional y Stock</h3>
+  <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>PbO₂</strong></p>
+  <div class="step-row">
+    <div class="step-n cat">1</div>
+    <div class="step-body cat"><strong>Identifica el tipo</strong><p>Pb (metal) + O → óxido básico.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n cat">2</div>
+    <div class="step-body cat"><strong>Calcula el EO</strong><p>x + 2(−2) = 0 → <strong>EO = +4</strong>.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n cat">3</div>
+    <div class="step-body cat"><strong>Elige el sufijo Tradicional</strong><p>Pb tiene EO = +2 (menor → plumboso) y +4 (mayor → plúmbico). EO = +4 → sufijo <em>-ico</em> → <strong>plúmbico</strong>.</p></div>
+  </div>
+  <div class="step-row">
+    <div class="step-n cat">4</div>
+    <div class="step-body cat"><strong>Ensambla los tres nombres</strong><p><strong>Tradicional:</strong> óxido plúmbico &nbsp;·&nbsp; <strong>Stock:</strong> óxido de plomo (IV) &nbsp;·&nbsp; <strong>Sistemática:</strong> dióxido de plomo.</p></div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Nomenclatura Tradicional (Clásica)</h2>
+  <p>Usa <strong>sufijos</strong> para indicar si el metal está en su valencia menor o mayor. Es más antigua y sigue usándose en algunos contextos hispanohablantes.</p>
+
+  <table class="tbl">
+    <tr><th>Cuando es la valencia…</th><th>Sufijo</th><th>Ejemplo con Fe</th></tr>
+    <tr><td>Menor (la más baja)</td><td><strong>-oso</strong></td><td>ferroso (+2) → cloru<em>ro ferro<strong>so</strong></em></td></tr>
+    <tr><td>Mayor (la más alta)</td><td><strong>-ico</strong></td><td>férrico (+3) → cloru<em>ro fér<strong>rico</strong></em></td></tr>
+  </table>
+
+  <div class="ejemplo">
+    <strong>FeCl₂</strong> → cloruro <span class="corr">ferroso</span> (Fe²⁺ = valencia menor de Fe)<br>
+    <strong>FeCl₃</strong> → cloruro <span class="corr">férrico</span> (Fe³⁺ = valencia mayor de Fe)<br>
+    <strong>Cu₂O</strong> → óxido <span class="corr">cuproso</span> (Cu⁺ = valencia menor de Cu)<br>
+    <strong>CuO</strong> → óxido <span class="corr">cúprico</span> (Cu²⁺ = valencia mayor de Cu)<br>
+    <strong>SnCl₂</strong> → cloruro <span class="corr">estannoso</span> (Sn²⁺)<br>
+    <strong>SnCl₄</strong> → cloruro <span class="corr">estánnico</span> (Sn⁴⁺)
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Comparación de los tres sistemas</h2>
+
+  <div class="comp-grid">
+    <div class="comp-col trad">
+      <div class="comp-col-lbl">Tradicional</div>
+      <div class="comp-item">cloruro ferroso</div>
+      <div class="comp-item">cloruro férrico</div>
+      <div class="comp-item">óxido cuproso</div>
+      <div class="comp-item">óxido cúprico</div>
+      <div class="comp-item">anhídrido sulfúrico</div>
+    </div>
+    <div class="comp-col stock">
+      <div class="comp-col-lbl">Stock</div>
+      <div class="comp-item">cloruro de hierro (II)</div>
+      <div class="comp-item">cloruro de hierro (III)</div>
+      <div class="comp-item">óxido de cobre (I)</div>
+      <div class="comp-item">óxido de cobre (II)</div>
+      <div class="comp-item">óxido de azufre (VI)</div>
+    </div>
+    <div class="comp-col sist">
+      <div class="comp-col-lbl">Sistemática / IUPAC</div>
+      <div class="comp-item">dicloruro de hierro</div>
+      <div class="comp-item">tricloruro de hierro</div>
+      <div class="comp-item">óxido de dícobre</div>
+      <div class="comp-item">óxido de cobre</div>
+      <div class="comp-item">trióxido de azufre</div>
+    </div>
+  </div>
+
+  <p style="font-size:.82rem;color:var(--dimmer);padding-top:4px">
+    <strong>Nota:</strong> La nomenclatura Stock es el estándar internacional recomendado por IUPAC para compuestos de metales con valencia variable. La Tradicional se mantiene en programas de bachillerato hispanoamericano.
+  </p>
+  <p style="font-size:.82rem;color:var(--dimmer);padding-top:8px">
+    <strong>¿Por qué SO₃ se llama "anhídrido" en Tradicional pero "óxido de azufre (VI)" en Stock?</strong><br>
+    La nomenclatura Tradicional distingue entre <em>óxidos</em> (metal + O) y <em>anhídridos</em> (no metal + O). Stock y Sistemática unifican ambos bajo la palabra "óxido", usando el número de oxidación o los prefijos para diferenciarlos. En el aula se usan los dos sistemas; es importante reconocer ambas formas.
+  </p>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente: -oso/-ico cuando hay más de 2 valencias</strong>
+    <p>La regla -oso/-ico solo funciona cuando el metal tiene <strong>exactamente 2 estados de oxidación</strong> comunes. Para Mn (+2, +3, +4) la nomenclatura Tradicional binaria falla: Mn³⁺ no tiene nombre Tradicional. Para esos casos se usa Stock obligatoriamente. Ver Sección 6 → Excepciones.</p>
+  </div>
+</div>
+`;
+
+// ── Sección 5: Excepciones ──
+CONTENIDO[5] = `
+<div class="sect">
+  <h2>Manganeso — 5 estados de oxidación</h2>
+  <p>El Mn es el metal de transición más versátil en bachillerato: tiene <strong>5 estados de oxidación comunes</strong>. La nomenclatura Tradicional no puede manejar más de 2 estados con -oso/-ico, por lo que varios compuestos de Mn <em>requieren</em> nomenclatura Stock.</p>
+
+  <table class="tbl">
+    <tr><th>EO</th><th>Fórmula ejemplo</th><th>Tradicional</th><th>Stock</th><th>Sistemática</th></tr>
+    <tr><td><code>+2</code></td><td>MnO</td><td>óxido manganoso</td><td>óxido de manganeso (II)</td><td>óxido de manganeso</td></tr>
+    <tr><td><code>+3</code></td><td>Mn₂O₃</td><td style="color:var(--err);font-style:italic">— sin nombre —</td><td>óxido de manganeso (III)</td><td>trióxido de dimanganeso</td></tr>
+    <tr><td><code>+4</code></td><td>MnO₂</td><td>óxido mangánico</td><td>óxido de manganeso (IV)</td><td>dióxido de manganeso</td></tr>
+    <tr><td><code>+6</code></td><td>K₂MnO₄</td><td colspan="2">manganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VI) de dipotasio</td></tr>
+    <tr><td><code>+7</code></td><td>KMnO₄</td><td colspan="2">permanganato de potasio (solo oxoanión)</td><td>tetraoxomanganato(VII) de potasio</td></tr>
+  </table>
+
+  <div class="error-box">
+    <strong>❌ Por qué falla la Tradicional con Mn en +3</strong>
+    <p>El sistema -oso/-ico asigna -oso al estado <em>menor</em> y -ico al <em>mayor</em> dentro de un par. Con Mn, hay tres estados binarios (+2, +3, +4): se asigna +2 → manganoso y +4 → mangánico, pero +3 queda sin nombre. Este es el límite del sistema Tradicional y por ello Stock es indispensable.</p>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Cromo — comportamiento dual</h2>
+  <p>El Cr presenta un caso especial: en EO = +6 actúa como <strong>no metal</strong>, formando anhídridos y oxoaniones, no óxidos básicos.</p>
+
+  <table class="tbl">
+    <tr><th>EO</th><th>Fórmula</th><th>Tradicional</th><th>Stock</th><th>Observación</th></tr>
+    <tr><td><code>+2</code></td><td>CrO</td><td>óxido cromoso</td><td>óxido de cromo (II)</td><td>Poco común</td></tr>
+    <tr><td><code>+3</code></td><td>Cr₂O₃</td><td>óxido crómico</td><td>óxido de cromo (III)</td><td>Estado más estable y frecuente</td></tr>
+    <tr><td><code>+6</code></td><td>CrO₃</td><td>anhídrido crómico</td><td>óxido de cromo (VI)</td><td>No metal: forma ácido crómico</td></tr>
+    <tr><td><code>+6</code></td><td>CrO₄²⁻</td><td colspan="2">cromato (oxoanión)</td><td>Teal en el modelo 2+matiz</td></tr>
+    <tr><td><code>+6</code></td><td>Cr₂O₇²⁻</td><td colspan="2">dicromato (oxoanión)</td><td>2 Cr por unidad del ion</td></tr>
+  </table>
+
+  <p style="font-size:.82rem;color:var(--dimmer)"><strong>Clave:</strong> Cuando el EO es alto, el no metal/metal se vuelve ácido-formador. CrO₃ es anhídrido porque reacciona con agua para dar H₂CrO₄ (ácido crómico). Del mismo modo, SO₃ → H₂SO₄.</p>
+</div>
+
+<div class="sect">
+  <h2>Mercurio — catión dinuclear Hg₂²⁺</h2>
+  <p>El mercurioso es un caso único en bachillerato: el ion <strong>Hg₂²⁺</strong> está formado por <em>dos</em> átomos de Hg unidos, cada uno con EO = +1.</p>
+
+  <table class="tbl">
+    <tr><th>Fórmula</th><th>Ion</th><th>Tradicional</th><th>Stock</th></tr>
+    <tr><td>Hg₂Cl₂</td><td>Hg₂²⁺ + 2 Cl⁻</td><td>cloruro mercurioso</td><td>cloruro de mercurio (I)</td></tr>
+    <tr><td>HgCl₂</td><td>Hg²⁺ + 2 Cl⁻</td><td>cloruro mercúrico</td><td>cloruro de mercurio (II)</td></tr>
+  </table>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente con Hg₂Cl₂</strong>
+    <p>El cloruro mercurioso NO es HgCl (un Hg + un Cl). Es Hg₂Cl₂ porque el ion mercurioso existe solo como par Hg₂²⁺. Al calcular el EO: (2x) + 2(−1) = 0 → x = +1 por átomo, pero son dos átomos formando el catión.</p>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Ácidos hídricos (haluros de hidrógeno)</h2>
+  <p>Cuando el hidrógeno se une a un halógeno o no metal sin oxígeno, forma un <strong>ácido hídrico</strong>. En disolución acuosa se llaman ácidos; en estado gaseoso son haluros de hidrógeno.</p>
+
+  <table class="tbl">
+    <tr><th>Fórmula</th><th>Gas (cloruro de hidrógeno)</th><th>Disolución (ácido)</th></tr>
+    <tr><td>HCl(g)</td><td>cloruro de hidrógeno</td><td>ácido clorhídrico</td></tr>
+    <tr><td>HBr(g)</td><td>bromuro de hidrógeno</td><td>ácido bromhídrico</td></tr>
+    <tr><td>HI(g)</td><td>yoduro de hidrógeno</td><td>ácido yodhídrico</td></tr>
+    <tr><td>H₂S(g)</td><td>sulfuro de hidrógeno</td><td>ácido sulfhídrico</td></tr>
+  </table>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente: HCl ≠ "ácido clorídrico"</strong>
+    <p>El nombre correcto es <em>ácido clor<strong>h</strong>ídrico</em> (con h intercalada: clor + h + ídrico). La h viene de "hidrógeno". Aplica igual para HBr → bromhídrico, HI → yodhídrico, H₂S → sulfhídrico.</p>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Los Tres Tipos de Hidruros</h2>
+  <p>El término "hidruro" engloba tres familias muy distintas. Confundirlas es uno de los errores más frecuentes en bachillerato:</p>
+
+  <div class="color-box cat">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Tipo 1 — Hidruro metálico (H⁻, EO = −1)</strong>
+      <span>Metal + H. El hidrógeno actúa como anión H⁻. Son sólidos iónicos. Ejemplos: <code>NaH</code> → hidruro de sodio · <code>CaH₂</code> → hidruro de calcio</span>
+    </div>
+  </div>
+
+  <div class="color-box an">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Tipo 2 — Hidruro no metálico gaseoso</strong>
+      <span>No metal + H en fase gaseosa. El H actúa con EO = +1. Son gases o vapores. Ejemplos: <code>HCl(g)</code> → cloruro de hidrógeno · <code>H₂S(g)</code> → sulfuro de hidrógeno</span>
+    </div>
+  </div>
+
+  <div class="color-box ox">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Tipo 3 — Hidruro no metálico acuoso (ácido hídrico)</strong>
+      <span>El mismo gas disuelto en agua. Cambia el nombre: pasa a llamarse ácido. La "h" intercalada indica que proviene de hidrógeno. Ejemplos: <code>HCl(aq)</code> → ácido clor<strong>h</strong>ídrico · <code>H₂S(aq)</code> → ácido sulf<strong>h</strong>ídrico</span>
+    </div>
+  </div>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente: confundir los tres tipos</strong>
+    <p>NaH (Tipo 1, sólido iónico, H⁻) ≠ HCl(g) (Tipo 2, gas) ≠ HCl(aq) (Tipo 3, ácido). El estado físico y el disolvente determinan el nombre. Un examen puede pedir los tres nombres para la misma fórmula con distintas condiciones.</p>
+  </div>
+</div>
+`;
+
+// ── Sección 6: Reactividad ──
+CONTENIDO[6] = `
+<div class="sect">
+  <h2>De la Nomenclatura a la Reactividad</h2>
+  <p><strong>El nombre te dice cómo reacciona el compuesto.</strong> Cuando conoces el tipo de compuesto — óxido básico, anhídrido, ácido, base, sal — puedes predecir qué ocurrirá al mezclarlo con otro reactivo.</p>
+</div>
+
+<div class="sect">
+  <h2>Patrón 1 — Óxido básico + H₂O → Base (pH &gt; 7)</h2>
+  <p>Un <strong>óxido básico</strong> (metal + O) reacciona con agua para producir una base (hidróxido). La solución resultante es alcalina.</p>
+
+  <div class="mdec-demo" style="margin-bottom:14px">
+    <div class="mdec-row">
+      <div class="mdec-token"><span class="mdec-w cat">Na₂O</span><span class="mdec-lbl cat">Ámbar · óxido básico</span></div>
+      <div class="mdec-token"><span class="mdec-w neu">+</span><span class="mdec-lbl neu"></span></div>
+      <div class="mdec-token"><span class="mdec-w neu">H₂O</span><span class="mdec-lbl neu">neutro</span></div>
+      <div class="mdec-token"><span class="mdec-w neu">→</span><span class="mdec-lbl neu"></span></div>
+      <div class="mdec-token"><span class="mdec-w oh">2 NaOH</span><span class="mdec-lbl oh">Violeta · base</span></div>
+    </div>
+    <div style="font-size:.78rem;color:var(--dim)">Na₂O + H₂O → 2 NaOH &nbsp;·&nbsp; pH &gt; 7 (básico)</div>
+  </div>
+
+  <div class="ejemplo">
+    <strong>CaO</strong> + H₂O → Ca(OH)₂ &nbsp;[óxido de calcio → hidróxido de calcio = cal apagada]<br>
+    <strong>Na₂O</strong> + H₂O → 2 NaOH &nbsp;[óxido de sodio → hidróxido de sodio = sosa cáustica]<br>
+    <strong>K₂O</strong> + H₂O → 2 KOH &nbsp;[óxido de potasio → hidróxido de potasio]
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Patrón 2 — Anhídrido (óxido ácido) + H₂O → Ácido (pH &lt; 7)</h2>
+  <p>Un <strong>anhídrido</strong> (no metal + O) reacciona con agua para producir un ácido oxácido. La solución resultante es ácida.</p>
+
+  <div class="ejemplo">
+    <strong>SO₃</strong> + H₂O → H₂SO₄ &nbsp;[trióxido de azufre → ácido sulfúrico]<br>
+    <strong>CO₂</strong> + H₂O → H₂CO₃ &nbsp;[dióxido de carbono → ácido carbónico]<br>
+    <strong>P₂O₅</strong> + 3 H₂O → 2 H₃PO₄ &nbsp;[pentaóxido de difósforo → ácido fosfórico]<br>
+    <strong>SO₂</strong> + H₂O → H₂SO₃ &nbsp;[dióxido de azufre → ácido sulfuroso]
+  </div>
+
+  <div class="color-box an">
+    <div class="color-dot"></div>
+    <div>
+      <strong>La nomenclatura revela la reacción</strong>
+      <span>"Anhídrido" viene del griego <em>an-hydro</em>: <em>sin agua</em>. Es literalmente el ácido al que le falta el agua. SO₃ + H₂O → H₂SO₄ se puede leer al revés: H₂SO₄ − H₂O = SO₃ (el anhídrido del ácido sulfúrico).</span>
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Patrón 3 — Ácido + Base → Sal + Agua (neutralización, pH ≈ 7)</h2>
+  <p>Cuando un ácido y una base reaccionan, se produce una <strong>sal</strong> y <strong>agua</strong>. La reacción se llama neutralización porque los H⁺ del ácido se combinan con los OH⁻ de la base para formar H₂O.</p>
+
+  <div class="ejemplo">
+    <strong>H₂SO₄</strong> + 2 NaOH → Na₂SO₄ + 2 H₂O &nbsp;[sal = sulfato de sodio]<br>
+    <strong>HCl</strong> + NaOH → NaCl + H₂O &nbsp;[sal = cloruro de sodio = sal de mesa]<br>
+    <strong>HNO₃</strong> + KOH → KNO₃ + H₂O &nbsp;[sal = nitrato de potasio]<br>
+    <strong>H₃PO₄</strong> + 3 NaOH → Na₃PO₄ + 3 H₂O &nbsp;[sal = fosfato de sodio]
+  </div>
+</div>
+
+<div class="sect">
+  <h2>¿Cómo sé qué tipo de compuesto tengo?</h2>
+  <table class="tbl">
+    <tr><th>Nombre / estructura</th><th>Indica</th><th>Patrón de reactividad</th></tr>
+    <tr><td>óxido de <em>metal</em></td><td>óxido básico</td><td>+ H₂O → Base (pH &gt; 7)</td></tr>
+    <tr><td>óxido de <em>no metal</em> / anhídrido</td><td>óxido ácido</td><td>+ H₂O → Ácido (pH &lt; 7)</td></tr>
+    <tr><td>hidróxido / base</td><td>fuente de OH⁻</td><td>+ Ácido → Sal + H₂O</td></tr>
+    <tr><td>ácido (empieza con H)</td><td>fuente de H⁺</td><td>+ Base → Sal + H₂O</td></tr>
+    <tr><td>sal (metal + oxoanión)</td><td>producto de neutralización</td><td>puede reaccionar con ácido o base fuerte</td></tr>
+  </table>
+
+  <div class="error-box">
+    <strong>❌ Error frecuente: "óxido básico" ≠ básico por llamarse así</strong>
+    <p>Un óxido básico se llama así porque <strong>reacciona con agua para dar una base</strong> (pH &gt; 7), no por tener "básico" en el nombre. Del mismo modo, un "anhídrido" no es ácido por sí solo — lo es al disolverse en agua. El nombre describe el comportamiento químico, no una propiedad intrínseca del sólido.</p>
+  </div>
+</div>
+`;
+
+// ══════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════
+let seccionActual = 0;
+
+function goToSection(idx){
+  seccionActual = idx;
+  document.getElementById('seccion-content').innerHTML = CONTENIDO[idx];
+  document.getElementById('seccion-titulo').textContent = SECCIONES[idx].icon + ' ' + SECCIONES[idx].titulo;
+  document.getElementById('seccion-numero').textContent = 'Sección ' + (idx+1) + ' de ' + SECCIONES.length;
+  document.getElementById('progress-text').textContent = (idx+1) + ' / ' + SECCIONES.length;
+  document.getElementById('progress-fill').style.width = ((idx+1)/SECCIONES.length*100) + '%';
+  document.getElementById('btn-anterior').disabled = idx === 0;
+  document.getElementById('btn-siguiente').disabled = idx === SECCIONES.length - 1;
+  document.getElementById('menu-principal').classList.remove('active');
+  document.getElementById('contenido-seccion').classList.add('active');
+  window.scrollTo(0,0);
+  localStorage.setItem('teoria-seccion', idx);
 }
 
-// PWA Install Handler — modal only opens on button click, never on load
+function volverAlMenu(){
+  document.getElementById('contenido-seccion').classList.remove('active');
+  document.getElementById('menu-principal').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function navAnterior(){ if(seccionActual > 0) goToSection(seccionActual - 1); }
+function navSiguiente(){ if(seccionActual < SECCIONES.length - 1) goToSection(seccionActual + 1); }
+
+document.addEventListener('keydown', e => {
+  if(document.getElementById('contenido-seccion').classList.contains('active')){
+    if(e.key === 'ArrowLeft') navAnterior();
+    if(e.key === 'ArrowRight') navSiguiente();
+    if(e.key === 'Escape') volverAlMenu();
+  }
+});
+
+// On load: show menu (don't auto-navigate)
+// localStorage is preserved for future reference but we don't auto-navigate
+
+// ══════════════════════════════════════════
+//  PWA Install Handler
+// ══════════════════════════════════════════
 let deferredPrompt;
 const navInstallBtn = document.getElementById('pwa-install-nav-btn');
 
