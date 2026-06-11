@@ -190,6 +190,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <span class="pt-chip">✏️ Escritura libre</span>
       <span class="pt-chip">⚡ Estado de oxidación</span>
       <span class="pt-chip">🧩 Completar nombre</span>
+      <span class="pt-chip">🔄 Nombre→Fórmula</span>
     </div>
     <div class="group-grid">
       <button class="group-btn full" onclick="startGame('all')">
@@ -383,7 +384,7 @@ function buildDrag(q, pool){
 
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
-const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag'];
+const TYPE_POOL=['mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag','invert'];
 
 function startGame(group){
   ST.group=group;
@@ -399,6 +400,7 @@ function startGame(group){
     if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
     if(t==='ox-state'&&!extractEO(q)) t='mc';
     if(t==='drag'&&!buildDrag(q,pool)) t='mc';
+    if(t==='invert'&&pool.length<4) t='mc';
     return {...q,qtype:t};
   });
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
@@ -415,7 +417,7 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/10';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 10 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.formula;
   const fb=document.getElementById('feedback');
@@ -425,6 +427,38 @@ function loadQuestion(){
   else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
   else if(q.qtype==='ox-state') renderOx(q);
   else if(q.qtype==='drag') renderDrag(q);
+  else if(q.qtype==='invert') renderInvert(q);
+}
+
+// ── Build smart distractors (reflect real cognitive errors) ──
+function buildSmartDistractors(q, pool){
+  const dist=[];
+  // 1. Same compound, wrong EO (±1 from real EO)
+  const info=extractEO(q);
+  if(info){
+    const allR=['I','II','III','IV','V','VI'];
+    const ri=allR.indexOf(info.roman);
+    if(ri>0) dist.push(q.stock[0].replace('('+info.roman+')','('+allR[ri-1]+')'));
+    if(ri<allR.length-1) dist.push(q.stock[0].replace('('+info.roman+')','('+allR[ri+1]+')'));
+    // 2. Swap -oso/-ico if Tradicional name exists
+    if(q.trad&&q.trad[0]){
+      const t=q.trad[0];
+      if(t.includes('oso')) dist.push(t.replace('oso','ico'));
+      else if(t.includes('ico')&&!t.includes('hídrico')) dist.push(t.replace('ico','oso'));
+    }
+  }
+  // 3. Names from same-group compounds (not valid for this q)
+  const sameGroup=pool.filter(c=>c.group===q.group&&c.formula!==q.formula);
+  shuffle(sameGroup).slice(0,4).forEach(c=>{
+    const n=(c.stock&&c.stock[0])?c.stock[0]:(c.trad&&c.trad[0])?c.trad[0]:null;
+    if(n&&!isCorrect(n,q,'any')) dist.push(n);
+  });
+  // 4. General pool fallback
+  pool.forEach(c=>{
+    if(c.formula===q.formula) return;
+    [...(c.trad||[]),...(c.stock||[]),...(c.sist||[])].forEach(n=>{if(n&&!isCorrect(n,q,'any'))dist.push(n);});
+  });
+  return shuffle([...new Set(dist.filter(Boolean))]).slice(0,3);
 }
 
 // ── MC ──
@@ -434,12 +468,7 @@ function renderMC(q){
   const allValid=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
   const correct=allValid[Math.floor(Math.random()*allValid.length)]||q.trad[0];
   const pool=getPool(ST.group);
-  const distPool=[];
-  pool.forEach(c=>{
-    if(c.formula===q.formula) return;
-    [...(c.trad||[]),...(c.stock||[]),...(c.sist||[])].forEach(n=>{if(n&&!isCorrect(n,q,'any'))distPool.push(n);});
-  });
-  const distractors=shuffle([...new Set(distPool)]).slice(0,3);
+  const distractors=buildSmartDistractors(q,pool);
   while(distractors.length<3) distractors.push('—');
   const opts=shuffle([correct,...distractors.slice(0,3)]);
   document.getElementById('q-mc-opts').innerHTML=opts.map(o=>
@@ -632,6 +661,43 @@ function checkDrag(){
         document.getElementById('feedback').className='feedback';
       },1400);
     }
+  }
+  updateStats();
+}
+
+// ── Invert (nombre → fórmula) ──
+function renderInvert(q){
+  const name=(q.stock&&q.stock[0])?q.stock[0]:(q.trad&&q.trad[0])?q.trad[0]:q.sist[0];
+  document.getElementById('q-formula').textContent='?';
+  document.getElementById('q-prompt').innerHTML=`¿Cuál es la fórmula de <strong>"${name}"</strong>?`;
+  document.getElementById('area-mc').style.display='';
+  const pool=getPool(ST.group);
+  const pool2=shuffle(pool.filter(c=>c.formula!==q.formula));
+  const wrongs=pool2.slice(0,3).map(c=>c.formula);
+  while(wrongs.length<3) wrongs.push('—');
+  const opts=shuffle([q.formula,...wrongs.slice(0,3)]);
+  document.getElementById('q-mc-opts').innerHTML=opts.map(o=>
+    `<button class="mc-opt" onclick="checkInvert(this,'${esc(o)}','${esc(q.formula)}')">${o}</button>`
+  ).join('');
+}
+
+function checkInvert(el,chosen,correct){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(chosen===correct){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    document.getElementById('q-formula').textContent=q.formula;
+    showFeedback('ok',`✓ ¡Correcto! La fórmula es ${q.formula}. +${pts} punto${pts!==1?'s':''}`,q);
+    scheduleNext(1800);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    document.getElementById('q-formula').textContent=q.formula;
+    showFeedback('err',`✗ La fórmula correcta es ${q.formula}.`,q);
+    scheduleNext(3000);
   }
   updateStats();
 }
