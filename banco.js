@@ -2153,6 +2153,369 @@ const BANCO = [
     hint: 'Au³⁺ (EO mayor) → áurico. Au³⁺ + 3I⁻ → AuI₃.'
   },
 
+
+  // ─────────────────────────────────────────────
+  // NEW ENTRIES — batch 2 (appended)
+  // ─────────────────────────────────────────────
+
+  // ── OX-BAS: talio, tungsteno, molibdeno, titanio, vanadio (IV) ──
+  {
+    formula: 'Tl₂O',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido talioso'],
+    stock: ['óxido de talio (I)'],
+    sist: ['óxido de ditalio'],
+    hint: 'Tl⁺ (EO menor del talio) → -oso → talioso. 2Tl⁺ + O²⁻ → Tl₂O.'
+  },
+  {
+    formula: 'Tl₂O₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido tálico'],
+    stock: ['óxido de talio (III)'],
+    sist: ['trióxido de ditalio'],
+    hint: 'Tl³⁺ (EO mayor del talio) → -ico → tálico. 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'WO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido wolframioso'],
+    stock: ['óxido de wolframio (IV)'],
+    sist: ['dióxido de wolframio'],
+    hint: 'W con EO=+4 (menor entre +4 y +6) → -oso → wolframioso. W⁴⁺ + 2O²⁻.'
+  },
+  {
+    formula: 'WO₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido wolfrámico'],
+    stock: ['óxido de wolframio (VI)'],
+    sist: ['trióxido de wolframio'],
+    hint: 'W con EO=+6 (mayor) → -ico → wolfrámico. W⁶⁺ + 3O²⁻ → WO₃.'
+  },
+  {
+    formula: 'MoO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido molibdoso'],
+    stock: ['óxido de molibdeno (IV)'],
+    sist: ['dióxido de molibdeno'],
+    hint: 'Mo con EO=+4 (menor entre +4 y +6) → -oso → molibdoso. Mo⁴⁺ + 2O²⁻.'
+  },
+  {
+    formula: 'MoO₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido molíbdico'],
+    stock: ['óxido de molibdeno (VI)'],
+    sist: ['trióxido de molibdeno'],
+    hint: 'Mo con EO=+6 (mayor) → -ico → molíbdico. Mo⁶⁺ + 3O²⁻ → MoO₃.'
+  },
+  {
+    formula: 'TiO',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido titanoso'],
+    stock: ['óxido de titanio (II)'],
+    sist: ['óxido de titanio'],
+    hint: 'Ti con EO=+2 (menor). → -oso → titanoso. Ti²⁺ + O²⁻ → TiO.'
+  },
+  {
+    formula: 'Ti₂O₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido titánico'],
+    stock: ['óxido de titanio (III)'],
+    sist: ['trióxido de dititanio'],
+    hint: 'Ti con EO=+3 (intermedio). Stock preciso. 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'VO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: [],
+    stock: ['óxido de vanadio (IV)'],
+    sist: ['dióxido de vanadio'],
+    hint: 'V con EO=+4 (intermedio entre +3 y +5). Múltiples EO → trad vacío; usar Stock. V⁴⁺ + 2O²⁻.'
+  },
+
+  // ── ANHID: NO y NO₂ (casos especiales), P₄O₆, P₄O₁₀ ──
+  {
+    formula: 'NO',
+    group: 'anhid', level: 'medium',
+    trad: ['óxido nítrico'],
+    stock: [],
+    sist: ['monóxido de nitrógeno'],
+    hint: 'N con EO=+2. Molécula radicalaria (impar de electrones). Nombre común: óxido nítrico.'
+  },
+  {
+    formula: 'NO₂',
+    group: 'anhid', level: 'medium',
+    trad: ['dióxido de nitrógeno'],
+    stock: [],
+    sist: ['dióxido de nitrógeno'],
+    hint: 'N con EO=+4. También radical. NO₂ dimeriza a N₂O₄. No encaja bien en series trad.'
+  },
+  {
+    formula: 'N₂O₄',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido nitroso'],
+    stock: [],
+    sist: ['tetróxido de dinitrógeno'],
+    hint: 'Dímero de NO₂. N con EO=+4 promedio. IUPAC: tetróxido de dinitrógeno.'
+  },
+  {
+    formula: 'P₄O₆',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido fosforoso'],
+    stock: [],
+    sist: ['hexaóxido de tetrafósforo'],
+    hint: 'Fórmula molecular real del óxido de P(III). Equivale a 2×P₂O₃. → fosforoso.'
+  },
+  {
+    formula: 'P₄O₁₀',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido fosfórico'],
+    stock: [],
+    sist: ['decaóxido de tetrafósforo'],
+    hint: 'Fórmula molecular real del óxido de P(V). Equivale a 2×P₂O₅. Gran desecante.'
+  },
+
+  // ── HIDRU: AlH₃, BeH₂, TiH₂ ──
+  {
+    formula: 'AlH₃',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de aluminio'],
+    stock: [],
+    sist: ['trihidruro de aluminio'],
+    hint: 'Al tiene valencia fija +3. Al³⁺ + 3H⁻ → AlH₃. IUPAC: trihidruro de aluminio.'
+  },
+  {
+    formula: 'BeH₂',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de berilio'],
+    stock: [],
+    sist: ['dihidruro de berilio'],
+    hint: 'Be tiene valencia fija +2. Be²⁺ + 2H⁻ → BeH₂. IUPAC: dihidruro de berilio.'
+  },
+  {
+    formula: 'TiH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro titanoso'],
+    stock: ['hidruro de titanio (II)'],
+    sist: ['dihidruro de titanio'],
+    hint: 'Ti con EO=+2 (menor) → -oso → titanoso → hidruro titanoso. TiH₂ se usa en metalurgia.'
+  },
+
+  // ── BASE: Mn(OH)₃, Tl(OH)₃, Ti(OH)₄ ──
+  {
+    formula: 'Mn(OH)₃',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido mangánico'],
+    stock: ['hidróxido de manganeso (III)'],
+    sist: ['trihidróxido de manganeso'],
+    hint: 'Mn³⁺ (EO mayor habitual en hidróxidos de Mn) → -ico → mangánico. Mn tiene +2,+3,+4,+7.'
+  },
+  {
+    formula: 'Tl(OH)₃',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido tálico'],
+    stock: ['hidróxido de talio (III)'],
+    sist: ['trihidróxido de talio'],
+    hint: 'Tl³⁺ (EO mayor) → -ico → tálico → hidróxido tálico. 2 EO del Tl: +1 y +3.'
+  },
+  {
+    formula: 'Ti(OH)₄',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido titánico'],
+    stock: ['hidróxido de titanio (IV)'],
+    sist: ['tetrahidróxido de titanio'],
+    hint: 'Ti con EO=+4 (el más estable) → -ico → titánico → hidróxido titánico. Ti⁴⁺ + 4OH⁻.'
+  },
+
+  // ── AC-OX: H₃PO₂ ──
+  {
+    formula: 'H₃PO₂',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido hipofosforoso'],
+    stock: [],
+    sist: ['ácido hipofosforoso'],
+    hint: 'H₃ + PO₂³⁻ (hipofosfit). P con EO=+1 (mínimo) → hipo-oso → hipofosforoso.'
+  },
+
+  // ── SAL-BIN: NaF, sales de sulfuro, bromuro de cobre ──
+  {
+    formula: 'NaF',
+    group: 'sal-bin', level: 'easy',
+    trad: ['fluoruro de sodio'],
+    stock: [],
+    sist: ['fluoruro de sodio'],
+    hint: 'F⁻ → fluoruro. Na⁺ → sodio. Valencia fija. Fluoruro de sodio (pasta dental).'
+  },
+  {
+    formula: 'CaS',
+    group: 'sal-bin', level: 'easy',
+    trad: ['sulfuro de calcio'],
+    stock: [],
+    sist: ['sulfuro de calcio'],
+    hint: 'S²⁻ → sulfuro. Ca²⁺ → calcio. Ca²⁺ + S²⁻ → CaS.'
+  },
+  {
+    formula: 'Ag₂S',
+    group: 'sal-bin', level: 'easy',
+    trad: ['sulfuro de plata'],
+    stock: [],
+    sist: ['sulfuro de diplata'],
+    hint: 'S²⁻ → sulfuro. Dos Ag⁺ por un S²⁻ → Ag₂S. Mineral argentita.'
+  },
+  {
+    formula: 'Cu₂S',
+    group: 'sal-bin', level: 'medium',
+    trad: ['sulfuro cuproso'],
+    stock: ['sulfuro de cobre (I)'],
+    sist: ['sulfuro de dicobre'],
+    hint: 'Cu⁺ (EO menor) → -oso → cuproso → sulfuro cuproso. Dos Cu⁺ + S²⁻ → Cu₂S.'
+  },
+  {
+    formula: 'PbS',
+    group: 'sal-bin', level: 'medium',
+    trad: ['sulfuro plumboso'],
+    stock: ['sulfuro de plomo (II)'],
+    sist: ['sulfuro de plomo'],
+    hint: 'Pb²⁺ (EO menor del Pb) → -oso → plumboso → sulfuro plumboso. Mineral galena.'
+  },
+  {
+    formula: 'FeS₂',
+    group: 'sal-bin', level: 'hard',
+    trad: ['bisulfuro ferroso'],
+    stock: ['disulfuro de hierro (II)'],
+    sist: ['disulfuro de hierro'],
+    hint: 'Fe²⁺ + S₂²⁻ (ion persulfuro). Mineral pirita (oro de los tontos). FeS₂.'
+  },
+  {
+    formula: 'Bi₂S₃',
+    group: 'sal-bin', level: 'hard',
+    trad: ['sulfuro de bismuto'],
+    stock: ['sulfuro de bismuto (III)'],
+    sist: ['trisulfuro de dibismuto'],
+    hint: 'Bi³⁺ (EO único habitual) + S²⁻. 2Bi³⁺ + 3S²⁻ → Bi₂S₃. Mineral bismutinita.'
+  },
+  {
+    formula: 'CuBr',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro cuproso'],
+    stock: ['bromuro de cobre (I)'],
+    sist: ['bromuro de cobre'],
+    hint: 'Cu⁺ (EO menor) → -oso → cuproso → bromuro cuproso. Cu⁺ + Br⁻ → CuBr.'
+  },
+  {
+    formula: 'CuBr₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro cúprico'],
+    stock: ['bromuro de cobre (II)'],
+    sist: ['dibromuro de cobre'],
+    hint: 'Cu²⁺ (EO mayor) → -ico → cúprico → bromuro cúprico. Cu²⁺ + 2Br⁻ → CuBr₂.'
+  },
+
+  // ── SAL-OX: carbonatos, cromatos, permanganato K₂, nitratos, fosfatos, sulfatos ──
+  {
+    formula: 'K₂CO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['carbonato de potasio'],
+    stock: [],
+    sist: ['carbonato de dipotasio'],
+    hint: 'CO₃²⁻ = carbonato. Dos K⁺ por un CO₃²⁻ → K₂CO₃. Potasa (K₂CO₃).'
+  },
+  {
+    formula: 'MgCO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['carbonato de magnesio'],
+    stock: [],
+    sist: ['carbonato de magnesio'],
+    hint: 'CO₃²⁻ = carbonato. Mg²⁺ + CO₃²⁻ → MgCO₃. Mineral magnesita.'
+  },
+  {
+    formula: 'BaCO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['carbonato de bario'],
+    stock: [],
+    sist: ['carbonato de bario'],
+    hint: 'CO₃²⁻ = carbonato. Ba²⁺ + CO₃²⁻ → BaCO₃. Mineral witherita.'
+  },
+  {
+    formula: 'Na₂CrO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['cromato de sodio'],
+    stock: [],
+    sist: ['cromato de disodio'],
+    hint: 'CrO₄²⁻ = cromato (Cr EO=+6). Dos Na⁺ + CrO₄²⁻ → Na₂CrO₄. Color amarillo.'
+  },
+  {
+    formula: 'Na₂Cr₂O₇',
+    group: 'sal-ox', level: 'hard',
+    trad: ['dicromato de sodio'],
+    stock: [],
+    sist: ['dicromato de disodio'],
+    hint: 'Cr₂O₇²⁻ = dicromato. Dos Na⁺ + Cr₂O₇²⁻ → Na₂Cr₂O₇. Oxidante fuerte, naranja.'
+  },
+  {
+    formula: 'K₂MnO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['manganato de potasio'],
+    stock: [],
+    sist: ['manganato de dipotasio'],
+    hint: 'MnO₄²⁻ = manganato (Mn EO=+6). Dos K⁺ + MnO₄²⁻ → K₂MnO₄. Verde en solución.'
+  },
+  {
+    formula: 'KNO₂',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrito de potasio'],
+    stock: [],
+    sist: ['nitrito de potasio'],
+    hint: 'NO₂⁻ = nitrito (N EO=+3). K⁺ → potasio. Nitrito de potasio.'
+  },
+  {
+    formula: 'Ca(NO₃)₂',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrato de calcio'],
+    stock: [],
+    sist: ['dinitrato de calcio'],
+    hint: 'NO₃⁻ = nitrato. Ca²⁺ + 2NO₃⁻ → Ca(NO₃)₂. Nitrato de calcio (salitre nórdico).'
+  },
+  {
+    formula: 'FePO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['fosfato férrico'],
+    stock: ['fosfato de hierro (III)'],
+    sist: ['fosfato de hierro'],
+    hint: 'PO₄³⁻ = fosfato. Fe³⁺ (EO mayor) → férrico → fosfato férrico. Fe³⁺ + PO₄³⁻ → FePO₄.'
+  },
+  {
+    formula: 'CaSO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de calcio'],
+    stock: [],
+    sist: ['sulfato de calcio'],
+    hint: 'SO₄²⁻ = sulfato. Ca²⁺ + SO₄²⁻ → CaSO₄. Aljez/yeso en construcción colombiana.'
+  },
+  {
+    formula: 'MgSO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de magnesio'],
+    stock: [],
+    sist: ['sulfato de magnesio'],
+    hint: 'SO₄²⁻ = sulfato. Mg²⁺ + SO₄²⁻ → MgSO₄. Sal de Epsom, usos medicinales.'
+  },
+  {
+    formula: 'NiSO₄',
+    group: 'sal-ox', level: 'medium',
+    trad: ['sulfato niqueloso'],
+    stock: ['sulfato de níquel (II)'],
+    sist: ['sulfato de níquel'],
+    hint: 'SO₄²⁻ = sulfato. Ni²⁺ (EO menor) → niqueloso → sulfato niqueloso. Ni²⁺ + SO₄²⁻.'
+  },
+  {
+    formula: 'Ag₂SO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de plata'],
+    stock: [],
+    sist: ['sulfato de diplata'],
+    hint: 'SO₄²⁻ = sulfato. Dos Ag⁺ + SO₄²⁻ → Ag₂SO₄. Ligeramente soluble.'
+  },
+
 ];
 
-// Total: 218 compounds
+// Total: ~90 new compounds added in batch 2 (grand total ~308)
