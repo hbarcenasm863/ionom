@@ -191,6 +191,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <span class="pt-chip">⚡ Estado de oxidación</span>
       <span class="pt-chip">🧩 Completar nombre</span>
       <span class="pt-chip">🔄 Nombre→Fórmula</span>
+      <span class="pt-chip">⚖️ Equilibrio iónico</span>
     </div>
     <div class="group-grid">
       <button class="group-btn full" onclick="startGame('all')">
@@ -384,7 +385,7 @@ function buildDrag(q, pool){
 
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
-const TYPE_POOL=['mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag','invert'];
+const TYPE_POOL=['mc','mc','write-any','write-any','write-stock','write-sist','ox-state','drag','invert','balance'];
 
 function startGame(group){
   ST.group=group;
@@ -401,6 +402,7 @@ function startGame(group){
     if(t==='ox-state'&&!extractEO(q)) t='mc';
     if(t==='drag'&&!buildDrag(q,pool)) t='mc';
     if(t==='invert'&&pool.length<4) t='mc';
+    if(t==='balance'&&!extractBalance(q)) t='mc';
     return {...q,qtype:t};
   });
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
@@ -417,7 +419,7 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/10';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 10 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.formula;
   const fb=document.getElementById('feedback');
@@ -428,6 +430,7 @@ function loadQuestion(){
   else if(q.qtype==='ox-state') renderOx(q);
   else if(q.qtype==='drag') renderDrag(q);
   else if(q.qtype==='invert') renderInvert(q);
+  else if(q.qtype==='balance') renderBalance(q);
 }
 
 // ── Build smart distractors (reflect real cognitive errors) ──
@@ -661,6 +664,75 @@ function checkDrag(){
         document.getElementById('feedback').className='feedback';
       },1400);
     }
+  }
+  updateStats();
+}
+
+// ── Balance-ion (¿cuántos aniones necesita el catión?) ──
+// Returns {catSymbol, catCharge, anSymbol, anCharge, count} or null
+const ANION_MAP={
+  'ox-bas':{sym:'O²⁻',charge:-2},
+  'anhid':{sym:'O²⁻',charge:-2},
+  'base':{sym:'OH⁻',charge:-1},
+  'sal-bin':{sym:'Cl⁻',charge:-1},
+  'ac-hid':{sym:'X⁻',charge:-1},
+  'sal-ox':{sym:'oxoanión',charge:null},
+};
+function extractBalance(q){
+  const info=extractEO(q);
+  if(!info) return null; // need variable-valence metal
+  const an=ANION_MAP[q.group];
+  if(!an||an.charge===null) return null;
+  const count=info.eo/Math.abs(an.charge);
+  if(!Number.isInteger(count)||count<1||count>6) return null;
+  // Determine real anion symbol from formula context
+  let anSym=an.sym;
+  if(q.group==='sal-bin'&&q.formula){
+    const fmatch=q.formula.match(/[A-Z][a-z]?(\d*)(Cl|Br|F|I|S|N|P)/);
+    if(fmatch){
+      const el=fmatch[2];
+      const charges={Cl:-1,Br:-1,F:-1,I:-1,S:-2,N:-3,P:-3};
+      const c=charges[el]||(-1);
+      anSym=`${el}${c===-1?'⁻':c===-2?'²⁻':c===-3?'³⁻':'⁻'}`;
+      const count2=info.eo/Math.abs(c);
+      if(!Number.isInteger(count2)||count2<1||count2>6) return null;
+      return {metal:info.metal,eo:info.eo,roman:info.roman,anSym,anCharge:c,count:count2};
+    }
+  }
+  return {metal:info.metal,eo:info.eo,roman:info.roman,anSym,anCharge:an.charge,count};
+}
+
+function renderBalance(q){
+  const b=extractBalance(q);
+  if(!b){renderMC(q);return;}
+  document.getElementById('q-prompt').textContent=
+    `El ion ${b.metal}${b.roman==='I'?'⁺':b.roman==='II'?'²⁺':b.roman==='III'?'³⁺':b.roman==='IV'?'⁴⁺':'ⁿ⁺'} tiene carga +${b.eo}. ¿Cuántos iones ${b.anSym} se necesitan para que la fórmula sea neutra?`;
+  document.getElementById('area-mc').style.display='';
+  const correct=b.count;
+  const opts=new Set([correct]);
+  for(let n=1;n<=6&&opts.size<4;n++){if(n!==correct)opts.add(n);}
+  const shuffled=shuffle([...opts]);
+  document.getElementById('q-mc-opts').innerHTML=shuffled.map(n=>
+    `<button class="mc-opt" onclick="checkBalance(this,${n},${correct})">${n} ion${n>1?'es':''} ${b.anSym}</button>`
+  ).join('');
+}
+
+function checkBalance(el,chosen,correct){
+  const q=ST.questions[ST.idx];
+  const b=extractBalance(q);
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>btn.classList.add('disabled'));
+  if(chosen===correct){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    showFeedback('ok',`✓ ¡Correcto! ${correct} ion${correct>1?'es':''} ${b?b.anSym:''} para EO +${b?b.eo:''}. Carga total: +${b?b.eo:''} + (${correct}×${b?b.anCharge:''}) = 0 ✓ +${pts} punto${pts!==1?'s':''}`,q);
+    scheduleNext(1800);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>{if(btn.textContent.startsWith(correct+' '))btn.classList.add('correct');});
+    showFeedback('err',`✗ La respuesta es ${correct}. Regla: ${b?b.eo:''} ÷ ${b?Math.abs(b.anCharge):''} = ${correct} iones.`,q);
+    scheduleNext(3000);
   }
   updateStats();
 }
