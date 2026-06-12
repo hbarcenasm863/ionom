@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IonNom">
+<title>Tabla Periódica — IonNom</title>
+<style>
+:root{
+  --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
+  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
+  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
+  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
+  --err:#dc2626;--ok:#16a34a;
+  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
+  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
+  --r:16px;--rs:10px;
+  --mono:'Courier New',monospace;
+  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
+  --serif:Georgia,'Times New Roman',serif;
+  --sh:0 3px 16px rgba(26,110,168,.10);
+  --sh2:0 8px 36px rgba(26,110,168,.18);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+/* NAV */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
+.nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
+.nav-links a .full{display:inline}
+@media(max-width:480px){
+  .nav-links a .full{display:none}
+  .nav-links a{padding:5px 8px;font-size:.72rem}
+  .nav-brand{font-size:.8rem}
+}
+
+/* PAGE WRAPPER */
+.page{padding:20px 16px 80px;position:relative;z-index:1}
+.page-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;font-style:italic;color:#0d4a73;margin-bottom:4px;letter-spacing:-.02em}
+.page-subtitle{font-size:.85rem;color:var(--dimmer);margin-bottom:20px}
+
+/* TABLE SCROLL CONTAINER */
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px}
+
+/* MAIN GRID */
+.pt-grid{
+  display:grid;
+  grid-template-columns:repeat(18,44px);
+  grid-template-rows:repeat(7,44px);
+  gap:3px;
+  width:max-content;
+}
+
+/* SEPARATE ROWS FOR LANTHANIDES/ACTINIDES */
+.pt-f-block{
+  display:grid;
+  grid-template-columns:repeat(18,44px);
+  grid-template-rows:repeat(2,44px);
+  gap:3px;
+  width:max-content;
+  margin-top:6px;
+}
+
+/* ELEMENT TILE */
+.el-tile{
+  border-radius:5px;
+  padding:2px 2px 2px 3px;
+  cursor:pointer;
+  transition:transform .1s,box-shadow .1s,filter .1s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  border:1.5px solid transparent;
+  user-select:none;
+  position:relative;
+}
+.el-tile:hover{transform:scale(1.18);box-shadow:0 4px 16px rgba(0,0,0,.28);z-index:10;filter:brightness(1.08)}
+.el-z{font-size:.48rem;font-weight:700;opacity:.85;line-height:1;color:inherit}
+.el-sym{font-size:1.05rem;font-weight:800;line-height:1;text-align:center;margin-top:1px;color:inherit}
+.el-name{font-size:.32rem;font-weight:600;line-height:1.1;text-align:center;opacity:.85;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit}
+
+/* TYPE COLORS */
+.el-tile.alkali    {background:#fee2e2;border-color:#ef4444;color:#7f1d1d}
+.el-tile.alkaline  {background:#ffedd5;border-color:#f97316;color:#7c2d12}
+.el-tile.transition{background:#dbeafe;border-color:#3b82f6;color:#1e3a8a}
+.el-tile.post      {background:#cffafe;border-color:#06b6d4;color:#164e63}
+.el-tile.metalloid {background:#dcfce7;border-color:#22c55e;color:#14532d}
+.el-tile.nonmetal  {background:#fef9c3;border-color:#eab308;color:#713f12}
+.el-tile.halogen   {background:#f3e8ff;border-color:#a855f7;color:#581c87}
+.el-tile.noble     {background:#f3f4f6;border-color:#6b7280;color:#1f2937}
+.el-tile.lanthanide{background:#fce7f3;border-color:#ec4899;color:#831843}
+.el-tile.actinide  {background:#f5f0ef;border-color:#78716c;color:#292524}
+
+/* PLACEHOLDER TILE (gap for La/Ac row) */
+.el-placeholder{
+  background:transparent;
+  border:1.5px dashed #c0d8e8;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.5rem;
+  color:#a0b8c8;
+  cursor:default;
+}
+
+/* LABEL FOR F-BLOCK ROWS */
+.f-row-label{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  font-size:.6rem;
+  font-weight:700;
+  color:var(--dimmer);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  margin-bottom:2px;
+  margin-top:10px;
+  padding-left:2px;
+}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:14px;background:var(--surf);border-radius:10px;border:1.5px solid var(--brd);width:max-content;max-width:100%}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:.68rem;font-weight:600;white-space:nowrap}
+.legend-dot{width:12px;height:12px;border-radius:3px;border:1.5px solid}
+.ld-alkali    {background:#fee2e2;border-color:#ef4444}
+.ld-alkaline  {background:#ffedd5;border-color:#f97316}
+.ld-transition{background:#dbeafe;border-color:#3b82f6}
+.ld-post      {background:#cffafe;border-color:#06b6d4}
+.ld-metalloid {background:#dcfce7;border-color:#22c55e}
+.ld-nonmetal  {background:#fef9c3;border-color:#eab308}
+.ld-halogen   {background:#f3e8ff;border-color:#a855f7}
+.ld-noble     {background:#f3f4f6;border-color:#6b7280}
+.ld-lanthanide{background:#fce7f3;border-color:#ec4899}
+.ld-actinide  {background:#f5f0ef;border-color:#78716c}
+
+/* DETAIL PANEL */
+.detail-panel{
+  position:fixed;
+  top:48px;right:0;bottom:0;
+  width:320px;
+  background:var(--surf);
+  box-shadow:-4px 0 24px rgba(0,0,0,.15);
+  z-index:300;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform .25s ease;
+  border-left:2px solid var(--brd);
+}
+.detail-panel.open{transform:translateX(0)}
+.dp-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;background:var(--bg);border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:background .15s}
+.dp-close:hover{background:var(--brd)}
+.dp-header{padding:20px 20px 12px;border-bottom:1.5px solid var(--brd)}
+.dp-z{font-size:.65rem;font-weight:800;color:var(--dimmer);letter-spacing:.1em;text-transform:uppercase}
+.dp-sym{font-size:3.5rem;font-weight:900;line-height:1;font-family:var(--mono)}
+.dp-name{font-size:1.05rem;font-weight:700;margin-top:2px}
+.dp-type-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:.65rem;font-weight:700;border:1.5px solid;margin-top:6px}
+.dp-body{padding:16px 20px}
+.dp-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;font-size:.82rem}
+.dp-lbl{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);white-space:nowrap;min-width:80px}
+.dp-val{font-weight:600;color:var(--tx)}
+.dp-chips{display:flex;flex-wrap:wrap;gap:4px}
+.dp-chip{padding:2px 8px;border-radius:100px;font-size:.72rem;font-weight:700;background:var(--bg);border:1.5px solid var(--brd);font-family:var(--mono);color:var(--dim)}
+.dp-valence{font-family:var(--mono);font-size:.82rem;font-weight:700;color:#1e3a8a;background:#dbeafe;padding:3px 10px;border-radius:6px;border:1.5px solid #3b82f6}
+.dp-section{margin-top:14px;padding-top:12px;border-top:1.5px solid var(--brd)}
+.dp-section-title{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dimmer);margin-bottom:7px}
+.dp-col-text{font-size:.8rem;color:var(--dim);line-height:1.6}
+
+/* BACKDROP */
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:250}
+.backdrop.open{display:block}
+
+/* MOBILE: panel as bottom sheet */
+@media(max-width:700px){
+  .detail-panel{
+    top:auto;bottom:0;left:0;right:0;width:100%;
+    height:70vh;border-top:2px solid var(--brd);border-left:none;
+    transform:translateY(100%);
+    border-radius:16px 16px 0 0;
+  }
+  .detail-panel.open{transform:translateY(0)}
+}
+
+/* SMALL SCREEN TABLE */
+@media(max-width:600px){
+  .pt-grid{
+    grid-template-columns:repeat(18,36px);
+    grid-template-rows:repeat(7,36px);
+  }
+  .pt-f-block{
+    grid-template-columns:repeat(18,36px);
+    grid-template-rows:repeat(2,36px);
+  }
+  .el-sym{font-size:.85rem}
+  .el-name{font-size:.28rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand"><img src="assets/iononpwa.png" alt="IonNom" style="height:32px;vertical-align:middle"></a>
+  <div class="nav-links">
+    <a href="index.html">🏠 <span class="full">Inicio</span></a>
+    <a href="teoria.html">📖 <span class="full">Principios</span></a>
+    <a href="funciones.html">🧪 <span class="full">Funciones</span></a>
+    <a href="juego.html">🎮 <span class="full">Juego</span></a>
+    <a href="tabla.html" class="active">⚗️ <span class="full">Tabla</span></a>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">⚗️ Tabla Periódica</h1>
+  <p class="page-subtitle">118 elementos — haz clic en cualquier elemento para ver detalles y su contexto colombiano</p>
+
+  <div class="tabla-scroll">
+    <!-- MAIN TABLE (periods 1-7, groups 1-18) -->
+    <div class="pt-grid" id="pt-main"></div>
+
+    <!-- F-BLOCK ROWS -->
+    <div class="f-row-label">Lantánidos (período 6)</div>
+    <div class="pt-f-block" id="pt-fblock"></div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
+    <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
+    <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
+    <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-trans.</div>
+    <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
+    <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
+    <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
+    <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
+    <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
+    <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>
+  </div>
+</div>
+
+<!-- BACKDROP -->
+<div class="backdrop" id="backdrop" onclick="closePanel()"></div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <button class="dp-close" onclick="closePanel()">✕</button>
+  <div class="dp-header">
+    <div class="dp-z" id="dp-z"></div>
+    <div class="dp-sym" id="dp-sym"></div>
+    <div class="dp-name" id="dp-name"></div>
+    <div class="dp-type-badge" id="dp-badge"></div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-row"><span class="dp-lbl">Masa atómica</span><span class="dp-val" id="dp-mass"></span></div>
+    <div class="dp-row"><span class="dp-lbl">Período / Grupo</span><span class="dp-val" id="dp-pg"></span></div>
+    <div class="dp-row"><span class="dp-lbl">Clasificación</span><span class="dp-val" id="dp-class"></span></div>
+    <div class="dp-row" style="align-items:flex-start">
+      <span class="dp-lbl">Estados de<br>oxidación</span>
+      <div class="dp-chips" id="dp-ox"></div>
+    </div>
+    <div class="dp-row" style="align-items:center">
+      <span class="dp-lbl">Electrones<br>de valencia</span>
+      <span class="dp-valence" id="dp-valence"></span>
+    </div>
+    <div class="dp-section">
+      <div class="dp-section-title">🇨🇴 En Colombia</div>
+      <p class="dp-col-text" id="dp-col"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const ELEMENTS = {
+  1: {sym:'H', name:'Hidrógeno', mass:1.008, type:'nonmetal', period:1, group:1, ox:['+1','-1'], valence:'1s¹', col:'Fundamental en la industria petrolera colombiana (refinería de Barrancabermeja). Investigado como combustible limpio por Ecopetrol.'},
+  2: {sym:'He', name:'Helio', mass:4.003, type:'noble', period:1, group:18, ox:[], valence:'1s²', col:'Usado en soldadura de precisión y en equipos MRI de hospitales colombianos como la Clínica del Country y el Hospital Militar.'},
+  3: {sym:'Li', name:'Litio', mass:6.941, type:'alkali', period:2, group:1, ox:['+1'], valence:'2s¹', col:'Colombia explora depósitos en Boyacá. El carbonato de litio se usa en tratamiento del trastorno bipolar en la red hospitalaria pública (EPS).'},
+  4: {sym:'Be', name:'Berilio', mass:9.012, type:'alkaline', period:2, group:2, ox:['+2'], valence:'2s²', col:'Usado en detectores de radiación y componentes aeroespaciales. La Fuerza Aérea Colombiana importa aleaciones de berilio para mantenimiento de aeronaves.'},
+  5: {sym:'B', name:'Boro', mass:10.81, type:'metalloid', period:2, group:13, ox:['+3'], valence:'2s²2p¹', col:'El bórax (borato de sodio) se usa en la industria cerámica de Ráquira (Boyacá) y en la fabricación de vidrio en Colombia.'},
+  6: {sym:'C', name:'Carbono', mass:12.011, type:'nonmetal', period:2, group:14, ox:['+4','+2','-4'], valence:'2s²2p²', col:'El carbón de El Cerrejón (La Guajira) es el mayor yacimiento de carbón a cielo abierto de América Latina. Colombia es el 5° exportador mundial de carbón.'},
+  7: {sym:'N', name:'Nitrógeno', mass:14.007, type:'nonmetal', period:2, group:15, ox:['-3','+1','+2','+3','+4','+5'], valence:'2s²2p³', col:'Base de fertilizantes nitrogenados usados en cultivos de café, arroz y palma africana. Monómero del ácido nítrico producido en Cartagena.'},
+  8: {sym:'O', name:'Oxígeno', mass:15.999, type:'nonmetal', period:2, group:16, ox:['-2'], valence:'2s²2p⁴', col:'Producido industrialmente en Colombia para hospitales, siderurgia (Paz de Río, Boyacá) y la industria química de Cartagena y Barranquilla.'},
+  9: {sym:'F', name:'Flúor', mass:18.998, type:'halogen', period:2, group:17, ox:['-1'], valence:'2s²2p⁵', col:'Presente en pastas dentales y agua fluorada. El Ministerio de Salud colombiano promueve la fluoración del agua potable para prevenir caries infantiles.'},
+  10: {sym:'Ne', name:'Neón', mass:20.180, type:'noble', period:2, group:18, ox:[], valence:'2s²2p⁶', col:'Usado en avisos luminosos y publicidad exterior en Bogotá, Medellín y Cali. También en láseres de diagnóstico médico.'},
+  11: {sym:'Na', name:'Sodio', mass:22.990, type:'alkali', period:3, group:1, ox:['+1'], valence:'3s¹', col:'La sal de Zipaquirá (NaCl) es Patrimonio Cultural colombiano. Las minas de sal tienen más de 500 años de explotación y albergan la famosa Catedral de Sal.'},
+  12: {sym:'Mg', name:'Magnesio', mass:24.305, type:'alkaline', period:3, group:2, ox:['+2'], valence:'3s²', col:'Componente de aleaciones ligeras usadas en la industria automotriz. La "leche de magnesia" (Mg(OH)₂) es un antiácido y laxante de uso común en Colombia.'},
+  13: {sym:'Al', name:'Aluminio', mass:26.982, type:'post', period:3, group:13, ox:['+3'], valence:'3s²3p¹', col:'Colombia importa aluminio de Venezuela (CVG Alúmina). Empresa Nacional de Aluminio (ENALCO) fabrica perfiles para construcción en Bogotá y Medellín.'},
+  14: {sym:'Si', name:'Silicio', mass:28.086, type:'metalloid', period:3, group:14, ox:['+4','-4'], valence:'3s²3p²', col:'Base de la industria de vidrio y cerámica colombiana. Los cuarzos del río Magdalena son fuente de SiO₂. Usado en paneles solares importados para zonas rurales aisladas.'},
+  15: {sym:'P', name:'Fósforo', mass:30.974, type:'nonmetal', period:3, group:15, ox:['-3','+3','+5'], valence:'3s²3p³', col:'Esencial en fertilizantes fosfatados para el café colombiano. Colombia importa roca fosfórica para producir superfosfatos en plantas de Bucaramanga y Cali.'},
+  16: {sym:'S', name:'Azufre', mass:32.06, type:'nonmetal', period:3, group:16, ox:['-2','+4','+6'], valence:'3s²3p⁴', col:'El volcán Galeras (Nariño) emite SO₂ naturalmente. El azufre se extrae del petróleo en Barrancabermeja (Ecopetrol) y se usa en fungicidas para cultivos.'},
+  17: {sym:'Cl', name:'Cloro', mass:35.45, type:'halogen', period:3, group:17, ox:['-1','+1','+3','+5','+7'], valence:'3s²3p⁵', col:'Clave en el tratamiento del agua potable en Colombia. Las empresas de acueducto (EPM, EAAB) usan cloro para desinfectar el agua en ciudades y municipios.'},
+  18: {sym:'Ar', name:'Argón', mass:39.948, type:'noble', period:3, group:18, ox:[], valence:'3s²3p⁶', col:'Usado en soldadura MIG/TIG en la industria metalmecánica colombiana (Medellín, Bogotá). También en lámparas de incandescencia y tubos fluorescentes.'},
+  19: {sym:'K', name:'Potasio', mass:39.098, type:'alkali', period:4, group:1, ox:['+1'], valence:'4s¹', col:'El KNO₃ (salitre) es clave en la floricultura de la Sabana de Bogotá (Colombia, 2° exportador mundial de flores) y en la pólvora de las fiestas de Año Nuevo.'},
+  20: {sym:'Ca', name:'Calcio', mass:40.078, type:'alkaline', period:4, group:2, ox:['+2'], valence:'4s²', col:'CaCO₃ es base del cemento colombiano (Cementos Argos, Cemex). Ca(OH)₂ se usa para encalar suelos en el altiplano cundiboyacense y en cultivos de papa.'},
+  21: {sym:'Sc', name:'Escandio', mass:44.956, type:'transition', period:4, group:3, ox:['+3'], valence:'3d¹4s²', col:'Usado en lámparas de alta intensidad para estadios. El Estadio El Campín (Bogotá) y el Atanasio Girardot (Medellín) usan iluminación LED con trazas de escandio.'},
+  22: {sym:'Ti', name:'Titanio', mass:47.867, type:'transition', period:4, group:4, ox:['+2','+3','+4'], valence:'3d²4s²', col:'TiO₂ es el pigmento blanco más usado en pinturas colombianas (Pintuco, Sherwin-Williams Colombia). También en implantes dentales y ortopédicos en hospitales colombianos.'},
+  23: {sym:'V', name:'Vanadio', mass:50.942, type:'transition', period:4, group:5, ox:['+2','+3','+4','+5'], valence:'3d³4s²', col:'Presente en el petróleo pesado de los Llanos Orientales colombianos. Ecopetrol estudia su extracción como subproducto del refinado en la refinería de Cartagena.'},
+  24: {sym:'Cr', name:'Cromo', mass:51.996, type:'transition', period:4, group:6, ox:['+2','+3','+6'], valence:'3d⁵4s¹', col:'Usado en recubrimientos anticorrosión (cromado) en la industria automotriz colombiana. Su hexavalente (Cr⁶⁺) es contaminante; el IDEAM monitorea vertimientos en ríos.'},
+  25: {sym:'Mn', name:'Manganeso', mass:54.938, type:'transition', period:4, group:7, ox:['+2','+4','+7'], valence:'3d⁵4s²', col:'Esencial en la producción de acero en Paz de Río (Boyacá). Colombia tiene depósitos de manganeso en Chocó y Córdoba, explotados para exportación.'},
+  26: {sym:'Fe', name:'Hierro', mass:55.845, type:'transition', period:4, group:8, ox:['+2','+3'], valence:'3d⁶4s²', col:'Acerías Paz de Río (Boyacá) es la única siderúrgica integrada de Colombia. El mineral (hematita, Fe₂O₃) se extrae del Cerro de Paz de Río desde 1954.'},
+  27: {sym:'Co', name:'Cobalto', mass:58.933, type:'transition', period:4, group:9, ox:['+2','+3'], valence:'3d⁷4s²', col:'Usado en baterías de litio-cobalto en celulares. Colombia explora si existe cobalto asociado a depósitos de níquel en Cerro Matoso (Córdoba).'},
+  28: {sym:'Ni', name:'Níquel', mass:58.693, type:'transition', period:4, group:10, ox:['+2'], valence:'3d⁸4s²', col:'Cerro Matoso (Montelíbano, Córdoba) es uno de los yacimientos de níquel más grandes del mundo. BHP Billiton opera la fundición; el níquel es un importante producto de exportación colombiano.'},
+  29: {sym:'Cu', name:'Cobre', mass:63.546, type:'transition', period:4, group:11, ox:['+1','+2'], valence:'3d¹⁰4s¹', col:'Depósitos en Chocó (proyecto Mande Norte) y Tolima (La Colosa). El cobre es esencial en el cableado eléctrico de obras de construcción en todo Colombia.'},
+  30: {sym:'Zn', name:'Zinc', mass:65.38, type:'transition', period:4, group:12, ox:['+2'], valence:'3d¹⁰4s²', col:'ZnO en bloqueadores solares muy usados en el Caribe colombiano. El zinc se usa en la galvanización del acero para construcción en zonas húmedas como el Chocó.'},
+  31: {sym:'Ga', name:'Galio', mass:69.723, type:'post', period:4, group:13, ox:['+3'], valence:'4s²4p¹', col:'Usado en paneles solares de alta eficiencia (GaAs) y LEDs. Colombia importa gallium para la industria electrónica y el programa de energías renovables del UPME.'},
+  32: {sym:'Ge', name:'Germanio', mass:72.630, type:'metalloid', period:4, group:14, ox:['+4'], valence:'4s²4p²', col:'Usado en fibra óptica (GeO₂) y semiconductores. La expansión de la red de fibra óptica del MinTIC en Colombia requiere grandes cantidades de germanio.'},
+  33: {sym:'As', name:'Arsénico', mass:74.922, type:'metalloid', period:4, group:15, ox:['-3','+3','+5'], valence:'4s²4p³', col:'Contaminante en aguas subterráneas de algunas regiones colombianas. El IDEAM y el INVIMA monitorean niveles de arsénico en el agua potable de La Guajira y Córdoba.'},
+  34: {sym:'Se', name:'Selenio', mass:78.971, type:'nonmetal', period:4, group:16, ox:['-2','+4','+6'], valence:'4s²4p⁴', col:'Usado en celdas fotoeléctricas y suplementos vitamínicos. Colombia importa selenio para la industria farmacéutica y los programas de nutrición del ICBF.'},
+  35: {sym:'Br', name:'Bromo', mass:79.904, type:'halogen', period:4, group:17, ox:['-1','+1','+5'], valence:'4s²4p⁵', col:'Usado en retardantes de llama para muebles y textiles. La Superintendencia de Industria y Comercio verifica normas de ignifugación en tapicería producida en Colombia.'},
+  36: {sym:'Kr', name:'Kriptón', mass:83.798, type:'noble', period:4, group:18, ox:[], valence:'4s²4p⁶', col:'Usado en lámparas de flash fotográfico y en equipos de diagnóstico por imagen de hospitales de alta complejidad en Bogotá y Medellín.'},
+  37: {sym:'Rb', name:'Rubidio', mass:85.468, type:'alkali', period:5, group:1, ox:['+1'], valence:'5s¹', col:'Usado en relojes atómicos y en la investigación de condensados de Bose-Einstein. El grupo de Óptica Cuántica de la Universidad de los Andes trabaja con rubidio ultrafrio.'},
+  38: {sym:'Sr', name:'Estroncio', mass:87.62, type:'alkaline', period:5, group:2, ox:['+2'], valence:'5s²', col:'El nitrato de estroncio da el color rojo intenso a los fuegos artificiales usados en las fiestas de Año Nuevo y en los festivales pirotécnicos de Bogotá.'},
+  39: {sym:'Y', name:'Itrio', mass:88.906, type:'transition', period:5, group:3, ox:['+3'], valence:'4d¹5s²', col:'Usado en lámparas de LED blanco y en superconductores de alta temperatura. Importado para laboratorios de física de materiales de universidades colombianas.'},
+  40: {sym:'Zr', name:'Circonio', mass:91.224, type:'transition', period:5, group:4, ox:['+4'], valence:'4d²5s²', col:'ZrO₂ (circona) se usa en cerámica dental de alta resistencia. Clínicas odontológicas de Bogotá y Medellín la usan para coronas y carillas estéticas.'},
+  41: {sym:'Nb', name:'Niobio', mass:92.906, type:'transition', period:5, group:5, ox:['+3','+5'], valence:'4d⁴5s¹', col:'Aleante en aceros especiales para tuberías de gas y petróleo. Ecopetrol usa tuberías con niobio en los oleoductos de los Llanos Orientales colombianos.'},
+  42: {sym:'Mo', name:'Molibdeno', mass:95.95, type:'transition', period:5, group:6, ox:['+4','+6'], valence:'4d⁵5s¹', col:'Componente de aceros inoxidables usados en la industria alimentaria y en equipos de la industria azucarera del Valle del Cauca (Ingenio Manuelita, Incauca).'},
+  43: {sym:'Tc', name:'Tecnecio', mass:98, type:'transition', period:5, group:7, ox:['+4','+7'], valence:'4d⁵5s²', col:'⁹⁹ᵐTc es el radioisótopo más usado en medicina nuclear. Hospitales colombianos como el Instituto Nacional de Cancerología lo usan en gammagrafías y PET-scan.'},
+  44: {sym:'Ru', name:'Rutenio', mass:101.07, type:'transition', period:5, group:8, ox:['+2','+3','+4'], valence:'4d⁷5s¹', col:'Catalizador en síntesis química y en discos duros. Importado para laboratorios de investigación de la UNAL y Universidad de los Andes en Bogotá.'},
+  45: {sym:'Rh', name:'Rodio', mass:102.91, type:'transition', period:5, group:9, ox:['+1','+3'], valence:'4d⁸5s¹', col:'Usado en catalizadores de convertidores catalíticos de automóviles. Con el creciente parque automotor de Colombia, la demanda de rodio ha aumentado significativamente.'},
+  46: {sym:'Pd', name:'Paladio', mass:106.42, type:'transition', period:5, group:10, ox:['+2','+4'], valence:'4d¹⁰', col:'Catalizador en refinación de gasolina sin plomo en Barrancabermeja. Colombia usa paladio en convertidores catalíticos para cumplir la norma Euro 5 de emisiones.'},
+  47: {sym:'Ag', name:'Plata', mass:107.87, type:'transition', period:5, group:11, ox:['+1'], valence:'4d¹⁰5s¹', col:'Colombia fue históricamente gran productora de plata. Minas en Marmato (Caldas) y Santa Bárbara (Nariño) siguen operando. La plata colombiana se exporta principalmente a EE.UU. y Europa.'},
+  48: {sym:'Cd', name:'Cadmio', mass:112.41, type:'transition', period:5, group:12, ox:['+2'], valence:'4d¹⁰5s²', col:'Contaminante en zonas mineras del Chocó y sur de Bolívar. El IDEAM monitorea cadmio en suelos y ríos por su toxicidad acumulativa en peces y humanos.'},
+  49: {sym:'In', name:'Indio', mass:114.82, type:'post', period:5, group:13, ox:['+3'], valence:'5s²5p¹', col:'Usado en pantallas táctiles (ITO: In₂O₃+SnO₂) de celulares y tablets. Con el alto consumo de smartphones en Colombia, la demanda de indio crece cada año.'},
+  50: {sym:'Sn', name:'Estaño', mass:118.71, type:'post', period:5, group:14, ox:['+2','+4'], valence:'5s²5p²', col:'Usado en soldadura electrónica y en el hojalata para conservas. La industria de alimentos colombiana (latas de atún, frutas en almíbar) consume grandes volúmenes de estaño.'},
+  51: {sym:'Sb', name:'Antimonio', mass:121.76, type:'metalloid', period:5, group:15, ox:['-3','+3','+5'], valence:'5s²5p³', col:'Retardante de llama en plásticos y textiles. Colombia importa antimonio para la industria de fabricación de baterías de plomo-ácido para vehículos.'},
+  52: {sym:'Te', name:'Teluro', mass:127.60, type:'metalloid', period:5, group:16, ox:['-2','+4','+6'], valence:'5s²5p⁴', col:'Usado en paneles solares de telururo de cadmio (CdTe). El IPSE (Colombia) estudia el uso de estos paneles para electrificación de zonas rurales no interconectadas.'},
+  53: {sym:'I', name:'Yodo', mass:126.90, type:'halogen', period:5, group:17, ox:['-1','+1','+5','+7'], valence:'5s²5p⁵', col:'La sal yodada es obligatoria en Colombia desde 1950 (Decreto 547/96) para prevenir el bocio. El INVIMA supervisa los niveles de yodo en toda la sal de consumo humano.'},
+  54: {sym:'Xe', name:'Xenón', mass:131.29, type:'noble', period:5, group:18, ox:[], valence:'5s²5p⁶', col:'Usado en faros de xenón (HID) de automóviles de lujo y en lámparas de cine y proyección. Los cines de Bogotá y Medellín usan lámparas de xenón de alta potencia.'},
+  55: {sym:'Cs', name:'Cesio', mass:132.91, type:'alkali', period:6, group:1, ox:['+1'], valence:'6s¹', col:'El reloj de cesio define el segundo en el Sistema Internacional. El Instituto Nacional de Metrología de Colombia (INM) tiene un reloj atómico de cesio como patrón oficial.'},
+  56: {sym:'Ba', name:'Bario', mass:137.33, type:'alkaline', period:6, group:2, ox:['+2'], valence:'6s²', col:'BaSO₄ es el contraste radiopaco más usado en radiografías digestivas en hospitales colombianos. También en lodos de perforación para los pozos petroleros de los Llanos.'},
+  57: {sym:'La', name:'Lantano', mass:138.91, type:'lanthanide', period:6, group:3, ox:['+3'], valence:'5d¹6s²', col:'Usado en catalizadores de refinación de petróleo (FCC). La refinería de Ecopetrol en Barrancabermeja importa zeolitas con lantano para el craqueo catalítico del crudo colombiano.'},
+  58: {sym:'Ce', name:'Cerio', mass:140.12, type:'lanthanide', period:6, group:4, ox:['+3','+4'], valence:'4f¹5d¹6s²', col:'Tierras raras usadas en imanes permanentes para motores eléctricos. Colombia importa cerio para catalizadores automotrices y abrasivos de pulido óptico.'},
+  59: {sym:'Pr', name:'Praseodimio', mass:140.91, type:'lanthanide', period:6, group:5, ox:['+3'], valence:'4f³6s²', col:'Usado en imanes de neodimio-hierro-boro para motores de vehículos eléctricos. Colombia busca impulsar la movilidad eléctrica con el programa del MinTransporte.'},
+  60: {sym:'Nd', name:'Neodimio', mass:144.24, type:'lanthanide', period:6, group:6, ox:['+3'], valence:'4f⁴6s²', col:'Componente clave de los imanes más potentes (NdFeB) usados en generadores eólicos. Los parques eólicos de La Guajira (Jepírachi, Windpeshi) usan turbinas con neodimio.'},
+  61: {sym:'Pm', name:'Prometio', mass:145, type:'lanthanide', period:6, group:7, ox:['+3'], valence:'4f⁵6s²', col:'Radiactivo; solo existe artificialmente. Sin uso industrial práctico. Estudiado en física nuclear en universidades colombianas como la UNAL.'},
+  62: {sym:'Sm', name:'Samario', mass:150.36, type:'lanthanide', period:6, group:8, ox:['+3'], valence:'4f⁶6s²', col:'Imanes de samario-cobalto usados en motores de alta temperatura. Usados en turbinas y equipos industriales de refinación en Barrancabermeja.'},
+  63: {sym:'Eu', name:'Europio', mass:151.96, type:'lanthanide', period:6, group:9, ox:['+2','+3'], valence:'4f⁷6s²', col:'Fósforo rojo en pantallas LED y tubos fluorescentes. Los billetes colombianos tienen trazas de compuestos de europio como elemento de seguridad anti-falsificación.'},
+  64: {sym:'Gd', name:'Gadolinio', mass:157.25, type:'lanthanide', period:6, group:10, ox:['+3'], valence:'4f⁷5d¹6s²', col:'Contraste para resonancia magnética (MRI). Hospitales colombianos de alta complejidad como el Hospital San Ignacio y la Fundación Santa Fe usan gadolinio en diagnóstico.'},
+  65: {sym:'Tb', name:'Terbio', mass:158.93, type:'lanthanide', period:6, group:11, ox:['+3'], valence:'4f⁹6s²', col:'Componente de fósforos verdes en pantallas y LEDs de alta eficiencia. Importado para la creciente industria de displays de Colombia.'},
+  66: {sym:'Dy', name:'Disprosio', mass:162.50, type:'lanthanide', period:6, group:12, ox:['+3'], valence:'4f¹⁰6s²', col:'Mejora los imanes de NdFeB para operar a altas temperaturas. Usado en motores eléctricos de vehículos y en los aerogeneradores de La Guajira.'},
+  67: {sym:'Ho', name:'Holmio', mass:164.93, type:'lanthanide', period:6, group:13, ox:['+3'], valence:'4f¹¹6s²', col:'Usado en láseres médicos (Ho:YAG) para cirugía de próstata y riñón. Hospitales urológicos en Bogotá y Medellín importan equipos con holmio para litotripsia.'},
+  68: {sym:'Er', name:'Erbio', mass:167.26, type:'lanthanide', period:6, group:14, ox:['+3'], valence:'4f¹²6s²', col:'Amplificadores de fibra óptica (EDFA) con erbio son esenciales en la red de internet de Colombia. ETB y Claro usan amplificadores dopados con erbio en su infraestructura.'},
+  69: {sym:'Tm', name:'Tulio', mass:168.93, type:'lanthanide', period:6, group:15, ox:['+3'], valence:'4f¹³6s²', col:'Fuente portátil de rayos X en equipos médicos de campo. Cruz Roja Colombiana y brigadas de salud en zonas rurales usan equipos con tulio para radiografías portátiles.'},
+  70: {sym:'Yb', name:'Iterbio', mass:173.04, type:'lanthanide', period:6, group:16, ox:['+2','+3'], valence:'4f¹⁴6s²', col:'Relojes ópticos de alta precisión y láseres de fibra. El INM de Colombia estudia el uso del iterbio para el nuevo patrón de tiempo óptico.'},
+  71: {sym:'Lu', name:'Lutecio', mass:174.97, type:'lanthanide', period:6, group:17, ox:['+3'], valence:'4f¹⁴5d¹6s²', col:'Catalizador en refinación de petróleo y en detectores PET. Los equipos de tomografía PET del INC y hospitales universitarios colombianos usan centelladores con lutecio.'},
+  72: {sym:'Hf', name:'Hafnio', mass:178.49, type:'transition', period:6, group:4, ox:['+4'], valence:'5d²6s²', col:'Usado en chips de microprocesadores (dieléctrico de alta-k). Los centros de datos en Colombia (ETB, Tigo, Claro) usan servidores con procesadores basados en hafnio.'},
+  73: {sym:'Ta', name:'Tántalo', mass:180.95, type:'transition', period:6, group:5, ox:['+5'], valence:'5d³6s²', col:'Componente de condensadores de teléfonos celulares (tantalio en coltán). El coltán se extrae ilegalmente en el Vichada colombiano; el gobierno busca regularizar su minería.'},
+  74: {sym:'W', name:'Tungsteno', mass:183.84, type:'transition', period:6, group:6, ox:['+4','+6'], valence:'5d⁴6s²', col:'Filamento de bombillas y herramientas de corte de alta dureza. Usado en la minería colombiana para brocas de perforación en explotaciones de oro y carbón.'},
+  75: {sym:'Re', name:'Renio', mass:186.21, type:'transition', period:6, group:7, ox:['+4','+7'], valence:'5d⁵6s²', col:'Superaleante en turbinas de avión. La Fuerza Aérea Colombiana y aerolíneas como Avianca importan componentes de renio para el mantenimiento de motores jet.'},
+  76: {sym:'Os', name:'Osmio', mass:190.23, type:'transition', period:6, group:8, ox:['+4','+8'], valence:'5d⁶6s²', col:'Metal más denso conocido. Usado en puntas de plumas estilográficas y en instrumentos quirúrgicos de precisión usados en hospitales de alta complejidad en Colombia.'},
+  77: {sym:'Ir', name:'Iridio', mass:192.22, type:'transition', period:6, group:9, ox:['+3','+4'], valence:'5d⁷6s²', col:'Muy resistente a la corrosión. Las bujías de iridio mejoran la eficiencia del motor; muy usadas en el parque automotor colombiano por su durabilidad en clima tropical.'},
+  78: {sym:'Pt', name:'Platino', mass:195.08, type:'transition', period:6, group:10, ox:['+2','+4'], valence:'5d⁹6s¹', col:'El Chocó colombiano fue la principal fuente de platino del mundo en el siglo XVIII. Hoy se extrae como subproducto de la minería de oro en ríos chocoanos.'},
+  79: {sym:'Au', name:'Oro', mass:196.97, type:'transition', period:6, group:11, ox:['+1','+3'], valence:'5d¹⁰6s¹', col:'Colombia produce ~30 t/año de oro, principalmente en Chocó, Antioquia y Cauca. La minería artesanal (MAPE) emplea a miles de familias colombianas, aunque genera conflictos ambientales.'},
+  80: {sym:'Hg', name:'Mercurio', mass:200.59, type:'transition', period:6, group:12, ox:['+1','+2'], valence:'5d¹⁰6s²', col:'Colombia es uno de los mayores contaminadores por mercurio del mundo debido a su uso en la minería artesanal de oro. La Ley 1658/2013 busca eliminar su uso progresivamente.'},
+  81: {sym:'Tl', name:'Talio', mass:204.38, type:'post', period:6, group:13, ox:['+1','+3'], valence:'6s²6p¹', col:'Muy tóxico; usado en detectores de radiación gamma. Hospitales de medicina nuclear en Colombia (INC, Clínica Shaio) usan detectores con cristales de talio yodado.'},
+  82: {sym:'Pb', name:'Plomo', mass:207.2, type:'post', period:6, group:14, ox:['+2','+4'], valence:'6s²6p²', col:'Baterías de automóvil y protección contra radiación. La contaminación por plomo en Bogotá y Medellín (gasolina con plomo hasta 1991) sigue siendo estudiada por el IDEAM.'},
+  83: {sym:'Bi', name:'Bismuto', mass:208.98, type:'post', period:6, group:15, ox:['+3'], valence:'6s²6p³', col:'El subsalicilato de bismuto (Pepto-Bismol) es muy vendido en farmacias colombianas para tratar gastritis y diarrea, problemas comunes en zonas rurales del país.'},
+  84: {sym:'Po', name:'Polonio', mass:209, type:'metalloid', period:6, group:16, ox:['+2','+4'], valence:'6s²6p⁴', col:'Radiactivo; poco uso práctico. El IAEA y el INEA monitorean trazas de polonio en zonas de explotación de gas natural en Colombia por ser emisor alfa natural.'},
+  85: {sym:'At', name:'Ástato', mass:210, type:'halogen', period:6, group:17, ox:['-1','+1'], valence:'6s²6p⁵', col:'Elemento muy raro y radiactivo. Investigado para radioterapia dirigida de cáncer de tiroides. El Instituto Nacional de Cancerología de Colombia sigue avances internacionales en ²¹¹At.'},
+  86: {sym:'Rn', name:'Radón', mass:222, type:'noble', period:6, group:18, ox:[], valence:'6s²6p⁶', col:'Gas radiactivo que emana del suelo granítico. El Servicio Geológico Colombiano ha detectado niveles elevados de radón en sótanos de Bogotá (suelo granítico de la sabana).'},
+  87: {sym:'Fr', name:'Francio', mass:223, type:'alkali', period:7, group:1, ox:['+1'], valence:'7s¹', col:'Elemento extremadamente raro y radiactivo; solo existen trazas en la naturaleza. Sin uso industrial directo. Estudiado teóricamente en universidades colombianas.'},
+  88: {sym:'Ra', name:'Radio', mass:226, type:'alkaline', period:7, group:2, ox:['+2'], valence:'7s²', col:'Radiactivo; usado históricamente en radioterapia. El INC (Bogotá) tiene fuentes selladas de radio en desuso bajo custodia del INEA para su manejo seguro.'},
+  89: {sym:'Ac', name:'Actinio', mass:227, type:'actinide', period:7, group:3, ox:['+3'], valence:'6d¹7s²', col:'Radiactivo; investigado en medicina nuclear. El INEA regula todos los radioisótopos en Colombia, incluyendo el actinio usado experimentalmente en oncología.'},
+  90: {sym:'Th', name:'Torio', mass:232.04, type:'actinide', period:7, group:4, ox:['+4'], valence:'6d²7s²', col:'Posible combustible nuclear de cuarta generación. El INEA regula las trazas de torio en monacita de playas colombianas del Pacífico.'},
+  91: {sym:'Pa', name:'Protactinio', mass:231.04, type:'actinide', period:7, group:5, ox:['+5'], valence:'5f²6d¹7s²', col:'Radiactivo; sin usos industriales. Solo existen miligramos en todo el mundo. Monitoreado por el INEA en Colombia como traza de series radiactivas naturales.'},
+  92: {sym:'U', name:'Uranio', mass:238.03, type:'actinide', period:7, group:6, ox:['+3','+4','+6'], valence:'5f³6d¹7s²', col:'Colombia tiene pequeños depósitos de uranio en Boyacá y Vaupes. El Servicio Geológico Colombiano hace inventario de minerales radiactivos para exploración futura.'},
+  93: {sym:'Np', name:'Neptunio', mass:237, type:'actinide', period:7, group:7, ox:['+4','+5'], valence:'5f⁴6d¹7s²', col:'Transuránico; producido en reactores nucleares. Sin uso práctico en Colombia. Objeto de estudio académico en física nuclear avanzada.'},
+  94: {sym:'Pu', name:'Plutonio', mass:244, type:'actinide', period:7, group:8, ox:['+3','+4'], valence:'5f⁶7s²', col:'Combustible nuclear y arma nuclear. Colombia no tiene reactores nucleares de potencia. El INEA regula estrictamente cualquier material nuclear en el país.'},
+  95: {sym:'Am', name:'Americio', mass:243, type:'actinide', period:7, group:9, ox:['+3'], valence:'5f⁷7s²', col:'Presente en detectores de humo domésticos (²⁴¹Am). Las normas colombianas de seguridad (RETIE) regulan la instalación y disposición de detectores iónicos en edificios.'},
+  96: {sym:'Cm', name:'Curio', mass:247, type:'actinide', period:7, group:10, ox:['+3'], valence:'5f⁷6d¹7s²', col:'Usado en espectrómetros alfa de sondas espaciales. Sin uso directo en Colombia; seguimiento académico de su síntesis y propiedades en universidades colombianas.'},
+  97: {sym:'Bk', name:'Berkelio', mass:247, type:'actinide', period:7, group:11, ox:['+3','+4'], valence:'5f⁹7s²', col:'Elemento sintético; solo existe en microgramos. Sin aplicaciones prácticas actuales en Colombia ni en el mundo.'},
+  98: {sym:'Cf', name:'Californio', mass:251, type:'actinide', period:7, group:12, ox:['+3'], valence:'5f¹⁰7s²', col:'Fuente de neutrones para iniciar reactores y en detección de minas antipersona. El Ejército colombiano (desminado humanitario) conoce equipos con californio usados internacionalmente.'},
+  99: {sym:'Es', name:'Einsteinio', mass:252, type:'actinide', period:7, group:13, ox:['+3'], valence:'5f¹¹7s²', col:'Elemento sintético de vida media muy corta. Sin aplicaciones. Solo se ha producido en microgramos en laboratorios como Los Álamos y Oak Ridge.'},
+  100: {sym:'Fm', name:'Fermio', mass:257, type:'actinide', period:7, group:14, ox:['+3'], valence:'5f¹²7s²', col:'Transuránico sin aplicaciones industriales. Nombrado en honor a Enrico Fermi. Objeto de estudios teóricos en física nuclear en Colombia.'},
+  101: {sym:'Md', name:'Mendelevio', mass:258, type:'actinide', period:7, group:15, ox:['+2','+3'], valence:'5f¹³7s²', col:'Elemento sintético. Solo se producen unos pocos átomos a la vez. Sin aplicaciones. Nombrado en honor a Dmitri Mendeléyev.'},
+  102: {sym:'No', name:'Nobelio', mass:259, type:'actinide', period:7, group:16, ox:['+2','+3'], valence:'5f¹⁴7s²', col:'Elemento sintético extremadamente inestable. Sin aplicaciones. Nombrado en honor a Alfred Nobel, cuyas inversiones incluyeron minas en Colombia.'},
+  103: {sym:'Lr', name:'Laurencio', mass:262, type:'actinide', period:7, group:17, ox:['+3'], valence:'5f¹⁴7s²7p¹', col:'Último actínido; solo existen trazas. Sin aplicaciones. Último elemento de la tabla periódica en el que se ha observado la serie actínida completa.'},
+  104: {sym:'Rf', name:'Rutherfordio', mass:267, type:'transition', period:7, group:4, ox:['+4'], valence:'5f¹⁴6d²7s²', col:'Elemento sintético transuránico. Sin aplicaciones actuales. Síntesis y estudio académico en laboratorios de física nuclear avanzada.'},
+  105: {sym:'Db', name:'Dubnio', mass:268, type:'transition', period:7, group:5, ox:['+5'], valence:'5f¹⁴6d³7s²', col:'Elemento sintético. Sin aplicaciones. Estudiado en física nuclear teórica.'},
+  106: {sym:'Sg', name:'Seaborgio', mass:269, type:'transition', period:7, group:6, ox:['+6'], valence:'5f¹⁴6d⁴7s²', col:'Elemento sintético. Sin aplicaciones industriales.'},
+  107: {sym:'Bh', name:'Bohrio', mass:270, type:'transition', period:7, group:7, ox:['+7'], valence:'5f¹⁴6d⁵7s²', col:'Elemento sintético de vida media muy corta.'},
+  108: {sym:'Hs', name:'Hasio', mass:277, type:'transition', period:7, group:8, ox:['+8'], valence:'5f¹⁴6d⁶7s²', col:'Elemento sintético. Sin aplicaciones.'},
+  109: {sym:'Mt', name:'Meitnerio', mass:278, type:'transition', period:7, group:9, ox:[], valence:'5f¹⁴6d⁷7s²', col:'Elemento sintético. Sin aplicaciones.'},
+  110: {sym:'Ds', name:'Darmstadtio', mass:281, type:'transition', period:7, group:10, ox:[], valence:'5f¹⁴6d⁸7s²', col:'Elemento sintético. Sin aplicaciones.'},
+  111: {sym:'Rg', name:'Roentgenio', mass:282, type:'transition', period:7, group:11, ox:[], valence:'5f¹⁴6d¹⁰7s¹', col:'Elemento sintético. Sin aplicaciones.'},
+  112: {sym:'Cn', name:'Copernicio', mass:285, type:'transition', period:7, group:12, ox:[], valence:'5f¹⁴6d¹⁰7s²', col:'Elemento sintético. Sin aplicaciones.'},
+  113: {sym:'Nh', name:'Nihonio', mass:286, type:'post', period:7, group:13, ox:[], valence:'5f¹⁴6d¹⁰7s²7p¹', col:'Elemento sintético. Sin aplicaciones.'},
+  114: {sym:'Fl', name:'Flerovio', mass:289, type:'post', period:7, group:14, ox:[], valence:'5f¹⁴6d¹⁰7s²7p²', col:'Elemento sintético. Sin aplicaciones.'},
+  115: {sym:'Mc', name:'Moscovio', mass:290, type:'post', period:7, group:15, ox:[], valence:'5f¹⁴6d¹⁰7s²7p³', col:'Elemento sintético. Sin aplicaciones.'},
+  116: {sym:'Lv', name:'Livermorio', mass:293, type:'post', period:7, group:16, ox:[], valence:'5f¹⁴6d¹⁰7s²7p⁴', col:'Elemento sintético. Sin aplicaciones.'},
+  117: {sym:'Ts', name:'Teneso', mass:294, type:'halogen', period:7, group:17, ox:[], valence:'5f¹⁴6d¹⁰7s²7p⁵', col:'Elemento sintético. Sin aplicaciones.'},
+  118: {sym:'Og', name:'Oganesón', mass:294, type:'noble', period:7, group:18, ox:[], valence:'5f¹⁴6d¹⁰7s²7p⁶', col:'Elemento sintético más pesado conocido. Sin aplicaciones industriales.'}
+};
+
+const TYPE_LABELS = {
+  alkali:'Metal alcalino', alkaline:'Alcalinotérreo', transition:'Metal de transición',
+  post:'Metal post-transición', metalloid:'Metaloide', nonmetal:'No metal',
+  halogen:'Halógeno', noble:'Gas noble', lanthanide:'Lantánido', actinide:'Actínido'
+};
+const TYPE_COLORS = {
+  alkali:'#ef4444', alkaline:'#f97316', transition:'#3b82f6', post:'#06b6d4',
+  metalloid:'#22c55e', nonmetal:'#eab308', halogen:'#a855f7', noble:'#6b7280',
+  lanthanide:'#ec4899', actinide:'#78716c'
+};
+
+function classOf(type){
+  if(['alkali','alkaline','transition','post','lanthanide','actinide'].includes(type)) return 'Metal';
+  if(type==='metalloid') return 'Metaloide';
+  if(type==='noble') return 'Gas noble';
+  return 'No metal';
+}
+
+function makeTile(z){
+  const el = ELEMENTS[z];
+  const div = document.createElement('div');
+  div.className = `el-tile ${el.type}`;
+  div.dataset.z = z;
+  div.setAttribute('onclick',`showEl(${z})`);
+  div.innerHTML = `<div class="el-z">${z}</div><div class="el-sym">${el.sym}</div><div class="el-name">${el.name}</div>`;
+  return div;
+}
+
+function buildMain(){
+  const grid = document.getElementById('pt-main');
+  // Elements placed in main grid by period/group
+  // Skip lanthanides 58-71 and actinides 90-103 (they go in f-block)
+  // La(57) goes at period 6, group 3; Ac(89) goes at period 7, group 3
+  const mainElements = new Set([...Array.from({length:56},(_,i)=>i+1), 57,
+    ...Array.from({length:16},(_,i)=>i+72), // 72-87
+    88, 89,
+    ...Array.from({length:15},(_,i)=>i+104) // 104-118
+  ]);
+
+  // Build a map of (period, group) -> z
+  const pos = {};
+  for(const z of mainElements){
+    const el = ELEMENTS[z];
+    pos[`${el.period},${el.group}`] = z;
+  }
+
+  // Grid is 18 cols x 7 rows
+  for(let row=1;row<=7;row++){
+    for(let col=1;col<=18;col++){
+      const key = `${row},${col}`;
+      const z = pos[key];
+      if(z !== undefined){
+        const tile = makeTile(z);
+        tile.style.gridColumn = col;
+        tile.style.gridRow = row;
+        grid.appendChild(tile);
+      }
+    }
+  }
+}
+
+function buildFBlock(){
+  const fblock = document.getElementById('pt-fblock');
+  // Row 1: lanthanides Ce(58)-Lu(71), starting at col 3
+  // Row 2: actinides Th(90)-Lr(103), starting at col 3
+  const lans = Array.from({length:14},(_,i)=>i+58); // 58-71
+  const acts = Array.from({length:14},(_,i)=>i+90); // 90-103
+
+  lans.forEach((z,i)=>{
+    const tile = makeTile(z);
+    tile.style.gridColumn = i+3;
+    tile.style.gridRow = 1;
+    fblock.appendChild(tile);
+  });
+  acts.forEach((z,i)=>{
+    const tile = makeTile(z);
+    tile.style.gridColumn = i+3;
+    tile.style.gridRow = 2;
+    fblock.appendChild(tile);
+  });
+}
+
+function showEl(z){
+  const el = ELEMENTS[z];
+  document.getElementById('dp-z').textContent = `Elemento #${z}`;
+  document.getElementById('dp-sym').textContent = el.sym;
+  document.getElementById('dp-name').textContent = el.name;
+
+  const badge = document.getElementById('dp-badge');
+  badge.textContent = TYPE_LABELS[el.type];
+  badge.style.background = TYPE_COLORS[el.type]+'22';
+  badge.style.borderColor = TYPE_COLORS[el.type];
+  badge.style.color = TYPE_COLORS[el.type];
+
+  document.getElementById('dp-mass').textContent = el.mass + ' u';
+  document.getElementById('dp-pg').textContent = `Período ${el.period} / Grupo ${el.group}`;
+  document.getElementById('dp-class').textContent = classOf(el.type);
+
+  const oxDiv = document.getElementById('dp-ox');
+  oxDiv.innerHTML = el.ox.length
+    ? el.ox.map(o=>`<span class="dp-chip">${o}</span>`).join('')
+    : '<span style="font-size:.75rem;color:#9ca3af;font-style:italic">—</span>';
+
+  document.getElementById('dp-valence').textContent = el.valence;
+  document.getElementById('dp-col').textContent = el.col;
+
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('backdrop').classList.add('open');
+}
+
+function closePanel(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('open');
+}
+
+buildMain();
+buildFBlock();
+</script>
+</body>
+</html>
