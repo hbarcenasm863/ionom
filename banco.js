@@ -1149,7 +1149,7 @@ const BANCO = [
   {
     formula: 'H₂Cr₂O₇',
     group: 'ac-ox', level: 'hard',
-    trad: ['ácido dicromatoso', 'ácido dicrómico'],
+    trad: ['ácido dicrómico'],
     stock: [],
     sist: ['ácido dicrómico'],
     hint: 'H₂ + Cr₂O₇²⁻ (dicromato). Dos átomos de Cr con EO=+6 cada uno.'
@@ -1903,7 +1903,7 @@ const BANCO = [
     group: 'anhid', level: 'medium',
     trad: ['anhídrido brómico', 'óxido brómico'],
     stock: ['óxido de bromo (V)'],
-    sist: ['pentóxido de dibromo'],
+    sist: ['pentaóxido de dibromo'],
     hint: 'Br en EO +5 → brómico. 2Br + 5O → Br₂O₅.'
   },
   {
@@ -1911,7 +1911,7 @@ const BANCO = [
     group: 'anhid', level: 'hard',
     trad: ['anhídrido perbrómico', 'óxido perbrómico'],
     stock: ['óxido de bromo (VII)'],
-    sist: ['heptóxido de dibromo'],
+    sist: ['heptaóxido de dibromo'],
     hint: 'Br en EO +7 (máximo) → per…ico. 2Br + 7O → Br₂O₇.'
   },
   {
@@ -1935,7 +1935,7 @@ const BANCO = [
     group: 'anhid', level: 'hard',
     trad: ['anhídrido peryódico', 'óxido peryódico'],
     stock: ['óxido de yodo (VII)'],
-    sist: ['heptóxido de diyodo'],
+    sist: ['heptaóxido de diyodo'],
     hint: 'I en EO +7 (máximo) → per…ico. 2I + 7O → I₂O₇.'
   },
   {
@@ -1975,16 +1975,16 @@ const BANCO = [
   {
     formula: 'CsOH',
     group: 'base', level: 'easy',
-    trad: ['hidróxido césico'],
-    stock: ['hidróxido de cesio'],
-    sist: ['monohidróxido de cesio'],
+    trad: ['hidróxido de cesio'],
+    stock: [],
+    sist: ['hidróxido de cesio'],
     hint: 'Cs⁺ (valencia fija) + OH⁻ → CsOH; base fuerte del grupo 1.'
   },
   {
     formula: 'Cd(OH)₂',
     group: 'base', level: 'easy',
-    trad: ['hidróxido cádmico'],
-    stock: ['hidróxido de cadmio'],
+    trad: ['hidróxido de cadmio'],
+    stock: [],
     sist: ['dihidróxido de cadmio'],
     hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂.'
   },
@@ -2017,10 +2017,10 @@ const BANCO = [
   {
     formula: 'H₂TeO₃',
     group: 'ac-ox', level: 'hard',
-    trad: ['ácido telluroso'],
+    trad: ['ácido teluroso'],
     stock: ['ácido trioxotelúrico (IV)'],
     sist: ['trioxotelurato (IV) de dihidrógeno'],
-    hint: 'Te en EO +4 → telluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
+    hint: 'Te en EO +4 → teluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
   },
   {
     formula: 'HBO₂',
@@ -2051,33 +2051,33 @@ const BANCO = [
   {
     formula: 'LiF',
     group: 'sal-bin', level: 'easy',
-    trad: ['fluoruro lítico'],
-    stock: ['fluoruro de litio'],
-    sist: ['monofluoruro de litio'],
+    trad: ['fluoruro de litio'],
+    stock: [],
+    sist: ['fluoruro de litio'],
     hint: 'Li⁺ (valencia fija) + F⁻ → LiF; sal binaria de flúor y litio.'
   },
   {
     formula: 'BaI₂',
     group: 'sal-bin', level: 'easy',
-    trad: ['yoduro bárico'],
-    stock: ['yoduro de bario'],
+    trad: ['yoduro de bario'],
+    stock: [],
     sist: ['diyoduro de bario'],
     hint: 'Ba²⁺ (valencia fija) + 2I⁻ → BaI₂.'
   },
   {
     formula: 'AlF₃',
     group: 'sal-bin', level: 'easy',
-    trad: ['fluoruro alumínico'],
-    stock: ['fluoruro de aluminio'],
+    trad: ['fluoruro de aluminio'],
+    stock: [],
     sist: ['trifluoruro de aluminio'],
     hint: 'Al³⁺ (valencia fija) + 3F⁻ → AlF₃.'
   },
   {
     formula: 'ZnS',
     group: 'sal-bin', level: 'easy',
-    trad: ['sulfuro zíncico'],
-    stock: ['sulfuro de zinc'],
-    sist: ['monosulfuro de zinc'],
+    trad: ['sulfuro de zinc'],
+    stock: [],
+    sist: ['sulfuro de zinc'],
     hint: 'Zn²⁺ (valencia fija) + S²⁻ → ZnS.'
   },
   {
@@ -2107,18 +2107,18 @@ const BANCO = [
   {
     formula: 'SnF₂',
     group: 'sal-bin', level: 'medium',
-    trad: ['fluoruro estañoso'],
+    trad: ['fluoruro estannoso'],
     stock: ['fluoruro de estaño (II)'],
     sist: ['difluoruro de estaño'],
-    hint: 'Sn²⁺ (EO menor) → estañoso. Sn²⁺ + 2F⁻ → SnF₂.'
+    hint: 'Sn²⁺ (EO menor) → estannoso. Sn²⁺ + 2F⁻ → SnF₂.'
   },
   {
     formula: 'SnF₄',
     group: 'sal-bin', level: 'hard',
-    trad: ['fluoruro estáñico'],
+    trad: ['fluoruro estánnico'],
     stock: ['fluoruro de estaño (IV)'],
     sist: ['tetrafluoruro de estaño'],
-    hint: 'Sn⁴⁺ (EO mayor) → estáñico. Sn⁴⁺ + 4F⁻ → SnF₄.'
+    hint: 'Sn⁴⁺ (EO mayor) → estánnico. Sn⁴⁺ + 4F⁻ → SnF₄.'
   },
   {
     formula: 'CoBr₃',
@@ -2254,8 +2254,8 @@ const BANCO = [
     group: 'anhid', level: 'medium',
     trad: ['anhídrido nitroso', 'óxido nitroso'],
     stock: [],
-    sist: ['tetróxido de dinitrógeno'],
-    hint: 'Dímero de NO₂. N con EO=+4 promedio. IUPAC: tetróxido de dinitrógeno.'
+    sist: ['tetraóxido de dinitrógeno'],
+    hint: 'Dímero de NO₂. N con EO=+4 promedio. IUPAC: tetraóxido de dinitrógeno.'
   },
   {
     formula: 'P₄O₆',
@@ -2516,6 +2516,1292 @@ const BANCO = [
     hint: 'SO₄²⁻ = sulfato. Dos Ag⁺ + SO₄²⁻ → Ag₂SO₄. Ligeramente soluble.'
   },
 
+  // ─────────────────────────────────────────────
+  // NEW ENTRIES — batch 3 (appended, +160)
+  // ─────────────────────────────────────────────
+
+  // ── OX-BAS (20) ──
+  {
+    formula: 'Fr₂O',
+    group: 'ox-bas', level: 'easy',
+    trad: ['óxido de francio'],
+    stock: [],
+    sist: ['óxido de difrancio'],
+    hint: 'Fr tiene valencia fija +1. 2Fr⁺ + O²⁻ → Fr₂O. Metal alcalino.'
+  },
+  {
+    formula: 'RaO',
+    group: 'ox-bas', level: 'easy',
+    trad: ['óxido de radio'],
+    stock: [],
+    sist: ['óxido de radio'],
+    hint: 'Ra (grupo 2A) tiene valencia fija +2. Ra²⁺ + O²⁻ → RaO.'
+  },
+  {
+    formula: 'CdO',
+    group: 'ox-bas', level: 'easy',
+    trad: ['óxido de cadmio'],
+    stock: [],
+    sist: ['óxido de cadmio'],
+    hint: 'Cd tiene valencia fija +2. Cd²⁺ + O²⁻ → CdO.'
+  },
+  {
+    formula: 'Cu₂O₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido cúprico'],
+    stock: ['óxido de cobre (III)'],
+    sist: ['trióxido de dicobre'],
+    hint: 'Cu en EO +3 (poco común). Stock es preciso: óxido de cobre (III). 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'MnO₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido mangánico'],
+    stock: ['óxido de manganeso (VI)'],
+    sist: ['trióxido de manganeso'],
+    hint: 'Mn en EO +6. Stock siempre preciso: óxido de manganeso (VI). Mn⁶⁺ + 3O²⁻.'
+  },
+  {
+    formula: 'Mn₂O₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido mangánico'],
+    stock: ['óxido de manganeso (III)'],
+    sist: ['trióxido de dimanganeso'],
+    hint: 'Mn en EO +3 → -ico → mangánico. 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'Co₃O₄',
+    group: 'ox-bas', level: 'hard',
+    trad: [],
+    stock: ['óxido de cobalto (II,III)'],
+    sist: ['tetraóxido de tricobalto'],
+    hint: 'Óxido mixto de Co²⁺ y Co³⁺ (espinela). No tiene forma tradicional simple; usar Stock o IUPAC.'
+  },
+  {
+    formula: 'Fe₃O₄',
+    group: 'ox-bas', level: 'hard',
+    trad: [],
+    stock: ['óxido de hierro (II,III)'],
+    sist: ['tetraóxido de trihierro'],
+    hint: 'Magnetita: óxido mixto de Fe²⁺ y Fe³⁺. No usa -oso/-ico simple; usar Stock o IUPAC.'
+  },
+  {
+    formula: 'PdO',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido paladoso'],
+    stock: ['óxido de paladio (II)'],
+    sist: ['óxido de paladio'],
+    hint: 'Pd²⁺ (EO menor habitual) → -oso → paladoso. Pd²⁺ + O²⁻ → PdO.'
+  },
+  {
+    formula: 'IrO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido irídico'],
+    stock: ['óxido de iridio (IV)'],
+    sist: ['dióxido de iridio'],
+    hint: 'Ir en EO +4 → -ico → irídico. Ir⁴⁺ + 2O²⁻ → IrO₂.'
+  },
+  {
+    formula: 'OsO₄',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido ósmico'],
+    stock: ['óxido de osmio (VIII)'],
+    sist: ['tetraóxido de osmio'],
+    hint: 'Os en EO +8 (máximo conocido). Stock: óxido de osmio (VIII). Os⁸⁺ + 4O²⁻.'
+  },
+  {
+    formula: 'ZrO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido circónico'],
+    stock: ['óxido de circonio (IV)'],
+    sist: ['dióxido de circonio'],
+    hint: 'Zr en EO +4 (el más estable) → -ico → circónico. Zr⁴⁺ + 2O²⁻ → ZrO₂.'
+  },
+  {
+    formula: 'HfO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido háfnico'],
+    stock: ['óxido de hafnio (IV)'],
+    sist: ['dióxido de hafnio'],
+    hint: 'Hf en EO +4 → -ico → háfnico. Hf⁴⁺ + 2O²⁻ → HfO₂.'
+  },
+  {
+    formula: 'Ce₂O₃',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido ceroso'],
+    stock: ['óxido de cerio (III)'],
+    sist: ['trióxido de dicerio'],
+    hint: 'Ce³⁺ (EO menor del cerio) → -oso → ceroso. 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'CeO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: ['óxido cérico'],
+    stock: ['óxido de cerio (IV)'],
+    sist: ['dióxido de cerio'],
+    hint: 'Ce⁴⁺ (EO mayor del cerio) → -ico → cérico. Ce⁴⁺ + 2O²⁻ → CeO₂.'
+  },
+  {
+    formula: 'SnO₃',
+    group: 'ox-bas', level: 'hard',
+    trad: [],
+    stock: ['óxido de estaño (VI)'],
+    sist: ['trióxido de estaño'],
+    hint: 'EO inusual (+6) del estaño; usar Stock o IUPAC en vez de tradicional.'
+  },
+  {
+    formula: 'GeO₂',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido germánico'],
+    stock: ['óxido de germanio (IV)'],
+    sist: ['dióxido de germanio'],
+    hint: 'Ge en EO +4 (mayor) → -ico → germánico. Ge⁴⁺ + 2O²⁻ → GeO₂.'
+  },
+  {
+    formula: 'GeO',
+    group: 'ox-bas', level: 'medium',
+    trad: ['óxido germanoso'],
+    stock: ['óxido de germanio (II)'],
+    sist: ['óxido de germanio'],
+    hint: 'Ge en EO +2 (menor) → -oso → germanoso. Ge²⁺ + O²⁻ → GeO.'
+  },
+  {
+    formula: 'NiO₂',
+    group: 'ox-bas', level: 'hard',
+    trad: [],
+    stock: ['óxido de níquel (IV)'],
+    sist: ['dióxido de níquel'],
+    hint: 'Ni en EO +4 (poco común). Stock preciso: óxido de níquel (IV).'
+  },
+
+  // ── ANHID (20) ── (recordar: trad incluye anhídrido X y óxido X)
+  {
+    formula: 'CO',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido carbonoso', 'óxido carbonoso'],
+    stock: ['óxido de carbono (II)'],
+    sist: ['monóxido de carbono'],
+    hint: 'C en EO +2 (menor). IUPAC: monóxido de carbono. Gas tóxico.'
+  },
+  {
+    formula: 'Cl₂O₆',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de cloro (VI)'],
+    sist: ['hexaóxido de dicloro'],
+    hint: 'EO mixto/inusual del cloro (+6); usar IUPAC o Stock. 2Cl + 6O → Cl₂O₆.'
+  },
+  {
+    formula: 'F₂O',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: [],
+    sist: ['monóxido de diflúor'],
+    hint: 'El flúor es más electronegativo que el O; aquí el O actúa como +2. IUPAC: monóxido de diflúor.'
+  },
+  {
+    formula: 'I₂O₄',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de yodo (IV)'],
+    sist: ['tetraóxido de diyodo'],
+    hint: 'Óxido mixto del yodo. Usar IUPAC o Stock. 2I + 4O → I₂O₄.'
+  },
+  {
+    formula: 'XeO₃',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de xenón (VI)'],
+    sist: ['trióxido de xenón'],
+    hint: 'Xe en EO +6 (gas noble reactivo). IUPAC: trióxido de xenón. Explosivo.'
+  },
+  {
+    formula: 'XeO₄',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de xenón (VIII)'],
+    sist: ['tetraóxido de xenón'],
+    hint: 'Xe en EO +8. IUPAC: tetraóxido de xenón. Muy inestable.'
+  },
+  {
+    formula: 'As₂O₄',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de arsénico (IV)'],
+    sist: ['tetraóxido de diarsénico'],
+    hint: 'Óxido mixto de As(III) y As(V). Usar IUPAC. 2As + 4O → As₂O₄.'
+  },
+  {
+    formula: 'Sb₂O₃',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido antimonioso', 'óxido antimonioso'],
+    stock: ['óxido de antimonio (III)'],
+    sist: ['trióxido de diantimonio'],
+    hint: 'Sb en EO +3 (menor) → -oso → antimonioso. 2(+3)+3(−2)=0.'
+  },
+  {
+    formula: 'Sb₂O₅',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido antimónico', 'óxido antimónico'],
+    stock: ['óxido de antimonio (V)'],
+    sist: ['pentaóxido de diantimonio'],
+    hint: 'Sb en EO +5 (mayor) → -ico → antimónico. 2(+5)+5(−2)=0.'
+  },
+  {
+    formula: 'P₂O',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido hipofosforoso', 'óxido hipofosforoso'],
+    stock: ['óxido de fósforo (I)'],
+    sist: ['monóxido de difósforo'],
+    hint: 'P en EO +1 (mínimo) → hipo…oso. 2P + O → P₂O.'
+  },
+  {
+    formula: 'N₂O₂',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de nitrógeno (II)'],
+    sist: ['dióxido de dinitrógeno'],
+    hint: 'Dímero de NO. N en EO +2. Usar IUPAC o Stock.'
+  },
+  {
+    formula: 'At₂O₇',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido perastatídico', 'óxido perastatídico'],
+    stock: ['óxido de astato (VII)'],
+    sist: ['heptaóxido de diastato'],
+    hint: 'At en EO +7 (máximo) → per…ico. Análogo a Cl₂O₇. 2At + 7O → At₂O₇.'
+  },
+  {
+    formula: 'TeO',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido hipoteluroso', 'óxido hipoteluroso'],
+    stock: ['óxido de telurio (II)'],
+    sist: ['monóxido de telurio'],
+    hint: 'Te en EO +2 (mínimo) → hipo…oso → hipoteluroso. Te + O → TeO.'
+  },
+  {
+    formula: 'Cl₂O₄',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de cloro (IV)'],
+    sist: ['tetraóxido de dicloro'],
+    hint: 'Óxido del cloro en EO +4 (mixto). Usar IUPAC o Stock.'
+  },
+  {
+    formula: 'ClO₂',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de cloro (IV)'],
+    sist: ['dióxido de cloro'],
+    hint: 'Radical, Cl en EO +4. IUPAC: dióxido de cloro. Desinfectante.'
+  },
+  {
+    formula: 'SiO',
+    group: 'anhid', level: 'medium',
+    trad: ['anhídrido silicioso', 'óxido silicioso'],
+    stock: ['óxido de silicio (II)'],
+    sist: ['monóxido de silicio'],
+    hint: 'Si en EO +2 (menor). IUPAC: monóxido de silicio.'
+  },
+  {
+    formula: 'CrO₂',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de cromo (IV)'],
+    sist: ['dióxido de cromo'],
+    hint: 'Cr en EO +4. Usar Stock o IUPAC. Usado en cintas magnéticas.'
+  },
+  {
+    formula: 'V₂O₄',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de vanadio (IV)'],
+    sist: ['tetraóxido de divanadio'],
+    hint: 'V en EO +4. Equivale a 2×VO₂. Usar Stock o IUPAC.'
+  },
+  {
+    formula: 'Br₂O₂',
+    group: 'anhid', level: 'hard',
+    trad: [],
+    stock: ['óxido de bromo (II)'],
+    sist: ['dióxido de dibromo'],
+    hint: 'Br en EO +2 (inusual). Usar IUPAC o Stock.'
+  },
+  {
+    formula: 'At₂O₅',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido astatídico', 'óxido astatídico'],
+    stock: ['óxido de astato (V)'],
+    sist: ['pentaóxido de diastato'],
+    hint: 'At (halógeno) en EO +5 → -ico. Análogo a I₂O₅. 2At + 5O → At₂O₅.'
+  },
+
+  // ── HIDRU (20) ──
+  {
+    formula: 'CsH',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de cesio'],
+    stock: [],
+    sist: ['hidruro de cesio'],
+    hint: 'Cs tiene valencia fija +1. Cs⁺ + H⁻ → CsH.'
+  },
+  {
+    formula: 'RaH₂',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de radio'],
+    stock: [],
+    sist: ['dihidruro de radio'],
+    hint: 'Ra tiene valencia fija +2. Ra²⁺ + 2H⁻ → RaH₂.'
+  },
+  {
+    formula: 'CuH₂',
+    group: 'hidru', level: 'medium',
+    trad: ['hidruro cúprico'],
+    stock: ['hidruro de cobre (II)'],
+    sist: ['dihidruro de cobre'],
+    hint: 'Cu²⁺ (EO mayor) → -ico → cúprico → hidruro cúprico. Cu²⁺ + 2H⁻.'
+  },
+  {
+    formula: 'NiH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro niquélico'],
+    stock: ['hidruro de níquel (III)'],
+    sist: ['trihidruro de níquel'],
+    hint: 'Ni³⁺ (EO mayor) → -ico → niquélico → hidruro niquélico.'
+  },
+  {
+    formula: 'CoH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro cobáltico'],
+    stock: ['hidruro de cobalto (III)'],
+    sist: ['trihidruro de cobalto'],
+    hint: 'Co³⁺ (EO mayor) → -ico → cobáltico → hidruro cobáltico.'
+  },
+  {
+    formula: 'SnH₂',
+    group: 'hidru', level: 'medium',
+    trad: ['hidruro estannoso'],
+    stock: ['hidruro de estaño (II)'],
+    sist: ['dihidruro de estaño'],
+    hint: 'Sn²⁺ (EO menor) → -oso → estannoso → hidruro estannoso.'
+  },
+  {
+    formula: 'SnH₄',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro estánnico'],
+    stock: ['hidruro de estaño (IV)'],
+    sist: ['tetrahidruro de estaño'],
+    hint: 'Sn⁴⁺ (EO mayor) → -ico → estánnico → hidruro estánnico. (estannano)'
+  },
+  {
+    formula: 'PbH₄',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro plúmbico'],
+    stock: ['hidruro de plomo (IV)'],
+    sist: ['tetrahidruro de plomo'],
+    hint: 'Pb⁴⁺ (EO mayor) → -ico → plúmbico → hidruro plúmbico. (plumbano)'
+  },
+  {
+    formula: 'CdH₂',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de cadmio'],
+    stock: [],
+    sist: ['dihidruro de cadmio'],
+    hint: 'Cd tiene valencia fija +2. Cd²⁺ + 2H⁻ → CdH₂.'
+  },
+  {
+    formula: 'CrH₆',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de cromo (VI)'],
+    sist: ['hexahidruro de cromo'],
+    hint: 'EO inusual (+6). Usar Stock o IUPAC en vez de tradicional.'
+  },
+  {
+    formula: 'AuH',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro auroso'],
+    stock: ['hidruro de oro (I)'],
+    sist: ['hidruro de oro'],
+    hint: 'Au⁺ (EO menor) → -oso → auroso → hidruro auroso.'
+  },
+  {
+    formula: 'AuH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro áurico'],
+    stock: ['hidruro de oro (III)'],
+    sist: ['trihidruro de oro'],
+    hint: 'Au³⁺ (EO mayor) → -ico → áurico → hidruro áurico.'
+  },
+  {
+    formula: 'HgH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro mercúrico'],
+    stock: ['hidruro de mercurio (II)'],
+    sist: ['dihidruro de mercurio'],
+    hint: 'Hg²⁺ (mercúrico) → hidruro mercúrico. Hg²⁺ + 2H⁻ → HgH₂.'
+  },
+  {
+    formula: 'PtH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro platinoso'],
+    stock: ['hidruro de platino (II)'],
+    sist: ['dihidruro de platino'],
+    hint: 'Pt²⁺ (EO menor) → -oso → platinoso → hidruro platinoso.'
+  },
+  {
+    formula: 'PtH₄',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro platínico'],
+    stock: ['hidruro de platino (IV)'],
+    sist: ['tetrahidruro de platino'],
+    hint: 'Pt⁴⁺ (EO mayor) → -ico → platínico → hidruro platínico.'
+  },
+  {
+    formula: 'GaH₃',
+    group: 'hidru', level: 'medium',
+    trad: ['hidruro de galio'],
+    stock: [],
+    sist: ['trihidruro de galio'],
+    hint: 'Ga tiene valencia +3 (la habitual). Ga³⁺ + 3H⁻ → GaH₃.'
+  },
+  {
+    formula: 'ZrH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro circónico'],
+    stock: ['hidruro de circonio (IV)'],
+    sist: ['dihidruro de circonio'],
+    hint: 'Zr en EO +4 (su EO estable) → -ico → circónico. ZrH₂ almacena hidrógeno.'
+  },
+  {
+    formula: 'VH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro vanádico'],
+    stock: ['hidruro de vanadio (III)'],
+    sist: ['trihidruro de vanadio'],
+    hint: 'V en EO +3 → -ico → vanádico. V³⁺ + 3H⁻ → VH₃.'
+  },
+  {
+    formula: 'FrH',
+    group: 'hidru', level: 'easy',
+    trad: ['hidruro de francio'],
+    stock: [],
+    sist: ['hidruro de francio'],
+    hint: 'Fr tiene valencia fija +1. Fr⁺ + H⁻ → FrH.'
+  },
+  {
+    formula: 'GaH',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de galio (I)'],
+    sist: ['hidruro de galio'],
+    hint: 'Ga en EO +1 (poco común). Usar Stock para precisar el EO.'
+  },
+
+  // ── AC-HID (20) ──
+  {
+    formula: 'HSCN',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido tiociánico'],
+    stock: [],
+    sist: ['tiocianato de hidrógeno'],
+    hint: 'H + SCN⁻ (tiocianato). Pseudohaluro. IUPAC: tiocianato de hidrógeno.'
+  },
+  {
+    formula: 'HN₃',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido hidrazoico'],
+    stock: [],
+    sist: ['azida de hidrógeno'],
+    hint: 'H + N₃⁻ (azida). Ácido hidrazoico, muy inestable. IUPAC: azida de hidrógeno.'
+  },
+  {
+    formula: 'HAt',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido astathídrico'],
+    stock: [],
+    sist: ['astaturo de hidrógeno'],
+    hint: 'H + At⁻. At es halógeno radiactivo. Ácido astathídrico (análogo a HI).'
+  },
+  {
+    formula: 'H₂Po',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido polonhídrico'],
+    stock: [],
+    sist: ['poloniuro de hidrógeno'],
+    hint: 'H₂ + Po²⁻ (análogo a H₂Te). Ácido polonhídrico. IUPAC: poloniuro de hidrógeno.'
+  },
+  {
+    formula: 'HSeCN',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido selenociánico'],
+    stock: [],
+    sist: ['selenocianato de hidrógeno'],
+    hint: 'H + SeCN⁻ (selenocianato). Pseudohaluro análogo al tiocianato.'
+  },
+  {
+    formula: 'HOCN',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido ciánico'],
+    stock: [],
+    sist: ['cianato de hidrógeno'],
+    hint: 'H + OCN⁻ (cianato). Pseudohaluro. IUPAC: cianato de hidrógeno.'
+  },
+  {
+    formula: 'HONC',
+    group: 'ac-hid', level: 'hard',
+    trad: ['ácido fulmínico'],
+    stock: [],
+    sist: ['fulminato de hidrógeno'],
+    hint: 'Isómero del ácido ciánico (CNO⁻ fulminato). Sales explosivas.'
+  },
+
+  // ── BASE (20) ──
+  {
+    formula: 'FrOH',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido de francio'],
+    stock: [],
+    sist: ['hidróxido de francio'],
+    hint: 'Fr tiene valencia fija +1. Fr⁺ + OH⁻ → FrOH. Base muy fuerte.'
+  },
+  {
+    formula: 'Ra(OH)₂',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido de radio'],
+    stock: [],
+    sist: ['dihidróxido de radio'],
+    hint: 'Ra tiene valencia fija +2. Ra²⁺ + 2OH⁻ → Ra(OH)₂.'
+  },
+  {
+    formula: 'Be(OH)₂',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido de berilio'],
+    stock: [],
+    sist: ['dihidróxido de berilio'],
+    hint: 'Be tiene valencia fija +2. Be²⁺ + 2OH⁻ → Be(OH)₂. Anfótero.'
+  },
+  {
+    formula: 'Ga(OH)₃',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido de galio'],
+    stock: [],
+    sist: ['trihidróxido de galio'],
+    hint: 'Ga en EO +3 (el habitual). Ga³⁺ + 3OH⁻ → Ga(OH)₃.'
+  },
+  {
+    formula: 'In(OH)₃',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido de indio'],
+    stock: [],
+    sist: ['trihidróxido de indio'],
+    hint: 'In en EO +3 (el habitual). In³⁺ + 3OH⁻ → In(OH)₃.'
+  },
+  {
+    formula: 'Sn(OH)₃',
+    group: 'base', level: 'hard',
+    trad: [],
+    stock: ['hidróxido de estaño (III)'],
+    sist: ['trihidróxido de estaño'],
+    hint: 'EO inusual (+3) del estaño; usar Stock o IUPAC.'
+  },
+  {
+    formula: 'Cr(OH)₆',
+    group: 'base', level: 'hard',
+    trad: [],
+    stock: ['hidróxido de cromo (VI)'],
+    sist: ['hexahidróxido de cromo'],
+    hint: 'EO inusual (+6) del cromo; usar Stock o IUPAC.'
+  },
+  {
+    formula: 'Pt(OH)₂',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido platinoso'],
+    stock: ['hidróxido de platino (II)'],
+    sist: ['dihidróxido de platino'],
+    hint: 'Pt²⁺ (EO menor) → -oso → platinoso → hidróxido platinoso.'
+  },
+  {
+    formula: 'Pt(OH)₄',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido platínico'],
+    stock: ['hidróxido de platino (IV)'],
+    sist: ['tetrahidróxido de platino'],
+    hint: 'Pt⁴⁺ (EO mayor) → -ico → platínico → hidróxido platínico.'
+  },
+  {
+    formula: 'Pd(OH)₂',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido paladoso'],
+    stock: ['hidróxido de paladio (II)'],
+    sist: ['dihidróxido de paladio'],
+    hint: 'Pd²⁺ (EO menor habitual) → -oso → paladoso → hidróxido paladoso.'
+  },
+  {
+    formula: 'Tl(OH)',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido talioso'],
+    stock: ['hidróxido de talio (I)'],
+    sist: ['hidróxido de talio'],
+    hint: 'Tl⁺ (EO menor) → -oso → talioso → hidróxido talioso. Base fuerte soluble.'
+  },
+  {
+    formula: 'Cu(OH)',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido cuproso'],
+    stock: ['hidróxido de cobre (I)'],
+    sist: ['hidróxido de cobre'],
+    hint: 'Cu⁺ (EO menor) → -oso → cuproso → hidróxido cuproso (forma CuOH).'
+  },
+  {
+    formula: 'V(OH)₃',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido vanádico'],
+    stock: ['hidróxido de vanadio (III)'],
+    sist: ['trihidróxido de vanadio'],
+    hint: 'V en EO +3 → -ico → vanádico → hidróxido vanádico.'
+  },
+  {
+    formula: 'V(OH)₂',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido vanadioso'],
+    stock: ['hidróxido de vanadio (II)'],
+    sist: ['dihidróxido de vanadio'],
+    hint: 'V en EO +2 (menor) → -oso → vanadioso → hidróxido vanadioso.'
+  },
+  {
+    formula: 'Zr(OH)₄',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido circónico'],
+    stock: ['hidróxido de circonio (IV)'],
+    sist: ['tetrahidróxido de circonio'],
+    hint: 'Zr en EO +4 (su EO estable) → -ico → circónico.'
+  },
+  {
+    formula: 'Ce(OH)₃',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido ceroso'],
+    stock: ['hidróxido de cerio (III)'],
+    sist: ['trihidróxido de cerio'],
+    hint: 'Ce³⁺ (EO menor) → -oso → ceroso → hidróxido ceroso.'
+  },
+  {
+    formula: 'Ce(OH)₄',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido cérico'],
+    stock: ['hidróxido de cerio (IV)'],
+    sist: ['tetrahidróxido de cerio'],
+    hint: 'Ce⁴⁺ (EO mayor) → -ico → cérico → hidróxido cérico.'
+  },
+  {
+    formula: 'Co(OH)₂·H₂O',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido cobaltoso hidratado'],
+    stock: ['hidróxido de cobalto (II) hidratado'],
+    sist: ['dihidróxido de cobalto hidratado'],
+    hint: 'Forma hidratada del hidróxido cobaltoso (Co²⁺ → -oso).'
+  },
+  {
+    formula: 'LiOH·H₂O',
+    group: 'base', level: 'easy',
+    trad: ['hidróxido de litio monohidratado'],
+    stock: [],
+    sist: ['hidróxido de litio monohidratado'],
+    hint: 'Forma comercial hidratada del hidróxido de litio. Li⁺ valencia fija.'
+  },
+  {
+    formula: 'Sr(OH)₂·8H₂O',
+    group: 'base', level: 'medium',
+    trad: ['hidróxido de estroncio octahidratado'],
+    stock: [],
+    sist: ['dihidróxido de estroncio octahidratado'],
+    hint: 'Forma cristalina común del hidróxido de estroncio. Sr²⁺ valencia fija.'
+  },
+
+  // ── AC-OX (20) ──
+  {
+    formula: 'HNO',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido hiponitroso'],
+    stock: [],
+    sist: ['ácido hiponitroso'],
+    hint: 'N en EO +1 (mínimo) → hipo-oso → hiponitroso. (forma HNO / H₂N₂O₂)'
+  },
+  {
+    formula: 'H₂N₂O₂',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido hiponitroso'],
+    stock: [],
+    sist: ['ácido hiponitroso'],
+    hint: 'N en EO +1 (mínimo). Forma dimérica real del ácido hiponitroso.'
+  },
+  {
+    formula: 'H₂MnO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido mangánico'],
+    stock: [],
+    sist: ['ácido mangánico'],
+    hint: 'H₂ + MnO₄²⁻ (manganato). Mn en EO +6 → -ico → mangánico.'
+  },
+  {
+    formula: 'H₃SbO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido antimónico'],
+    stock: [],
+    sist: ['ácido antimónico'],
+    hint: 'H₃ + SbO₄³⁻ (antimoniato). Sb en EO +5 → -ico → antimónico.'
+  },
+  {
+    formula: 'H₃SbO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido antimonioso'],
+    stock: [],
+    sist: ['ácido antimonioso'],
+    hint: 'H₃ + SbO₃³⁻ (antimonito). Sb en EO +3 → -oso → antimonioso.'
+  },
+  {
+    formula: 'H₂MoO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido molíbdico'],
+    stock: [],
+    sist: ['ácido molíbdico'],
+    hint: 'H₂ + MoO₄²⁻ (molibdato). Mo en EO +6 → -ico → molíbdico.'
+  },
+  {
+    formula: 'H₂WO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido wolfrámico'],
+    stock: [],
+    sist: ['ácido wolfrámico'],
+    hint: 'H₂ + WO₄²⁻ (wolframato). W en EO +6 → -ico → wolfrámico.'
+  },
+  {
+    formula: 'HVO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido vanádico'],
+    stock: [],
+    sist: ['ácido metavanádico'],
+    hint: 'H + VO₃⁻ (metavanadato). V en EO +5 → -ico → vanádico.'
+  },
+  {
+    formula: 'H₃VO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido ortovanádico'],
+    stock: [],
+    sist: ['ácido ortovanádico'],
+    hint: 'H₃ + VO₄³⁻ (ortovanadato). V en EO +5 → -ico → vanádico.'
+  },
+  {
+    formula: 'HAtO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido astatídico'],
+    stock: [],
+    sist: ['ácido astatídico'],
+    hint: 'H + AtO₃⁻ (astatato). At en EO +5 → -ico (análogo a yódico).'
+  },
+  {
+    formula: 'HAtO',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido hipoastatoso'],
+    stock: [],
+    sist: ['ácido hipoastatoso'],
+    hint: 'H + AtO⁻ (hipoastatito). At en EO +1 (mínimo) → hipo-oso.'
+  },
+  {
+    formula: 'H₂CrO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido cromoso'],
+    stock: [],
+    sist: ['ácido cromoso'],
+    hint: 'H₂ + CrO₃²⁻ (cromito). Cr en EO +4 (menor que +6) → -oso → cromoso.'
+  },
+  {
+    formula: 'H₂SeO₂',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido hiposelenioso'],
+    stock: [],
+    sist: ['ácido hiposelenioso'],
+    hint: 'H₂ + SeO₂²⁻. Se en EO +2 (mínimo) → hipo-oso → hiposelenioso.'
+  },
+  {
+    formula: 'H₆TeO₆',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido ortotelúrico'],
+    stock: [],
+    sist: ['ácido ortotelúrico'],
+    hint: 'Forma orto del ácido telúrico (Te en EO +6). 6H + TeO₆⁶⁻.'
+  },
+  {
+    formula: 'H₅IO₆',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido ortoperyódico'],
+    stock: [],
+    sist: ['ácido ortoperyódico'],
+    hint: 'Forma orto del ácido peryódico (I en EO +7). 5H + IO₆⁵⁻.'
+  },
+  {
+    formula: 'HPO₂',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido metahipofosforoso'],
+    stock: [],
+    sist: ['ácido dioxofosfórico (III)'],
+    hint: 'Forma meta del fosforoso. P en EO +3. H⁺ + PO₂⁻.'
+  },
+  {
+    formula: 'H₂S₂O₇',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido disulfúrico', 'ácido pirosulfúrico'],
+    stock: [],
+    sist: ['ácido disulfúrico'],
+    hint: 'Forma piro: dos unidades de azufre +6 condensadas. 2H + S₂O₇²⁻.'
+  },
+  {
+    formula: 'H₂S₂O₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido tiosulfúrico'],
+    stock: [],
+    sist: ['ácido tiosulfúrico'],
+    hint: 'Un O del sulfúrico sustituido por S (tio-). Base de los tiosulfatos.'
+  },
+  {
+    formula: 'H₂CO₂',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido carbonoso'],
+    stock: [],
+    sist: ['ácido dioxocarbónico (II)'],
+    hint: 'C en EO +2 (menor que +4) → -oso → carbonoso. 2H + CO₂²⁻.'
+  },
+  {
+    formula: 'H₂Cr₃O₁₀',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido tricrómico'],
+    stock: [],
+    sist: ['ácido tricrómico'],
+    hint: 'Forma policondensada (tres unidades de Cr +6). 2H + Cr₃O₁₀²⁻.'
+  },
+
+  // ── SAL-BIN (20) ──
+  {
+    formula: 'LiCl',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de litio'],
+    stock: [],
+    sist: ['cloruro de litio'],
+    hint: 'Li⁺ + Cl⁻ → LiCl. Valencia fija. Cloruro de litio (higroscópico).'
+  },
+  {
+    formula: 'LiBr',
+    group: 'sal-bin', level: 'easy',
+    trad: ['bromuro de litio'],
+    stock: [],
+    sist: ['bromuro de litio'],
+    hint: 'Li⁺ + Br⁻ → LiBr. Valencia fija. Bromuro de litio.'
+  },
+  {
+    formula: 'LiI',
+    group: 'sal-bin', level: 'easy',
+    trad: ['yoduro de litio'],
+    stock: [],
+    sist: ['yoduro de litio'],
+    hint: 'Li⁺ + I⁻ → LiI. Valencia fija. Yoduro de litio.'
+  },
+  {
+    formula: 'RbCl',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de rubidio'],
+    stock: [],
+    sist: ['cloruro de rubidio'],
+    hint: 'Rb⁺ + Cl⁻ → RbCl. Valencia fija (grupo 1A).'
+  },
+  {
+    formula: 'CsCl',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de cesio'],
+    stock: [],
+    sist: ['cloruro de cesio'],
+    hint: 'Cs⁺ + Cl⁻ → CsCl. Valencia fija. Estructura cristalina tipo CsCl.'
+  },
+  {
+    formula: 'BaF₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['fluoruro de bario'],
+    stock: [],
+    sist: ['difluoruro de bario'],
+    hint: 'Ba²⁺ + 2F⁻ → BaF₂. Valencia fija (grupo 2A).'
+  },
+  {
+    formula: 'BaBr₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['bromuro de bario'],
+    stock: [],
+    sist: ['dibromuro de bario'],
+    hint: 'Ba²⁺ + 2Br⁻ → BaBr₂. Valencia fija.'
+  },
+  {
+    formula: 'SrCl₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de estroncio'],
+    stock: [],
+    sist: ['dicloruro de estroncio'],
+    hint: 'Sr²⁺ + 2Cl⁻ → SrCl₂. Valencia fija. Da color rojo a las llamas.'
+  },
+  {
+    formula: 'MgF₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['fluoruro de magnesio'],
+    stock: [],
+    sist: ['difluoruro de magnesio'],
+    hint: 'Mg²⁺ + 2F⁻ → MgF₂. Valencia fija. Mineral sellaíta.'
+  },
+  {
+    formula: 'AgBr',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro de plata'],
+    stock: [],
+    sist: ['bromuro de plata'],
+    hint: 'Ag⁺ + Br⁻ → AgBr. Valencia fija. Sensible a la luz (fotografía).'
+  },
+  {
+    formula: 'AgI',
+    group: 'sal-bin', level: 'medium',
+    trad: ['yoduro de plata'],
+    stock: [],
+    sist: ['yoduro de plata'],
+    hint: 'Ag⁺ + I⁻ → AgI. Valencia fija. Usado para inducir lluvia.'
+  },
+  {
+    formula: 'AgF',
+    group: 'sal-bin', level: 'medium',
+    trad: ['fluoruro de plata'],
+    stock: [],
+    sist: ['fluoruro de plata'],
+    hint: 'Ag⁺ + F⁻ → AgF. Valencia fija. A diferencia de AgCl, es soluble.'
+  },
+  {
+    formula: 'FeBr₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro ferroso'],
+    stock: ['bromuro de hierro (II)'],
+    sist: ['dibromuro de hierro'],
+    hint: 'Fe²⁺ (EO menor) → -oso → ferroso → bromuro ferroso.'
+  },
+  {
+    formula: 'FeBr₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['bromuro férrico'],
+    stock: ['bromuro de hierro (III)'],
+    sist: ['tribromuro de hierro'],
+    hint: 'Fe³⁺ (EO mayor) → -ico → férrico → bromuro férrico.'
+  },
+  {
+    formula: 'FeF₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['fluoruro ferroso'],
+    stock: ['fluoruro de hierro (II)'],
+    sist: ['difluoruro de hierro'],
+    hint: 'Fe²⁺ (EO menor) → -oso → ferroso → fluoruro ferroso.'
+  },
+  {
+    formula: 'FeF₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['fluoruro férrico'],
+    stock: ['fluoruro de hierro (III)'],
+    sist: ['trifluoruro de hierro'],
+    hint: 'Fe³⁺ (EO mayor) → -ico → férrico → fluoruro férrico.'
+  },
+  {
+    formula: 'CuI',
+    group: 'sal-bin', level: 'medium',
+    trad: ['yoduro cuproso'],
+    stock: ['yoduro de cobre (I)'],
+    sist: ['yoduro de cobre'],
+    hint: 'Cu⁺ (EO menor) → -oso → cuproso → yoduro cuproso. Cu⁺ + I⁻ → CuI.'
+  },
+  {
+    formula: 'CuF₂',
+    group: 'sal-bin', level: 'medium',
+    trad: ['fluoruro cúprico'],
+    stock: ['fluoruro de cobre (II)'],
+    sist: ['difluoruro de cobre'],
+    hint: 'Cu²⁺ (EO mayor) → -ico → cúprico → fluoruro cúprico.'
+  },
+  {
+    formula: 'CrF₃',
+    group: 'sal-bin', level: 'hard',
+    trad: ['fluoruro crómico'],
+    stock: ['fluoruro de cromo (III)'],
+    sist: ['trifluoruro de cromo'],
+    hint: 'Cr³⁺ (EO mayor en sales) → -ico → crómico → fluoruro crómico.'
+  },
+  {
+    formula: 'MnS',
+    group: 'sal-bin', level: 'hard',
+    trad: ['sulfuro manganoso'],
+    stock: ['sulfuro de manganeso (II)'],
+    sist: ['sulfuro de manganeso'],
+    hint: 'S²⁻ → sulfuro. Mn²⁺ (EO menor) → manganoso → sulfuro manganoso.'
+  },
+
+  // ── SAL-OX (20) ──
+  {
+    formula: 'LiNO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrato de litio'],
+    stock: [],
+    sist: ['nitrato de litio'],
+    hint: 'NO₃⁻ = nitrato. Li⁺ → litio. Valencia fija. Nitrato de litio.'
+  },
+  {
+    formula: 'Li₂CO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['carbonato de litio'],
+    stock: [],
+    sist: ['carbonato de dilitio'],
+    hint: 'CO₃²⁻ = carbonato. 2Li⁺ + CO₃²⁻ → Li₂CO₃. Uso psiquiátrico.'
+  },
+  {
+    formula: 'Li₂SO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de litio'],
+    stock: [],
+    sist: ['sulfato de dilitio'],
+    hint: 'SO₄²⁻ = sulfato. 2Li⁺ + SO₄²⁻ → Li₂SO₄. Sulfato de litio.'
+  },
+  {
+    formula: 'RbNO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrato de rubidio'],
+    stock: [],
+    sist: ['nitrato de rubidio'],
+    hint: 'NO₃⁻ = nitrato. Rb⁺ → rubidio. Valencia fija.'
+  },
+  {
+    formula: 'CsNO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrato de cesio'],
+    stock: [],
+    sist: ['nitrato de cesio'],
+    hint: 'NO₃⁻ = nitrato. Cs⁺ → cesio. Valencia fija.'
+  },
+  {
+    formula: 'SrCO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['carbonato de estroncio'],
+    stock: [],
+    sist: ['carbonato de estroncio'],
+    hint: 'CO₃²⁻ = carbonato. Sr²⁺ + CO₃²⁻ → SrCO₃. Mineral estroncianita.'
+  },
+  {
+    formula: 'SrSO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de estroncio'],
+    stock: [],
+    sist: ['sulfato de estroncio'],
+    hint: 'SO₄²⁻ = sulfato. Sr²⁺ + SO₄²⁻ → SrSO₄. Mineral celestina.'
+  },
+  {
+    formula: 'K₃BO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['borato de potasio'],
+    stock: [],
+    sist: ['borato de tripotasio'],
+    hint: 'BO₃³⁻ = borato. 3K⁺ + BO₃³⁻ → K₃BO₃. Borato de potasio.'
+  },
+  {
+    formula: 'Na₂SiO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['silicato de sodio'],
+    stock: [],
+    sist: ['silicato de disodio'],
+    hint: 'SiO₃²⁻ = silicato. 2Na⁺ + SiO₃²⁻ → Na₂SiO₃. Vidrio soluble.'
+  },
+  {
+    formula: 'KIO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['yodato de potasio'],
+    stock: [],
+    sist: ['yodato de potasio'],
+    hint: 'IO₃⁻ = yodato (I EO=+5). K⁺ → potasio. Aditivo de la sal yodada.'
+  },
+  {
+    formula: 'KBrO',
+    group: 'sal-ox', level: 'medium',
+    trad: ['hipobromito de potasio'],
+    stock: [],
+    sist: ['hipobromito de potasio'],
+    hint: 'BrO⁻ = hipobromito (Br EO=+1). K⁺ → potasio.'
+  },
+  {
+    formula: 'NaBrO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['bromato de sodio'],
+    stock: [],
+    sist: ['bromato de sodio'],
+    hint: 'BrO₃⁻ = bromato (Br EO=+5). Na⁺ → sodio.'
+  },
+  {
+    formula: 'CoSO₄',
+    group: 'sal-ox', level: 'medium',
+    trad: ['sulfato cobaltoso'],
+    stock: ['sulfato de cobalto (II)'],
+    sist: ['sulfato de cobalto'],
+    hint: 'SO₄²⁻ = sulfato. Co²⁺ (EO menor) → cobaltoso → sulfato cobaltoso.'
+  },
+  {
+    formula: 'MnSO₄',
+    group: 'sal-ox', level: 'medium',
+    trad: ['sulfato manganoso'],
+    stock: ['sulfato de manganeso (II)'],
+    sist: ['sulfato de manganeso'],
+    hint: 'SO₄²⁻ = sulfato. Mn²⁺ (EO menor) → manganoso → sulfato manganoso.'
+  },
+  {
+    formula: 'Cu₂CO₃',
+    group: 'sal-ox', level: 'hard',
+    trad: ['carbonato cuproso'],
+    stock: ['carbonato de cobre (I)'],
+    sist: ['carbonato de dicobre'],
+    hint: 'CO₃²⁻ = carbonato. Cu⁺ (EO menor) → cuproso. 2Cu⁺ + CO₃²⁻.'
+  },
+  {
+    formula: 'CuCO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['carbonato cúprico'],
+    stock: ['carbonato de cobre (II)'],
+    sist: ['carbonato de cobre'],
+    hint: 'CO₃²⁻ = carbonato. Cu²⁺ (EO mayor) → cúprico → carbonato cúprico.'
+  },
+  {
+    formula: 'Fe₂(CO₃)₃',
+    group: 'sal-ox', level: 'hard',
+    trad: ['carbonato férrico'],
+    stock: ['carbonato de hierro (III)'],
+    sist: ['tricarbonato de dihierro'],
+    hint: 'CO₃²⁻ = carbonato. Fe³⁺ (EO mayor) → férrico. 2Fe³⁺ + 3CO₃²⁻.'
+  },
+  {
+    formula: 'FeCO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['carbonato ferroso'],
+    stock: ['carbonato de hierro (II)'],
+    sist: ['carbonato de hierro'],
+    hint: 'CO₃²⁻ = carbonato. Fe²⁺ (EO menor) → ferroso → carbonato ferroso. Mineral siderita.'
+  },
+  {
+    formula: 'KIO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['peryodato de potasio'],
+    stock: [],
+    sist: ['peryodato de potasio'],
+    hint: 'IO₄⁻ = peryodato (I EO=+7). K⁺ → potasio.'
+  },
+  {
+    formula: 'NaIO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['yodato de sodio'],
+    stock: [],
+    sist: ['yodato de sodio'],
+    hint: 'IO₃⁻ = yodato (I EO=+5). Na⁺ → sodio. Aditivo de sal yodada.'
+  },
+
+  // ── extra (balance) ──
+  {
+    formula: 'CdCl₂',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de cadmio'],
+    stock: [],
+    sist: ['dicloruro de cadmio'],
+    hint: 'Cd²⁺ (valencia fija) + 2Cl⁻ → CdCl₂.'
+  },
+  {
+    formula: 'CdS',
+    group: 'sal-bin', level: 'easy',
+    trad: ['sulfuro de cadmio'],
+    stock: [],
+    sist: ['sulfuro de cadmio'],
+    hint: 'Cd²⁺ + S²⁻ → CdS. Pigmento amarillo cadmio.'
+  },
+  {
+    formula: 'Ca(ClO)₂',
+    group: 'sal-ox', level: 'medium',
+    trad: ['hipoclorito de calcio'],
+    stock: [],
+    sist: ['di(hipoclorito) de calcio'],
+    hint: 'ClO⁻ = hipoclorito. Ca²⁺ + 2ClO⁻ → Ca(ClO)₂. Cloro de piscina.'
+  },
+  {
+    formula: 'KIO',
+    group: 'sal-ox', level: 'medium',
+    trad: ['hipoyodito de potasio'],
+    stock: [],
+    sist: ['hipoyodito de potasio'],
+    hint: 'IO⁻ = hipoyodito (I EO=+1, mínimo → hipo-). K⁺ → potasio.'
+  },
+  {
+    formula: 'NaBO₂',
+    group: 'sal-ox', level: 'medium',
+    trad: ['metaborato de sodio'],
+    stock: [],
+    sist: ['metaborato de sodio'],
+    hint: 'BO₂⁻ = metaborato (B EO=+3). Na⁺ → sodio.'
+  },
+  {
+    formula: 'CaSeO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['selenato de calcio'],
+    stock: [],
+    sist: ['selenato de calcio'],
+    hint: 'SeO₄²⁻ = selenato (Se EO=+6). Ca²⁺ + SeO₄²⁻ → CaSeO₄.'
+  },
+  {
+    formula: 'BaCrO₄',
+    group: 'sal-ox', level: 'hard',
+    trad: ['cromato de bario'],
+    stock: [],
+    sist: ['cromato de bario'],
+    hint: 'CrO₄²⁻ = cromato (Cr EO=+6). Ba²⁺ + CrO₄²⁻ → BaCrO₄. Pigmento amarillo.'
+  },
+  {
+    formula: 'GaCl₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['cloruro de galio'],
+    stock: [],
+    sist: ['tricloruro de galio'],
+    hint: 'Ga³⁺ (EO habitual) + 3Cl⁻ → GaCl₃.'
+  },
+  {
+    formula: 'InCl₃',
+    group: 'sal-bin', level: 'medium',
+    trad: ['cloruro de indio'],
+    stock: [],
+    sist: ['tricloruro de indio'],
+    hint: 'In³⁺ (EO habitual) + 3Cl⁻ → InCl₃.'
+  },
+  {
+    formula: 'H₂S₂O₈',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido peroxodisulfúrico'],
+    stock: [],
+    sist: ['ácido peroxodisulfúrico'],
+    hint: 'Contiene puente peroxo O–O. Base de los persulfatos. 2H + S₂O₈²⁻.'
+  },
+  {
+    formula: 'HReO₄',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido perrénico'],
+    stock: [],
+    sist: ['ácido perrénico'],
+    hint: 'H + ReO₄⁻ (perrenato). Re en EO +7 (máximo) → per…ico → perrénico.'
+  },
+  {
+    formula: 'H₂PoO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido polonoso'],
+    stock: [],
+    sist: ['ácido polonoso'],
+    hint: 'Po en EO +4 → -oso (análogo al teluroso). 2H + PoO₃²⁻.'
+  },
+
 ];
 
-// Total: ~90 new compounds added in batch 2 (grand total ~308)
+// Total: ~158 new compounds added in batches 3+ (grand total ~459)
