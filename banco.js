@@ -310,7 +310,7 @@ const BANCO = [
   {
     formula: 'CO₂',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido carbónico'],
+    trad: ['anhídrido carbónico', 'óxido carbónico'],
     stock: [],
     sist: ['dióxido de carbono'],
     hint: 'C con EO=+4 (mayor para C). No metal + O → anhídrido. → -ico → carbónico.'
@@ -318,7 +318,7 @@ const BANCO = [
   {
     formula: 'SO₃',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido sulfúrico'],
+    trad: ['anhídrido sulfúrico', 'óxido sulfúrico'],
     stock: [],
     sist: ['trióxido de azufre'],
     hint: 'S con EO=+6 (mayor). → -ico → sulfúrico → anhídrido sulfúrico. S+6 + 3O−2 = 0.'
@@ -326,7 +326,7 @@ const BANCO = [
   {
     formula: 'SO₂',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido sulfuroso'],
+    trad: ['anhídrido sulfuroso', 'óxido sulfuroso'],
     stock: [],
     sist: ['dióxido de azufre'],
     hint: 'S con EO=+4 (menor que +6). → -oso → sulfuroso → anhídrido sulfuroso.'
@@ -334,7 +334,7 @@ const BANCO = [
   {
     formula: 'N₂O₅',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido nítrico'],
+    trad: ['anhídrido nítrico', 'óxido nítrico'],
     stock: [],
     sist: ['pentaóxido de dinitrógeno'],
     hint: 'N con EO=+5 (mayor). → -ico → nítrico → anhídrido nítrico. 2(+5)+5(−2)=0.'
@@ -342,7 +342,7 @@ const BANCO = [
   {
     formula: 'N₂O₃',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido nitroso'],
+    trad: ['anhídrido nitroso', 'óxido nitroso'],
     stock: [],
     sist: ['trióxido de dinitrógeno'],
     hint: 'N con EO=+3 (menor que +5). → -oso → nitroso → anhídrido nitroso.'
@@ -350,7 +350,7 @@ const BANCO = [
   {
     formula: 'Cl₂O',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido hipocloroso'],
+    trad: ['anhídrido hipocloroso', 'óxido hipocloroso'],
     stock: [],
     sist: ['monóxido de dicloro'],
     hint: 'Cl con EO=+1 (el mínimo). → prefijo hipo- → hipocloroso → anhídrido hipocloroso.'
@@ -358,7 +358,7 @@ const BANCO = [
   {
     formula: 'P₂O₅',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido fosfórico'],
+    trad: ['anhídrido fosfórico', 'óxido fosfórico'],
     stock: [],
     sist: ['pentaóxido de difósforo'],
     hint: 'P con EO=+5 (mayor). → -ico → fosfórico → anhídrido fosfórico.'
@@ -368,7 +368,7 @@ const BANCO = [
   {
     formula: 'P₂O₃',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido fosforoso'],
+    trad: ['anhídrido fosforoso', 'óxido fosforoso'],
     stock: [],
     sist: ['trióxido de difósforo'],
     hint: 'P con EO=+3 (menor que +5). → -oso → fosforoso → anhídrido fosforoso.'
@@ -376,7 +376,7 @@ const BANCO = [
   {
     formula: 'Cl₂O₃',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido cloroso'],
+    trad: ['anhídrido cloroso', 'óxido cloroso'],
     stock: [],
     sist: ['trióxido de dicloro'],
     hint: 'Cl con EO=+3. En la serie del cloro: +1(hipo-oso), +3(-oso), +5(-ico), +7(per-ico).'
@@ -384,7 +384,7 @@ const BANCO = [
   {
     formula: 'Cl₂O₅',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido clórico'],
+    trad: ['anhídrido clórico', 'óxido clórico'],
     stock: [],
     sist: ['pentaóxido de dicloro'],
     hint: 'Cl con EO=+5 (penúltimo). → -ico → clórico → anhídrido clórico.'
@@ -392,7 +392,7 @@ const BANCO = [
   {
     formula: 'Cl₂O₇',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido perclórico'],
+    trad: ['anhídrido perclórico', 'óxido perclórico'],
     stock: [],
     sist: ['heptaóxido de dicloro'],
     hint: 'Cl con EO=+7 (máximo, ≥4 estados) → prefijo per- → perclórico → anhídrido perclórico.'
@@ -400,7 +400,7 @@ const BANCO = [
   {
     formula: 'As₂O₃',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido arsenioso'],
+    trad: ['anhídrido arsenioso', 'óxido arsenioso'],
     stock: [],
     sist: ['trióxido de diarsénico'],
     hint: 'As con EO=+3 (menor). → -oso → arsenioso → anhídrido arsenioso.'
@@ -408,7 +408,7 @@ const BANCO = [
   {
     formula: 'As₂O₅',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido arsénico'],
+    trad: ['anhídrido arsénico', 'óxido arsénico'],
     stock: [],
     sist: ['pentaóxido de diarsénico'],
     hint: 'As con EO=+5 (mayor). → -ico → arsénico → anhídrido arsénico.'
@@ -416,7 +416,7 @@ const BANCO = [
   {
     formula: 'Br₂O',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido hipobromoso'],
+    trad: ['anhídrido hipobromoso', 'óxido hipobromoso'],
     stock: [],
     sist: ['monóxido de dibromo'],
     hint: 'Br con EO=+1 (mínimo). → hipo-oso → hipobromoso → anhídrido hipobromoso.'
@@ -424,7 +424,7 @@ const BANCO = [
   {
     formula: 'SiO₂',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido silícico'],
+    trad: ['anhídrido silícico', 'óxido silícico'],
     stock: [],
     sist: ['dióxido de silicio'],
     hint: 'Si con EO=+4 (único EO del Si). → -ico → silícico → anhídrido silícico.'
@@ -432,7 +432,7 @@ const BANCO = [
   {
     formula: 'N₂O',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido hiponitroso'],
+    trad: ['anhídrido hiponitroso', 'óxido hiponitroso'],
     stock: [],
     sist: ['monóxido de dinitrógeno'],
     hint: 'N con EO=+1 (el mínimo del N). → hipo-oso → hiponitroso → anhídrido hiponitroso.'
@@ -442,7 +442,7 @@ const BANCO = [
   {
     formula: 'Mn₂O₇',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido permangánico'],
+    trad: ['anhídrido permangánico', 'óxido permangánico'],
     stock: [],
     sist: ['heptaóxido de dimanganeso'],
     hint: 'Mn con EO=+7 (máximo, actúa como no metal). Prefijo per- → permangánico.'
@@ -450,7 +450,7 @@ const BANCO = [
   {
     formula: 'CrO₃',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido crómico'],
+    trad: ['anhídrido crómico', 'óxido crómico'],
     stock: [],
     sist: ['trióxido de cromo'],
     hint: 'Cr con EO=+6 actúa como no metal → anhídrido. EO mayor → -ico → crómico.'
@@ -458,7 +458,7 @@ const BANCO = [
   {
     formula: 'I₂O₅',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido yódico'],
+    trad: ['anhídrido yódico', 'óxido yódico'],
     stock: [],
     sist: ['pentaóxido de diyodo'],
     hint: 'I con EO=+5. → -ico → yódico → anhídrido yódico.'
@@ -466,7 +466,7 @@ const BANCO = [
   {
     formula: 'SeO₂',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido selenioso'],
+    trad: ['anhídrido selenioso', 'óxido selenioso'],
     stock: [],
     sist: ['dióxido de selenio'],
     hint: 'Se con EO=+4 (menor). → -oso → selenioso → anhídrido selenioso.'
@@ -474,7 +474,7 @@ const BANCO = [
   {
     formula: 'SeO₃',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido selénico'],
+    trad: ['anhídrido selénico', 'óxido selénico'],
     stock: [],
     sist: ['trióxido de selenio'],
     hint: 'Se con EO=+6 (mayor). → -ico → selénico → anhídrido selénico.'
@@ -482,7 +482,7 @@ const BANCO = [
   {
     formula: 'TeO₂',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido teluroso'],
+    trad: ['anhídrido teluroso', 'óxido teluroso'],
     stock: [],
     sist: ['dióxido de telurio'],
     hint: 'Te con EO=+4 (menor). → -oso → teluroso → anhídrido teluroso.'
@@ -1893,7 +1893,7 @@ const BANCO = [
   {
     formula: 'Br₂O₃',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido bromoso'],
+    trad: ['anhídrido bromoso', 'óxido bromoso'],
     stock: ['óxido de bromo (III)'],
     sist: ['trióxido de dibromo'],
     hint: 'Br en EO +3 → bromoso (prefijo hipo- se omite en el intermedio). 2Br + 3O → Br₂O₃.'
@@ -1901,7 +1901,7 @@ const BANCO = [
   {
     formula: 'Br₂O₅',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido brómico'],
+    trad: ['anhídrido brómico', 'óxido brómico'],
     stock: ['óxido de bromo (V)'],
     sist: ['pentóxido de dibromo'],
     hint: 'Br en EO +5 → brómico. 2Br + 5O → Br₂O₅.'
@@ -1909,7 +1909,7 @@ const BANCO = [
   {
     formula: 'Br₂O₇',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido perbrómico'],
+    trad: ['anhídrido perbrómico', 'óxido perbrómico'],
     stock: ['óxido de bromo (VII)'],
     sist: ['heptóxido de dibromo'],
     hint: 'Br en EO +7 (máximo) → per…ico. 2Br + 7O → Br₂O₇.'
@@ -1917,7 +1917,7 @@ const BANCO = [
   {
     formula: 'I₂O',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido hipoyodoso'],
+    trad: ['anhídrido hipoyodoso', 'óxido hipoyodoso'],
     stock: ['óxido de yodo (I)'],
     sist: ['monóxido de diyodo'],
     hint: 'I en EO +1 (mínimo) → hipo…oso. 2I + O → I₂O.'
@@ -1925,7 +1925,7 @@ const BANCO = [
   {
     formula: 'I₂O₃',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido yodoso'],
+    trad: ['anhídrido yodoso', 'óxido yodoso'],
     stock: ['óxido de yodo (III)'],
     sist: ['trióxido de diyodo'],
     hint: 'I en EO +3 → yodoso. 2I + 3O → I₂O₃.'
@@ -1933,7 +1933,7 @@ const BANCO = [
   {
     formula: 'I₂O₇',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido peryódico'],
+    trad: ['anhídrido peryódico', 'óxido peryódico'],
     stock: ['óxido de yodo (VII)'],
     sist: ['heptóxido de diyodo'],
     hint: 'I en EO +7 (máximo) → per…ico. 2I + 7O → I₂O₇.'
@@ -1941,7 +1941,7 @@ const BANCO = [
   {
     formula: 'SO',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido hiposulfuroso'],
+    trad: ['anhídrido hiposulfuroso', 'óxido hiposulfuroso'],
     stock: ['óxido de azufre (II)'],
     sist: ['monóxido de azufre'],
     hint: 'S en EO +2 (mínimo positivo) → hiposulfuroso. S + O → SO.'
@@ -1949,7 +1949,7 @@ const BANCO = [
   {
     formula: 'SeO',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido hiposelenioso'],
+    trad: ['anhídrido hiposelenioso', 'óxido hiposelenioso'],
     stock: ['óxido de selenio (II)'],
     sist: ['monóxido de selenio'],
     hint: 'Se en EO +2 → hiposelenioso. Se + O → SeO.'
@@ -1957,7 +1957,7 @@ const BANCO = [
   {
     formula: 'TeO₃',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido telúrico'],
+    trad: ['anhídrido telúrico', 'óxido telúrico'],
     stock: ['óxido de telurio (VI)'],
     sist: ['trióxido de telurio'],
     hint: 'Te en EO +6 → telúrico. Te + 3O → TeO₃.'
@@ -1965,7 +1965,7 @@ const BANCO = [
   {
     formula: 'B₂O₃',
     group: 'anhid', level: 'easy',
-    trad: ['anhídrido bórico'],
+    trad: ['anhídrido bórico', 'óxido bórico'],
     stock: ['óxido de boro (III)'],
     sist: ['trióxido de diboro'],
     hint: 'B en EO +3 (fijo) → bórico. 2B + 3O → B₂O₃.'
@@ -2252,7 +2252,7 @@ const BANCO = [
   {
     formula: 'N₂O₄',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido nitroso'],
+    trad: ['anhídrido nitroso', 'óxido nitroso'],
     stock: [],
     sist: ['tetróxido de dinitrógeno'],
     hint: 'Dímero de NO₂. N con EO=+4 promedio. IUPAC: tetróxido de dinitrógeno.'
@@ -2260,7 +2260,7 @@ const BANCO = [
   {
     formula: 'P₄O₆',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido fosforoso'],
+    trad: ['anhídrido fosforoso', 'óxido fosforoso'],
     stock: [],
     sist: ['hexaóxido de tetrafósforo'],
     hint: 'Fórmula molecular real del óxido de P(III). Equivale a 2×P₂O₃. → fosforoso.'
@@ -2268,7 +2268,7 @@ const BANCO = [
   {
     formula: 'P₄O₁₀',
     group: 'anhid', level: 'hard',
-    trad: ['anhídrido fosfórico'],
+    trad: ['anhídrido fosfórico', 'óxido fosfórico'],
     stock: [],
     sist: ['decaóxido de tetrafósforo'],
     hint: 'Fórmula molecular real del óxido de P(V). Equivale a 2×P₂O₅. Gran desecante.'

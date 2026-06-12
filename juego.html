@@ -843,6 +843,10 @@ function showFeedback(type,msg,q,noAlts=false){
     if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
     if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
     if(alts.length) html+=`<div class="fb-alts">${alts.join(' · ')}</div>`;
+    // Colombian curriculum note for anhídridos
+    if(q.group==='anhid'&&q.trad&&q.trad.length>=2){
+      html+=`<div class="fb-hint">🇨🇴 <strong>Contexto colombiano:</strong> en Colombia este compuesto se clasifica como <em>óxido ácido</em> (no metal + O), a diferencia de los <em>óxidos básicos</em> (metal + O). Ambos nombres son válidos: "<em>${q.trad[0]}</em>" y "<em>${q.trad[1]}</em>".</div>`;
+    }
     if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
   }
   const fb=document.getElementById('feedback');
