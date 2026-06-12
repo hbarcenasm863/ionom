@@ -387,13 +387,26 @@ function buildDrag(q, pool){
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
 const TYPE_POOL=['mc','mc','write-any','write-any','write-stock','write-sist','ox-state','drag','invert','balance'];
 
+// Pick n questions from pool, cycling without consecutive repeats when pool < n
+function buildQuestionQueue(pool, n){
+  if(pool.length>=n) return shuffle(pool).slice(0,n);
+  const result=[];
+  let bag=[];
+  while(result.length<n){
+    if(!bag.length) bag=shuffle([...pool]);
+    const last=result.length?result[result.length-1].formula:null;
+    let idx=bag.findIndex(c=>c.formula!==last);
+    if(idx<0) idx=0;
+    result.push(bag.splice(idx,1)[0]);
+  }
+  return result;
+}
+
 function startGame(group){
   ST.group=group;
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
-  let base=shuffle(pool);
-  while(base.length<10) base=base.concat(shuffle(pool));
-  const compounds=base.slice(0,10);
+  const compounds=buildQuestionQueue(pool,10);
   const types=shuffle([...TYPE_POOL]);
   ST.questions=compounds.map((q,i)=>{
     let t=types[i];
@@ -450,14 +463,15 @@ function buildSmartDistractors(q, pool){
       else if(t.includes('ico')&&!t.includes('hídrico')) dist.push(t.replace('ico','oso'));
     }
   }
-  // 3. Names from same-group compounds (not valid for this q)
+  // 3. Names from same-group compounds (plausible confusors)
   const sameGroup=pool.filter(c=>c.group===q.group&&c.formula!==q.formula);
   shuffle(sameGroup).slice(0,4).forEach(c=>{
     const n=(c.stock&&c.stock[0])?c.stock[0]:(c.trad&&c.trad[0])?c.trad[0]:null;
     if(n&&!isCorrect(n,q,'any')) dist.push(n);
   });
-  // 4. General pool fallback
-  pool.forEach(c=>{
+  // 4. Full BANCO fallback (not just active-group pool) to guarantee 3 distractors
+  const fullBank=(typeof BANCO!=='undefined')?BANCO:pool;
+  fullBank.forEach(c=>{
     if(c.formula===q.formula) return;
     [...(c.trad||[]),...(c.stock||[]),...(c.sist||[])].forEach(n=>{if(n&&!isCorrect(n,q,'any'))dist.push(n);});
   });
@@ -472,7 +486,16 @@ function renderMC(q){
   const correct=allValid[Math.floor(Math.random()*allValid.length)]||q.trad[0];
   const pool=getPool(ST.group);
   const distractors=buildSmartDistractors(q,pool);
-  while(distractors.length<3) distractors.push('—');
+  // Emergency fallback: pull random names from full bank (should never trigger with 301 entries)
+  if(distractors.length<3){
+    const fullBank=(typeof BANCO!=='undefined')?BANCO:pool;
+    shuffle(fullBank).forEach(c=>{
+      if(distractors.length>=3) return;
+      const n=(c.trad&&c.trad[0])?c.trad[0]:null;
+      if(n&&!isCorrect(n,q,'any')&&!distractors.includes(n)) distractors.push(n);
+    });
+  }
+  while(distractors.length<3) distractors.push('(opción inválida)');
   const opts=shuffle([correct,...distractors.slice(0,3)]);
   document.getElementById('q-mc-opts').innerHTML=opts.map(o=>
     `<button class="mc-opt" onclick="checkMC(this)">${o}</button>`
