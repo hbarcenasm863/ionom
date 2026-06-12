@@ -165,6 +165,18 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ex-complete strong{color:#14532d;font-size:.95rem;display:block;margin-bottom:4px}
 .ex-complete p{font-size:.82rem;color:#14532d}
 
+/* CONTEXT CARDS */
+.ctx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:4px}
+.ctx-card{background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);padding:14px 16px;transition:border-color .15s}
+.ctx-card:hover{border-color:var(--an)}
+.ctx-formula{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--cat-t);margin-bottom:3px}
+.ctx-name{font-size:.78rem;font-weight:700;color:var(--tx);margin-bottom:5px}
+.ctx-use{font-size:.76rem;color:var(--dimmer);line-height:1.6}
+.ctx-tag{display:inline-block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:100px;margin-bottom:6px}
+.ctx-tag.col{background:var(--cat-b);color:var(--cat-t)}
+.ctx-tag.ind{background:var(--an-b);color:var(--an-t)}
+.ctx-tag.bio{background:var(--oh-b);color:var(--oh-t)}
+.ctx-tag.amb{background:var(--ox-b);color:var(--ox-t)}
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
@@ -346,6 +358,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Óxidos básicos presentes en la vida cotidiana, la industria y el medioambiente colombiano.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Construcción</div>
+          <div class="ctx-formula">CaO</div>
+          <div class="ctx-name">Óxido de calcio / Cal viva</div>
+          <div class="ctx-use">Usada en la construcción de viviendas en Colombia. En Boyacá y Cundinamarca se emplea para blanquear paredes (encalado) y en la fabricación de cemento en plantas como Holcim.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">Fe₂O₃</div>
+          <div class="ctx-name">Óxido de hierro (III) / Hematita</div>
+          <div class="ctx-use">Principal mineral del hierro. Colombia lo extrae en el Cerro Matoso (Córdoba) y en Paz de Río (Boyacá), donde funciona la única siderúrgica integrada del país.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Salud</div>
+          <div class="ctx-formula">ZnO</div>
+          <div class="ctx-name">Óxido de zinc</div>
+          <div class="ctx-use">Activo en bloqueadores solares y cremas para el pañal. Muy usado en regiones costeras como Cartagena y Santa Marta, donde la radiación UV es alta.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Medioambiente</div>
+          <div class="ctx-formula">Al₂O₃</div>
+          <div class="ctx-name">Óxido de aluminio / Alúmina</div>
+          <div class="ctx-use">Extraída de la bauxita. Base para producir aluminio. El potencial de reservas de bauxita en el Pacífico colombiano es objeto de estudios del Servicio Geológico Colombiano.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-ox-bas"><strong>🎉 ¡Ejercicio completo!</strong><p>Nominaste Fe₂O₃ en los tres sistemas. Continúa con el siguiente grupo funcional.</p></div>
     </div>
   </div><!-- sec-0 -->
@@ -446,6 +488,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Óxidos ácidos (anhídridos) relevantes en la industria, la agricultura y la calidad del aire en Colombia.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Aire / Clima</div>
+          <div class="ctx-formula">CO₂</div>
+          <div class="ctx-name">Dióxido de carbono / Anhídrido carbónico</div>
+          <div class="ctx-use">Principal gas de efecto invernadero. Colombia se comprometió a reducir sus emisiones en el Acuerdo de París. La deforestación en la Amazonía colombiana es una de las principales fuentes nacionales de CO₂.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Contaminación</div>
+          <div class="ctx-formula">SO₂</div>
+          <div class="ctx-name">Dióxido de azufre / Anhídrido sulfuroso</div>
+          <div class="ctx-use">Emitido por el volcán Galeras (Nariño) y por quema de carbón. Es precursor de la lluvia ácida. El IDEAM monitorea sus niveles en Bogotá y en la zona andina.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">SO₃</div>
+          <div class="ctx-name">Trióxido de azufre / Anhídrido sulfúrico</div>
+          <div class="ctx-use">Intermedio clave en la producción de ácido sulfúrico, usado en la industria química colombiana (fertilizantes, baterías). Se produce en plantas de Cartagena y Barranquilla.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Agricultura</div>
+          <div class="ctx-formula">P₂O₅</div>
+          <div class="ctx-name">Pentaóxido de difósforo / Anhídrido fosfórico</div>
+          <div class="ctx-use">Base para fertilizantes fosfatados. Las regiones cafeteras de Colombia (Eje Cafetero, Huila) los usan ampliamente. Colombia importa roca fosfórica de Marruecos y Venezuela.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-anhid"><strong>🎉 ¡Ejercicio completo!</strong><p>Nominaste P₂O₅ en los tres sistemas. ¡Excelente dominio de los anhídridos!</p></div>
     </div>
   </div><!-- sec-1 -->
@@ -531,6 +603,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Hidruros presentes en la energía, la industria y la cotidianidad colombiana.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Energía</div>
+          <div class="ctx-formula">NaH</div>
+          <div class="ctx-name">Hidruro de sodio</div>
+          <div class="ctx-use">Agente reductor fuerte usado en síntesis química. De interés para Colombia en el contexto de investigación de almacenamiento de hidrógeno como combustible limpio, tema prioritario del MinCiencias.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">CaH₂</div>
+          <div class="ctx-name">Hidruro de calcio</div>
+          <div class="ctx-use">Usado para secar solventes en laboratorios químicos y en la producción de titanio. Laboratorios universitarios en Colombia (UNAL, Uniandes) lo emplean en síntesis orgánica.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Medicina</div>
+          <div class="ctx-formula">LiH</div>
+          <div class="ctx-name">Hidruro de litio</div>
+          <div class="ctx-use">Precursor de compuestos de litio farmacéuticos. El litio (como carbonato de litio) se usa en tratamiento del trastorno bipolar; Colombia importa sus derivados para la red hospitalaria pública.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Tecnología</div>
+          <div class="ctx-formula">TiH₂</div>
+          <div class="ctx-name">Hidruro de titanio</div>
+          <div class="ctx-use">Usado en la producción de espumas metálicas y materiales aeroespaciales. De creciente interés en la industria colombiana de manufactura avanzada y en programas de la Fuerza Aérea Colombiana.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-hidru"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los hidruros metálicos. ¡Continúa con los ácidos hídricos!</p></div>
     </div>
   </div><!-- sec-2 -->
@@ -617,6 +719,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Ácidos hídricos de gran presencia en la industria minera, alimentaria y ambiental de Colombia.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Minería</div>
+          <div class="ctx-formula">HCl (aq)</div>
+          <div class="ctx-name">Ácido clorhídrico / Ácido muriático</div>
+          <div class="ctx-use">Esencial en la minería de oro artesanal (MAPE) del Chocó y Cauca para limpiar metales. También se usa en la industria de alimentos en Medellín y Bogotá para regular el pH.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Medioambiente</div>
+          <div class="ctx-formula">H₂S (aq)</div>
+          <div class="ctx-name">Ácido sulfhídrico</div>
+          <div class="ctx-use">Gas de olor a huevo podrido emitido por aguas residuales y campos de petróleo. En el piedemonte llanero (Meta, Casanare) los pozos de crudo pueden liberar H₂S; es tóxico y se monitorea permanentemente.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Flores</div>
+          <div class="ctx-formula">HF (aq)</div>
+          <div class="ctx-name">Ácido fluorhídrico</div>
+          <div class="ctx-use">Usado para grabar vidrio y en la industria de semiconductores. Colombia lo importa principalmente para el sector de flores de la Sabana de Bogotá, donde se aplica en tratamientos especiales de postcosecha.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Piscicultura</div>
+          <div class="ctx-formula">HCN (aq)</div>
+          <div class="ctx-name">Ácido cianhídrico (cianuro de hidrógeno)</div>
+          <div class="ctx-use">Extremadamente tóxico. Usado ilegalmente en minería de oro. Ha contaminado ríos en el Pacífico colombiano; el gobierno y la ANM buscan erradicar su uso con alternativas de biominería.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-acid-hid"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los ácidos hídricos. Recuerda: (aq) = ácido; (g) = [anión]-uro de hidrógeno.</p></div>
     </div>
   </div><!-- sec-3 -->
@@ -701,6 +833,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Bases e hidróxidos esenciales en la agricultura, la industria y los hogares colombianos.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Agricultura</div>
+          <div class="ctx-formula">Ca(OH)₂</div>
+          <div class="ctx-name">Hidróxido de calcio / Cal apagada</div>
+          <div class="ctx-use">Se usa masivamente para encalar suelos ácidos en el altiplano cundiboyacense y en cultivos de papa. También es ingrediente del <em>mambeo</em> de coca en comunidades indígenas amazónicas.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">NaOH</div>
+          <div class="ctx-name">Hidróxido de sodio / Soda cáustica</div>
+          <div class="ctx-use">Fundamental en la producción de jabón artesanal (muy difundida en el Caribe colombiano), en la industria textil de Medellín y en el tratamiento de aguas residuales de Bogotá (EAAB).</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Farmacia</div>
+          <div class="ctx-formula">Mg(OH)₂</div>
+          <div class="ctx-name">Hidróxido de magnesio / Leche de magnesia</div>
+          <div class="ctx-use">Antiácido y laxante de uso común en Colombia. Comercializado como "Leche de magnesia Phillips". Recetado frecuentemente por médicos del sistema de salud pública (EPS).</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Papel</div>
+          <div class="ctx-formula">Al(OH)₃</div>
+          <div class="ctx-name">Hidróxido de aluminio</div>
+          <div class="ctx-use">Usado como agente de retención en la industria papelera colombiana (Propal en Cali) y como antiácido. También empleado como retardante de llama en cables eléctricos fabricados en Colombia.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-base"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominaste las bases e hidróxidos. ¡Sigue con los ácidos oxácidos!</p></div>
     </div>
   </div><!-- sec-4 -->
@@ -792,6 +954,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Ácidos oxácidos de gran importancia en la economía, la salud y el medioambiente colombiano.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Café</div>
+          <div class="ctx-formula">H₂SO₄</div>
+          <div class="ctx-name">Ácido sulfúrico</div>
+          <div class="ctx-use">Ácido industrial más producido en el mundo. En Colombia se usa en baterías de motos y carros, en la industria de fertilizantes (superfosfatos) para el café y en el refinado de petróleo en Barrancabermeja.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Minería</div>
+          <div class="ctx-formula">HNO₃</div>
+          <div class="ctx-name">Ácido nítrico</div>
+          <div class="ctx-use">Se usa en la minería de oro (agua regia = HNO₃ + HCl) y en la producción de fertilizantes nitrogenados. Su uso ilegal en producción de explosivos (ANFO) es monitoreado por la Policía Nacional de Colombia.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Salud</div>
+          <div class="ctx-formula">H₃PO₄</div>
+          <div class="ctx-name">Ácido fosfórico</div>
+          <div class="ctx-use">Presente en gaseosas como Coca-Cola y Postobón. El consumo excesivo de bebidas fosfóricas es estudiado por el ICBF en Colombia como factor de riesgo para la salud ósea de adolescentes.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Lluvia ácida</div>
+          <div class="ctx-formula">H₂SO₃</div>
+          <div class="ctx-name">Ácido sulfuroso</div>
+          <div class="ctx-use">Se forma cuando el SO₂ del volcán Galeras (Nariño) o de las termoeléctricas del Caribe se disuelve en el agua de lluvia. La lluvia ácida daña cultivos y ecosistemas de páramo en Colombia.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-oxac"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los ácidos oxácidos. Recuerda: -ato → ácido -ico; -ito → ácido -oso.</p></div>
     </div>
   </div><!-- sec-5 -->
@@ -881,6 +1073,36 @@ footer a:hover{text-decoration:underline}
           <div class="ex-fb"></div>
         </div>
       </div>
+    <div class="sect">
+      <h2>Compuestos en contexto 🇨🇴</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Sales binarias de uso diario, en la gastronomía, la industria y la minería de Colombia.</p>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Gastronomía</div>
+          <div class="ctx-formula">NaCl</div>
+          <div class="ctx-name">Cloruro de sodio / Sal de mesa</div>
+          <div class="ctx-use">La sal de Zipaquirá (Cundinamarca) es famosa mundialmente. Las minas de sal de Zipaquirá tienen más de 500 años de explotación y son Patrimonio Cultural Colombiano; albergan la Catedral de Sal.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Salud</div>
+          <div class="ctx-formula">AgCl</div>
+          <div class="ctx-name">Cloruro de plata</div>
+          <div class="ctx-use">Compuesto fotosensible usado en películas radiográficas. Muchos hospitales colombianos aún usan radiografías convencionales (cine médico) en zonas con baja conectividad digital.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">FeCl₃</div>
+          <div class="ctx-name">Cloruro de hierro (III)</div>
+          <div class="ctx-use">Usado en el tratamiento de aguas potables y residuales como coagulante. Las plantas de tratamiento de Bogotá (EAAB) y Medellín (EPM) lo usan para purificar el agua del acueducto.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag amb">Medioambiente</div>
+          <div class="ctx-formula">PbS</div>
+          <div class="ctx-name">Sulfuro de plomo / Galena</div>
+          <div class="ctx-use">Mineral con el que se extrae el plomo. Su presencia en ríos del sur de Bolívar y el Chocó, por minería ilegal, contamina el agua con plomo, un metal tóxico que afecta el desarrollo neurológico infantil.</div>
+        </div>
+      </div>
+    </div>
       <div class="ex-complete" id="exc-sal-bin"><strong>🎉 ¡Ejercicio completo!</strong><p>¡Excelente! Dominaste las sales binarias en los tres sistemas.</p></div>
     </div>
   </div><!-- sec-6 -->
