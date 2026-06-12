@@ -50,8 +50,31 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .portada-types{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
 .pt-chip{padding:5px 13px;border-radius:100px;font-size:.7rem;font-weight:700;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.07)}
 
-/* Group grid */
-.group-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* MODE TABS */
+.mode-tabs{display:flex;gap:8px;margin-bottom:20px}
+.mode-tab{flex:1;padding:10px 0;border-radius:100px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.mode-tab.act{background:rgba(217,119,6,.25);border-color:rgba(217,119,6,.6);color:#fcd34d}
+.mode-tab:hover:not(.act){background:rgba(255,255,255,.13);color:#fff}
+
+/* LOGIN PANEL */
+.login-panel{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:20px;margin-bottom:20px;text-align:left}
+.login-panel label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.code-row{display:flex;gap:8px}
+.code-inp{flex:1;padding:11px 14px;border-radius:var(--rs);border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-family:var(--mono);font-size:1rem;font-weight:700;letter-spacing:.1em;outline:none;transition:border-color .2s}
+.code-inp::placeholder{color:rgba(255,255,255,.3);font-weight:400;letter-spacing:0;font-size:.85rem}
+.code-inp:focus{border-color:rgba(217,119,6,.7);background:rgba(255,255,255,.11)}
+.code-btn{padding:11px 18px;background:rgba(217,119,6,.3);border:2px solid rgba(217,119,6,.6);color:#fcd34d;border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap}
+.code-btn:hover{background:rgba(217,119,6,.5)}
+.code-ok{margin-top:10px;padding:10px 14px;background:rgba(22,163,74,.15);border:1.5px solid rgba(22,163,74,.4);border-radius:var(--rs);color:#86efac;font-size:.82rem;display:none}
+.code-ok strong{display:block;font-size:.92rem;color:#4ade80}
+.code-err{margin-top:10px;padding:9px 14px;background:rgba(220,38,38,.15);border:1.5px solid rgba(220,38,38,.4);border-radius:var(--rs);color:#fca5a5;font-size:.8rem;display:none}
+
+/* SEND STATUS in result */
+.send-status{padding:12px 16px;border-radius:var(--rs);font-size:.84rem;margin-bottom:16px;border-left:4px solid;display:none}
+.send-status.show{display:block}
+.send-status.ok{background:var(--okb);border-color:var(--ok);color:#14532d}
+.send-status.err{background:var(--errb);border-color:var(--err);color:var(--err)}
+.send-status.sending{background:var(--warnb);border-color:var(--warn);color:var(--cat-t)}
 .group-btn{padding:14px 10px;border-radius:var(--rs);border:2px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-family:var(--sans);cursor:pointer;transition:all .2s;text-align:center;line-height:1.3}
 .group-btn .gb-icon{font-size:1.25rem;display:block;margin-bottom:4px}
 .group-btn .gb-name{display:block;font-size:.8rem;font-weight:800}
@@ -186,7 +209,28 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <div class="portada-inner">
     <div class="portada-badge">⚛ Nomenclatura Inorgánica</div>
     <div class="portada-title">Ion<em>Nom</em></div>
-    <div class="portada-sub">Elige un grupo funcional para comenzar.<br>10 preguntas variadas · 20 puntos posibles.</div>
+    <div class="portada-sub">10 preguntas variadas · 20 puntos posibles.</div>
+
+    <!-- Mode selector -->
+    <div class="mode-tabs">
+      <button class="mode-tab act" id="tab-libre" onclick="setMode('libre')">🎮 Modo Libre</button>
+      <button class="mode-tab" id="tab-student" onclick="setMode('student')">🏫 Modo Estudiante</button>
+    </div>
+
+    <!-- Student login panel -->
+    <div class="login-panel" id="login-panel" style="display:none">
+      <label for="code-inp">Ingresa tu código de estudiante</label>
+      <div class="code-row">
+        <input class="code-inp" id="code-inp" type="text" maxlength="6"
+               placeholder="Ej: 100401" inputmode="numeric"
+               oninput="this.value=this.value.replace(/\D/g,'')"
+               onkeydown="if(event.key==='Enter')validateCode()">
+        <button class="code-btn" onclick="validateCode()">Verificar →</button>
+      </div>
+      <div class="code-ok" id="code-ok"></div>
+      <div class="code-err" id="code-err"></div>
+    </div>
+
     <div class="portada-types">
       <span class="pt-chip">🔵 Opción múltiple</span>
       <span class="pt-chip">✏️ Escritura libre</span>
@@ -195,43 +239,44 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <span class="pt-chip">🔄 Nombre→Fórmula</span>
       <span class="pt-chip">⚖️ Equilibrio iónico</span>
     </div>
-    <div class="group-grid">
-      <button class="group-btn full" onclick="startGame('all')">
+
+    <div class="group-grid" id="group-grid">
+      <button class="group-btn full" onclick="pickGroup('all')">
         <span class="gb-icon">🔬</span>
         <span class="gb-name">Todos los grupos</span>
         <span class="gb-sub">Mezcla completa</span>
       </button>
-      <button class="group-btn" onclick="startGame('ox-anh')">
+      <button class="group-btn" onclick="pickGroup('ox-anh')">
         <span class="gb-icon">💨</span>
         <span class="gb-name">Óxidos y Anhídridos</span>
         <span class="gb-sub">Básicos + ácidos</span>
       </button>
-      <button class="group-btn" onclick="startGame('hidru')">
+      <button class="group-btn" onclick="pickGroup('hidru')">
         <span class="gb-icon">⚗️</span>
         <span class="gb-name">Hidruros</span>
         <span class="gb-sub">Metal + H⁻</span>
       </button>
-      <button class="group-btn" onclick="startGame('ac-hid')">
+      <button class="group-btn" onclick="pickGroup('ac-hid')">
         <span class="gb-icon">🧪</span>
         <span class="gb-name">Ácidos hídricos</span>
         <span class="gb-sub">Sin oxígeno</span>
       </button>
-      <button class="group-btn" onclick="startGame('base')">
+      <button class="group-btn" onclick="pickGroup('base')">
         <span class="gb-icon">🟣</span>
         <span class="gb-name">Bases</span>
         <span class="gb-sub">Hidróxidos</span>
       </button>
-      <button class="group-btn" onclick="startGame('ac-ox')">
+      <button class="group-btn" onclick="pickGroup('ac-ox')">
         <span class="gb-icon">⚡</span>
         <span class="gb-name">Ácidos oxácidos</span>
         <span class="gb-sub">Con oxoanión</span>
       </button>
-      <button class="group-btn" onclick="startGame('sal-bin')">
+      <button class="group-btn" onclick="pickGroup('sal-bin')">
         <span class="gb-icon">🔵</span>
         <span class="gb-name">Sales binarias</span>
         <span class="gb-sub">Metal + halógeno/S</span>
       </button>
-      <button class="group-btn" onclick="startGame('sal-ox')">
+      <button class="group-btn" onclick="pickGroup('sal-ox')">
         <span class="gb-icon">🟠</span>
         <span class="gb-name">Sales oxigenadas</span>
         <span class="gb-sub">Con oxoanión</span>
@@ -307,6 +352,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div class="rs-box"><div class="rs-val" id="r-score">0</div><div class="rs-lbl">Puntos</div></div>
       <div class="rs-box"><div class="rs-val" id="r-pct">0%</div><div class="rs-lbl">Porcentaje</div></div>
     </div>
+    <div class="send-status" id="send-status"></div>
     <div class="btn-row">
       <button class="btn-print" onclick="window.print()">🖨 Imprimir certificado</button>
       <button class="btn-retry" onclick="resetGame()">↻ Otra sesión</button>
@@ -316,6 +362,157 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 </div>
 
 <script>
+// ── Apps Script endpoint (deploy as web app, replace URL) ──
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/REEMPLAZAR_CON_URL_DE_DEPLOY/exec';
+
+// ── Student roster ──
+const STUDENTS = {
+  '100307':'LANDERO VEGA SHARITH ALEJANDRA',
+  '100401':'ACUÑA SANTOS JOSILENNY','100402':'AMARIS TORRES LITZY DAYANA',
+  '100403':'BARRAGAN SOLORZANO DANNA BRIGITTE','100404':'BELTRAN FUENTES KAREN JULIANA',
+  '100405':'CASTAÑEDA MORERA JHOAN DAVID','100406':'CHAVES CHAUTA CIELO ESMERALDA',
+  '100407':'CORTES APONTE JHON ALEXANDER','100408':'GALLARDO FERNANDEZ CRISTIAN CAMILO',
+  '100409':'GARCIA MUÑOZ JUAN DIEGO','100410':'GOMEZ MACIAS BRAYAN STIVEN',
+  '100411':'HERNANDEZ VALENCIA LUCIANA','100412':'LEMOS ROBLEDO JUAN CAMILO',
+  '100413':'MOLINA MOTTA LAUREN ESTEFANY','100414':'MONTAÑO CABARCAS JULIAN ESTEBAN',
+  '100415':'MORENO FONQUE VALERY TATIANA','100416':'PIRELA GONZALEZ MARIANGELES MANUELA',
+  '100417':'RAMOS OLIVARES NICOLLE JULIETH','100418':'RODRIGUEZ LEIVA MARIA VALENTINA',
+  '100419':'RODRIGUEZ PEÑA KEVIN ANDRES','100420':'SANCHEZ MOLINA SARA ISABELA',
+  '100421':'SANCHEZ SUAREZ SARA ISABELLA','100422':'SEGURA GARCIA LAURA SOFIA',
+  '100423':'SOTILLO MEDINA SANYA MICHELL','100424':'SUAREZ MENDEZ JUAN SEBASTIAN',
+  '100425':'TORO GIL LUISA FERNANDA','100426':'TORRECILLA GARCIA DANGLIS DAYANNA',
+  '100501':'ALVAREZ TORRES MAILY TATIANA','100502':'ARCILA MARTIN MARIA JULIANA',
+  '100503':'AROCA VILLAREAL FREDY SANTIAGO','100504':'ASPRILLA PEREZ KRISTHOPHER SMITH',
+  '100505':'CAMARGO MONTERO MARIANA','100506':'CARRILLO MEDINA BRAYAN ANDRES',
+  '100507':'DIAZ GUZMAN ISABELA','100508':'DUARTE OSORIO MARIA CAMILA',
+  '100509':'FLOREZ AROCA MARIANA','100510':'GONGORA NEUTA DANIEL SANTIAGO',
+  '100511':'GONZALEZ MARTINEZ LUIS ALEJANDRO','100513':'MARTINEZ PARRA JUAN CAMILO',
+  '100514':'MEDINA MACHADO FLORELIS DEL VALLE','100515':'MUÑOZ SANABRIA MEYLEEN SOFIA',
+  '100516':'NOVOA SUAREZ DANNA SOFIA','100517':'OROZCO OLIVARES ANDRES DAVID',
+  '100518':'OTALORA PICO SAMUEL','100519':'PARDO DUARTE CRISTIAN CAMILO',
+  '100520':'PINZON GARCES KAROL DAYANA','100521':'RODRIGUEZ PULIDO JOSTIN ALEJANDRO',
+  '100522':'RUEDA SALAZAR SOBEIDA','100523':'SANCHEZ GARZON MIGUEL ANGEL',
+  '100524':'TORRES NAVARRO FELIPE ANDRES','100525':'VILLAMIL RAMIREZ ASHLIN MALENA',
+  '100526':'AYALA DUARTE SHARICK VANESA',
+  '100601':'ALVAREZ ESTRELLA YULISSA','100602':'BALLESTEROS VANEGAS DANIEL SANTIAGO',
+  '100603':'CALDERON VERGARA MARINELA JULIETH','100604':'CASTILLO MARIAN SOFIA',
+  '100605':'COGOLLO RODRIGUEZ FLORENS BEATRIZ','100606':'CUEVAS PINZON JUAN JOSE',
+  '100607':'DIAZ LADINO MICHAEL DAVID','100608':'GOMEZ NARVAEZ ARIANA',
+  '100609':'LEMUS FUENTES KEVIN DANIEL','100610':'LINAREZ DOS REIS ANNAIRETH NIKOLL',
+  '100611':'MEDINA CUBILLOS ELKIN SANTIAGO','100612':'MELENGUE QUINCHANEGUA MANUEL ESTEBAN',
+  '100613':'MUÑOZ ZAMBRANO KEVIN TOMAS','100614':'MUÑOZ LARA IZABELLA',
+  '100615':'PANQUEVA LOPEZ DAVID STEVEN','100616':'PEÑA CRUZ SARA DAILYN',
+  '100617':'PEREZ PEÑALVER YESIBEL LUCIA','100618':'QUINTANA OVIEDO SERGIO ANDRES',
+  '100619':'RENGIFO MONTILLA ASHLEY MARGARETH','100620':'RUIZ BALAGUERA LAURA VALENTINA',
+  '100621':'SARMIENTO ROJANO LEIDY CAROLINA','100622':'SILVA OLIVEROS JUAN FELIPE',
+  '100623':'VANEGAS SALAS KIMBERLY SOFIA','100624':'YATE MOYANO SANTIAGO',
+  '100625':'ZAMORA SANTAMARIA LENNON SANTIAGO','100626':'ANGULO SALCEDO HANSEL RAQNSES',
+  '100627':'HERRAN FORERO SAILY GISETH','100628':'ALARCON LOZZADA ARAIDNYZ DEL CARMEN',
+  '100629':'BANGUERO CANTOR ANGIE LIZETH',
+  '110101':'AMARIS ARAUJO ALANYS LISETH','110102':'BETANCOURT MORENO LIAM YACETH',
+  '110103':'DIAZ DURAN SAMUEL SANTIAGO','110104':'DIAZ MELO NICOLE SOFIA',
+  '110105':'GALLEGO MARIN ANDRU YAZIL','110106':'GARCIA ERAZO LAURA SOFIA',
+  '110107':'JARA LOSADA LAURA CAMILA','110108':'LEAL GONZALEZ BRAINER DACCIR',
+  '110109':'MEDINA ORTIZ SANTIAGO','110110':'MELENDEZ CONTRERAS ESTEFANY',
+  '110111':'MORERA VARGAS SARA JULIETH','110112':'NARVAES NARVAEZ SARA MICHELL',
+  '110113':'PACHON HERNANDEZ NICOLLE VANESSA','110114':'PATIÑO GUTIERREZ JUAN SEBASTIAN',
+  '110115':'PEREA MOSQUERA INGRID YOHANA','110116':'PEREZ TORRES YERALDIN',
+  '110117':'PERILLA VALLES LINDA ESTEFANY','110118':'PORTILLA SILVA KAROL XIMENA',
+  '110120':'SANTAMARIA CUENCA LUIS ALEJANDRO','110121':'SEGURA URREGO ALEX JULIETH',
+  '110122':'TORRES MAHECHA JOHAN SANTIAGO','110124':'ZAMBRANO MARIN SUSANA',
+  '110130':'RIOS MUÑETON MARIA FERNANDA',
+  '110201':'ANGARITA OLIVAREZ LUIS ANGEL','110202':'AVENDAÑO RAMIREZ DERLYE JOHANNA',
+  '110203':'BERRIO ROBAYO DAVID SANTIAGO','110204':'BUSTOS BENAVIDES SHAROM ALEJANDRA',
+  '110205':'CASTAÑEDA RIVEROS YURI TATIANA','110206':'GALINDO SABOGAL JHON FREDY',
+  '110207':'GARAY DIAZ ANA VALENTINA','110208':'JARA LOZADA KAREN LIZETH',
+  '110209':'LEON CONTRERAS NICOLETTE STEPHANIE','110210':'LOAIZA VERGARA NICOLE',
+  '110211':'LOPEZ SALCEDO JAVIER MATEO','110212':'MAESTRE CEBALLOS FREYDER JOSE',
+  '110213':'MEJIA MARCHAN ZAIN MISAEL','110214':'MOLINA RAMOS PABLO',
+  '110215':'PEREZ PEÑALVER ALBERT JOSE','110216':'RAMIREZ CALDERON JHONATAN',
+  '110217':'RINCON GUZMAN DANNA VALENTINA','110218':'RIOS MUÑETON MARIA FERNANDA',
+  '110219':'RIVERA MENDEZ JUAN CAMILO','110220':'ROMERO TABARES SHERIL SNEIGY',
+  '110221':'RUIZ BALAGUERA MARIA FERNANDA','110222':'SANCHEZ SUAREZ DANIEL SANTIAGO',
+  '110223':'VARGAS HERNANDEZ SAHARA DANIELA','110226':'VASQUEZ SARMIENTO DILAN STIVEN',
+  '110228':'RODRIGUEZ PEDREROS SANTIAGO',
+  '110301':'ARISMENDI PEREZ ADRIANA','110302':'BONILLA MONROY JUAN ESTEBAN',
+  '110303':'CALA SANCHEZ DYLAN YESID','110304':'DELAROSA DIAZ ALEJANDRA',
+  '110305':'GALVIZ SANTAMARIA ALISSON DAYAN','110306':'GARCIA ACOSTA VALERIA SOFIA',
+  '110307':'GARZON GARZON VALERY ESTEFANIA','110309':'GORDILLO TAPIAS DANIELA',
+  '110310':'GUTIERREZ ESPINOSA JHON FREDY','110311':'MAHECHA LIZARAZO EMILYN YHOZARA',
+  '110312':'MARTINEZ DELOSRIOS AMMY GABRIELA','110313':'MERCADO BENAVIDES STIVEN DANIEL',
+  '110314':'MERCADO FORNARIS YESUA STIVEN','110315':'NOSA BELTRAN DANIEL RICARDO',
+  '110316':'OCAMPO SEPULVEDA ALEX DAVID','110317':'PERDOMO GUTIERREZ YESICA PAOLA',
+  '110318':'RAMIREZ CORTES ANA MARIA','110319':'RAMOS PORTO JULIO CESAR',
+  '110320':'RUA CASTRO VALENTINA','110321':'SANCHEZ SANCHEZ DANNA MICHELL',
+  '110322':'VARGAS SANTACRUZ HANNAH VANESSA','110323':'VENEGAS MENDOZA KAROL LIZETH',
+  '110324':'AREVALO SANCHEZ DANA SOFIA',
+  '110401':'ALVARADO LUNA YUDENNIS DANIELIZ','110402':'ANGEL GUTIERREZ OSCAR DAVID',
+  '110403':'ARENILLA GALVAN LINA MARCELA','110404':'BAUTISTA PEÑA MARIAN SOFIA',
+  '110405':'BUSTOS NEUSA PABLO JULIAN','110406':'CARRILLO SANCHEZ JUAN SEBASTIAN',
+  '110407':'CASTILLO COBOS ANYI JULIETH','110408':'CRUZ HERNANDEZ EDINDSON ARLEY',
+  '110409':'CUEVAS MONTAÑA DANNA ALEJANDRA','110410':'DIAZ MARIN DAYANNA',
+  '110411':'FORERO CAICEDO SANTIAGO','110412':'FRANCO DIAZ JUAN MIGUEL',
+  '110413':'GARCIA GOMEZ JOSE MANUEL','110414':'GRANADOS TELLEZ ANA MARIA',
+  '110415':'GUTIERREZ NIÑO ALEJANDRO','110416':'LEON CONTRERAS GABRIEL ALEJANDRO',
+  '110417':'MENDEZ BENAVIDES OLIVER DAVID','110418':'NINCO VARGAS IVETH CAMILA',
+  '110419':'NIÑO CELY JULIAN MATEO','110420':'PONTON LIZARAZO SHAIRA ALEJANDRA',
+  '110421':'SAENZ HONTIBON SEBASTIAN','110422':'TORRES MARTINEZ YULI ESTEFANIA',
+  '110423':'RUIZ MARIA ALEJANDRA','110424':'BELLO GONZALEZ LAURA VALENTINA',
+  '110425':'LOZANO NOSA PAULA ALEJANDRA'
+};
+
+function parseCourse(code){
+  // 100401 → grado 10, curso 04; 110201 → grado 11, curso 02
+  const gr = code.slice(0,2)==='10'?'10':'11';
+  const cu = parseInt(code.slice(2,4),10);
+  return `${gr}°${String(cu).padStart(2,'0')}`;
+}
+
+// ── Mode state ──
+let GAME_MODE = 'libre'; // 'libre' | 'student'
+let STUDENT_CODE = '';
+let STUDENT_NAME = '';
+let STUDENT_COURSE = '';
+let CODE_VERIFIED = false;
+
+function setMode(mode){
+  GAME_MODE = mode;
+  document.getElementById('tab-libre').classList.toggle('act', mode==='libre');
+  document.getElementById('tab-student').classList.toggle('act', mode==='student');
+  document.getElementById('login-panel').style.display = mode==='student' ? '' : 'none';
+  if(mode==='libre'){ CODE_VERIFIED=false; STUDENT_CODE=''; STUDENT_NAME=''; }
+}
+
+function validateCode(){
+  const inp = document.getElementById('code-inp');
+  const code = inp.value.trim();
+  const okEl = document.getElementById('code-ok');
+  const errEl = document.getElementById('code-err');
+  okEl.style.display='none'; errEl.style.display='none';
+  if(!code){errEl.textContent='Ingresa tu código.';errEl.style.display='';return;}
+  const name = STUDENTS[code];
+  if(!name){
+    errEl.textContent='Código no encontrado. Verifica con tu docente.';
+    errEl.style.display=''; CODE_VERIFIED=false; return;
+  }
+  STUDENT_CODE = code;
+  STUDENT_NAME = name;
+  STUDENT_COURSE = parseCourse(code);
+  CODE_VERIFIED = true;
+  okEl.innerHTML = `<strong>${name}</strong>Curso ${STUDENT_COURSE} · Código ${code}<br><span style="font-size:.75rem;opacity:.7">Selecciona un grupo funcional para comenzar.</span>`;
+  okEl.style.display='';
+}
+
+function pickGroup(group){
+  if(GAME_MODE==='student' && !CODE_VERIFIED){
+    document.getElementById('code-err').textContent='Verifica tu código primero.';
+    document.getElementById('code-err').style.display='';
+    document.getElementById('code-inp').focus();
+    return;
+  }
+  startGame(group);
+}
+
 // ── Helpers ──
 function shuffle(arr){
   const a=[...arr];
@@ -889,6 +1086,7 @@ function endGame(){
   document.getElementById('r-pct').textContent=pct+'%';
   generateCert(grade,level);
   showScreen('s-result');
+  if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
 const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas'};
@@ -916,6 +1114,40 @@ function generateCert(grade,level){
     </div>`;
 }
 
+// ── Send results to Apps Script ──
+function sendResults(grade, level, pct){
+  const ss = document.getElementById('send-status');
+  ss.className='send-status sending show';
+  ss.innerHTML='⏳ Enviando resultados al registro del docente…';
+  const payload = {
+    codigo: STUDENT_CODE,
+    nombre: STUDENT_NAME,
+    curso: STUDENT_COURSE,
+    grupo: GROUP_LABELS[ST.group]||ST.group,
+    correctas: ST.correct,
+    puntaje: ST.score,
+    total: 20,
+    intentos: ST.totalAttempts,
+    porcentaje: pct,
+    calificacion: grade,
+    nivel: level,
+    timestamp: new Date().toISOString()
+  };
+  fetch(APPS_SCRIPT_URL, {
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(()=>{
+    ss.className='send-status ok show';
+    ss.innerHTML='✅ <strong>Resultados enviados correctamente.</strong> El docente recibirá tu puntaje.';
+  }).catch(()=>{
+    ss.className='send-status err show';
+    ss.innerHTML='⚠️ No se pudo enviar. Muéstrale esta pantalla al docente: '+
+      STUDENT_NAME+' · '+ST.score+'/20 · '+pct+'%';
+  });
+}
+
 function confirmExit(){
   if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')){
     resetGame();
@@ -924,6 +1156,9 @@ function confirmExit(){
 
 function resetGame(){
   ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
+  // Keep student logged in for another round; just hide send-status
+  const ss=document.getElementById('send-status');
+  if(ss) ss.className='send-status';
   showScreen('s-portada');
 }
 
