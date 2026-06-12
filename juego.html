@@ -188,6 +188,24 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 @media print{.site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}#s-result{display:block!important}body{background:#fff}.cert{box-shadow:none;border-color:#000}}
 @media(max-width:520px){.portada-title{font-size:2.2rem}.group-grid{grid-template-columns:1fr 1fr}.result-stats{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.cert-sigs{grid-template-columns:1fr;gap:20px}}
+
+/* WELCOME MODAL */
+.wm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);animation:fadeIn .2s ease}
+.wm-box{background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(217,119,6,.5);border-radius:20px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideUp .25s ease;position:relative}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.wm-avatar{width:72px;height:72px;border-radius:50%;background:rgba(217,119,6,.25);border:3px solid rgba(217,119,6,.6);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px}
+.wm-hi{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.55);margin-bottom:4px}
+.wm-name{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:#fcd34d;line-height:1.2;margin-bottom:6px}
+.wm-course{display:inline-block;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:#fcd34d;font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:100px;margin-bottom:20px}
+.wm-prompt{font-size:.88rem;color:rgba(255,255,255,.75);margin-bottom:22px;line-height:1.6}
+.wm-groups{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.wm-grp{padding:11px 8px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--sans);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.35}
+.wm-grp:hover{background:rgba(217,119,6,.2);border-color:rgba(217,119,6,.6);color:#fcd34d;transform:translateY(-2px)}
+.wm-grp.full{grid-column:1/-1;background:rgba(217,119,6,.14);border-color:rgba(217,119,6,.4)}
+.wm-grp .wg-icon{font-size:1.1rem;display:block;margin-bottom:3px}
+.wm-grp .wg-sub{font-size:.6rem;opacity:.6;font-weight:400}
+.wm-close{position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:color .15s}
+.wm-close:hover{color:#fff}
 </style>
 </head>
 <body>
@@ -280,6 +298,44 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <span class="gb-icon">🟠</span>
         <span class="gb-name">Sales oxigenadas</span>
         <span class="gb-sub">Con oxoanión</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ WELCOME MODAL ═══════════════ -->
+<div id="wm-overlay" class="wm-overlay" style="display:none" onclick="if(event.target===this)closeWelcome()">
+  <div class="wm-box">
+    <button class="wm-close" onclick="closeWelcome()">✕</button>
+    <div class="wm-avatar">🎓</div>
+    <div class="wm-hi">¡Bienvenido/a!</div>
+    <div class="wm-name" id="wm-name"></div>
+    <div class="wm-course" id="wm-course"></div>
+    <div class="wm-prompt">Selecciona un grupo funcional para comenzar tu sesión:</div>
+    <div class="wm-groups">
+      <button class="wm-grp full" onclick="closeAndPick('all')">
+        <span class="wg-icon">🔬</span>Todos los grupos<br><span class="wg-sub">Mezcla completa</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('ox-anh')">
+        <span class="wg-icon">💨</span>Óxidos y Anhídridos<br><span class="wg-sub">Básicos + ácidos</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('hidru')">
+        <span class="wg-icon">⚗️</span>Hidruros<br><span class="wg-sub">Metal + H⁻</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('ac-hid')">
+        <span class="wg-icon">🧪</span>Ácidos hídricos<br><span class="wg-sub">Sin oxígeno</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('base')">
+        <span class="wg-icon">🟣</span>Bases<br><span class="wg-sub">Hidróxidos</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('ac-ox')">
+        <span class="wg-icon">⚡</span>Ácidos oxácidos<br><span class="wg-sub">Con oxoanión</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('sal-bin')">
+        <span class="wg-icon">🔵</span>Sales binarias<br><span class="wg-sub">Metal + halógeno/S</span>
+      </button>
+      <button class="wm-grp" onclick="closeAndPick('sal-ox')">
+        <span class="wg-icon">🟠</span>Sales oxigenadas<br><span class="wg-sub">Con oxoanión</span>
       </button>
     </div>
   </div>
@@ -486,9 +542,8 @@ function setMode(mode){
 function validateCode(){
   const inp = document.getElementById('code-inp');
   const code = inp.value.trim();
-  const okEl = document.getElementById('code-ok');
   const errEl = document.getElementById('code-err');
-  okEl.style.display='none'; errEl.style.display='none';
+  errEl.style.display='none';
   if(!code){errEl.textContent='Ingresa tu código.';errEl.style.display='';return;}
   const name = STUDENTS[code];
   if(!name){
@@ -499,8 +554,22 @@ function validateCode(){
   STUDENT_NAME = name;
   STUDENT_COURSE = parseCourse(code);
   CODE_VERIFIED = true;
-  okEl.innerHTML = `<strong>${name}</strong>Curso ${STUDENT_COURSE} · Código ${code}<br><span style="font-size:.75rem;opacity:.7">Selecciona un grupo funcional para comenzar.</span>`;
-  okEl.style.display='';
+  openWelcome();
+}
+
+function openWelcome(){
+  document.getElementById('wm-name').textContent = STUDENT_NAME;
+  document.getElementById('wm-course').textContent = 'Curso ' + STUDENT_COURSE + ' · Código ' + STUDENT_CODE;
+  document.getElementById('wm-overlay').style.display = 'flex';
+}
+
+function closeWelcome(){
+  document.getElementById('wm-overlay').style.display = 'none';
+}
+
+function closeAndPick(group){
+  closeWelcome();
+  startGame(group);
 }
 
 function pickGroup(group){
@@ -508,6 +577,10 @@ function pickGroup(group){
     document.getElementById('code-err').textContent='Verifica tu código primero.';
     document.getElementById('code-err').style.display='';
     document.getElementById('code-inp').focus();
+    return;
+  }
+  if(GAME_MODE==='student'){
+    openWelcome();
     return;
   }
   startGame(group);
