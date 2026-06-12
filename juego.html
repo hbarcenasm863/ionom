@@ -189,6 +189,24 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 @media print{.site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}#s-result{display:block!important}body{background:#fff}.cert{box-shadow:none;border-color:#000}}
 @media(max-width:520px){.portada-title{font-size:2.2rem}.group-grid{grid-template-columns:1fr 1fr}.result-stats{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.cert-sigs{grid-template-columns:1fr;gap:20px}}
 
+/* TIMER */
+.timer-bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:4px}
+.timer-fill{height:100%;border-radius:3px;transition:width 1s linear,background-color .5s}
+.timer-num{font-family:var(--mono);font-size:.72rem;font-weight:700;color:rgba(255,255,255,.65);text-align:right;margin-top:1px}
+.timer-num.warn{color:#fcd34d}
+.timer-num.danger{color:#f87171}
+
+/* OX-ASSIGN */
+.ox-assign-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;padding:16px;background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);margin-bottom:4px}
+.oxa-atom{display:flex;flex-direction:column;align-items:center;gap:4px}
+.oxa-inp{width:58px;padding:7px 4px;border:2px solid var(--brd);border-radius:8px;text-align:center;font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--tx);background:var(--surf);outline:none;transition:border-color .2s}
+.oxa-inp:focus{border-color:var(--cat)}
+.oxa-inp.ok{border-color:var(--ok);background:var(--okb);color:#14532d}
+.oxa-inp.err{border-color:var(--err);background:var(--errb);color:var(--err)}
+.oxa-sym{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--cat-t);text-align:center;line-height:1.2}
+.oxa-sub{font-size:.7rem;color:var(--dimmer);text-align:center}
+.oxa-plus{font-family:var(--mono);font-size:.85rem;color:var(--dimmer);align-self:center;padding-bottom:8px}
+
 /* WELCOME MODAL */
 .wm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);animation:fadeIn .2s ease}
 .wm-box{background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(217,119,6,.5);border-radius:20px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideUp .25s ease;position:relative}
@@ -348,9 +366,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <span class="gh-logo" style="flex-shrink:0">Ion<em>Nom</em></span>
     <div class="gh-center">
       <div class="gh-prog"><div class="gh-progfill" id="g-prog" style="width:0%"></div></div>
-      <div class="gh-pts" id="g-pts">0 / 20 pts</div>
+      <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;background:#22c55e"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="gh-pts" id="g-pts">0 / 40 pts</div>
+        <div class="timer-num" id="timer-num">60s</div>
+      </div>
     </div>
-    <span class="gh-score" id="g-qnum">Q 1/10</span>
+    <span class="gh-score" id="g-qnum">Q 1/20</span>
   </div>
   <div class="game-body">
     <div class="stats-row">
@@ -376,6 +398,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div id="area-drag" style="display:none">
         <div class="drag-name" id="drag-name"></div>
         <div class="drag-bank" id="drag-bank"></div>
+      </div>
+      <div id="area-ox-assign" style="display:none">
+        <div class="ox-assign-row" id="ox-assign-row"></div>
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center;flex-wrap:wrap">
+          <button class="btn-submit" onclick="checkOxAssign()">Verificar →</button>
+          <span style="font-size:.75rem;color:var(--dimmer)">Usa +2, −2, etc. La suma total debe ser 0.</span>
+        </div>
       </div>
     </div>
     <div class="feedback" id="feedback"></div>
@@ -657,8 +686,44 @@ function buildDrag(q, pool){
 }
 
 // ── State ──
-let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
-const TYPE_POOL=['mc','mc','write-any','write-any','write-stock','write-sist','ox-state','drag','invert','balance'];
+let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
+const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance'];
+
+// ── Timer ──
+let TIMER_ID=null;
+const TIMER_TOTAL=60;
+function startTimer(){
+  stopTimer();
+  let left=TIMER_TOTAL;
+  const fill=document.getElementById('timer-fill');
+  const num=document.getElementById('timer-num');
+  function tick(){
+    if(fill){fill.style.width=(left/TIMER_TOTAL*100)+'%';fill.style.backgroundColor=left>20?'#22c55e':left>10?'#f59e0b':'#ef4444';}
+    if(num){num.textContent=left+'s';num.className='timer-num'+(left<=10?' danger':left<=20?' warn':'');}
+    if(left<=0){stopTimer();timeOut();return;}
+    left--;
+  }
+  tick();
+  TIMER_ID=setInterval(tick,1000);
+}
+function stopTimer(){
+  if(TIMER_ID){clearInterval(TIMER_ID);TIMER_ID=null;}
+  const fill=document.getElementById('timer-fill');
+  const num=document.getElementById('timer-num');
+  if(fill){fill.style.transition='none';fill.style.width='100%';fill.style.backgroundColor='#22c55e';setTimeout(()=>{if(fill)fill.style.transition='width 1s linear,background-color .5s';},50);}
+  if(num){num.textContent='60s';num.className='timer-num';}
+}
+function timeOut(){
+  const q=ST.questions[ST.idx];
+  ST.totalAttempts++;
+  document.querySelectorAll('.mc-opt,.drag-chip,.drag-slot').forEach(el=>{el.disabled=true;el.style.pointerEvents='none';});
+  const inp=document.getElementById('q-input');if(inp){inp.disabled=true;}
+  const oxa=document.querySelectorAll('.oxa-inp');oxa.forEach(i=>i.disabled=true);
+  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+  showFeedback('err','⏱ Tiempo agotado. La respuesta era:',q);
+  scheduleNext(3500);
+  updateStats();
+}
 
 // Pick n questions from pool, cycling without consecutive repeats when pool < n
 function buildQuestionQueue(pool, n){
@@ -683,6 +748,7 @@ function validTypesFor(q, pool){
   if(buildDrag(q,pool)) v.add('drag');
   if(pool.length>=4) v.add('invert');
   if(extractBalance(q)) v.add('balance');
+  if(getOxidationStates(q)) v.add('ox-assign');
   return v;
 }
 
@@ -715,9 +781,9 @@ function startGame(group){
   ST.group=group;
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
-  const compounds=buildQuestionQueue(pool,10);
+  const compounds=buildQuestionQueue(pool,20);
   ST.questions=assignTypes(compounds,pool);
-  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
+  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
   showScreen('s-game');
   loadQuestion();
 }
@@ -728,21 +794,23 @@ function loadQuestion(){
   ST.qtype=q.qtype; ST.attempts=0;
   const pct=(ST.idx/ST.questions.length)*100;
   document.getElementById('g-prog').style.width=pct+'%';
-  document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
-  document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/10';
+  document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
+  document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas'};
-  document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 10 · ${typeLabels[q.qtype]||''}`;
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas'};
+  document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.formula;
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag'].forEach(id=>document.getElementById(id).style.display='none');
+  ['area-mc','area-write','area-ox','area-drag','area-ox-assign'].forEach(id=>document.getElementById(id).style.display='none');
   if(q.qtype==='mc') renderMC(q);
   else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
   else if(q.qtype==='ox-state') renderOx(q);
   else if(q.qtype==='drag') renderDrag(q);
   else if(q.qtype==='invert') renderInvert(q);
   else if(q.qtype==='balance') renderBalance(q);
+  else if(q.qtype==='ox-assign') renderOxAssign(q);
+  startTimer();
 }
 
 // ── Build smart distractors (reflect real cognitive errors) ──
@@ -814,6 +882,7 @@ function checkMC(el){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(isCorrect(b.textContent,q,'any'))b.classList.add('correct');});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
     showFeedback('err','✗ Incorrecto.',q);
     scheduleNext(3000);
   }
@@ -851,6 +920,7 @@ function submitWrite(){
   } else {
     document.getElementById('q-input').disabled=true;
     document.getElementById('btn-hint-el').style.display='none';
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
     showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
     scheduleNext(3500);
   }
@@ -890,8 +960,115 @@ function checkOx(el,chosen,correct){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>{if(b.textContent.includes('('+correct+')'))b.classList.add('correct');});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
     showFeedback('err',`✗ El estado de oxidación correcto es ${correct} (+${ROMAN[correct]}).`,q);
     scheduleNext(3000);
+  }
+  updateStats();
+}
+
+// ── Ox-assign (asignar estados de oxidación sobre la fórmula) ──
+function parseFormula(f){
+  const SUBS={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  let s=f.replace(/[₀-₉]/g,c=>SUBS[c]||c);
+  const result={};
+  function pg(str,mult){
+    let i=0;
+    while(i<str.length){
+      if(str[i]==='('){
+        let j=str.indexOf(')',i),ns='',k=j+1;
+        while(k<str.length&&/\d/.test(str[k])){ns+=str[k];k++;}
+        pg(str.slice(i+1,j),mult*(ns?parseInt(ns):1));i=k;
+      } else if(/[A-Z]/.test(str[i])){
+        let sym=str[i];i++;
+        while(i<str.length&&/[a-z]/.test(str[i])){sym+=str[i];i++;}
+        let ns='';
+        while(i<str.length&&/\d/.test(str[i])){ns+=str[i];i++;}
+        result[sym]=(result[sym]||0)+(ns?parseInt(ns):1)*mult;
+      } else {i++;}
+    }
+  }
+  pg(s,1);
+  return Object.entries(result).map(([elem,n])=>({elem,n}));
+}
+
+function getOxidationStates(q){
+  const raw=parseFormula(q.formula);
+  if(!raw||raw.length<2) return null;
+  const gr=q.group;
+  const elems={};raw.forEach(({elem,n})=>{elems[elem]=n;});
+  const states={};
+  if(elems['O']) states['O']=-2;
+  if(elems['H']) states['H']=(gr==='hidru')?-1:+1;
+  ['F','Cl','Br','I'].forEach(el=>{if(elems[el]&&(gr==='sal-bin'||gr==='ac-hid'))states[el]=-1;});
+  if(elems['S']&&gr==='ac-hid') states['S']=-2;
+  if(elems['N']&&gr==='ac-hid') states['N']=-3;
+  if(elems['P']&&gr==='ac-hid') states['P']=-3;
+  const unknown=Object.keys(elems).filter(el=>states[el]===undefined);
+  if(unknown.length===0){
+    const sum=Object.entries(elems).reduce((a,[el,n])=>a+states[el]*n,0);
+    if(sum!==0) return null;
+  } else if(unknown.length===1){
+    const kSum=Object.entries(states).reduce((a,[el,st])=>a+st*elems[el],0);
+    const u=unknown[0];
+    const uSt=-kSum/elems[u];
+    if(!Number.isInteger(uSt)||uSt===0||Math.abs(uSt)>8) return null;
+    states[u]=uSt;
+  } else { return null; }
+  return raw.map(({elem,n})=>({elem,n,state:states[elem]}));
+}
+
+function renderOxAssign(q){
+  const data=getOxidationStates(q);
+  if(!data){renderMC(q);return;}
+  document.getElementById('q-prompt').textContent='Escribe el estado de oxidación de cada elemento. La suma ponderada debe ser 0.';
+  document.getElementById('area-ox-assign').style.display='';
+  const row=document.getElementById('ox-assign-row');
+  // Build display: atom boxes with "+" between them
+  let html='';
+  data.forEach(({elem,n},i)=>{
+    if(i>0) html+='<span class="oxa-plus">+</span>';
+    html+=`<div class="oxa-atom"><input class="oxa-inp" id="oxa-inp-${i}" type="text" placeholder="?" maxlength="3" onkeydown="if(event.key==='Enter')checkOxAssign()"><div class="oxa-sym">${elem}</div>${n>1?`<div class="oxa-sub">×${n}</div>`:''}</div>`;
+  });
+  html+='<span class="oxa-plus" style="margin-left:6px">= 0</span>';
+  row.innerHTML=html;
+  row.dataset.oxdata=JSON.stringify(data);
+  setTimeout(()=>{const inp=document.getElementById('oxa-inp-0');if(inp)inp.focus();},80);
+}
+
+function checkOxAssign(){
+  const q=ST.questions[ST.idx];
+  const row=document.getElementById('ox-assign-row');
+  const data=JSON.parse(row.dataset.oxdata||'[]');
+  if(!data.length) return;
+  ST.attempts++;ST.totalAttempts++;
+  let allOk=true, sum=0;
+  data.forEach(({n,state},i)=>{
+    const inp=document.getElementById('oxa-inp-'+i);
+    if(!inp) return;
+    const raw=inp.value.replace(/\s/g,'').replace('−','-').replace('–','-');
+    const val=parseInt(raw,10);
+    const ok=!isNaN(val)&&val===state;
+    inp.classList.remove('ok','err');inp.classList.add(ok?'ok':'err');
+    if(!ok) allOk=false;
+    if(!isNaN(val)) sum+=val*n;
+  });
+  if(allOk){
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    data.forEach((_,i)=>{const inp=document.getElementById('oxa-inp-'+i);if(inp)inp.disabled=true;});
+    showFeedback('ok',`✓ ¡Correcto! Suma = ${sum}. +${pts} punto${pts!==1?'s':''}`,q);
+    scheduleNext(1800);
+  } else if(ST.attempts>=3){
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    data.forEach(({state},i)=>{
+      const inp=document.getElementById('oxa-inp-'+i);
+      if(inp){inp.value=(state>0?'+':'')+state;inp.disabled=true;inp.classList.remove('err');inp.classList.add('ok');}
+    });
+    showFeedback('reveal','3 intentos agotados. Los estados correctos son:',q);
+    scheduleNext(3500);
+  } else {
+    showFeedback('err',`✗ Intento ${ST.attempts} de 3 — algún estado es incorrecto. Suma actual: ${sum}.`,null,true);
   }
   updateStats();
 }
@@ -975,6 +1152,7 @@ function checkDrag(){
     if(ST.attempts>=3){
       ds.locked=true;
       document.querySelectorAll('.drag-chip').forEach(b=>b.style.pointerEvents='none');
+      if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
       showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
       scheduleNext(3500);
     } else {
@@ -1053,6 +1231,7 @@ function checkBalance(el,chosen,correct){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>{if(btn.textContent.startsWith(correct+' '))btn.classList.add('correct');});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
     showFeedback('err',`✗ La respuesta es ${correct}. Regla: ${b?b.eo:''} ÷ ${b?Math.abs(b.anCharge):''} = ${correct} iones.`,q);
     scheduleNext(3000);
   }
@@ -1090,6 +1269,7 @@ function checkInvert(el,chosen,correct){
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
     document.getElementById('q-formula').textContent=q.formula;
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
     showFeedback('err',`✗ La fórmula correcta es ${q.formula}.`,q);
     scheduleNext(3000);
   }
@@ -1127,13 +1307,13 @@ function showFeedback(type,msg,q,noAlts=false){
 function updateStats(){
   document.getElementById('g-correct').textContent=ST.correct;
   document.getElementById('g-attempts').textContent=ST.totalAttempts;
-  const done=Math.min(ST.idx+1,10);
+  const done=Math.min(ST.idx+1,20);
   document.getElementById('g-eff').textContent=done>0?Math.round((ST.correct/done)*100)+'%':'—';
-  document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
+  document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
 }
 
 function scheduleNext(_ms){
-  // Show "Siguiente" button instead of auto-advancing
+  stopTimer();
   const fb=document.getElementById('feedback');
   const btn=document.createElement('button');
   btn.className='btn-next';
@@ -1144,47 +1324,45 @@ function scheduleNext(_ms){
 
 // ── End ──
 function endGame(){
-  const pct=Math.round((ST.score/20)*100);
-  const grade=((ST.score/20)*5).toFixed(2);
+  stopTimer();
+  const pct=Math.round((ST.score/40)*100);
+  const grade=((ST.score/40)*5).toFixed(2);
   let medal='🔰',level='Principiante';
   if(pct>=90){medal='🥇';level='Experto';}
   else if(pct>=70){medal='🥈';level='Avanzado';}
   else if(pct>=50){medal='🥉';level='En Progreso';}
   document.getElementById('r-medal').textContent=medal;
   document.getElementById('r-level').textContent=level;
-  document.getElementById('r-grade').textContent=ST.score+' / 20 pts';
-  document.getElementById('r-msg').textContent=`Respondiste ${ST.correct} de 10 preguntas con ${ST.totalAttempts} intentos totales.`;
-  document.getElementById('r-correct').textContent=ST.correct+'/10';
-  document.getElementById('r-score').textContent=ST.score+'/20';
+  document.getElementById('r-grade').textContent=ST.score+' / 40 pts';
+  document.getElementById('r-msg').textContent=`Respondiste ${ST.correct} de 20 preguntas con ${ST.totalAttempts} intentos totales.`;
+  document.getElementById('r-correct').textContent=ST.correct+'/20';
+  document.getElementById('r-score').textContent=ST.score+'/40';
   document.getElementById('r-pct').textContent=pct+'%';
-  generateCert(grade,level);
+  generateStudyFeedback();
   showScreen('s-result');
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
 const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas'};
 
-function generateCert(grade,level){
-  const now=new Date();
-  const dateStr=now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('cert-container').innerHTML=`
-    <div class="cert" id="print-cert">
-      <div class="cert-hdr">Colegio Rufino José Cuervo I.E.D.</div>
-      <div class="cert-title">Certificado de Logro</div>
-      <div class="cert-sub">Nomenclatura Inorgánica · IonNom</div>
-      <div class="cert-body"><p>Esta sesión de práctica fue completada</p><p>con nivel de desempeño: <strong>${level}</strong></p></div>
-      <div class="cert-stats">
-        <div class="cert-stat"><div class="cert-stat-val">${ST.correct}/10</div><div class="cert-stat-lbl">Respuestas correctas</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${ST.score}/20</div><div class="cert-stat-lbl">Puntos obtenidos</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${grade}</div><div class="cert-stat-lbl">Calificación / 5.0</div></div>
-        <div class="cert-stat"><div class="cert-stat-val">${GROUP_LABELS[ST.group]||ST.group}</div><div class="cert-stat-lbl">Grupo funcional</div></div>
-      </div>
-      <div class="cert-sigs">
-        <div><div class="cert-sig-line"></div><p>Firma del estudiante</p></div>
-        <div><div class="cert-sig-line"></div><p>Docente responsable</p></div>
-      </div>
-      <div class="cert-footer">Fecha: ${dateStr}<br>IonNom © 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</div>
-    </div>`;
+const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.'};
+
+function generateStudyFeedback(){
+  const errors=ST.errors||[];
+  const byGroup={};
+  errors.forEach(e=>{
+    if(!byGroup[e.group]) byGroup[e.group]=[];
+    if(!byGroup[e.group].find(x=>x.formula===e.formula)) byGroup[e.group].push(e);
+  });
+  const groups=Object.keys(byGroup);
+  const container=document.getElementById('cert-container');
+  if(!groups.length){
+    container.innerHTML='<div style="text-align:center;padding:24px 20px;background:var(--okb);border:2px solid var(--ok);border-radius:var(--r);color:#14532d"><div style="font-size:2.5rem;margin-bottom:10px">🏆</div><strong style="font-size:1rem">¡Sin errores! Dominas todos los grupos de esta sesión.</strong></div>';
+    return;
+  }
+  container.innerHTML='<div style="background:var(--warnb);border:2px solid var(--warn);border-radius:var(--r);padding:20px"><div style="font-weight:800;font-size:.92rem;color:var(--cat-t);margin-bottom:14px">📚 Temas para repasar</div>'+
+    groups.map(g=>'<div style="margin-bottom:12px;padding:12px;background:var(--surf);border-radius:var(--rs);border-left:4px solid var(--warn)"><div style="font-weight:800;font-size:.85rem;color:var(--tx);margin-bottom:3px">'+(GROUP_LABELS[g]||g)+'</div><div style="font-size:.75rem;color:var(--dimmer);margin-bottom:7px">'+(STUDY_TIPS[g]||'Revisa las reglas de nomenclatura para este grupo.')+'</div><div style="display:flex;flex-wrap:wrap;gap:6px">'+byGroup[g].map(e=>'<span style="font-family:var(--mono);font-size:.8rem;background:var(--warnb);padding:3px 8px;border-radius:6px;border:1px solid var(--warn);color:var(--cat-t)">'+e.formula+'</span>').join('')+'</div></div>').join('')+
+    '</div>';
 }
 
 // ── Send results to Apps Script ──
@@ -1199,7 +1377,7 @@ function sendResults(grade, level, pct){
     grupo: GROUP_LABELS[ST.group]||ST.group,
     correctas: ST.correct,
     puntaje: ST.score,
-    total: 20,
+    total: 40,
     intentos: ST.totalAttempts,
     porcentaje: pct,
     calificacion: grade,
@@ -1228,7 +1406,8 @@ function confirmExit(){
 }
 
 function resetGame(){
-  ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
+  stopTimer();
+  ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
   // Keep student logged in for another round; just hide send-status
   const ss=document.getElementById('send-status');
   if(ss) ss.className='send-status';
