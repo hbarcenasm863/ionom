@@ -65,6 +65,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .game-hdr{background:linear-gradient(90deg,#0d2d42,#0d4a73);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;font-style:italic;color:#fff}
 .gh-logo em{color:#fcd34d;font-style:normal}
+.gh-back{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-family:var(--sans);font-size:.75rem;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s}
+.gh-back:hover{background:rgba(255,255,255,.22)}
 .gh-center{flex:1;display:flex;flex-direction:column;gap:4px}
 .gh-prog{height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
 .gh-progfill{height:100%;background:linear-gradient(90deg,var(--cat),var(--an));transition:width .4s ease;border-radius:3px}
@@ -241,7 +243,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <!-- ═══════════════ GAME ═══════════════ -->
 <div id="s-game" class="screen">
   <div class="game-hdr">
-    <span class="gh-logo">Ion<em>Nom</em></span>
+    <button class="gh-back" onclick="confirmExit()">← Menú</button>
+    <span class="gh-logo" style="flex-shrink:0">Ion<em>Nom</em></span>
     <div class="gh-center">
       <div class="gh-prog"><div class="gh-progfill" id="g-prog" style="width:0%"></div></div>
       <div class="gh-pts" id="g-pts">0 / 20 pts</div>
@@ -402,22 +405,48 @@ function buildQuestionQueue(pool, n){
   return result;
 }
 
+function validTypesFor(q, pool){
+  const v=new Set(['mc','write-any']);
+  if(q.stock&&q.stock[0]) v.add('write-stock');
+  if(q.sist&&q.sist[0]) v.add('write-sist');
+  if(extractEO(q)) v.add('ox-state');
+  if(buildDrag(q,pool)) v.add('drag');
+  if(pool.length>=4) v.add('invert');
+  if(extractBalance(q)) v.add('balance');
+  return v;
+}
+
+function assignTypes(compounds, pool){
+  // Start with a shuffled copy of TYPE_POOL; swap slots forward so each
+  // compound gets a valid type — minimises 'mc' fallback.
+  const bag=shuffle([...TYPE_POOL]);
+  for(let i=0;i<compounds.length;i++){
+    const valid=validTypesFor(compounds[i],pool);
+    if(!valid.has(bag[i])){
+      // try to find a later slot whose type IS valid for this compound
+      let swapped=false;
+      for(let j=i+1;j<bag.length;j++){
+        if(valid.has(bag[j])){
+          [bag[i],bag[j]]=[bag[j],bag[i]];
+          swapped=true; break;
+        }
+      }
+      // if nothing found, demote to the best available non-mc type
+      if(!swapped){
+        const pref=['write-any','write-stock','write-sist','drag','invert','ox-state','balance','mc'];
+        bag[i]=pref.find(t=>valid.has(t))||'mc';
+      }
+    }
+  }
+  return compounds.map((q,i)=>({...q,qtype:bag[i]}));
+}
+
 function startGame(group){
   ST.group=group;
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
   const compounds=buildQuestionQueue(pool,10);
-  const types=shuffle([...TYPE_POOL]);
-  ST.questions=compounds.map((q,i)=>{
-    let t=types[i];
-    if(t==='write-stock'&&!(q.stock&&q.stock[0])) t='write-any';
-    if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
-    if(t==='ox-state'&&!extractEO(q)) t='mc';
-    if(t==='drag'&&!buildDrag(q,pool)) t='mc';
-    if(t==='invert'&&pool.length<4) t='mc';
-    if(t==='balance'&&!extractBalance(q)) t='mc';
-    return {...q,qtype:t};
-  });
+  ST.questions=assignTypes(compounds,pool);
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
   showScreen('s-game');
   loadQuestion();
@@ -881,6 +910,12 @@ function generateCert(grade,level){
       </div>
       <div class="cert-footer">Fecha: ${dateStr}<br>IonNom © 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</div>
     </div>`;
+}
+
+function confirmExit(){
+  if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')){
+    resetGame();
+  }
 }
 
 function resetGame(){
