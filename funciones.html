@@ -38,19 +38,54 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .nav-links a .full{display:inline}
 @media(max-width:480px){.nav-links a .full{display:none}.nav-links a{padding:5px 8px;font-size:.72rem}.nav-brand{font-size:.8rem}}
 
+/* SCREENS */
+.screen{display:none}
+.screen.active{display:block}
+
 /* PAGE HEADER */
 .page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
 .page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
 .page-hdr p{font-size:.88rem;color:var(--dimmer)}
 
-/* TAB SYSTEM */
-.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--brd);overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:0}
-.tab-btn{padding:14px 20px;border:none;background:transparent;color:var(--dimmer);font-family:var(--sans);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
-.tab-btn:hover{color:var(--tx)}
-.tab-btn.act{color:var(--an);border-bottom-color:var(--an)}
-.tab-cont{display:none;padding:28px 0;animation:fadeIn .25s ease}
-.tab-cont.act{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:8px}
+.card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 18px 18px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;text-align:left;font-family:var(--sans)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.card.card-cat{border-top:4px solid var(--cat)}.card.card-cat:hover{border-color:var(--cat)}
+.card.card-an{border-top:4px solid var(--an)}.card.card-an:hover{border-color:var(--an)}
+.card.card-oh{border-top:4px solid var(--oh)}.card.card-oh:hover{border-color:var(--oh)}
+.card.card-ox{border-top:4px solid var(--ox)}.card.card-ox:hover{border-color:var(--ox)}
+.card-icon{font-size:1.6rem;margin-bottom:8px}
+.card-num{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;opacity:.55}
+.card-title{font-size:.95rem;font-weight:800;color:var(--tx);margin-bottom:4px}
+.card-pattern{font-family:var(--mono);font-size:.75rem;color:var(--dimmer)}
+.card.card-cat .card-num{color:var(--cat-t)}
+.card.card-an .card-num{color:var(--an-t)}
+.card.card-oh .card-num{color:var(--oh-t)}
+.card.card-ox .card-num{color:var(--ox-t)}
+
+/* BREADCRUMB */
+.breadcrumb-bar{display:flex;align-items:center;gap:8px;padding:10px 0 18px;font-size:.8rem;color:var(--dimmer)}
+.breadcrumb-bar button{background:none;border:none;color:var(--an);font-family:var(--sans);font-size:.8rem;font-weight:700;cursor:pointer;padding:0}
+.breadcrumb-bar button:hover{text-decoration:underline}
+.bc-sep{opacity:.4}
+
+/* PROGRESS */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-top:4px}
+
+/* SECTION HEADER */
+.sec-hdr{margin-bottom:20px}
+.sec-hdr h2{font-family:var(--serif);font-size:1.4rem;font-weight:700;font-style:italic;color:var(--tx)}
+
+/* NAV FOOTER */
+.nav-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 0 0;border-top:1px solid var(--brd);margin-top:24px}
+.nav-btn{padding:10px 20px;border-radius:100px;border:2px solid var(--brd);background:var(--surf);color:var(--tx);font-family:var(--sans);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .15s}
+.nav-btn:hover:not(:disabled){border-color:var(--an);color:var(--an);background:var(--an-b)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.nav-btn.primary{background:var(--an);color:#fff;border-color:var(--an)}
+.nav-btn.primary:hover:not(:disabled){background:var(--an-t);border-color:var(--an-t)}
 
 /* SECTION CARDS */
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
@@ -136,8 +171,9 @@ footer a:hover{text-decoration:underline}
 
 @media(max-width:580px){
   .sect{padding:16px 18px}
-  .tab-btn{padding:12px 14px;font-size:.72rem}
+  .cards-grid{grid-template-columns:repeat(2,1fr)}
 }
+@media(max-width:360px){.cards-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -155,1252 +191,798 @@ footer a:hover{text-decoration:underline}
 
 <div class="app">
 
-<div class="page-hdr">
-  <h1>Funciones Inorgánicas</h1>
-  <p>Las 8 funciones de la química inorgánica: identificación, reglas de nomenclatura y ejercicios interactivos con los tres sistemas (Tradicional, Stock, IUPAC)</p>
+<!-- ══════════════════ MENÚ PRINCIPAL ══════════════════ -->
+<div id="menu-principal" class="screen active">
+  <div class="page-hdr">
+    <h1>Funciones Inorgánicas</h1>
+    <p>Las 8 funciones de la química inorgánica. Selecciona una para ver su identificación, reglas de nomenclatura y ejercicios interactivos.</p>
+  </div>
+  <div class="cards-grid">
+    <button class="card card-cat" onclick="goToSection(0)">
+      <div class="card-icon">🔴</div>
+      <div class="card-num">Función 01</div>
+      <div class="card-title">Óxidos Básicos</div>
+      <div class="card-pattern">Metal + O</div>
+    </button>
+    <button class="card card-an" onclick="goToSection(1)">
+      <div class="card-icon">🔵</div>
+      <div class="card-num">Función 02</div>
+      <div class="card-title">Anhídridos</div>
+      <div class="card-pattern">No metal + O</div>
+    </button>
+    <button class="card card-cat" onclick="goToSection(2)">
+      <div class="card-icon">⚗️</div>
+      <div class="card-num">Función 03</div>
+      <div class="card-title">Hidruros</div>
+      <div class="card-pattern">Metal + H⁻</div>
+    </button>
+    <button class="card card-an" onclick="goToSection(3)">
+      <div class="card-icon">💧</div>
+      <div class="card-num">Función 04</div>
+      <div class="card-title">Ácidos Hídricos</div>
+      <div class="card-pattern">H + no metal (aq)</div>
+    </button>
+    <button class="card card-oh" onclick="goToSection(4)">
+      <div class="card-icon">🟣</div>
+      <div class="card-num">Función 05</div>
+      <div class="card-title">Bases · Hidróxidos</div>
+      <div class="card-pattern">Metal + OH⁻</div>
+    </button>
+    <button class="card card-ox" onclick="goToSection(5)">
+      <div class="card-icon">🌊</div>
+      <div class="card-num">Función 06</div>
+      <div class="card-title">Ácidos Oxácidos</div>
+      <div class="card-pattern">H + no metal + O</div>
+    </button>
+    <button class="card card-an" onclick="goToSection(6)">
+      <div class="card-icon">🔷</div>
+      <div class="card-num">Función 07</div>
+      <div class="card-title">Sales Binarias</div>
+      <div class="card-pattern">Metal + no metal</div>
+    </button>
+    <button class="card card-ox" onclick="goToSection(7)">
+      <div class="card-icon">🟠</div>
+      <div class="card-num">Función 08</div>
+      <div class="card-title">Sales Oxigenadas</div>
+      <div class="card-pattern">Metal + oxoanión</div>
+    </button>
+  </div>
 </div>
 
-<div class="tab-nav">
-  <button class="tab-btn act" onclick="switchTab(0)">01 · Óxidos Básicos</button>
-  <button class="tab-btn" onclick="switchTab(1)">02 · Anhídridos</button>
-  <button class="tab-btn" onclick="switchTab(2)">03 · Hidruros</button>
-  <button class="tab-btn" onclick="switchTab(3)">04 · Ác. Hídricos</button>
-  <button class="tab-btn" onclick="switchTab(4)">05 · Bases</button>
-  <button class="tab-btn" onclick="switchTab(5)">06 · Ác. Oxácidos</button>
-  <button class="tab-btn" onclick="switchTab(6)">07 · Sales Binarias</button>
-  <button class="tab-btn" onclick="switchTab(7)">08 · Sales Oxigenadas</button>
-</div>
-
-<!-- ══════════════════════════════════
-     TAB 01 — ÓXIDOS BÁSICOS
-══════════════════════════════════ -->
-<div class="tab-cont act" id="tab-0">
-
-  <div class="sect">
-    <div class="func-badge cat">
-      <div class="func-num">01</div>
-      <div>
-        <div class="func-badge-title">Óxidos Básicos</div>
-        <div class="func-pattern">Metal_a + O_b · EO(O) = −2</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto binario formado por un <strong>metal</strong> y <strong>oxígeno</strong>. El metal actúa con estado de oxidación positivo, el oxígeno siempre con EO = −2.</p>
-    <ul>
-      <li>Solo 2 elementos en la fórmula.</li>
-      <li>El primer elemento es un <strong>metal</strong>.</li>
-      <li>El segundo elemento es <strong>O</strong> (oxígeno).</li>
-      <li>Los subíndices del metal (a) y del oxígeno (b) se ajustan para que las cargas se cancelen.</li>
-    </ul>
+<!-- ══════════════════ CONTENIDO SECCIÓN ══════════════════ -->
+<div id="contenido-seccion" class="screen">
+  <div class="breadcrumb-bar">
+    <button onclick="volverAlMenu()">🧪 Funciones</button>
+    <span class="bc-sep">›</span>
+    <span id="seccion-titulo"></span>
   </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-text"></div>
 
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (CuO)</th></tr>
-      <tr><td><strong>Tradicional</strong></td><td>"óxido" + sufijo del metal: <em>-oso</em> (EO menor) / <em>-ico</em> (EO mayor). Si valencia fija: "óxido de [metal]".</td><td>óxido cúprico (Cu²⁺ = mayor)</td></tr>
-      <tr><td><strong>Stock</strong></td><td>"óxido de [metal] (EO en romano)". Sin paréntesis si valencia fija.</td><td>óxido de cobre (II)</td></tr>
-      <tr><td><strong>IUPAC</strong></td><td>"[n]óxido de [m][metal]" con prefijos numéricos. <em>mono-</em> se omite para el primer elemento.</td><td>óxido de cobre</td></tr>
-    </table>
+  <!-- ── SEC 0: ÓXIDOS BÁSICOS ── -->
+  <div id="sec-0" class="sec-panel">
+    <div class="sect">
+      <div class="func-badge cat">
+        <div class="func-num">01</div>
+        <div>
+          <div class="func-badge-title">Óxidos Básicos</div>
+          <div class="func-pattern">Metal_a + O_b · EO(O) = −2</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto binario formado por un <strong>metal</strong> y <strong>oxígeno</strong>. El metal actúa con estado de oxidación positivo, el oxígeno siempre con EO = −2.</p>
+      <ul>
+        <li>Solo 2 elementos en la fórmula.</li>
+        <li>El primer elemento es un <strong>metal</strong>.</li>
+        <li>El segundo elemento es <strong>O</strong> (oxígeno).</li>
+        <li>Los subíndices del metal (a) y del oxígeno (b) se ajustan para que las cargas se cancelen.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (CuO)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>"óxido" + sufijo del metal: <em>-oso</em> (EO menor) / <em>-ico</em> (EO mayor). Si valencia fija: "óxido de [metal]".</td><td>óxido cúprico</td></tr>
+        <tr><td><strong>Stock</strong></td><td>"óxido de [metal] (EO en romano)". Sin paréntesis si valencia fija.</td><td>óxido de cobre (II)</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>"[n]óxido de [m][metal]" con prefijos numéricos.</td><td>óxido de cobre</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: CuO</h2>
+      <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Sigue los pasos para nombrar el óxido de cobre (II). Haz clic en <strong>Siguiente →</strong> para revelar cada paso.</p>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
+        <div class="pw-body" id="pw-1-b0"><strong>Cu</strong> (cobre) es un metal de transición con <strong>EO variable: +1 y +2</strong>.<br><strong>O</strong> (oxígeno) siempre tiene EO = −2 en óxidos.<br>Fórmula CuO: 1 Cu y 1 O.<button class="pw-next-btn" id="pw-1-btn0" onclick="nextPWStep(1,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Calcula el EO del cobre</div></div>
+        <div class="pw-body hidden" id="pw-1-b1">Suma de EO = 0 (molécula neutra):<br><strong>x + (−2) = 0 → x = +2</strong><br>El Cu tiene EO = +2. Escala de Cu: +1 (menor) y +2 (mayor) → es el <strong>mayor</strong>.<button class="pw-next-btn" id="pw-1-btn1" onclick="nextPWStep(1,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
+        <div class="pw-body hidden" id="pw-1-b2">EO mayor → sufijo <strong>-ico</strong> → cu + prico = <em>cúprico</em><br><strong>Tradicional: óxido cúprico</strong><button class="pw-next-btn" id="pw-1-btn2" onclick="nextPWStep(1,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n oh">4</div><div class="pw-title">Stock y Sistemática</div></div>
+        <div class="pw-body hidden" id="pw-1-b3"><strong>Stock:</strong> óxido de cobre (II) — EO = +2 entre paréntesis en romano.<br><strong>Sistemática:</strong> óxido de cobre (1 Cu, 1 O; "mono" omitido para el primer elemento).<button class="pw-next-btn" id="pw-1-btn3" onclick="nextPWStep(1,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: Fe₂O₃</h2>
+      <div class="ex-formula-disp">Fe₂O₃</div>
+      <div id="ex-ox-bas">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué tipo de compuesto es Fe₂O₃?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'ox-bas',0,'✓ Correcto. Fe es metal y O es oxígeno → óxido básico.')">Óxido básico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. Metal + O sin halógenos → óxido básico, no sal binaria.')">Sal binaria</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. Anhídrido sería no metal + O. El Fe es metal.')">Anhídrido</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. No hay grupo OH en la fórmula.')">Hidróxido</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">Calcula el EO del Fe en Fe₂O₃. Escribe solo el número con signo (ej: +3).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ 2(x) + 3(−2) = 0 → x = +3. El hierro tiene EO = +3."><button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',1)">Comprobar</button></div>
+          <div class="ex-hint">Pista: 2(x) + 3(−2) = 0</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">Fe tiene EO +2 (menor) y +3 (mayor). EO = +3 es mayor → sufijo -ico → férrico. ¿Cuál es el nombre Tradicional?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="óxido ..." data-answers='["oxido ferrico","óxido férrico"]' data-fb="✓ EO mayor (+3) → -ico → férrico. Nombre Tradicional: óxido férrico."><button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: EO mayor → sufijo -ico → fér___co</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre según el sistema Stock.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="óxido de ..." data-answers='["oxido de hierro(iii)","óxido de hierro(iii)","oxido de hierro (iii)","óxido de hierro (iii)"]' data-fb="✓ Stock: óxido de hierro (III) — EO entre paréntesis en romano."><button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: óxido de [metal] (EO en romano)</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="4">
+          <div class="ex-step-hdr"><div class="ex-snum">5</div><div class="ex-q">Escribe el nombre Sistemático de Fe₂O₃ usando prefijos numéricos (2=di, 3=tri).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="...óxido de di..." data-answers='["trioxido de dihierro","trióxido de dihierro"]' data-fb="✓ Sistemática: trióxido de dihierro — 3 O → tri, 2 Fe → di."><button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',4)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [prefijo]óxido de [prefijo]hierro</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-ox-bas"><strong>🎉 ¡Ejercicio completo!</strong><p>Nominaste Fe₂O₃ en los tres sistemas. Continúa con el siguiente grupo funcional.</p></div>
+    </div>
+  </div><!-- sec-0 -->
+
+  <!-- ── SEC 1: ANHÍDRIDOS ── -->
+  <div id="sec-1" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge an">
+        <div class="func-num">02</div>
+        <div>
+          <div class="func-badge-title">Anhídridos</div>
+          <div class="func-pattern">No metal_a + O_b · EO(O) = −2</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto binario formado por un <strong>no metal</strong> y <strong>oxígeno</strong>. El no metal actúa como ácido-formador: al disolverse en agua genera un ácido oxácido.</p>
+      <ul>
+        <li>Solo 2 elementos en la fórmula.</li>
+        <li>El primer (o único) elemento es un <strong>no metal</strong> (S, N, P, Cl, C…).</li>
+        <li>El segundo elemento es <strong>O</strong>.</li>
+        <li>No contiene H, OH ni metales.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (SO₃)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>"anhídrido" + adjetivo del ácido correspondiente (-oso/-ico). SO₃ proviene de H₂SO₄ (ácido sulfúrico) → anhídrido sulfúrico.</td><td>anhídrido sulfúrico</td></tr>
+        <tr><td><strong>Stock</strong></td><td>"óxido de [no metal] (EO en romano)".</td><td>óxido de azufre (VI)</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>"[n]óxido de [m][no metal]" con prefijos numéricos.</td><td>trióxido de azufre</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: SO₃</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">1</div><div class="pw-title">Identifica los elementos</div></div>
+        <div class="pw-body" id="pw-2-b0"><strong>S</strong> (azufre) es un no metal con EO variable.<br><strong>O</strong> = 3 átomos con EO = −2 cada uno.<br>Compuesto binario no metal + O = <strong>Anhídrido</strong>.<button class="pw-next-btn" id="pw-2-btn0" onclick="nextPWStep(2,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">2</div><div class="pw-title">Calcula el EO del azufre</div></div>
+        <div class="pw-body hidden" id="pw-2-b1"><strong>x + 3(−2) = 0 → x = +6</strong><br>El S tiene EO = +6 en SO₃. El ácido correspondiente es H₂SO₄ (ácido sulfúrico).<button class="pw-next-btn" id="pw-2-btn1" onclick="nextPWStep(2,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
+        <div class="pw-body hidden" id="pw-2-b2">Ácido padre: H₂SO₄ = ácido <em>sulfúrico</em><br>→ anhídrido + adjetivo del ácido = <strong>anhídrido sulfúrico</strong><button class="pw-next-btn" id="pw-2-btn2" onclick="nextPWStep(2,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">4</div><div class="pw-title">Nombres Stock y Sistemática</div></div>
+        <div class="pw-body hidden" id="pw-2-b3"><strong>Stock:</strong> óxido de azufre (VI) — EO = +6 en romano.<br><strong>Sistemática:</strong> trióxido de azufre — 3 O → tri, 1 S → sin prefijo.<button class="pw-next-btn" id="pw-2-btn3" onclick="nextPWStep(2,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: P₂O₅</h2>
+      <div class="ex-formula-disp">P₂O₅</div>
+      <div id="ex-anhid">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué tipo de compuesto es P₂O₅?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'anhid',0,'✓ Correcto. P es no metal + O → anhídrido.')">Anhídrido</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. El P es no metal. Óxido básico sería metal + O.')">Óxido básico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. No hay hidrógeno en la fórmula.')">Ácido hídrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. No hay metal. P es no metal.')">Sal binaria</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">Calcula el EO del P en P₂O₅. Escribe el número con signo (ej: +5).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="+?" data-answers='["+5"]' data-fb="✓ 2(x) + 5(−2) = 0 → x = +5."><button class="ex-submit-btn" onclick="checkWriteStep('anhid',1)">Comprobar</button></div>
+          <div class="ex-hint">Pista: 2(x) + 5(−2) = 0</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">Escribe el nombre Tradicional de P₂O₅. (El ácido padre es H₃PO₄ = ácido fosfórico)</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="anhídrido ..." data-answers='["anhidrido fosforico","anhídrido fosfórico"]' data-fb="✓ Ácido padre H₃PO₄ = fosfórico → anhídrido fosfórico."><button class="ex-submit-btn" onclick="checkWriteStep('anhid',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: anhídrido + adjetivo del ácido H₃PO₄</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre Stock de P₂O₅.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="óxido de ..." data-answers='["oxido de fosforo(v)","óxido de fósforo(v)","oxido de fosforo (v)","óxido de fósforo (v)"]' data-fb="✓ Stock: óxido de fósforo (V) — EO = +5 en romano."><button class="ex-submit-btn" onclick="checkWriteStep('anhid',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: óxido de [no metal] (EO romano)</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="4">
+          <div class="ex-step-hdr"><div class="ex-snum">5</div><div class="ex-q">Escribe el nombre Sistemático de P₂O₅ usando prefijos (2=di, 5=penta).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="...óxido de di..." data-answers='["pentaoxido de difósforo","pentaóxido de difósforo","pentaoxido de difosforo","pentaóxido de difosforo"]' data-fb="✓ Sistemática: pentaóxido de difósforo — 5 O → penta, 2 P → di."><button class="ex-submit-btn" onclick="checkWriteStep('anhid',4)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [prefijo]óxido de [prefijo]fósforo</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-anhid"><strong>🎉 ¡Ejercicio completo!</strong><p>Nominaste P₂O₅ en los tres sistemas. ¡Excelente dominio de los anhídridos!</p></div>
+    </div>
+  </div><!-- sec-1 -->
+
+  <!-- ── SEC 2: HIDRUROS ── -->
+  <div id="sec-2" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge cat">
+        <div class="func-num">03</div>
+        <div>
+          <div class="func-badge-title">Hidruros Metálicos</div>
+          <div class="func-pattern">Metal_a + H_b · EO(H) = −1</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto binario formado por un <strong>metal</strong> e <strong>hidrógeno</strong>, donde el H actúa como anión (H⁻ = hidruro), con EO = −1. A diferencia de los ácidos, aquí el H va al final de la fórmula.</p>
+      <ul>
+        <li>Solo 2 elementos: metal + H.</li>
+        <li>El H aparece al final de la fórmula y tiene EO = −1.</li>
+        <li>No confundir con ácidos hídricos donde H va al inicio.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (NaH)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>"hidruro de [metal]". Solo añadir EO en paréntesis si el metal tiene valencia variable.</td><td>hidruro de sodio</td></tr>
+        <tr><td><strong>Stock</strong></td><td>Igual que Tradicional para esta función.</td><td>hidruro de sodio</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>"[n]hidruro de [metal]" con prefijos. Para metales de valencia fija, los tres sistemas coinciden.</td><td>hidruro de sodio</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: NaH</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
+        <div class="pw-body" id="pw-3-b0"><strong>Na</strong> (sodio) es un metal alcalino del grupo IA con valencia fija <strong>+1</strong>.<br><strong>H</strong> al final de la fórmula → EO = −1 (hidruro).<br>Compuesto binario metal + H = <strong>Hidruro metálico</strong>.<button class="pw-next-btn" id="pw-3-btn0" onclick="nextPWStep(3,0,3)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Verifica la neutralidad</div></div>
+        <div class="pw-body hidden" id="pw-3-b1">Na (+1) + H (−1) = 0 ✓<br>Na tiene valencia fija → no necesitamos número romano ni sufijo especial.<button class="pw-next-btn" id="pw-3-btn1" onclick="nextPWStep(3,1,3)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre en los tres sistemas</div></div>
+        <div class="pw-body hidden" id="pw-3-b2"><strong>Tradicional, Stock y Sistemática:</strong> hidruro de sodio<br>Los tres sistemas coinciden porque Na tiene valencia fija.<button class="pw-next-btn" id="pw-3-btn2" onclick="nextPWStep(3,2,3)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: CaH₂</h2>
+      <div class="ex-formula-disp">CaH₂</div>
+      <div id="ex-hidru">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué tipo de compuesto es CaH₂?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',0,'✓ Correcto. Ca es metal + H al final con EO = −1 → hidruro metálico.')">Hidruro metálico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. En ácidos hídricos el H va al inicio y está en solución acuosa.')">Ácido hídrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. No hay oxígeno en la fórmula.')">Óxido básico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. H aquí tiene EO = −1, no es un anión halógeno.')">Sal binaria</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">¿Cuál es el EO del calcio (Ca) en CaH₂? El Ca pertenece al grupo IIA.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',1,'✓ Ca es del grupo IIA → EO = +2 fijo.')">+2 fijo (grupo IIA)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',1,'✗ No. Ca no es del grupo IA.')">+1 fijo (grupo IA)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',1,'✗ No. Ca tiene EO fijo +2.')">+2 o +4 variable</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">Escribe el nombre de CaH₂ (igual en los tres sistemas para Ca).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="hidruro de ..." data-answers='["hidruro de calcio"]' data-fb="✓ Los tres sistemas coinciden: hidruro de calcio."><button class="ex-submit-btn" onclick="checkWriteStep('hidru',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: hidruro de [nombre del metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">¿Cuándo se añade el EO entre paréntesis en los hidruros metálicos?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',3,'✓ Correcto. Solo con metales de valencia variable como FeH₂ → hidruro de hierro (II).')">Solo con metales de valencia variable</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',3,'✗ No. Para metales de valencia fija no se añade EO.')">Siempre</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',3,'✗ No. El EO sí es necesario cuando el metal tiene más de una valencia.')">Nunca</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-hidru"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los hidruros metálicos. ¡Continúa con los ácidos hídricos!</p></div>
+    </div>
+  </div><!-- sec-2 -->
+
+  <!-- ── SEC 3: ÁCIDOS HÍDRICOS ── -->
+  <div id="sec-3" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge an">
+        <div class="func-num">04</div>
+        <div>
+          <div class="func-badge-title">Ácidos Hídricos</div>
+          <div class="func-pattern">HₙX (aq) · X = no metal (sin O)</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Cuando un <strong>hidruro de no metal</strong> se disuelve en agua, forma un ácido hídrico. La distinción entre gas y solución es crucial para el nombre.</p>
+      <ul>
+        <li>En estado gaseoso: [no metal]-uro de hidrógeno. Ej: HCl(g) = cloruro de hidrógeno.</li>
+        <li>En solución acuosa: ácido [raíz]hídrico. Ej: HCl(aq) = ácido clorhídrico.</li>
+        <li>Raíces: Cl → clor, Br → brom, I → yod, S → sulf, CN → cian.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Estado</th><th>Sistema</th><th>Ejemplo HCl</th></tr>
+        <tr><td>Gas: HCl(g)</td><td>Stock/Sistemática</td><td>cloruro de hidrógeno</td></tr>
+        <tr><td>Solución: HCl(aq)</td><td>Tradicional</td><td>ácido clorhídrico</td></tr>
+        <tr><td>Gas: H₂S(g)</td><td>Stock/Sistemática</td><td>sulfuro de hidrógeno</td></tr>
+        <tr><td>Solución: H₂S(aq)</td><td>Tradicional</td><td>ácido sulfhídrico</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: HCl(aq)</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">1</div><div class="pw-title">Identifica el estado</div></div>
+        <div class="pw-body" id="pw-4-b0"><strong>H + Cl</strong>, sin O → hidruro de no metal.<br>La indicación <strong>(aq)</strong> = solución acuosa → <em>ácido hídrico</em>.<button class="pw-next-btn" id="pw-4-btn0" onclick="nextPWStep(4,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">2</div><div class="pw-title">Nombre en gas</div></div>
+        <div class="pw-body hidden" id="pw-4-b1">HCl(g) → anión Cl⁻ = cloruro → <strong>cloruro de hidrógeno</strong><br>Este es el nombre Stock/Sistemática para el gas.<button class="pw-next-btn" id="pw-4-btn1" onclick="nextPWStep(4,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Raíz del no metal</div></div>
+        <div class="pw-body hidden" id="pw-4-b2">Cl → raíz <strong>clor-</strong><br>Fórmula del ácido hídrico: ácido + [raíz] + hídrico<br>→ <strong>ácido clorhídrico</strong><button class="pw-next-btn" id="pw-4-btn2" onclick="nextPWStep(4,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">4</div><div class="pw-title">Resumen de ácidos hídricos</div></div>
+        <div class="pw-body hidden" id="pw-4-b3"><strong>HCl(g)</strong> = cloruro de hidrógeno<br><strong>HCl(aq)</strong> = ácido clorhídrico<br><strong>HBr(aq)</strong> = ácido bromhídrico<br><strong>H₂S(aq)</strong> = ácido sulfhídrico<button class="pw-next-btn" id="pw-4-btn3" onclick="nextPWStep(4,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: H₂S(aq)</h2>
+      <div class="ex-formula-disp">H₂S (aq)</div>
+      <div id="ex-acid-hid">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">H₂S está en solución acuosa (aq). ¿Qué función química corresponde?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'acid-hid',0,'✓ En solución acuosa, el hidruro de no metal se llama ácido hídrico.')">En solución acuosa es ácido hídrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',0,'✗ No. El hidruro metálico tiene metal + H. Aquí S es no metal.')">Hidruro metálico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',0,'✗ No. Los ácidos oxácidos contienen oxígeno.')">Ácido oxácido</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">¿Cuál es la raíz del azufre (S) para nombrar el ácido hídrico?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'acid-hid',1,'✓ S → raíz sulf-. Entonces: ácido sulfhídrico.')">sulf- → sulfhídrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',1,'✗ No. La raíz del azufre es sulf-, no clor-.')">clor- → clorhídrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',1,'✗ No. La raíz correcta para S es sulf-.')">az- → azhídrico</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">Escribe el nombre completo de H₂S(aq).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido sulfhidrico","ácido sulfhídrico"]' data-fb="✓ ácido sulfhídrico — raíz sulf + hídrico."><button class="ex-submit-btn" onclick="checkWriteStep('acid-hid',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: ácido + [raíz del S] + hídrico</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre de HCl(aq).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido clorhidrico","ácido clorhídrico"]' data-fb="✓ ácido clorhídrico — raíz clor + hídrico."><button class="ex-submit-btn" onclick="checkWriteStep('acid-hid',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: Cl → raíz clor-</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-acid-hid"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los ácidos hídricos. Recuerda: (aq) = ácido; (g) = [anión]-uro de hidrógeno.</p></div>
+    </div>
+  </div><!-- sec-3 -->
+
+  <!-- ── SEC 4: BASES ── -->
+  <div id="sec-4" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge oh">
+        <div class="func-num">05</div>
+        <div>
+          <div class="func-badge-title">Bases · Hidróxidos</div>
+          <div class="func-pattern">Metal + (OH)ₙ · EO(OH) = −1</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto ternario formado por un <strong>metal</strong> y el grupo <strong>OH⁻</strong> (hidroxilo). En agua libera iones OH⁻ (base de Arrhenius).</p>
+      <ul>
+        <li>Contiene metal + grupo OH.</li>
+        <li>El subíndice de OH se determina por la valencia del metal.</li>
+        <li>En agua libera iones OH⁻.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (NaOH)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>"hidróxido" + sufijo del metal (-oso menor / -ico mayor). Si fija: "hidróxido de [metal]".</td><td>hidróxido de sodio</td></tr>
+        <tr><td><strong>Stock</strong></td><td>"hidróxido de [metal] (EO en romano)". Sin paréntesis si fija.</td><td>hidróxido de sodio</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>"[n]hidróxido de [metal]" con prefijo si hay varios grupos OH.</td><td>hidróxido de sodio</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: NaOH</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n oh">1</div><div class="pw-title">Identifica el grupo OH⁻</div></div>
+        <div class="pw-body" id="pw-5-b0"><strong>Na</strong> (sodio) + grupo <strong>OH⁻</strong> (hidroxilo).<br>Compuesto ternario metal + OH⁻ → <strong>Base / Hidróxido</strong>.<button class="pw-next-btn" id="pw-5-btn0" onclick="nextPWStep(5,0,3)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n oh">2</div><div class="pw-title">Valencia del sodio</div></div>
+        <div class="pw-body hidden" id="pw-5-b1">Na es del grupo IA → EO = <strong>+1 fijo</strong>.<br>Na (+1) + OH (−1) = 0 ✓ → no necesita número romano.<button class="pw-next-btn" id="pw-5-btn1" onclick="nextPWStep(5,1,3)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n oh">3</div><div class="pw-title">Nombre en los tres sistemas</div></div>
+        <div class="pw-body hidden" id="pw-5-b2"><strong>Todos los sistemas:</strong> hidróxido de sodio<br>Los tres coinciden porque Na tiene valencia fija.<button class="pw-next-btn" id="pw-5-btn2" onclick="nextPWStep(5,2,3)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: Fe(OH)₃</h2>
+      <div class="ex-formula-disp">Fe(OH)₃</div>
+      <div id="ex-base">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Cuál es el grupo identificador de las bases/hidróxidos?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'base',0,'✓ El grupo OH⁻ (hidroxilo) es el identificador de las bases.')">OH⁻ (hidroxilo)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'base',0,'✗ No. SO₄²⁻ es sulfato (oxoanión).')">SO₄²⁻ (sulfato)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'base',0,'✗ No. O²⁻ forma óxidos.')">O²⁻ (óxido)</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">Calcula el EO del Fe en Fe(OH)₃. Escribe el número con signo.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ x + 3(−1) = 0 → x = +3."><button class="ex-submit-btn" onclick="checkWriteStep('base',1)">Comprobar</button></div>
+          <div class="ex-hint">Pista: x + 3(−1) = 0</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">EO = +3 en Fe (mayor de Fe). Sufijo -ico → férrico. Escribe el nombre Tradicional.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="hidróxido ..." data-answers='["hidroxido ferrico","hidróxido férrico"]' data-fb="✓ EO mayor → -ico → férrico. Nombre Tradicional: hidróxido férrico."><button class="ex-submit-btn" onclick="checkWriteStep('base',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: hidróxido + [sufijo del metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre Stock de Fe(OH)₃.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="hidróxido de ..." data-answers='["hidroxido de hierro(iii)","hidróxido de hierro(iii)","hidroxido de hierro (iii)","hidróxido de hierro (iii)"]' data-fb="✓ Stock: hidróxido de hierro (III)."><button class="ex-submit-btn" onclick="checkWriteStep('base',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: hidróxido de [metal] (EO romano)</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="4">
+          <div class="ex-step-hdr"><div class="ex-snum">5</div><div class="ex-q">Escribe el nombre Sistemático de Fe(OH)₃ usando prefijo para los 3 grupos OH.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="tri..." data-answers='["trihidroxido de hierro","trihidróxido de hierro"]' data-fb="✓ Sistemática: trihidróxido de hierro — 3 OH → tri."><button class="ex-submit-btn" onclick="checkWriteStep('base',4)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [prefijo]hidróxido de [metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-base"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominaste las bases e hidróxidos. ¡Sigue con los ácidos oxácidos!</p></div>
+    </div>
+  </div><!-- sec-4 -->
+
+  <!-- ── SEC 5: ÁCIDOS OXÁCIDOS ── -->
+  <div id="sec-5" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge ox">
+        <div class="func-num">06</div>
+        <div>
+          <div class="func-badge-title">Ácidos Oxácidos</div>
+          <div class="func-pattern">H + no metal + O · EO(H)=+1, EO(O)=−2</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto ternario formado por <strong>H + no metal + O</strong>. El anión que resulta al perder los H es un oxoanión. El nombre del ácido depende del nombre del oxoanión.</p>
+      <ul>
+        <li>Empieza con H (uno o varios) y contiene O.</li>
+        <li>El nombre del oxoanión determina el del ácido: <strong>-ato → ácido -ico</strong>; <strong>-ito → ácido -oso</strong>.</li>
+        <li>Prefijo <em>per-</em> para el EO más alto; <em>hipo-</em> para el más bajo.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura (oxoanión → ácido)</h2>
+      <table class="tbl">
+        <tr><th>Oxoanión</th><th>Ácido</th></tr>
+        <tr><td>sulfato (SO₄²⁻)</td><td>ácido sulfúrico (H₂SO₄)</td></tr>
+        <tr><td>sulfito (SO₃²⁻)</td><td>ácido sulfuroso (H₂SO₃)</td></tr>
+        <tr><td>nitrato (NO₃⁻)</td><td>ácido nítrico (HNO₃)</td></tr>
+        <tr><td>nitrito (NO₂⁻)</td><td>ácido nitroso (HNO₂)</td></tr>
+        <tr><td>perclorato (ClO₄⁻)</td><td>ácido perclórico (HClO₄)</td></tr>
+        <tr><td>hipoclorito (ClO⁻)</td><td>ácido hipocloroso (HClO)</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: H₂SO₄</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">1</div><div class="pw-title">Identifica el tipo</div></div>
+        <div class="pw-body" id="pw-6-b0">H + <strong>S</strong> + O → ácido oxácido.<br>El anión SO₄²⁻ = <strong>sulfato</strong>.<button class="pw-next-btn" id="pw-6-btn0" onclick="nextPWStep(6,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">2</div><div class="pw-title">EO del azufre</div></div>
+        <div class="pw-body hidden" id="pw-6-b1">2(+1) + x + 4(−2) = 0 → x = +6<br>S tiene EO = +6 → oxoanión = <strong>sulfato</strong> (-ato = EO alto).<button class="pw-next-btn" id="pw-6-btn1" onclick="nextPWStep(6,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">3</div><div class="pw-title">Nombre del ácido</div></div>
+        <div class="pw-body hidden" id="pw-6-b2">Regla: sulfato → ácido sulf<strong>úrico</strong> (-ato → -ico)<br>→ <strong>ácido sulfúrico</strong><button class="pw-next-btn" id="pw-6-btn2" onclick="nextPWStep(6,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">4</div><div class="pw-title">Contraste con H₂SO₃</div></div>
+        <div class="pw-body hidden" id="pw-6-b3">SO₃²⁻ = <strong>sulfito</strong> (-ito = EO más bajo)<br>Sulfito → ácido sulf<strong>uroso</strong> (-ito → -oso)<br>→ H₂SO₃ = <strong>ácido sulfuroso</strong><button class="pw-next-btn" id="pw-6-btn3" onclick="nextPWStep(6,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: HNO₃</h2>
+      <div class="ex-formula-disp">HNO₃</div>
+      <div id="ex-oxac">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué identifica a un ácido oxácido?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',0,'✓ H + no metal + O define al ácido oxácido.')">H + no metal + O = ácido oxácido</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',0,'✗ No. Los ácidos hídricos tienen H + no metal sin O.')">H + no metal (sin O)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',0,'✗ No. Metal + O forman óxidos básicos.')">Metal + O</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">El anión de HNO₃ es NO₃⁻. ¿Cómo se llama este oxoanión?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',1,'✓ NO₃⁻ = nitrato.')">nitrato</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',1,'✗ No. El nitrito es NO₂⁻ (tiene un O menos).')">nitrito</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',1,'✗ No. El sulfato es SO₄²⁻.')">sulfato</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">Anión nitrato (-ato) → ácido ____ico. Escribe el nombre del ácido HNO₃.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido nitrico","ácido nítrico"]' data-fb="✓ nitrato (-ato) → ácido nítrico (-ico)."><button class="ex-submit-btn" onclick="checkWriteStep('oxac',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: nitrato → ácido nit___co</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">HNO₂ tiene el anión nitrito (NO₂⁻). Regla: -ito → -oso. ¿Cuál es el nombre de HNO₂?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',3,'✓ nitrito (-ito) → ácido nitroso (-oso).')">ácido nitroso</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',3,'✗ No. El ácido nítrico viene del nitrato (-ato).')">ácido nítrico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',3,'✗ No. No existe ácido nitrúrico.')">ácido nitrúrico</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-oxac"><strong>🎉 ¡Ejercicio completo!</strong><p>Dominas los ácidos oxácidos. Recuerda: -ato → ácido -ico; -ito → ácido -oso.</p></div>
+    </div>
+  </div><!-- sec-5 -->
+
+  <!-- ── SEC 6: SALES BINARIAS ── -->
+  <div id="sec-6" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge cat">
+        <div class="func-num">07</div>
+        <div>
+          <div class="func-badge-title">Sales Binarias</div>
+          <div class="func-pattern">Metal_a + No metal_b · (sin O)</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto binario formado por un <strong>metal</strong> y un <strong>no metal</strong> distinto del oxígeno. El no metal actúa como anión y recibe el sufijo <em>-uro</em>.</p>
+      <ul>
+        <li>Solo 2 elementos: metal + no metal (Cl, S, Br, I, F, N, P…).</li>
+        <li>Sin oxígeno en la fórmula.</li>
+        <li>El no metal (anión) lleva el sufijo <strong>-uro</strong>: Cl⁻ = cloruro, S²⁻ = sulfuro, Br⁻ = bromuro.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (FeCl₂)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>[anión]-uro + sufijo del catión (-oso menor / -ico mayor). Si fija: "[anión]-uro de [metal]".</td><td>cloruro ferroso</td></tr>
+        <tr><td><strong>Stock</strong></td><td>[anión]-uro de [metal] (EO en romano). Sin paréntesis si fija.</td><td>cloruro de hierro (II)</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>[n][anión]-uro de [m][metal] con prefijos numéricos.</td><td>dicloruro de hierro</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: FeCl₂</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
+        <div class="pw-body" id="pw-7-b0"><strong>Fe</strong> (metal de transición, EO variable: +2, +3) + <strong>Cl</strong> (no metal).<br>Sin oxígeno → <strong>Sal binaria</strong>.<button class="pw-next-btn" id="pw-7-btn0" onclick="nextPWStep(7,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Calcula el EO del hierro</div></div>
+        <div class="pw-body hidden" id="pw-7-b1">x + 2(−1) = 0 → x = +2<br>Fe tiene EO = +2 → es el <strong>menor</strong> de Fe (+2 menor, +3 mayor).<button class="pw-next-btn" id="pw-7-btn1" onclick="nextPWStep(7,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
+        <div class="pw-body hidden" id="pw-7-b2">Cl⁻ = cloruro · Fe EO menor → sufijo <strong>-oso</strong> → ferroso<br><strong>Tradicional: cloruro ferroso</strong><button class="pw-next-btn" id="pw-7-btn2" onclick="nextPWStep(7,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n oh">4</div><div class="pw-title">Stock y Sistemática</div></div>
+        <div class="pw-body hidden" id="pw-7-b3"><strong>Stock:</strong> cloruro de hierro (II)<br><strong>Sistemática:</strong> dicloruro de hierro — 2 Cl → di.<button class="pw-next-btn" id="pw-7-btn3" onclick="nextPWStep(7,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: FeCl₃</h2>
+      <div class="ex-formula-disp">FeCl₃</div>
+      <div id="ex-sal-bin">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué tipo de compuesto es FeCl₃?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-bin',0,'✓ Metal (Fe) + no metal (Cl), sin oxígeno → sal binaria.')">Sal binaria</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. Metal + O sería óxido básico.')">Óxido básico</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. La sal oxigenada tiene un oxoanión.')">Sal oxigenada</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. Los hidróxidos contienen el grupo OH.')">Hidróxido</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">Calcula el EO del Fe en FeCl₃. Escribe el número con signo.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ x + 3(−1) = 0 → x = +3."><button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',1)">Comprobar</button></div>
+          <div class="ex-hint">Pista: x + 3(−1) = 0</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">EO = +3 es el mayor de Fe → sufijo -ico → férrico. Escribe el nombre Tradicional.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="cloruro ..." data-answers='["cloruro ferrico","cloruro férrico"]' data-fb="✓ EO mayor → -ico → férrico. Nombre Tradicional: cloruro férrico."><button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: cloruro + [sufijo del metal con EO mayor]</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre Stock de FeCl₃.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="cloruro de ..." data-answers='["cloruro de hierro(iii)","cloruro de hierro (iii)"]' data-fb="✓ Stock: cloruro de hierro (III)."><button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [anión]-uro de [metal] (EO romano)</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="4">
+          <div class="ex-step-hdr"><div class="ex-snum">5</div><div class="ex-q">Escribe el nombre Sistemático de FeCl₃ usando prefijo para los 3 Cl.</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="tri..." data-answers='["tricloruro de hierro"]' data-fb="✓ Sistemática: tricloruro de hierro — 3 Cl → tri."><button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',4)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [prefijo]cloruro de [metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-sal-bin"><strong>🎉 ¡Ejercicio completo!</strong><p>¡Excelente! Dominaste las sales binarias en los tres sistemas.</p></div>
+    </div>
+  </div><!-- sec-6 -->
+
+  <!-- ── SEC 7: SALES OXIGENADAS ── -->
+  <div id="sec-7" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge ox">
+        <div class="func-num">08</div>
+        <div>
+          <div class="func-badge-title">Sales Oxigenadas</div>
+          <div class="func-pattern">Metal + Oxoanión</div>
+        </div>
+      </div>
+      <h2>Descripción e identificación</h2>
+      <p>Compuesto formado por un <strong>metal</strong> y un <strong>oxoanión</strong> (anión que contiene oxígeno). El oxoanión tiene nombre propio que hay que memorizar.</p>
+      <ul>
+        <li>Contiene metal + anión con O (sulfato, nitrato, fosfato…).</li>
+        <li>Los 3 sistemas coinciden en la forma básica; solo Stock añade EO en paréntesis si el metal tiene valencia variable.</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Oxoaniones comunes</h2>
+      <table class="tbl">
+        <tr><th>Fórmula</th><th>Nombre</th><th>Ejemplo de sal</th></tr>
+        <tr><td><code>SO₄²⁻</code></td><td>sulfato</td><td>Na₂SO₄ = sulfato de sodio</td></tr>
+        <tr><td><code>SO₃²⁻</code></td><td>sulfito</td><td>Na₂SO₃ = sulfito de sodio</td></tr>
+        <tr><td><code>NO₃⁻</code></td><td>nitrato</td><td>Ca(NO₃)₂ = nitrato de calcio</td></tr>
+        <tr><td><code>NO₂⁻</code></td><td>nitrito</td><td>KNO₂ = nitrito de potasio</td></tr>
+        <tr><td><code>PO₄³⁻</code></td><td>fosfato</td><td>Ca₃(PO₄)₂ = fosfato de calcio</td></tr>
+        <tr><td><code>CO₃²⁻</code></td><td>carbonato</td><td>Na₂CO₃ = carbonato de sodio</td></tr>
+        <tr><td><code>CrO₄²⁻</code></td><td>cromato</td><td>K₂CrO₄ = cromato de potasio</td></tr>
+        <tr><td><code>MnO₄⁻</code></td><td>permanganato</td><td>KMnO₄ = permanganato de potasio</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Ejemplo resuelto: Na₂SO₄</h2>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">1</div><div class="pw-title">Identifica el oxoanión</div></div>
+        <div class="pw-body" id="pw-8-b0"><strong>Na</strong> (metal, EO = +1 fijo) + <strong>SO₄²⁻</strong> (sulfato, oxoanión).<br>Compuesto: metal + oxoanión = <strong>Sal oxigenada</strong>.<button class="pw-next-btn" id="pw-8-btn0" onclick="nextPWStep(8,0,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">2</div><div class="pw-title">Verifica la neutralidad</div></div>
+        <div class="pw-body hidden" id="pw-8-b1">2 × Na⁺(+1) + SO₄²⁻(−2) = 0 ✓<br>Na es de valencia fija → no se añade EO en paréntesis.<button class="pw-next-btn" id="pw-8-btn1" onclick="nextPWStep(8,1,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">3</div><div class="pw-title">Nombre</div></div>
+        <div class="pw-body hidden" id="pw-8-b2">Regla: [nombre del oxoanión] de [metal]<br>→ <strong>sulfato de sodio</strong><br>Los tres sistemas coinciden porque Na es fijo.<button class="pw-next-btn" id="pw-8-btn2" onclick="nextPWStep(8,2,4)">Siguiente →</button></div>
+      </div>
+      <div class="pw-step">
+        <div class="pw-head"><div class="pw-n ox">4</div><div class="pw-title">Contraste con Fe₂(SO₄)₃</div></div>
+        <div class="pw-body hidden" id="pw-8-b3">Fe es variable (EO +2 o +3). En Fe₂(SO₄)₃: EO de Fe = +3<br><strong>Tradicional:</strong> sulfato férrico<br><strong>Stock:</strong> sulfato de hierro (III)<br><strong>Sistemática:</strong> trisulfato de dihierro<button class="pw-next-btn" id="pw-8-btn3" onclick="nextPWStep(8,3,4)">Siguiente →</button></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: Ca(NO₃)₂</h2>
+      <div class="ex-formula-disp">Ca(NO₃)₂</div>
+      <div id="ex-sal-ox">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿Qué tipo de compuesto es Ca(NO₃)₂?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',0,'✓ Metal (Ca) + oxoanión (NO₃⁻) → sal oxigenada.')">Sal oxigenada</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Las sales binarias tienen metal + no metal sin O.')">Sal binaria</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Los hidróxidos tienen el grupo OH.')">Hidróxido</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Los ácidos oxácidos empiezan con H.')">Ácido oxácido</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">¿Cómo se llama el oxoanión NO₃⁻?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',1,'✓ NO₃⁻ = nitrato.')">nitrato (NO₃⁻)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',1,'✗ No. El nitrito es NO₂⁻.')">nitrito (NO₂⁻)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',1,'✗ No. El sulfato es SO₄²⁻.')">sulfato (SO₄²⁻)</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">El Ca pertenece al grupo IIA (EO = +2 fijo). ¿Se añade EO en paréntesis?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',2,'✓ Ca tiene EO fijo (+2) → no se añade EO en paréntesis.')">No, Ca tiene EO fijo → sin paréntesis</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',2,'✗ No. Solo se añade EO cuando el metal tiene EO variable.')">Sí, siempre se añade</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',2,'✗ No. Con metales de EO fijo no es necesario.')">Solo en Sistemática</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="3">
+          <div class="ex-step-hdr"><div class="ex-snum">4</div><div class="ex-q">Escribe el nombre de Ca(NO₃)₂ (igual en los tres sistemas para Ca).</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="nitrato de ..." data-answers='["nitrato de calcio"]' data-fb="✓ nitrato de calcio — [oxoanión] de [metal]."><button class="ex-submit-btn" onclick="checkWriteStep('sal-ox',3)">Comprobar</button></div>
+          <div class="ex-hint">Pista: [oxoanión] de [metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="4">
+          <div class="ex-step-hdr"><div class="ex-snum">5</div><div class="ex-q">Para Fe(NO₃)₃ (Fe con EO variable), ¿cuál es el nombre Stock?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',4,'✓ Fe tiene EO variable. En Fe(NO₃)₃ el EO del Fe = +3. Stock: nitrato de hierro (III).')">nitrato de hierro (III)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',4,'✗ No. El EO del Fe en Fe(NO₃)₃ es +3, no +2.')">nitrato de hierro (II)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',4,'✗ No. El nombre Tradicional sería nitrato férrico. Stock usa número romano.')">nitrato férrico</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-sal-ox"><strong>🎉 ¡Ejercicio completo!</strong><p>¡Has completado las 8 funciones inorgánicas! Estás listo para el Juego.</p></div>
+    </div>
+  </div><!-- sec-7 -->
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="btn-anterior" onclick="navAnterior()">← Anterior</button>
+    <button class="nav-btn" onclick="volverAlMenu()">☰ Menú</button>
+    <button class="nav-btn primary" id="btn-siguiente" onclick="navSiguiente()">Siguiente →</button>
   </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: CuO</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Sigue los pasos para nombrar el óxido de cobre (II). Haz clic en <strong>Siguiente →</strong> para revelar cada paso.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
-      <div class="pw-body" id="pw-1-b0">
-        <strong>Cu</strong> (cobre) es un metal de transición con <strong>EO variable: +1 y +2</strong>.<br>
-        <strong>O</strong> (oxígeno) siempre tiene EO = −2 en óxidos.<br>
-        Fórmula CuO: 1 Cu y 1 O.
-        <button class="pw-next-btn" id="pw-1-btn0" onclick="nextPWStep(1,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Calcula el EO del cobre</div></div>
-      <div class="pw-body hidden" id="pw-1-b1">
-        Suma de EO = 0 (molécula neutra):<br>
-        <strong>x + (−2) = 0 → x = +2</strong><br>
-        El Cu tiene EO = +2. Escala de Cu: +1 (menor) y +2 (mayor) → es el <strong>mayor</strong>.
-        <button class="pw-next-btn" id="pw-1-btn1" onclick="nextPWStep(1,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
-      <div class="pw-body hidden" id="pw-1-b2">
-        EO mayor → sufijo <strong>-ico</strong> → cu + prico = <em>cúprico</em><br>
-        <strong>Tradicional: óxido cúprico</strong>
-        <button class="pw-next-btn" id="pw-1-btn2" onclick="nextPWStep(1,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n oh">4</div><div class="pw-title">Stock e IUPAC</div></div>
-      <div class="pw-body hidden" id="pw-1-b3">
-        <strong>Stock:</strong> óxido de cobre (II) — EO = +2 entre paréntesis en romano.<br>
-        <strong>IUPAC:</strong> óxido de cobre (1 Cu, 1 O; "mono" omitido para el primer elemento; puede decirse "monóxido de cobre" para el segundo).
-        <button class="pw-next-btn" id="pw-1-btn3" onclick="nextPWStep(1,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: Fe₂O₃</h2>
-    <div class="ex-formula-disp">Fe₂O₃</div>
-    <div id="ex-ox-bas">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué tipo de compuesto es Fe₂O₃?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'ox-bas',0,'✓ Correcto. Fe es metal y O es oxígeno → óxido básico.')">Óxido básico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. Metal + O sin halógenos → óxido básico, no sal binaria.')">Sal binaria</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. Anhídrido sería no metal + O. El Fe es metal.')">Anhídrido</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'ox-bas',0,'✗ No. No hay grupo OH en la fórmula.')">Hidróxido</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">Calcula el EO del Fe en Fe₂O₃. Escribe solo el número con signo (ej: +3).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ 2(x) + 3(−2) = 0 → x = +3. El hierro tiene EO = +3.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',1)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: 2(x) + 3(−2) = 0</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">Fe tiene EO +2 (menor) y +3 (mayor). EO = +3 es mayor → sufijo -ico → férrico. ¿Cuál es el nombre Tradicional?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="óxido ..." data-answers='["oxido ferrico","óxido férrico"]' data-fb="✓ EO mayor (+3) → -ico → férrico. Nombre Tradicional: óxido férrico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: EO mayor → sufijo -ico → fér___co</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre según el sistema Stock.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="óxido de ..." data-answers='["oxido de hierro(iii)","óxido de hierro(iii)","oxido de hierro (iii)","óxido de hierro (iii)"]' data-fb="✓ Stock: óxido de hierro (III) — EO entre paréntesis en romano.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: óxido de [metal] (EO en romano)</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="4">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">5</div>
-          <div class="ex-q">Escribe el nombre IUPAC de Fe₂O₃ usando prefijos numéricos (2=di, 3=tri).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="...óxido de di..." data-answers='["trioxido de dihierro","trióxido de dihierro"]' data-fb="✓ IUPAC: trióxido de dihierro — 3 O → tri, 2 Fe → di.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('ox-bas',4)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [prefijo]óxido de [prefijo]hierro</div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-ox-bas">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Nominaste Fe₂O₃ en los tres sistemas. Continúa con el siguiente grupo funcional.</p>
-    </div>
-  </div>
-
-</div><!-- tab-0 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 02 — ANHÍDRIDOS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-1">
-
-  <div class="sect">
-    <div class="func-badge an">
-      <div class="func-num">02</div>
-      <div>
-        <div class="func-badge-title">Anhídridos</div>
-        <div class="func-pattern">No metal_a + O_b · EO(O) = −2</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto binario formado por un <strong>no metal</strong> y <strong>oxígeno</strong>. El no metal actúa como ácido-formador: al disolverse en agua genera un ácido oxácido.</p>
-    <ul>
-      <li>Solo 2 elementos en la fórmula.</li>
-      <li>El primer (o único) elemento es un <strong>no metal</strong> (S, N, P, Cl, C…).</li>
-      <li>El segundo elemento es <strong>O</strong>.</li>
-      <li>No contiene H, OH ni metales.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (SO₃)</th></tr>
-      <tr><td><strong>Tradicional</strong></td><td>"anhídrido" + adjetivo del ácido correspondiente (-oso/-ico). SO₃ proviene de H₂SO₄ (ácido sulfúrico) → anhídrido sulfúrico.</td><td>anhídrido sulfúrico</td></tr>
-      <tr><td><strong>Stock</strong></td><td>"óxido de [no metal] (EO en romano)". No usa la palabra "anhídrido".</td><td>óxido de azufre (VI)</td></tr>
-      <tr><td><strong>IUPAC</strong></td><td>"[n]óxido de [m][no metal]" con prefijos numéricos.</td><td>trióxido de azufre</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: SO₃</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Nombra el trióxido de azufre en los tres sistemas.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">1</div><div class="pw-title">Identifica los elementos</div></div>
-      <div class="pw-body" id="pw-2-b0">
-        <strong>S</strong> (azufre) es un no metal con EO variable.<br>
-        <strong>O</strong> = 3 átomos con EO = −2 cada uno.<br>
-        Compuesto binario no metal + O = <strong>Anhídrido</strong>.
-        <button class="pw-next-btn" id="pw-2-btn0" onclick="nextPWStep(2,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">2</div><div class="pw-title">Calcula el EO del azufre</div></div>
-      <div class="pw-body hidden" id="pw-2-b1">
-        <strong>x + 3(−2) = 0 → x = +6</strong><br>
-        El S tiene EO = +6 en SO₃. El ácido correspondiente es H₂SO₄ (ácido sulfúrico, EO S = +6).
-        <button class="pw-next-btn" id="pw-2-btn1" onclick="nextPWStep(2,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
-      <div class="pw-body hidden" id="pw-2-b2">
-        Ácido padre: H₂SO₄ = ácido <em>sulfúrico</em><br>
-        → anhídrido + adjetivo del ácido = <strong>anhídrido sulfúrico</strong>
-        <button class="pw-next-btn" id="pw-2-btn2" onclick="nextPWStep(2,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">4</div><div class="pw-title">Nombres Stock e IUPAC</div></div>
-      <div class="pw-body hidden" id="pw-2-b3">
-        <strong>Stock:</strong> óxido de azufre (VI) — EO = +6 en romano.<br>
-        <strong>IUPAC:</strong> trióxido de azufre — 3 O → tri, 1 S → sin prefijo (mono omitido para el primer elemento).
-        <button class="pw-next-btn" id="pw-2-btn3" onclick="nextPWStep(2,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: P₂O₅</h2>
-    <div class="ex-formula-disp">P₂O₅</div>
-    <div id="ex-anhid">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué tipo de compuesto es P₂O₅?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'anhid',0,'✓ Correcto. P es no metal + O → anhídrido.')">Anhídrido</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. El P es no metal. Óxido básico sería metal + O.')">Óxido básico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. No hay hidrógeno en la fórmula.')">Ácido hídrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'anhid',0,'✗ No. No hay metal. P es no metal.')">Sal binaria</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">Calcula el EO del P en P₂O₅. Escribe el número con signo (ej: +5).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="+?" data-answers='["+5"]' data-fb="✓ 2(x) + 5(−2) = 0 → x = +5.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('anhid',1)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: 2(x) + 5(−2) = 0</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">Escribe el nombre Tradicional de P₂O₅. (El ácido padre es H₃PO₄ = ácido fosfórico)</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="anhídrido ..." data-answers='["anhidrido fosforico","anhídrido fosfórico"]' data-fb="✓ Ácido padre H₃PO₄ = fosfórico → anhídrido fosfórico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('anhid',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: anhídrido + adjetivo del ácido H₃PO₄</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre Stock de P₂O₅.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="óxido de ..." data-answers='["oxido de fosforo(v)","óxido de fósforo(v)","oxido de fosforo (v)","óxido de fósforo (v)"]' data-fb="✓ Stock: óxido de fósforo (V) — EO = +5 en romano.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('anhid',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: óxido de [no metal] (EO romano)</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="4">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">5</div>
-          <div class="ex-q">Escribe el nombre IUPAC de P₂O₅ usando prefijos (2=di, 5=penta).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="...óxido de di..." data-answers='["pentaoxido de difósforo","pentaóxido de difósforo","pentaoxido de difósforo","pentaóxido de difósforo","pentaoxido de difosforo","pentaóxido de difosforo"]' data-fb="✓ IUPAC: pentaóxido de difósforo — 5 O → penta, 2 P → di.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('anhid',4)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [prefijo]óxido de [prefijo]fósforo</div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-anhid">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Nominaste P₂O₅ en los tres sistemas. ¡Excelente dominio de los anhídridos!</p>
-    </div>
-  </div>
-
-</div><!-- tab-1 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 03 — HIDRUROS METÁLICOS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-2">
-
-  <div class="sect">
-    <div class="func-badge cat">
-      <div class="func-num">03</div>
-      <div>
-        <div class="func-badge-title">Hidruros Metálicos</div>
-        <div class="func-pattern">Metal_a + H_b · EO(H) = −1</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto binario formado por un <strong>metal</strong> e <strong>hidrógeno</strong>, donde el H actúa como anión (H⁻ = hidruro), con EO = −1. A diferencia de los ácidos, aquí el H va al final de la fórmula.</p>
-    <ul>
-      <li>Solo 2 elementos: metal + H.</li>
-      <li>El H aparece al final de la fórmula y tiene EO = −1.</li>
-      <li>No confundir con ácidos hídricos donde H va al inicio.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (NaH)</th></tr>
-      <tr><td><strong>Tradicional</strong></td><td>"hidruro de [metal]". Solo añadir EO en paréntesis si el metal tiene valencia variable.</td><td>hidruro de sodio</td></tr>
-      <tr><td><strong>Stock</strong></td><td>Igual que Tradicional para esta función. EO entre paréntesis si variable.</td><td>hidruro de sodio</td></tr>
-      <tr><td><strong>IUPAC</strong></td><td>"[n]hidruro de [metal]" con prefijos. Para metales de valencia fija, los tres sistemas coinciden.</td><td>hidruro de sodio</td></tr>
-    </table>
-    <p style="font-size:.82rem;color:var(--dimmer)">Los tres sistemas coinciden para metales de valencia fija como NaH o CaH₂.</p>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: NaH</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">El hidruro de sodio es un caso sencillo porque el Na tiene valencia fija (+1).</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
-      <div class="pw-body" id="pw-3-b0">
-        <strong>Na</strong> (sodio) es un metal alcalino del grupo IA con valencia fija <strong>+1</strong>.<br>
-        <strong>H</strong> al final de la fórmula → EO = −1 (hidruro).<br>
-        Compuesto binario metal + H = <strong>Hidruro metálico</strong>.
-        <button class="pw-next-btn" id="pw-3-btn0" onclick="nextPWStep(3,0,3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Verifica la neutralidad</div></div>
-      <div class="pw-body hidden" id="pw-3-b1">
-        Na (+1) + H (−1) = 0 ✓<br>
-        Na tiene valencia fija → no necesitamos número romano ni sufijo especial.
-        <button class="pw-next-btn" id="pw-3-btn1" onclick="nextPWStep(3,1,3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre en los tres sistemas</div></div>
-      <div class="pw-body hidden" id="pw-3-b2">
-        <strong>Tradicional, Stock e IUPAC:</strong> hidruro de sodio<br>
-        Los tres sistemas coinciden porque Na tiene valencia fija.
-        <button class="pw-next-btn" id="pw-3-btn2" onclick="nextPWStep(3,2,3)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: CaH₂</h2>
-    <div class="ex-formula-disp">CaH₂</div>
-    <div id="ex-hidru">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué tipo de compuesto es CaH₂?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',0,'✓ Correcto. Ca es metal + H al final con EO = −1 → hidruro metálico.')">Hidruro metálico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. En ácidos hídricos el H va al inicio y está en solución acuosa.')">Ácido hídrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. No hay oxígeno en la fórmula.')">Óxido básico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',0,'✗ No. H aquí tiene EO = −1, no es un anión halógeno.')">Sal binaria</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">¿Cuál es el EO del calcio (Ca) en CaH₂? El Ca pertenece al grupo IIA.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',1,'✓ Ca es del grupo IIA → EO = +2 fijo. x + 2(−1) = 0 → x = +2.')">+2 fijo (grupo IIA)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',1,'✗ No. Ca no es del grupo IA. Pertenece al grupo IIA con EO = +2.')">+1 fijo (grupo IA)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',1,'✗ No. Ca tiene EO fijo +2, no variable.')">+2 o +4 variable</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">Escribe el nombre de CaH₂ (igual en los tres sistemas para Ca).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="hidruro de ..." data-answers='["hidruro de calcio"]' data-fb="✓ Los tres sistemas coinciden: hidruro de calcio. Ca tiene valencia fija.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('hidru',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: hidruro de [nombre del metal]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">¿Cuándo se añade el EO entre paréntesis en los hidruros metálicos?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'hidru',3,'✓ Correcto. Solo con metales de valencia variable como FeH₂ → hidruro de hierro (II).')">Solo con metales de valencia variable</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',3,'✗ No. Para metales de valencia fija (Na, Ca, Al) no se añade EO.')">Siempre</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'hidru',3,'✗ No. El EO sí es necesario cuando el metal tiene más de una valencia.')">Nunca</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-hidru">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Dominas los hidruros metálicos. ¡Continúa con los ácidos hídricos!</p>
-    </div>
-  </div>
-
-</div><!-- tab-2 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 04 — ÁCIDOS HÍDRICOS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-3">
-
-  <div class="sect">
-    <div class="func-badge an">
-      <div class="func-num">04</div>
-      <div>
-        <div class="func-badge-title">Ácidos Hídricos</div>
-        <div class="func-pattern">HₙX (aq) · X = no metal (sin O)</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Cuando un <strong>hidruro de no metal</strong> se disuelve en agua, forma un ácido hídrico. La distinción entre gas y solución es crucial para el nombre.</p>
-    <ul>
-      <li>En estado gaseoso: [no metal]-uro de hidrógeno. Ej: HCl(g) = cloruro de hidrógeno.</li>
-      <li>En solución acuosa: ácido [raíz]hídrico. Ej: HCl(aq) = ácido clorhídrico.</li>
-      <li>Raíces: Cl → clor, Br → brom, I → yod, S → sulf, CN → cian.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Estado</th><th>Sistema</th><th>Ejemplo HCl</th></tr>
-      <tr><td>Gas: HCl(g)</td><td>IUPAC/Stock</td><td>cloruro de hidrógeno</td></tr>
-      <tr><td>Solución: HCl(aq)</td><td>Tradicional</td><td>ácido clorhídrico</td></tr>
-      <tr><td>Gas: H₂S(g)</td><td>IUPAC/Stock</td><td>sulfuro de hidrógeno</td></tr>
-      <tr><td>Solución: H₂S(aq)</td><td>Tradicional</td><td>ácido sulfhídrico</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: HCl(aq)</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">El cloruro de hidrógeno es gas; en solución se convierte en ácido clorhídrico.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">1</div><div class="pw-title">Identifica el estado</div></div>
-      <div class="pw-body" id="pw-4-b0">
-        <strong>H + Cl</strong>, sin O → hidruro de no metal (haluro de hidrógeno).<br>
-        La indicación <strong>(aq)</strong> = solución acuosa → <em>ácido hídrico</em>.
-        <button class="pw-next-btn" id="pw-4-btn0" onclick="nextPWStep(4,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">2</div><div class="pw-title">Nombre en gas</div></div>
-      <div class="pw-body hidden" id="pw-4-b1">
-        HCl(g) → anión Cl⁻ = cloruro → <strong>cloruro de hidrógeno</strong><br>
-        Este es el nombre IUPAC/Stock para el gas.
-        <button class="pw-next-btn" id="pw-4-btn1" onclick="nextPWStep(4,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Raíz del no metal</div></div>
-      <div class="pw-body hidden" id="pw-4-b2">
-        Cl → raíz <strong>clor-</strong><br>
-        Fórmula del ácido hídrico: ácido + [raíz] + hídrico<br>
-        → <strong>ácido clorhídrico</strong>
-        <button class="pw-next-btn" id="pw-4-btn2" onclick="nextPWStep(4,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">4</div><div class="pw-title">Resumen de ácidos hídricos</div></div>
-      <div class="pw-body hidden" id="pw-4-b3">
-        <strong>HCl(g)</strong> = cloruro de hidrógeno<br>
-        <strong>HCl(aq)</strong> = ácido clorhídrico<br>
-        <strong>HBr(aq)</strong> = ácido bromhídrico<br>
-        <strong>H₂S(aq)</strong> = ácido sulfhídrico
-        <button class="pw-next-btn" id="pw-4-btn3" onclick="nextPWStep(4,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: H₂S(aq)</h2>
-    <div class="ex-formula-disp">H₂S (aq)</div>
-    <div id="ex-acid-hid">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">H₂S está en solución acuosa (aq). ¿Qué función química corresponde?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'acid-hid',0,'✓ En solución acuosa, el hidruro de no metal se llama ácido hídrico.')">En solución acuosa es ácido hídrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',0,'✗ No. El hidruro metálico tiene metal + H. Aquí S es no metal y H va al inicio.')">Hidruro metálico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',0,'✗ No. Los ácidos oxácidos contienen oxígeno. Este compuesto no tiene O.')">Ácido oxácido</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">¿Cuál es la raíz del azufre (S) para nombrar el ácido hídrico?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'acid-hid',1,'✓ S → raíz sulf-. Entonces: ácido sulf + hídrico = ácido sulfhídrico.')">sulf- → sulfhídrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',1,'✗ No. La raíz del azufre es sulf-, no clor- (que es de Cl).')">clor- → clorhídrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'acid-hid',1,'✗ No. La raíz correcta para S es sulf-.')">az- → azhídrico</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">Escribe el nombre completo de H₂S(aq).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido sulfhidrico","ácido sulfhídrico"]' data-fb="✓ ácido sulfhídrico — raíz sulf + hídrico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('acid-hid',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: ácido + [raíz del S] + hídrico</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre de HCl(aq).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido clorhidrico","ácido clorhídrico"]' data-fb="✓ ácido clorhídrico — raíz clor + hídrico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('acid-hid',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: Cl → raíz clor-</div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-acid-hid">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Dominas los ácidos hídricos. Recuerda: (aq) = ácido; (g) = [anión]-uro de hidrógeno.</p>
-    </div>
-  </div>
-
-</div><!-- tab-3 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 05 — BASES / HIDRÓXIDOS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-4">
-
-  <div class="sect">
-    <div class="func-badge oh">
-      <div class="func-num">05</div>
-      <div>
-        <div class="func-badge-title">Bases · Hidróxidos</div>
-        <div class="func-pattern">Metal + (OH)ₙ · EO(OH) = −1</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto ternario formado por un <strong>metal</strong> y el grupo <strong>OH⁻</strong> (hidroxilo). Es la función más relacionada con el color violeta en el modelo 2+matiz.</p>
-    <ul>
-      <li>Contiene metal + grupo OH (identificado en violeta).</li>
-      <li>El subíndice de OH se determina por la valencia del metal.</li>
-      <li>En agua libera iones OH⁻ (base de Arrhenius).</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (NaOH)</th></tr>
-      <tr><td><strong>Tradicional</strong></td><td>"hidróxido" + sufijo del metal (-oso menor / -ico mayor). Si fija: "hidróxido de [metal]".</td><td>hidróxido de sodio</td></tr>
-      <tr><td><strong>Stock</strong></td><td>"hidróxido de [metal] (EO en romano)". Sin paréntesis si valencia fija.</td><td>hidróxido de sodio</td></tr>
-      <tr><td><strong>IUPAC</strong></td><td>"[n]hidróxido de [metal]" con prefijo si hay varios grupos OH.</td><td>hidróxido de sodio</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: NaOH</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">Hidróxido de sodio = sosa cáustica. Na tiene valencia fija +1.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n oh">1</div><div class="pw-title">Identifica el grupo OH⁻</div></div>
-      <div class="pw-body" id="pw-5-b0">
-        <strong>Na</strong> (sodio) + grupo <strong>OH⁻</strong> (violeta en 2+matiz).<br>
-        Compuesto ternario metal + OH⁻ → <strong>Base / Hidróxido</strong>.
-        <button class="pw-next-btn" id="pw-5-btn0" onclick="nextPWStep(5,0,3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n oh">2</div><div class="pw-title">Valencia del sodio</div></div>
-      <div class="pw-body hidden" id="pw-5-b1">
-        Na es del grupo IA → EO = <strong>+1 fijo</strong>.<br>
-        Na (+1) + OH (−1) = 0 ✓ → no necesita número romano.
-        <button class="pw-next-btn" id="pw-5-btn1" onclick="nextPWStep(5,1,3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n oh">3</div><div class="pw-title">Nombre en los tres sistemas</div></div>
-      <div class="pw-body hidden" id="pw-5-b2">
-        <strong>Todos los sistemas:</strong> hidróxido de sodio<br>
-        Los tres coinciden porque Na tiene valencia fija.
-        <button class="pw-next-btn" id="pw-5-btn2" onclick="nextPWStep(5,2,3)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: Fe(OH)₃</h2>
-    <div class="ex-formula-disp">Fe(OH)₃</div>
-    <div id="ex-base">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Cuál es el grupo identificador de las bases/hidróxidos?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'base',0,'✓ El grupo OH⁻ (hidroxilo) es el identificador de las bases. Color violeta en 2+matiz.')">OH⁻ (violeta en 2+matiz)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'base',0,'✗ No. SO₄²⁻ es sulfato (oxoanión, color teal).')">SO₄²⁻ (sulfato)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'base',0,'✗ No. O²⁻ forma óxidos (anión simple, azul).')">O²⁻ (óxido)</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">Calcula el EO del Fe en Fe(OH)₃. Escribe el número con signo.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ x + 3(−1) = 0 → x = +3. El Fe tiene EO = +3.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('base',1)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: x + 3(−1) = 0</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">EO = +3 en Fe (mayor de Fe). Sufijo -ico → férrico. Escribe el nombre Tradicional.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="hidróxido ..." data-answers='["hidroxido ferrico","hidróxido férrico"]' data-fb="✓ EO mayor → -ico → férrico. Nombre Tradicional: hidróxido férrico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('base',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: hidróxido + [sufijo del metal]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre Stock de Fe(OH)₃.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="hidróxido de ..." data-answers='["hidroxido de hierro(iii)","hidróxido de hierro(iii)","hidroxido de hierro (iii)","hidróxido de hierro (iii)"]' data-fb="✓ Stock: hidróxido de hierro (III).">
-          <button class="ex-submit-btn" onclick="checkWriteStep('base',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: hidróxido de [metal] (EO romano)</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="4">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">5</div>
-          <div class="ex-q">Escribe el nombre IUPAC de Fe(OH)₃ usando prefijo para los 3 grupos OH.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="tri..." data-answers='["trihidroxido de hierro","trihidróxido de hierro"]' data-fb="✓ IUPAC: trihidróxido de hierro — 3 OH → tri.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('base',4)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [prefijo]hidróxido de [metal]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-base">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Dominaste las bases e hidróxidos. ¡Sigue con los ácidos oxácidos!</p>
-    </div>
-  </div>
-
-</div><!-- tab-4 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 06 — ÁCIDOS OXÁCIDOS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-5">
-
-  <div class="sect">
-    <div class="func-badge ox">
-      <div class="func-num">06</div>
-      <div>
-        <div class="func-badge-title">Ácidos Oxácidos</div>
-        <div class="func-pattern">H + no metal + O · EO(H)=+1, EO(O)=−2</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto ternario formado por <strong>H + no metal + O</strong>. El anión que resulta al perder los H es un oxoanión (teal en 2+matiz). El nombre del ácido depende del nombre del oxoanión.</p>
-    <ul>
-      <li>Empieza con H (uno o varios) y contiene O.</li>
-      <li>El nombre del oxoanión determina el del ácido: <strong>-ato → ácido -ico</strong>; <strong>-ito → ácido -oso</strong>.</li>
-      <li>Prefijo <em>per-</em> para el EO más alto; <em>hipo-</em> para el más bajo.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura (oxoanión → ácido)</h2>
-    <table class="tbl">
-      <tr><th>Oxoanión</th><th>Ácido</th></tr>
-      <tr><td>sulfato (SO₄²⁻)</td><td>ácido sulfúrico (H₂SO₄)</td></tr>
-      <tr><td>sulfito (SO₃²⁻)</td><td>ácido sulfuroso (H₂SO₃)</td></tr>
-      <tr><td>nitrato (NO₃⁻)</td><td>ácido nítrico (HNO₃)</td></tr>
-      <tr><td>nitrito (NO₂⁻)</td><td>ácido nitroso (HNO₂)</td></tr>
-      <tr><td>perclorato (ClO₄⁻)</td><td>ácido perclórico (HClO₄)</td></tr>
-      <tr><td>hipoclorito (ClO⁻)</td><td>ácido hipocloroso (HClO)</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: H₂SO₄</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">El ácido sulfúrico es el ácido más producido en la industria.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">1</div><div class="pw-title">Identifica el tipo</div></div>
-      <div class="pw-body" id="pw-6-b0">
-        H + <strong>S</strong> + O → ácido oxácido.<br>
-        El anión SO₄²⁻ = <strong>sulfato</strong> (teal en 2+matiz).
-        <button class="pw-next-btn" id="pw-6-btn0" onclick="nextPWStep(6,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">2</div><div class="pw-title">EO del azufre</div></div>
-      <div class="pw-body hidden" id="pw-6-b1">
-        2(+1) + x + 4(−2) = 0 → x = +6<br>
-        S tiene EO = +6 → oxoanión = <strong>sulfato</strong> (-ato = EO alto).
-        <button class="pw-next-btn" id="pw-6-btn1" onclick="nextPWStep(6,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">3</div><div class="pw-title">Nombre del ácido</div></div>
-      <div class="pw-body hidden" id="pw-6-b2">
-        Regla: sulfato → ácido sulf<strong>úrico</strong> (-ato → -ico)<br>
-        → <strong>ácido sulfúrico</strong>
-        <button class="pw-next-btn" id="pw-6-btn2" onclick="nextPWStep(6,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">4</div><div class="pw-title">Contraste con H₂SO₃</div></div>
-      <div class="pw-body hidden" id="pw-6-b3">
-        SO₃²⁻ = <strong>sulfito</strong> (-ito = EO más bajo)<br>
-        Sulfito → ácido sulf<strong>uroso</strong> (-ito → -oso)<br>
-        → H₂SO₃ = <strong>ácido sulfuroso</strong>
-        <button class="pw-next-btn" id="pw-6-btn3" onclick="nextPWStep(6,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: HNO₃</h2>
-    <div class="ex-formula-disp">HNO₃</div>
-    <div id="ex-oxac">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué identifica a un ácido oxácido?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',0,'✓ H + no metal + O define al ácido oxácido. El O lo distingue del ácido hídrico.')">H + no metal + O = ácido oxácido</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',0,'✗ No. Los ácidos hídricos tienen H + no metal sin O.')">H + no metal (sin O)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',0,'✗ No. Metal + O forman óxidos básicos.')">Metal + O</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">El anión de HNO₃ es NO₃⁻. ¿Cómo se llama este oxoanión?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',1,'✓ NO₃⁻ = nitrato. Es uno de los oxoaniones más importantes.')">nitrato</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',1,'✗ No. El nitrito es NO₂⁻ (tiene un O menos).')">nitrito</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',1,'✗ No. El sulfato es SO₄²⁻.')">sulfato</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">Anión nitrato (-ato) → ácido ____ico. Escribe el nombre del ácido HNO₃.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="ácido ..." data-answers='["acido nitrico","ácido nítrico"]' data-fb="✓ nitrato (-ato) → ácido nítrico (-ico). Regla: -ato → -ico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('oxac',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: nitrato → ácido nit___co</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">HNO₂ tiene el anión nitrito (NO₂⁻). Regla: -ito → -oso. ¿Cuál es el nombre de HNO₂?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'oxac',3,'✓ nitrito (-ito) → ácido nitroso (-oso). La regla -ito → -oso siempre aplica.')">ácido nitroso</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',3,'✗ No. El ácido nítrico viene del nitrato (-ato). HNO₂ tiene nitrito (-ito).')">ácido nítrico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'oxac',3,'✗ No. No existe ácido nitrúrico. La regla es -ito → -oso.')">ácido nitrúrico</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-oxac">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>Dominas los ácidos oxácidos. Recuerda: -ato → ácido -ico; -ito → ácido -oso.</p>
-    </div>
-  </div>
-
-</div><!-- tab-5 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 07 — SALES BINARIAS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-6">
-
-  <div class="sect">
-    <div class="func-badge cat">
-      <div class="func-num">07</div>
-      <div>
-        <div class="func-badge-title">Sales Binarias</div>
-        <div class="func-pattern">Metal_a + No metal_b · (sin O)</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto binario formado por un <strong>metal</strong> y un <strong>no metal</strong> distinto del oxígeno. El no metal actúa como anión y recibe el sufijo <em>-uro</em>.</p>
-    <ul>
-      <li>Solo 2 elementos: metal + no metal (Cl, S, Br, I, F, N, P…).</li>
-      <li>Sin oxígeno en la fórmula.</li>
-      <li>El no metal (anión) lleva el sufijo <strong>-uro</strong>: Cl⁻ = cloruro, S²⁻ = sulfuro, Br⁻ = bromuro.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Reglas de nomenclatura</h2>
-    <table class="tbl">
-      <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (FeCl₂)</th></tr>
-      <tr><td><strong>Tradicional</strong></td><td>[anión]-uro + sufijo del catión (-oso menor / -ico mayor). Si fija: "[anión]-uro de [metal]".</td><td>cloruro ferroso</td></tr>
-      <tr><td><strong>Stock</strong></td><td>[anión]-uro de [metal] (EO en romano). Sin paréntesis si fija.</td><td>cloruro de hierro (II)</td></tr>
-      <tr><td><strong>IUPAC</strong></td><td>[n][anión]-uro de [m][metal] con prefijos numéricos.</td><td>dicloruro de hierro</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: FeCl₂</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">El cloruro ferroso (FeCl₂) tiene Fe en estado de oxidación +2.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">1</div><div class="pw-title">Identifica los elementos</div></div>
-      <div class="pw-body" id="pw-7-b0">
-        <strong>Fe</strong> (metal de transición, EO variable: +2, +3) + <strong>Cl</strong> (no metal).<br>
-        Sin oxígeno → <strong>Sal binaria</strong>.
-        <button class="pw-next-btn" id="pw-7-btn0" onclick="nextPWStep(7,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n cat">2</div><div class="pw-title">Calcula el EO del hierro</div></div>
-      <div class="pw-body hidden" id="pw-7-b1">
-        x + 2(−1) = 0 → x = +2<br>
-        Fe tiene EO = +2 → es el <strong>menor</strong> de Fe (menor = +2, mayor = +3).
-        <button class="pw-next-btn" id="pw-7-btn1" onclick="nextPWStep(7,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n an">3</div><div class="pw-title">Nombre Tradicional</div></div>
-      <div class="pw-body hidden" id="pw-7-b2">
-        Cl⁻ = cloruro · Fe EO menor → sufijo <strong>-oso</strong> → ferroso<br>
-        <strong>Tradicional: cloruro ferroso</strong>
-        <button class="pw-next-btn" id="pw-7-btn2" onclick="nextPWStep(7,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n oh">4</div><div class="pw-title">Stock e IUPAC</div></div>
-      <div class="pw-body hidden" id="pw-7-b3">
-        <strong>Stock:</strong> cloruro de hierro (II)<br>
-        <strong>IUPAC:</strong> dicloruro de hierro — 2 Cl → di, 1 Fe → sin prefijo.
-        <button class="pw-next-btn" id="pw-7-btn3" onclick="nextPWStep(7,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: FeCl₃</h2>
-    <div class="ex-formula-disp">FeCl₃</div>
-    <div id="ex-sal-bin">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué tipo de compuesto es FeCl₃?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'sal-bin',0,'✓ Metal (Fe) + no metal (Cl), sin oxígeno → sal binaria.')">Sal binaria</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. Metal + O sería óxido básico. Aquí hay Cl, no O.')">Óxido básico</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. La sal oxigenada tiene un oxoanión (con O). Aquí solo hay Cl.')">Sal oxigenada</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-bin',0,'✗ No. Los hidróxidos contienen el grupo OH.')">Hidróxido</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">Calcula el EO del Fe en FeCl₃. Escribe el número con signo.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="+?" data-answers='["+3"]' data-fb="✓ x + 3(−1) = 0 → x = +3. El Fe tiene EO = +3.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',1)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: x + 3(−1) = 0</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">EO = +3 es el mayor de Fe → sufijo -ico → férrico. Escribe el nombre Tradicional.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="cloruro ..." data-answers='["cloruro ferrico","cloruro férrico"]' data-fb="✓ EO mayor → -ico → férrico. Nombre Tradicional: cloruro férrico.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',2)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: cloruro + [sufijo del metal con EO mayor]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre Stock de FeCl₃.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="cloruro de ..." data-answers='["cloruro de hierro(iii)","cloruro de hierro (iii)"]' data-fb="✓ Stock: cloruro de hierro (III).">
-          <button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [anión]-uro de [metal] (EO romano)</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="4">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">5</div>
-          <div class="ex-q">Escribe el nombre IUPAC de FeCl₃ usando prefijo para los 3 Cl.</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="tri..." data-answers='["tricloruro de hierro"]' data-fb="✓ IUPAC: tricloruro de hierro — 3 Cl → tri, 1 Fe → sin prefijo.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('sal-bin',4)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [prefijo]cloruro de [metal]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-sal-bin">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>¡Excelente! Dominaste las sales binarias en los tres sistemas.</p>
-    </div>
-  </div>
-
-</div><!-- tab-6 -->
-
-
-<!-- ══════════════════════════════════
-     TAB 08 — SALES OXIGENADAS
-══════════════════════════════════ -->
-<div class="tab-cont" id="tab-7">
-
-  <div class="sect">
-    <div class="func-badge ox">
-      <div class="func-num">08</div>
-      <div>
-        <div class="func-badge-title">Sales Oxigenadas</div>
-        <div class="func-pattern">Metal + Oxoanión · (teal en 2+matiz)</div>
-      </div>
-    </div>
-    <h2>Descripción e identificación</h2>
-    <p>Compuesto formado por un <strong>metal</strong> y un <strong>oxoanión</strong> (anión que contiene oxígeno). El oxoanión se identifica con el color teal en el modelo 2+matiz.</p>
-    <ul>
-      <li>Contiene metal + anión con O (sulfato, nitrato, fosfato…).</li>
-      <li>El oxoanión tiene nombre propio que hay que memorizar.</li>
-      <li>Los 3 sistemas coinciden en la forma básica; solo Stock añade EO en paréntesis si el metal tiene valencia variable.</li>
-    </ul>
-  </div>
-
-  <div class="sect">
-    <h2>Oxoaniones comunes</h2>
-    <table class="tbl">
-      <tr><th>Fórmula</th><th>Nombre</th><th>Ejemplo de sal</th></tr>
-      <tr><td><code>SO₄²⁻</code></td><td>sulfato</td><td>Na₂SO₄ = sulfato de sodio</td></tr>
-      <tr><td><code>SO₃²⁻</code></td><td>sulfito</td><td>Na₂SO₃ = sulfito de sodio</td></tr>
-      <tr><td><code>NO₃⁻</code></td><td>nitrato</td><td>Ca(NO₃)₂ = nitrato de calcio</td></tr>
-      <tr><td><code>NO₂⁻</code></td><td>nitrito</td><td>KNO₂ = nitrito de potasio</td></tr>
-      <tr><td><code>PO₄³⁻</code></td><td>fosfato</td><td>Ca₃(PO₄)₂ = fosfato de calcio</td></tr>
-      <tr><td><code>CO₃²⁻</code></td><td>carbonato</td><td>Na₂CO₃ = carbonato de sodio</td></tr>
-      <tr><td><code>CrO₄²⁻</code></td><td>cromato</td><td>K₂CrO₄ = cromato de potasio</td></tr>
-      <tr><td><code>MnO₄⁻</code></td><td>permanganato</td><td>KMnO₄ = permanganato de potasio</td></tr>
-    </table>
-  </div>
-
-  <div class="sect">
-    <h2>Ejemplo resuelto: Na₂SO₄</h2>
-    <p style="font-size:.83rem;color:var(--dim);margin-bottom:14px">El sulfato de sodio (sal de Glauber). Na tiene valencia fija.</p>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">1</div><div class="pw-title">Identifica el oxoanión</div></div>
-      <div class="pw-body" id="pw-8-b0">
-        <strong>Na</strong> (metal, EO = +1 fijo) + <strong>SO₄²⁻</strong> (sulfato, oxoanión teal).<br>
-        Compuesto: metal + oxoanión = <strong>Sal oxigenada</strong>.
-        <button class="pw-next-btn" id="pw-8-btn0" onclick="nextPWStep(8,0,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">2</div><div class="pw-title">Verifica la neutralidad</div></div>
-      <div class="pw-body hidden" id="pw-8-b1">
-        2 × Na⁺(+1) + SO₄²⁻(−2) = 0 ✓<br>
-        Na es de valencia fija → no se añade EO en paréntesis.
-        <button class="pw-next-btn" id="pw-8-btn1" onclick="nextPWStep(8,1,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">3</div><div class="pw-title">Nombre</div></div>
-      <div class="pw-body hidden" id="pw-8-b2">
-        Regla: [nombre del oxoanión] de [metal]<br>
-        → <strong>sulfato de sodio</strong><br>
-        Los tres sistemas coinciden porque Na es fijo.
-        <button class="pw-next-btn" id="pw-8-btn2" onclick="nextPWStep(8,2,4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <div class="pw-step">
-      <div class="pw-head"><div class="pw-n ox">4</div><div class="pw-title">Contraste con Fe₂(SO₄)₃</div></div>
-      <div class="pw-body hidden" id="pw-8-b3">
-        Fe es variable (EO +2 o +3). En Fe₂(SO₄)₃: EO de Fe = +3<br>
-        <strong>Tradicional:</strong> sulfato férrico<br>
-        <strong>Stock:</strong> sulfato de hierro (III)<br>
-        <strong>IUPAC:</strong> trisulfato de dihierro
-        <button class="pw-next-btn" id="pw-8-btn3" onclick="nextPWStep(8,3,4)">Siguiente →</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <h2>Practica: Ca(NO₃)₂</h2>
-    <div class="ex-formula-disp">Ca(NO₃)₂</div>
-    <div id="ex-sal-ox">
-
-      <div class="ex-step active" data-s="0">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">1</div>
-          <div class="ex-q">¿Qué tipo de compuesto es Ca(NO₃)₂?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',0,'✓ Metal (Ca) + oxoanión (NO₃⁻) → sal oxigenada.')">Sal oxigenada</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Las sales binarias tienen metal + no metal sin O. Aquí hay oxoanión.')">Sal binaria</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Los hidróxidos tienen el grupo OH, no nitrato.')">Hidróxido</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',0,'✗ No. Los ácidos oxácidos empiezan con H.')">Ácido oxácido</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="1">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">2</div>
-          <div class="ex-q">¿Cómo se llama el oxoanión NO₃⁻?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',1,'✓ NO₃⁻ = nitrato. Es uno de los oxoaniones fundamentales.')">nitrato (NO₃⁻)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',1,'✗ No. El nitrito es NO₂⁻ (un O menos).')">nitrito (NO₂⁻)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',1,'✗ No. El sulfato es SO₄²⁻.')">sulfato (SO₄²⁻)</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="2">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">3</div>
-          <div class="ex-q">El Ca pertenece al grupo IIA (EO = +2 fijo). ¿Se añade EO en paréntesis?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',2,'✓ Ca tiene EO fijo (+2) → no se añade EO en paréntesis en ningún sistema.')">No, Ca tiene EO fijo → sin paréntesis</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',2,'✗ No. Solo se añade EO en paréntesis cuando el metal tiene EO variable.')">Sí, siempre se añade</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',2,'✗ No. Con metales de EO fijo no es necesario en ningún sistema.')">Solo en IUPAC</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="3">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">4</div>
-          <div class="ex-q">Escribe el nombre de Ca(NO₃)₂ (igual en los tres sistemas para Ca).</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-write-row">
-          <input class="ex-inp" type="text" placeholder="nitrato de ..." data-answers='["nitrato de calcio"]' data-fb="✓ nitrato de calcio — [oxoanión] de [metal]. Los tres sistemas coinciden.">
-          <button class="ex-submit-btn" onclick="checkWriteStep('sal-ox',3)">Comprobar</button>
-        </div>
-        <div class="ex-hint">Pista: [oxoanión] de [metal]</div>
-        <div class="ex-fb"></div>
-      </div>
-
-      <div class="ex-step locked" data-s="4">
-        <div class="ex-step-hdr">
-          <div class="ex-snum">5</div>
-          <div class="ex-q">Para Fe(NO₃)₃ (Fe con EO variable), ¿cuál es el nombre Stock?</div>
-          <span class="ex-done-mark">✓</span>
-        </div>
-        <div class="ex-opts">
-          <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ox',4,'✓ Fe tiene EO variable. En Fe(NO₃)₃ el EO del Fe = +3. Stock: nitrato de hierro (III).')">nitrato de hierro (III)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',4,'✗ No. El EO del Fe en Fe(NO₃)₃ es +3, no +2.')">nitrato de hierro (II)</button>
-          <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ox',4,'✗ No. El nombre Tradicional sería nitrato férrico. Stock usa número romano.')">nitrato férrico</button>
-        </div>
-        <div class="ex-fb"></div>
-      </div>
-
-    </div>
-    <div class="ex-complete" id="exc-sal-ox">
-      <strong>🎉 ¡Ejercicio completo!</strong>
-      <p>¡Has completado las 8 funciones inorgánicas! Estás listo para el Juego.</p>
-    </div>
-  </div>
-
-</div><!-- tab-7 -->
+</div><!-- contenido-seccion -->
 
 </div><!-- .app -->
 
@@ -1410,16 +992,60 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
-/* ── Tab switching ── */
-function switchTab(idx){
-  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('act',i===idx); });
-  document.querySelectorAll('.tab-cont').forEach(function(c,i){ c.classList.toggle('act',i===idx); });
+var seccionActual = 0;
+var TOTAL = 8;
+var TITULOS = [
+  'Óxidos Básicos','Anhídridos','Hidruros','Ácidos Hídricos',
+  'Bases · Hidróxidos','Ácidos Oxácidos','Sales Binarias','Sales Oxigenadas'
+];
+var EX_IDS  = ['ox-bas','anhid','hidru','acid-hid','base','oxac','sal-bin','sal-ox'];
+var EX_TOTS = [5,5,4,4,5,4,5,5];
+
+function goToSection(idx){
+  seccionActual = idx;
+  document.querySelectorAll('.sec-panel').forEach(function(p,i){
+    p.style.display = (i === idx) ? '' : 'none';
+  });
+  document.getElementById('seccion-titulo').textContent = TITULOS[idx];
+  var pct = ((idx+1)/TOTAL*100).toFixed(0);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = (idx+1) + ' de ' + TOTAL;
+  document.getElementById('btn-anterior').disabled = (idx === 0);
+  document.getElementById('btn-siguiente').disabled = (idx === TOTAL-1);
+  document.getElementById('menu-principal').classList.remove('active');
+  document.getElementById('contenido-seccion').classList.add('active');
+  window.scrollTo(0,0);
+  localStorage.setItem('funciones-seccion', idx);
+  initExercise(EX_IDS[idx], EX_TOTS[idx]);
 }
+
+function volverAlMenu(){
+  document.getElementById('contenido-seccion').classList.remove('active');
+  document.getElementById('menu-principal').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function navAnterior(){
+  if(seccionActual > 0) goToSection(seccionActual - 1);
+}
+
+function navSiguiente(){
+  if(seccionActual < TOTAL - 1) goToSection(seccionActual + 1);
+}
+
+document.addEventListener('keydown', function(e){
+  var s = document.getElementById('contenido-seccion');
+  if(!s.classList.contains('active')) return;
+  if(e.key === 'ArrowRight') navSiguiente();
+  else if(e.key === 'ArrowLeft') navAnterior();
+  else if(e.key === 'Escape') volverAlMenu();
+});
 
 /* ── Exercise state ── */
 var EXS = {};
 
 function initExercise(eid, total){
+  if(EXS[eid]) return;
   EXS[eid] = {cur:0, total:total};
   activateStep(eid, 0);
 }
@@ -1488,7 +1114,6 @@ function checkWriteStep(eid, stepIdx){
   }
 }
 
-/* ── Worked example reveal ── */
 function nextPWStep(wid, cur, total){
   var body = document.getElementById('pw-' + wid + '-b' + cur);
   if(body) body.classList.remove('hidden');
@@ -1506,16 +1131,13 @@ function nextPWStep(wid, cur, total){
   if(body) body.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
-/* ── Init all exercises on load ── */
+/* Restore last visited section */
 document.addEventListener('DOMContentLoaded', function(){
-  initExercise('ox-bas', 5);
-  initExercise('anhid', 5);
-  initExercise('hidru', 4);
-  initExercise('acid-hid', 4);
-  initExercise('base', 5);
-  initExercise('oxac', 4);
-  initExercise('sal-bin', 5);
-  initExercise('sal-ox', 5);
+  var saved = localStorage.getItem('funciones-seccion');
+  if(saved !== null){
+    var idx = parseInt(saved, 10);
+    if(idx >= 0 && idx < TOTAL) goToSection(idx);
+  }
 });
 </script>
 </body>
