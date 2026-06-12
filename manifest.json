@@ -10,25 +10,17 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230d4a73' width='192' height='192'/><text x='50%' y='50%' font-size='80' font-weight='bold' font-family='Georgia' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>",
+      "src": "assets/iononpwa.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%230d4a73' width='512' height='512'/><text x='50%' y='50%' font-size='250' font-weight='bold' font-family='Georgia' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>",
+      "src": "assets/iononpwa.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education"],
-  "screenshots": [
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f6fafe' width='540' height='720'/><rect fill='%230d4a73' width='540' height='60'/><text x='270' y='35' font-size='24' font-weight='bold' font-family='Georgia' fill='%23fff' text-anchor='middle' dominant-baseline='central'>IonNom</text><text x='270' y='200' font-size='20' font-weight='bold' font-family='Georgia' fill='%230d2d42' text-anchor='middle'>Nomenclatura Inorgánica</text></svg>",
-      "sizes": "540x720",
-      "type": "image/svg+xml",
-      "form_factor": "narrow"
-    }
-  ]
+  "categories": ["education"]
 }
