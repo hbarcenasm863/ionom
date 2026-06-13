@@ -103,8 +103,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .mod-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
 .mod-card.azul{background:linear-gradient(135deg,#0d2d42,#0d4a73);border-color:#0d4a73}
 .mod-card.ambar{background:linear-gradient(135deg,var(--cat-t),var(--cat));border-color:var(--cat)}
-.mod-card.duelo{background:linear-gradient(135deg,#1A0A06,#3D1A0A);border-color:#8B6914;grid-column:span 2}
-@media(max-width:560px){.mod-card.duelo{grid-column:span 1}}
+.mod-card.verde{background:linear-gradient(135deg,#064e3b,#047857);border-color:#059669}
+.mod-card.teal{background:linear-gradient(135deg,#134e4a,#0f766e);border-color:#0d9488}
+.mod-card.violeta{background:linear-gradient(135deg,#3b0764,#6d28d9);border-color:#7c3aed}
+.mod-card.duelo{background:linear-gradient(135deg,#1A0A06,#3D1A0A);border-color:#8B6914}
+.mod-card.span2{grid-column:span 2}
+@media(max-width:560px){.mod-card.span2{grid-column:span 1}}
 .mod-top{padding:22px 24px 16px;flex:1}
 .mod-icon{font-size:2rem;display:block;margin-bottom:8px}
 .mod-paso{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.6);margin-bottom:4px}
@@ -239,17 +243,22 @@ footer a:hover{text-decoration:underline}
   <div class="ruta-steps">
     <a class="rs r1" href="teoria.html">
       <span class="rs-n">①</span>
-      <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y sistemas de nomenclatura</div></div>
+      <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y 3 sistemas</div></div>
+    </a>
+    <span class="ruta-arrow">→</span>
+    <a class="rs r1" href="funciones.html" style="border-color:#059669;background:#d1fae5;color:#064e3b">
+      <span class="rs-n">②</span>
+      <div><div class="rs-title">Funciones</div><div class="rs-desc">Ejercicios por los 8 grupos inorgánicos</div></div>
     </a>
     <span class="ruta-arrow">→</span>
     <a class="rs r2" href="juego.html">
-      <span class="rs-n">②</span>
-      <div><div class="rs-title">Juego</div><div class="rs-desc">Practica con compuestos reales y obtén tu certificado</div></div>
+      <span class="rs-n">③</span>
+      <div><div class="rs-title">Juego</div><div class="rs-desc">20 preguntas cronometradas · medallas</div></div>
     </a>
     <span class="ruta-arrow">→</span>
     <a class="rs r3" href="nomenClash.html">
-      <span class="rs-n">③</span>
-      <div><div class="rs-title">NomenClash</div><div class="rs-desc">Duelo de iones: combina cationes y aniones contra la IA</div></div>
+      <span class="rs-n">④</span>
+      <div><div class="rs-title">NomenClash</div><div class="rs-desc">Duelo de iones contra la IA</div></div>
     </a>
   </div>
 </div>
@@ -265,8 +274,24 @@ footer a:hover{text-decoration:underline}
     </div>
     <div class="mod-bottom">
       <div class="mod-chips">
-        <span class="mc">6 temas</span>
+        <span class="mc">7 temas</span>
         <span class="mc">Trad · Stock · IUPAC</span>
+      </div>
+      <span class="mod-arrow">→</span>
+    </div>
+  </a>
+  <a class="mod-card verde" href="funciones.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧪</span>
+      <div class="mod-paso">② Practica por grupo</div>
+      <div class="mod-title">Funciones Inorgánicas</div>
+      <div class="mod-desc">8 grupos funcionales con teoría, ejercicios interactivos y compuestos reales en contexto colombiano (Cerrejón, Galeras, Paz de Río…).</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips">
+        <span class="mc">8 grupos</span>
+        <span class="mc">Contexto 🇨🇴</span>
+        <span class="mc">Ejercicios</span>
       </div>
       <span class="mod-arrow">→</span>
     </div>
@@ -274,33 +299,63 @@ footer a:hover{text-decoration:underline}
   <a class="mod-card ambar" href="juego.html">
     <div class="mod-top">
       <span class="mod-icon">🎮</span>
-      <div class="mod-paso">② Pon a prueba lo aprendido</div>
+      <div class="mod-paso">③ Pon a prueba lo aprendido</div>
       <div class="mod-title">Juego</div>
-      <div class="mod-desc">3 niveles de dificultad, opción múltiple y escritura libre, sistema de puntos, medallas y certificado personalizado.</div>
+      <div class="mod-desc">20 preguntas cronometradas (60 s c/u), 10 tipos distintos de pregunta, banco de 459 compuestos, medallas y retroalimentación de temas a repasar.</div>
     </div>
     <div class="mod-bottom">
       <div class="mod-chips">
-        <span class="mc">3 niveles</span>
-        <span class="mc">5 preguntas</span>
-        <span class="mc">Certificado</span>
+        <span class="mc">20 preguntas</span>
+        <span class="mc">10 tipos</span>
+        <span class="mc">459 compuestos</span>
+      </div>
+      <span class="mod-arrow">→</span>
+    </div>
+  </a>
+  <a class="mod-card teal" href="tabla.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚗️</span>
+      <div class="mod-paso">④ Referencia</div>
+      <div class="mod-title">Tabla Periódica</div>
+      <div class="mod-desc">118 elementos interactivos: símbolo, nombre, masa, estados de oxidación, electronegatividad de Pauling y contexto colombiano de cada elemento.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips">
+        <span class="mc">118 elementos</span>
+        <span class="mc">Electroneg. Pauling</span>
+        <span class="mc">Contexto 🇨🇴</span>
+      </div>
+      <span class="mod-arrow">→</span>
+    </div>
+  </a>
+  <a class="mod-card violeta" href="generador.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚙️</span>
+      <div class="mod-paso">⑤ Para docentes</div>
+      <div class="mod-title">Generador de Ejercicios</div>
+      <div class="mod-desc">Genera hojas de trabajo personalizadas por grupo funcional, nivel y cantidad de preguntas. Lista para imprimir o proyectar en clase.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips">
+        <span class="mc">8 grupos</span>
+        <span class="mc">Imprimible</span>
+        <span class="mc">Proyectable</span>
       </div>
       <span class="mod-arrow">→</span>
     </div>
   </a>
   <a class="mod-card duelo" href="nomenClash.html">
-    <div class="mod-top" style="flex-direction:row;align-items:center;gap:20px;">
-      <span class="mod-icon" style="font-size:2.4rem;flex-shrink:0;">⚔️</span>
-      <div>
-        <div class="mod-paso" style="color:#D4AF37;opacity:.8">③ Desafío avanzado</div>
-        <div class="mod-title" style="color:#F2E8D5;font-size:1.2rem;">NomenClash – El Duelo de los Iones</div>
-        <div class="mod-desc" style="color:rgba(242,232,213,.7)">Juego de cartas medieval: enfrenta cationes con aniones, forma compuestos neutros, nomínalos correctamente y derrota a la IA. Modos básico y completo.</div>
-      </div>
+    <div class="mod-top">
+      <span class="mod-icon">⚔️</span>
+      <div class="mod-paso" style="color:#D4AF37;opacity:.9">⑥ Competencia</div>
+      <div class="mod-title">NomenClash — El Duelo de los Iones</div>
+      <div class="mod-desc" style="color:rgba(242,232,213,.78)">Juego de cartas medieval: combina cationes y aniones para formar compuestos neutros, nómbralos correctamente y derrota a la IA. Modo básico y completo.</div>
     </div>
-    <div class="mod-bottom" style="border-top:1px solid rgba(212,175,55,.2);padding-top:10px;margin-top:12px;">
+    <div class="mod-bottom">
       <div class="mod-chips">
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37;border-color:#8B6914">Cartas</span>
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37;border-color:#8B6914">IA oponente</span>
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37;border-color:#8B6914">Trad · Stock · IUPAC</span>
+        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">Cartas</span>
+        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">IA oponente</span>
+        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">Trad · Stock · IUPAC</span>
       </div>
       <span class="mod-arrow" style="color:#D4AF37">→</span>
     </div>
