@@ -1210,10 +1210,12 @@ function renderElMC(q){
     // deduplicate options
     const seen=new Set(); options=options.filter(o=>o&&!seen.has(o)&&seen.add(o));
     while(options.length<4){options.push('(ninguna)');}
-    document.getElementById('area-mc').style.display='';
-    document.getElementById('q-mc-opts').innerHTML=options.slice(0,4).map(o=>
-      `<button class="mc-opt" onclick="checkElMC(this,${JSON.stringify(o)},${JSON.stringify(correct)})">${o}</button>`
+    const mc=document.getElementById('q-mc-opts');
+    mc.dataset.elCorrect=correct;
+    mc.innerHTML=options.slice(0,4).map(o=>
+      `<button class="mc-opt" onclick="checkElMC(this)">${o}</button>`
     ).join('');
+    document.getElementById('area-mc').style.display='';
   }catch(e){console.error('renderElMC error:',e);renderMC_fallback(q);}
 }
 
@@ -1240,10 +1242,12 @@ function renderElConfig(q){
       const seen=new Set(); options=options.filter(o=>o&&!seen.has(o)&&seen.add(o));
       while(options.length<4){options.push('(ninguno)');}
     }
-    document.getElementById('area-mc').style.display='';
-    document.getElementById('q-mc-opts').innerHTML=options.slice(0,4).map(o=>
-      `<button class="mc-opt" onclick="checkElMC(this,${JSON.stringify(o)},${JSON.stringify(correct)})">${o}</button>`
+    const mc=document.getElementById('q-mc-opts');
+    mc.dataset.elCorrect=correct;
+    mc.innerHTML=options.slice(0,4).map(o=>
+      `<button class="mc-opt" onclick="checkElMC(this)">${o}</button>`
     ).join('');
+    document.getElementById('area-mc').style.display='';
   }catch(e){console.error('renderElConfig error:',e);renderMC_fallback(q);}
 }
 
@@ -1253,9 +1257,11 @@ function renderMC_fallback(q){
   document.getElementById('q-mc-opts').innerHTML='<button class="mc-opt" onclick="scheduleNext(0)">Siguiente →</button>';
 }
 
-function checkElMC(el,chosen,correct){
+function checkElMC(el){
   try{
     const q=ST.questions[ST.idx];
+    const chosen=el.textContent;
+    const correct=document.getElementById('q-mc-opts').dataset.elCorrect;
     ST.attempts++;ST.totalAttempts++;
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
     if(chosen===correct){
@@ -1266,7 +1272,7 @@ function checkElMC(el,chosen,correct){
       scheduleNext(1800);
     } else {
       el.classList.add('wrong');
-      document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+      document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('correct');});
       if(ST.attempts>=3){
         if(!ST.errors.find(e=>e.formula===q.formula&&e.group==='elemento')) ST.errors.push({group:'elemento',formula:q.formula,name:(q.trad&&q.trad[0])||''});
         showElFeedback('err','✗ La respuesta correcta era: '+correct,q);
