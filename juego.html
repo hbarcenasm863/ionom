@@ -1212,9 +1212,8 @@ function renderElMC(q){
     while(options.length<4){options.push('(ninguna)');}
     const mc=document.getElementById('q-mc-opts');
     mc.dataset.elCorrect=correct;
-    mc.innerHTML=options.slice(0,4).map(o=>
-      `<button class="mc-opt" onclick="checkElMC(this)">${o}</button>`
-    ).join('');
+    mc.innerHTML=options.slice(0,4).map(o=>`<button class="mc-opt">${o}</button>`).join('');
+    mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkElMC(btn)));
     document.getElementById('area-mc').style.display='';
   }catch(e){console.error('renderElMC error:',e);renderMC_fallback(q);}
 }
@@ -1244,9 +1243,8 @@ function renderElConfig(q){
     }
     const mc=document.getElementById('q-mc-opts');
     mc.dataset.elCorrect=correct;
-    mc.innerHTML=options.slice(0,4).map(o=>
-      `<button class="mc-opt" onclick="checkElMC(this)">${o}</button>`
-    ).join('');
+    mc.innerHTML=options.slice(0,4).map(o=>`<button class="mc-opt">${o}</button>`).join('');
+    mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkElMC(btn)));
     document.getElementById('area-mc').style.display='';
   }catch(e){console.error('renderElConfig error:',e);renderMC_fallback(q);}
 }
