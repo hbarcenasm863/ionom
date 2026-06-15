@@ -1047,6 +1047,14 @@ function assignTypes(compounds, pool){
 
 function startGame(group){
   ST.group=group;
+  if(group==='elemento'){
+    // All 20 questions are element questions — no compound pool needed
+    ST.questions=Array.from({length:20},()=>makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    showScreen('s-game');
+    loadQuestion();
+    return;
+  }
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
   const compounds=buildQuestionQueue(pool,20);
