@@ -108,6 +108,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .q-meta{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
 .q-formula{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--cat-t);letter-spacing:.02em;margin-bottom:12px;line-height:1}
 .q-prompt{font-size:.88rem;color:var(--dim);margin-bottom:20px;line-height:1.55}
+.sys-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:8px;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;border:2px solid}
+.sys-badge.trad{background:var(--cat-b);color:var(--cat-t);border-color:var(--cat)}
+.sys-badge.stock{background:var(--an-b);color:var(--an-t);border-color:var(--an)}
+.sys-badge.sist{background:var(--ox-b);color:var(--ox-t);border-color:var(--ox)}
+.sys-badge.any{background:#f0fdf4;color:#14532d;border-color:#16a34a}
+.sys-badge .sb-icon{font-size:1rem}
+.write-hint{font-size:.8rem;color:var(--dimmer);margin-top:4px}
 
 /* MC */
 .mc-opts{display:grid;gap:10px;margin-bottom:4px}
@@ -897,7 +904,11 @@ function checkMC(el){
 
 // ── Write ──
 function renderWrite(q){
-  const prompts={'write-any':'Escribe el nombre de este compuesto (cualquier sistema de nomenclatura).','write-stock':'Escribe el nombre en nomenclatura <strong>Stock</strong>. (Si el compuesto no tiene nombre Stock, el nombre tradicional también es válido.)','write-sist':'Escribe el nombre en nomenclatura <strong>Sistemática</strong>.'};
+  const prompts={
+    'write-any': `<span class="sys-badge any"><span class="sb-icon">✏️</span>Cualquier nomenclatura</span><div class="write-hint">Puedes usar el nombre Tradicional, Stock o Sistemático.</div>`,
+    'write-stock': `<span class="sys-badge stock"><span class="sb-icon">②</span>NOMENCLATURA STOCK</span><div class="write-hint">Usa el sistema Stock: nombre del compuesto con el estado de oxidación en números romanos entre paréntesis cuando sea necesario. <em>Ej.: óxido de hierro (III)</em></div>`,
+    'write-sist': `<span class="sys-badge sist"><span class="sb-icon">④</span>NOMENCLATURA SISTEMÁTICA</span><div class="write-hint">Usa prefijos griegos: mono, di, tri, tetra… para indicar el número de átomos. <em>Ej.: trióxido de dialuminio</em></div>`
+  };
   document.getElementById('q-prompt').innerHTML=prompts[q.qtype];
   document.getElementById('area-write').style.display='';
   const inp=document.getElementById('q-input');
@@ -1287,20 +1298,14 @@ function isCorrect(input,q,mode){
   const ni=norm(input);
   const allNames=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
   if(mode==='stock'){
-    // Accept stock names + sist names (IUPAC is always valid); fall back to all if no stock
     const stockNames=(q.stock||[]).filter(Boolean);
-    const sistNames=(q.sist||[]).filter(Boolean);
-    const acceptSet=[...stockNames,...sistNames];
-    if(acceptSet.length) return acceptSet.some(v=>norm(v)===ni);
-    return allNames.some(v=>norm(v)===ni);
+    if(stockNames.length) return stockNames.some(v=>norm(v)===ni);
+    return allNames.some(v=>norm(v)===ni); // fallback si no hay nombre Stock
   }
   if(mode==='sist'){
-    // Accept sist names + stock names (Stock ⊆ IUPAC in most cases); fall back to all if no sist
     const sistNames=(q.sist||[]).filter(Boolean);
-    const stockNames=(q.stock||[]).filter(Boolean);
-    const acceptSet=[...sistNames,...stockNames];
-    if(acceptSet.length) return acceptSet.some(v=>norm(v)===ni);
-    return allNames.some(v=>norm(v)===ni);
+    if(sistNames.length) return sistNames.some(v=>norm(v)===ni);
+    return allNames.some(v=>norm(v)===ni); // fallback si no hay nombre sistemático
   }
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
   if(allNames.some(v=>norm(v)===ni)) return true;
