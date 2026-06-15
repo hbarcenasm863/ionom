@@ -1287,14 +1287,19 @@ function isCorrect(input,q,mode){
   const ni=norm(input);
   const allNames=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
   if(mode==='stock'){
-    // Accept stock names; fall back to any name if compound has no stock name
+    // Accept stock names + sist names (IUPAC is always valid); fall back to all if no stock
     const stockNames=(q.stock||[]).filter(Boolean);
-    if(stockNames.length) return stockNames.some(v=>norm(v)===ni);
+    const sistNames=(q.sist||[]).filter(Boolean);
+    const acceptSet=[...stockNames,...sistNames];
+    if(acceptSet.length) return acceptSet.some(v=>norm(v)===ni);
     return allNames.some(v=>norm(v)===ni);
   }
   if(mode==='sist'){
+    // Accept sist names + stock names (Stock ⊆ IUPAC in most cases); fall back to all if no sist
     const sistNames=(q.sist||[]).filter(Boolean);
-    if(sistNames.length) return sistNames.some(v=>norm(v)===ni);
+    const stockNames=(q.stock||[]).filter(Boolean);
+    const acceptSet=[...sistNames,...stockNames];
+    if(acceptSet.length) return acceptSet.some(v=>norm(v)===ni);
     return allNames.some(v=>norm(v)===ni);
   }
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
