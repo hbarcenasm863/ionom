@@ -14,7 +14,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de litio'],
     stock: [],
-    sist: ['óxido de dilítio'],
+    sist: ['monóxido de dilítio', 'óxido de dilítio'],
     hint: 'Li tiene valencia fija +1. Dos Li⁺ compensan un O²⁻. Grupo 1A → óxido básico.'
   },
   {
@@ -22,7 +22,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de sodio'],
     stock: [],
-    sist: ['óxido de disodio'],
+    sist: ['monóxido de disodio', 'óxido de disodio'],
     hint: 'Na tiene valencia fija +1. Dos Na⁺ compensan un O²⁻ → óxido de sodio.'
   },
   {
@@ -30,7 +30,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de potasio'],
     stock: [],
-    sist: ['óxido de dipotasio'],
+    sist: ['monóxido de dipotasio', 'óxido de dipotasio'],
     hint: 'K tiene valencia fija +1. Metal alcalino + O₂ forma óxido básico.'
   },
   {
@@ -38,7 +38,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de rubidio'],
     stock: [],
-    sist: ['óxido de dirubidio'],
+    sist: ['monóxido de dirubidio', 'óxido de dirubidio'],
     hint: 'Rb (grupo 1A) tiene valencia fija +1. Metal alcalino + O₂.'
   },
   {
@@ -46,7 +46,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de cesio'],
     stock: [],
-    sist: ['óxido de dicesio'],
+    sist: ['monóxido de dicesio', 'óxido de dicesio'],
     hint: 'Cs (grupo 1A) tiene valencia fija +1. Óxido básico.'
   },
   {
@@ -54,7 +54,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de berilio'],
     stock: [],
-    sist: ['óxido de berilio'],
+    sist: ['monóxido de berilio', 'óxido de berilio'],
     hint: 'Be tiene valencia fija +2. Ratio 1:1 con O²⁻ → BeO.'
   },
   {
@@ -62,7 +62,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de magnesio'],
     stock: [],
-    sist: ['óxido de magnesio'],
+    sist: ['monóxido de magnesio', 'óxido de magnesio'],
     hint: 'Mg tiene valencia fija +2. Mg²⁺ + O²⁻ → MgO.'
   },
   {
@@ -70,7 +70,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de calcio'],
     stock: [],
-    sist: ['óxido de calcio'],
+    sist: ['monóxido de calcio', 'óxido de calcio'],
     hint: 'Ca tiene valencia +2. Metal alcalinotérreo + O₂ → óxido básico.'
   },
   {
@@ -78,7 +78,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de estroncio'],
     stock: [],
-    sist: ['óxido de estroncio'],
+    sist: ['monóxido de estroncio', 'óxido de estroncio'],
     hint: 'Sr (grupo 2A) tiene valencia fija +2. Sr²⁺ + O²⁻ → SrO.'
   },
   {
@@ -86,7 +86,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de bario'],
     stock: [],
-    sist: ['óxido de bario'],
+    sist: ['monóxido de bario', 'óxido de bario'],
     hint: 'Ba (grupo 2A) tiene valencia fija +2. Óxido básico.'
   },
   {
@@ -102,7 +102,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de zinc'],
     stock: [],
-    sist: ['óxido de zinc'],
+    sist: ['monóxido de zinc', 'óxido de zinc'],
     hint: 'Zn tiene valencia fija +2. Zn²⁺ + O²⁻ → ZnO.'
   },
   {
@@ -110,7 +110,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de plata'],
     stock: [],
-    sist: ['óxido de diplata'],
+    sist: ['monóxido de diplata', 'óxido de diplata'],
     hint: 'Ag tiene valencia fija +1. Dos Ag⁺ compensan un O²⁻ → Ag₂O.'
   },
 
@@ -120,7 +120,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido ferroso'],
     stock: ['óxido de hierro (II)'],
-    sist: ['óxido de hierro'],
+    sist: ['monóxido de hierro', 'óxido de hierro'],
     hint: 'Fe²⁺ es el EO menor del hierro → sufijo -oso → ferroso. Compuesto: óxido ferroso.'
   },
   {
@@ -136,7 +136,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido cuproso'],
     stock: ['óxido de cobre (I)'],
-    sist: ['óxido de dicobre'],
+    sist: ['monóxido de dicobre', 'óxido de dicobre'],
     hint: 'Cu⁺ es el EO menor del cobre → -oso → cuproso. Dos Cu⁺ compensan un O²⁻.'
   },
   {
@@ -144,7 +144,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido cúprico'],
     stock: ['óxido de cobre (II)'],
-    sist: ['óxido de cobre'],
+    sist: ['monóxido de cobre', 'óxido de cobre'],
     hint: 'Cu²⁺ es el EO mayor del cobre → -ico → cúprico. Cu²⁺ + O²⁻ → CuO.'
   },
   {
@@ -152,7 +152,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido plumboso'],
     stock: ['óxido de plomo (II)'],
-    sist: ['óxido de plomo'],
+    sist: ['monóxido de plomo', 'óxido de plomo'],
     hint: 'Pb²⁺ es el EO menor del plomo → -oso → plumboso.'
   },
   {
@@ -168,7 +168,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido estannoso'],
     stock: ['óxido de estaño (II)'],
-    sist: ['óxido de estaño'],
+    sist: ['monóxido de estaño', 'óxido de estaño'],
     hint: 'Sn²⁺ es el EO menor del estaño → -oso → estannoso.'
   },
   {
@@ -184,7 +184,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido niqueloso'],
     stock: ['óxido de níquel (II)'],
-    sist: ['óxido de níquel'],
+    sist: ['monóxido de níquel', 'óxido de níquel'],
     hint: 'Ni²⁺ es el EO menor del níquel → -oso → niqueloso.'
   },
   {
@@ -200,7 +200,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido cobaltoso'],
     stock: ['óxido de cobalto (II)'],
-    sist: ['óxido de cobalto'],
+    sist: ['monóxido de cobalto', 'óxido de cobalto'],
     hint: 'Co²⁺ es el EO menor del cobalto → -oso → cobaltoso.'
   },
   {
@@ -218,7 +218,7 @@ const BANCO = [
     group: 'ox-bas', level: 'hard',
     trad: ['óxido manganoso'],
     stock: ['óxido de manganeso (II)'],
-    sist: ['óxido de manganeso'],
+    sist: ['monóxido de manganeso', 'óxido de manganeso'],
     hint: 'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.'
   },
   {
@@ -266,7 +266,7 @@ const BANCO = [
     group: 'ox-bas', level: 'hard',
     trad: ['óxido mercúrico'],
     stock: ['óxido de mercurio (II)'],
-    sist: ['óxido de mercurio'],
+    sist: ['monóxido de mercurio', 'óxido de mercurio'],
     hint: 'Hg²⁺ (mercúrico) es el EO mayor del mercurio. Hg⁺ (mercurioso) forma Hg₂²⁺.'
   },
   {
@@ -274,7 +274,7 @@ const BANCO = [
     group: 'ox-bas', level: 'hard',
     trad: ['óxido auroso'],
     stock: ['óxido de oro (I)'],
-    sist: ['óxido de dioro'],
+    sist: ['monóxido de dioro', 'óxido de dioro'],
     hint: 'Au⁺ es el EO menor del oro → -oso → auroso. Dos Au⁺ por un O²⁻.'
   },
   {
@@ -290,7 +290,7 @@ const BANCO = [
     group: 'ox-bas', level: 'hard',
     trad: ['óxido vanadioso'],
     stock: ['óxido de vanadio (II)'],
-    sist: ['óxido de vanadio'],
+    sist: ['monóxido de vanadio', 'óxido de vanadio'],
     hint: 'V²⁺ es el EO menor del vanadio → -oso → vanadioso. V tiene EO +2,+3,+4,+5.'
   },
   {
@@ -2164,7 +2164,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido talioso'],
     stock: ['óxido de talio (I)'],
-    sist: ['óxido de ditalio'],
+    sist: ['monóxido de ditalio', 'óxido de ditalio'],
     hint: 'Tl⁺ (EO menor del talio) → -oso → talioso. 2Tl⁺ + O²⁻ → Tl₂O.'
   },
   {
@@ -2212,7 +2212,7 @@ const BANCO = [
     group: 'ox-bas', level: 'hard',
     trad: ['óxido titanoso'],
     stock: ['óxido de titanio (II)'],
-    sist: ['óxido de titanio'],
+    sist: ['monóxido de titanio', 'óxido de titanio'],
     hint: 'Ti con EO=+2 (menor). → -oso → titanoso. Ti²⁺ + O²⁻ → TiO.'
   },
   {
@@ -2526,7 +2526,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de francio'],
     stock: [],
-    sist: ['óxido de difrancio'],
+    sist: ['monóxido de difrancio', 'óxido de difrancio'],
     hint: 'Fr tiene valencia fija +1. 2Fr⁺ + O²⁻ → Fr₂O. Metal alcalino.'
   },
   {
@@ -2534,7 +2534,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de radio'],
     stock: [],
-    sist: ['óxido de radio'],
+    sist: ['monóxido de radio', 'óxido de radio'],
     hint: 'Ra (grupo 2A) tiene valencia fija +2. Ra²⁺ + O²⁻ → RaO.'
   },
   {
@@ -2542,7 +2542,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de cadmio'],
     stock: [],
-    sist: ['óxido de cadmio'],
+    sist: ['monóxido de cadmio', 'óxido de cadmio'],
     hint: 'Cd tiene valencia fija +2. Cd²⁺ + O²⁻ → CdO.'
   },
   {
@@ -2590,7 +2590,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido paladoso'],
     stock: ['óxido de paladio (II)'],
-    sist: ['óxido de paladio'],
+    sist: ['monóxido de paladio', 'óxido de paladio'],
     hint: 'Pd²⁺ (EO menor habitual) → -oso → paladoso. Pd²⁺ + O²⁻ → PdO.'
   },
   {
@@ -2612,10 +2612,10 @@ const BANCO = [
   {
     formula: 'ZrO₂',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido circónico'],
+    trad: ['óxido de circonio', 'óxido circónico'],
     stock: ['óxido de circonio (IV)'],
     sist: ['dióxido de circonio'],
-    hint: 'Zr en EO +4 (el más estable) → -ico → circónico. Zr⁴⁺ + 2O²⁻ → ZrO₂.'
+    hint: 'Zr en EO +4 (el más estable). Trad. usual: óxido de circonio (circonia). Zr⁴⁺ + 2O²⁻ → ZrO₂.'
   },
   {
     formula: 'HfO₂',
@@ -2662,7 +2662,7 @@ const BANCO = [
     group: 'ox-bas', level: 'medium',
     trad: ['óxido germanoso'],
     stock: ['óxido de germanio (II)'],
-    sist: ['óxido de germanio'],
+    sist: ['monóxido de germanio', 'óxido de germanio'],
     hint: 'Ge en EO +2 (menor) → -oso → germanoso. Ge²⁺ + O²⁻ → GeO.'
   },
   {
@@ -2968,7 +2968,7 @@ const BANCO = [
   {
     formula: 'ZrH₂',
     group: 'hidru', level: 'hard',
-    trad: ['hidruro circónico'],
+    trad: ['hidruro de circonio', 'hidruro circónico'],
     stock: ['hidruro de circonio (IV)'],
     sist: ['dihidruro de circonio'],
     hint: 'Zr en EO +4 (su EO estable) → -ico → circónico. ZrH₂ almacena hidrógeno.'
@@ -3172,7 +3172,7 @@ const BANCO = [
   {
     formula: 'Zr(OH)₄',
     group: 'base', level: 'hard',
-    trad: ['hidróxido circónico'],
+    trad: ['hidróxido de circonio', 'hidróxido circónico'],
     stock: ['hidróxido de circonio (IV)'],
     sist: ['tetrahidróxido de circonio'],
     hint: 'Zr en EO +4 (su EO estable) → -ico → circónico.'
