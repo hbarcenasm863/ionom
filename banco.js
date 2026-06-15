@@ -2694,10 +2694,10 @@ const BANCO = [
   {
     formula: 'F₂O',
     group: 'anhid', level: 'hard',
-    trad: [],
-    stock: [],
+    trad: ['óxido de diflúor'],
+    stock: ['óxido de flúor'],
     sist: ['monóxido de diflúor'],
-    hint: 'El flúor es más electronegativo que el O; aquí el O actúa como +2. IUPAC: monóxido de diflúor.'
+    hint: 'El flúor es más electronegativo que O; aquí O actúa como +2. IUPAC: monóxido de diflúor.'
   },
   {
     formula: 'I₂O₄',

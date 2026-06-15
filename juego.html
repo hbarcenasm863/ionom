@@ -665,7 +665,8 @@ function extractEO(q){
 // ── Drag builder ──
 const TRIVIAL=new Set(['de','del','y','e','o','a','el','la','los','las','con','un','una']);
 function buildDrag(q, pool){
-  const name=(q.stock&&q.stock[0])?q.stock[0]:q.trad[0];
+  const name=(q.stock&&q.stock[0])?q.stock[0]:(q.trad&&q.trad[0])||'';
+  if(!name) return null;
   const label=(q.stock&&q.stock[0])?'Stock':'Tradicional';
   const parts=name.split(/\s+/);
   const keyIdx=parts.reduce((a,w,i)=>{
@@ -680,7 +681,8 @@ function buildDrag(q, pool){
   const allWords=[];
   pool.forEach(c=>{
     if(c.formula===q.formula) return;
-    const n=(c.stock&&c.stock[0])?c.stock[0]:c.trad[0];
+    const n=(c.stock&&c.stock[0])?c.stock[0]:(c.trad&&c.trad[0])||'';
+    if(!n) return;
     n.split(/\s+/).forEach(w=>{
       if(!TRIVIAL.has(w.toLowerCase())&&!/^\([IVX]+\)$/.test(w)&&w.length>1&&!answers.includes(w)) allWords.push(w);
     });
