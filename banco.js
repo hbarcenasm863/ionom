@@ -2612,10 +2612,10 @@ const BANCO = [
   {
     formula: 'ZrO₂',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido circónico'],
+    trad: ['óxido de circonio', 'óxido circónico'],
     stock: ['óxido de circonio (IV)'],
     sist: ['dióxido de circonio'],
-    hint: 'Zr en EO +4 (el más estable) → -ico → circónico. Zr⁴⁺ + 2O²⁻ → ZrO₂.'
+    hint: 'Zr en EO +4 (el más estable). Trad. usual: óxido de circonio (circonia). Zr⁴⁺ + 2O²⁻ → ZrO₂.'
   },
   {
     formula: 'HfO₂',
@@ -2968,7 +2968,7 @@ const BANCO = [
   {
     formula: 'ZrH₂',
     group: 'hidru', level: 'hard',
-    trad: ['hidruro circónico'],
+    trad: ['hidruro de circonio', 'hidruro circónico'],
     stock: ['hidruro de circonio (IV)'],
     sist: ['dihidruro de circonio'],
     hint: 'Zr en EO +4 (su EO estable) → -ico → circónico. ZrH₂ almacena hidrógeno.'
@@ -3172,7 +3172,7 @@ const BANCO = [
   {
     formula: 'Zr(OH)₄',
     group: 'base', level: 'hard',
-    trad: ['hidróxido circónico'],
+    trad: ['hidróxido de circonio', 'hidróxido circónico'],
     stock: ['hidróxido de circonio (IV)'],
     sist: ['tetrahidróxido de circonio'],
     hint: 'Zr en EO +4 (su EO estable) → -ico → circónico.'
