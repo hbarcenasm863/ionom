@@ -1155,71 +1155,87 @@ function checkMC(el){
 
 // ── Element MC (sym→name, name→sym, z→name, sym→type) ──
 function renderElMC(q){
-  const el=ELEMENTS[q.z];
-  const fEl=document.getElementById('q-formula');
-  const prompt=document.getElementById('q-prompt');
-  document.getElementById('area-mc').style.display='';
-  let correct, options;
-  if(q.qtype==='el-sym2name'){
-    const color=TYPE_COLORS[el.type];
-    fEl.innerHTML=`<span class="el-tile-lg" style="background:${color}22;border-color:${color};color:${color}">${el.sym}</span>`;
-    prompt.textContent='¿Cómo se llama este elemento?';
-    correct=el.name;
-    options=shuffle([correct,...elSamegroupNames(q.z,3)]);
-  } else if(q.qtype==='el-name2sym'){
-    fEl.innerHTML=`<span class="el-name-lg">${el.name}</span>`;
-    prompt.textContent='¿Cuál es el símbolo de este elemento?';
-    correct=el.sym;
-    options=shuffle([correct,...elSameperiodSyms(q.z,3)]);
-  } else if(q.qtype==='el-z2name'){
-    fEl.innerHTML=`<span class="el-z-lg">Elemento #${q.z}</span>`;
-    prompt.textContent='¿Cómo se llama este elemento?';
-    correct=el.name;
-    options=shuffle([correct,...elSamegroupNames(q.z,3)]);
-  } else { // el-sym2type
-    const color=TYPE_COLORS[el.type];
-    fEl.innerHTML=`<span class="el-tile-lg" style="background:${color}22;border-color:${color};color:${color}">${el.sym}</span>`;
-    prompt.textContent='¿A qué categoría pertenece este elemento?';
-    correct=TYPE_LABELS[el.type];
-    // distractors: 3 other types present in periods 2-5
-    const typesPresent=new Set();
-    for(let k=1;k<=103;k++){if(ELEMENTS[k].period>=2&&ELEMENTS[k].period<=5)typesPresent.add(ELEMENTS[k].type);}
-    typesPresent.delete(el.type);
-    const distTypes=shuffle([...typesPresent]).slice(0,3).map(t=>TYPE_LABELS[t]);
-    while(distTypes.length<3){
-      const extra=shuffle(Object.values(TYPE_LABELS)).find(l=>l!==correct&&!distTypes.includes(l));
-      if(extra)distTypes.push(extra); else break;
+  try{
+    const el=ELEMENTS[q.z];
+    if(!el){console.error('renderElMC: ELEMENTS['+q.z+'] undefined');renderMC_fallback(q);return;}
+    const fEl=document.getElementById('q-formula');
+    const prompt=document.getElementById('q-prompt');
+    let correct, options;
+    if(q.qtype==='el-sym2name'){
+      const color=TYPE_COLORS[el.type]||'#3498db';
+      fEl.innerHTML=`<span class="el-tile-lg" style="background:${color}22;border-color:${color};color:${color}">${el.sym}</span>`;
+      prompt.textContent='¿Cómo se llama este elemento?';
+      correct=el.name;
+      options=shuffle([correct,...elSamegroupNames(q.z,3)]);
+    } else if(q.qtype==='el-name2sym'){
+      fEl.innerHTML=`<span class="el-name-lg">${el.name}</span>`;
+      prompt.textContent='¿Cuál es el símbolo de este elemento?';
+      correct=el.sym;
+      options=shuffle([correct,...elSameperiodSyms(q.z,3)]);
+    } else if(q.qtype==='el-z2name'){
+      fEl.innerHTML=`<span class="el-z-lg">Elemento #${q.z}</span>`;
+      prompt.textContent='¿Cómo se llama este elemento?';
+      correct=el.name;
+      options=shuffle([correct,...elSamegroupNames(q.z,3)]);
+    } else { // el-sym2type
+      const color=TYPE_COLORS[el.type]||'#3498db';
+      fEl.innerHTML=`<span class="el-tile-lg" style="background:${color}22;border-color:${color};color:${color}">${el.sym}</span>`;
+      prompt.textContent='¿A qué categoría pertenece este elemento?';
+      correct=TYPE_LABELS[el.type]||el.type;
+      const typesPresent=new Set();
+      for(let k=1;k<=103;k++){if(ELEMENTS[k]&&ELEMENTS[k].period>=2&&ELEMENTS[k].period<=5)typesPresent.add(ELEMENTS[k].type);}
+      typesPresent.delete(el.type);
+      const distTypes=shuffle([...typesPresent]).slice(0,3).map(t=>TYPE_LABELS[t]||t);
+      while(distTypes.length<3){
+        const extra=Object.values(TYPE_LABELS).find(l=>l!==correct&&!distTypes.includes(l));
+        if(extra)distTypes.push(extra); else break;
+      }
+      options=shuffle([correct,...distTypes]);
     }
-    options=shuffle([correct,...distTypes]);
-  }
-  document.getElementById('q-mc-opts').innerHTML=options.map(o=>
-    `<button class="mc-opt" onclick="checkElMC(this,'${esc(o)}','${esc(correct)}')">${o}</button>`
-  ).join('');
+    // deduplicate options
+    const seen=new Set(); options=options.filter(o=>o&&!seen.has(o)&&seen.add(o));
+    while(options.length<4){options.push('(ninguna)');}
+    document.getElementById('area-mc').style.display='';
+    document.getElementById('q-mc-opts').innerHTML=options.slice(0,4).map(o=>
+      `<button class="mc-opt" onclick="checkElMC(this,${JSON.stringify(o)},${JSON.stringify(correct)})">${o}</button>`
+    ).join('');
+  }catch(e){console.error('renderElMC error:',e);renderMC_fallback(q);}
 }
 
 // ── Element electron-config questions (config→valence, config→element) ──
 function renderElConfig(q){
-  const el=ELEMENTS[q.z];
-  const fEl=document.getElementById('q-formula');
-  const prompt=document.getElementById('q-prompt');
+  try{
+    const el=ELEMENTS[q.z];
+    if(!el){console.error('renderElConfig: ELEMENTS['+q.z+'] undefined');renderMC_fallback(q);return;}
+    const fEl=document.getElementById('q-formula');
+    const prompt=document.getElementById('q-prompt');
+    fEl.innerHTML=`<span class="el-config-box">${supify(elAbbrevConfig(q.z))}</span>`;
+    let correct, options;
+    if(q.qtype==='el-config2val'){
+      prompt.textContent='¿Cuántos electrones de valencia tiene este elemento?';
+      correct=String(elValenceCount(q.z));
+      const opts=new Set([correct]);
+      const cands=shuffle([1,2,3,4,5,6,7,8]);
+      for(const c of cands){if(opts.size>=4)break;opts.add(String(c));}
+      options=shuffle([...opts]);
+    } else { // el-config2el
+      prompt.textContent='¿A qué elemento corresponde esta configuración electrónica?';
+      correct=el.name;
+      options=shuffle([correct,...elSamegroupNames(q.z,3)]);
+      const seen=new Set(); options=options.filter(o=>o&&!seen.has(o)&&seen.add(o));
+      while(options.length<4){options.push('(ninguno)');}
+    }
+    document.getElementById('area-mc').style.display='';
+    document.getElementById('q-mc-opts').innerHTML=options.slice(0,4).map(o=>
+      `<button class="mc-opt" onclick="checkElMC(this,${JSON.stringify(o)},${JSON.stringify(correct)})">${o}</button>`
+    ).join('');
+  }catch(e){console.error('renderElConfig error:',e);renderMC_fallback(q);}
+}
+
+function renderMC_fallback(q){
+  document.getElementById('q-prompt').textContent='Error al cargar la pregunta. Avanza a la siguiente.';
   document.getElementById('area-mc').style.display='';
-  fEl.innerHTML=`<span class="el-config-box">${supify(elAbbrevConfig(q.z))}</span>`;
-  let correct, options;
-  if(q.qtype==='el-config2val'){
-    prompt.textContent='¿Cuántos electrones de valencia tiene este elemento?';
-    correct=String(elValenceCount(q.z));
-    const opts=new Set([correct]);
-    const cands=shuffle([1,2,3,4,5,6,7,8]);
-    for(const c of cands){if(opts.size>=4)break;opts.add(String(c));}
-    options=shuffle([...opts]);
-  } else { // el-config2el
-    prompt.textContent='¿A qué elemento corresponde esta configuración electrónica?';
-    correct=el.name;
-    options=shuffle([correct,...elSamegroupNames(q.z,3)]);
-  }
-  document.getElementById('q-mc-opts').innerHTML=options.map(o=>
-    `<button class="mc-opt" onclick="checkElMC(this,'${esc(o)}','${esc(correct)}')">${o}</button>`
-  ).join('');
+  document.getElementById('q-mc-opts').innerHTML='<button class="mc-opt" onclick="scheduleNext(0)">Siguiente →</button>';
 }
 
 function checkElMC(el,chosen,correct){
