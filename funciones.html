@@ -188,6 +188,61 @@ footer a:hover{text-decoration:underline}
   .cards-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:360px){.cards-grid{grid-template-columns:1fr}}
+
+/* ══════════ MAPA DE REACTIVIDAD ══════════ */
+.react-map-section{margin:0 0 32px;padding:24px;background:#0d2d42;border:1px solid #1e4060;border-radius:var(--r);box-shadow:var(--sh2)}
+.react-map-section h2{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:#e0f2fe;margin-bottom:20px;text-align:center;letter-spacing:-.02em}
+.react-map-section h2 span{color:#fcd34d}
+
+/* map grid */
+.rmap{display:grid;grid-template-columns:1fr 60px 1fr;grid-template-rows:auto auto auto auto auto;gap:0;align-items:center;justify-items:center;width:100%;max-width:600px;margin:0 auto}
+
+/* node buttons */
+.rnode{background:none;border:none;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;gap:0}
+.rnode-box{padding:8px 14px;border-radius:8px;font-size:.78rem;font-weight:700;text-align:center;line-height:1.3;transition:filter .15s,transform .15s;border:2px solid transparent;min-width:110px}
+.rnode:hover .rnode-box{filter:brightness(1.2);transform:translateY(-2px)}
+.rnode-label{font-size:.65rem;color:#94a3b8;margin-top:3px;text-align:center}
+
+/* color variants */
+.rn-metal .rnode-box{background:#78350f;border-color:#d97706;color:#fcd34d}
+.rn-nometal .rnode-box{background:#0c2e5c;border-color:#3b82f6;color:#bfdbfe}
+.rn-oxbas .rnode-box{background:#7c2d12;border-color:#ea580c;color:#fed7aa}
+.rn-anhid .rnode-box{background:#1e3a5f;border-color:#60a5fa;color:#dbeafe}
+.rn-base .rnode-box{background:#4c1d95;border-color:#7c3aed;color:#ede9fe}
+.rn-acox .rnode-box{background:#164e63;border-color:#06b6d4;color:#cffafe}
+.rn-salox .rnode-box{background:#3b0764;border-color:#a855f7;color:#f3e8ff;font-size:.82rem}
+.rn-hidru .rnode-box{background:#713f12;border-color:#ca8a04;color:#fef08a}
+.rn-achid .rnode-box{background:#0f3460;border-color:#2563eb;color:#bfdbfe}
+.rn-salbin .rnode-box{background:#134e4a;border-color:#0d9488;color:#99f6e4}
+
+/* arrows */
+.rarrow{color:#64748b;font-size:1.1rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.rarrow-v{writing-mode:vertical-rl;transform:rotate(180deg)}
+.rarrow-h{font-size:.9rem}
+.rarrow-lbl{font-size:.58rem;color:#94a3b8;text-align:center;margin-top:2px}
+
+/* neutralization row */
+.rmap-neut{display:flex;align-items:center;justify-content:center;gap:10px;grid-column:1/-1;margin:4px 0}
+
+/* bottom row */
+.rmap-bottom{display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:1px solid #1e4060;width:100%}
+
+/* modal */
+#react-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
+#react-modal-overlay.open{display:flex}
+.react-modal-box{background:#0d2d42;border:1px solid #2a5080;border-radius:var(--r);padding:28px 28px 24px;max-width:480px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
+.react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:#bfdbfe;margin-bottom:14px;padding-right:36px;line-height:1.4}
+.react-modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#64748b;font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color .15s}
+.react-modal-close:hover{color:#e0f2fe}
+.react-modal-rxns{list-style:none;display:flex;flex-direction:column;gap:8px}
+.react-modal-rxns li{background:#0a1f30;border-left:3px solid #3b82f6;border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:#e0f2fe;line-height:1.5}
+.react-modal-rxns li.note{font-family:var(--sans);border-left-color:#64748b;color:#94a3b8;font-size:.8rem;font-style:italic}
+
+@media(max-width:520px){
+  .rmap{grid-template-columns:1fr 44px 1fr}
+  .rnode-box{min-width:80px;font-size:.72rem;padding:6px 8px}
+  .rmap-bottom{gap:10px}
+}
 </style>
 </head>
 <body>
@@ -212,6 +267,95 @@ footer a:hover{text-decoration:underline}
     <h1>Funciones Inorgánicas</h1>
     <p>Las 8 funciones de la química inorgánica. Selecciona una para ver su identificación, reglas de nomenclatura y ejercicios interactivos.</p>
   </div>
+  <!-- MAPA DE REACTIVIDAD -->
+  <div class="react-map-section">
+    <h2>Mapa de <span>Reactividad</span> — Química Inorgánica</h2>
+    <div class="rmap">
+      <!-- Row 1: root elements -->
+      <button class="rnode rn-metal" onclick="openReactModal('metal')">
+        <div class="rnode-box">METAL</div>
+        <div class="rnode-label">elemento</div>
+      </button>
+      <div></div>
+      <button class="rnode rn-nometal" onclick="openReactModal('nometal')">
+        <div class="rnode-box">NO METAL</div>
+        <div class="rnode-label">elemento</div>
+      </button>
+
+      <!-- Row 2: + O₂ arrows -->
+      <div class="rarrow" style="flex-direction:column">
+        <div class="rarrow-v">↓</div>
+        <div class="rarrow-lbl">+ O₂</div>
+      </div>
+      <div></div>
+      <div class="rarrow" style="flex-direction:column">
+        <div class="rarrow-v">↓</div>
+        <div class="rarrow-lbl">+ O₂</div>
+      </div>
+
+      <!-- Row 3: oxides -->
+      <button class="rnode rn-oxbas" onclick="openReactModal('ox-bas')">
+        <div class="rnode-box">Óxido Básico</div>
+        <div class="rnode-label">Metal + O₂</div>
+      </button>
+      <div></div>
+      <button class="rnode rn-anhid" onclick="openReactModal('anhid')">
+        <div class="rnode-box">Anhídrido</div>
+        <div class="rnode-label">No metal + O₂</div>
+      </button>
+
+      <!-- Row 4: + H₂O arrows -->
+      <div class="rarrow" style="flex-direction:column">
+        <div class="rarrow-v">↓</div>
+        <div class="rarrow-lbl">+ H₂O</div>
+      </div>
+      <div></div>
+      <div class="rarrow" style="flex-direction:column">
+        <div class="rarrow-v">↓</div>
+        <div class="rarrow-lbl">+ H₂O</div>
+      </div>
+
+      <!-- Row 5: base + acid + neutralization -->
+      <button class="rnode rn-base" onclick="openReactModal('base')">
+        <div class="rnode-box">Base<br>(Hidróxido)</div>
+        <div class="rnode-label">Óx. básico + H₂O</div>
+      </button>
+      <div></div>
+      <button class="rnode rn-acox" onclick="openReactModal('ac-ox')">
+        <div class="rnode-box">Ácido Oxácido</div>
+        <div class="rnode-label">Anhídrido + H₂O</div>
+      </button>
+
+      <!-- Neutralization row spans all columns -->
+      <div class="rmap-neut">
+        <span class="rarrow rarrow-h">Base</span>
+        <span class="rarrow rarrow-h">+</span>
+        <span class="rarrow rarrow-h">Ácido</span>
+        <span class="rarrow rarrow-h">→</span>
+        <button class="rnode rn-salox" onclick="openReactModal('sal-ox')">
+          <div class="rnode-box">SAL OXIGENADA + H₂O</div>
+          <div class="rnode-label">Neutralización</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom row: hydrides, acid hydrics, binary salts -->
+    <div class="rmap-bottom">
+      <button class="rnode rn-hidru" onclick="openReactModal('hidru')">
+        <div class="rnode-box">Hidruro Metálico</div>
+        <div class="rnode-label">Metal + H₂</div>
+      </button>
+      <button class="rnode rn-achid" onclick="openReactModal('ac-hid')">
+        <div class="rnode-box">Ácido Hídrico</div>
+        <div class="rnode-label">No metal + H₂</div>
+      </button>
+      <button class="rnode rn-salbin" onclick="openReactModal('sal-bin')">
+        <div class="rnode-box">Sal Binaria</div>
+        <div class="rnode-label">Metal + No metal</div>
+      </button>
+    </div>
+  </div>
+
   <div class="cards-grid">
     <button class="card card-cat" onclick="goToSection(0)">
       <div class="card-icon">🔴</div>
@@ -261,6 +405,15 @@ footer a:hover{text-decoration:underline}
       <div class="card-title">Sales Oxigenadas</div>
       <div class="card-pattern">Metal + oxoanión</div>
     </button>
+  </div>
+</div>
+
+<!-- MODAL DE REACTIVIDAD -->
+<div id="react-modal-overlay" onclick="closeReactModal(event)">
+  <div class="react-modal-box">
+    <button class="react-modal-close" onclick="closeReactModal()">✕</button>
+    <h3 id="react-modal-title"></h3>
+    <ul class="react-modal-rxns" id="react-modal-rxns"></ul>
   </div>
 </div>
 
@@ -1403,6 +1556,104 @@ document.addEventListener('DOMContentLoaded', function(){
     if(idx >= 0 && idx < TOTAL) goToSection(idx);
   }
 });
+
+/* ══════════ MAPA DE REACTIVIDAD ══════════ */
+var REACT_DATA = {
+  'metal': {
+    title: 'Elemento Metálico',
+    items: [{note: 'Punto de partida de la rama izquierda. Los metales reaccionan con oxígeno, hidrógeno o no metales para formar distintas funciones inorgánicas.'}]
+  },
+  'nometal': {
+    title: 'Elemento No Metálico',
+    items: [{note: 'Punto de partida de la rama derecha. Los no metales reaccionan con oxígeno, hidrógeno o metales para formar distintas funciones inorgánicas.'}]
+  },
+  'ox-bas': {
+    title: 'Óxido Básico (Metal + O₂)',
+    items: [
+      {rxn: '2Ca + O<sub>2</sub> → 2CaO'},
+      {rxn: '4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub>'}
+    ]
+  },
+  'anhid': {
+    title: 'Anhídrido (No metal + O₂)',
+    items: [
+      {rxn: 'S + O<sub>2</sub> → SO<sub>2</sub>'},
+      {rxn: '2S + 3O<sub>2</sub> → 2SO<sub>3</sub>'},
+      {rxn: 'P<sub>4</sub> + 5O<sub>2</sub> → 2P<sub>2</sub>O<sub>5</sub>'}
+    ]
+  },
+  'base': {
+    title: 'Base / Hidróxido (Óxido básico + H₂O)',
+    items: [
+      {rxn: 'CaO + H<sub>2</sub>O → Ca(OH)<sub>2</sub>'},
+      {rxn: 'Na<sub>2</sub>O + H<sub>2</sub>O → 2NaOH'}
+    ]
+  },
+  'ac-ox': {
+    title: 'Ácido Oxácido (Anhídrido + H₂O)',
+    items: [
+      {rxn: 'SO<sub>3</sub> + H<sub>2</sub>O → H<sub>2</sub>SO<sub>4</sub>'},
+      {rxn: 'P<sub>2</sub>O<sub>5</sub> + 3H<sub>2</sub>O → 2H<sub>3</sub>PO<sub>4</sub>'},
+      {rxn: 'CO<sub>2</sub> + H<sub>2</sub>O → H<sub>2</sub>CO<sub>3</sub>'}
+    ]
+  },
+  'sal-ox': {
+    title: 'Sal Oxigenada — Neutralización (Base + Ácido oxácido)',
+    items: [
+      {rxn: 'Ca(OH)<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> → CaSO<sub>4</sub> + 2H<sub>2</sub>O'},
+      {rxn: 'NaOH + HNO<sub>3</sub> → NaNO<sub>3</sub> + H<sub>2</sub>O'},
+      {rxn: '2NaOH + H<sub>2</sub>SO<sub>4</sub> → Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O'}
+    ]
+  },
+  'hidru': {
+    title: 'Hidruro Metálico (Metal + H₂)',
+    items: [
+      {rxn: 'Ca + H<sub>2</sub> → CaH<sub>2</sub>'},
+      {rxn: '2Na + H<sub>2</sub> → 2NaH'}
+    ]
+  },
+  'ac-hid': {
+    title: 'Ácido Hídrico (No metal + H₂)',
+    items: [
+      {rxn: 'H<sub>2</sub> + Cl<sub>2</sub> → 2HCl'},
+      {rxn: 'H<sub>2</sub> + S → H<sub>2</sub>S'},
+      {rxn: '3H<sub>2</sub> + N<sub>2</sub> → 2NH<sub>3</sub>'}
+    ]
+  },
+  'sal-bin': {
+    title: 'Sal Binaria (Metal + No metal)',
+    items: [
+      {rxn: '2Na + Cl<sub>2</sub> → 2NaCl'},
+      {rxn: 'Fe + S → FeS'},
+      {rxn: 'Ca + Cl<sub>2</sub> → CaCl<sub>2</sub>'}
+    ]
+  }
+};
+
+function openReactModal(key) {
+  var data = REACT_DATA[key];
+  if (!data) return;
+  document.getElementById('react-modal-title').textContent = data.title;
+  var list = document.getElementById('react-modal-rxns');
+  list.innerHTML = '';
+  data.items.forEach(function(item) {
+    var li = document.createElement('li');
+    if (item.note) {
+      li.className = 'note';
+      li.textContent = item.note;
+    } else {
+      li.innerHTML = item.rxn;
+    }
+    list.appendChild(li);
+  });
+  document.getElementById('react-modal-overlay').classList.add('open');
+}
+
+function closeReactModal(e) {
+  if (!e || e.target === document.getElementById('react-modal-overlay') || !e.target) {
+    document.getElementById('react-modal-overlay').classList.remove('open');
+  }
+}
 </script>
 </body>
 </html>
