@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IonNom">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230d4a73' width='100' height='100'/><text x='50' y='50' font-size='60' font-weight='bold' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>">
+<title>Simulador | IonNom</title>
+<script src="banco.js"></script>
+<style>
+:root {
+  --bg: #0a1f30;
+  --surf: #0d2d42;
+  --brd: #1e4060;
+  --tx: #e0f2fe;
+  --dim: rgba(224,242,254,.65);
+  --dimmer: rgba(224,242,254,.45);
+  --amber: #d97706;
+  --amber-l: #fcd34d;
+  --blue: #3b82f6;
+  --r: 12px;
+  --rs: 8px;
+  --mono: 'Courier New', monospace;
+  --sans: system-ui, -apple-system, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sh: 0 3px 16px rgba(0,0,0,.35);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--sans);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+.site-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #0d2d42; padding: 0 20px; height: 48px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,.4);
+  border-bottom: 1px solid var(--brd);
+}
+.nav-brand {
+  color: #fff; font-weight: 800; font-size: .9rem;
+  font-style: italic; letter-spacing: -.02em; text-decoration: none; white-space: nowrap;
+}
+.nav-brand em { color: #fcd34d; font-style: normal; }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-links a {
+  color: rgba(255,255,255,.72); text-decoration: none; font-size: .78rem;
+  font-weight: 600; padding: 6px 10px; border-radius: 8px;
+  transition: background .15s, color .15s; white-space: nowrap;
+}
+.nav-links a:hover { background: rgba(255,255,255,.1); color: #fff; }
+.nav-links a.active { background: rgba(255,255,255,.18); color: #fff; }
+.nav-links a .full { display: inline; }
+#btn-install {
+  display: none; padding: 5px 12px; border-radius: 8px;
+  background: rgba(217,119,6,.28); border: 1.5px solid rgba(217,119,6,.6);
+  color: #fcd34d; font-size: .75rem; font-weight: 700; cursor: pointer;
+  transition: background .2s; white-space: nowrap;
+}
+#btn-install:hover { background: rgba(217,119,6,.45); }
+@media (max-width: 640px) {
+  .nav-links a .full { display: none; }
+  .nav-links a { padding: 5px 7px; font-size: .72rem; }
+  .nav-brand { font-size: .8rem; }
+}
+
+/* PAGE WRAPPER */
+.app { max-width: 900px; margin: 0 auto; padding: 0 16px 60px; position: relative; z-index: 1; }
+
+/* PAGE HEADER */
+.page-header {
+  background: var(--surf); border: 1px solid var(--brd);
+  border-radius: var(--r); padding: 28px 32px; margin: 24px 0 20px;
+  position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(59,130,246,.07); pointer-events: none;
+}
+.page-header h1 {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 700;
+  font-style: italic; letter-spacing: -.03em; margin-bottom: 6px;
+  color: var(--tx);
+}
+.page-header h1 em { color: var(--amber-l); font-style: normal; }
+.page-header p { font-size: .88rem; color: var(--dim); max-width: 540px; line-height: 1.7; }
+
+/* TABS */
+.sim-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.sim-tab {
+  flex: 1; padding: 11px 16px; border-radius: var(--r);
+  border: 1.5px solid var(--brd); background: var(--surf);
+  color: var(--dim); font-family: var(--sans); font-size: .88rem;
+  font-weight: 700; cursor: pointer; transition: all .2s; text-align: center;
+}
+.sim-tab.active {
+  background: rgba(59,130,246,.18); border-color: rgba(59,130,246,.5);
+  color: #93c5fd;
+}
+.sim-tab:hover:not(.active) { background: rgba(255,255,255,.06); color: var(--tx); }
+
+.sim-panel { display: none; }
+.sim-panel.active { display: block; }
+
+/* CARD */
+.card {
+  background: var(--surf); border: 1px solid var(--brd);
+  border-radius: var(--r); padding: 20px 24px; margin-bottom: 16px;
+  box-shadow: var(--sh);
+}
+.sec-label {
+  font-size: .6rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .16em; color: var(--dimmer); margin-bottom: 12px;
+}
+
+/* SUBSTANCE PALETTE */
+.palette-group { margin-bottom: 14px; }
+.palette-group-title {
+  font-size: .65rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; margin-bottom: 8px; padding: 3px 8px;
+  border-radius: 4px; display: inline-block;
+}
+.palette-group-title.metal   { color: #fcd34d; background: rgba(217,119,6,.18); }
+.palette-group-title.nonmetal{ color: #93c5fd; background: rgba(59,130,246,.18); }
+.palette-group-title.other   { color: #5eead4; background: rgba(20,184,166,.18); }
+.palette-group-title.oxide   { color: #86efac; background: rgba(22,163,74,.18); }
+.palette-group-title.base    { color: #c4b5fd; background: rgba(124,58,237,.18); }
+
+.substance-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card {
+  padding: 8px 10px; border-radius: var(--rs);
+  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  cursor: pointer; transition: all .18s; text-align: center;
+  min-width: 54px;
+}
+.sub-card:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.25); }
+.sub-card.selected-a {
+  background: rgba(217,119,6,.22); border-color: var(--amber);
+  box-shadow: 0 0 0 2px rgba(217,119,6,.35);
+}
+.sub-card.selected-b {
+  background: rgba(59,130,246,.22); border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(59,130,246,.35);
+}
+.sub-sym {
+  font-family: var(--mono); font-size: .9rem; font-weight: 700;
+  color: var(--tx); line-height: 1.2;
+}
+.sub-name { font-size: .55rem; color: var(--dimmer); margin-top: 2px; line-height: 1.2; }
+
+/* REACTION SLOTS */
+.reaction-row {
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap; margin-bottom: 16px;
+}
+.reactant-slot {
+  flex: 1; min-width: 120px; padding: 14px 16px; border-radius: var(--r);
+  border: 2px dashed var(--brd); background: rgba(255,255,255,.03);
+  text-align: center; min-height: 68px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.reactant-slot.has-val {
+  border-style: solid; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.2);
+}
+.slot-label   { font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--dimmer); margin-bottom: 4px; }
+.slot-sym     { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--tx); line-height: 1; }
+.slot-placeholder { font-size: .78rem; color: var(--dimmer); font-style: italic; }
+.reaction-plus  { font-size: 1.6rem; color: var(--dimmer); flex-shrink: 0; }
+.reaction-arrow { font-size: 1.6rem; color: var(--dimmer); flex-shrink: 0; }
+
+.react-btn {
+  padding: 12px 24px; border-radius: var(--r);
+  background: linear-gradient(135deg, rgba(59,130,246,.35), rgba(59,130,246,.2));
+  border: 1.5px solid rgba(59,130,246,.5); color: #93c5fd;
+  font-family: var(--sans); font-size: .88rem; font-weight: 700;
+  cursor: pointer; transition: all .2s; flex-shrink: 0;
+}
+.react-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(59,130,246,.55), rgba(59,130,246,.35)); color: #fff;
+}
+.react-btn:disabled { opacity: .45; cursor: not-allowed; }
+.clear-btn {
+  padding: 8px 16px; border-radius: var(--rs);
+  background: transparent; border: 1px solid var(--brd);
+  color: var(--dimmer); font-family: var(--sans); font-size: .78rem;
+  cursor: pointer; transition: all .2s;
+}
+.clear-btn:hover { border-color: rgba(255,255,255,.3); color: var(--dim); }
+
+/* RESULT */
+.result-box {
+  border-radius: var(--r); padding: 20px 24px; margin-top: 8px;
+  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  animation: fadeIn .3s ease;
+  display: none;
+}
+.result-box.show { display: block; }
+.result-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 100px;
+  font-size: .65rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; margin-bottom: 12px;
+}
+.result-badge.ox-bas      { background: rgba(217,119,6,.25); color: #fcd34d; border: 1px solid rgba(217,119,6,.5); }
+.result-badge.anhidrido   { background: rgba(59,130,246,.25); color: #93c5fd; border: 1px solid rgba(59,130,246,.5); }
+.result-badge.base        { background: rgba(124,58,237,.25); color: #c4b5fd; border: 1px solid rgba(124,58,237,.5); }
+.result-badge.ac-oxacido  { background: rgba(20,184,166,.25); color: #5eead4; border: 1px solid rgba(20,184,166,.5); }
+.result-badge.neutraliz   { background: rgba(22,163,74,.25); color: #86efac; border: 1px solid rgba(22,163,74,.5); }
+.result-badge.hidruro     { background: rgba(245,158,11,.25); color: #fde68a; border: 1px solid rgba(245,158,11,.5); }
+.result-badge.ac-hidrico  { background: rgba(239,68,68,.25); color: #fca5a5; border: 1px solid rgba(239,68,68,.5); }
+.result-badge.sal         { background: rgba(168,85,247,.25); color: #d8b4fe; border: 1px solid rgba(168,85,247,.5); }
+.result-badge.no-reaction { background: rgba(100,116,139,.18); color: rgba(224,242,254,.6); border: 1px solid rgba(100,116,139,.3); }
+
+.result-eq-label { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px; }
+.result-eq {
+  font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
+  color: var(--tx); margin-bottom: 14px; padding: 10px 14px;
+  background: rgba(255,255,255,.05); border-radius: var(--rs);
+  border-left: 3px solid var(--blue);
+}
+.result-product { font-size: .88rem; color: var(--dim); margin-bottom: 6px; }
+.result-product strong { color: var(--tx); }
+.result-desc { font-size: .82rem; color: var(--dimmer); margin-bottom: 14px; line-height: 1.6; }
+.no-reaction-msg { font-size: .88rem; color: var(--dim); line-height: 1.6; font-style: italic; }
+
+/* QUIZ */
+.quiz-box {
+  background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.25);
+  border-radius: var(--r); padding: 18px 20px; margin-top: 14px;
+  animation: fadeIn .3s ease; display: none;
+}
+.quiz-box.show { display: block; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.quiz-title { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #93c5fd; }
+.quiz-score { font-size: .75rem; font-weight: 700; color: var(--amber-l); }
+.quiz-question { font-size: .92rem; font-weight: 600; color: var(--tx); margin-bottom: 12px; line-height: 1.55; }
+.quiz-opts { display: flex; flex-direction: column; gap: 7px; }
+.quiz-opt {
+  padding: 10px 14px; border-radius: var(--rs);
+  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  color: var(--dim); font-family: var(--sans); font-size: .84rem;
+  cursor: pointer; transition: all .18s; text-align: left;
+}
+.quiz-opt:hover:not(:disabled) { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.2); color: var(--tx); }
+.quiz-opt.correct { background: rgba(22,163,74,.2); border-color: #16a34a; color: #86efac; }
+.quiz-opt.wrong   { background: rgba(220,38,38,.18); border-color: #dc2626; color: #fca5a5; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-feedback { margin-top: 10px; font-size: .82rem; padding: 8px 12px; border-radius: var(--rs); display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok  { background: rgba(22,163,74,.15); color: #86efac; border: 1px solid rgba(22,163,74,.35); }
+.quiz-feedback.err { background: rgba(220,38,38,.12); color: #fca5a5; border: 1px solid rgba(220,38,38,.3); }
+.completion-badge {
+  text-align: center; padding: 20px;
+  background: rgba(217,119,6,.15); border: 1.5px solid rgba(217,119,6,.4);
+  border-radius: var(--r); color: var(--amber-l); font-weight: 700;
+  font-size: .95rem; line-height: 1.6; display: none; margin-top: 12px;
+}
+.completion-badge.show { display: block; }
+
+/* PH SIMULATOR */
+.ph-controls { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.ph-select-wrap { flex: 1; min-width: 220px; }
+.ph-select-wrap label {
+  display: block; font-size: .6rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px;
+}
+.ph-select {
+  width: 100%; padding: 10px 14px; border-radius: var(--rs);
+  border: 1.5px solid var(--brd); background: var(--surf);
+  color: var(--tx); font-family: var(--sans); font-size: .88rem;
+  outline: none; cursor: pointer; transition: border-color .2s;
+}
+.ph-select:focus { border-color: var(--blue); }
+.ph-select option { background: #0d2d42; color: #e0f2fe; }
+.ph-conc-wrap { flex: 1; min-width: 220px; }
+.ph-conc-wrap label {
+  display: block; font-size: .6rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px;
+}
+.ph-conc-val { font-size: .82rem; color: var(--amber-l); font-weight: 700; margin-bottom: 6px; }
+.ph-slider {
+  width: 100%; height: 6px; border-radius: 3px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(to right, #dc2626, #22c55e, #7c3aed);
+  outline: none;
+}
+.ph-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: 50%; background: #fff; border: 2px solid var(--blue);
+  cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+
+/* INDICATORS */
+.indicators-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+@media (max-width: 580px) { .indicators-grid { grid-template-columns: 1fr; } }
+
+.indicator-card {
+  background: var(--surf); border: 1px solid var(--brd); border-radius: var(--r);
+  padding: 16px; text-align: center; transition: all .3s;
+}
+.ind-title { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--dimmer); margin-bottom: 12px; }
+
+/* pH meter */
+.ph-meter-val {
+  font-family: var(--mono); font-size: 3rem; font-weight: 700;
+  line-height: 1; margin-bottom: 8px; transition: color .4s;
+}
+.ph-scale-bar {
+  position: relative; height: 14px; border-radius: 7px;
+  background: linear-gradient(to right, #dc2626, #f97316, #facc15, #22c55e, #3b82f6, #7c3aed);
+  margin-bottom: 6px; overflow: visible;
+}
+.ph-needle {
+  position: absolute; top: -5px; width: 4px; height: 24px;
+  background: #fff; border-radius: 2px; transform: translateX(-50%);
+  transition: left .4s ease; box-shadow: 0 0 6px rgba(0,0,0,.6);
+}
+.ph-scale-labels {
+  display: flex; justify-content: space-between;
+  font-size: .55rem; color: var(--dimmer); margin-bottom: 8px;
+}
+.ph-class-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 100px;
+  font-size: .65rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .08em; transition: all .3s;
+}
+
+/* Test tube */
+.test-tube-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.test-tube-cap  { width: 40px; height: 8px; background: rgba(255,255,255,.3); border-radius: 2px 2px 0 0; }
+.test-tube {
+  width: 36px; height: 100px; border-radius: 0 0 18px 18px;
+  border: 2px solid rgba(255,255,255,.3); border-top: none;
+  transition: background-color .5s, border-color .5s;
+}
+.test-tube-color-name { font-size: .72rem; color: var(--dim); font-weight: 600; }
+
+/* Beaker */
+.beaker-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.beaker-rim  { width: 84px; height: 8px; background: rgba(255,255,255,.25); border-radius: 2px; }
+.beaker {
+  width: 80px; height: 70px;
+  border: 2px solid rgba(255,255,255,.3); border-top: none;
+  border-radius: 0 0 12px 12px;
+  transition: background-color .5s;
+  clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
+}
+.beaker-color-name { font-size: .72rem; color: var(--dim); font-weight: 600; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">Ion<em>Nom</em></a>
+  <div class="nav-links">
+    <a href="index.html"><span class="full">Inicio</span></a>
+    <a href="teoria.html"><span class="full">Principios</span></a>
+    <a href="funciones.html"><span class="full">Funciones</span></a>
+    <a href="juego.html"><span class="full">Juego</span></a>
+    <a href="tabla.html"><span class="full">Tabla</span></a>
+    <a href="generador.html"><span class="full">Generador</span></a>
+    <a href="nomenClash.html"><span class="full">NomenClash</span></a>
+    <a href="simulador.html" class="active"><span class="full">Simulador</span></a>
+    <button id="btn-install">Instalar</button>
+  </div>
+</nav>
+
+<div class="app">
+
+  <div class="page-header">
+    <h1>Simula<em>dor</em></h1>
+    <p>Explora reacciones inorgánicas y el comportamiento del pH con indicadores visuales en tiempo real.</p>
+  </div>
+
+  <div class="sim-tabs">
+    <button class="sim-tab active" onclick="switchTab('reacciones')">&#9879;&#65039; Simulador de Reacciones</button>
+    <button class="sim-tab" onclick="switchTab('ph')">&#129514; Simulador de pH</button>
+  </div>
+
+  <!-- TAB 1: REACTIONS -->
+  <div class="sim-panel active" id="panel-reacciones">
+
+    <div class="card">
+      <div class="sec-label">Paleta de sustancias — elige Reactivo A y Reactivo B</div>
+      <div class="palette-group">
+        <span class="palette-group-title metal">Metales</span>
+        <div class="substance-grid" id="grid-metales"></div>
+      </div>
+      <div class="palette-group">
+        <span class="palette-group-title nonmetal">No metales</span>
+        <div class="substance-grid" id="grid-nometales"></div>
+      </div>
+      <div class="palette-group">
+        <span class="palette-group-title other">Otros reactivos</span>
+        <div class="substance-grid" id="grid-otros"></div>
+      </div>
+      <div class="palette-group">
+        <span class="palette-group-title oxide">&#211;xidos</span>
+        <div class="substance-grid" id="grid-oxidos"></div>
+      </div>
+      <div class="palette-group">
+        <span class="palette-group-title base">Bases</span>
+        <div class="substance-grid" id="grid-bases"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="reaction-row">
+        <div class="reactant-slot" id="slot-a">
+          <div class="slot-label">Reactivo A</div>
+          <div class="slot-placeholder">Selecciona una sustancia</div>
+        </div>
+        <div class="reaction-plus">+</div>
+        <div class="reactant-slot" id="slot-b">
+          <div class="slot-label">Reactivo B</div>
+          <div class="slot-placeholder">Selecciona una sustancia</div>
+        </div>
+        <div class="reaction-arrow">&#8594;</div>
+        <button class="react-btn" id="btn-react" disabled onclick="runReaction()">Reaccionar &#9654;</button>
+      </div>
+      <button class="clear-btn" onclick="clearSelection()">&#10005; Limpiar selecci&#243;n</button>
+    </div>
+
+    <div class="result-box" id="result-box"></div>
+
+    <div class="quiz-box" id="quiz-box-1">
+      <div class="quiz-header">
+        <span class="quiz-title">Pregunta de comprensi&#243;n</span>
+        <span class="quiz-score" id="score-1">Aciertos: 0/0</span>
+      </div>
+      <div class="quiz-question" id="q1-question"></div>
+      <div class="quiz-opts" id="q1-opts"></div>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+    <div class="completion-badge" id="completion-1">
+      &#127942; &#161;Simulador dominado! Identificaste correctamente 5 reacciones.
+    </div>
+
+  </div>
+
+  <!-- TAB 2: pH -->
+  <div class="sim-panel" id="panel-ph">
+
+    <div class="card">
+      <div class="sec-label">Configuraci&#243;n de la soluci&#243;n</div>
+      <div class="ph-controls">
+        <div class="ph-select-wrap">
+          <label for="ph-substance">Sustancia</label>
+          <select class="ph-select" id="ph-substance" onchange="updatePH()">
+            <optgroup label="&#193;cidos fuertes">
+              <option value="HCl-sa">HCl &mdash; &aacute;cido clor&iacute;drico</option>
+              <option value="H2SO4-sa">H&#8322;SO&#8324; &mdash; &aacute;cido sulf&uacute;rico</option>
+              <option value="HNO3-sa">HNO&#8323; &mdash; &aacute;cido n&iacute;trico</option>
+            </optgroup>
+            <optgroup label="&#193;cidos d&eacute;biles">
+              <option value="H2CO3-wa">H&#8322;CO&#8323; &mdash; &aacute;cido carb&oacute;nico (Ka=4.3&times;10&#8315;&#8311;)</option>
+              <option value="H2S-wa">H&#8322;S &mdash; &aacute;cido sulfh&iacute;drico (Ka=9.5&times;10&#8315;&#8312;)</option>
+              <option value="CH3COOH-wa">CH&#8323;COOH &mdash; &aacute;cido ac&eacute;tico (Ka=1.8&times;10&#8315;&#8309;)</option>
+            </optgroup>
+            <optgroup label="Bases fuertes">
+              <option value="NaOH-sb">NaOH &mdash; hidr&oacute;xido de sodio</option>
+              <option value="CaOH2-sb">Ca(OH)&#8322; &mdash; hidr&oacute;xido de calcio</option>
+              <option value="KOH-sb">KOH &mdash; hidr&oacute;xido de potasio</option>
+            </optgroup>
+            <optgroup label="Bases d&eacute;biles">
+              <option value="NH3-wb">NH&#8323; &mdash; amon&iacute;aco (Kb=1.8&times;10&#8315;&#8309;)</option>
+              <option value="NH4OH-wb">NH&#8324;OH &mdash; hidr&oacute;xido de amonio (Kb=1.8&times;10&#8315;&#8309;)</option>
+            </optgroup>
+            <optgroup label="Neutro">
+              <option value="H2O-n">H&#8322;O &mdash; agua pura</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="ph-conc-wrap">
+          <label>Concentraci&#243;n</label>
+          <div class="ph-conc-val" id="conc-val">0.1000 mol/L</div>
+          <input type="range" class="ph-slider" id="ph-slider" min="0" max="100" value="50" oninput="updatePH()">
+        </div>
+      </div>
+    </div>
+
+    <div class="indicators-grid">
+      <div class="indicator-card" id="card-phmetro">
+        <div class="ind-title">pH-metro digital</div>
+        <div class="ph-meter-val" id="ph-num">7.0</div>
+        <div class="ph-scale-bar">
+          <div class="ph-needle" id="ph-needle" style="left:50%"></div>
+        </div>
+        <div class="ph-scale-labels">
+          <span>0</span><span>3</span><span>7</span><span>10</span><span>14</span>
+        </div>
+        <div class="ph-class-badge" id="ph-class">NEUTRO</div>
+      </div>
+
+      <div class="indicator-card">
+        <div class="ind-title">Fenolftale&iacute;na</div>
+        <div class="test-tube-wrap">
+          <div class="test-tube-cap"></div>
+          <div class="test-tube" id="tt-fenolf"></div>
+          <div class="test-tube-color-name" id="tt-fenolf-name">Incoloro</div>
+        </div>
+      </div>
+
+      <div class="indicator-card">
+        <div class="ind-title">Repollo morado</div>
+        <div class="beaker-wrap">
+          <div class="beaker-rim"></div>
+          <div class="beaker" id="beaker-repollo"></div>
+          <div class="beaker-color-name" id="beaker-repollo-name">Morado neutro</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-box show" id="quiz-box-2">
+      <div class="quiz-header">
+        <span class="quiz-title">Pregunta de pH</span>
+        <span class="quiz-score" id="score-2">Aciertos: 0/0</span>
+      </div>
+      <div class="quiz-question" id="q2-question">Carga una soluci&#243;n para comenzar las preguntas.</div>
+      <div class="quiz-opts" id="q2-opts"></div>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+    <div class="completion-badge" id="completion-2">
+      &#127942; &#161;Laboratorio dominado! Interpretas correctamente los indicadores de pH.
+    </div>
+
+  </div>
+
+  <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
+    <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> &copy; 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SUBSTANCE PALETTE DATA ──────────────────────────────────────────────
+var SUBSTANCES = {
+  metales: [
+    {sym:'Na',  name:'Sodio'},
+    {sym:'Ca',  name:'Calcio'},
+    {sym:'Fe',  name:'Hierro'},
+    {sym:'Cu',  name:'Cobre'},
+    {sym:'Mg',  name:'Magnesio'},
+    {sym:'Al',  name:'Aluminio'}
+  ],
+  nometales: [
+    {sym:'S',   name:'Azufre'},
+    {sym:'Cl2', name:'Cloro'},
+    {sym:'N2',  name:'Nitr&oacute;geno'},
+    {sym:'P',   name:'F&oacute;sforo'},
+    {sym:'C',   name:'Carbono'}
+  ],
+  otros: [
+    {sym:'O2',    name:'Ox&iacute;geno'},
+    {sym:'H2',    name:'Hidr&oacute;geno'},
+    {sym:'H2O',   name:'Agua'},
+    {sym:'HCl(g)',name:'Cl. hidr&oacute;geno'},
+    {sym:'HNO3',  name:'Ac. n&iacute;trico'},
+    {sym:'H2SO4', name:'Ac. sulf&uacute;rico'}
+  ],
+  oxidos: [
+    {sym:'CaO',   name:'&Oacute;x. calcio'},
+    {sym:'Fe2O3', name:'&Oacute;x. hierro'},
+    {sym:'SO2',   name:'Di&oacute;x. azufre'},
+    {sym:'SO3',   name:'Tri&oacute;x. azufre'},
+    {sym:'P2O5',  name:'Pent&oacute;x. f&oacute;sforo'},
+    {sym:'CO2',   name:'Di&oacute;x. carbono'}
+  ],
+  bases: [
+    {sym:'NaOH',    name:'Hid. sodio'},
+    {sym:'Ca(OH)2', name:'Hid. calcio'},
+    {sym:'Fe(OH)3', name:'Hid. hierro'}
+  ]
+};
+
+// Symbol display (HTML) for each key
+var SYM_HTML = {
+  'Na':'Na','Ca':'Ca','Fe':'Fe','Cu':'Cu','Mg':'Mg','Al':'Al',
+  'S':'S','Cl2':'Cl<sub>2</sub>','N2':'N<sub>2</sub>','P':'P','C':'C',
+  'O2':'O<sub>2</sub>','H2':'H<sub>2</sub>','H2O':'H<sub>2</sub>O',
+  'HCl(g)':'HCl<sub>(g)</sub>','HNO3':'HNO<sub>3</sub>','H2SO4':'H<sub>2</sub>SO<sub>4</sub>',
+  'CaO':'CaO','Fe2O3':'Fe<sub>2</sub>O<sub>3</sub>',
+  'SO2':'SO<sub>2</sub>','SO3':'SO<sub>3</sub>',
+  'P2O5':'P<sub>2</sub>O<sub>5</sub>','CO2':'CO<sub>2</sub>',
+  'NaOH':'NaOH','Ca(OH)2':'Ca(OH)<sub>2</sub>','Fe(OH)3':'Fe(OH)<sub>3</sub>'
+};
+
+// ── REACTIONS TABLE ─────────────────────────────────────────────────────
+var REACTIONS = [
+  // Oxidos basicos
+  {r:['Na','O2'],     product:'Na<sub>2</sub>O',   eq:'4Na + O<sub>2</sub> &rarr; 2Na<sub>2</sub>O',             group:'ox-bas',    groupName:'&Oacute;xido B&aacute;sico',            nombre:'&oacute;xido de sodio',           tipo:'S&iacute;ntesis',    desc:'Un metal reacciona con ox&iacute;geno para dar un &oacute;xido b&aacute;sico.'},
+  {r:['Ca','O2'],     product:'CaO',               eq:'2Ca + O<sub>2</sub> &rarr; 2CaO',                          group:'ox-bas',    groupName:'&Oacute;xido B&aacute;sico',            nombre:'&oacute;xido de calcio',           tipo:'S&iacute;ntesis',    desc:'Reacci&oacute;n de s&iacute;ntesis entre calcio y ox&iacute;geno.'},
+  {r:['Fe','O2'],     product:'Fe<sub>2</sub>O<sub>3</sub>', eq:'4Fe + 3O<sub>2</sub> &rarr; 2Fe<sub>2</sub>O<sub>3</sub>', group:'ox-bas', groupName:'&Oacute;xido B&aacute;sico', nombre:'&oacute;xido de hierro(III)',      tipo:'S&iacute;ntesis',    desc:'El hierro se oxida formando &oacute;xido de hierro(III).'},
+  {r:['Cu','O2'],     product:'CuO',               eq:'2Cu + O<sub>2</sub> &rarr; 2CuO',                          group:'ox-bas',    groupName:'&Oacute;xido B&aacute;sico',            nombre:'&oacute;xido de cobre(II)',        tipo:'S&iacute;ntesis',    desc:'El cobre se oxida para dar &oacute;xido c&uacute;prico.'},
+  {r:['Mg','O2'],     product:'MgO',               eq:'2Mg + O<sub>2</sub> &rarr; 2MgO',                          group:'ox-bas',    groupName:'&Oacute;xido B&aacute;sico',            nombre:'&oacute;xido de magnesio',         tipo:'S&iacute;ntesis',    desc:'El magnesio arde con llama brillante formando &oacute;xido de magnesio.'},
+  {r:['Al','O2'],     product:'Al<sub>2</sub>O<sub>3</sub>', eq:'4Al + 3O<sub>2</sub> &rarr; 2Al<sub>2</sub>O<sub>3</sub>', group:'ox-bas', groupName:'&Oacute;xido B&aacute;sico', nombre:'&oacute;xido de aluminio',         tipo:'S&iacute;ntesis',    desc:'La al&uacute;mina forma una capa protectora sobre el aluminio.'},
+  // Anhidridos
+  {r:['S','O2'],      product:'SO<sub>2</sub>',    eq:'S + O<sub>2</sub> &rarr; SO<sub>2</sub>',                   group:'anhidrido', groupName:'Anh&iacute;drido (&Oacute;xido &Aacute;cido)', nombre:'di&oacute;xido de azufre',  tipo:'S&iacute;ntesis',    desc:'Un no metal reacciona con ox&iacute;geno produciendo un &oacute;xido &aacute;cido.'},
+  {r:['C','O2'],      product:'CO<sub>2</sub>',    eq:'C + O<sub>2</sub> &rarr; CO<sub>2</sub>',                   group:'anhidrido', groupName:'Anh&iacute;drido (&Oacute;xido &Aacute;cido)', nombre:'di&oacute;xido de carbono', tipo:'S&iacute;ntesis',    desc:'Combusti&oacute;n del carbono en exceso de ox&iacute;geno.'},
+  {r:['N2','O2'],     product:'NO',                eq:'N<sub>2</sub> + O<sub>2</sub> &rarr; 2NO',                  group:'anhidrido', groupName:'Anh&iacute;drido (&Oacute;xido &Aacute;cido)', nombre:'mon&oacute;xido de nitr&oacute;geno', tipo:'S&iacute;ntesis', desc:'Reacci&oacute;n que ocurre a altas temperaturas.'},
+  {r:['P','O2'],      product:'P<sub>2</sub>O<sub>5</sub>', eq:'P<sub>4</sub> + 5O<sub>2</sub> &rarr; 2P<sub>2</sub>O<sub>5</sub>', group:'anhidrido', groupName:'Anh&iacute;drido (&Oacute;xido &Aacute;cido)', nombre:'pent&oacute;xido de dif&oacute;sforo', tipo:'S&iacute;ntesis', desc:'El f&oacute;sforo reacciona con exceso de ox&iacute;geno para dar su anh&iacute;drido.'},
+  // Bases
+  {r:['CaO','H2O'],   product:'Ca(OH)<sub>2</sub>', eq:'CaO + H<sub>2</sub>O &rarr; Ca(OH)<sub>2</sub>',          group:'base',      groupName:'Base (Hidr&oacute;xido)',                nombre:'hidr&oacute;xido de calcio',       tipo:'S&iacute;ntesis',    desc:'Un &oacute;xido b&aacute;sico reacciona con agua para producir una base.'},
+  {r:['Fe2O3','H2O'], product:'Fe(OH)<sub>3</sub>', eq:'Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O &rarr; 2Fe(OH)<sub>3</sub>', group:'base', groupName:'Base (Hidr&oacute;xido)', nombre:'hidr&oacute;xido de hierro(III)', tipo:'S&iacute;ntesis', desc:'El &oacute;xido de hierro(III) se hidrata para dar el hidr&oacute;xido correspondiente.'},
+  // Acidos oxacidos
+  {r:['SO2','H2O'],   product:'H<sub>2</sub>SO<sub>3</sub>', eq:'SO<sub>2</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>3</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido sulfuroso',    tipo:'S&iacute;ntesis', desc:'Un &oacute;xido &aacute;cido reacciona con agua para dar un &aacute;cido ox&aacute;cido.'},
+  {r:['SO3','H2O'],   product:'H<sub>2</sub>SO<sub>4</sub>', eq:'SO<sub>3</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>4</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido sulf&uacute;rico', tipo:'S&iacute;ntesis', desc:'El tri&oacute;xido de azufre se disuelve en agua formando &aacute;cido sulf&uacute;rico.'},
+  {r:['P2O5','H2O'],  product:'H<sub>3</sub>PO<sub>4</sub>', eq:'P<sub>2</sub>O<sub>5</sub> + 3H<sub>2</sub>O &rarr; 2H<sub>3</sub>PO<sub>4</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido fosf&oacute;rico', tipo:'S&iacute;ntesis', desc:'El pent&oacute;xido de dif&oacute;sforo reacciona con agua para dar &aacute;cido fosf&oacute;rico.'},
+  {r:['CO2','H2O'],   product:'H<sub>2</sub>CO<sub>3</sub>', eq:'CO<sub>2</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>CO<sub>3</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido carb&oacute;nico', tipo:'S&iacute;ntesis', desc:'El CO<sub>2</sub> se disuelve en agua formando el d&eacute;bil &aacute;cido carb&oacute;nico.'},
+  // Neutralizacion
+  {r:['NaOH','H2SO4'],     product:'Na<sub>2</sub>SO<sub>4</sub>', eq:'2NaOH + H<sub>2</sub>SO<sub>4</sub> &rarr; Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O', group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'sulfato de sodio',         tipo:'Neutralizaci&oacute;n', desc:'Reacci&oacute;n entre una base y un &aacute;cido que produce sal y agua.'},
+  {r:['Ca(OH)2','H2SO4'],  product:'CaSO<sub>4</sub>',             eq:'Ca(OH)<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> &rarr; CaSO<sub>4</sub> + 2H<sub>2</sub>O', group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'sulfato de calcio',         tipo:'Neutralizaci&oacute;n', desc:'Neutralizaci&oacute;n del hidr&oacute;xido de calcio con &aacute;cido sulf&uacute;rico.'},
+  {r:['NaOH','HNO3'],      product:'NaNO<sub>3</sub>',             eq:'NaOH + HNO<sub>3</sub> &rarr; NaNO<sub>3</sub> + H<sub>2</sub>O',                             group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'nitrato de sodio',          tipo:'Neutralizaci&oacute;n', desc:'Neutralizaci&oacute;n del hidr&oacute;xido de sodio con &aacute;cido n&iacute;trico.'},
+  {r:['Fe(OH)3','HCl(g)'], product:'FeCl<sub>3</sub>',             eq:'Fe(OH)<sub>3</sub> + 3HCl &rarr; FeCl<sub>3</sub> + 3H<sub>2</sub>O',                         group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'cloruro de hierro(III)',    tipo:'Neutralizaci&oacute;n', desc:'Neutralizaci&oacute;n del hidr&oacute;xido de hierro(III) con &aacute;cido clor&iacute;drico.'},
+  // Hidruros metalicos
+  {r:['Na','H2'],   product:'NaH',              eq:'2Na + H<sub>2</sub> &rarr; 2NaH',    group:'hidruro',    groupName:'Hidruro Met&aacute;lico',  nombre:'hidruro de sodio',           tipo:'S&iacute;ntesis', desc:'Un metal alcalino reacciona con hidr&oacute;geno formando un hidruro met&aacute;lico.'},
+  {r:['Ca','H2'],   product:'CaH<sub>2</sub>',  eq:'Ca + H<sub>2</sub> &rarr; CaH<sub>2</sub>', group:'hidruro', groupName:'Hidruro Met&aacute;lico', nombre:'hidruro de calcio',          tipo:'S&iacute;ntesis', desc:'Reacci&oacute;n directa del calcio con hidr&oacute;geno molecular.'},
+  // Acidos hidricos
+  {r:['Cl2','H2'],  product:'HCl',              eq:'Cl<sub>2</sub> + H<sub>2</sub> &rarr; 2HCl', group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'&aacute;cido clor&iacute;drico', tipo:'S&iacute;ntesis', desc:'Un hal&oacute;geno reacciona con hidr&oacute;geno para dar un &aacute;cido h&iacute;drico.'},
+  {r:['S','H2'],    product:'H<sub>2</sub>S',   eq:'S + H<sub>2</sub> &rarr; H<sub>2</sub>S',    group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'&aacute;cido sulfh&iacute;drico',tipo:'S&iacute;ntesis', desc:'El azufre reacciona con hidr&oacute;geno para dar sulfuro de hidr&oacute;geno.'},
+  {r:['N2','H2'],   product:'NH<sub>3</sub>',   eq:'N<sub>2</sub> + 3H<sub>2</sub> &rarr; 2NH<sub>3</sub>', group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'amon&iacute;aco', tipo:'S&iacute;ntesis', desc:'S&iacute;ntesis de Haber-Bosch: nitr&oacute;geno e hidr&oacute;geno dan amon&iacute;aco.'},
+  // Sales binarias
+  {r:['Na','Cl2'],  product:'NaCl',             eq:'2Na + Cl<sub>2</sub> &rarr; 2NaCl',         group:'sal', groupName:'Sal Binaria', nombre:'cloruro de sodio',         tipo:'S&iacute;ntesis', desc:'Un metal reacciona con un no metal para formar una sal binaria.'},
+  {r:['Fe','S'],    product:'FeS',              eq:'Fe + S &rarr; FeS',                          group:'sal', groupName:'Sal Binaria', nombre:'sulfuro de hierro(II)',    tipo:'S&iacute;ntesis', desc:'Reacci&oacute;n directa entre hierro y azufre.'},
+  {r:['Ca','Cl2'],  product:'CaCl<sub>2</sub>', eq:'Ca + Cl<sub>2</sub> &rarr; CaCl<sub>2</sub>',group:'sal', groupName:'Sal Binaria', nombre:'cloruro de calcio',        tipo:'S&iacute;ntesis', desc:'El calcio reacciona con cloro para dar una sal binaria.'},
+  {r:['Al','Cl2'],  product:'AlCl<sub>3</sub>', eq:'2Al + 3Cl<sub>2</sub> &rarr; 2AlCl<sub>3</sub>', group:'sal', groupName:'Sal Binaria', nombre:'cloruro de aluminio', tipo:'S&iacute;ntesis', desc:'El aluminio reacciona con cloro para formar cloruro de aluminio.'}
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────
+var selA = null, selB = null;
+var r1Correct = 0, r1Total = 0, r1Answered = false;
+var r2Correct = 0, r2Total = 0, r2Answered = false;
+var currentPH = 7.0;
+
+// ── BUILD PALETTE ────────────────────────────────────────────────────────
+function buildPalette() {
+  var map = {metales:'grid-metales', nometales:'grid-nometales', otros:'grid-otros', oxidos:'grid-oxidos', bases:'grid-bases'};
+  for (var key in map) {
+    var container = document.getElementById(map[key]);
+    SUBSTANCES[key].forEach(function(s) {
+      var card = document.createElement('div');
+      card.className = 'sub-card';
+      card.dataset.sym = s.sym;
+      var displayHtml = SYM_HTML[s.sym] || s.sym;
+      card.innerHTML = '<div class="sub-sym">' + displayHtml + '</div><div class="sub-name">' + s.name + '</div>';
+      card.addEventListener('click', onSubClick);
+      container.appendChild(card);
+    });
+  }
+}
+
+function onSubClick(e) {
+  var card = e.currentTarget;
+  var sym = card.dataset.sym;
+  if (selA === sym) {
+    selA = null;
+    card.classList.remove('selected-a');
+  } else if (selB === sym) {
+    selB = null;
+    card.classList.remove('selected-b');
+  } else if (!selA) {
+    selA = sym;
+    card.classList.add('selected-a');
+  } else if (!selB) {
+    selB = sym;
+    card.classList.add('selected-b');
+  } else {
+    document.querySelectorAll('.sub-card.selected-a').forEach(function(c){ c.classList.remove('selected-a'); });
+    selA = sym;
+    card.classList.add('selected-a');
+  }
+  updateSlots();
+}
+
+function updateSlots() {
+  var slotA = document.getElementById('slot-a');
+  var slotB = document.getElementById('slot-b');
+  if (selA) {
+    slotA.classList.add('has-val');
+    slotA.innerHTML = '<div class="slot-label">Reactivo A</div><div class="slot-sym">' + (SYM_HTML[selA]||selA) + '</div>';
+  } else {
+    slotA.classList.remove('has-val');
+    slotA.innerHTML = '<div class="slot-label">Reactivo A</div><div class="slot-placeholder">Selecciona una sustancia</div>';
+  }
+  if (selB) {
+    slotB.classList.add('has-val');
+    slotB.innerHTML = '<div class="slot-label">Reactivo B</div><div class="slot-sym">' + (SYM_HTML[selB]||selB) + '</div>';
+  } else {
+    slotB.classList.remove('has-val');
+    slotB.innerHTML = '<div class="slot-label">Reactivo B</div><div class="slot-placeholder">Selecciona una sustancia</div>';
+  }
+  document.getElementById('btn-react').disabled = !(selA && selB);
+}
+
+function clearSelection() {
+  selA = null; selB = null;
+  document.querySelectorAll('.sub-card').forEach(function(c){ c.classList.remove('selected-a','selected-b'); });
+  updateSlots();
+  var rb = document.getElementById('result-box');
+  rb.classList.remove('show');
+  rb.innerHTML = '';
+  document.getElementById('quiz-box-1').classList.remove('show');
+}
+
+function findReaction(a, b) {
+  for (var i = 0; i < REACTIONS.length; i++) {
+    var rx = REACTIONS[i];
+    if ((rx.r[0]===a && rx.r[1]===b) || (rx.r[0]===b && rx.r[1]===a)) return rx;
+  }
+  return null;
+}
+
+function runReaction() {
+  if (!selA || !selB) return;
+  var rx = findReaction(selA, selB);
+  var box = document.getElementById('result-box');
+  box.innerHTML = '';
+  box.classList.add('show');
+  r1Answered = false;
+
+  if (rx) {
+    box.innerHTML =
+      '<span class="result-badge ' + rx.group + '">' + rx.groupName + '</span>' +
+      '<div class="result-eq-label">Reacci&oacute;n balanceada</div>' +
+      '<div class="result-eq">' + rx.eq + '</div>' +
+      '<div class="result-product"><strong>Producto:</strong> ' + rx.product + ' &mdash; ' + rx.nombre + '</div>' +
+      '<div class="result-desc">' + rx.desc + '</div>';
+    showQuiz1(rx);
+  } else {
+    box.innerHTML =
+      '<span class="result-badge no-reaction">Sin reacci&oacute;n directa</span>' +
+      '<p class="no-reaction-msg">Estos dos reactivos no forman un compuesto inorg&aacute;nico directo en los grupos estudiados. Prueba otra combinaci&oacute;n.</p>';
+    document.getElementById('quiz-box-1').classList.remove('show');
+  }
+}
+
+// ── QUIZ 1 ───────────────────────────────────────────────────────────────
+var ALL_GROUP_NAMES = [
+  '&Oacute;xido B&aacute;sico','Anh&iacute;drido (&Oacute;xido &Aacute;cido)','Base (Hidr&oacute;xido)',
+  '&Aacute;cido Ox&aacute;cido','Sal (Neutralizaci&oacute;n)','Hidruro Met&aacute;lico',
+  '&Aacute;cido H&iacute;drico','Sal Binaria'
+];
+
+function showQuiz1(rx) {
+  if (r1Correct >= 5) return;
+  var qbox = document.getElementById('quiz-box-1');
+  qbox.classList.add('show');
+  r1Total++;
+  document.getElementById('score-1').textContent = 'Aciertos: ' + r1Correct + '/' + r1Total;
+
+  var qIdx = Math.floor(Math.random() * 4);
+  var chosen;
+  if (qIdx === 0) chosen = makeQ1type1(rx);
+  else if (qIdx === 1) chosen = makeQ1type2(rx);
+  else if (qIdx === 2) chosen = makeQ1type3(rx);
+  else chosen = makeQ1type4(rx);
+
+  document.getElementById('q1-question').innerHTML = chosen.q;
+  var optsEl = document.getElementById('q1-opts');
+  optsEl.innerHTML = '';
+  chosen.opts.forEach(function(opt) {
+    var btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = opt.text;
+    btn.addEventListener('click', function() {
+      if (r1Answered) return;
+      r1Answered = true;
+      optsEl.querySelectorAll('.quiz-opt').forEach(function(b){ b.disabled = true; });
+      var fb = document.getElementById('q1-feedback');
+      if (opt.correct) {
+        btn.classList.add('correct');
+        r1Correct++;
+        document.getElementById('score-1').textContent = 'Aciertos: ' + r1Correct + '/' + r1Total;
+        fb.className = 'quiz-feedback show ok';
+        fb.innerHTML = '&iexcl;Correcto! ' + (chosen.explain || '');
+        if (r1Correct >= 5) document.getElementById('completion-1').classList.add('show');
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show err';
+        fb.innerHTML = 'Incorrecto. La respuesta correcta es: <strong>' + chosen.correctText + '</strong>';
+        optsEl.querySelectorAll('.quiz-opt').forEach(function(b){
+          if (b.innerHTML === chosen.correctText) b.classList.add('correct');
+        });
+      }
+    });
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('q1-feedback').className = 'quiz-feedback';
+}
+
+function makeQ1type1(rx) {
+  var correct = rx.groupName;
+  var opts = makeOpts4(ALL_GROUP_NAMES, correct);
+  return {
+    q: '&iquest;A qu&eacute; funci&oacute;n qu&iacute;mica inorg&aacute;nica pertenece el producto <strong>' + rx.product + '</strong>?',
+    opts: opts,
+    correctText: correct,
+    explain: rx.product + ' es un(a) ' + correct + '.'
+  };
+}
+
+function makeQ1type2(rx) {
+  // Oxidation state of the first reactant element in the product
+  var eoMap = {
+    'Na':'+1','Ca':'+2','Fe':'+3','Cu':'+2','Mg':'+2','Al':'+3',
+    'S':'+4','C':'+4','N':'+2','P':'+5',
+    'CaO':'+2','Fe2O3':'+3','SO2':'+4','SO3':'+6','P2O5':'+5','CO2':'+4'
+  };
+  var elem = rx.r[0];
+  var eo = eoMap[elem];
+  if (!eo) { return makeQ1type1(rx); } // fallback
+  var allEO = ['+1','+2','+3','+4','+5','+6','-1','-2'];
+  var opts = makeOpts4(allEO, eo);
+  var elemName = {'Na':'sodio','Ca':'calcio','Fe':'hierro','Cu':'cobre','Mg':'magnesio','Al':'aluminio',
+    'S':'azufre','C':'carbono','N':'nitrógeno','P':'fósforo',
+    'CaO':'calcio en CaO','Fe2O3':'hierro en Fe₂O₃','SO2':'azufre en SO₂','SO3':'azufre en SO₃','P2O5':'fósforo en P₂O₅','CO2':'carbono en CO₂'}[elem] || elem;
+  return {
+    q: '¿Cuál es el estado de oxidación del <strong>' + elemName + '</strong> en <strong>' + rx.product + '</strong>?',
+    opts: opts,
+    correctText: eo,
+    explain: 'El ' + elemName + ' tiene EO = ' + eo + ' en este compuesto.'
+  };
+}
+
+function makeQ1type4(rx) {
+  // "What would this product react with to form...?"
+  var nextMap = {
+    'ox-bas':    { reag:'H₂O', result:'una Base (Hidróxido)', wrong:['O₂','HCl','H₂'] },
+    'anhidrido': { reag:'H₂O', result:'un Ácido Oxácido',     wrong:['O₂','NaOH','H₂'] },
+    'base':      { reag:'un Ácido oxácido', result:'una Sal oxigenada + H₂O', wrong:['O₂','H₂','CO₂'] },
+    'ac-oxacido':{ reag:'una Base',         result:'una Sal oxigenada + H₂O', wrong:['O₂','H₂','H₂O'] },
+    'hidruro':   { reag:'H₂O', result:'una Base + H₂',        wrong:['O₂','HCl','NaOH'] },
+    'ac-hidrico':{ reag:'una Base',         result:'una Sal binaria + H₂O',   wrong:['O₂','H₂','CO₂'] },
+    'neutraliz': { reag:'más base',         result:'solución más básica',      wrong:['O₂','H₂','Cl₂'] },
+    'sal':       { reag:'agua (disolución)','result':'iones en solución',      wrong:['O₂','H₂','NaOH'] }
+  };
+  var info = nextMap[rx.group];
+  if (!info) { return makeQ1type3(rx); }
+  var correct = info.reag;
+  var pool = [correct].concat(info.wrong);
+  var opts = makeOpts4(pool, correct);
+  return {
+    q: 'El producto <strong>' + rx.product + '</strong> (' + rx.groupName + ') reaccionaría con <strong>¿qué sustancia</strong> para continuar la cadena de reactividad?',
+    opts: opts,
+    correctText: correct,
+    explain: rx.product + ' + ' + correct + ' → ' + info.result + '.'
+  };
+}
+
+function makeQ1type3(rx) {
+  var correct = rx.tipo;
+  var pool = ['S&iacute;ntesis','Neutralizaci&oacute;n','Doble desplazamiento','Descomposici&oacute;n'];
+  var opts = makeOpts4(pool, correct);
+  return {
+    q: '&iquest;Qu&eacute; tipo de reacci&oacute;n qu&iacute;mica es: <em>' + rx.eq + '</em>?',
+    opts: opts,
+    correctText: correct,
+    explain: 'Es una reacci&oacute;n de ' + correct + '.'
+  };
+}
+
+function makeOpts4(pool, correct) {
+  var others = shuffleArr(pool.filter(function(x){ return x !== correct; })).slice(0,3);
+  var all = shuffleArr([correct].concat(others));
+  return all.map(function(t){ return {text:t, correct: t===correct}; });
+}
+
+function shuffleArr(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i+1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+// ── TAB SWITCH ───────────────────────────────────────────────────────────
+function switchTab(name) {
+  var tabs = document.querySelectorAll('.sim-tab');
+  tabs[0].classList.toggle('active', name === 'reacciones');
+  tabs[1].classList.toggle('active', name === 'ph');
+  document.getElementById('panel-reacciones').classList.toggle('active', name === 'reacciones');
+  document.getElementById('panel-ph').classList.toggle('active', name === 'ph');
+}
+
+// ── pH SIMULATOR ─────────────────────────────────────────────────────────
+var PH_SUBSTANCES = {
+  'HCl-sa':     {type:'sa', name:'HCl',               fullName:'&Aacute;cido clor&iacute;drico'},
+  'H2SO4-sa':   {type:'sa', name:'H&#8322;SO&#8324;',  fullName:'&Aacute;cido sulf&uacute;rico'},
+  'HNO3-sa':    {type:'sa', name:'HNO&#8323;',          fullName:'&Aacute;cido n&iacute;trico'},
+  'H2CO3-wa':   {type:'wa', Ka:4.3e-7, name:'H&#8322;CO&#8323;',  fullName:'&Aacute;cido carb&oacute;nico'},
+  'H2S-wa':     {type:'wa', Ka:9.5e-8, name:'H&#8322;S',          fullName:'&Aacute;cido sulfh&iacute;drico'},
+  'CH3COOH-wa': {type:'wa', Ka:1.8e-5, name:'CH&#8323;COOH',      fullName:'&Aacute;cido ac&eacute;tico'},
+  'NaOH-sb':    {type:'sb', name:'NaOH',              fullName:'Hidr&oacute;xido de sodio'},
+  'CaOH2-sb':   {type:'sb', name:'Ca(OH)&#8322;',      fullName:'Hidr&oacute;xido de calcio'},
+  'KOH-sb':     {type:'sb', name:'KOH',               fullName:'Hidr&oacute;xido de potasio'},
+  'NH3-wb':     {type:'wb', Kb:1.8e-5, name:'NH&#8323;',           fullName:'Amon&iacute;aco'},
+  'NH4OH-wb':   {type:'wb', Kb:1.8e-5, name:'NH&#8324;OH',         fullName:'Hidr&oacute;xido de amonio'},
+  'H2O-n':      {type:'n',              name:'H&#8322;O',           fullName:'Agua pura'}
+};
+
+function sliderToConc(val) {
+  return Math.pow(10, -4 + (val / 100) * 4);
+}
+
+function calcPH(subKey, conc) {
+  var s = PH_SUBSTANCES[subKey];
+  if (!s) return 7;
+  if (s.type === 'n') return 7;
+  if (s.type === 'sa') return Math.max(0, -Math.log10(conc));
+  if (s.type === 'sb') return Math.min(14, 14 - Math.max(0, -Math.log10(conc)));
+  if (s.type === 'wa') {
+    var pKa = -Math.log10(s.Ka);
+    return Math.min(14, Math.max(0, 0.5 * (pKa - Math.log10(conc))));
+  }
+  if (s.type === 'wb') {
+    var pKb = -Math.log10(s.Kb);
+    return Math.min(14, Math.max(0, 14 - 0.5 * (pKb - Math.log10(conc))));
+  }
+  return 7;
+}
+
+function phToDisplayColor(ph) {
+  if (ph <= 2)  return '#f87171';
+  if (ph <= 4)  return '#fb923c';
+  if (ph <= 6)  return '#facc15';
+  if (ph <= 8)  return '#4ade80';
+  if (ph <= 10) return '#60a5fa';
+  if (ph <= 12) return '#a78bfa';
+  return '#c084fc';
+}
+
+function phClassInfo(ph) {
+  if (ph < 2)  return {label:'&Aacute;CIDO FUERTE',  bg:'rgba(220,38,38,.25)',   color:'#fca5a5'};
+  if (ph < 6)  return {label:'&Aacute;CIDO',         bg:'rgba(249,115,22,.2)',   color:'#fdba74'};
+  if (ph <= 8) return {label:'NEUTRO',               bg:'rgba(34,197,94,.18)',   color:'#86efac'};
+  if (ph <= 12)return {label:'BASE',                 bg:'rgba(59,130,246,.2)',   color:'#93c5fd'};
+  return            {label:'BASE FUERTE',            bg:'rgba(124,58,237,.25)', color:'#c4b5fd'};
+}
+
+function fenolfColor(ph) {
+  if (ph < 8.2) return {color:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.2)', name:'Incoloro'};
+  if (ph < 9)   return {color:'#fbcfe8', border:'#f9a8d4', name:'Rosa p&aacute;lido'};
+  if (ph < 10)  return {color:'#ec4899', border:'#db2777', name:'Rosa fuerte'};
+  return              {color:'#be185d', border:'#9d174d',  name:'Magenta intenso'};
+}
+
+function repolloColor(ph) {
+  var r = Math.round(ph);
+  if (r <= 2)  return {color:'#dc2626', name:'Rojo intenso'};
+  if (r <= 4)  return {color:'#f87171', name:'Rojo rosado'};
+  if (r <= 6)  return {color:'#a855f7', name:'Morado'};
+  if (r <= 7)  return {color:'#7c3aed', name:'Morado neutro'};
+  if (r <= 9)  return {color:'#3b82f6', name:'Azul'};
+  if (r <= 11) return {color:'#06b6d4', name:'Azul verdoso'};
+  return             {color:'#84cc16', name:'Verde amarillo'};
+}
+
+var phQuizPending = false;
+
+function updatePH() {
+  var subKey = document.getElementById('ph-substance').value;
+  var sliderVal = parseInt(document.getElementById('ph-slider').value, 10);
+  var conc = sliderToConc(sliderVal);
+
+  var concStr = conc < 0.001 ? conc.toExponential(2) : conc.toFixed(4);
+  document.getElementById('conc-val').textContent = 'Concentración: ' + concStr + ' mol/L';
+
+  var ph = Math.round(calcPH(subKey, conc) * 10) / 10;
+  currentPH = ph;
+
+  // pH meter
+  var phNumEl = document.getElementById('ph-num');
+  phNumEl.textContent = ph.toFixed(1);
+  phNumEl.style.color = phToDisplayColor(ph);
+  document.getElementById('ph-needle').style.left = ((ph / 14) * 100) + '%';
+
+  var cls = phClassInfo(ph);
+  var badge = document.getElementById('ph-class');
+  badge.innerHTML = cls.label;
+  badge.style.background = cls.bg;
+  badge.style.color = cls.color;
+
+  // Fenolftaleina
+  var fc = fenolfColor(ph);
+  var tt = document.getElementById('tt-fenolf');
+  tt.style.backgroundColor = fc.color;
+  tt.style.borderColor = fc.border;
+  document.getElementById('tt-fenolf-name').innerHTML = fc.name;
+
+  // Repollo
+  var rc = repolloColor(ph);
+  document.getElementById('beaker-repollo').style.backgroundColor = rc.color;
+  document.getElementById('beaker-repollo-name').textContent = rc.name;
+
+  // Generate quiz if not answered yet
+  if (!r2Answered && r2Correct < 5) {
+    generatePHQuiz(ph, subKey, fc, rc);
+  }
+}
+
+// ── QUIZ 2 ───────────────────────────────────────────────────────────────
+function generatePHQuiz(ph, subKey, fc, rc) {
+  r2Total++;
+  r2Answered = false;
+  document.getElementById('score-2').textContent = 'Aciertos: ' + r2Correct + '/' + r2Total;
+
+  var sub = PH_SUBSTANCES[subKey];
+  var qIdx = Math.floor(Math.random() * 5);
+  var chosen;
+  if (qIdx === 0) chosen = makeQ2type1(ph, fc);
+  else if (qIdx === 1) chosen = makeQ2type2(ph, sub);
+  else if (qIdx === 2) chosen = makeQ2type3(ph, rc);
+  else if (qIdx === 3) chosen = makeQ2type4(ph, sub);
+  else chosen = makeQ2type5();
+
+  document.getElementById('q2-question').innerHTML = chosen.q;
+  var optsEl = document.getElementById('q2-opts');
+  optsEl.innerHTML = '';
+  chosen.opts.forEach(function(opt) {
+    var btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = opt.text;
+    btn.addEventListener('click', function() {
+      if (r2Answered) return;
+      r2Answered = true;
+      optsEl.querySelectorAll('.quiz-opt').forEach(function(b){ b.disabled = true; });
+      var fb = document.getElementById('q2-feedback');
+      if (opt.correct) {
+        btn.classList.add('correct');
+        r2Correct++;
+        document.getElementById('score-2').textContent = 'Aciertos: ' + r2Correct + '/' + r2Total;
+        fb.className = 'quiz-feedback show ok';
+        fb.innerHTML = '&iexcl;Correcto! ' + (chosen.explain || '');
+        if (r2Correct >= 5) document.getElementById('completion-2').classList.add('show');
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show err';
+        fb.innerHTML = 'Incorrecto. La respuesta es: <strong>' + chosen.correctText + '</strong>';
+        optsEl.querySelectorAll('.quiz-opt').forEach(function(b){
+          if (b.innerHTML === chosen.correctText) b.classList.add('correct');
+        });
+      }
+    });
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('q2-feedback').className = 'quiz-feedback';
+}
+
+function makeQ2type1(ph, fc) {
+  var correct, explain;
+  if (ph < 8.2) {
+    correct = 'Indica medio &aacute;cido o neutro';
+    explain = 'La fenolftale&iacute;na permanece incolora en medios &aacute;cidos y neutros (pH &lt; 8.2).';
+  } else {
+    correct = 'Indica medio b&aacute;sico';
+    explain = 'La fenolftale&iacute;na se colorea en medios b&aacute;sicos (pH &gt; 8.2).';
+  }
+  var pool = ['Indica medio &aacute;cido o neutro','Indica medio b&aacute;sico','Indica pH exactamente 7','Indica alta temperatura'];
+  return {
+    q: 'La fenolftale&iacute;na muestra color <strong>' + fc.name + '</strong>. &iquest;Qu&eacute; indica esto?',
+    opts: makeOpts4(pool, correct),
+    correctText: correct,
+    explain: explain
+  };
+}
+
+function makeQ2type2(ph, sub) {
+  var correct;
+  if (ph < 2) correct = '&Aacute;cido fuerte';
+  else if (ph < 6) correct = '&Aacute;cido d&eacute;bil';
+  else if (ph <= 8) correct = 'Neutro';
+  else if (ph < 12) correct = 'Base d&eacute;bil';
+  else correct = 'Base fuerte';
+  var pool = ['&Aacute;cido fuerte','&Aacute;cido d&eacute;bil','Neutro','Base d&eacute;bil','Base fuerte'];
+  return {
+    q: 'La soluci&oacute;n de <strong>' + sub.fullName + '</strong> tiene pH = ' + ph.toFixed(1) + '. &iquest;C&oacute;mo se clasifica?',
+    opts: makeOpts4(pool, correct),
+    correctText: correct,
+    explain: 'Con pH ' + ph.toFixed(1) + ' la soluci&oacute;n es ' + correct + '.'
+  };
+}
+
+function makeQ2type3(ph, rc) {
+  var correct;
+  if (ph <= 3) correct = 'Entre 1 y 3';
+  else if (ph <= 6) correct = 'Entre 4 y 6';
+  else if (ph <= 8) correct = 'Neutro (7 &plusmn; 1)';
+  else correct = 'Entre 8 y 14';
+  var pool = ['Entre 1 y 3','Entre 4 y 6','Neutro (7 &plusmn; 1)','Entre 8 y 14'];
+  return {
+    q: 'El repollo morado muestra color <strong>' + rc.name + '</strong>. &iquest;Cu&aacute;l es el pH aproximado?',
+    opts: makeOpts4(pool, correct),
+    correctText: correct,
+    explain: 'Ese color corresponde a pH aproximado: ' + correct + '.'
+  };
+}
+
+function makeQ2type4(ph, sub) {
+  var correct = (ph > 8.2) ? 'Fenolftale&iacute;na' : 'Ninguno (pH &lt; 8.2)';
+  var pool = ['Fenolftale&iacute;na','Tornasol rojo','Tornasol azul','Ninguno (pH &lt; 8.2)'];
+  return {
+    q: '&iquest;Qu&eacute; indicador cl&aacute;sico cambiar&iacute;a de color con <strong>' + sub.fullName + '</strong> (pH=' + ph.toFixed(1) + ')?',
+    opts: makeOpts4(pool, correct),
+    correctText: correct,
+    explain: correct === 'Fenolftale&iacute;na'
+      ? 'La fenolftale&iacute;na vira en medios b&aacute;sicos (pH &gt; 8.2).'
+      : 'Con pH &lt; 8.2 la fenolftale&iacute;na permanece incolora.'
+  };
+}
+
+function makeQ2type5() {
+  var correct = '&asymp; 7 (neutro)';
+  var pool = ['&asymp; 7 (neutro)','&lt; 2 (muy &aacute;cido)','&gt; 12 (muy b&aacute;sico)','&asymp; 4 (&aacute;cido d&eacute;bil)'];
+  return {
+    q: 'Si mezclas HCl con NaOH en partes iguales y concentraciones iguales, &iquest;cu&aacute;l ser&iacute;a el pH aproximado?',
+    opts: makeOpts4(pool, correct),
+    correctText: correct,
+    explain: 'La neutralizaci&oacute;n completa de &aacute;cido fuerte con base fuerte en proporciones iguales produce una soluci&oacute;n neutra (pH &asymp; 7).'
+  };
+}
+
+// ── PWA ──────────────────────────────────────────────────────────────────
+var deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('btn-install').style.display = 'inline-block';
+});
+document.getElementById('btn-install').addEventListener('click', function() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function() {
+    deferredPrompt = null;
+    document.getElementById('btn-install').style.display = 'none';
+  });
+});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+buildPalette();
+updatePH();
+</script>
+</body>
+</html>
