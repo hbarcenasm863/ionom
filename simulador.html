@@ -617,7 +617,7 @@ var REACTIONS = [
   {r:['P','O2'],      product:'P<sub>2</sub>O<sub>5</sub>', eq:'P<sub>4</sub> + 5O<sub>2</sub> &rarr; 2P<sub>2</sub>O<sub>5</sub>', group:'anhidrido', groupName:'Anh&iacute;drido (&Oacute;xido &Aacute;cido)', nombre:'pent&oacute;xido de dif&oacute;sforo', tipo:'S&iacute;ntesis', desc:'El f&oacute;sforo reacciona con exceso de ox&iacute;geno para dar su anh&iacute;drido.'},
   // Bases
   {r:['CaO','H2O'],   product:'Ca(OH)<sub>2</sub>', eq:'CaO + H<sub>2</sub>O &rarr; Ca(OH)<sub>2</sub>',          group:'base',      groupName:'Base (Hidr&oacute;xido)',                nombre:'hidr&oacute;xido de calcio',       tipo:'S&iacute;ntesis',    desc:'Un &oacute;xido b&aacute;sico reacciona con agua para producir una base.'},
-  {r:['Fe2O3','H2O'], product:'Fe(OH)<sub>3</sub>', eq:'Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O &rarr; 2Fe(OH)<sub>3</sub>', group:'base', groupName:'Base (Hidr&oacute;xido)', nombre:'hidr&oacute;xido de hierro(III)', tipo:'S&iacute;ntesis', desc:'El &oacute;xido de hierro(III) se hidrata para dar el hidr&oacute;xido correspondiente.'},
+  {r:['Fe2O3','H2O'], product:'Fe(OH)<sub>3</sub>', eq:'Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O &rarr; 2Fe(OH)<sub>3</sub>', group:'base', groupName:'Base (Hidr&oacute;xido)', nombre:'hidr&oacute;xido de hierro(III)', tipo:'S&iacute;ntesis', desc:'<em>Nota: en la pr&aacute;ctica esta reacci&oacute;n es muy lenta y normalmente ocurre en sentido inverso. Se incluye como modelo te&oacute;rico del comportamiento de los &oacute;xidos b&aacute;sicos frente al agua.</em>'},
   // Acidos oxacidos
   {r:['SO2','H2O'],   product:'H<sub>2</sub>SO<sub>3</sub>', eq:'SO<sub>2</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>3</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido sulfuroso',    tipo:'S&iacute;ntesis', desc:'Un &oacute;xido &aacute;cido reacciona con agua para dar un &aacute;cido ox&aacute;cido.'},
   {r:['SO3','H2O'],   product:'H<sub>2</sub>SO<sub>4</sub>', eq:'SO<sub>3</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>4</sub>', group:'ac-oxacido', groupName:'&Aacute;cido Ox&aacute;cido', nombre:'&aacute;cido sulf&uacute;rico', tipo:'S&iacute;ntesis', desc:'El tri&oacute;xido de azufre se disuelve en agua formando &aacute;cido sulf&uacute;rico.'},
@@ -635,11 +635,26 @@ var REACTIONS = [
   {r:['Cl2','H2'],  product:'HCl',              eq:'Cl<sub>2</sub> + H<sub>2</sub> &rarr; 2HCl', group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'&aacute;cido clor&iacute;drico', tipo:'S&iacute;ntesis', desc:'Un hal&oacute;geno reacciona con hidr&oacute;geno para dar un &aacute;cido h&iacute;drico.'},
   {r:['S','H2'],    product:'H<sub>2</sub>S',   eq:'S + H<sub>2</sub> &rarr; H<sub>2</sub>S',    group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'&aacute;cido sulfh&iacute;drico',tipo:'S&iacute;ntesis', desc:'El azufre reacciona con hidr&oacute;geno para dar sulfuro de hidr&oacute;geno.'},
   {r:['N2','H2'],   product:'NH<sub>3</sub>',   eq:'N<sub>2</sub> + 3H<sub>2</sub> &rarr; 2NH<sub>3</sub>', group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'amon&iacute;aco', tipo:'S&iacute;ntesis', desc:'S&iacute;ntesis de Haber-Bosch: nitr&oacute;geno e hidr&oacute;geno dan amon&iacute;aco.'},
-  // Sales binarias
+  // Sales binarias (síntesis directa)
   {r:['Na','Cl2'],  product:'NaCl',             eq:'2Na + Cl<sub>2</sub> &rarr; 2NaCl',         group:'sal', groupName:'Sal Binaria', nombre:'cloruro de sodio',         tipo:'S&iacute;ntesis', desc:'Un metal reacciona con un no metal para formar una sal binaria.'},
   {r:['Fe','S'],    product:'FeS',              eq:'Fe + S &rarr; FeS',                          group:'sal', groupName:'Sal Binaria', nombre:'sulfuro de hierro(II)',    tipo:'S&iacute;ntesis', desc:'Reacci&oacute;n directa entre hierro y azufre.'},
   {r:['Ca','Cl2'],  product:'CaCl<sub>2</sub>', eq:'Ca + Cl<sub>2</sub> &rarr; CaCl<sub>2</sub>',group:'sal', groupName:'Sal Binaria', nombre:'cloruro de calcio',        tipo:'S&iacute;ntesis', desc:'El calcio reacciona con cloro para dar una sal binaria.'},
-  {r:['Al','Cl2'],  product:'AlCl<sub>3</sub>', eq:'2Al + 3Cl<sub>2</sub> &rarr; 2AlCl<sub>3</sub>', group:'sal', groupName:'Sal Binaria', nombre:'cloruro de aluminio', tipo:'S&iacute;ntesis', desc:'El aluminio reacciona con cloro para formar cloruro de aluminio.'}
+  {r:['Al','Cl2'],  product:'AlCl<sub>3</sub>', eq:'2Al + 3Cl<sub>2</sub> &rarr; 2AlCl<sub>3</sub>', group:'sal', groupName:'Sal Binaria', nombre:'cloruro de aluminio', tipo:'S&iacute;ntesis', desc:'El aluminio reacciona con cloro para formar cloruro de aluminio.'},
+  // Sales binarias (desplazamiento simple: metal + ácido hídrico)
+  {r:['Fe','HCl(g)'],  product:'FeCl<sub>2</sub>', eq:'Fe + 2HCl &rarr; FeCl<sub>2</sub> + H<sub>2</sub>&uarr;', group:'sal', groupName:'Sal Binaria', nombre:'cloruro de hierro(II)', tipo:'Desplazamiento simple', desc:'Un metal activo desplaza el hidr&oacute;geno del &aacute;cido clor&iacute;drico produciendo una sal binaria e H<sub>2</sub> gaseoso.'},
+  {r:['Mg','HCl(g)'],  product:'MgCl<sub>2</sub>', eq:'Mg + 2HCl &rarr; MgCl<sub>2</sub> + H<sub>2</sub>&uarr;', group:'sal', groupName:'Sal Binaria', nombre:'cloruro de magnesio', tipo:'Desplazamiento simple', desc:'El magnesio reacciona vigorosamente con el &aacute;cido clor&iacute;drico liberando hidr&oacute;geno gaseoso.'},
+  // Metales + agua → base + hidrógeno
+  {r:['Na','H2O'],  product:'NaOH', eq:'2Na + 2H<sub>2</sub>O &rarr; 2NaOH + H<sub>2</sub>&uarr;', group:'base', groupName:'Base (Hidr&oacute;xido)', nombre:'hidr&oacute;xido de sodio', tipo:'S&iacute;ntesis (Metal + Agua)', desc:'El sodio reacciona violenta y exot&eacute;rmicamente con el agua produciendo hidr&oacute;xido de sodio e hidr&oacute;geno gaseoso. ⚠️ Reacci&oacute;n muy peligrosa.'},
+  {r:['Ca','H2O'],  product:'Ca(OH)<sub>2</sub>', eq:'Ca + 2H<sub>2</sub>O &rarr; Ca(OH)<sub>2</sub> + H<sub>2</sub>&uarr;', group:'base', groupName:'Base (Hidr&oacute;xido)', nombre:'hidr&oacute;xido de calcio', tipo:'S&iacute;ntesis (Metal + Agua)', desc:'El calcio reacciona con el agua formando hidr&oacute;xido de calcio (agua de cal) e hidr&oacute;geno gaseoso.'},
+  // Neutralización: base + ácido hídrico
+  {r:['NaOH','HCl(g)'],    product:'NaCl',             eq:'NaOH + HCl &rarr; NaCl + H<sub>2</sub>O',                                    group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'cloruro de sodio',    tipo:'Neutralizaci&oacute;n', desc:'Neutralizaci&oacute;n del hidr&oacute;xido de sodio con &aacute;cido clor&iacute;drico: la reacci&oacute;n de neutralizaci&oacute;n m&aacute;s representativa.'},
+  {r:['Ca(OH)2','HCl(g)'],  product:'CaCl<sub>2</sub>', eq:'Ca(OH)<sub>2</sub> + 2HCl &rarr; CaCl<sub>2</sub> + 2H<sub>2</sub>O',        group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'cloruro de calcio',   tipo:'Neutralizaci&oacute;n', desc:'El hidr&oacute;xido de calcio reacciona con &aacute;cido clor&iacute;drico produciendo cloruro de calcio y agua.'},
+  {r:['Fe(OH)3','H2SO4'],   product:'Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>', eq:'2Fe(OH)<sub>3</sub> + 3H<sub>2</sub>SO<sub>4</sub> &rarr; Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 6H<sub>2</sub>O', group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'sulfato de hierro(III)', tipo:'Neutralizaci&oacute;n', desc:'El hidr&oacute;xido de hierro(III) reacciona con &aacute;cido sulf&uacute;rico para dar sulfato de hierro(III) y agua.'},
+  // Óxido básico + ácido → sal + agua
+  {r:['CaO','HCl(g)'],  product:'CaCl<sub>2</sub>', eq:'CaO + 2HCl &rarr; CaCl<sub>2</sub> + H<sub>2</sub>O',                            group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'cloruro de calcio',   tipo:'Neutralizaci&oacute;n', desc:'Un &oacute;xido b&aacute;sico reacciona con un &aacute;cido h&iacute;drico produciendo una sal y agua.'},
+  {r:['Fe2O3','H2SO4'], product:'Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>', eq:'Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>SO<sub>4</sub> &rarr; Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 3H<sub>2</sub>O', group:'neutraliz', groupName:'Sal (Neutralizaci&oacute;n)', nombre:'sulfato de hierro(III)', tipo:'Neutralizaci&oacute;n', desc:'Un &oacute;xido b&aacute;sico reacciona con un &aacute;cido ox&aacute;cido produciendo sal y agua.'},
+  // Cloro en agua (desproporción)
+  {r:['Cl2','H2O'],  product:'HCl + HClO', eq:'Cl<sub>2</sub> + H<sub>2</sub>O &rarr; HCl + HClO', group:'ac-hidrico', groupName:'&Aacute;cido H&iacute;drico', nombre:'&aacute;cido clor&iacute;drico + &aacute;cido hipoloroso', tipo:'Desproporcio&oacute;n', desc:'El cloro se desproporciona en agua produciendo &aacute;cido clor&iacute;drico y &aacute;cido hipocloroso. Esta mezcla es la base del agua clorada.'}
 ];
 
 // ── STATE ────────────────────────────────────────────────────────────────
@@ -756,6 +771,11 @@ var ALL_GROUP_NAMES = [
   '&Aacute;cido Ox&aacute;cido','Sal (Neutralizaci&oacute;n)','Hidruro Met&aacute;lico',
   '&Aacute;cido H&iacute;drico','Sal Binaria'
 ];
+// Extended pool used internally (same values, needed for new reaction groups)
+var ALL_TIPO_NAMES = [
+  'S&iacute;ntesis','Neutralizaci&oacute;n','Doble desplazamiento','Descomposici&oacute;n',
+  'Desplazamiento simple','S&iacute;ntesis (Metal + Agua)','Desproporcio&oacute;n'
+];
 
 function showQuiz1(rx) {
   if (r1Correct >= 5) return;
@@ -865,7 +885,8 @@ function makeQ1type4(rx) {
 
 function makeQ1type3(rx) {
   var correct = rx.tipo;
-  var pool = ['S&iacute;ntesis','Neutralizaci&oacute;n','Doble desplazamiento','Descomposici&oacute;n'];
+  var pool = ALL_TIPO_NAMES.slice();
+  if (pool.indexOf(correct) === -1) pool.push(correct);
   var opts = makeOpts4(pool, correct);
   return {
     q: '&iquest;Qu&eacute; tipo de reacci&oacute;n qu&iacute;mica es: <em>' + rx.eq + '</em>?',
