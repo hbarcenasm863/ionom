@@ -194,8 +194,19 @@ footer a:hover{text-decoration:underline}
 .react-map-section h2{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:#e0f2fe;margin-bottom:20px;text-align:center;letter-spacing:-.02em}
 .react-map-section h2 span{color:#fcd34d}
 
-/* map grid */
-.rmap{display:grid;grid-template-columns:1fr 60px 1fr;grid-template-rows:auto auto auto auto auto;gap:0;align-items:center;justify-items:center;width:100%;max-width:600px;margin:0 auto}
+/* map two-column vertical layout */
+.rmap{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;max-width:560px;margin:0 auto}
+.rmap-col{display:flex;flex-direction:column;align-items:center;gap:0}
+.rmap-arrow-v{display:flex;flex-direction:column;align-items:center;gap:0;margin:2px 0}
+.rmap-arrow-v::before{content:'↓';color:#64748b;font-size:1.2rem;line-height:1}
+.rmap-arrow-v-lbl{font-size:.6rem;color:#94a3b8;text-align:center;margin-top:1px}
+.rmap-merge{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:0;margin-top:6px;width:100%}
+.rmap-merge-line{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:4px 0}
+.rmap-merge-line::before,.rmap-merge-line::after{content:'';flex:1;height:1px;background:#475569;max-width:80px}
+.rmap-merge-connector{color:#64748b;font-size:.7rem}
+.rmap-merge-arrow{display:flex;flex-direction:column;align-items:center;gap:0;margin:2px 0}
+.rmap-merge-arrow::before{content:'↓';color:#64748b;font-size:1.2rem;line-height:1}
+.rmap-merge-arrow-lbl{font-size:.6rem;color:#94a3b8;text-align:center}
 
 /* node buttons */
 .rnode{background:none;border:none;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;gap:0}
@@ -215,31 +226,41 @@ footer a:hover{text-decoration:underline}
 .rn-achid .rnode-box{background:#0f3460;border-color:#2563eb;color:#bfdbfe}
 .rn-salbin .rnode-box{background:#134e4a;border-color:#0d9488;color:#99f6e4}
 
-/* arrows */
-.rarrow{color:#64748b;font-size:1.1rem;line-height:1;display:flex;align-items:center;justify-content:center}
-.rarrow-v{writing-mode:vertical-rl;transform:rotate(180deg)}
-.rarrow-h{font-size:.9rem}
-.rarrow-lbl{font-size:.58rem;color:#94a3b8;text-align:center;margin-top:2px}
-
-/* neutralization row */
-.rmap-neut{display:flex;align-items:center;justify-content:center;gap:10px;grid-column:1/-1;margin:4px 0}
-
 /* bottom row */
-.rmap-bottom{display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:1px solid #1e4060;width:100%}
+.rmap-bottom{display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid #1e4060;width:100%}
 
 /* modal */
 #react-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
 #react-modal-overlay.open{display:flex}
-.react-modal-box{background:#0d2d42;border:1px solid #2a5080;border-radius:var(--r);padding:28px 28px 24px;max-width:480px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
-.react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:#bfdbfe;margin-bottom:14px;padding-right:36px;line-height:1.4}
+.react-modal-box{background:#0d2d42;border:1px solid #2a5080;border-radius:var(--r);padding:28px 28px 24px;max-width:500px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
+.react-modal-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding-right:36px}
+.react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:#bfdbfe;margin-bottom:12px;padding-right:36px;line-height:1.4}
 .react-modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#64748b;font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color .15s}
 .react-modal-close:hover{color:#e0f2fe}
+.react-modal-divider{border:none;border-top:1px solid #1e4060;margin:12px 0}
+.react-modal-section{margin-bottom:10px}
+.react-modal-section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:6px}
+.react-modal-desc{font-size:.82rem;color:#cbd5e1;line-height:1.55}
 .react-modal-rxns{list-style:none;display:flex;flex-direction:column;gap:8px}
 .react-modal-rxns li{background:#0a1f30;border-left:3px solid #3b82f6;border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:#e0f2fe;line-height:1.5}
-.react-modal-rxns li.note{font-family:var(--sans);border-left-color:#64748b;color:#94a3b8;font-size:.8rem;font-style:italic}
+.react-modal-cond{font-size:.8rem;color:#94a3b8;line-height:1.5}
+.react-modal-colombia{font-size:.8rem;color:#86efac;line-height:1.5}
+.react-modal-prereq{font-size:.78rem;color:#fcd34d;background:#1c1200;border:1px solid #78350f;border-radius:6px;padding:7px 10px;line-height:1.45}
+/* badge pills */
+.react-badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.react-badge-acid{background:#450a0a;color:#ef4444;border:1px solid #ef4444}
+.react-badge-base{background:#2e1065;color:#a855f7;border:1px solid #a855f7}
+.react-badge-salt{background:#042f2e;color:#14b8a6;border:1px solid #14b8a6}
+.react-badge-neutral{background:#1e293b;color:#64748b;border:1px solid #64748b}
+.react-badge-element{background:#1c1200;color:#f59e0b;border:1px solid #f59e0b}
+/* rxn type tag */
+.react-rxntype{display:inline-block;padding:3px 9px;border-radius:6px;font-size:.68rem;font-weight:600;background:#0a1f30;color:#7dd3fc;border:1px solid #1e4060}
+/* go-to-section button */
+.react-go-btn{display:inline-block;margin-top:4px;padding:7px 16px;background:#d97706;color:#1c0700;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:background .15s}
+.react-go-btn:hover{background:#f59e0b}
 
 @media(max-width:520px){
-  .rmap{grid-template-columns:1fr 44px 1fr}
+  .rmap{grid-template-columns:1fr 1fr}
   .rnode-box{min-width:80px;font-size:.72rem;padding:6px 8px}
   .rmap-bottom{gap:10px}
 }
@@ -271,67 +292,46 @@ footer a:hover{text-decoration:underline}
   <div class="react-map-section">
     <h2>Mapa de <span>Reactividad</span> — Química Inorgánica</h2>
     <div class="rmap">
-      <!-- Row 1: root elements -->
-      <button class="rnode rn-metal" onclick="openReactModal('metal')">
-        <div class="rnode-box">METAL</div>
-        <div class="rnode-label">elemento</div>
-      </button>
-      <div></div>
-      <button class="rnode rn-nometal" onclick="openReactModal('nometal')">
-        <div class="rnode-box">NO METAL</div>
-        <div class="rnode-label">elemento</div>
-      </button>
-
-      <!-- Row 2: + O₂ arrows -->
-      <div class="rarrow" style="flex-direction:column">
-        <div class="rarrow-v">↓</div>
-        <div class="rarrow-lbl">+ O₂</div>
-      </div>
-      <div></div>
-      <div class="rarrow" style="flex-direction:column">
-        <div class="rarrow-v">↓</div>
-        <div class="rarrow-lbl">+ O₂</div>
+      <!-- Left column: metal branch -->
+      <div class="rmap-col">
+        <button class="rnode rn-metal" onclick="openReactModal('metal')">
+          <div class="rnode-box">METAL</div>
+          <div class="rnode-label">elemento</div>
+        </button>
+        <div class="rmap-arrow-v"><div class="rmap-arrow-v-lbl">+ O₂</div></div>
+        <button class="rnode rn-oxbas" onclick="openReactModal('ox-bas')">
+          <div class="rnode-box">Óxido Básico</div>
+          <div class="rnode-label">Metal + O₂</div>
+        </button>
+        <div class="rmap-arrow-v"><div class="rmap-arrow-v-lbl">+ H₂O</div></div>
+        <button class="rnode rn-base" onclick="openReactModal('base')">
+          <div class="rnode-box">Base (Hidróxido)</div>
+          <div class="rnode-label">Óx. básico + H₂O</div>
+        </button>
       </div>
 
-      <!-- Row 3: oxides -->
-      <button class="rnode rn-oxbas" onclick="openReactModal('ox-bas')">
-        <div class="rnode-box">Óxido Básico</div>
-        <div class="rnode-label">Metal + O₂</div>
-      </button>
-      <div></div>
-      <button class="rnode rn-anhid" onclick="openReactModal('anhid')">
-        <div class="rnode-box">Anhídrido</div>
-        <div class="rnode-label">No metal + O₂</div>
-      </button>
-
-      <!-- Row 4: + H₂O arrows -->
-      <div class="rarrow" style="flex-direction:column">
-        <div class="rarrow-v">↓</div>
-        <div class="rarrow-lbl">+ H₂O</div>
-      </div>
-      <div></div>
-      <div class="rarrow" style="flex-direction:column">
-        <div class="rarrow-v">↓</div>
-        <div class="rarrow-lbl">+ H₂O</div>
+      <!-- Right column: non-metal branch -->
+      <div class="rmap-col">
+        <button class="rnode rn-nometal" onclick="openReactModal('nometal')">
+          <div class="rnode-box">NO METAL</div>
+          <div class="rnode-label">elemento</div>
+        </button>
+        <div class="rmap-arrow-v"><div class="rmap-arrow-v-lbl">+ O₂</div></div>
+        <button class="rnode rn-anhid" onclick="openReactModal('anhid')">
+          <div class="rnode-box">Anhídrido</div>
+          <div class="rnode-label">No metal + O₂</div>
+        </button>
+        <div class="rmap-arrow-v"><div class="rmap-arrow-v-lbl">+ H₂O</div></div>
+        <button class="rnode rn-acox" onclick="openReactModal('ac-ox')">
+          <div class="rnode-box">Ácido Oxácido</div>
+          <div class="rnode-label">Anhídrido + H₂O</div>
+        </button>
       </div>
 
-      <!-- Row 5: base + acid + neutralization -->
-      <button class="rnode rn-base" onclick="openReactModal('base')">
-        <div class="rnode-box">Base<br>(Hidróxido)</div>
-        <div class="rnode-label">Óx. básico + H₂O</div>
-      </button>
-      <div></div>
-      <button class="rnode rn-acox" onclick="openReactModal('ac-ox')">
-        <div class="rnode-box">Ácido Oxácido</div>
-        <div class="rnode-label">Anhídrido + H₂O</div>
-      </button>
-
-      <!-- Neutralization row spans all columns -->
-      <div class="rmap-neut">
-        <span class="rarrow rarrow-h">Base</span>
-        <span class="rarrow rarrow-h">+</span>
-        <span class="rarrow rarrow-h">Ácido</span>
-        <span class="rarrow rarrow-h">→</span>
+      <!-- Merge row: neutralization -->
+      <div class="rmap-merge">
+        <div class="rmap-merge-line"><span class="rmap-merge-connector">Base + Ácido oxácido</span></div>
+        <div class="rmap-merge-arrow"><div class="rmap-merge-arrow-lbl">neutralización</div></div>
         <button class="rnode rn-salox" onclick="openReactModal('sal-ox')">
           <div class="rnode-box">SAL OXIGENADA + H₂O</div>
           <div class="rnode-label">Neutralización</div>
