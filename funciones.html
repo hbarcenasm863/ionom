@@ -412,8 +412,33 @@ footer a:hover{text-decoration:underline}
 <div id="react-modal-overlay" onclick="closeReactModal(event)">
   <div class="react-modal-box">
     <button class="react-modal-close" onclick="closeReactModal()">✕</button>
+    <div class="react-modal-top" id="react-modal-top"></div>
     <h3 id="react-modal-title"></h3>
-    <ul class="react-modal-rxns" id="react-modal-rxns"></ul>
+    <hr class="react-modal-divider">
+    <div class="react-modal-section">
+      <div class="react-modal-section-label">📖 Descripción</div>
+      <div class="react-modal-desc" id="react-modal-desc"></div>
+    </div>
+    <hr class="react-modal-divider">
+    <div class="react-modal-section">
+      <div class="react-modal-section-label">⚗️ Reacciones balanceadas</div>
+      <ul class="react-modal-rxns" id="react-modal-rxns"></ul>
+    </div>
+    <hr class="react-modal-divider">
+    <div class="react-modal-section" id="react-modal-cond-wrap">
+      <div class="react-modal-section-label">🌡️ Condiciones</div>
+      <div class="react-modal-cond" id="react-modal-cond"></div>
+    </div>
+    <hr class="react-modal-divider" id="react-modal-col-hr">
+    <div class="react-modal-section" id="react-modal-colombia-wrap">
+      <div class="react-modal-section-label">🇨🇴 Contexto colombiano</div>
+      <div class="react-modal-colombia" id="react-modal-colombia"></div>
+    </div>
+    <div id="react-modal-prereq-wrap">
+      <hr class="react-modal-divider">
+      <div class="react-modal-prereq" id="react-modal-prereq"></div>
+    </div>
+    <div id="react-modal-go-wrap" style="margin-top:14px"></div>
   </div>
 </div>
 
@@ -1561,71 +1586,144 @@ document.addEventListener('DOMContentLoaded', function(){
 var REACT_DATA = {
   'metal': {
     title: 'Elemento Metálico',
-    items: [{note: 'Punto de partida de la rama izquierda. Los metales reaccionan con oxígeno, hidrógeno o no metales para formar distintas funciones inorgánicas.'}]
+    desc: 'Elemento metálico: átomo que cede electrones fácilmente. Es el punto de partida de la rama básica de la química inorgánica.',
+    rxnType: 'Punto de partida',
+    conditions: 'Estado sólido a temperatura ambiente (excepto Hg)',
+    badge: 'element',
+    colombia: 'Colombia produce níquel en Cerro Matoso (Córdoba) y oro en Antioquia y Chocó, ambos metales clave en esta rama.',
+    prereq: null,
+    goSection: null,
+    reactions: []
   },
   'nometal': {
     title: 'Elemento No Metálico',
-    items: [{note: 'Punto de partida de la rama derecha. Los no metales reaccionan con oxígeno, hidrógeno o metales para formar distintas funciones inorgánicas.'}]
+    desc: 'Elemento no metálico: átomo que gana electrones o los comparte. Punto de partida de la rama ácida.',
+    rxnType: 'Punto de partida',
+    conditions: 'Pueden ser sólidos, líquidos o gases a temperatura ambiente',
+    badge: 'element',
+    colombia: 'El azufre (S) se extrae como subproducto del refinamiento de petróleo en Barrancabermeja.',
+    prereq: null,
+    goSection: null,
+    reactions: []
   },
   'ox-bas': {
-    title: 'Óxido Básico (Metal + O₂)',
-    items: [
-      {rxn: '2Ca + O<sub>2</sub> → 2CaO'},
-      {rxn: '4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub>'}
+    title: 'Óxido Básico',
+    desc: 'Óxido básico: compuesto binario de metal con oxígeno. Se forma por combustión del metal en aire.',
+    rxnType: 'Síntesis',
+    conditions: 'Calor y presencia de oxígeno (combustión directa)',
+    badge: 'base',
+    colombia: 'El CaO (cal viva) se produce en hornos en Boyacá y Cundinamarca para construcción y agricultura.',
+    prereq: 'Necesitas un metal',
+    goSection: 0,
+    reactions: [
+      '2Ca + O<sub>2</sub> → 2CaO',
+      '4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub>',
+      '2Cu + O<sub>2</sub> → 2CuO'
     ]
   },
   'anhid': {
-    title: 'Anhídrido (No metal + O₂)',
-    items: [
-      {rxn: 'S + O<sub>2</sub> → SO<sub>2</sub>'},
-      {rxn: '2S + 3O<sub>2</sub> → 2SO<sub>3</sub>'},
-      {rxn: 'P<sub>4</sub> + 5O<sub>2</sub> → 2P<sub>2</sub>O<sub>5</sub>'}
+    title: 'Anhídrido (Óxido Ácido)',
+    desc: 'Anhídrido u óxido ácido: compuesto binario de no metal con oxígeno. Precursor de los ácidos oxácidos.',
+    rxnType: 'Síntesis',
+    conditions: 'Alta temperatura, exceso de oxígeno',
+    badge: 'acid',
+    colombia: 'El SO<sub>2</sub> es emitido por el volcán Galeras (Nariño) y monitorado por el SGC para alertas de erupciones.',
+    prereq: 'Necesitas un no metal',
+    goSection: 1,
+    reactions: [
+      'S + O<sub>2</sub> → SO<sub>2</sub>',
+      '2S + 3O<sub>2</sub> → 2SO<sub>3</sub>',
+      'P<sub>4</sub> + 5O<sub>2</sub> → 2P<sub>2</sub>O<sub>5</sub>'
     ]
   },
   'base': {
-    title: 'Base / Hidróxido (Óxido básico + H₂O)',
-    items: [
-      {rxn: 'CaO + H<sub>2</sub>O → Ca(OH)<sub>2</sub>'},
-      {rxn: 'Na<sub>2</sub>O + H<sub>2</sub>O → 2NaOH'}
+    title: 'Base / Hidróxido',
+    desc: 'Base o hidróxido: reacción del óxido básico con agua. Libera iones OH⁻ en solución; carácter básico (pH > 7).',
+    rxnType: 'Síntesis con agua',
+    conditions: 'Disolución acuosa, temperatura ambiente',
+    badge: 'base',
+    colombia: 'El Ca(OH)<sub>2</sub> (cal apagada) se usa en potabilización de agua en municipios colombianos y en el proceso de la panela.',
+    prereq: 'Necesitas un óxido básico',
+    goSection: 5,
+    reactions: [
+      'CaO + H<sub>2</sub>O → Ca(OH)<sub>2</sub>',
+      'Na<sub>2</sub>O + H<sub>2</sub>O → 2NaOH',
+      'BaO + H<sub>2</sub>O → Ba(OH)<sub>2</sub>'
     ]
   },
   'ac-ox': {
-    title: 'Ácido Oxácido (Anhídrido + H₂O)',
-    items: [
-      {rxn: 'SO<sub>3</sub> + H<sub>2</sub>O → H<sub>2</sub>SO<sub>4</sub>'},
-      {rxn: 'P<sub>2</sub>O<sub>5</sub> + 3H<sub>2</sub>O → 2H<sub>3</sub>PO<sub>4</sub>'},
-      {rxn: 'CO<sub>2</sub> + H<sub>2</sub>O → H<sub>2</sub>CO<sub>3</sub>'}
+    title: 'Ácido Oxácido',
+    desc: 'Ácido oxácido: reacción del anhídrido con agua. Libera iones H⁺ en solución; carácter ácido (pH < 7).',
+    rxnType: 'Síntesis con agua',
+    conditions: 'Disolución acuosa, temperatura ambiente',
+    badge: 'acid',
+    colombia: 'El H<sub>2</sub>SO<sub>4</sub> (ácido sulfúrico) se produce en Colombia para fertilizantes fosfatados y procesos mineros.',
+    prereq: 'Necesitas un anhídrido',
+    goSection: 6,
+    reactions: [
+      'SO<sub>3</sub> + H<sub>2</sub>O → H<sub>2</sub>SO<sub>4</sub>',
+      'P<sub>2</sub>O<sub>5</sub> + 3H<sub>2</sub>O → 2H<sub>3</sub>PO<sub>4</sub>',
+      'CO<sub>2</sub> + H<sub>2</sub>O → H<sub>2</sub>CO<sub>3</sub>'
     ]
   },
   'sal-ox': {
-    title: 'Sal Oxigenada — Neutralización (Base + Ácido oxácido)',
-    items: [
-      {rxn: 'Ca(OH)<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> → CaSO<sub>4</sub> + 2H<sub>2</sub>O'},
-      {rxn: 'NaOH + HNO<sub>3</sub> → NaNO<sub>3</sub> + H<sub>2</sub>O'},
-      {rxn: '2NaOH + H<sub>2</sub>SO<sub>4</sub> → Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O'}
+    title: 'Sal Oxigenada',
+    desc: 'Sal oxigenada: producto de la neutralización entre una base y un ácido oxácido. Reacción de doble desplazamiento.',
+    rxnType: 'Neutralización',
+    conditions: 'Disolución acuosa, mezcla directa base + ácido',
+    badge: 'salt',
+    colombia: 'El Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> (fosfato de calcio) es base de fertilizantes usados en cultivos de café y caña de azúcar.',
+    prereq: 'Necesitas una base Y un ácido oxácido',
+    goSection: 7,
+    reactions: [
+      'Ca(OH)<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> → CaSO<sub>4</sub> + 2H<sub>2</sub>O',
+      'NaOH + HNO<sub>3</sub> → NaNO<sub>3</sub> + H<sub>2</sub>O',
+      '2NaOH + H<sub>2</sub>SO<sub>4</sub> → Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O'
     ]
   },
   'hidru': {
-    title: 'Hidruro Metálico (Metal + H₂)',
-    items: [
-      {rxn: 'Ca + H<sub>2</sub> → CaH<sub>2</sub>'},
-      {rxn: '2Na + H<sub>2</sub> → 2NaH'}
+    title: 'Hidruro Metálico',
+    desc: 'Hidruro metálico: compuesto binario de metal con hidrógeno. El hidrógeno actúa con estado de oxidación −1.',
+    rxnType: 'Síntesis reductora',
+    conditions: 'Alta temperatura, hidrógeno gaseoso a presión',
+    badge: 'neutral',
+    colombia: 'El NaH se usa en síntesis orgánica en laboratorios farmacéuticos como los de Medellín y Bogotá.',
+    prereq: 'Necesitas un metal',
+    goSection: 2,
+    reactions: [
+      'Ca + H<sub>2</sub> → CaH<sub>2</sub>',
+      '2Na + H<sub>2</sub> → 2NaH',
+      'Mg + H<sub>2</sub> → MgH<sub>2</sub>'
     ]
   },
   'ac-hid': {
-    title: 'Ácido Hídrico (No metal + H₂)',
-    items: [
-      {rxn: 'H<sub>2</sub> + Cl<sub>2</sub> → 2HCl'},
-      {rxn: 'H<sub>2</sub> + S → H<sub>2</sub>S'},
-      {rxn: '3H<sub>2</sub> + N<sub>2</sub> → 2NH<sub>3</sub>'}
+    title: 'Ácido Hídrico',
+    desc: 'Ácido hídrico: compuesto binario de no metal con hidrógeno. El hidrógeno actúa con EO +1; carácter ácido (pH < 7).',
+    rxnType: 'Síntesis directa',
+    conditions: 'Alta temperatura o UV (para HCl); temperatura ambiente',
+    badge: 'acid',
+    colombia: 'El HCl (ácido clorhídrico) se usa en la minería de oro artesanal en el Chocó, aunque con riesgos ambientales.',
+    prereq: 'Necesitas un no metal',
+    goSection: 3,
+    reactions: [
+      'H<sub>2</sub> + Cl<sub>2</sub> → 2HCl',
+      'H<sub>2</sub> + S → H<sub>2</sub>S',
+      '3H<sub>2</sub> + N<sub>2</sub> → 2NH<sub>3</sub>'
     ]
   },
   'sal-bin': {
-    title: 'Sal Binaria (Metal + No metal)',
-    items: [
-      {rxn: '2Na + Cl<sub>2</sub> → 2NaCl'},
-      {rxn: 'Fe + S → FeS'},
-      {rxn: 'Ca + Cl<sub>2</sub> → CaCl<sub>2</sub>'}
+    title: 'Sal Binaria',
+    desc: 'Sal binaria: compuesto formado directamente entre un metal y un no metal (sin pasar por ácido o base).',
+    rxnType: 'Síntesis directa',
+    conditions: 'Alta temperatura, contacto directo entre elementos',
+    badge: 'salt',
+    colombia: 'El NaCl (cloruro de sodio) se extrae en las Salinas de Zipaquirá y Manaure, símbolo de la química inorgánica colombiana.',
+    prereq: 'Necesitas un metal Y un no metal',
+    goSection: 4,
+    reactions: [
+      '2Na + Cl<sub>2</sub> → 2NaCl',
+      'Fe + S → FeS',
+      'Ca + Cl<sub>2</sub> → CaCl<sub>2</sub>'
     ]
   }
 };
@@ -1633,19 +1731,68 @@ var REACT_DATA = {
 function openReactModal(key) {
   var data = REACT_DATA[key];
   if (!data) return;
+
+  /* badge */
+  var badgeClass = 'react-badge react-badge-' + data.badge;
+  var badgeLabels = {acid:'Ácido', base:'Base', salt:'Sal', neutral:'Neutro', element:'Elemento'};
+  var topHTML = '<span class="' + badgeClass + '">' + (badgeLabels[data.badge] || data.badge) + '</span>';
+  if (data.rxnType) topHTML += ' <span class="react-rxntype">' + data.rxnType + '</span>';
+  document.getElementById('react-modal-top').innerHTML = topHTML;
+
+  /* title */
   document.getElementById('react-modal-title').textContent = data.title;
+
+  /* description */
+  document.getElementById('react-modal-desc').textContent = data.desc || '';
+
+  /* reactions */
   var list = document.getElementById('react-modal-rxns');
   list.innerHTML = '';
-  data.items.forEach(function(item) {
+  if (data.reactions && data.reactions.length > 0) {
+    data.reactions.forEach(function(rxn) {
+      var li = document.createElement('li');
+      li.innerHTML = rxn;
+      list.appendChild(li);
+    });
+  } else {
     var li = document.createElement('li');
-    if (item.note) {
-      li.className = 'note';
-      li.textContent = item.note;
-    } else {
-      li.innerHTML = item.rxn;
-    }
+    li.className = 'note';
+    li.textContent = 'Sin reacciones de ejemplo para este nodo.';
     list.appendChild(li);
-  });
+  }
+
+  /* conditions */
+  document.getElementById('react-modal-cond').textContent = data.conditions || '';
+
+  /* colombia */
+  var colWrap = document.getElementById('react-modal-colombia-wrap');
+  var colHr = document.getElementById('react-modal-col-hr');
+  if (data.colombia) {
+    document.getElementById('react-modal-colombia').innerHTML = data.colombia;
+    colWrap.style.display = '';
+    colHr.style.display = '';
+  } else {
+    colWrap.style.display = 'none';
+    colHr.style.display = 'none';
+  }
+
+  /* prereq */
+  var prereqWrap = document.getElementById('react-modal-prereq-wrap');
+  if (data.prereq) {
+    document.getElementById('react-modal-prereq').textContent = '⚠️ Precondición: ' + data.prereq;
+    prereqWrap.style.display = '';
+  } else {
+    prereqWrap.style.display = 'none';
+  }
+
+  /* go-to-section button */
+  var goWrap = document.getElementById('react-modal-go-wrap');
+  if (data.goSection !== null && data.goSection !== undefined) {
+    goWrap.innerHTML = '<button class="react-go-btn" onclick="closeReactModal();volverAlMenu();goToSection(' + data.goSection + ')">Ir a nomenclatura →</button>';
+  } else {
+    goWrap.innerHTML = '';
+  }
+
   document.getElementById('react-modal-overlay').classList.add('open');
 }
 
