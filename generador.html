@@ -21,6 +21,12 @@
   --sh:0 3px 18px rgba(26,110,168,.10);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* Group checkboxes */
+.group-check{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.8);font-size:.83rem;border:1.5px solid rgba(255,255,255,.12);transition:background .15s,border-color .15s}
+.group-check:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
+.group-check input[type=checkbox]{accent-color:#fcd34d;width:15px;height:15px;flex-shrink:0;cursor:pointer}
+.group-check.checked{background:rgba(252,211,77,.12);border-color:rgba(252,211,77,.5);color:#fcd34d}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
 
@@ -116,19 +122,18 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
     <h1 class="form-title">⚙️ Generador de Ejercicios</h1>
 
     <div class="form-group">
-      <label class="form-label">Grupo funcional</label>
-      <select id="inp-group" class="form-select">
-        <option value="">Selecciona un grupo...</option>
-        <option value="all">Todos los grupos</option>
-        <option value="ox-bas">Óxidos básicos</option>
-        <option value="anhid">Anhídridos</option>
-        <option value="hidru">Hidruros metálicos</option>
-        <option value="ac-hid">Ácidos hídricos</option>
-        <option value="base">Bases / Hidróxidos</option>
-        <option value="ac-ox">Ácidos oxácidos</option>
-        <option value="sal-bin">Sales binarias</option>
-        <option value="sal-ox">Sales oxigenadas</option>
-      </select>
+      <label class="form-label">Grupos funcionales <span style="font-size:.65rem;opacity:.6">(selecciona uno o varios)</span></label>
+      <div id="group-checks" style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:4px">
+        <label class="group-check"><input type="checkbox" value="all" id="chk-all" onchange="toggleAll(this)"> <span>Todos los grupos</span></label>
+        <label class="group-check"><input type="checkbox" value="ox-bas"> <span>Óxidos básicos</span></label>
+        <label class="group-check"><input type="checkbox" value="anhid"> <span>Anhídridos</span></label>
+        <label class="group-check"><input type="checkbox" value="hidru"> <span>Hidruros metálicos</span></label>
+        <label class="group-check"><input type="checkbox" value="ac-hid"> <span>Ácidos hídricos</span></label>
+        <label class="group-check"><input type="checkbox" value="base"> <span>Bases / Hidróxidos</span></label>
+        <label class="group-check"><input type="checkbox" value="ac-ox"> <span>Ácidos oxácidos</span></label>
+        <label class="group-check"><input type="checkbox" value="sal-bin"> <span>Sales binarias</span></label>
+        <label class="group-check"><input type="checkbox" value="sal-ox"> <span>Sales oxigenadas</span></label>
+      </div>
     </div>
 
     <div class="form-group">
@@ -139,6 +144,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="formula-to-name">Nombrar moléculas (fórmula → nombre)</option>
         <option value="name-to-formula">De nombre a fórmula</option>
         <option value="table-complete">Completar tabla de datos</option>
+        <option value="oxidation-state">Calcular estados de oxidación</option>
       </select>
     </div>
 
@@ -148,7 +154,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="all">Todos (mezcla)</option>
         <option value="trad">Solo Tradicional</option>
         <option value="stock">Solo Stock</option>
-        <option value="sist">Solo IUPAC / Sistemática</option>
+        <option value="sist">Solo Sistemática</option>
       </select>
     </div>
 
@@ -278,12 +284,12 @@ const GROUP_LABELS = {
 // Pick a name from the compound based on desired system
 // Returns {name, system, label}
 function pickName(c, sistema){
-  const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'IUPAC'};
+  const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'Sistemática'};
   let candidates = [];
   if(sistema === 'all'){
     if(c.trad && c.trad[0]) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
     if(c.stock && c.stock[0]) candidates.push({name:c.stock[0], system:'stock', label:'Stock'});
-    if(c.sist && c.sist[0]) candidates.push({name:c.sist[0], system:'sist', label:'IUPAC'});
+    if(c.sist && c.sist[0]) candidates.push({name:c.sist[0], system:'sist', label:'Sistemática'});
     if(!candidates.length) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
     return candidates[Math.floor(Math.random() * candidates.length)];
   } else {
@@ -294,32 +300,64 @@ function pickName(c, sistema){
   }
 }
 
+// Toggle "todos" checkbox
+function toggleAll(chk){
+  document.querySelectorAll('#group-checks input[type=checkbox]').forEach(cb => {
+    if(cb !== chk) cb.checked = false;
+    updateCheckStyle(cb);
+  });
+  updateCheckStyle(chk);
+}
+
+function updateCheckStyle(cb){
+  cb.closest('.group-check').classList.toggle('checked', cb.checked);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#group-checks input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      if(cb.id !== 'chk-all'){
+        document.getElementById('chk-all').checked = false;
+        updateCheckStyle(document.getElementById('chk-all'));
+      }
+      updateCheckStyle(cb);
+    });
+  });
+});
+
 // Generate exercises
 function generateExercises(){
-  const group = document.getElementById('inp-group').value;
   const type = document.getElementById('inp-type').value;
   const sistema = document.getElementById('inp-sistema').value;
   const count = parseInt(document.getElementById('inp-count').value) || 5;
 
-  if(!group || !type){
-    alert('Por favor selecciona grupo y tipo de ejercicio');
+  // Read selected groups from checkboxes
+  const allChk = document.getElementById('chk-all');
+  let selectedGroups = [];
+  if(allChk.checked){
+    selectedGroups = ['all'];
+  } else {
+    document.querySelectorAll('#group-checks input[type=checkbox]:not(#chk-all):checked').forEach(cb => {
+      selectedGroups.push(cb.value);
+    });
+  }
+
+  if(selectedGroups.length === 0 || !type){
+    alert('Por favor selecciona al menos un grupo y el tipo de ejercicio');
     return;
   }
 
-  // Get all compounds from BANCO (banco.js) or fallback
   let compounds = getAllCompounds();
 
-  // Filter by group
-  if(group !== 'all'){
-    compounds = compounds.filter(c => c.group === group);
+  if(!selectedGroups.includes('all')){
+    compounds = compounds.filter(c => selectedGroups.includes(c.group));
   }
 
   if(compounds.length === 0){
-    alert('No hay compuestos disponibles para este grupo. Prueba con otro grupo o nivel.');
+    alert('No hay compuestos disponibles para los grupos seleccionados.');
     return;
   }
 
-  // Fisher-Yates shuffle
   function shuffle(arr){
     const a = [...arr];
     for(let i = a.length - 1; i > 0; i--){
@@ -329,21 +367,21 @@ function generateExercises(){
     return a;
   }
 
-  // Shuffle without repetition; only cycle if count > available
   let pool = shuffle(compounds);
   while(pool.length < count) pool = pool.concat(shuffle(compounds));
   const selected = pool.slice(0, count);
 
-  // Generate HTML
   const typeLabel = {
     'all': 'Ejercicios diversos',
     'formula-to-name': 'Nombrar moléculas',
     'name-to-formula': 'De nombre a fórmula',
-    'table-complete': 'Completar tabla'
+    'table-complete': 'Completar tabla',
+    'oxidation-state': 'Estados de oxidación'
   }[type];
 
-  const sistemaLabel = {all:'Todos los sistemas', trad:'Tradicional', stock:'Stock', sist:'IUPAC'}[sistema];
-  const groupLabel = GROUP_LABELS[group] || 'Todos los grupos';
+  const sistemaLabel = {all:'Todos los sistemas', trad:'Tradicional', stock:'Stock', sist:'Sistemática'}[sistema];
+  const groupLabel = selectedGroups.includes('all') ? 'Todos los grupos'
+    : selectedGroups.map(g => GROUP_LABELS[g] || g).join(', ');
   document.getElementById('prev-title').textContent = `${typeLabel} — ${groupLabel} — ${sistemaLabel}`;
 
   let html = '';
@@ -355,6 +393,8 @@ function generateExercises(){
     html = generateNameToFormula(selected, sistema);
   } else if(type === 'table-complete'){
     html = generateTableComplete(selected, sistema);
+  } else if(type === 'oxidation-state'){
+    html = generateOxidationState(selected);
   }
 
   document.getElementById('exercises-container').innerHTML = html;
@@ -454,7 +494,7 @@ function buildTable(compounds, sistema){
     let headers = `<th style="width:18%">Fórmula</th>`;
     if(showTrad)  headers += `<th>Tradicional</th>`;
     if(showStock) headers += `<th>Stock</th>`;
-    if(showSist)  headers += `<th>IUPAC</th>`;
+    if(showSist)  headers += `<th>Sistemática</th>`;
 
     html += `<div class="exercise-card ex-type-3 PDF-section">
       <div class="ex-num">Tabla ${tableNum}</div>
@@ -479,6 +519,55 @@ function buildTable(compounds, sistema){
 
     html += `</tbody></table></div></div>`;
   }
+  return html;
+}
+
+function generateOxidationState(compounds){
+  // Extract the metal/non-metal cation and its oxidation state from ions array
+  let html = '';
+  compounds.forEach((c, i) => {
+    // Find the cation ion entry to extract the EO
+    const catIon = c.ions ? c.ions.find(ion => ion.t === 'cat') : null;
+    // Build a simple question: given the formula, find EO of the element indicated
+    // We ask for the EO of the first cation (metal) shown in the formula
+    const hint = c.hint || '';
+    // Determine which element to ask about and what the answer is from ions
+    let askEl = '';
+    let answerEO = '';
+    if(catIon){
+      // e.g. "Fe²⁺ (EO=+2)" or "Na⁺ × 2" → parse element symbol
+      const m = catIon.l.match(/^([A-Z][a-z]?)/);
+      if(m) askEl = m[1];
+      const eoMatch = catIon.l.match(/EO=([+\-\d]+)/);
+      if(eoMatch) answerEO = eoMatch[1];
+      else {
+        // infer from charge notation like Fe²⁺ → +2, Na⁺ → +1
+        const chM = catIon.l.match(/([A-Z][a-z]?)(\d*)([+\-])/);
+        if(chM) answerEO = chM[3] === '+' ? `+${chM[2]||1}` : `-${chM[2]||1}`;
+      }
+    }
+    const questionEl = askEl ? `del <strong>${askEl}</strong>` : 'del metal';
+    html += `
+      <div class="exercise-card PDF-section" style="border-left:4px solid var(--ox)">
+        <div class="ex-num">Ejercicio ${i+1}</div>
+        <div style="font-size:.88rem;color:var(--dim);margin-bottom:12px">
+          Calcula el <strong>estado de oxidación ${questionEl}</strong> en el siguiente compuesto.
+          Recuerda: la suma algebraica de todos los estados de oxidación debe ser igual a <strong>0</strong>.
+        </div>
+        <div style="font-size:2rem;font-weight:800;color:var(--ox);font-family:'Courier New',monospace;margin-bottom:14px">${c.formula}</div>
+        <div style="font-size:.8rem;color:var(--dimmer);margin-bottom:10px">
+          Iones presentes: ${(c.ions||[]).map(ion=>`<span style="background:${ion.t==='cat'?'var(--cat-b)':ion.t==='oh'?'var(--oh-b)':'var(--an-b)'};padding:2px 7px;border-radius:6px;font-size:.78rem">${ion.l}</span>`).join(' ')}
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
+          <span style="font-size:.82rem;color:var(--dimmer)">Estado de oxidación de ${askEl||'?'} =</span>
+          <div style="border-bottom:2px solid var(--dimmer);width:60px;height:22px"></div>
+        </div>
+        <details style="margin-top:14px">
+          <summary style="font-size:.75rem;color:var(--an);cursor:pointer;user-select:none">💡 Pista</summary>
+          <p style="font-size:.78rem;color:var(--dim);margin-top:6px;line-height:1.5">${hint||'Usa la regla de electroneutralidad: suma de cargas = 0.'}</p>
+        </details>
+      </div>`;
+  });
   return html;
 }
 
