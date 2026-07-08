@@ -317,6 +317,77 @@ footer a:hover{text-decoration:underline}
 
 <script>
 // ══════════════════════════════════════════
+//  TTS — Web Speech API
+// ══════════════════════════════════════════
+let _ttsUtt = null;
+function speak(text, onEnd){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  _ttsUtt = new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang = 'es-CO';
+  _ttsUtt.rate = 0.9;
+  _ttsUtt.pitch = 1.05;
+  const loadVoice = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const esp = voices.find(v=>v.lang.startsWith('es'))||voices[0];
+    if(esp) _ttsUtt.voice = esp;
+    if(onEnd) _ttsUtt.onend = onEnd;
+    window.speechSynthesis.speak(_ttsUtt);
+  };
+  if(window.speechSynthesis.getVoices().length) loadVoice();
+  else window.speechSynthesis.onvoiceschanged = loadVoice;
+}
+function stopSpeech(){ window.speechSynthesis && window.speechSynthesis.cancel(); }
+function speakCurrentSection(){
+  if(SEC_DASH[seccionActual]) speak(SEC_DASH[seccionActual].intro);
+}
+
+// ══════════════════════════════════════════
+//  SECTION DASHBOARDS
+// ══════════════════════════════════════════
+const SEC_DASH = [
+  {color:'#d97706', summary:'Cada ion tiene un color. Los 4 colores MDEC te dicen qué tipo de compuesto es y cómo nombrarlo.',
+   chips:['🔴 Catión (metal)','🔵 Anión simple','🟣 OH⁻ Hidróxido','🟢 Oxoanión'],
+   intro:'¡Hola! En esta sección vas a aprender el sistema de colores que hace visible la estructura de los compuestos inorgánicos. Cada tipo de ion tiene un color fijo. El ámbar es para el catión o metal, el azul para el anión simple, el violeta para el grupo hidróxido, y el teal para los oxoaniones. Con estos cuatro colores vas a poder leer cualquier fórmula inorgánica.'},
+  {color:'#0369a1', summary:'EO = carga que tendría el átomo si los electrones fueran completamente del ion más electronegativo.',
+   chips:['O siempre −2','H: +1 en ácidos, −1 en hidruros','Suma de EO = 0','Metales de transición: variable'],
+   intro:'Los estados de oxidación son el corazón de la nomenclatura inorgánica. El estado de oxidación nos dice qué carga tendría cada átomo si la molécula fuera completamente iónica. La regla de oro es que la suma de todos los estados de oxidación en una molécula neutra debe ser igual a cero. Con esa regla puedes calcular cualquier estado de oxidación desconocido.'},
+  {color:'#0f766e', summary:'Binarios: 2 elementos. Ternarios: 3 elementos (con grupo oxoanión o OH).',
+   chips:['Binario: Metal+O ó Metal+X','Ternario: Metal+OH ó Metal+Oxoanión','Anhídrido: No metal+O','Ácido hídrico: H+X(aq)'],
+   intro:'Los compuestos inorgánicos se clasifican según cuántos elementos tienen y cuáles son. Los binarios tienen dos elementos, como el cloruro de sodio o los óxidos. Los ternarios tienen tres elementos, como los hidróxidos y las sales oxigenadas. Los anhídridos son no metales con oxígeno. Y los ácidos hídricos son hidrógeno con un no metal en solución acuosa.'},
+  {color:'#0369a1', summary:'Sistemática: cuenta los átomos con prefijos (mono, di, tri…). Sin deducir EO.',
+   chips:['mono=1','di=2','tri=3','tetra=4','penta=5'],
+   intro:'La nomenclatura sistemática, también llamada IUPAC, es la más sencilla: simplemente cuenta los átomos de cada elemento y usa prefijos griegos. Mono para uno, di para dos, tri para tres, tetra para cuatro, penta para cinco. No necesitas saber el estado de oxidación. Solo cuentas y nombras.'},
+  {color:'#d97706', summary:'Stock: nombre del metal + EO en romano. Tradicional: sufijos -oso (menor) / -ico (mayor).',
+   chips:['Fe²⁺ = ferroso / hierro(II)','Fe³⁺ = férrico / hierro(III)','Solo metales de valencia variable','Fija: sin sufijo ni romano'],
+   intro:'Los sistemas Stock y Tradicional son para los metales con valencia variable, es decir, aquellos que pueden tener más de un estado de oxidación. En el sistema Stock, se pone el nombre del metal y entre paréntesis el estado de oxidación en número romano. En el sistema Tradicional, se usan los sufijos oso para la valencia menor e ico para la mayor.'},
+  {color:'#7c3aed', summary:'Excepciones: Mn (2,4,7), Cr (2,3,6), Hg (1→Hg₂²⁺), 3 tipos de hidruros.',
+   chips:['Mn: manganoso/mangánico/permangánico','Cr: cromoso/crómico → anhídrido crómico','Hg(I)→Hg₂²⁺ (ion mercurioso)','Hidruro metálico vs HX vs H₂O'],
+   intro:'Las excepciones son los casos especiales que hay que memorizar. El manganeso puede tener estados de oxidación dos, cuatro y siete. El cromo tiene dos, tres y seis. El mercurio uno forma un ion diatómico especial llamado mercurioso. Y los hidruros se dividen en tres tipos: metálicos como el hidruro de sodio, ácidos hídricos como el ácido clorhídrico, y el agua que es un caso único.'},
+  {color:'#0f766e', summary:'La nomenclatura conecta con las ecuaciones: óxido → base → sal (metal) / anhídrido → ácido → sal (no metal).',
+   chips:['Metal → Óxido → Base → Sal','No metal → Anhídrido → Ácido → Sal','DBA 3 MEN Colombia','pH y neutralización'],
+   intro:'La reactividad conecta todo lo que aprendiste sobre nomenclatura con las ecuaciones químicas. Los metales forman la cadena: óxido básico, luego hidróxido o base, y finalmente sal. Los no metales forman la cadena: anhídrido, luego ácido oxácido, y también finalmente sal. Esta cadena de reactividad es el estándar tres de los Derechos Básicos de Aprendizaje del Ministerio de Educación de Colombia.'},
+];
+
+// ══════════════════════════════════════════
+//  MINI QUIZ
+// ══════════════════════════════════════════
+function checkMQ2(sec, qIdx, btn){
+  const opts=btn.closest('.mq-opts').querySelectorAll('.mq-btn');
+  opts.forEach(b=>b.disabled=true);
+  const isCorrect=btn.dataset.correct==='true';
+  const fb=document.getElementById('mq-fb-'+sec+'-'+qIdx);
+  if(isCorrect){
+    btn.classList.add('mq-correct');
+    if(fb) fb.innerHTML='<span style="color:#16a34a;font-weight:700">✓ ¡Correcto!</span>';
+  } else {
+    btn.classList.add('mq-wrong');
+    opts.forEach(b=>{if(b.dataset.correct==='true') b.classList.add('mq-correct');});
+    if(fb) fb.innerHTML='<span style="color:#dc2626;font-weight:700">✗ Incorrecto. La correcta está marcada en verde.</span>';
+  }
+}
+
+// ══════════════════════════════════════════
 //  SECCIONES metadata
 // ══════════════════════════════════════════
 const SECCIONES = [
@@ -449,6 +520,20 @@ CONTENIDO[0] = `
     <tr><td>Mn</td><td><code>+2</code> · <code>+3</code> · <code>+4</code> · <code>+6</code> · <code>+7</code></td><td><span class="tag tag-cat">Variable (5 estados)</span></td></tr>
     <tr><td>Cr</td><td><code>+2</code> · <code>+3</code> · <code>+6</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
   </table>
+</div>
+
+<div class="sect mayer-quiz" id="quiz-0">
+  <h2>🎯 Practica — Sección 1</h2>
+  <div class="mq-question" id="mq-0-0">
+    <p class="mq-q">¿Qué color representa al catión (metal) en el sistema MDEC?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(0,0,this)">🔴 Ámbar</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🔵 Azul</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🟣 Violeta</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🟢 Teal</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-0-0"></div>
+  </div>
 </div>
 `;
 
@@ -588,6 +673,20 @@ CONTENIDO[1] = `
     <p>No necesitas memorizar una lista infinita. Aplica la regla: si está en bloque s → valencia fija = número de columna. Si está en bloque d → variable, calcula el EO con la fórmula. El cálculo siempre supera la memoria.</p>
   </div>
 </div>
+
+<div class="sect mayer-quiz" id="quiz-1">
+  <h2>🎯 Practica — Sección 2</h2>
+  <div class="mq-question" id="mq-1-0">
+    <p class="mq-q">En Fe₂O₃, si el EO del O es −2, ¿cuál es el EO del Fe?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(1,0,this)">+3</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">+2</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">+6</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">−3</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-1-0"></div>
+  </div>
+</div>
 `;
 
 // ── Sección 2: Tipos de Compuestos ──
@@ -710,6 +809,20 @@ CONTENIDO[2] = `
     </div>
   </div>
 </div>
+
+<div class="sect mayer-quiz" id="quiz-2">
+  <h2>🎯 Practica — Sección 3</h2>
+  <div class="mq-question" id="mq-2-0">
+    <p class="mq-q">¿Cuál de estos es un anhídrido?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(2,0,this)">SO₃</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">NaOH</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">FeCl₃</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">Ca(OH)₂</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-2-0"></div>
+  </div>
+</div>
 `;
 
 // ── Sección 3: Nomenclatura Sistemática / IUPAC ──
@@ -767,6 +880,20 @@ CONTENIDO[3] = `
   <div class="error-box">
     <strong>❌ Error frecuente: prefijos en sistema equivocado</strong>
     <p>Los prefijos di-, tri-, tetra- son <strong>exclusivos del sistema Sistemática / IUPAC</strong>. En Tradicional se dice "cloruro férrico" (no "tricloruro"). En Stock se dice "cloruro de hierro (III)" (no "tricloruro"). Mezclar sistemas es el error más común en exámenes.</p>
+  </div>
+</div>
+
+<div class="sect mayer-quiz" id="quiz-3">
+  <h2>🎯 Practica — Sección 4</h2>
+  <div class="mq-question" id="mq-3-0">
+    <p class="mq-q">¿Cómo se llama P₂O₅ en nomenclatura sistemática?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(3,0,this)">pentaóxido de difósforo</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">óxido de fósforo (V)</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">anhídrido fosfórico</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">pentóxido de disfósforo</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-3-0"></div>
   </div>
 </div>
 `;
@@ -868,6 +995,20 @@ CONTENIDO[4] = `
   <div class="error-box">
     <strong>❌ Error frecuente: -oso/-ico cuando hay más de 2 valencias</strong>
     <p>La regla -oso/-ico solo funciona cuando el metal tiene <strong>exactamente 2 estados de oxidación</strong> comunes. Para Mn (+2, +3, +4) la nomenclatura Tradicional binaria falla: Mn³⁺ no tiene nombre Tradicional. Para esos casos se usa Stock obligatoriamente. Ver Sección 6 → Excepciones.</p>
+  </div>
+</div>
+
+<div class="sect mayer-quiz" id="quiz-4">
+  <h2>🎯 Practica — Sección 5</h2>
+  <div class="mq-question" id="mq-4-0">
+    <p class="mq-q">¿Cuál es el nombre Tradicional de Fe₂O₃?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(4,0,this)">óxido férrico</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">óxido ferroso</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">óxido de hierro</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">dióxido de dihierro</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-4-0"></div>
   </div>
 </div>
 `;
@@ -976,6 +1117,20 @@ CONTENIDO[5] = `
     <p>NaH (Tipo 1, sólido iónico, H⁻) ≠ HCl(g) (Tipo 2, gas) ≠ HCl(aq) (Tipo 3, ácido). El estado físico y el disolvente determinan el nombre. Un examen puede pedir los tres nombres para la misma fórmula con distintas condiciones.</p>
   </div>
 </div>
+
+<div class="sect mayer-quiz" id="quiz-5">
+  <h2>🎯 Practica — Sección 6</h2>
+  <div class="mq-question" id="mq-5-0">
+    <p class="mq-q">El ion Hg₂²⁺ corresponde al estado de oxidación +1 del mercurio. ¿Por qué lleva el subíndice 2?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(5,0,this)">Porque el Hg(I) forma un dímero diatómico (Hg–Hg)</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Por error de nomenclatura</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Porque siempre es divalente</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Porque se combina con 2 aniones</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-5-0"></div>
+  </div>
+</div>
 `;
 
 // ── Sección 6: Reactividad ──
@@ -1055,6 +1210,20 @@ CONTENIDO[6] = `
     <p>Un óxido básico se llama así porque <strong>reacciona con agua para dar una base</strong> (pH &gt; 7), no por tener "básico" en el nombre. Del mismo modo, un "anhídrido" no es ácido por sí solo — lo es al disolverse en agua. El nombre describe el comportamiento químico, no una propiedad intrínseca del sólido.</p>
   </div>
 </div>
+
+<div class="sect mayer-quiz" id="quiz-6">
+  <h2>🎯 Practica — Sección 7</h2>
+  <div class="mq-question" id="mq-6-0">
+    <p class="mq-q">En la cadena del no metal, ¿qué se forma cuando el anhídrido reacciona con agua?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(6,0,this)">Ácido oxácido</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Sal oxigenada</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Hidróxido</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Sal binaria</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-6-0"></div>
+  </div>
+</div>
 `;
 
 // ══════════════════════════════════════════
@@ -1063,8 +1232,23 @@ CONTENIDO[6] = `
 let seccionActual = 0;
 
 function goToSection(idx){
+  stopSpeech();
   seccionActual = idx;
-  document.getElementById('seccion-content').innerHTML = CONTENIDO[idx];
+  const d = SEC_DASH[idx];
+  const introEsc = d.intro.replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  const dashHTML = `<div style="background:${d.color};border-radius:12px;padding:16px 20px;margin-bottom:20px;color:#fff">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div>
+      <div style="font-size:1.05rem;font-weight:800">${SECCIONES[idx].icon} ${SECCIONES[idx].titulo}</div>
+      <div style="font-size:.8rem;opacity:.85;margin-top:3px">${d.summary}</div>
+    </div>
+    <button onclick="speak('${introEsc}')" style="flex-shrink:0;padding:8px 14px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:8px;color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;margin-left:12px">🔊 Escuchar</button>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    ${d.chips.map(c=>`<span style="background:rgba(255,255,255,.18);padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:700">${c}</span>`).join('')}
+  </div>
+</div>`;
+  document.getElementById('seccion-content').innerHTML = dashHTML + CONTENIDO[idx];
   document.getElementById('seccion-titulo').textContent = SECCIONES[idx].icon + ' ' + SECCIONES[idx].titulo;
   document.getElementById('seccion-numero').textContent = 'Sección ' + (idx+1) + ' de ' + SECCIONES.length;
   document.getElementById('progress-text').textContent = (idx+1) + ' / ' + SECCIONES.length;
@@ -1073,13 +1257,18 @@ function goToSection(idx){
   document.getElementById('btn-siguiente').disabled = idx === SECCIONES.length - 1;
   document.getElementById('menu-principal').classList.remove('active');
   document.getElementById('contenido-seccion').classList.add('active');
+  const floatBtn = document.getElementById('speak-btn-float');
+  if(floatBtn) floatBtn.style.display='block';
   window.scrollTo(0,0);
   localStorage.setItem('teoria-seccion', idx);
 }
 
 function volverAlMenu(){
+  stopSpeech();
   document.getElementById('contenido-seccion').classList.remove('active');
   document.getElementById('menu-principal').classList.add('active');
+  const floatBtn = document.getElementById('speak-btn-float');
+  if(floatBtn) floatBtn.style.display='none';
   window.scrollTo(0,0);
 }
 
