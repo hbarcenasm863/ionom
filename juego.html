@@ -124,6 +124,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .mc-opt.wrong{border-color:var(--err);background:var(--errb);color:var(--err);cursor:default}
 .mc-opt.disabled{pointer-events:none;opacity:.5}
 
+/* React Chain */
+.chain-box{background:#fff;border:2px solid var(--brd);border-radius:10px;padding:10px 16px;text-align:center;font-family:'Courier New',monospace;font-size:1.1rem;font-weight:700;color:var(--tx);min-width:120px}
+.chain-box.asked{background:var(--cat-b);border:2.5px dashed var(--cat);color:var(--cat-t)}
+.chain-box.revealed{background:var(--okb);border-color:var(--ok)}
+.chain-arrow{text-align:center;color:var(--dimmer);font-size:1.2rem;margin:4px 0;line-height:1}
+.chain-label{font-size:.7rem;font-weight:700;color:var(--dimmer);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.chain-step{display:flex;flex-direction:column;align-items:center;margin:2px 0}
+.chain-reagent{font-size:.8rem;color:var(--dim);margin:3px 0;font-family:'Courier New',monospace}
+
 /* Write */
 .write-input{width:100%;padding:13px 16px;background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);color:var(--tx);font-family:var(--sans);font-size:.92rem;transition:border-color .2s;margin-bottom:12px}
 .write-input:focus{outline:none;border-color:var(--cat);background:var(--cat-b)}
@@ -360,6 +369,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <span class="gb-name">Tabla periódica</span>
         <span class="gb-sub">Símbolos, nombres, config. electrónica</span>
       </button>
+      <button class="group-btn full" onclick="pickGroup('reactividad')">
+        <span class="gb-icon">🔗</span>
+        <span class="gb-name">Cadena de reactividad</span>
+        <span class="gb-sub">Óxido → Base → Sal</span>
+      </button>
     </div>
   </div>
 </div>
@@ -451,6 +465,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
           <button class="btn-submit" onclick="checkOxAssign()">Verificar →</button>
           <span style="font-size:.75rem;color:var(--dimmer)">Usa +2, −2, etc. La suma total debe ser 0.</span>
         </div>
+      </div>
+      <div id="area-react" style="display:none">
+        <div id="react-chain-diagram"></div>
+        <div id="react-mc-opts" class="mc-opts"></div>
       </div>
     </div>
     <button class="pt-modal-btn" onclick="openPTModal()">📋 Ver tabla</button>
@@ -888,6 +906,20 @@ let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempt
 const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance','el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
 const EL_TYPES=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
 
+const REACT_CHAINS=[
+  {metal:'Li',eo:'+1',oxide:'Li₂O',hydroxide:'LiOH',salts:[{acid:'HNO₃',formula:'LiNO₃'},{acid:'HCl',formula:'LiCl'},{acid:'H₂SO₄',formula:'Li₂SO₄'},{acid:'HClO₄',formula:'LiClO₄'}]},
+  {metal:'Na',eo:'+1',oxide:'Na₂O',hydroxide:'NaOH',salts:[{acid:'HCl',formula:'NaCl'},{acid:'HNO₃',formula:'NaNO₃'},{acid:'H₂SO₄',formula:'Na₂SO₄'},{acid:'H₃PO₄',formula:'Na₃PO₄'}]},
+  {metal:'K',eo:'+1',oxide:'K₂O',hydroxide:'KOH',salts:[{acid:'HCl',formula:'KCl'},{acid:'HNO₃',formula:'KNO₃'},{acid:'H₂SO₄',formula:'K₂SO₄'},{acid:'HClO₄',formula:'KClO₄'}]},
+  {metal:'Mg',eo:'+2',oxide:'MgO',hydroxide:'Mg(OH)₂',salts:[{acid:'HCl',formula:'MgCl₂'},{acid:'H₂SO₄',formula:'MgSO₄'},{acid:'HNO₃',formula:'Mg(NO₃)₂'},{acid:'H₃PO₄',formula:'Mg₃(PO₄)₂'}]},
+  {metal:'Ca',eo:'+2',oxide:'CaO',hydroxide:'Ca(OH)₂',salts:[{acid:'HCl',formula:'CaCl₂'},{acid:'H₂SO₄',formula:'CaSO₄'},{acid:'HNO₃',formula:'Ca(NO₃)₂'},{acid:'HClO₄',formula:'Ca(ClO₄)₂'}]},
+  {metal:'Ba',eo:'+2',oxide:'BaO',hydroxide:'Ba(OH)₂',salts:[{acid:'HCl',formula:'BaCl₂'},{acid:'H₂SO₄',formula:'BaSO₄'},{acid:'HNO₃',formula:'Ba(NO₃)₂'},{acid:'H₃PO₄',formula:'Ba₃(PO₄)₂'}]},
+  {metal:'Al',eo:'+3',oxide:'Al₂O₃',hydroxide:'Al(OH)₃',salts:[{acid:'HCl',formula:'AlCl₃'},{acid:'HNO₃',formula:'Al(NO₃)₃'},{acid:'H₂SO₄',formula:'Al₂(SO₄)₃'},{acid:'HClO₄',formula:'Al(ClO₄)₃'}]},
+  {metal:'Fe',eo:'+2',oxide:'FeO',hydroxide:'Fe(OH)₂',salts:[{acid:'HCl',formula:'FeCl₂'},{acid:'H₂SO₄',formula:'FeSO₄'},{acid:'HNO₃',formula:'Fe(NO₃)₂'},{acid:'HClO₄',formula:'Fe(ClO₄)₂'}]},
+  {metal:'Fe',eo:'+3',oxide:'Fe₂O₃',hydroxide:'Fe(OH)₃',salts:[{acid:'HCl',formula:'FeCl₃'},{acid:'H₂SO₄',formula:'Fe₂(SO₄)₃'},{acid:'HNO₃',formula:'Fe(NO₃)₃'},{acid:'HClO₄',formula:'Fe(ClO₄)₃'}]},
+  {metal:'Cu',eo:'+2',oxide:'CuO',hydroxide:'Cu(OH)₂',salts:[{acid:'HCl',formula:'CuCl₂'},{acid:'H₂SO₄',formula:'CuSO₄'},{acid:'HNO₃',formula:'Cu(NO₃)₂'},{acid:'HClO₄',formula:'Cu(ClO₄)₂'}]},
+  {metal:'Zn',eo:'+2',oxide:'ZnO',hydroxide:'Zn(OH)₂',salts:[{acid:'HCl',formula:'ZnCl₂'},{acid:'H₂SO₄',formula:'ZnSO₄'},{acid:'HNO₃',formula:'Zn(NO₃)₂'},{acid:'HClO₄',formula:'Zn(ClO₄)₂'}]},
+];
+
 // ── Element-question helpers ──
 const NOBLE_BY_PERIOD={1:'',2:'[He] ',3:'[Ne] ',4:'[Ar] ',5:'[Kr] ',6:'[Xe] ',7:'[Rn] '};
 function elValenceCount(z){
@@ -1046,8 +1078,20 @@ function assignTypes(compounds, pool){
   return compounds.map((q,i)=>EL_TYPES.includes(bag[i])?makeElementQuestion(bag[i]):({...q,qtype:bag[i]}));
 }
 
+function makeReactChain(){
+  const chain=REACT_CHAINS[Math.floor(Math.random()*REACT_CHAINS.length)];
+  const salt=chain.salts[Math.floor(Math.random()*chain.salts.length)];
+  const step=['oxide','hydroxide','salt'][Math.floor(Math.random()*3)];
+  return {qtype:'react-chain',isReact:true,metal:chain.metal,eo:chain.eo,oxide:chain.oxide,hydroxide:chain.hydroxide,salt:salt.formula,acid:salt.acid,step};
+}
+
 function startGame(group){
   ST.group=group;
+  if(group==='reactividad'){
+    ST.questions=Array.from({length:20},()=>makeReactChain());
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    showScreen('s-game');loadQuestion();return;
+  }
   if(group==='elemento'){
     // All 20 questions are element questions — no compound pool needed
     ST.questions=Array.from({length:20},()=>makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
@@ -1074,12 +1118,12 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','react-chain':'Cadena de reactividad'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag','area-ox-assign'].forEach(id=>document.getElementById(id).style.display='none');
+  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react'].forEach(id=>document.getElementById(id).style.display='none');
   if(['el-sym2name','el-name2sym','el-z2name','el-sym2type'].includes(q.qtype)) renderElMC(q);
   else if(['el-config2val','el-config2el'].includes(q.qtype)) renderElConfig(q);
   else if(q.qtype==='mc') renderMC(q);
@@ -1089,6 +1133,7 @@ function loadQuestion(){
   else if(q.qtype==='invert') renderInvert(q);
   else if(q.qtype==='balance') renderBalance(q);
   else if(q.qtype==='ox-assign') renderOxAssign(q);
+  else if(q.qtype==='react-chain') renderReactChain(q);
   startTimer();
 }
 
@@ -1677,6 +1722,68 @@ function extractBalance(q){
     }
   }
   return {metal:info.metal,eo:info.eo,roman:info.roman,anSym,anCharge:an.charge,count};
+}
+
+function renderReactChain(q){
+  const stepLabels={oxide:'A',hydroxide:'B',salt:'C'};
+  const asked=stepLabels[q.step];
+  const boxOxide=q.step==='oxide'?`<div class="chain-box asked">? (${asked})</div>`:`<div class="chain-box">${q.oxide}</div>`;
+  const boxHydrox=q.step==='hydroxide'?`<div class="chain-box asked">? (${asked})</div>`:`<div class="chain-box">${q.hydroxide}</div>`;
+  const boxSalt=q.step==='salt'?`<div class="chain-box asked">? (${asked})</div>`:`<div class="chain-box">${q.salt}</div>`;
+  const promptText={oxide:`¿Cuál es la fórmula del óxido básico (A) que forma el ${q.metal}?`,hydroxide:`¿Cuál es la fórmula del hidróxido (B) que se forma?`,salt:`¿Cuál es la fórmula de la sal (C) que se forma al reaccionar con ${q.acid}?`}[q.step];
+  document.getElementById('q-prompt').textContent=promptText;
+  document.getElementById('q-formula').textContent='';
+  const diag=document.getElementById('react-chain-diagram');
+  diag.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:12px 0;max-width:300px;margin:0 auto">
+    <div class="chain-step"><div class="chain-label">Metal</div><div class="chain-box" style="font-size:.95rem">${q.metal}<sup>${q.eo}</sup></div></div>
+    <div class="chain-arrow">↓ <span style="font-size:.72rem">+ O²⁻</span></div>
+    <div class="chain-step"><div class="chain-label">A — Óxido básico</div>${boxOxide}</div>
+    <div class="chain-arrow">↓ <span style="font-size:.72rem">+ H₂O</span></div>
+    <div class="chain-step"><div class="chain-label">B — Hidróxido</div>${boxHydrox}</div>
+    <div class="chain-arrow">↓ <span style="font-size:.72rem">+ ${q.acid}</span></div>
+    <div class="chain-step"><div class="chain-label">C — Sal + H₂O</div>${boxSalt}</div>
+  </div>`;
+  const correct={oxide:q.oxide,hydroxide:q.hydroxide,salt:q.salt}[q.step];
+  const distPool=REACT_CHAINS.map(c=>{
+    if(q.step==='oxide') return c.oxide;
+    if(q.step==='hydroxide') return c.hydroxide;
+    return c.salts[0].formula;
+  }).filter(f=>f!==correct);
+  const distractors=shuffle([...new Set(distPool)]).slice(0,3);
+  while(distractors.length<3) distractors.push('—');
+  const opts=shuffle([correct,...distractors]);
+  const mc=document.getElementById('react-mc-opts');
+  mc.dataset.correct=correct;
+  mc.innerHTML=opts.map(o=>`<button class="mc-opt">${o}</button>`).join('');
+  mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkReactChain(btn)));
+  document.getElementById('area-react').style.display='';
+}
+
+function checkReactChain(el){
+  try{
+    const q=ST.questions[ST.idx];
+    const correct=document.getElementById('react-mc-opts').dataset.correct;
+    ST.attempts++;ST.totalAttempts++;
+    document.querySelectorAll('#react-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+    if(el.textContent.trim()===correct){
+      el.classList.add('correct');
+      const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+      ST.score+=pts;ST.correct++;
+      document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{
+        b.textContent=correct;b.classList.remove('asked');b.classList.add('revealed');
+      });
+      showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+      scheduleNext(1800);
+    } else {
+      el.classList.add('wrong');
+      document.querySelectorAll('#react-mc-opts .mc-opt').forEach(b=>{
+        if(b.textContent.trim()===correct) b.classList.add('correct');
+      });
+      const hint={oxide:`Recuerda: metal ${q.eo} + O²⁻ → óxido básico. Aplica la regla de cruce de valencias.`,hydroxide:`Recuerda: óxido básico + H₂O → hidróxido. El catión conserva su estado de oxidación.`,salt:`Recuerda: hidróxido + ácido → sal + H₂O. Cruza las cargas del catión y del anión ácido.`}[q.step];
+      showFeedback('err',`✗ Incorrecto. ${hint}`,q);
+      if(ST.attempts>=2){scheduleNext(2000);}
+    }
+  }catch(err){scheduleNext(0);}
 }
 
 function renderBalance(q){
