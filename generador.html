@@ -109,6 +109,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
 @media print{
   body{background:#fff}
   .site-nav,.preview-header,.btn-pdf,.btn-back{display:none}
+  #student-header{border:1.5px solid #aaa !important;box-shadow:none !important;margin-bottom:16px !important}
   #s-preview{padding:0}
   .preview-container{max-width:100%}
   .exercise-card{page-break-inside:avoid;border:1px solid #ccc;box-shadow:none}
@@ -194,6 +195,22 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
       <div>
         <button class="btn-pdf" onclick="exportToPDF()">📄 Descargar PDF</button>
         <button class="btn-back" onclick="backToForm()">← Atrás</button>
+      </div>
+    </div>
+    <div id="student-header" style="background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;box-shadow:var(--sh)">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:2;min-width:180px">
+          <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:6px">Nombre del estudiante</div>
+          <div style="border-bottom:2px solid var(--dimmer);height:28px"></div>
+        </div>
+        <div style="flex:1;min-width:100px">
+          <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:6px">Curso</div>
+          <div style="border-bottom:2px solid var(--dimmer);height:28px"></div>
+        </div>
+        <div style="flex:1;min-width:120px">
+          <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:6px">Fecha</div>
+          <div style="border-bottom:2px solid var(--dimmer);height:28px"></div>
+        </div>
       </div>
     </div>
     <div id="exercises-container"></div>
@@ -766,15 +783,21 @@ function showScreen(id){
 }
 
 function exportToPDF(){
-  const element = document.getElementById('exercises-container');
+  // Wrap student header + exercises into a single element for pdf export
+  const title = document.getElementById('prev-title').textContent;
+  const header = document.getElementById('student-header').outerHTML;
+  const body = document.getElementById('exercises-container').innerHTML;
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'font-family:Arial,sans-serif;color:#0d2d42;background:#fff;padding:4px';
+  wrapper.innerHTML = `<h2 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;color:#0d4a73">${title}</h2>${header}${body}`;
   const opt = {
     margin: 10,
-    filename: 'ejercicios-nomenclatura.pdf',
+    filename: 'ejercicios-ionom.pdf',
     image: {type: 'jpeg', quality: 0.98},
-    html2canvas: {scale: 2},
+    html2canvas: {scale: 2, backgroundColor:'#ffffff'},
     jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4'}
   };
-  html2pdf().set(opt).from(element).save();
+  html2pdf().set(opt).from(wrapper).save();
 }
 </script>
 <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
