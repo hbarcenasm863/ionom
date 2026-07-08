@@ -139,6 +139,16 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .comp-item{font-family:var(--mono);font-size:.82rem;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.08);color:var(--tx)}
 .comp-item:last-child{border-bottom:none}
 
+/* MAYER QUIZ */
+.mayer-quiz{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--sans);font-size:.83rem;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-fb{font-size:.82rem;min-height:20px}
+.mq-correct{background:#dcfce7!important;border-color:#16a34a!important;color:#14532d!important}
+.mq-wrong{background:#fee2e2!important;border-color:#dc2626!important;color:#991b1b!important}
+
 /* NEW: SCREEN SYSTEM */
 .screen{display:none}.screen.active{display:block}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:32px 0}
@@ -283,6 +293,8 @@ footer a:hover{text-decoration:underline}
 </div>
 
 </div><!-- .app -->
+
+<button id="speak-btn-float" onclick="speakCurrentSection()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none">🔊 Leer</button>
 
 <footer>
   <p><a href="https://hbarcenasm863.github.io/ionom/">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
