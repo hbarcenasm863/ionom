@@ -469,6 +469,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div id="area-react" style="display:none">
         <div id="react-chain-diagram"></div>
         <div id="react-mc-opts" class="mc-opts"></div>
+        <div id="react-write-area" style="display:none;margin-top:10px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="text" id="react-write-inp" placeholder="Ej: Fe2O3 ó Fe₂O₃"
+              style="flex:1;padding:10px 12px;border:2px solid var(--brd);border-radius:var(--rs);font-family:'Courier New',monospace;font-size:1rem;font-weight:700;color:var(--tx);background:var(--surf);outline:none">
+            <button class="btn-submit" id="react-write-btn" onclick="checkReactChainWrite()">Verificar →</button>
+          </div>
+          <div style="font-size:.72rem;color:var(--dimmer);margin-top:5px">Usa números normales: Ca(OH)2, Fe2O3, Na2SO4</div>
+        </div>
       </div>
     </div>
     <button class="pt-modal-btn" onclick="openPTModal()">📋 Ver tabla</button>
@@ -1090,16 +1098,20 @@ function makeReactChain(){
   const chain=REACT_CHAINS[Math.floor(Math.random()*REACT_CHAINS.length)];
   const saltObj=chain.salts[Math.floor(Math.random()*chain.salts.length)];
   const step=['A','B','C'][Math.floor(Math.random()*3)];
+  const r=Math.random();
+  const mode=r<0.34?'write':r<0.67?'infer':'mc';
   if(chain.type==='nm'){
-    return {qtype:'react-chain',isReact:true,chainType:'nm',
+    return {qtype:'react-chain',isReact:true,chainType:'nm',mode,
       nonmetal:chain.nonmetal,eo:chain.eo,
       A:chain.anhydride,B:chain.acid,C:saltObj.formula,
-      acidName:chain.acidName,base:saltObj.base,step};
+      acidName:chain.acidName,base:saltObj.base,
+      inferStep:Math.random()<0.5?'AtoB':'BtoC',step};
   }
-  return {qtype:'react-chain',isReact:true,chainType:'metal',
+  return {qtype:'react-chain',isReact:true,chainType:'metal',mode,
     metal:chain.metal,eo:chain.eo,
     A:chain.oxide,B:chain.hydroxide,C:saltObj.formula,
-    acid:saltObj.acid,step};
+    acid:saltObj.acid,
+    inferStep:Math.random()<0.5?'AtoB':'BtoC',step};
 }
 
 function startGame(group){
@@ -1741,7 +1753,81 @@ function extractBalance(q){
   return {metal:info.metal,eo:info.eo,roman:info.roman,anSym,anCharge:an.charge,count};
 }
 
+const _S=['₀','₁','₂','₃','₄','₅','₆','₇','₈','₉'];
+function sub(n){return n<=1?'':(_S[n]||String(n));}
+function gcdRC(a,b){return b?gcdRC(b,a%b):a;}
+function buildOxide(sym,n){const g=gcdRC(n,2);return `${sym}${sub(2/g)}O${sub(n/g)}`;}
+function buildHydroxide(sym,n){return n===1?`${sym}OH`:`${sym}(OH)${sub(n)}`;}
+
+const ACID_ANION={
+  'HCl':{sym:'Cl',ch:1},'H₂SO₄':{sym:'SO₄',ch:2},'HNO₃':{sym:'NO₃',ch:1},
+  'H₃PO₄':{sym:'PO₄',ch:3},'HClO₄':{sym:'ClO₄',ch:1},'HNO₂':{sym:'NO₂',ch:1},
+  'H₂SO₃':{sym:'SO₃',ch:2},'H₂CO₃':{sym:'CO₃',ch:2}
+};
+const BASE_CATION={
+  'NaOH':{sym:'Na',ch:1},'KOH':{sym:'K',ch:1},'Ca(OH)₂':{sym:'Ca',ch:2},
+  'Ba(OH)₂':{sym:'Ba',ch:2},'Al(OH)₃':{sym:'Al',ch:3}
+};
+const NM_VARIANTS={
+  'SO₂':['SO₃','S₂O₃','SO₄'],'SO₃':['SO₂','S₂O₅','SO₄'],
+  'N₂O₃':['N₂O₅','NO₂','N₂O'],'N₂O₅':['N₂O₃','NO₂','N₂O₄'],
+  'P₂O₅':['P₂O₃','PO₃','P₄O₁₀'],'CO₂':['CO','CO₃','C₂O₃'],'Cl₂O₇':['Cl₂O₅','ClO₃','Cl₂O'],
+  'H₂SO₃':['H₂SO₄','HSO₃','H₃SO₃'],'H₂SO₄':['H₂SO₃','HSO₄','H₃SO₄'],
+  'HNO₂':['HNO₃','H₂NO₂','HNO'],'HNO₃':['HNO₂','H₂NO₃','HNO₄'],
+  'H₃PO₄':['H₂PO₄','HPO₃','H₃PO₃'],'H₂CO₃':['HCO₃','H₂CO₂','H₂CO'],
+  'HClO₄':['HClO₃','HClO₂','H₂ClO₄']
+};
+
+function buildSalt(mSym,mCh,aSym,aCh){
+  const g=gcdRC(mCh,aCh);const mI=aCh/g,aI=mCh/g;
+  const parens=aSym.length>2&&aI>1;
+  return `${mSym}${sub(mI)}${parens?'('+aSym+')':aSym}${sub(aI)}`;
+}
+
+function buildChainDistractors(q){
+  const eoN=Math.abs(parseInt((q.eo||'+2').replace('+','')));
+  const dists=[];
+  if(q.chainType==='metal'){
+    const M=q.metal;
+    if(q.step==='A'){
+      [1,2,3,4,6].filter(n=>n!==eoN).forEach(n=>dists.push(buildOxide(M,n)));
+    } else if(q.step==='B'){
+      [1,2,3,4].filter(n=>n!==eoN).forEach(n=>dists.push(buildHydroxide(M,n)));
+    } else {
+      const anion=ACID_ANION[q.acid||'HCl']||{sym:'Cl',ch:1};
+      [1,2,3,4].filter(n=>n!==eoN).forEach(n=>dists.push(buildSalt(M,n,anion.sym,anion.ch)));
+    }
+  } else {
+    const correct=q[q.step];
+    dists.push(...(NM_VARIANTS[correct]||[]));
+    if(q.step==='C'){
+      const cat=BASE_CATION[q.base||'NaOH']||{sym:'Na',ch:1};
+      const acidAnion=ACID_ANION[q.B];
+      if(acidAnion){
+        [1,2,3].filter(n=>n!==cat.ch).forEach(n=>{
+          dists.push(buildSalt(cat.sym,n,acidAnion.sym,acidAnion.ch));
+        });
+      }
+    }
+    REACT_CHAINS.filter(c=>c.type==='nm'&&c.nonmetal===q.nonmetal).forEach(c=>{
+      const alt=q.step==='A'?c.anhydride:q.step==='B'?c.acid:c.salts[0]?.formula;
+      if(alt&&alt!==correct) dists.push(alt);
+    });
+  }
+  const unique=[...new Set(dists.filter(d=>d&&d!==q[q.step]))];
+  if(unique.length<3){
+    REACT_CHAINS.forEach(c=>{
+      const alt=c.type==='nm'?{A:c.anhydride,B:c.acid,C:c.salts[0]?.formula}[q.step]:{A:c.oxide,B:c.hydroxide,C:c.salts[0]?.formula}[q.step];
+      if(alt&&alt!==q[q.step]&&!unique.includes(alt)) unique.push(alt);
+    });
+  }
+  return shuffle(unique).slice(0,3);
+}
+
 function renderReactChain(q){
+  if(q.mode==='infer') return renderReactChainInfer(q);
+  if(q.mode==='write') return renderReactChainWrite(q);
+  // mc mode (default)
   const nm=q.chainType==='nm';
   const box=s=>q.step===s
     ?`<div class="chain-box asked">? (${s})</div>`
@@ -1781,19 +1867,131 @@ function renderReactChain(q){
     </div>`;
   }
 
-  const correct=q[q.step];
-  const distPool=REACT_CHAINS.map(c=>c.type==='nm'
-    ?{A:c.anhydride,B:c.acid,C:c.salts[0].formula}[q.step]
-    :{A:c.oxide,B:c.hydroxide,C:c.salts[0].formula}[q.step]
-  ).filter(f=>f&&f!==correct);
-  const distractors=shuffle([...new Set(distPool)]).slice(0,3);
-  while(distractors.length<3) distractors.push('—');
-  const opts=shuffle([correct,...distractors]);
+  const dists=buildChainDistractors(q);
+  while(dists.length<3) dists.push('—');
+  const opts=shuffle([q[q.step],...dists.slice(0,3)]);
   const mc=document.getElementById('react-mc-opts');
-  mc.dataset.correct=correct;
+  mc.dataset.correct=q[q.step];
+  mc.style.display='';
   mc.innerHTML=opts.map(o=>`<button class="mc-opt">${o}</button>`).join('');
   mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkReactChain(btn)));
+  document.getElementById('react-write-area').style.display='none';
   document.getElementById('area-react').style.display='';
+}
+
+function renderReactChainInfer(q){
+  const nm=q.chainType==='nm';
+  const isAtoB=q.inferStep==='AtoB';
+  const fromCompound=isAtoB?q.A:q.B;
+  const toCompound=isAtoB?q.B:q.C;
+  const reagent=isAtoB?'H₂O':(nm?q.base:q.acid);
+  const fromLabel=isAtoB?(nm?'Anhídrido':'Óxido básico'):(nm?'Ácido oxácido':'Hidróxido');
+  const toLabel=isAtoB?(nm?'Ácido oxácido':'Hidróxido'):'Sal';
+  q.step=isAtoB?'B':'C';
+  const prompt=nm
+    ?(isAtoB?`El ${fromCompound} es un anhídrido. Al hidratarse (+ H₂O), ¿qué ácido oxácido produce?`
+            :`El ${fromCompound} es un ácido oxácido. Al reaccionar con ${reagent}, ¿qué sal se forma?`)
+    :(isAtoB?`El ${fromCompound} es un óxido básico. Al reaccionar con H₂O, ¿qué hidróxido se espera que forme?`
+            :`El ${fromCompound} es un hidróxido. Al neutralizarse con ${reagent}, ¿qué sal se obtiene?`);
+  document.getElementById('q-prompt').textContent=prompt;
+  document.getElementById('q-formula').textContent='';
+  document.getElementById('react-chain-diagram').innerHTML=
+    `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;max-width:280px;margin:0 auto">
+       <div class="chain-step"><div class="chain-label">${fromLabel}</div><div class="chain-box" style="background:var(--an-b);border-color:var(--an);font-size:1rem">${fromCompound}</div></div>
+       <div class="chain-arrow">↓ <span style="font-size:.72rem">+ ${reagent}</span></div>
+       <div class="chain-step"><div class="chain-label">${toLabel}</div><div class="chain-box asked">?</div></div>
+     </div>`;
+  const dists=buildChainDistractors(q);
+  while(dists.length<3) dists.push('—');
+  const opts=shuffle([toCompound,...dists.slice(0,3)]);
+  const mc=document.getElementById('react-mc-opts');
+  mc.dataset.correct=toCompound;
+  mc.style.display='';
+  mc.innerHTML=opts.map(o=>`<button class="mc-opt">${o}</button>`).join('');
+  mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkReactChain(btn)));
+  document.getElementById('react-write-area').style.display='none';
+  document.getElementById('area-react').style.display='';
+}
+
+function renderReactChainWrite(q){
+  const nm=q.chainType==='nm';
+  const boxInp=`<div class="chain-box asked" style="background:var(--cat-b);padding:6px 8px"><span style="font-size:.7rem;opacity:.6">✏️ escribe aquí</span></div>`;
+  const box=s=>q.step===s?boxInp:`<div class="chain-box">${q[s]}</div>`;
+  const prompt=nm
+    ?{A:`Escribe la fórmula del anhídrido (A) que forma el ${q.nonmetal} con EO ${q.eo}`,
+      B:`Escribe la fórmula del ácido oxácido (B) que se forma al hidratar el anhídrido`,
+      C:`Escribe la fórmula de la sal (C) al reaccionar con ${q.base}`}[q.step]
+    :{A:`Escribe la fórmula del óxido básico (A) que forma el ${q.metal}`,
+      B:`Escribe la fórmula del hidróxido (B) que se forma`,
+      C:`Escribe la fórmula de la sal (C) al reaccionar con ${q.acid}`}[q.step];
+  document.getElementById('q-prompt').textContent=prompt;
+  document.getElementById('q-formula').textContent='';
+  const diag=document.getElementById('react-chain-diagram');
+  if(nm){
+    diag.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:12px 0;max-width:300px;margin:0 auto">
+      <div class="chain-step"><div class="chain-label">No metal</div><div class="chain-box" style="font-size:.95rem">${q.nonmetal}<sup>${q.eo}</sup></div></div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ O²⁻</span></div>
+      <div class="chain-step"><div class="chain-label">A — Anhídrido</div>${box('A')}</div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ H₂O</span></div>
+      <div class="chain-step"><div class="chain-label">B — Ácido oxácido</div>${box('B')}</div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ ${q.base}</span></div>
+      <div class="chain-step"><div class="chain-label">C — Sal + H₂O</div>${box('C')}</div>
+    </div>`;
+  } else {
+    diag.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:12px 0;max-width:300px;margin:0 auto">
+      <div class="chain-step"><div class="chain-label">Metal</div><div class="chain-box" style="font-size:.95rem">${q.metal}<sup>${q.eo}</sup></div></div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ O²⁻</span></div>
+      <div class="chain-step"><div class="chain-label">A — Óxido básico</div>${box('A')}</div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ H₂O</span></div>
+      <div class="chain-step"><div class="chain-label">B — Hidróxido</div>${box('B')}</div>
+      <div class="chain-arrow">↓ <span style="font-size:.72rem">+ ${q.acid}</span></div>
+      <div class="chain-step"><div class="chain-label">C — Sal + H₂O</div>${box('C')}</div>
+    </div>`;
+  }
+  document.getElementById('react-mc-opts').style.display='none';
+  document.getElementById('react-write-area').style.display='';
+  document.getElementById('area-react').style.display='';
+  const inp=document.getElementById('react-write-inp');
+  if(inp){ inp.value=''; inp.disabled=false; inp.style.borderColor=''; inp.style.background=''; inp.style.color=''; setTimeout(()=>{inp.focus();inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkReactChainWrite();});},80); }
+  const btn=document.getElementById('react-write-btn');
+  if(btn) btn.disabled=false;
+}
+
+function normalizeFormula(f){
+  if(!f) return '';
+  return f.replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'0123456789'['₀₁₂₃₄₅₆₇₈₉'.indexOf(c)])
+    .replace(/\s/g,'').toLowerCase();
+}
+
+function checkReactChainWrite(){
+  try{
+    const q=ST.questions[ST.idx];
+    const correct=q[q.step];
+    const inp=document.getElementById('react-write-inp');
+    const btn=document.getElementById('react-write-btn');
+    if(!inp||!inp.value.trim()){if(inp)inp.style.borderColor='#f59e0b';return;}
+    ST.attempts++;ST.totalAttempts++;
+    inp.disabled=true;if(btn)btn.disabled=true;
+    if(normalizeFormula(inp.value)===normalizeFormula(correct)){
+      inp.style.borderColor='#16a34a';inp.style.background='#dcfce7';inp.style.color='#14532d';
+      document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
+      const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+      ST.score+=pts;ST.correct++;
+      showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+      scheduleNext(1800);
+    } else {
+      inp.style.borderColor='#dc2626';inp.style.background='#fee2e2';inp.style.color='#991b1b';
+      if(ST.attempts>=2){
+        document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
+        showFeedback('err',`✗ La fórmula correcta es: ${correct}`,q);
+        scheduleNext(2500);
+      } else {
+        inp.disabled=false;if(btn)btn.disabled=false;
+        setTimeout(()=>{inp.style.borderColor='';inp.style.background='';inp.style.color='';inp.focus();inp.select();},600);
+        showFeedback('err','✗ Revisa la fórmula e intenta de nuevo.',q);
+      }
+    }
+  }catch(e){scheduleNext(0);}
 }
 
 function checkReactChain(el){
