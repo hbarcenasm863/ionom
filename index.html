@@ -146,6 +146,22 @@ footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-siz
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 
+/* MAYER: narration button */
+.narr-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(3,105,161,.1);border:2px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:18px}
+.narr-btn:hover{background:var(--an);color:#fff}
+.narr-btn.playing{background:var(--an);color:#fff}
+
+/* MAYER: tip card */
+.tip-card{background:#fffbeb;border:2px solid #f59e0b;border-radius:var(--rs);padding:14px 18px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start}
+.tip-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.tip-body{flex:1}
+.tip-label{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#92400e;margin-bottom:4px}
+.tip-text{font-size:.82rem;color:#78350f;line-height:1.55}
+
+/* MAYER: signal highlight on recommended path */
+.rs.r1.highlight-signal{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2);animation:pulse-signal 2.5s ease-in-out infinite}
+@keyframes pulse-signal{0%,100%{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2)}50%{box-shadow:0 0 0 6px rgba(3,105,161,.18),var(--sh2)}}
+
 @media(max-width:580px){
   .parts-grid{grid-template-columns:1fr}
   .mods{grid-template-columns:1fr}
@@ -178,12 +194,22 @@ footer a:hover{text-decoration:underline}
 <div class="intro-card">
   <img src="assets/logo.png" alt="IonNom" style="max-width:380px;width:90%;display:block;margin:0 auto 20px">
   <p>Aprende los tres sistemas de nomenclatura inorgánica — Tradicional, Stock e IUPAC — usando el modelo visual de colores <strong>2+matiz</strong>. Cada color representa una función química diferente.</p>
+  <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
   <div class="four-tags">
     <span class="ft cat">① Ámbar · Catión</span>
     <span class="ft an">② Azul · Anión simple</span>
     <span class="ft oh">③ Violeta · OH⁻</span>
     <span class="ft ox">④ Teal · Oxoanión</span>
   </div>
+</div>
+
+<div class="tip-card" id="tip-inicio">
+  <div class="tip-icon">💡</div>
+  <div class="tip-body">
+    <div class="tip-label">Consejo para empezar</div>
+    <div class="tip-text">¿Primera vez en IonNom? Sigue la <strong>Ruta recomendada</strong>: comienza por <em>Principios</em>, luego <em>Funciones</em> y finalmente pon a prueba lo aprendido en el <em>Juego</em>. ¡Paso a paso llegarás más lejos! 🚀</div>
+  </div>
+  <button onclick="document.getElementById('tip-inicio').style.display='none'" style="background:none;border:none;color:#92400e;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" aria-label="Cerrar consejo">✕</button>
 </div>
 
 <div class="rw-section">
@@ -242,7 +268,7 @@ footer a:hover{text-decoration:underline}
 <div class="ruta-card">
   <div class="ruta-hdr">Ruta recomendada</div>
   <div class="ruta-steps">
-    <a class="rs r1" href="teoria.html">
+    <a class="rs r1 highlight-signal" href="teoria.html">
       <span class="rs-n">①</span>
       <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y 3 sistemas</div></div>
     </a>
@@ -402,6 +428,41 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
+// ── MAYER: Colombian Spanish voice narration ──
+function speak(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-CO'; u.rate = 0.92; u.pitch = 1.05;
+  if (onEnd) u.onend = onEnd;
+  speechSynthesis.speak(u);
+}
+
+let narrating = false;
+function toggleNarration() {
+  const btn = document.getElementById('narr-btn-home');
+  if (narrating) {
+    speechSynthesis.cancel();
+    narrating = false;
+    btn.textContent = '🔊 Escuchar introducción';
+    btn.classList.remove('playing');
+    return;
+  }
+  narrating = true;
+  btn.textContent = '⏹ Detener';
+  btn.classList.add('playing');
+  const texto = '¡Hola! Bienvenido a IonNom, tu herramienta para aprender nomenclatura inorgánica. ' +
+    'Aquí encontrarás cuatro colores clave: ámbar para los cationes o metales, azul para los aniones simples, ' +
+    'violeta para el grupo hidroxilo, y teal para los oxoaniones. ' +
+    'Te recomendamos empezar por Principios, luego practicar con Funciones, y después jugar para poner a prueba lo que aprendiste. ' +
+    '¡Mucho éxito en tu aprendizaje!';
+  speak(texto, () => {
+    narrating = false;
+    btn.textContent = '🔊 Escuchar introducción';
+    btn.classList.remove('playing');
+  });
+}
+
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/ionom/sw.js', {scope: '/ionom/'}).then(() => {

@@ -549,6 +549,7 @@ body {
   <div class="page-header">
     <h1>Simula<em>dor</em></h1>
     <p>Explora reacciones inorgánicas y el comportamiento del pH con indicadores visuales en tiempo real.</p>
+    <button onclick="openSimIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.45);color:#93c5fd;border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;margin-top:14px;transition:all .2s">🔊 ¿Cómo usar el simulador?</button>
   </div>
 
   <div class="sim-tabs">
@@ -1551,6 +1552,62 @@ if ('serviceWorker' in navigator) {
 // ── INIT ─────────────────────────────────────────────────────────────────
 buildPalette();
 updatePH();
+
+// ── MAYER: Colombian Spanish voice narration ──
+function speak(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-CO'; u.rate = 0.92; u.pitch = 1.05;
+  if (onEnd) u.onend = onEnd;
+  speechSynthesis.speak(u);
+}
+
+function openSimIntro() {
+  document.getElementById('sim-intro-overlay').style.display = 'flex';
+  speak('¡Hola! El simulador de IonNom tiene dos modos. ' +
+    'En el Simulador de Reacciones, seleccionas un reactivo A, de color ámbar, y un reactivo B, de color azul, y presionas el botón Reaccionar para ver el producto. ' +
+    'El simulador te dirá qué tipo de compuesto se formó y su nombre según los tres sistemas. ' +
+    'En el Simulador de pH, puedes probar diferentes sustancias con indicadores como fenolftaleína y repollo morado, y observar cómo cambia el color según el pH. ' +
+    '¡Experimenta y aprende!');
+}
+
+function closeSimIntro() {
+  document.getElementById('sim-intro-overlay').style.display = 'none';
+  speechSynthesis.cancel();
+}
+
+// Show intro for first-time visitors
+if (!localStorage.getItem('ionom_sim_visited')) {
+  window.addEventListener('load', () => {
+    setTimeout(() => openSimIntro(), 500);
+    localStorage.setItem('ionom_sim_visited', '1');
+  });
+}
 </script>
+
+<!-- ═══ SIMULADOR INTRO MODAL (MAYER) ═══ -->
+<div id="sim-intro-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeSimIntro()">
+  <div style="background:var(--surf);border:1.5px solid rgba(59,130,246,.5);border-radius:var(--r);padding:32px 28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.6);position:relative">
+    <button onclick="closeSimIntro()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--dimmer);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:2rem;margin-bottom:6px">🔬</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#93c5fd;font-family:Georgia,serif;font-style:italic">¿Cómo usar el Simulador?</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
+      <div style="padding:10px 12px;background:rgba(217,119,6,.12);border-radius:8px;border-left:3px solid var(--amber)">
+        <strong style="color:var(--amber-l)">⚗️ Simulador de Reacciones:</strong><span style="color:var(--dim)"> selecciona <strong style="color:var(--amber-l)">Reactivo A</strong> (ámbar) y <strong style="color:#93c5fd">Reactivo B</strong> (azul), luego presiona <em>Reaccionar</em>. Verás el producto, su tipo de compuesto y cómo nombrarlo.</span>
+      </div>
+      <div style="padding:10px 12px;background:rgba(59,130,246,.1);border-radius:8px;border-left:3px solid rgba(59,130,246,.6)">
+        <strong style="color:#93c5fd">🧪 Tipos de reacción:</strong><span style="color:var(--dim)"> óxidos básicos y ácidos forman sales, metales con oxígeno forman óxidos, bases con ácidos producen neutralización. El simulador identifica el tipo automáticamente.</span>
+      </div>
+      <div style="padding:10px 12px;background:rgba(124,58,237,.1);border-radius:8px;border-left:3px solid rgba(124,58,237,.5)">
+        <strong style="color:#c4b5fd">💧 Simulador de pH:</strong><span style="color:var(--dim)"> experimenta con fenolftaleína (rosa en básico, incolora en ácido) y repollo morado (cambia de rojo a verde según el pH). Responde las preguntas de evaluación al final.</span>
+      </div>
+    </div>
+    <button onclick="closeSimIntro()" style="width:100%;padding:12px;background:rgba(59,130,246,.7);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Entendido, a experimentar! 🧪</button>
+  </div>
+</div>
+
 </body>
 </html>

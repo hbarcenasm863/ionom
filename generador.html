@@ -120,6 +120,9 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
 <div class="screen active" id="s-form">
   <div class="form-container">
     <h1 class="form-title">⚙️ Generador de Ejercicios</h1>
+    <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+      <button onclick="openGenTip()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:#fcd34d;border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s">🔊 ¿Cómo funciona?</button>
+    </div>
 
     <div class="form-group">
       <label class="form-label">Grupos funcionales <span style="font-size:.65rem;opacity:.6">(selecciona uno o varios)</span></label>
@@ -181,8 +184,58 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
   </div>
 </div>
 
+<!-- ═══ GENERADOR TIP MODAL (MAYER) ═══ -->
+<div id="gen-tip-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeGenTip()">
+  <div style="background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(252,211,77,.5);border-radius:20px;padding:32px 28px;max-width:440px;width:100%;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.55);position:relative">
+    <button onclick="closeGenTip()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:2rem;margin-bottom:6px">⚙️</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#fcd34d;font-family:Georgia,serif;font-style:italic">Generador de Ejercicios</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px">Para docentes y estudiantes de 10° — DBA 3 MEN</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;font-size:.82rem">
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #fcd34d"><strong style="color:#fcd34d">① Grupos funcionales:</strong><span style="color:rgba(255,255,255,.75)"> selecciona uno o varios grupos que quieres incluir en la hoja de trabajo.</span></div>
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #93c5fd"><strong style="color:#93c5fd">② Tipo de ejercicio:</strong><span style="color:rgba(255,255,255,.75)"> elige si los estudiantes nombrarán fórmulas, escribirán fórmulas a partir del nombre, completarán una tabla o calcularán estados de oxidación.</span></div>
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #5eead4"><strong style="color:#5eead4">③ Sistema de nomenclatura:</strong><span style="color:rgba(255,255,255,.75)"> Tradicional (sufijos -oso/-ico), Stock (números romanos) o Sistemática (prefijos griegos).</span></div>
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #86efac"><strong style="color:#86efac">④ Cantidad:</strong><span style="color:rgba(255,255,255,.75)"> entre 3 y 50 ejercicios. El resultado se puede descargar en PDF o imprimir directamente.</span></div>
+    </div>
+    <button onclick="closeGenTip()" style="width:100%;padding:12px;background:rgba(217,119,6,.8);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Listo, a generar! →</button>
+  </div>
+</div>
+
 <script src="banco.js"></script>
 <script>
+// ── MAYER: Colombian Spanish voice narration ──
+function speak(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-CO'; u.rate = 0.92; u.pitch = 1.05;
+  if (onEnd) u.onend = onEnd;
+  speechSynthesis.speak(u);
+}
+
+function openGenTip() {
+  document.getElementById('gen-tip-overlay').style.display = 'flex';
+  speak('¡Hola! El generador de ejercicios te permite crear hojas de trabajo personalizadas. ' +
+    'Primero selecciona los grupos funcionales que quieres practicar: óxidos, bases, ácidos o sales. ' +
+    'Luego elige el tipo de ejercicio y el sistema de nomenclatura. ' +
+    'Puedes generar entre tres y cincuenta preguntas, y descargarlas en PDF para trabajar en clase. ¡Inténtalo!');
+}
+
+function closeGenTip() {
+  document.getElementById('gen-tip-overlay').style.display = 'none';
+  speechSynthesis.cancel();
+}
+
+// Show tip for first-time visitors
+if (!localStorage.getItem('ionom_gen_visited')) {
+  window.addEventListener('load', () => {
+    setTimeout(() => openGenTip(), 500);
+    localStorage.setItem('ionom_gen_visited', '1');
+  });
+}
+
 // BANK_FALLBACK — used only if banco.js fails to load
 const BANK_FALLBACK = {
   easy: {

@@ -222,8 +222,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </nav>
 
 <div class="page">
-  <h1 class="page-title">⚗️ Tabla Periódica</h1>
-  <p class="page-subtitle">118 elementos — haz clic en cualquier elemento para ver detalles y su contexto colombiano</p>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:4px">
+    <h1 class="page-title" style="margin-bottom:0">⚗️ Tabla Periódica</h1>
+    <button onclick="openTablaIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:var(--an-b);border:2px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='var(--an)';this.style.color='#fff'" onmouseout="this.style.background='var(--an-b)';this.style.color='var(--an-t)'">🔊 ¿Cómo usar la tabla?</button>
+  </div>
+  <p class="page-subtitle">118 elementos — toca cualquier elemento para escuchar su información en voz</p>
 
   <div class="tabla-scroll">
     <!-- MAIN TABLE (periods 1-7, groups 1-18) -->
@@ -246,6 +249,23 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
     <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
     <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>
+  </div>
+</div>
+
+<!-- ═══ TABLA INTRO MODAL (MAYER) ═══ -->
+<div id="tabla-intro-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeTablaIntro()">
+  <div style="background:var(--surf);border:2px solid var(--an);border-radius:var(--r);padding:32px 28px;max-width:440px;width:100%;box-shadow:var(--sh2);position:relative">
+    <button onclick="closeTablaIntro()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--dimmer);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:2rem;margin-bottom:6px">⚗️</div>
+      <div style="font-size:1.2rem;font-weight:800;color:var(--an-t);font-family:Georgia,serif;font-style:italic">¿Cómo usar la tabla?</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
+      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> cada color representa un tipo de elemento. La leyenda está justo debajo de la tabla.</div>
+      <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)"><strong style="color:var(--cat-t)">👆 Toca o haz clic:</strong> selecciona cualquier elemento para ver su número atómico, masa, estados de oxidación, electronegatividad y contexto colombiano.</div>
+      <div style="padding:10px 12px;background:var(--ox-b);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">🔊 Narración de voz:</strong> al abrir un elemento, escucharás su información en voz para reforzar el aprendizaje visual y auditivo.</div>
+    </div>
+    <button onclick="closeTablaIntro()" style="width:100%;padding:12px;background:var(--an);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Entendido! Explorar →</button>
   </div>
 </div>
 
@@ -524,6 +544,49 @@ function closePanel(){
 
 buildMain();
 buildFBlock();
+
+// ── MAYER: Colombian Spanish voice narration ──
+function speak(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-CO'; u.rate = 0.92; u.pitch = 1.05;
+  if (onEnd) u.onend = onEnd;
+  speechSynthesis.speak(u);
+}
+
+function openTablaIntro() {
+  document.getElementById('tabla-intro-overlay').style.display = 'flex';
+  speak('¡Bienvenido a la tabla periódica de IonNom! Toca o haz clic en cualquier elemento para escuchar su información. ' +
+    'Los colores indican el tipo de elemento: rojo para metales alcalinos, naranja para alcalinotérreos, ' +
+    'azul para metales de transición, amarillo para no metales, y así. ' +
+    'La leyenda en la parte inferior te explica cada color. ¡Explora!');
+}
+
+function closeTablaIntro() {
+  document.getElementById('tabla-intro-overlay').style.display = 'none';
+  speechSynthesis.cancel();
+}
+
+// Voice narration on element click — patch showEl to add voice
+const _origShowEl = showEl;
+showEl = function(z) {
+  _origShowEl(z);
+  const el = ELEMENTS[z];
+  const oxText = el.ox.length ? 'sus estados de oxidación son ' + el.ox.join(', ') + '.' : '';
+  const enText = el.en != null ? 'Electronegatividad de Pauling: ' + el.en.toFixed(2) + '.' : '';
+  speak(`${el.name}. Símbolo: ${el.sym}. Número atómico: ${z}. Masa atómica: ${el.mass} u. ` +
+    `${classOf(el.type)}. Período ${el.period}, grupo ${el.group}. ` +
+    oxText + ' ' + enText);
+};
+
+// Show intro for first-time visitors
+if (!localStorage.getItem('ionom_tabla_visited')) {
+  window.addEventListener('load', () => {
+    setTimeout(() => openTablaIntro(), 500);
+    localStorage.setItem('ionom_tabla_visited', '1');
+  });
+}
 </script>
 <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
   <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
