@@ -110,6 +110,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
   body{background:#fff}
   .site-nav,.preview-header,.btn-pdf,.btn-back{display:none}
   #student-header{border:1.5px solid #aaa !important;box-shadow:none !important;margin-bottom:16px !important}
+  details{display:none}
   #s-preview{padding:0}
   .preview-container{max-width:100%}
   .exercise-card{page-break-inside:avoid;border:1px solid #ccc;box-shadow:none}
@@ -790,6 +791,7 @@ function exportToPDF(){
   const wrapper = document.createElement('div');
   wrapper.style.cssText = 'font-family:Arial,sans-serif;color:#0d2d42;background:#fff;padding:4px';
   wrapper.innerHTML = `<h2 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;color:#0d4a73">${title}</h2>${header}${body}`;
+  wrapper.querySelectorAll('details').forEach(d=>d.remove());
   const opt = {
     margin: 10,
     filename: 'ejercicios-ionom.pdf',
