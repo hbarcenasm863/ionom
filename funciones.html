@@ -1477,6 +1477,7 @@ function goToSection(idx){
 }
 
 function volverAlMenu(){
+  localStorage.removeItem('funciones-seccion');
   document.getElementById('contenido-seccion').classList.remove('active');
   document.getElementById('menu-principal').classList.add('active');
   window.scrollTo(0,0);
@@ -1590,11 +1591,8 @@ function nextPWStep(wid, cur, total){
 
 /* Restore last visited section */
 document.addEventListener('DOMContentLoaded', function(){
-  var saved = localStorage.getItem('funciones-seccion');
-  if(saved !== null){
-    var idx = parseInt(saved, 10);
-    if(idx >= 0 && idx < TOTAL) goToSection(idx);
-  }
+  // Always start at the menu when navigating to this page
+  localStorage.removeItem('funciones-seccion');
 });
 
 /* ══════════ MAPA DE REACTIVIDAD ══════════ */
