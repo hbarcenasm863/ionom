@@ -14,7 +14,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de litio'],
     stock: [],
-    sist: ['monóxido de dilítio', 'óxido de dilítio'],
+    sist: ['monóxido de dilitio', 'óxido de dilitio'],
     hint: 'Li tiene valencia fija +1. Dos Li⁺ compensan un O²⁻. Grupo 1A → óxido básico.'
   },
   {
@@ -296,10 +296,10 @@ const BANCO = [
   {
     formula: 'V₂O₃',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido vanadioso'],
+    trad: [],
     stock: ['óxido de vanadio (III)'],
     sist: ['trióxido de divanadio'],
-    hint: 'V³⁺ EO intermedio del vanadio. Stock siempre preciso. 2(+3)+3(−2)=0.'
+    hint: 'V³⁺ EO intermedio del vanadio. Con 4 EO posibles (+2,+3,+4,+5) el sistema -oso/-ico genera ambigüedad; usa siempre Stock. 2(+3)+3(−2)=0.'
   },
 
   // ─────────────────────────────────────────────
@@ -1623,8 +1623,8 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de calcio'],
     stock: [],
-    sist: ['fosfato de calcio'],
-    hint: 'PO₄³⁻ = fosfato. 3 Ca²⁺ + 2 PO₄³⁻ → Ca₃(PO₄)₂. Componente de los huesos.'
+    sist: ['difosfato de tricalcio'],
+    hint: 'PO₄³⁻ = fosfato. 3 Ca²⁺ + 2 PO₄³⁻ → Ca₃(PO₄)₂. Nombre sistemático: difosfato de tricalcio (2 PO₄ y 3 Ca). Componente principal de los huesos.'
   },
   {
     formula: 'Mg(NO₃)₂',
@@ -1989,12 +1989,12 @@ const BANCO = [
     hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂.'
   },
   {
-    formula: 'HgOH',
+    formula: 'Hg₂(OH)₂',
     group: 'base', level: 'medium',
     trad: ['hidróxido mercurioso'],
     stock: ['hidróxido de mercurio (I)'],
-    sist: ['monohidróxido de dimercurio'],
-    hint: 'Hg⁺ (EO menor) → mercurioso. Hg⁺ + OH⁻ → HgOH.'
+    sist: ['dihidróxido de dimercurio'],
+    hint: 'El mercurio(I) existe siempre como catión dinuclear Hg₂²⁺, nunca como Hg⁺ aislado. Por eso la fórmula correcta es Hg₂(OH)₂, no HgOH. Este compuesto es muy inestable y se descompone en Hg₂O + H₂O.'
   },
 
   // ── ÁCIDOS OXÁCIDOS (banco adicional) ──
@@ -2252,10 +2252,10 @@ const BANCO = [
   {
     formula: 'N₂O₄',
     group: 'anhid', level: 'medium',
-    trad: ['anhídrido nitroso', 'óxido nitroso'],
+    trad: [],
     stock: [],
     sist: ['tetraóxido de dinitrógeno'],
-    hint: 'Dímero de NO₂. N con EO=+4 promedio. IUPAC: tetraóxido de dinitrógeno.'
+    hint: 'Dímero de NO₂ (N con EO=+4 promedio). El nombre "anhídrido nitroso" le pertenece a N₂O₃; N₂O₄ no tiene nombre tradicional estándar. IUPAC: tetraóxido de dinitrógeno.'
   },
   {
     formula: 'P₄O₆',
@@ -2548,26 +2548,26 @@ const BANCO = [
   {
     formula: 'Cu₂O₃',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido cúprico'],
+    trad: [],
     stock: ['óxido de cobre (III)'],
     sist: ['trióxido de dicobre'],
-    hint: 'Cu en EO +3 (poco común). Stock es preciso: óxido de cobre (III). 2(+3)+3(−2)=0.'
+    hint: 'Cu en EO +3 (poco común). "Cúprico" ya le pertenece a CuO (Cu²⁺, EO mayor en el par Cu⁺/Cu²⁺); Cu³⁺ no tiene nombre tradicional. Usa siempre Stock: óxido de cobre (III). 2(+3)+3(−2)=0.'
   },
   {
     formula: 'MnO₃',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido mangánico'],
+    trad: [],
     stock: ['óxido de manganeso (VI)'],
     sist: ['trióxido de manganeso'],
-    hint: 'Mn en EO +6. Stock siempre preciso: óxido de manganeso (VI). Mn⁶⁺ + 3O²⁻.'
+    hint: 'Mn en EO +6. Mn tiene 4 EO posibles (+2,+3,+4,+7); el sistema -oso/-ico es ambiguo. Usa Stock: óxido de manganeso (VI). Mn⁶⁺ + 3O²⁻.'
   },
   {
     formula: 'Mn₂O₃',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido mangánico'],
+    trad: [],
     stock: ['óxido de manganeso (III)'],
     sist: ['trióxido de dimanganeso'],
-    hint: 'Mn en EO +3 → -ico → mangánico. 2(+3)+3(−2)=0.'
+    hint: 'Mn en EO +3. Con 4 EO posibles el nombre tradicional es ambiguo; "mangánico" también se usa para MnO₂ y MnO₃. Usa Stock: óxido de manganeso (III). 2(+3)+3(−2)=0.'
   },
   {
     formula: 'Co₃O₄',
@@ -2976,10 +2976,10 @@ const BANCO = [
   {
     formula: 'VH₃',
     group: 'hidru', level: 'hard',
-    trad: ['hidruro vanádico'],
+    trad: [],
     stock: ['hidruro de vanadio (III)'],
     sist: ['trihidruro de vanadio'],
-    hint: 'V en EO +3 → -ico → vanádico. V³⁺ + 3H⁻ → VH₃.'
+    hint: 'V en EO +3. Con 4 EO posibles (+2,+3,+4,+5) el sistema -oso/-ico no aplica sin ambigüedad (V₂O₅ también usa -ico para EO +5). Usa siempre Stock: hidruro de vanadio (III). V³⁺ + 3H⁻ → VH₃.'
   },
   {
     formula: 'FrH',
@@ -3800,6 +3800,80 @@ const BANCO = [
     stock: [],
     sist: ['ácido polonoso'],
     hint: 'Po en EO +4 → -oso (análogo al teluroso). 2H + PoO₃²⁻.'
+  },
+
+  // ── Sales relevantes currículo colombiano ──────────────────────────────────
+  {
+    formula: 'Ca(HCO₃)₂',
+    group: 'sal-ox', level: 'medium',
+    trad: ['bicarbonato de calcio'],
+    stock: [],
+    sist: ['dihidrogenocarbonato de calcio'],
+    ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'HCO₃⁻ × 2'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+    hint: 'HCO₃⁻ = bicarbonato (hidrogenocarbonato). Ca²⁺ + 2HCO₃⁻ → Ca(HCO₃)₂. Causa la dureza temporal del agua; al hervir se convierte en CaCO₃ insoluble.'
+  },
+  {
+    formula: 'NaHCO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['bicarbonato de sodio'],
+    stock: [],
+    sist: ['hidrogenocarbonato de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'HCO₃⁻ = bicarbonato. Na⁺ + HCO₃⁻ → NaHCO₃. El "bicarbonato de sodio" casero; reacciona con ácidos liberando CO₂.'
+  },
+
+  // ── Sales de amonio (currículo DBA 3 Colombia) ─────────────────────────────
+  {
+    formula: 'NH₄Cl',
+    group: 'sal-bin', level: 'easy',
+    trad: ['cloruro de amonio'],
+    stock: [],
+    sist: ['cloruro de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'Cl⁻'}],
+    tokens: [{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ = catión amonio. Cl⁻ = cloruro. NH₄Cl se forma en la reacción NH₃ + HCl. Usado como fertilizante y en pilas.'
+  },
+  {
+    formula: '(NH₄)₂SO₄',
+    group: 'sal-ox', level: 'easy',
+    trad: ['sulfato de amonio'],
+    stock: [],
+    sist: ['sulfato de diamonio'],
+    ions: [{t:'cat',l:'NH₄⁺ × 2'},{t:'an',l:'SO₄²⁻'}],
+    tokens: [{w:'sulfato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ (carga +1) + SO₄²⁻ (carga −2): se necesitan 2 NH₄⁺ para equilibrar. Fertilizante muy usado en Colombia (20% N, 24% S).'
+  },
+  {
+    formula: 'NH₄NO₃',
+    group: 'sal-ox', level: 'easy',
+    trad: ['nitrato de amonio'],
+    stock: [],
+    sist: ['nitrato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'NO₃⁻'}],
+    tokens: [{w:'nitrato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ + NO₃⁻ → NH₄NO₃. Fertilizante nitrogenado (34% N). El N del catión tiene EO −3 y el del anión +5.'
+  },
+  {
+    formula: '(NH₄)₂CO₃',
+    group: 'sal-ox', level: 'medium',
+    trad: ['carbonato de amonio'],
+    stock: [],
+    sist: ['carbonato de diamonio'],
+    ions: [{t:'cat',l:'NH₄⁺ × 2'},{t:'an',l:'CO₃²⁻'}],
+    tokens: [{w:'carbonato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'CO₃²⁻ = carbonato. 2 NH₄⁺ equilibran la carga −2. Se descompone fácilmente en NH₃ + CO₂ + H₂O.'
+  },
+  {
+    formula: 'NH₄H₂PO₄',
+    group: 'sal-ox', level: 'medium',
+    trad: ['dihidrogenofosfato de amonio'],
+    stock: [],
+    sist: ['dihidrogenofosfato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'H₂PO₄⁻ = dihidrogenofosfato (fosfato con 2H sin ionizar). NH₄⁺ + H₂PO₄⁻ → NH₄H₂PO₄. Fertilizante MAP (fosfato monoamónico).'
   },
 
 ];
