@@ -3876,6 +3876,402 @@ const BANCO = [
     hint: 'H₂PO₄⁻ = dihidrogenofosfato (fosfato con 2H sin ionizar). NH₄⁺ + H₂PO₄⁻ → NH₄H₂PO₄. Fertilizante MAP (fosfato monoamónico).'
   },
 
+  // ─────────────────────────────────────────────
+  // NEW ENTRIES — batch 4 (dual naming ac-hid, more hidru, anhid, base, ac-ox)
+  // ─────────────────────────────────────────────
+
+  // ── AC-HID: forma gaseosa/pura (doble nomenclatura) ──
+  // HF(aq) faltaba como entrada acuosa explícita
+  {
+    formula: 'HF(aq)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['ácido fluorhídrico'],
+    stock: [],
+    sist: ['fluoruro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'F⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'fluorhídrico',t:'an'}],
+    hint: 'HF en solución acuosa: ácido fluorhídrico. Es un ácido DÉBIL (a diferencia de HCl, HBr, HI). Se usa en el grabado de vidrio y en la industria petroquímica de Barrancabermeja.'
+  },
+  // Forma gaseosa/pura de cada ácido hídrico
+  {
+    formula: 'HF(g)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['fluoruro de hidrógeno'],
+    stock: [],
+    sist: ['fluoruro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'F⁻'}],
+    tokens: [{w:'fluoruro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'El fluoruro de hidrógeno es un gas tóxico en estado puro. Al disolverse en agua forma el ácido fluorhídrico HF(aq). Se usa en el grabado de vidrio.'
+  },
+  {
+    formula: 'HCl(g)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['cloruro de hidrógeno'],
+    stock: [],
+    sist: ['cloruro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],
+    tokens: [{w:'cloruro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'El cloruro de hidrógeno es un gas incoloro e irritante. Como gas: cloruro de hidrógeno. Disuelto en agua: ácido clorhídrico.'
+  },
+  {
+    formula: 'HBr(g)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['bromuro de hidrógeno'],
+    stock: [],
+    sist: ['bromuro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'Br⁻'}],
+    tokens: [{w:'bromuro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'El bromuro de hidrógeno es un gas ácido. Como compuesto puro: bromuro de hidrógeno. En solución: ácido bromhídrico.'
+  },
+  {
+    formula: 'HI(g)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['yoduro de hidrógeno'],
+    stock: [],
+    sist: ['yoduro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'I⁻'}],
+    tokens: [{w:'yoduro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'El yoduro de hidrógeno es un gas incoloro. Como compuesto puro: yoduro de hidrógeno. En solución acuosa: ácido yodhídrico.'
+  },
+  {
+    formula: 'H₂S(g)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['sulfuro de dihidrógeno', 'sulfuro de hidrógeno'],
+    stock: [],
+    sist: ['sulfuro de dihidrógeno'],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
+    tokens: [{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'dihidrógeno',t:'cat'}],
+    hint: 'H₂S como gas huele a huevo podrido y es muy tóxico. Nombre como compuesto puro: sulfuro de dihidrógeno. En solución: ácido sulfhídrico. Presente en volcanes colombianos.'
+  },
+  {
+    formula: 'H₂Se(g)',
+    group: 'ac-hid', level: 'medium',
+    trad: ['seleniuro de dihidrógeno'],
+    stock: [],
+    sist: ['seleniuro de dihidrógeno'],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'Se²⁻'}],
+    tokens: [{w:'seleniuro',t:'an'},{w:'de',t:'neu'},{w:'dihidrógeno',t:'cat'}],
+    hint: 'Seleniuro de dihidrógeno como gas puro. En solución acuosa: ácido selenhídrico.'
+  },
+  {
+    formula: 'H₂Te(g)',
+    group: 'ac-hid', level: 'hard',
+    trad: ['telururo de dihidrógeno'],
+    stock: [],
+    sist: ['telururo de dihidrógeno'],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'Te²⁻'}],
+    tokens: [{w:'telururo',t:'an'},{w:'de',t:'neu'},{w:'dihidrógeno',t:'cat'}],
+    hint: 'Telururo de dihidrógeno como gas puro. En solución: ácido telurhídrico.'
+  },
+  {
+    formula: 'HCN(g)',
+    group: 'ac-hid', level: 'medium',
+    trad: ['cianuro de hidrógeno'],
+    stock: [],
+    sist: ['cianuro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'CN⁻'}],
+    tokens: [{w:'cianuro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'El cianuro de hidrógeno (ácido prúsico) es un gas muy tóxico. Como compuesto puro: cianuro de hidrógeno. En solución: ácido cianhídrico. Antídoto disponible en hospitales colombianos de alta complejidad.'
+  },
+  {
+    formula: 'HAt(g)',
+    group: 'ac-hid', level: 'hard',
+    trad: ['astaturo de hidrógeno'],
+    stock: [],
+    sist: ['astaturo de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'At⁻'}],
+    tokens: [{w:'astaturo',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'Análogo al HI pero con astato radiactivo. Como compuesto: astaturo de hidrógeno. En solución: ácido astathídrico.'
+  },
+  {
+    formula: 'H₂Po(g)',
+    group: 'ac-hid', level: 'hard',
+    trad: ['poloniuro de dihidrógeno'],
+    stock: [],
+    sist: ['poloniuro de dihidrógeno'],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'Po²⁻'}],
+    tokens: [{w:'poloniuro',t:'an'},{w:'de',t:'neu'},{w:'dihidrógeno',t:'cat'}],
+    hint: 'Análogo al H₂Te pero con polonio radiactivo. Como compuesto: poloniuro de dihidrógeno. En solución: ácido polonhídrico.'
+  },
+  {
+    formula: 'HN₃(g)',
+    group: 'ac-hid', level: 'hard',
+    trad: ['trinitruro de hidrógeno', 'azoimida'],
+    stock: [],
+    sist: ['trinitruro de hidrógeno'],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'N₃⁻'}],
+    tokens: [{w:'trinitruro',t:'an'},{w:'de',t:'neu'},{w:'hidrógeno',t:'cat'}],
+    hint: 'HN₃ es un compuesto explosivo. Como gas: trinitruro de hidrógeno. En solución: ácido hidrazoico.'
+  },
+
+  // ── HIDRU: 19 nuevos hidruros metálicos ──
+  {
+    formula: 'WH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro wolframoso'],
+    stock: ['hidruro de wolframio (II)'],
+    sist: ['dihidruro de wolframio'],
+    ions: [{t:'cat',l:'W²⁺'},{t:'an',l:'H⁻ × 2'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'wolframoso',t:'cat'}],
+    hint: 'W con EO +2 (menor) → -oso → wolframoso. W²⁺ + 2H⁻ → WH₂.'
+  },
+  {
+    formula: 'WH₃',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de wolframio (III)'],
+    sist: ['trihidruro de wolframio'],
+    ions: [{t:'cat',l:'W³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'wolframio',t:'cat'}],
+    hint: 'W con EO +3. El sistema -oso/-ico no aplica con más de 2 estados. Usa Stock: hidruro de wolframio (III).'
+  },
+  {
+    formula: 'WH₄',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de wolframio (IV)'],
+    sist: ['tetrahidruro de wolframio'],
+    ions: [{t:'cat',l:'W⁴⁺'},{t:'an',l:'H⁻ × 4'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'wolframio',t:'cat'}],
+    hint: 'W con EO +4. Stock: hidruro de wolframio (IV). W⁴⁺ + 4H⁻.'
+  },
+  {
+    formula: 'WH₆',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro wolfrámico'],
+    stock: ['hidruro de wolframio (VI)'],
+    sist: ['hexahidruro de wolframio'],
+    ions: [{t:'cat',l:'W⁶⁺'},{t:'an',l:'H⁻ × 6'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'wolfrámico',t:'cat'}],
+    hint: 'W con EO +6 (mayor) → -ico → wolfrámico. W⁶⁺ + 6H⁻.'
+  },
+  {
+    formula: 'MoH₂',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro molibdenoso'],
+    stock: ['hidruro de molibdeno (II)'],
+    sist: ['dihidruro de molibdeno'],
+    ions: [{t:'cat',l:'Mo²⁺'},{t:'an',l:'H⁻ × 2'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'molibdenoso',t:'cat'}],
+    hint: 'Mo con EO +2 → -oso → molibdenoso.'
+  },
+  {
+    formula: 'MoH₃',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de molibdeno (III)'],
+    sist: ['trihidruro de molibdeno'],
+    ions: [{t:'cat',l:'Mo³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'molibdeno',t:'cat'}],
+    hint: 'Mo con múltiples EO. Stock: hidruro de molibdeno (III).'
+  },
+  {
+    formula: 'MnH₃',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de manganeso (III)'],
+    sist: ['trihidruro de manganeso'],
+    ions: [{t:'cat',l:'Mn³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],
+    hint: 'Mn con EO +3. Mn tiene 4 EO: -oso/-ico ambiguo. Stock: hidruro de manganeso (III).'
+  },
+  {
+    formula: 'BiH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro bismútico', 'bismutina'],
+    stock: ['hidruro de bismuto (III)'],
+    sist: ['trihidruro de bismuto'],
+    ions: [{t:'cat',l:'Bi³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'bismútico',t:'cat'}],
+    hint: 'Bi con EO +3 (única valencia práctica). Bi³⁺ + 3H⁻ → BiH₃. También llamada bismutina.'
+  },
+  {
+    formula: 'AsH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro arsenioso', 'arsina'],
+    stock: ['hidruro de arsénico (III)'],
+    sist: ['trihidruro de arsénico'],
+    ions: [{t:'cat',l:'As³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'arsenioso',t:'cat'}],
+    hint: 'As con EO +3. As³⁺ + 3H⁻ → AsH₃. También llamada arsina. Gas muy tóxico.'
+  },
+  {
+    formula: 'SbH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro estibioso', 'estibina'],
+    stock: ['hidruro de antimonio (III)'],
+    sist: ['trihidruro de antimonio'],
+    ions: [{t:'cat',l:'Sb³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'estibioso',t:'cat'}],
+    hint: 'Sb con EO +3 (menor) → -oso → estibioso. También llamada estibina. Sb³⁺ + 3H⁻ → SbH₃.'
+  },
+  {
+    formula: 'GeH₄',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro germánico', 'germano'],
+    stock: ['hidruro de germanio (IV)'],
+    sist: ['tetrahidruro de germanio'],
+    ions: [{t:'cat',l:'Ge⁴⁺'},{t:'an',l:'H⁻ × 4'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'germánico',t:'cat'}],
+    hint: 'Ge con EO +4. Ge⁴⁺ + 4H⁻ → GeH₄. También llamado germano. Análogo al metano.'
+  },
+  {
+    formula: 'InH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro índico'],
+    stock: ['hidruro de indio (III)'],
+    sist: ['trihidruro de indio'],
+    ions: [{t:'cat',l:'In³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'índico',t:'cat'}],
+    hint: 'In con EO +3 (valencia fija). In³⁺ + 3H⁻ → InH₃.'
+  },
+  {
+    formula: 'TlH',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro talioso'],
+    stock: ['hidruro de talio (I)'],
+    sist: ['hidruro de talio'],
+    ions: [{t:'cat',l:'Tl⁺'},{t:'an',l:'H⁻'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'talioso',t:'cat'}],
+    hint: 'Tl con EO +1 (menor) → -oso → talioso. Tl⁺ + H⁻ → TlH.'
+  },
+  {
+    formula: 'TlH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro tálico'],
+    stock: ['hidruro de talio (III)'],
+    sist: ['trihidruro de talio'],
+    ions: [{t:'cat',l:'Tl³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'tálico',t:'cat'}],
+    hint: 'Tl con EO +3 (mayor) → -ico → tálico. Tl³⁺ + 3H⁻ → TlH₃.'
+  },
+  {
+    formula: 'RhH₃',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de rodio (III)'],
+    sist: ['trihidruro de rodio'],
+    ions: [{t:'cat',l:'Rh³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'rodio',t:'cat'}],
+    hint: 'Rh con EO +3. Rodio: metal del grupo platino. Stock: hidruro de rodio (III).'
+  },
+  {
+    formula: 'IrH₃',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de iridio (III)'],
+    sist: ['trihidruro de iridio'],
+    ions: [{t:'cat',l:'Ir³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'iridio',t:'cat'}],
+    hint: 'Ir con EO +3. Iridio: metal del grupo platino. Stock: hidruro de iridio (III).'
+  },
+  {
+    formula: 'OsH₄',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de osmio (IV)'],
+    sist: ['tetrahidruro de osmio'],
+    ions: [{t:'cat',l:'Os⁴⁺'},{t:'an',l:'H⁻ × 4'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'osmio',t:'cat'}],
+    hint: 'Os con EO +4. Osmio: el elemento más denso. Stock: hidruro de osmio (IV).'
+  },
+  {
+    formula: 'ReH₄',
+    group: 'hidru', level: 'hard',
+    trad: [],
+    stock: ['hidruro de renio (IV)'],
+    sist: ['tetrahidruro de renio'],
+    ions: [{t:'cat',l:'Re⁴⁺'},{t:'an',l:'H⁻ × 4'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'de',t:'neu'},{w:'renio',t:'cat'}],
+    hint: 'Re con EO +4. Renio tiene múltiples EO. Stock: hidruro de renio (IV).'
+  },
+  {
+    formula: 'LaH₃',
+    group: 'hidru', level: 'hard',
+    trad: ['hidruro lántico'],
+    stock: ['hidruro de lantano (III)'],
+    sist: ['trihidruro de lantano'],
+    ions: [{t:'cat',l:'La³⁺'},{t:'an',l:'H⁻ × 3'}],
+    tokens: [{w:'hidruro',t:'an'},{w:'lántico',t:'cat'}],
+    hint: 'La con EO +3 (fijo en lantánidos). La³⁺ + 3H⁻ → LaH₃. El hidruro de lantano tiene propiedades de almacenamiento de H₂ investigadas por la industria energética.'
+  },
+
+  // ── ANHID: 3 nuevos anhídridos ──
+  {
+    formula: 'TeO',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido hipoteluridhídrico', 'óxido hipoteluridhídrico'],
+    stock: ['óxido de telurio (II)'],
+    sist: ['monóxido de telurio'],
+    hint: 'Te con EO +2. 2(+2)+2(−2)=0. Stock: óxido de telurio (II).'
+  },
+  {
+    formula: 'PoO₂',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido polonoso', 'óxido polonoso'],
+    stock: ['óxido de polonio (IV)'],
+    sist: ['dióxido de polonio'],
+    hint: 'Po con EO +4. Análogo al TeO₂. Stock: óxido de polonio (IV).'
+  },
+  {
+    formula: 'PoO₃',
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido polónico', 'óxido polónico'],
+    stock: ['óxido de polonio (VI)'],
+    sist: ['trióxido de polonio'],
+    hint: 'Po con EO +6 (mayor). → -ico → polónico. Stock: óxido de polonio (VI).'
+  },
+
+  // ── BASE: 3 nuevos hidróxidos ──
+  {
+    formula: 'Pd(OH)₄',
+    group: 'base', level: 'hard',
+    trad: ['hidróxido paladioso'],
+    stock: ['hidróxido de paladio (IV)'],
+    sist: ['tetrahidróxido de paladio'],
+    ions: [{t:'cat',l:'Pd⁴⁺'},{t:'oh',l:'OH⁻ × 4'}],
+    tokens: [{w:'hidróxido',t:'oh'},{w:'paladioso',t:'cat'}],
+    hint: 'Pd con EO +4. Pd⁴⁺ + 4OH⁻ → Pd(OH)₄. Metal del grupo platino.'
+  },
+  {
+    formula: 'Rh(OH)₃',
+    group: 'base', level: 'hard',
+    trad: [],
+    stock: ['hidróxido de rodio (III)'],
+    sist: ['trihidróxido de rodio'],
+    ions: [{t:'cat',l:'Rh³⁺'},{t:'oh',l:'OH⁻ × 3'}],
+    tokens: [{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'rodio',t:'cat'}],
+    hint: 'Rh con EO +3. Rodio del grupo platino. Rh³⁺ + 3OH⁻ → Rh(OH)₃.'
+  },
+  {
+    formula: 'Os(OH)₄',
+    group: 'base', level: 'hard',
+    trad: [],
+    stock: ['hidróxido de osmio (IV)'],
+    sist: ['tetrahidróxido de osmio'],
+    ions: [{t:'cat',l:'Os⁴⁺'},{t:'oh',l:'OH⁻ × 4'}],
+    tokens: [{w:'hidróxido',t:'oh'},{w:'de',t:'neu'},{w:'osmio',t:'cat'}],
+    hint: 'Os con EO +4. El osmio es el metal más denso. Os⁴⁺ + 4OH⁻ → Os(OH)₄.'
+  },
+
+  // ── AC-OX: 2 nuevos ácidos oxácidos ──
+  {
+    formula: 'H₂MoO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido molibdenoso'],
+    stock: [],
+    sist: ['ácido molibdenoso'],
+    hint: 'H₂MoO₃ = 2H + MoO₃²⁻. Mo con EO +4 (menor) → -oso → molibdenoso. Análogo al ácido cromoso.'
+  },
+  {
+    formula: 'H₃VO₃',
+    group: 'ac-ox', level: 'hard',
+    trad: ['ácido vanadioso'],
+    stock: [],
+    sist: ['ácido vanadioso'],
+    hint: 'H₃VO₃ = 3H + VO₃³⁻ (meta-vanadato). V con EO +3 (menor) → -oso → vanadioso.'
+  },
+
 ];
 
-// Total: ~158 new compounds added in batches 3+ (grand total ~459)
+// Total: batch 4 adds 12 ac-hid, 19 hidru, 3 anhid, 3 base, 2 ac-ox
