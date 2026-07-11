@@ -944,7 +944,10 @@ function buildDrag(q, pool){
 
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
-const TYPE_POOL=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance','el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
+const TYPE_POOL_BASE=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance'];
+const TYPE_POOL_EL=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
+// TYPE_POOL kept for legacy references
+const TYPE_POOL=[...TYPE_POOL_BASE,...TYPE_POOL_EL];
 const EL_TYPES=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
 
 const REACT_CHAINS=[
@@ -1100,19 +1103,27 @@ function validTypesFor(q, pool){
   return v;
 }
 
-function assignTypes(compounds, pool){
-  // Start with a shuffled copy of TYPE_POOL; swap slots forward so each
+function assignTypes(compounds, pool, group){
+  // Build the type bag: only include element question types when group is 'all'
+  const includeEl=(group==='all');
+  const baseBag=includeEl?[...TYPE_POOL_BASE,...TYPE_POOL_EL]:[...TYPE_POOL_BASE];
+  // Pad to at least compounds.length slots
+  let fullBag=[...baseBag];
+  while(fullBag.length<compounds.length) fullBag=[...fullBag,...baseBag];
+  // Start with a shuffled copy; swap slots forward so each
   // compound gets a valid type — minimises 'mc' fallback.
-  const bag=shuffle([...TYPE_POOL]);
+  const bag=shuffle(fullBag).slice(0,compounds.length);
   for(let i=0;i<compounds.length;i++){
     // Element-type slots are generated on the fly from ELEMENTS, not from compounds.
-    if(EL_TYPES.includes(bag[i])) continue;
+    if(includeEl && EL_TYPES.includes(bag[i])) continue;
+    // If element type slipped in when not allowed, demote to mc
+    if(!includeEl && EL_TYPES.includes(bag[i])) bag[i]='mc';
     const valid=validTypesFor(compounds[i],pool);
     if(!valid.has(bag[i])){
       // try to find a later slot whose type IS valid for this compound
       let swapped=false;
       for(let j=i+1;j<bag.length;j++){
-        if(valid.has(bag[j])){
+        if(valid.has(bag[j]) && !(EL_TYPES.includes(bag[j]) && !includeEl)){
           [bag[i],bag[j]]=[bag[j],bag[i]];
           swapped=true; break;
         }
@@ -1124,7 +1135,7 @@ function assignTypes(compounds, pool){
       }
     }
   }
-  return compounds.map((q,i)=>EL_TYPES.includes(bag[i])?makeElementQuestion(bag[i]):({...q,qtype:bag[i]}));
+  return compounds.map((q,i)=>(includeEl && EL_TYPES.includes(bag[i]))?makeElementQuestion(bag[i]):({...q,qtype:bag[i]}));
 }
 
 function makeReactChain(){
@@ -1165,7 +1176,7 @@ function startGame(group){
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
   const compounds=buildQuestionQueue(pool,20);
-  ST.questions=assignTypes(compounds,pool);
+  ST.questions=assignTypes(compounds,pool,group);
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
   showScreen('s-game');
   loadQuestion();
