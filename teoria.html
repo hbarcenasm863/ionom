@@ -367,6 +367,9 @@ const SEC_DASH = [
   {color:'#0f766e', summary:'La nomenclatura conecta con las ecuaciones: óxido → base → sal (metal) / anhídrido → ácido → sal (no metal).',
    chips:['Metal → Óxido → Base → Sal','No metal → Anhídrido → Ácido → Sal','DBA 3 MEN Colombia','pH y neutralización'],
    intro:'La reactividad conecta todo lo que aprendiste sobre nomenclatura con las ecuaciones químicas. Los metales forman la cadena: óxido básico, luego hidróxido o base, y finalmente sal. Los no metales forman la cadena: anhídrido, luego ácido oxácido, y también finalmente sal. Esta cadena de reactividad es el estándar tres de los Derechos Básicos de Aprendizaje del Ministerio de Educación de Colombia.'},
+  {color:'#0369a1', summary:'Sales ácidas: el ácido poliprótico no cedió todos sus H⁺. El anión conserva H ionizable.',
+   chips:['HCO₃⁻ = bicarbonato / hidrogenocarbonato','HSO₄⁻ = bisulfato / hidrogenosulfato','H₂PO₄⁻ = dihidrogenofosfato','HPO₄²⁻ = hidrogenofosfato'],
+   intro:'Las sales ácidas se forman cuando un ácido con más de un hidrógeno ionizable — llamado ácido poliprótico — solo cede algunos de sus hidrógenos al neutralizarse. El anión que queda todavía tiene hidrógeno. Por ejemplo, el ácido carbónico H₂CO₃ tiene dos hidrógenos. Si solo uno es reemplazado por sodio, se forma NaHCO₃, el bicarbonato de sodio — el bicarbonato casero que conocemos en Colombia.'},
 ];
 
 // ══════════════════════════════════════════
@@ -397,7 +400,8 @@ const SECCIONES = [
   {titulo:'Nomenclatura Sistemática',icon:'⚗️', color:'an'},
   {titulo:'Stock y Tradicional',     icon:'💎', color:'cat'},
   {titulo:'Excepciones',             icon:'⚠️', color:'oh'},
-  {titulo:'Reactividad',             icon:'🔥', color:'ox'}
+  {titulo:'Reactividad',             icon:'🔥', color:'ox'},
+  {titulo:'Sales Ácidas',            icon:'🧪', color:'an'}
 ];
 
 // ══════════════════════════════════════════
@@ -1233,6 +1237,75 @@ CONTENIDO[6] = `
       <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Sal binaria</button>
     </div>
     <div class="mq-fb" id="mq-fb-6-0"></div>
+  </div>
+</div>
+`;
+
+CONTENIDO[7] = `
+<div class="sect">
+  <h2>¿Qué son las sales ácidas?</h2>
+  <p>Cuando un <strong>ácido poliprótico</strong> (con más de un H ionizable) reacciona con una base pero no cede <em>todos</em> sus H⁺, el producto es una <strong>sal ácida</strong>. El anión resultante todavía contiene hidrógeno ionizable.</p>
+  <div class="ejemplo">
+    H₂SO₄ + NaOH → <strong>NaHSO₄</strong> + H₂O &nbsp;[1 de 2 H neutralizados → bisulfato de sodio]<br>
+    H₂CO₃ + NaOH → <strong>NaHCO₃</strong> + H₂O &nbsp;[1 de 2 H neutralizados → bicarbonato de sodio]<br>
+    H₃PO₄ + NaOH → <strong>NaH₂PO₄</strong> + H₂O &nbsp;[1 de 3 H neutralizados → dihidrogenofosfato de sodio]<br>
+    H₃PO₄ + 2 NaOH → <strong>Na₂HPO₄</strong> + 2 H₂O &nbsp;[2 de 3 H neutralizados → hidrogenofosfato de sodio]
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Aniones de sales ácidas y sus nombres</h2>
+  <table class="tbl">
+    <tr><th>Anión</th><th>Trad.</th><th>Stock / IUPAC</th><th>Ácido origen</th></tr>
+    <tr><td><code>HCO₃⁻</code></td><td>bicarbonato</td><td>hidrogenocarbonato</td><td>H₂CO₃</td></tr>
+    <tr><td><code>HSO₄⁻</code></td><td>bisulfato</td><td>hidrogenosulfato</td><td>H₂SO₄</td></tr>
+    <tr><td><code>HSO₃⁻</code></td><td>bisulfito</td><td>hidrogenosulfito</td><td>H₂SO₃</td></tr>
+    <tr><td><code>H₂PO₄⁻</code></td><td>dihidrogenofosfato</td><td>dihidrogenofosfato</td><td>H₃PO₄</td></tr>
+    <tr><td><code>HPO₄²⁻</code></td><td>fosfato ácido / hidrogenofosfato</td><td>hidrogenofosfato</td><td>H₃PO₄</td></tr>
+  </table>
+</div>
+
+<div class="sect">
+  <h2>Regla mnemotécnica</h2>
+  <div class="color-box cat">
+    <div class="color-dot"></div>
+    <div>
+      <strong>bi- = un H de ácido diprótico</strong>
+      <span>El prefijo <em>bi-</em> (tradicional) indica que el ácido diprótico cedió solo 1 H⁺: bi-carbonato (HCO₃⁻), bi-sulfato (HSO₄⁻), bi-sulfito (HSO₃⁻). Para Stock/IUPAC usa <em>hidrogeno-</em>. Para H₃PO₄ con 2H residuales usa <em>dihidrogeno-</em>.</span>
+    </div>
+  </div>
+</div>
+
+<div class="sect mayer-quiz" id="quiz-7">
+  <h2>🎯 Mini-prueba — Sales ácidas</h2>
+  <div class="mq-question" id="mq-7-0">
+    <p class="mq-q">¿Cuál es el nombre <strong>tradicional</strong> de NaHCO₃?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,0,this)">bicarbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">hidrogenocarbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">carbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">dihidrogenocarbonato de sodio</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-7-0"></div>
+  </div>
+  <div class="mq-question" id="mq-7-1" style="margin-top:14px">
+    <p class="mq-q">¿Cuál es el nombre <strong>Stock</strong> de NaHSO₄?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">bisulfato de sodio</button>
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,1,this)">hidrogenosulfato de sodio</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">sulfato de sodio</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">dihidrogenosulfato de sodio</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-7-1"></div>
+  </div>
+  <div class="mq-question" id="mq-7-2" style="margin-top:14px">
+    <p class="mq-q">En Na₂HPO₄, ¿cuántos H⁺ cedió el H₃PO₄ al neutralizarse?</p>
+    <div class="mq-opts">
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,2,this)">1</button>
+      <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,2,this)">2</button>
+      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,2,this)">3</button>
+    </div>
+    <div class="mq-fb" id="mq-fb-7-2"></div>
   </div>
 </div>
 `;

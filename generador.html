@@ -152,6 +152,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <label class="group-check"><input type="checkbox" value="ac-ox"> <span>Ácidos oxácidos</span></label>
         <label class="group-check"><input type="checkbox" value="sal-bin"> <span>Sales binarias</span></label>
         <label class="group-check"><input type="checkbox" value="sal-ox"> <span>Sales oxigenadas</span></label>
+        <label class="group-check"><input type="checkbox" value="sal-ac"> <span>Sales ácidas</span></label>
         <label class="group-check" id="chk-react-wrap"><input type="checkbox" value="react-chain" id="chk-react" onchange="toggleReactChain(this)"> <span>⛓️ Cadenas de reactividad</span></label>
       </div>
     </div>
@@ -365,7 +366,8 @@ const GROUP_LABELS = {
   'base': 'Bases / Hidróxidos',
   'ac-ox': 'Ácidos oxácidos',
   'sal-bin': 'Sales binarias',
-  'sal-ox': 'Sales oxigenadas'
+  'sal-ox': 'Sales oxigenadas',
+  'sal-ac': 'Sales ácidas'
 };
 
 // Pick a name from the compound based on desired system

@@ -1596,11 +1596,13 @@ const BANCO = [
   },
   {
     formula: 'NaHCO₃',
-    group: 'sal-ox', level: 'easy',
+    group: 'sal-ac', level: 'easy',
     trad: ['bicarbonato de sodio'],
-    stock: [],
+    stock: ['hidrogenocarbonato de sodio'],
     sist: ['hidrogenocarbonato de sodio'],
-    hint: 'HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Na⁺ → sodio.'
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Na⁺ → sodio. El H₂CO₃ cedió 1 de 2 H⁺.'
   },
   {
     formula: 'K₃PO₄',
@@ -3805,23 +3807,23 @@ const BANCO = [
   // ── Sales relevantes currículo colombiano ──────────────────────────────────
   {
     formula: 'Ca(HCO₃)₂',
-    group: 'sal-ox', level: 'medium',
+    group: 'sal-ac', level: 'medium',
     trad: ['bicarbonato de calcio'],
-    stock: [],
+    stock: ['hidrogenocarbonato de calcio'],
     sist: ['dihidrogenocarbonato de calcio'],
     ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'HCO₃⁻ × 2'}],
     tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
-    hint: 'HCO₃⁻ = bicarbonato (hidrogenocarbonato). Ca²⁺ + 2HCO₃⁻ → Ca(HCO₃)₂. Causa la dureza temporal del agua; al hervir se convierte en CaCO₃ insoluble.'
+    hint: 'HCO₃⁻ = bicarbonato (hidrogenocarbonato). Ca²⁺ + 2HCO₃⁻ → Ca(HCO₃)₂. Causa la dureza temporal del agua de acueducto; al hervir se convierte en CaCO₃ insoluble (incrustaciones en ollas).'
   },
   {
     formula: 'NaHCO₃',
-    group: 'sal-ox', level: 'easy',
+    group: 'sal-ac', level: 'easy',
     trad: ['bicarbonato de sodio'],
-    stock: [],
+    stock: ['hidrogenocarbonato de sodio'],
     sist: ['hidrogenocarbonato de sodio'],
     ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HCO₃⁻'}],
     tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-    hint: 'HCO₃⁻ = bicarbonato. Na⁺ + HCO₃⁻ → NaHCO₃. El "bicarbonato de sodio" casero; reacciona con ácidos liberando CO₂.'
+    hint: 'H₂CO₃ cedió 1 de sus 2 H⁺. Anión HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (Stock). El "bicarbonato de sodio" casero; reacciona con ácidos liberando CO₂.'
   },
 
   // ── Sales de amonio (currículo DBA 3 Colombia) ─────────────────────────────
@@ -4272,6 +4274,201 @@ const BANCO = [
     hint: 'H₃VO₃ = 3H + VO₃³⁻ (meta-vanadato). V con EO +3 (menor) → -oso → vanadioso.'
   },
 
+  // ─────────────────────────────────────────────
+  // SAL-AC  (sales ácidas)  — ácido poliprótico parcialmente neutralizado
+  // ─────────────────────────────────────────────
+
+  // -- Carbonatos ácidos (bicarbonatos) --
+  {
+    formula: 'KHCO₃',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bicarbonato de potasio'],
+    stock: ['hidrogenocarbonato de potasio'],
+    sist: ['hidrogenocarbonato de potasio'],
+    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: 'H₂CO₃ cedió 1 de sus 2 H⁺. K⁺ + HCO₃⁻ → KHCO₃. Trad: bi- + carbonato = bicarbonato. Stock: hidrogeno- + carbonato = hidrogenocarbonato de potasio.'
+  },
+  {
+    formula: 'Mg(HCO₃)₂',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bicarbonato de magnesio'],
+    stock: ['hidrogenocarbonato de magnesio'],
+    sist: ['dihidrogenocarbonato de magnesio'],
+    ions: [{t:'cat',l:'Mg²⁺'},{t:'an',l:'HCO₃⁻ × 2'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'magnesio',t:'cat'}],
+    hint: 'Mg²⁺ (EO fijo +2) con 2 HCO₃⁻. El H₂CO₃ solo cedió 1 de 2 H⁺. Contribuye a la dureza temporal del agua junto con Ca(HCO₃)₂.'
+  },
+  {
+    formula: 'Ba(HCO₃)₂',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bicarbonato de bario'],
+    stock: ['hidrogenocarbonato de bario'],
+    sist: ['dihidrogenocarbonato de bario'],
+    ions: [{t:'cat',l:'Ba²⁺'},{t:'an',l:'HCO₃⁻ × 2'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'bario',t:'cat'}],
+    hint: 'Ba²⁺ + 2 HCO₃⁻ → Ba(HCO₃)₂. Sal ácida del ácido carbónico. El Ba²⁺ reemplazó solo 1 H de cada H₂CO₃ (necesitó 2 moléculas de H₂CO₃ parcialmente neutralizadas).'
+  },
+  {
+    formula: 'Fe(HCO₃)₂',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bicarbonato ferroso', 'bicarbonato de hierro (II)'],
+    stock: ['hidrogenocarbonato de hierro (II)'],
+    sist: ['dihidrogenocarbonato de hierro'],
+    ions: [{t:'cat',l:'Fe²⁺'},{t:'an',l:'HCO₃⁻ × 2'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'ferroso',t:'cat'}],
+    hint: 'Fe²⁺ (EO menor, -oso) + 2 HCO₃⁻. Trad: bicarbonato ferroso. Stock: hidrogenocarbonato de hierro (II). El hierro tiene EO variable → se indica en paréntesis en Stock.'
+  },
+  {
+    formula: 'Fe(HCO₃)₃',
+    group: 'sal-ac', level: 'hard',
+    trad: ['bicarbonato férrico', 'bicarbonato de hierro (III)'],
+    stock: ['hidrogenocarbonato de hierro (III)'],
+    sist: ['trihidrogenocarbonato de hierro'],
+    ions: [{t:'cat',l:'Fe³⁺'},{t:'an',l:'HCO₃⁻ × 3'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'férrico',t:'cat'}],
+    hint: 'Fe³⁺ (EO mayor, -ico) + 3 HCO₃⁻. Trad: bicarbonato férrico. Stock: hidrogenocarbonato de hierro (III). Poco estable; se descompone fácilmente.'
+  },
+
+  // -- Sulfatos ácidos (bisulfatos) --
+  {
+    formula: 'NaHSO₄',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfato de sodio'],
+    stock: ['hidrogenosulfato de sodio'],
+    sist: ['hidrogenosulfato de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₂SO₄ (diprót.) cedió 1 de 2 H⁺. Anión HSO₄⁻: trad. = bisulfato (bi- + sulfato); Stock = hidrogenosulfato. Na⁺ → sodio (EO fijo, sin romano). Componente de algunos limpiadores ácidos.'
+  },
+  {
+    formula: 'KHSO₄',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfato de potasio'],
+    stock: ['hidrogenosulfato de potasio'],
+    sist: ['hidrogenosulfato de potasio'],
+    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: 'H₂SO₄ solo cedió 1 H⁺. K⁺ + HSO₄⁻ → KHSO₄. Trad: bi- + sulfato = bisulfato de potasio. Stock: hidrogeno- + sulfato = hidrogenosulfato de potasio.'
+  },
+  {
+    formula: 'Ca(HSO₄)₂',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bisulfato de calcio'],
+    stock: ['hidrogenosulfato de calcio'],
+    sist: ['dihidrogenosulfato de calcio'],
+    ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'HSO₄⁻ × 2'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+    hint: 'Ca²⁺ + 2 HSO₄⁻ → Ca(HSO₄)₂. Sal ácida del ácido sulfúrico. Solo 1 de 2 H fue reemplazado en cada anión. Trad: bisulfato de calcio; Stock: hidrogenosulfato de calcio.'
+  },
+
+  // -- Sulfitos ácidos (bisulfitos) --
+  {
+    formula: 'NaHSO₃',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfito de sodio'],
+    stock: ['hidrogenosulfito de sodio'],
+    sist: ['hidrogenosulfito de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HSO₃⁻'}],
+    tokens: [{w:'bisulfito',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₂SO₃ (diprót.) cedió 1 de 2 H⁺. Anión HSO₃⁻: trad. = bisulfito (bi- + sulfito); Stock = hidrogenosulfito. Se usa como conservante de alimentos (E222).'
+  },
+  {
+    formula: 'KHSO₃',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfito de potasio'],
+    stock: ['hidrogenosulfito de potasio'],
+    sist: ['hidrogenosulfito de potasio'],
+    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'HSO₃⁻'}],
+    tokens: [{w:'bisulfito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: 'K⁺ + HSO₃⁻ → KHSO₃. Trad: bisulfito de potasio (bi- + sulfito). Stock: hidrogenosulfito de potasio. H₂SO₃ solo cedió 1 de sus 2 H⁺.'
+  },
+
+  // -- Fosfatos ácidos (de H₃PO₄ triprót.) --
+  {
+    formula: 'NaH₂PO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['fosfato ácido de sodio', 'dihidrogenofosfato de sodio'],
+    stock: ['dihidrogenofosfato de sodio'],
+    sist: ['dihidrogenofosfato de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₃PO₄ (triprót.) cedió 1 de 3 H⁺. Quedan 2 H en el anión H₂PO₄⁻ = dihidrogenofosfato. 1 Na⁺ equilibra la carga −1. Stock = dihidrogeno- + fosfato de sodio.'
+  },
+  {
+    formula: 'KH₂PO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['dihidrogenofosfato de potasio'],
+    stock: ['dihidrogenofosfato de potasio'],
+    sist: ['dihidrogenofosfato de potasio'],
+    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: 'H₃PO₄ cedió 1 de 3 H⁺. K⁺ + H₂PO₄⁻ → KH₂PO₄. Anión = dihidrogenofosfato (2 H quedan). Fertilizante MAP (monofosfato de potasio) muy usado en agricultura colombiana.'
+  },
+  {
+    formula: 'Ca(H₂PO₄)₂',
+    group: 'sal-ac', level: 'hard',
+    trad: ['dihidrogenofosfato de calcio'],
+    stock: ['dihidrogenofosfato de calcio'],
+    sist: ['dihihidrogenofosfato de calcio'],
+    ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'H₂PO₄⁻ × 2'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+    hint: 'Ca²⁺ + 2 H₂PO₄⁻. H₃PO₄ cedió 1 de 3 H⁺ en cada anión. Superfosfato de calcio: fertilizante importante. Los 2 H residuales en el anión indican neutralización parcial.'
+  },
+  {
+    formula: 'Al(H₂PO₄)₃',
+    group: 'sal-ac', level: 'hard',
+    trad: ['dihidrogenofosfato de aluminio'],
+    stock: ['dihidrogenofosfato de aluminio'],
+    sist: ['tris(dihidrogenofosfato) de aluminio'],
+    ions: [{t:'cat',l:'Al³⁺'},{t:'an',l:'H₂PO₄⁻ × 3'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'aluminio',t:'cat'}],
+    hint: 'Al³⁺ (EO fijo +3) + 3 H₂PO₄⁻. H₃PO₄ parcialmente neutralizado (1 de 3 H⁺ cedido). Al tiene EO fijo → sin número romano en Stock.'
+  },
+  {
+    formula: 'Na₂HPO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['fosfato ácido de disodio', 'hidrogenofosfato de sodio'],
+    stock: ['hidrogenofosfato de sodio'],
+    sist: ['hidrogenofosfato de disodio'],
+    ions: [{t:'cat',l:'Na⁺ × 2'},{t:'an',l:'HPO₄²⁻'}],
+    tokens: [{w:'hidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₃PO₄ cedió 2 de 3 H⁺. Queda 1 H en el anión HPO₄²⁻ = hidrogenofosfato (carga −2). 2 Na⁺ equilibran la carga. Stock: hidrogeno- + fosfato de sodio. Presente en soluciones tampón.'
+  },
+  {
+    formula: 'K₂HPO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['fosfato ácido de dipotasio', 'hidrogenofosfato de potasio'],
+    stock: ['hidrogenofosfato de potasio'],
+    sist: ['hidrogenofosfato de dipotasio'],
+    ions: [{t:'cat',l:'K⁺ × 2'},{t:'an',l:'HPO₄²⁻'}],
+    tokens: [{w:'hidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: '2 K⁺ + HPO₄²⁻. H₃PO₄ cedió 2 de 3 H⁺; 1 H queda en el anión. Stock: hidrogenofosfato de potasio. Fertilizante DKP usado en cultivos colombianos.'
+  },
+  {
+    formula: 'CaHPO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['fosfato ácido de calcio', 'hidrogenofosfato de calcio'],
+    stock: ['hidrogenofosfato de calcio'],
+    sist: ['hidrogenofosfato de calcio'],
+    ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'HPO₄²⁻'}],
+    tokens: [{w:'hidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+    hint: 'Ca²⁺ + HPO₄²⁻. H₃PO₄ cedió 2 de 3 H⁺; 1 H queda en el anión HPO₄²⁻. Ca tiene EO fijo (+2) → sin romano. Fosfato dicálcico: suplemento alimenticio y componente del esmalte dental.'
+  },
+
+  // -- Cromato ácido --
+  {
+    formula: 'NaHCrO₄',
+    group: 'sal-ac', level: 'hard',
+    trad: ['cromato ácido de sodio', 'bicromato de sodio hidrógeno'],
+    stock: ['hidrogenocromato de sodio'],
+    sist: ['hidrogenocromato de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HCrO₄⁻'}],
+    tokens: [{w:'hidrogenocromato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₂CrO₄ (diprót.) cedió 1 de 2 H⁺. Anión HCrO₄⁻ = hidrogenocromato (Stock). Na⁺ sin romano (EO fijo). Al acidificar HCrO₄⁻ se dimeriza a Cr₂O₇²⁻ (dicromato).'
+  },
+
 ];
 
 // Total: batch 4 adds 12 ac-hid, 19 hidru, 3 anhid, 3 base, 2 ac-ox
+// sal-ac section: 20 entries (bicarbonatos, bisulfatos, bisulfitos, fosfatos ácidos, cromato ácido)

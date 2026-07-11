@@ -412,6 +412,12 @@ footer a:hover{text-decoration:underline}
       <div class="card-title">Sales Oxigenadas</div>
       <div class="card-pattern">Metal + oxoanión</div>
     </button>
+    <button class="card card-ox" onclick="goToSection(8)">
+      <div class="card-icon">🧪</div>
+      <div class="card-num">Función 09</div>
+      <div class="card-title">Sales Ácidas</div>
+      <div class="card-pattern">bi-, hidrogeno-, H parcial</div>
+    </button>
   </div>
 </div>
 
@@ -1445,6 +1451,118 @@ footer a:hover{text-decoration:underline}
     </div>
   </div><!-- sec-7 -->
 
+  <!-- ── SEC 8: SALES ÁCIDAS ── -->
+  <div id="sec-8" class="sec-panel" style="display:none">
+    <div class="sect">
+      <div class="func-badge ox">
+        <div class="func-num">09</div>
+        <div>
+          <div class="func-badge-title">Sales Ácidas</div>
+          <div class="func-pattern">Metal + Anión con H residual</div>
+        </div>
+      </div>
+      <h2>¿Qué son las sales ácidas?</h2>
+      <p>Se forman cuando un <strong>ácido poliprótico</strong> (con más de un H ionizable) es <strong>parcialmente neutralizado</strong>: el catión reemplaza solo <em>algunos</em> de los H⁺, y el resto permanece en el anión.</p>
+      <ul>
+        <li>El anión resultante <strong>aún contiene hidrógeno</strong> ionizable.</li>
+        <li>Son intermedias entre el ácido original y la sal neutra.</li>
+        <li>Posibles con H₂SO₄, H₂SO₃, H₂CO₃, H₃PO₄, H₂CrO₄…</li>
+      </ul>
+    </div>
+    <div class="sect">
+      <h2>Aniones característicos</h2>
+      <table class="tbl">
+        <tr><th>Anión</th><th>Nombre tradicional</th><th>Nombre Stock / IUPAC</th><th>Ácido origen</th></tr>
+        <tr><td><code>HCO₃⁻</code></td><td>bicarbonato</td><td>hidrogenocarbonato</td><td>H₂CO₃</td></tr>
+        <tr><td><code>HSO₄⁻</code></td><td>bisulfato</td><td>hidrogenosulfato</td><td>H₂SO₄</td></tr>
+        <tr><td><code>HSO₃⁻</code></td><td>bisulfito</td><td>hidrogenosulfito</td><td>H₂SO₃</td></tr>
+        <tr><td><code>H₂PO₄⁻</code></td><td>fosfato ácido (dihidro)</td><td>dihidrogenofosfato</td><td>H₃PO₄</td></tr>
+        <tr><td><code>HPO₄²⁻</code></td><td>fosfato ácido</td><td>hidrogenofosfato</td><td>H₃PO₄</td></tr>
+        <tr><td><code>HCrO₄⁻</code></td><td>—</td><td>hidrogenocromato</td><td>H₂CrO₄</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Reglas de nomenclatura</h2>
+      <table class="tbl">
+        <tr><th>Sistema</th><th>Regla</th><th>Ejemplo (NaHCO₃)</th></tr>
+        <tr><td><strong>Tradicional</strong></td><td>Prefijo <strong>bi-</strong> para aniones con 1H de ácido diprót. Para H₃PO₄: "fosfato ácido de" o "dihidrogenofosfato".</td><td>bicarbonato de sodio</td></tr>
+        <tr><td><strong>Stock</strong></td><td><strong>hidrogeno-</strong> (o <strong>dihidrogeno-</strong>) + nombre del oxoanión + "de" + metal (con romano si EO variable).</td><td>hidrogenocarbonato de sodio</td></tr>
+        <tr><td><strong>Sistemática</strong></td><td>Igual que Stock; se pueden añadir prefijos de cantidad.</td><td>hidrogenocarbonato de sodio</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Comparación de los tres sistemas</h2>
+      <table class="tbl">
+        <tr><th>Fórmula</th><th>Tradicional</th><th>Stock</th><th>Sistemática</th></tr>
+        <tr><td><code>NaHCO₃</code></td><td>bicarbonato de sodio</td><td>hidrogenocarbonato de sodio</td><td>hidrogenocarbonato de sodio</td></tr>
+        <tr><td><code>NaHSO₄</code></td><td>bisulfato de sodio</td><td>hidrogenosulfato de sodio</td><td>hidrogenosulfato de sodio</td></tr>
+        <tr><td><code>NaH₂PO₄</code></td><td>dihidrogenofosfato de sodio</td><td>dihidrogenofosfato de sodio</td><td>dihidrogenofosfato de sodio</td></tr>
+        <tr><td><code>Na₂HPO₄</code></td><td>fosfato ácido de disodio</td><td>hidrogenofosfato de sodio</td><td>hidrogenofosfato de disodio</td></tr>
+        <tr><td><code>Fe(HCO₃)₂</code></td><td>bicarbonato ferroso</td><td>hidrogenocarbonato de hierro (II)</td><td>dihidrogenocarbonato de hierro</td></tr>
+      </table>
+    </div>
+    <div class="sect">
+      <h2>Contexto colombiano 🇨🇴</h2>
+      <div class="ctx-grid">
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Hogar</div>
+          <div class="ctx-formula">NaHCO₃</div>
+          <div class="ctx-name">Bicarbonato de sodio</div>
+          <div class="ctx-use">El "bicarbonato casero" colombiano. Se usa para aliviar la acidez gástrica (antiácido), fermentar masas (pandeyuca, buñuelos) y limpiar superficies. Reacciona con ácidos liberando CO₂ burbujeante.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag col">🇨🇴 Agua</div>
+          <div class="ctx-formula">Ca(HCO₃)₂</div>
+          <div class="ctx-name">Bicarbonato de calcio</div>
+          <div class="ctx-use">Causa la "dureza temporal" del agua de acueducto en ciudades como Bogotá, Medellín y Cali. Al hervir el agua, Ca(HCO₃)₂ → CaCO₃↓ + CO₂ + H₂O, formando las incrustaciones blancas en ollas y calentadores.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag bio">Agricultura</div>
+          <div class="ctx-formula">KH₂PO₄</div>
+          <div class="ctx-name">Dihidrogenofosfato de potasio (MKP)</div>
+          <div class="ctx-use">Fertilizante de alta solubilidad muy usado en la floricultura de la Sabana de Bogotá y en cultivos de café. Aporta fósforo (raíces y flores) y potasio (calidad del fruto) simultáneamente.</div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-tag ind">Industria</div>
+          <div class="ctx-formula">NaHSO₄</div>
+          <div class="ctx-name">Bisulfato de sodio / Hidrogenosulfato de sodio</div>
+          <div class="ctx-use">Se usa en limpiadores ácidos para piscinas y superficies de piedra. En Colombia es común en el mantenimiento de piscinas de hoteles y condominios de Bogotá, Cartagena y el Eje Cafetero.</div>
+        </div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>Practica: NaHSO₄</h2>
+      <div class="ex-formula-disp">NaHSO₄</div>
+      <div id="ex-sal-ac">
+        <div class="ex-step active" data-s="0">
+          <div class="ex-step-hdr"><div class="ex-snum">1</div><div class="ex-q">¿De qué ácido poliprótico proviene NaHSO₄?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ac',0,'✓ NaHSO₄ proviene del H₂SO₄: solo 1 de 2 H⁺ fue reemplazado por Na⁺.')">H₂SO₄ (ácido sulfúrico)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ac',0,'✗ No. H₂SO₃ daría HSO₃⁻ = bisulfito, no bisulfato.')">H₂SO₃ (ácido sulfuroso)</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ac',0,'✗ No. H₃PO₄ daría H₂PO₄⁻ o HPO₄²⁻.')">H₃PO₄ (ácido fosfórico)</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="1">
+          <div class="ex-step-hdr"><div class="ex-snum">2</div><div class="ex-q">¿Cómo se llama el anión HSO₄⁻ en nomenclatura tradicional?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-opts">
+            <button class="ex-opt" onclick="checkMCStep(this,true,'sal-ac',1,'✓ bi- + sulfato = bisulfato. Prefijo bi- indica 1H residual de ácido diprótico.')">bisulfato</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ac',1,'✗ No. Hidrogenosulfato es el nombre Stock/IUPAC, no el tradicional.')">hidrogenosulfato</button>
+            <button class="ex-opt" onclick="checkMCStep(this,false,'sal-ac',1,'✗ No. El sulfato es SO₄²⁻ sin H.')">sulfato</button>
+          </div>
+          <div class="ex-fb"></div>
+        </div>
+        <div class="ex-step locked" data-s="2">
+          <div class="ex-step-hdr"><div class="ex-snum">3</div><div class="ex-q">¿Cómo se llama NaHSO₄ en nomenclatura Stock (IUPAC)?</div><span class="ex-done-mark">✓</span></div>
+          <div class="ex-write-row"><input class="ex-inp" type="text" placeholder="hidrogeno... de ..." data-answers='["hidrogenosulfato de sodio"]' data-fb="✓ hidrogenosulfato de sodio — hidrogeno- + sulfato + de + catión."><button class="ex-submit-btn" onclick="checkWriteStep('sal-ac',2)">Comprobar</button></div>
+          <div class="ex-hint">Pista: hidrogeno- + [oxoanión] + de + [metal]</div>
+          <div class="ex-fb"></div>
+        </div>
+      </div>
+      <div class="ex-complete" id="exc-sal-ac"><strong>🎉 ¡Ejercicio completo!</strong><p>¡Dominas las sales ácidas! Practica en el Juego con el grupo "Sales ácidas".</p></div>
+    </div>
+  </div><!-- sec-8 -->
+
   <div class="nav-footer">
     <button class="nav-btn" id="btn-anterior" onclick="navAnterior()">← Anterior</button>
     <button class="nav-btn" onclick="volverAlMenu()">☰ Menú</button>
@@ -1460,13 +1578,13 @@ footer a:hover{text-decoration:underline}
 
 <script>
 var seccionActual = 0;
-var TOTAL = 8;
+var TOTAL = 9;
 var TITULOS = [
   'Óxidos Básicos','Anhídridos','Hidruros','Ácidos Hídricos',
-  'Bases · Hidróxidos','Ácidos Oxácidos','Sales Binarias','Sales Oxigenadas'
+  'Bases · Hidróxidos','Ácidos Oxácidos','Sales Binarias','Sales Oxigenadas','Sales Ácidas'
 ];
-var EX_IDS  = ['ox-bas','anhid','hidru','acid-hid','base','oxac','sal-bin','sal-ox'];
-var EX_TOTS = [5,5,4,4,5,4,5,5];
+var EX_IDS  = ['ox-bas','anhid','hidru','acid-hid','base','oxac','sal-bin','sal-ox','sal-ac'];
+var EX_TOTS = [5,5,4,4,5,4,5,5,3];
 
 function goToSection(idx){
   seccionActual = idx;
