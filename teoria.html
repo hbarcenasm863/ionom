@@ -620,6 +620,8 @@ CONTENIDO[1] = `
     <div class="step-body cat"><strong>Regla de la suma:</strong><p>En molécula neutra: <span class="mayer-hl">∑ EO = 0</span>. En ión poliatómico: suma = carga del ión</p></div>
   </div>
 
+  <div class="mayer-rule">📐 <strong>Regla de oro:</strong> En cualquier molécula neutra, la suma de todos los estados de oxidación siempre es igual a <span class="mayer-hl">cero</span>. En un ion poliatómico, la suma es igual a la <span class="mayer-hl">carga del ion</span>.</div>
+
   <div class="color-box oh" style="margin-top:18px">
     <div class="color-dot"></div>
     <div>
@@ -632,12 +634,36 @@ CONTENIDO[1] = `
 <div class="sect">
   <h2>Ejemplos de cálculo</h2>
 
+  <!-- P1 + P2 visual diagram for EO calculation -->
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin:12px 0">
+    <div style="flex:1;min-width:200px">
+      <svg viewBox="0 0 260 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;font-family:Arial,sans-serif">
+        <rect x="2" y="2" width="256" height="86" rx="8" fill="#fff" stroke="#d0e6f5" stroke-width="1.5"/>
+        <!-- Fe₂O₃ -->
+        <text x="20" y="25" font-size="13" font-weight="800" fill="#d97706">Fe₂</text>
+        <text x="50" y="25" font-size="13" font-weight="800" fill="#0369a1">O₃</text>
+        <!-- equation -->
+        <text x="20" y="48" font-size="11" fill="#2a3f52">2(<em>x</em>) + 3(−2) = 0</text>
+        <text x="20" y="64" font-size="11" fill="#2a3f52">2<em>x</em> = +6</text>
+        <!-- answer -->
+        <rect x="20" y="70" width="60" height="16" rx="4" fill="#fef3c7"/>
+        <text x="24" y="82" font-size="11" font-weight="800" fill="#92400e">x = +3 ✓</text>
+        <!-- arrow labels -->
+        <text x="140" y="30" font-size="9" fill="#d97706" font-weight="700">Fe → cede e⁻</text>
+        <text x="140" y="44" font-size="9" fill="#0369a1" font-weight="700">O → toma e⁻</text>
+        <text x="140" y="58" font-size="9" fill="#134e4a" font-weight="700">suma = 0 (neutro)</text>
+        <text x="140" y="72" font-size="9" fill="#92400e" font-weight="700">Fe³⁺ = hierro(III)</text>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:160px">
   <div class="ejemplo">
     <strong>Fe₂O₃</strong> — ¿cuál es el EO del hierro?<br>
     Fe: <em>x</em> &nbsp;|&nbsp; O: −2<br>
     2(<em>x</em>) + 3(−2) = 0<br>
     2<em>x</em> − 6 = 0 &nbsp;→&nbsp; <span class="corr">x = +3</span><br>
-    ∴ El Fe tiene EO = +3 → es Fe³⁺ (hierro III)
+    ∴ El Fe tiene EO = +3 → es <span class="mayer-hl">Fe³⁺ (hierro III)</span>
+  </div>
+    </div>
   </div>
 
   <div class="ejemplo">
@@ -753,6 +779,29 @@ CONTENIDO[1] = `
 CONTENIDO[2] = `
 <div class="sect">
   <h2>Compuestos binarios (2 elementos)</h2>
+
+  <!-- P1+P9 visual classification map -->
+  <div class="compare-grid" style="margin-bottom:14px">
+    <div class="compare-card" style="background:var(--cat-b);border:2px solid var(--cat)">
+      <h5 style="color:var(--cat-t)">🟡 Óxido básico</h5>
+      <div style="font-size:.8rem;color:var(--cat-t)"><strong>Metal + O</strong></div>
+      <div style="font-family:var(--mono);font-size:.78rem;color:var(--tx);margin-top:4px">Fe₂O₃, CaO, Na₂O</div>
+      <div style="font-size:.72rem;color:var(--dimmer);margin-top:4px">→ base con H₂O</div>
+    </div>
+    <div class="compare-card" style="background:var(--an-b);border:2px solid var(--an)">
+      <h5 style="color:var(--an-t)">🔵 Anhídrido</h5>
+      <div style="font-size:.8rem;color:var(--an-t)"><strong>No metal + O</strong></div>
+      <div style="font-family:var(--mono);font-size:.78rem;color:var(--tx);margin-top:4px">SO₃, P₂O₅, Cl₂O₇</div>
+      <div style="font-size:.72rem;color:var(--dimmer);margin-top:4px">→ ácido con H₂O</div>
+    </div>
+    <div class="compare-card" style="background:var(--ox-b);border:2px solid var(--ox)">
+      <h5 style="color:var(--ox-t)">🟢 Sal binaria</h5>
+      <div style="font-size:.8rem;color:var(--ox-t)"><strong>Metal + No metal</strong></div>
+      <div style="font-family:var(--mono);font-size:.78rem;color:var(--tx);margin-top:4px">NaCl, CaF₂, FeCl₃</div>
+      <div style="font-size:.72rem;color:var(--dimmer);margin-top:4px">anión termina en -uro</div>
+    </div>
+  </div>
+
   <table class="tbl">
     <tr><th>Tipo</th><th>Composición</th><th>Característica</th><th>Ejemplos</th></tr>
     <tr>
@@ -873,6 +922,8 @@ CONTENIDO[2] = `
   </div>
 </div>
 
+</details>
+
 <div class="sect mayer-quiz" id="quiz-2">
   <h2>🎯 Practica — Sección 3</h2>
   <div class="mq-question" id="mq-2-0">
@@ -903,6 +954,8 @@ CONTENIDO[3] = `
     <tr><td>5</td><td>penta-</td><td>10</td><td>deca-</td></tr>
   </table>
 
+  <div class="mayer-rule">🔢 <strong>Regla clave:</strong> En Sistemática, el <span class="mayer-hl">segundo elemento</span> va primero en el nombre, el <span class="mayer-hl">primero va de segundo</span>. Ejemplo: CO₂ → <em>di</em>óxido de carbono (el O va primero en el nombre).</div>
+
   <h3>Reglas generales</h3>
   <ol class="sect ol">
     <li>Se nombra primero el elemento menos electronegativo (el metal o el elemento de la izquierda)</li>
@@ -923,21 +976,45 @@ CONTENIDO[3] = `
 
   <h3>Construye el nombre Sistemática / IUPAC — paso a paso</h3>
   <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>N₂O₃</strong></p>
+
+  <!-- P1+P2 visual: prefix assembly diagram -->
+  <div style="margin:10px 0 14px">
+    <svg viewBox="0 0 340 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;font-family:Arial,sans-serif">
+      <rect x="2" y="2" width="336" height="56" rx="8" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+      <text x="14" y="22" font-size="10" fill="#082f49" font-weight="700">N₂O₃</text>
+      <text x="14" y="38" font-size="9" fill="#0369a1">2 N</text>
+      <text x="14" y="50" font-size="9" fill="#134e4a">3 O</text>
+      <!-- arrow -->
+      <text x="52" y="32" font-size="16" fill="#0369a1">→</text>
+      <!-- tri prefix -->
+      <rect x="74" y="12" width="32" height="16" rx="3" fill="#0369a1"/>
+      <text x="77" y="24" font-size="10" font-weight="800" fill="#fff">tri-</text>
+      <text x="74" y="44" font-size="8" fill="#134e4a">3 O</text>
+      <text x="108" y="26" font-size="11" fill="#082f49" font-weight="700">óxido</text>
+      <text x="150" y="26" font-size="11" fill="#2a3f52">de</text>
+      <!-- di prefix -->
+      <rect x="170" y="12" width="24" height="16" rx="3" fill="#d97706"/>
+      <text x="173" y="24" font-size="10" font-weight="800" fill="#fff">di-</text>
+      <text x="170" y="44" font-size="8" fill="#92400e">2 N</text>
+      <text x="196" y="26" font-size="11" fill="#082f49" font-weight="700">nitrógeno</text>
+    </svg>
+  </div>
+
   <div class="step-row">
     <div class="step-n an">1</div>
-    <div class="step-body an"><strong>Cuenta los átomos</strong><p>N₂O₃ tiene 2 átomos de N y 3 átomos de O.</p></div>
+    <div class="step-body an"><strong><span class="mayer-step-num">①</span> Cuenta los átomos</strong><p>N₂O₃ tiene <span class="mayer-hl">2</span> átomos de N y <span class="mayer-hl">3</span> átomos de O.</p></div>
   </div>
   <div class="step-row">
     <div class="step-n an">2</div>
-    <div class="step-body an"><strong>Primer elemento (izquierda): N</strong><p>2 átomos → prefijo <em>di-</em> + nitrógeno = <strong>dinitrógeno</strong>.</p></div>
+    <div class="step-body an"><strong><span class="mayer-step-num">②</span> Segundo elemento (O) va primero en el nombre</strong><p>3 átomos → prefijo <span class="mayer-hl">tri-</span> + óxido = <strong>trióxido</strong>.</p></div>
   </div>
   <div class="step-row">
     <div class="step-n an">3</div>
-    <div class="step-body an"><strong>Segundo elemento: O</strong><p>3 átomos → prefijo <em>tri-</em> + óxido = <strong>trióxido</strong>.</p></div>
+    <div class="step-body an"><strong><span class="mayer-step-num">③</span> Primer elemento (N) va de segundo</strong><p>2 átomos → prefijo <span class="mayer-hl">di-</span> + nitrógeno = <strong>dinitrógeno</strong>.</p></div>
   </div>
   <div class="step-row">
     <div class="step-n an">4</div>
-    <div class="step-body an"><strong>Ensambla el nombre</strong><p>[segundo] de [primero] → <strong>trióxido de dinitrógeno</strong>.</p></div>
+    <div class="step-body an"><strong><span class="mayer-step-num">④</span> Ensambla el nombre</strong><p>[segundo] de [primero] → <strong>trióxido de dinitrógeno</strong>.</p></div>
   </div>
 
   <div class="error-box">
@@ -967,15 +1044,58 @@ CONTENIDO[4] = `
   <h2>Nomenclatura Stock</h2>
   <p>Indica el <strong>estado de oxidación del metal con números romanos</strong> entre paréntesis, justo después del nombre del metal. Es el estándar internacional actual.</p>
 
+  <!-- P9 visual comparison card -->
+  <div class="compare-grid" style="margin:14px 0">
+    <div class="compare-card" style="background:var(--cat-b);border:2px solid var(--cat)">
+      <h5 style="color:var(--cat-t)">📌 Fórmula</h5>
+      <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--cat-t)">FeCl₂</div>
+      <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--cat-t);margin-top:4px">FeCl₃</div>
+      <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--cat-t);margin-top:4px">Cu₂O</div>
+      <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--cat-t);margin-top:4px">CuO</div>
+    </div>
+    <div class="compare-card" style="background:var(--an-b);border:2px solid var(--an)">
+      <h5 style="color:var(--an-t)">🔢 Stock</h5>
+      <div style="font-size:.82rem;color:var(--an-t)">hierro <strong>(II)</strong></div>
+      <div style="font-size:.82rem;color:var(--an-t);margin-top:4px">hierro <strong>(III)</strong></div>
+      <div style="font-size:.82rem;color:var(--an-t);margin-top:4px">cobre <strong>(I)</strong></div>
+      <div style="font-size:.82rem;color:var(--an-t);margin-top:4px">cobre <strong>(II)</strong></div>
+    </div>
+    <div class="compare-card" style="background:var(--ox-b);border:2px solid var(--ox)">
+      <h5 style="color:var(--ox-t)">🔤 Tradicional</h5>
+      <div style="font-size:.82rem;color:var(--ox-t)"><strong>ferro</strong>so</div>
+      <div style="font-size:.82rem;color:var(--ox-t);margin-top:4px"><strong>fér</strong>rico</div>
+      <div style="font-size:.82rem;color:var(--ox-t);margin-top:4px"><strong>cu</strong>proso</div>
+      <div style="font-size:.82rem;color:var(--ox-t);margin-top:4px"><strong>cú</strong>prico</div>
+    </div>
+  </div>
+
   <div class="ejemplo">
-    <strong>FeCl₂</strong> → cloruro de hierro <span class="corr">(II)</span> &nbsp;[Fe tiene EO = +2]<br>
-    <strong>FeCl₃</strong> → cloruro de hierro <span class="corr">(III)</span> &nbsp;[Fe tiene EO = +3]<br>
-    <strong>Cu₂O</strong> → óxido de cobre <span class="corr">(I)</span> &nbsp;[Cu tiene EO = +1]<br>
-    <strong>CuO</strong> → óxido de cobre <span class="corr">(II)</span> &nbsp;[Cu tiene EO = +2]<br>
-    <strong>PbO₂</strong> → óxido de plomo <span class="corr">(IV)</span> &nbsp;[Pb tiene EO = +4]
+    <strong>FeCl₂</strong> → cloruro de hierro <span class="corr">(II)</span> &nbsp;[Fe tiene <span class="mayer-hl">EO = +2</span>]<br>
+    <strong>FeCl₃</strong> → cloruro de hierro <span class="corr">(III)</span> &nbsp;[Fe tiene <span class="mayer-hl">EO = +3</span>]<br>
+    <strong>Cu₂O</strong> → óxido de cobre <span class="corr">(I)</span> &nbsp;[Cu tiene <span class="mayer-hl">EO = +1</span>]<br>
+    <strong>CuO</strong> → óxido de cobre <span class="corr">(II)</span> &nbsp;[Cu tiene <span class="mayer-hl">EO = +2</span>]<br>
+    <strong>PbO₂</strong> → óxido de plomo <span class="corr">(IV)</span> &nbsp;[Pb tiene <span class="mayer-hl">EO = +4</span>]
   </div>
 
   <p>Para metales de valencia fija (Na, Ca, Al…) no se usa número romano porque no hay ambigüedad. El número romano solo aparece cuando el metal puede tener más de una valencia.</p>
+
+  <!-- P1 visual: Stock Roman numeral placement -->
+  <div style="margin:12px 0">
+    <svg viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;font-family:Arial,sans-serif">
+      <rect x="2" y="2" width="336" height="66" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+      <!-- formula parts -->
+      <text x="20" y="28" font-size="13" font-weight="800" fill="#2a3f52">cloruro</text>
+      <text x="90" y="28" font-size="13" fill="#2a3f52">de</text>
+      <text x="108" y="28" font-size="13" font-weight="800" fill="#d97706">hierro</text>
+      <rect x="164" y="14" width="32" height="18" rx="3" fill="#0369a1"/>
+      <text x="170" y="27" font-size="12" font-weight="800" fill="#fff">(III)</text>
+      <text x="200" y="28" font-size="11" fill="#92400e">→ EO = +3</text>
+      <!-- arrows/labels -->
+      <text x="20" y="50" font-size="9" fill="#134e4a">anión (-uro)</text>
+      <text x="108" y="50" font-size="9" fill="#d97706" font-weight="700">nombre metal</text>
+      <text x="164" y="50" font-size="9" fill="#0369a1" font-weight="700">romano = EO</text>
+    </svg>
+  </div>
 
   <h3>Construye paso a paso — Tradicional y Stock</h3>
   <p style="font-size:.83rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>PbO₂</strong></p>
@@ -1003,8 +1123,8 @@ CONTENIDO[4] = `
 
   <table class="tbl">
     <tr><th>Cuando es la valencia…</th><th>Sufijo</th><th>Ejemplo con Fe</th></tr>
-    <tr><td>Menor (la más baja)</td><td><strong>-oso</strong></td><td>ferroso (+2) → cloru<em>ro ferro<strong>so</strong></em></td></tr>
-    <tr><td>Mayor (la más alta)</td><td><strong>-ico</strong></td><td>férrico (+3) → cloru<em>ro fér<strong>rico</strong></em></td></tr>
+    <tr><td>Menor (la más baja)</td><td><span class="mayer-hl">-oso</span></td><td>ferroso (+2) → cloru<em>ro ferro<strong>so</strong></em></td></tr>
+    <tr><td>Mayor (la más alta)</td><td><span class="mayer-hl">-ico</span></td><td>férrico (+3) → cloru<em>ro fér<strong>rico</strong></em></td></tr>
   </table>
 
   <div class="ejemplo">
@@ -1016,6 +1136,9 @@ CONTENIDO[4] = `
     <strong>SnCl₄</strong> → cloruro <span class="corr">estánnico</span> (Sn⁴⁺)
   </div>
 </div>
+
+<details class="seg-details">
+<summary><span class="seg-arrow">▶</span> Continuar — Parte 2: Comparación de los tres sistemas</summary>
 
 <div class="sect">
   <h2>Comparación de los tres sistemas</h2>
@@ -1061,6 +1184,8 @@ CONTENIDO[4] = `
   </div>
 </div>
 
+</details>
+
 <div class="sect mayer-quiz" id="quiz-4">
   <h2>🎯 Practica — Sección 5</h2>
   <div class="mq-question" id="mq-4-0">
@@ -1080,7 +1205,7 @@ CONTENIDO[4] = `
 CONTENIDO[5] = `
 <div class="sect">
   <h2>Manganeso — 5 estados de oxidación</h2>
-  <p>El Mn es el metal de transición más versátil en bachillerato: tiene <strong>5 estados de oxidación comunes</strong>. La nomenclatura Tradicional no puede manejar más de 2 estados con -oso/-ico, por lo que varios compuestos de Mn <em>requieren</em> nomenclatura Stock.</p>
+  <p>El Mn es el metal de transición más versátil en bachillerato: tiene <span class="mayer-hl">5 estados de oxidación</span> comunes. La nomenclatura Tradicional no puede manejar más de 2 estados con -oso/-ico, por lo que varios compuestos de Mn <em>requieren</em> nomenclatura Stock.</p>
 
   <table class="tbl">
     <tr><th>EO</th><th>Fórmula ejemplo</th><th>Tradicional</th><th>Stock</th><th>Sistemática</th></tr>
@@ -1115,7 +1240,7 @@ CONTENIDO[5] = `
 
 <div class="sect">
   <h2>Mercurio — catión dinuclear Hg₂²⁺</h2>
-  <p>El mercurioso es un caso único en bachillerato: el ion <strong>Hg₂²⁺</strong> está formado por <em>dos</em> átomos de Hg unidos, cada uno con EO = +1.</p>
+  <p>El mercurioso es un caso único en bachillerato: el ion <span class="mayer-hl">Hg₂²⁺</span> está formado por <em>dos</em> átomos de Hg unidos, cada uno con EO = +1.</p>
 
   <table class="tbl">
     <tr><th>Fórmula</th><th>Ion</th><th>Tradicional</th><th>Stock</th></tr>
@@ -1211,11 +1336,12 @@ CONTENIDO[5] = `
 CONTENIDO[6] = `
 <div class="sect">
   <h2>De la Nomenclatura a la Reactividad</h2>
-  <p><strong>El nombre te dice cómo reacciona el compuesto.</strong> Cuando conoces el tipo de compuesto — óxido básico, anhídrido, ácido, base, sal — puedes predecir qué ocurrirá al mezclarlo con otro reactivo.</p>
+  <p><strong>El nombre te dice cómo reacciona el compuesto.</strong> Cuando conoces el tipo de compuesto — <span class="mayer-hl">óxido básico</span>, <span class="mayer-hl">anhídrido</span>, <span class="mayer-hl">ácido</span>, <span class="mayer-hl">base</span>, <span class="mayer-hl">sal</span> — puedes predecir qué ocurrirá al mezclarlo con otro reactivo.</p>
 </div>
 
 <div class="sect">
   <h2>Patrón 1 — Óxido básico + H₂O → Base (pH &gt; 7)</h2>
+  <div class="mayer-rule">⛓️ <strong>Cadena del metal:</strong> <span class="mayer-hl">Metal → Óxido básico → Hidróxido → Sal</span></div>
   <p>Un <strong>óxido básico</strong> (metal + O) reacciona con agua para producir una base (hidróxido). La solución resultante es alcalina.</p>
 
   <div class="mdec-demo" style="margin-bottom:14px">
@@ -1238,6 +1364,7 @@ CONTENIDO[6] = `
 
 <div class="sect">
   <h2>Patrón 2 — Anhídrido (óxido ácido) + H₂O → Ácido (pH &lt; 7)</h2>
+  <div class="mayer-rule">⛓️ <strong>Cadena del no metal:</strong> <span class="mayer-hl">No metal → Anhídrido → Ácido oxácido → Sal</span></div>
   <p>Un <strong>anhídrido</strong> (no metal + O) reacciona con agua para producir un ácido oxácido. La solución resultante es ácida.</p>
 
   <div class="ejemplo">
@@ -1303,7 +1430,7 @@ CONTENIDO[6] = `
 CONTENIDO[7] = `
 <div class="sect">
   <h2>¿Qué son las sales ácidas?</h2>
-  <p>Cuando un <strong>ácido poliprótico</strong> (con más de un H ionizable) reacciona con una base pero no cede <em>todos</em> sus H⁺, el producto es una <strong>sal ácida</strong>. El anión resultante todavía contiene hidrógeno ionizable.</p>
+  <p>Cuando un <span class="mayer-hl">ácido poliprótico</span> (con más de un H ionizable) reacciona con una base pero no cede <em>todos</em> sus H⁺, el producto es una <span class="mayer-hl">sal ácida</span>. El anión resultante todavía contiene hidrógeno ionizable.</p>
   <div class="ejemplo">
     H₂SO₄ + NaOH → <strong>NaHSO₄</strong> + H₂O &nbsp;[1 de 2 H neutralizados → bisulfato de sodio]<br>
     H₂CO₃ + NaOH → <strong>NaHCO₃</strong> + H₂O &nbsp;[1 de 2 H neutralizados → bicarbonato de sodio]<br>
@@ -1404,7 +1531,7 @@ function goToSection(idx){
   // P12 — guide icon (tutor presence)
   // P8 — dash-intro class for redundancy dimming
   const dashHTML = `<div style="position:relative;background:${d.color};border-radius:12px;padding:16px 20px;margin-bottom:20px;color:#fff">
-  <span class="section-guide" title="Tu guía de química">🧪👩‍🔬</span>
+  <span class="section-guide" title="Tu guía de química" style="position:absolute;top:10px;right:10px">🧪👩‍🔬</span>
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:12px">
     <div style="flex:1">
       <div style="font-size:1.05rem;font-weight:800">${SECCIONES[idx].icon} ${SECCIONES[idx].titulo}</div>
