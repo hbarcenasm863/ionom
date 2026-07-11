@@ -187,6 +187,38 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
+
+/* ── MAYER CTML PRINCIPLES ── */
+/* P8 Redundancy */
+.tts-playing{opacity:.35;transition:opacity .3s;font-size:.8rem!important}
+.dash-intro{transition:opacity .3s,font-size .3s}
+
+/* P7 Signaling */
+.mayer-hl{background:var(--cat-b);border-radius:4px;padding:1px 6px;font-weight:700;color:var(--cat-t)}
+.mayer-rule{border-left:4px solid var(--cat);background:var(--cat-b);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:.88rem}
+.mayer-step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--an);color:#fff;border-radius:50%;font-size:.72rem;font-weight:800;margin-right:6px;flex-shrink:0}
+
+/* P5 Pre-training */
+.pretrain-box{background:rgba(13,74,115,.06);border:1.5px solid var(--brd);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.pretrain-box h4{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:8px}
+.pretrain-row{display:flex;align-items:baseline;gap:8px;margin-bottom:5px;font-size:.85rem}
+.pretrain-term{font-family:'Courier New',monospace;font-weight:700;color:var(--an);min-width:130px}
+
+/* P9 Modality — visual comparison cards */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}
+.compare-card{border-radius:8px;padding:10px 12px;font-size:.82rem}
+.compare-card h5{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+@media(max-width:580px){.compare-grid{grid-template-columns:1fr}}
+
+/* P12 Guide icon */
+.section-guide{font-size:1.4rem;opacity:.75;flex-shrink:0}
+
+/* P4 Segmenting */
+.seg-details{margin:16px 0}
+.seg-details summary{cursor:pointer;padding:10px 14px;background:var(--an-b);border-radius:8px;font-size:.85rem;font-weight:700;color:var(--an);list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+.seg-details summary::-webkit-details-marker{display:none}
+.seg-details[open] summary span.seg-arrow{transform:rotate(90deg);display:inline-block}
+.seg-arrow{transition:transform .2s;display:inline-block}
 </style>
 </head>
 <body>
@@ -295,6 +327,7 @@ footer a:hover{text-decoration:underline}
 </div><!-- .app -->
 
 <button id="speak-btn-float" onclick="speakCurrentSection()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopSpeech()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 
 <footer>
   <p><a href="https://hbarcenasm863.github.io/ionom/">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
@@ -317,27 +350,40 @@ footer a:hover{text-decoration:underline}
 
 <script>
 // ══════════════════════════════════════════
-//  TTS — Web Speech API
+//  TTS — Web Speech API  (P3, P8, P11)
 // ══════════════════════════════════════════
 let _ttsUtt = null;
 function speak(text, onEnd){
   if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
+  // P8 — dim on-screen text while audio plays
+  document.querySelectorAll('.dash-intro').forEach(el=>el.classList.add('tts-playing'));
+  const stopBtn = document.getElementById('tts-stop-btn');
+  if(stopBtn) stopBtn.style.display='inline-flex';
   _ttsUtt = new SpeechSynthesisUtterance(text);
   _ttsUtt.lang = 'es-CO';
-  _ttsUtt.rate = 0.9;
+  _ttsUtt.rate = 0.92;   // P11 — slightly slower for comprehension
   _ttsUtt.pitch = 1.05;
+  _ttsUtt.onend = function(){
+    document.querySelectorAll('.dash-intro').forEach(el=>el.classList.remove('tts-playing'));
+    if(stopBtn) stopBtn.style.display='none';
+    if(onEnd) onEnd();
+  };
   const loadVoice = () => {
     const voices = window.speechSynthesis.getVoices();
-    const esp = voices.find(v=>v.lang.startsWith('es'))||voices[0];
+    const esp = voices.find(v=>v.lang==='es-CO')||voices.find(v=>v.lang.startsWith('es'))||voices[0];
     if(esp) _ttsUtt.voice = esp;
-    if(onEnd) _ttsUtt.onend = onEnd;
     window.speechSynthesis.speak(_ttsUtt);
   };
   if(window.speechSynthesis.getVoices().length) loadVoice();
   else window.speechSynthesis.onvoiceschanged = loadVoice;
 }
-function stopSpeech(){ window.speechSynthesis && window.speechSynthesis.cancel(); }
+function stopSpeech(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.querySelectorAll('.dash-intro').forEach(el=>el.classList.remove('tts-playing'));
+  const stopBtn = document.getElementById('tts-stop-btn');
+  if(stopBtn) stopBtn.style.display='none';
+}
 function speakCurrentSection(){
   if(SEC_DASH[seccionActual]) speak(SEC_DASH[seccionActual].intro);
 }
@@ -348,28 +394,28 @@ function speakCurrentSection(){
 const SEC_DASH = [
   {color:'#d97706', summary:'Cada ion tiene un color. Los 4 colores MDEC te dicen qué tipo de compuesto es y cómo nombrarlo.',
    chips:['🔴 Catión (metal)','🔵 Anión simple','🟣 OH⁻ Hidróxido','🟢 Oxoanión'],
-   intro:'¡Hola! En esta sección vas a aprender el sistema de colores que hace visible la estructura de los compuestos inorgánicos. Cada tipo de ion tiene un color fijo. El ámbar es para el catión o metal, el azul para el anión simple, el violeta para el grupo hidróxido, y el teal para los oxoaniones. Con estos cuatro colores vas a poder leer cualquier fórmula inorgánica.'},
+   intro:'¿Alguna vez te has preguntado cómo saber de qué tipo es un compuesto con solo verlo? Con el sistema de colores MDEC, cada ion tiene su propio color: ámbar para el metal, azul para el anión simple, violeta para el OH⁻ y teal para el oxoanión. Cuando domines estos cuatro colores, vas a leer cualquier fórmula inorgánica como si fuera un mapa.'},
   {color:'#0369a1', summary:'EO = carga que tendría el átomo si los electrones fueran completamente del ion más electronegativo.',
    chips:['O siempre −2','H: +1 en ácidos, −1 en hidruros','Suma de EO = 0','Metales de transición: variable'],
-   intro:'Los estados de oxidación son el corazón de la nomenclatura inorgánica. El estado de oxidación nos dice qué carga tendría cada átomo si la molécula fuera completamente iónica. La regla de oro es que la suma de todos los estados de oxidación en una molécula neutra debe ser igual a cero. Con esa regla puedes calcular cualquier estado de oxidación desconocido.'},
+   intro:'¿Sabías que cada átomo lleva un "contador" de electrones ganados o perdidos? Eso es el estado de oxidación, y es la clave para nombrar cualquier compuesto inorgánico. Recuerda la regla de oro: en una molécula neutra, la suma de todos los EO siempre da cero. Con esa sola regla puedes calcular el EO de cualquier elemento desconocido.'},
   {color:'#0f766e', summary:'Binarios: 2 elementos. Ternarios: 3 elementos (con grupo oxoanión o OH).',
    chips:['Binario: Metal+O ó Metal+X','Ternario: Metal+OH ó Metal+Oxoanión','Anhídrido: No metal+O','Ácido hídrico: H+X(aq)'],
-   intro:'Los compuestos inorgánicos se clasifican según cuántos elementos tienen y cuáles son. Los binarios tienen dos elementos, como el cloruro de sodio o los óxidos. Los ternarios tienen tres elementos, como los hidróxidos y las sales oxigenadas. Los anhídridos son no metales con oxígeno. Y los ácidos hídricos son hidrógeno con un no metal en solución acuosa.'},
+   intro:'Antes de nombrar un compuesto, necesitas saber qué tipo es. ¿Tiene dos elementos o tres? ¿Es un metal con oxígeno o un no metal? Por ejemplo, el NaCl de la Catedral de Sal de Zipaquirá es un binario, mientras que el Ca(OH)₂ de la cal apagada es un ternario. Identificar el tipo es el primer paso para nombrar correctamente.'},
   {color:'#0369a1', summary:'Sistemática: cuenta los átomos con prefijos (mono, di, tri…). Sin deducir EO.',
    chips:['mono=1','di=2','tri=3','tetra=4','penta=5'],
-   intro:'La nomenclatura sistemática, también llamada IUPAC, es la más sencilla: simplemente cuenta los átomos de cada elemento y usa prefijos griegos. Mono para uno, di para dos, tri para tres, tetra para cuatro, penta para cinco. No necesitas saber el estado de oxidación. Solo cuentas y nombras.'},
+   intro:'La sistemática es la más fácil de todas: solo tienes que contar. ¿Cuántos átomos de cada elemento hay en la fórmula? Uno es mono, dos es di, tres es tri, cuatro es tetra. No necesitas calcular ningún EO. Solo contar y poner el prefijo correcto antes del nombre del elemento.'},
   {color:'#d97706', summary:'Stock: nombre del metal + EO en romano. Tradicional: sufijos -oso (menor) / -ico (mayor).',
    chips:['Fe²⁺ = ferroso / hierro(II)','Fe³⁺ = férrico / hierro(III)','Solo metales de valencia variable','Fija: sin sufijo ni romano'],
-   intro:'Los sistemas Stock y Tradicional son para los metales con valencia variable, es decir, aquellos que pueden tener más de un estado de oxidación. En el sistema Stock, se pone el nombre del metal y entre paréntesis el estado de oxidación en número romano. En el sistema Tradicional, se usan los sufijos oso para la valencia menor e ico para la mayor.'},
+   intro:'¿Cómo diferencias el hierro que forma el óxido de Paz del Río del que forma la herrumbre? Con Stock o Tradicional: Stock usa número romano entre paréntesis como hierro(III), y Tradicional usa sufijos: -oso para la valencia menor y -ico para la mayor. Estos sistemas son solo para metales que pueden tener más de una valencia.'},
   {color:'#7c3aed', summary:'Excepciones: Mn (2,4,7), Cr (2,3,6), Hg (1→Hg₂²⁺), 3 tipos de hidruros.',
    chips:['Mn: manganoso/mangánico/permangánico','Cr: cromoso/crómico → anhídrido crómico','Hg(I)→Hg₂²⁺ (ion mercurioso)','Hidruro metálico vs HX vs H₂O'],
-   intro:'Las excepciones son los casos especiales que hay que memorizar. El manganeso puede tener estados de oxidación dos, cuatro y siete. El cromo tiene dos, tres y seis. El mercurio uno forma un ion diatómico especial llamado mercurioso. Y los hidruros se dividen en tres tipos: metálicos como el hidruro de sodio, ácidos hídricos como el ácido clorhídrico, y el agua que es un caso único.'},
+   intro:'¡Atención! Aquí vienen los casos que más confunden en los exámenes. El manganeso tiene hasta cinco valencias, el cromo actúa a veces como no metal, y el mercurioso es el único catión diatómico del bachillerato. Prepárate para entender por qué estos metales rompen las reglas comunes, y cómo nombrarlos sin confundirte.'},
   {color:'#0f766e', summary:'La nomenclatura conecta con las ecuaciones: óxido → base → sal (metal) / anhídrido → ácido → sal (no metal).',
    chips:['Metal → Óxido → Base → Sal','No metal → Anhídrido → Ácido → Sal','DBA 3 MEN Colombia','pH y neutralización'],
-   intro:'La reactividad conecta todo lo que aprendiste sobre nomenclatura con las ecuaciones químicas. Los metales forman la cadena: óxido básico, luego hidróxido o base, y finalmente sal. Los no metales forman la cadena: anhídrido, luego ácido oxácido, y también finalmente sal. Esta cadena de reactividad es el estándar tres de los Derechos Básicos de Aprendizaje del Ministerio de Educación de Colombia.'},
+   intro:'¿Para qué sirve saber el nombre de un compuesto? Para predecir cómo reacciona. En Colombia, el DBA 3 del MEN pide exactamente eso: entender que el CaO (cal viva) reacciona con agua para dar Ca(OH)₂, o que el SO₃ (que causa lluvia ácida) reacciona con agua para dar H₂SO₄. La nomenclatura es el mapa de la reactividad.'},
   {color:'#0369a1', summary:'Sales ácidas: el ácido poliprótico no cedió todos sus H⁺. El anión conserva H ionizable.',
    chips:['HCO₃⁻ = bicarbonato / hidrogenocarbonato','HSO₄⁻ = bisulfato / hidrogenosulfato','H₂PO₄⁻ = dihidrogenofosfato','HPO₄²⁻ = hidrogenofosfato'],
-   intro:'Las sales ácidas se forman cuando un ácido con más de un hidrógeno ionizable — llamado ácido poliprótico — solo cede algunos de sus hidrógenos al neutralizarse. El anión que queda todavía tiene hidrógeno. Por ejemplo, el ácido carbónico H₂CO₃ tiene dos hidrógenos. Si solo uno es reemplazado por sodio, se forma NaHCO₃, el bicarbonato de sodio — el bicarbonato casero que conocemos en Colombia.'},
+   intro:'¿Conoces el bicarbonato que usamos en la cocina colombiana? Ese NaHCO₃ es una sal ácida: el ácido carbónico solo cedió uno de sus dos hidrógenos. Cuando un ácido poliprótico no cede todos sus H⁺ al neutralizarse, el anión que queda todavía tiene hidrógeno ionizable y se llama sal ácida.'},
 ];
 
 // ══════════════════════════════════════════
@@ -418,7 +464,7 @@ CONTENIDO[0] = `
   <div class="color-box cat">
     <div class="color-dot"></div>
     <div>
-      <strong>① Ámbar — Catión (metal)</strong>
+      <strong><span class="mayer-step-num">①</span> Ámbar — <span class="mayer-hl">Catión (metal)</span></strong>
       <span>Átomo que pierde electrones y queda con carga positiva. Va <em>primero</em> en fórmula y nombre. Ejemplos: Na⁺, Ca²⁺, Fe³⁺, Cu²⁺, Al³⁺</span>
     </div>
   </div>
@@ -426,7 +472,7 @@ CONTENIDO[0] = `
   <div class="color-box an">
     <div class="color-dot"></div>
     <div>
-      <strong>② Azul — Anión simple</strong>
+      <strong><span class="mayer-step-num">②</span> Azul — <span class="mayer-hl">Anión simple</span></strong>
       <span>No metal que gana electrones. En el nombre recibe la terminación <em>-uro</em>. Forma sales binarias. Ejemplos: Cl⁻ (cloru<strong>ro</strong>), S²⁻ (sulfur<strong>o</strong>), O²⁻ (óxid<strong>o</strong>)</span>
     </div>
   </div>
@@ -434,7 +480,7 @@ CONTENIDO[0] = `
   <div class="color-box oh">
     <div class="color-dot"></div>
     <div>
-      <strong>③ Violeta — Grupo OH⁻</strong>
+      <strong><span class="mayer-step-num">③</span> Violeta — <span class="mayer-hl">Grupo OH⁻</span></strong>
       <span>El grupo hidroxilo es un anión poliatómico especial. Siempre se llama <em>hidróxido</em>. Forma bases. Ejemplos: NaOH → hidróxido de sodio, Ca(OH)₂ → hidróxido de calcio</span>
     </div>
   </div>
@@ -442,7 +488,7 @@ CONTENIDO[0] = `
   <div class="color-box ox">
     <div class="color-dot"></div>
     <div>
-      <strong>④ Teal — Oxoanión</strong>
+      <strong><span class="mayer-step-num">④</span> Teal — <span class="mayer-hl">Oxoanión</span></strong>
       <span>Anión que contiene oxígeno. Tiene nombre propio que hay que memorizar. Forma sales oxigenadas. Ejemplos: SO₄²⁻ (sulfato), NO₃⁻ (nitrato), PO₄³⁻ (fosfato)</span>
     </div>
   </div>
@@ -499,9 +545,12 @@ CONTENIDO[0] = `
   </div>
 </div>
 
+<details class="seg-details">
+<summary><span class="seg-arrow">▶</span> Continuar — Parte 2: Fórmulas iónicas y valencias</summary>
+
 <div class="sect">
   <h2>Compuestos iónicos: lectura de fórmulas</h2>
-  <p>Un compuesto iónico está formado por un catión y un anión. Los subíndices se ajustan para que las cargas se cancelen:</p>
+  <p>Un compuesto iónico está formado por un <span class="mayer-hl">catión</span> y un <span class="mayer-hl">anión</span>. Los subíndices se ajustan para que las cargas se cancelen:</p>
 
   <div class="ejemplo">
     <strong>NaCl</strong> = Na⁺ (×1) + Cl⁻ (×1) · cargas: +1 – 1 = 0 ✓<br>
@@ -525,6 +574,8 @@ CONTENIDO[0] = `
     <tr><td>Cr</td><td><code>+2</code> · <code>+3</code> · <code>+6</code></td><td><span class="tag tag-cat">Variable</span></td></tr>
   </table>
 </div>
+
+</details>
 
 <div class="sect mayer-quiz" id="quiz-0">
   <h2>🎯 Practica — Sección 1</h2>
@@ -550,23 +601,23 @@ CONTENIDO[1] = `
   <h3>Reglas de asignación</h3>
   <div class="step-row">
     <div class="step-n cat">1</div>
-    <div class="step-body cat"><strong>Elemento puro:</strong><p>EO = 0. Ej: Fe(s), O₂(g), Na(s) → todos tienen EO = 0</p></div>
+    <div class="step-body cat"><strong>Elemento puro:</strong><p><span class="mayer-hl">EO = 0</span>. Ej: Fe(s), O₂(g), Na(s) → todos tienen EO = 0</p></div>
   </div>
   <div class="step-row">
     <div class="step-n an">2</div>
-    <div class="step-body an"><strong>Ión monoatómico:</strong><p>EO = carga del ión. Ej: Na⁺ → EO = +1 · Fe³⁺ → EO = +3</p></div>
+    <div class="step-body an"><strong>Ión monoatómico:</strong><p><span class="mayer-hl">EO = carga del ión</span>. Ej: <span class="mayer-hl">Na⁺</span> → EO = +1 · Fe³⁺ → EO = +3</p></div>
   </div>
   <div class="step-row">
     <div class="step-n oh">3</div>
-    <div class="step-body oh"><strong>Oxígeno:</strong><p>EO = −2 en casi todos los compuestos. Excepción: en O₂ es 0; en peróxidos (H₂O₂) es −1</p></div>
+    <div class="step-body oh"><strong>Oxígeno:</strong><p><span class="mayer-hl">O siempre −2</span> en casi todos los compuestos. Excepción: en O₂ es 0; en peróxidos (H₂O₂) es −1</p></div>
   </div>
   <div class="step-row">
     <div class="step-n ox">4</div>
-    <div class="step-body ox"><strong>Hidrógeno:</strong><p>EO = +1 cuando va con no metales. EO = −1 en hidruros metálicos (NaH, CaH₂)</p></div>
+    <div class="step-body ox"><strong>Hidrógeno:</strong><p><span class="mayer-hl">H = +1</span> con no metales. <span class="mayer-hl">H = −1</span> en hidruros metálicos (NaH, CaH₂)</p></div>
   </div>
   <div class="step-row">
     <div class="step-n cat">5</div>
-    <div class="step-body cat"><strong>Regla de la suma:</strong><p>En molécula neutra: suma de todos los EO = 0. En ión poliátomico: suma = carga del ión</p></div>
+    <div class="step-body cat"><strong>Regla de la suma:</strong><p>En molécula neutra: <span class="mayer-hl">∑ EO = 0</span>. En ión poliatómico: suma = carga del ión</p></div>
   </div>
 
   <div class="color-box oh" style="margin-top:18px">
@@ -635,6 +686,9 @@ CONTENIDO[1] = `
   </div>
 </div>
 
+<details class="seg-details">
+<summary><span class="seg-arrow">▶</span> Continuar — Parte 2: Tabla periódica y valencias</summary>
+
 <div class="sect">
   <h2>Conexión: Tabla Periódica → Valencias</h2>
   <p>La tabla periódica no es solo una lista — su <strong>posición</strong> predice cuántas valencias tiene cada metal. Saber esto te permite predecir, no memorizar.</p>
@@ -677,6 +731,8 @@ CONTENIDO[1] = `
     <p>No necesitas memorizar una lista infinita. Aplica la regla: si está en bloque s → valencia fija = número de columna. Si está en bloque d → variable, calcula el EO con la fórmula. El cálculo siempre supera la memoria.</p>
   </div>
 </div>
+
+</details>
 
 <div class="sect mayer-quiz" id="quiz-1">
   <h2>🎯 Practica — Sección 2</h2>
@@ -785,6 +841,9 @@ CONTENIDO[2] = `
     <tr><td><code>MnO₄⁻</code></td><td>permanganato</td><td>HMnO₄ ácido permangánico</td></tr>
   </table>
 </div>
+
+<details class="seg-details">
+<summary><span class="seg-arrow">▶</span> Continuar — Parte 2: Compuestos inorgánicos en Colombia</summary>
 
 <div class="sect">
   <h2>Compuestos inorgánicos en Colombia</h2>
@@ -1311,6 +1370,28 @@ CONTENIDO[7] = `
 `;
 
 // ══════════════════════════════════════════
+//  PRETRAIN — P5 Pre-training boxes
+// ══════════════════════════════════════════
+const PRETRAIN = [
+  // 0 — Conceptos Base
+  [{term:'Ión', def:'átomo o grupo de átomos con carga eléctrica (+ o −)'},{term:'Catión', def:'ion con carga positiva: el metal perdió electrones'},{term:'Anión', def:'ion con carga negativa: el no metal ganó electrones'},{term:'Oxoanión', def:'anión que contiene oxígeno: sulfato, nitrato, fosfato…'}],
+  // 1 — Estados de Oxidación
+  [{term:'Estado de oxidación (EO)', def:'número que indica cuántos electrones ganó o perdió un átomo en un compuesto'},{term:'Electroneutralidad', def:'la suma de todos los EO en un compuesto neutro siempre es igual a 0'},{term:'EO positivo (+)', def:'el átomo cedió electrones (actúa como catión)'},{term:'EO negativo (−)', def:'el átomo ganó electrones (actúa como anión)'}],
+  // 2 — Tipos de compuestos
+  [{term:'Compuesto binario', def:'formado por exactamente 2 elementos (ej: NaCl, Fe₂O₃)'},{term:'Compuesto ternario', def:'formado por 3 elementos (ej: NaOH, Na₂SO₄)'},{term:'Anhídrido', def:'no metal + O₂, precursor del ácido oxácido al reaccionar con agua'},{term:'Sal', def:'catión metálico + anión no metálico (binaria) o + oxoanión (oxigenada)'}],
+  // 3 — Sistemática
+  [{term:'Prefijo mono-', def:'1 átomo de ese elemento (a veces omitido)'},{term:'Prefijo di-', def:'2 átomos del elemento'},{term:'Prefijo tri-', def:'3 átomos del elemento'},{term:'Prefijo tetra-', def:'4 átomos del elemento'}],
+  // 4 — Stock/Tradicional
+  [{term:'Nomenclatura Stock', def:'usa numeral romano entre paréntesis: hierro(III) = Fe con EO +3'},{term:'Sufijo -oso', def:'EO menor del metal con valencia variable (ej: ferroso = Fe²⁺)'},{term:'Sufijo -ico', def:'EO mayor del metal con valencia variable (ej: férrico = Fe³⁺)'},{term:'Valencia fija', def:'el metal solo tiene un EO posible — no necesita sufijo ni romano'}],
+  // 5 — Excepciones
+  [{term:'Valencia variable', def:'el metal puede tener 2 o más EO (ej: Fe: +2 y +3, Mn: +2,+3,+4,+6,+7)'},{term:'Catión diatómico', def:'ion formado por dos átomos del mismo metal unidos: Hg₂²⁺'},{term:'Hidruro metálico', def:'metal + H donde H tiene EO = −1 (sólido iónico)'},{term:'Ácido hídrico', def:'no metal + H en solución acuosa: HCl(aq) = ácido clorhídrico'}],
+  // 6 — Reactividad
+  [{term:'Óxido básico', def:'metal + O → reacciona con agua para dar una base (pH > 7)'},{term:'Anhídrido (óxido ácido)', def:'no metal + O → reacciona con agua para dar un ácido (pH < 7)'},{term:'Neutralización', def:'ácido + base → sal + agua (pH ≈ 7)'},{term:'DBA 3 MEN', def:'estándar curricular colombiano: comprender cadenas de reactividad inorgánica'}],
+  // 7 — Sales ácidas
+  [{term:'Ácido poliprótico', def:'ácido con más de un H ionizable: H₂SO₄, H₃PO₄, H₂CO₃'},{term:'Sal ácida', def:'sal formada por neutralización parcial de un ácido poliprótico'},{term:'Prefijo bi-', def:'indica que queda 1 H del ácido diprótico: bicarbonato = HCO₃⁻'},{term:'hidrogeno-', def:'prefijo IUPAC para indicar H retenido en el anión: hidrogenocarbonato'}],
+];
+
+// ══════════════════════════════════════════
 //  NAVEGACIÓN
 // ══════════════════════════════════════════
 let seccionActual = 0;
@@ -1320,19 +1401,29 @@ function goToSection(idx){
   seccionActual = idx;
   const d = SEC_DASH[idx];
   const introEsc = d.intro.replace(/'/g,'&#39;').replace(/"/g,'&quot;');
-  const dashHTML = `<div style="background:${d.color};border-radius:12px;padding:16px 20px;margin-bottom:20px;color:#fff">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div>
+  // P12 — guide icon (tutor presence)
+  // P8 — dash-intro class for redundancy dimming
+  const dashHTML = `<div style="position:relative;background:${d.color};border-radius:12px;padding:16px 20px;margin-bottom:20px;color:#fff">
+  <span class="section-guide" title="Tu guía de química">🧪👩‍🔬</span>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:12px">
+    <div style="flex:1">
       <div style="font-size:1.05rem;font-weight:800">${SECCIONES[idx].icon} ${SECCIONES[idx].titulo}</div>
       <div style="font-size:.8rem;opacity:.85;margin-top:3px">${d.summary}</div>
     </div>
-    <button onclick="speak('${introEsc}')" style="flex-shrink:0;padding:8px 14px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:8px;color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;margin-left:12px">🔊 Escuchar</button>
+    <button onclick="speak('${introEsc}')" style="flex-shrink:0;padding:8px 14px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:8px;color:#fff;font-size:.8rem;font-weight:700;cursor:pointer">🔊 Escuchar</button>
   </div>
+  <p class="dash-intro" style="font-size:.84rem;opacity:.92;line-height:1.6;margin-bottom:10px">${d.intro}</p>
   <div style="display:flex;flex-wrap:wrap;gap:6px">
     ${d.chips.map(c=>`<span style="background:rgba(255,255,255,.18);padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:700">${c}</span>`).join('')}
   </div>
 </div>`;
-  document.getElementById('seccion-content').innerHTML = dashHTML + CONTENIDO[idx];
+  // P5 — pre-training box
+  const pretrainHTML = PRETRAIN[idx] ? `
+  <div class="pretrain-box">
+    <h4>📌 Antes de comenzar — conceptos clave</h4>
+    ${PRETRAIN[idx].map(p=>`<div class="pretrain-row"><span class="pretrain-term">${p.term}</span><span style="color:var(--dimmer)">→</span><span>${p.def}</span></div>`).join('')}
+  </div>` : '';
+  document.getElementById('seccion-content').innerHTML = dashHTML + pretrainHTML + CONTENIDO[idx];
   document.getElementById('seccion-titulo').textContent = SECCIONES[idx].icon + ' ' + SECCIONES[idx].titulo;
   document.getElementById('seccion-numero').textContent = 'Sección ' + (idx+1) + ' de ' + SECCIONES.length;
   document.getElementById('progress-text').textContent = (idx+1) + ' / ' + SECCIONES.length;
