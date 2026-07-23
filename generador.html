@@ -154,6 +154,13 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
       <input type="number" id="inp-count" class="form-input" min="3" max="50" value="10" placeholder="3 a 50">
     </div>
 
+    <div class="form-group" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px 14px;margin-top:4px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.85rem;color:rgba(255,255,255,.85)">
+        <input type="checkbox" id="chk-avanzados" style="width:16px;height:16px;accent-color:#fcd34d">
+        <span><strong>Incluir compuestos avanzados</strong> <span style="opacity:.6">(ácidos de halógenos, trans. metal, poli-ácidos — fuera del DBA 3 básico)</span></span>
+      </label>
+    </div>
+
     <button class="btn-gen" onclick="generateExercises()">Generar Ejercicios</button>
   </div>
 </div>
@@ -276,6 +283,10 @@ const GROUP_LABELS = {
 // Returns {name, system, label}
 function pickName(c, sistema){
   const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'IUPAC'};
+  // Oxysalts: curriculum only requires traditional nomenclature
+  if(c.group === 'sal-ox'){
+    return {name: c.trad[0] || '—', system: 'trad', label: 'Tradicional'};
+  }
   let candidates = [];
   if(sistema === 'all'){
     if(c.trad && c.trad[0]) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
@@ -286,7 +297,6 @@ function pickName(c, sistema){
   } else {
     const arr = c[sistema] || [];
     if(arr[0]) return {name:arr[0], system:sistema, label:SYS_LABEL[sistema]};
-    // Fallback to trad if this system not available for compound
     return {name:c.trad[0], system:'trad', label:'Tradicional'};
   }
 }
@@ -309,6 +319,12 @@ function generateExercises(){
   // Filter by group
   if(group !== 'all'){
     compounds = compounds.filter(c => c.group === group);
+  }
+
+  // Exclude hard-level ac-ox compounds (poly/pyro acids) unless "avanzados" checked
+  const includeAdvanced = document.getElementById('chk-avanzados')?.checked;
+  if(!includeAdvanced){
+    compounds = compounds.filter(c => !(c.group === 'ac-ox' && c.level === 'hard'));
   }
 
   if(compounds.length === 0){

@@ -398,6 +398,7 @@ function startGame(group){
     let t=types[i];
     if(t==='write-stock'&&!(q.stock&&q.stock[0])) t='write-any';
     if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
+    if((t==='write-stock'||t==='write-sist')&&q.group==='sal-ox') t='write-any';
     if(t==='ox-state'&&!extractEO(q)) t='mc';
     if(t==='drag'&&!buildDrag(q,pool)) t='mc';
     if(t==='invert'&&pool.length<4) t='mc';
@@ -497,7 +498,13 @@ function checkMC(el){
 
 // ── Write ──
 function renderWrite(q){
-  const prompts={'write-any':'Escribe el nombre de este compuesto (cualquier sistema de nomenclatura).','write-stock':'Escribe el nombre en nomenclatura <strong>Stock</strong>.','write-sist':'Escribe el nombre en nomenclatura <strong>Sistemática</strong>.'};
+  const prompts={
+    'write-any': q.group==='sal-ox'
+      ? 'Escribe el nombre de esta sal oxigenada usando <strong>nomenclatura tradicional</strong> (sufijo <em>-ato/-ito</em>). Ej.: <em>sulfato de sodio</em>.'
+      : 'Escribe el nombre de este compuesto (cualquier sistema de nomenclatura).',
+    'write-stock':'Escribe el nombre en nomenclatura <strong>Stock</strong>.',
+    'write-sist':'Escribe el nombre en nomenclatura <strong>Sistemática</strong>.'
+  };
   document.getElementById('q-prompt').innerHTML=prompts[q.qtype];
   document.getElementById('area-write').style.display='';
   const inp=document.getElementById('q-input');
@@ -707,6 +714,8 @@ function isCorrect(input,q,mode){
   const ni=norm(input);
   if(mode==='stock') return (q.stock||[]).some(v=>norm(v)===ni);
   if(mode==='sist') return (q.sist||[]).some(v=>norm(v)===ni);
+  // Oxysalts: only accept traditional nomenclature per curriculum
+  if(q.group==='sal-ox') return (q.trad||[]).some(v=>norm(v)===ni);
   return [...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].some(v=>norm(v)===ni);
 }
 
@@ -716,9 +725,13 @@ function showFeedback(type,msg,q,noAlts=false){
   if(q&&!noAlts){
     const alts=[];
     if(q.trad&&q.trad[0]) alts.push(`Tradicional: <em>${q.trad[0]}</em>`);
-    if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
-    if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
+    // Oxysalts: only show traditional nomenclature in feedback
+    if(q.group!=='sal-ox'){
+      if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
+      if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
+    }
     if(alts.length) html+=`<div class="fb-alts">${alts.join(' · ')}</div>`;
+    if(q.group==='sal-ox') html+=`<div class="fb-hint">📌 Las oxisales se nombran solo con nomenclatura <strong>tradicional</strong>.</div>`;
     if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
   }
   const fb=document.getElementById('feedback');
