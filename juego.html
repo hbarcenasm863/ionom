@@ -292,7 +292,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <div class="portada-inner">
     <div class="portada-badge">⚛ Nomenclatura Inorgánica</div>
     <div class="portada-title">Ion<em>Nom</em></div>
-    <div class="portada-sub">10 preguntas variadas · 20 puntos posibles.</div>
+    <div class="portada-sub">20 preguntas variadas · 40 puntos posibles.</div>
 
     <!-- Mode selector -->
     <div class="mode-tabs">
@@ -325,6 +325,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
     <button onclick="openHowToPlay()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:#fcd34d;border-radius:100px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:18px;transition:all .2s" onmouseover="this.style.background='rgba(252,211,77,.25)'" onmouseout="this.style.background='rgba(252,211,77,.15)'">🔊 ¿Cómo jugar?</button>
 
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
+      <label for="difficulty-sel" style="font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600">Dificultad:</label>
+      <select id="difficulty-sel" style="padding:6px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:.8rem;cursor:pointer">
+        <option value="easy">🟢 Fácil (solo compuestos básicos)</option>
+        <option value="normal" selected>🟡 Normal (básico + intermedio)</option>
+        <option value="all">🔴 Completo (todos los compuestos)</option>
+      </select>
+    </div>
     <div class="group-grid" id="group-grid">
       <button class="group-btn full" onclick="pickGroup('all')">
         <span class="gb-icon">🔬</span>
@@ -401,7 +409,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.1)">
         <span style="font-size:1.3rem;flex-shrink:0">②</span>
-        <div><div style="font-size:.82rem;font-weight:700;margin-bottom:2px">Responde 10 preguntas variadas</div><div style="font-size:.74rem;color:rgba(255,255,255,.65)">Hay opción múltiple, escritura libre, equilibrio iónico, estados de oxidación y más.</div></div>
+        <div><div style="font-size:.82rem;font-weight:700;margin-bottom:2px">Responde 20 preguntas variadas</div><div style="font-size:.74rem;color:rgba(255,255,255,.65)">Hay opción múltiple, escritura libre, equilibrio iónico, estados de oxidación, cadenas de reactividad y más.</div></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.1)">
         <span style="font-size:1.3rem;flex-shrink:0">③</span>
@@ -904,11 +912,19 @@ const TYPE_COLORS = {
   lanthanide:'#ec4899', actinide:'#78716c'
 };
 
+function getDifficultyFilter(){
+  const sel=document.getElementById('difficulty-sel');
+  const v=sel?sel.value:'all';
+  if(v==='easy') return c=>c.level==='easy';
+  if(v==='normal') return c=>c.level==='easy'||c.level==='medium';
+  return ()=>true;
+}
 function getPool(group){
   const all=(typeof BANCO!=='undefined')?BANCO:MINI;
-  if(group==='ox-anh') return all.filter(c=>c.group==='ox-bas'||c.group==='anhid');
-  if(group!=='all') return all.filter(c=>c.group===group);
-  return all;
+  const diff=getDifficultyFilter();
+  if(group==='ox-anh') return all.filter(c=>(c.group==='ox-bas'||c.group==='anhid')&&diff(c));
+  if(group!=='all') return all.filter(c=>c.group===group&&diff(c));
+  return all.filter(diff);
 }
 
 // ── EO extraction from Stock name ──
@@ -982,11 +998,16 @@ const REACT_CHAINS=[
 
 // ── Element-question helpers ──
 const NOBLE_BY_PERIOD={1:'',2:'[He] ',3:'[Ne] ',4:'[Ar] ',5:'[Kr] ',6:'[Xe] ',7:'[Rn] '};
+const _EL_VALENCE={
+  21:2,22:2,23:2,24:1,25:2,26:2,27:2,28:2,29:1,30:2, // Sc-Zn (Cr,Cu exception)
+  39:2,40:2,41:1,42:1,43:2,44:2,45:2,46:0,47:1,48:2, // Y-Cd (Nb,Mo,Pd,Ag exception)
+  57:2,72:2,73:2,74:2,75:2,76:2,77:2,78:1,79:1,80:2  // La,Hf-Hg
+};
 function elValenceCount(z){
   const el=ELEMENTS[z];const g=el.group;
   if(g>=1&&g<=2) return g;
   if(g>=13&&g<=18) return g-10;
-  return 2; // transition metals (groups 3-12)
+  return _EL_VALENCE[z]||2; // transition metals
 }
 function elAbbrevConfig(z){
   const el=ELEMENTS[z];
@@ -1184,7 +1205,15 @@ function startGame(group){
   const pool=getPool(group);
   if(!pool.length){alert('No hay compuestos para este grupo.');return;}
   const compounds=buildQuestionQueue(pool,20);
-  ST.questions=assignTypes(compounds,pool,group);
+  let questions=assignTypes(compounds,pool,group);
+  // For 'all' group, replace ~3 questions with react-chain questions
+  if(group==='all'){
+    const chainCount=3;
+    const chainQs=Array.from({length:chainCount},()=>makeReactChain());
+    const replaceAt=[4,10,16].filter(i=>i<questions.length);
+    replaceAt.forEach((i,j)=>{if(chainQs[j])questions[i]=chainQs[j];});
+  }
+  ST.questions=questions;
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
   showScreen('s-game');
   loadQuestion();
@@ -1572,6 +1601,7 @@ function checkOx(el,chosen,correct){
 
 // ── Ox-assign (asignar estados de oxidación sobre la fórmula) ──
 function parseFormula(f){
+  f=(f||'').replace(/\((aq|g|l|s)\)$/i,'').trim();
   const SUBS={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
   let s=f.replace(/[₀-₉]/g,c=>SUBS[c]||c);
   const result={};
@@ -1780,11 +1810,29 @@ const ANION_MAP={
   'sal-bin':{sym:'Cl⁻',charge:-1},
   'ac-hid':{sym:'X⁻',charge:-1},
   'sal-ox':{sym:'oxoanión',charge:null},
+  'sal-ac':{sym:'anión ácido',charge:null},
 };
+function extractAnionFromIons(q){
+  if(!q.ions) return null;
+  const an=q.ions.find(i=>i.t==='an');
+  if(!an||!an.l) return null;
+  const label=an.l;
+  const chMatch=label.match(/([²³⁴]?)([⁻⁺])$/);
+  if(!chMatch) return null;
+  const numMap={'':'1','²':'2','³':'3','⁴':'4'};
+  const n=parseInt(numMap[chMatch[1]]||'1');
+  const sign=chMatch[2]==='⁻'?-1:1;
+  return {sym:label,charge:n*sign};
+}
 function extractBalance(q){
   const info=extractEO(q);
   if(!info) return null; // need variable-valence metal
-  const an=ANION_MAP[q.group];
+  let an=ANION_MAP[q.group];
+  if(an&&an.charge===null){
+    const fromIons=extractAnionFromIons(q);
+    if(!fromIons) return null;
+    an=fromIons;
+  }
   if(!an||an.charge===null) return null;
   const count=info.eo/Math.abs(an.charge);
   if(!Number.isInteger(count)||count<1||count>6) return null;
@@ -2030,10 +2078,10 @@ function checkReactChainWrite(){
       const pts=ST.attempts===1?2:ST.attempts===2?1:0;
       ST.score+=pts;ST.correct++;
       showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
-      scheduleNext(1800);
+      scheduleNext(0);
     } else {
       inp.style.borderColor='#dc2626';inp.style.background='#fee2e2';inp.style.color='#991b1b';
-      if(ST.attempts>=2){
+      if(ST.attempts>=3){
         document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
         showFeedback('err',`✗ La fórmula correcta es: ${correct}`,q);
         scheduleNext(2500);
@@ -2161,13 +2209,11 @@ function isCorrect(input,q,mode){
   const allNames=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
   if(mode==='stock'){
     const stockNames=(q.stock||[]).filter(Boolean);
-    if(stockNames.length) return stockNames.some(v=>norm(v)===ni);
-    return allNames.some(v=>norm(v)===ni); // fallback si no hay nombre Stock
+    return stockNames.some(v=>norm(v)===ni);
   }
   if(mode==='sist'){
     const sistNames=(q.sist||[]).filter(Boolean);
-    if(sistNames.length) return sistNames.some(v=>norm(v)===ni);
-    return allNames.some(v=>norm(v)===ni); // fallback si no hay nombre sistemático
+    return sistNames.some(v=>norm(v)===ni);
   }
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
   if(allNames.some(v=>norm(v)===ni)) return true;
@@ -2209,14 +2255,18 @@ function updateStats(){
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
 }
 
-function scheduleNext(_ms){
+function scheduleNext(ms){
   stopTimer();
-  const fb=document.getElementById('feedback');
-  const btn=document.createElement('button');
-  btn.className='btn-next';
-  btn.textContent='Siguiente pregunta →';
-  btn.onclick=()=>{ST.idx++;loadQuestion();};
-  fb.appendChild(btn);
+  if(ms>0){
+    setTimeout(()=>{ST.idx++;loadQuestion();},ms);
+  } else {
+    const fb=document.getElementById('feedback');
+    const btn=document.createElement('button');
+    btn.className='btn-next';
+    btn.textContent='Siguiente pregunta →';
+    btn.onclick=()=>{ST.idx++;loadQuestion();};
+    fb.appendChild(btn);
+  }
 }
 
 // ── End ──

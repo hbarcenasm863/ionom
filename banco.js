@@ -224,10 +224,10 @@ const BANCO = [
   {
     formula: 'MnO₂',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido mangánico'],
+    trad: [],
     stock: ['óxido de manganeso (IV)'],
     sist: ['dióxido de manganeso'],
-    hint: 'Mn con EO=+4 entre +2 y +7. En tradicional hay ambigüedad; se acepta -ico para EO central.'
+    hint: 'Mn con EO=+4 (tiene +2, +3, +4, +7). Con 4 estados de oxidación el sistema -oso/-ico no aplica sin ambigüedad. Usa siempre Stock o Sistemática.'
   },
   {
     formula: 'Cr₂O₃',
@@ -247,11 +247,11 @@ const BANCO = [
   },
   {
     formula: 'V₂O₅',
-    group: 'ox-bas', level: 'hard',
-    trad: ['óxido vanádico'],
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido vanádico'],
     stock: ['óxido de vanadio (V)'],
     sist: ['pentaóxido de divanadio'],
-    hint: 'V con EO=+5 (mayor). En nomenclatura clásica → -ico → vanádico. 2(+5)+5(−2)=0.'
+    hint: 'V₂O₅ es un óxido ácido (anhídrido). Es el precursor del ácido vanádico H₃VO₄. EO del V = +5.'
   },
   {
     formula: 'Bi₂O₃',
@@ -1595,16 +1595,6 @@ const BANCO = [
     hint: 'CO₃²⁻ = carbonato. Ca²⁺ → calcio. CaCO₃ es la piedra caliza/calcita.'
   },
   {
-    formula: 'NaHCO₃',
-    group: 'sal-ac', level: 'easy',
-    trad: ['bicarbonato de sodio'],
-    stock: ['hidrogenocarbonato de sodio'],
-    sist: ['hidrogenocarbonato de sodio'],
-    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'HCO₃⁻'}],
-    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
-    hint: 'HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Na⁺ → sodio. El H₂CO₃ cedió 1 de 2 H⁺.'
-  },
-  {
     formula: 'K₃PO₄',
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de potasio'],
@@ -2187,11 +2177,11 @@ const BANCO = [
   },
   {
     formula: 'WO₃',
-    group: 'ox-bas', level: 'hard',
-    trad: ['óxido wolfrámico'],
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido túngstico'],
     stock: ['óxido de wolframio (VI)'],
     sist: ['trióxido de wolframio'],
-    hint: 'W con EO=+6 (mayor) → -ico → wolfrámico. W⁶⁺ + 3O²⁻ → WO₃.'
+    hint: 'WO₃ es un óxido ácido (anhídrido). Es el precursor del ácido túngstico H₂WO₄. EO del W = +6.'
   },
   {
     formula: 'MoO₂',
@@ -2203,11 +2193,11 @@ const BANCO = [
   },
   {
     formula: 'MoO₃',
-    group: 'ox-bas', level: 'hard',
-    trad: ['óxido molíbdico'],
+    group: 'anhid', level: 'hard',
+    trad: ['anhídrido molíbdico'],
     stock: ['óxido de molibdeno (VI)'],
     sist: ['trióxido de molibdeno'],
-    hint: 'Mo con EO=+6 (mayor) → -ico → molíbdico. Mo⁶⁺ + 3O²⁻ → MoO₃.'
+    hint: 'MoO₃ es un óxido ácido (anhídrido). Es el precursor del ácido molíbdico H₂MoO₄. EO del Mo = +6.'
   },
   {
     formula: 'TiO',
@@ -4468,7 +4458,119 @@ const BANCO = [
     hint: 'H₂CrO₄ (diprót.) cedió 1 de 2 H⁺. Anión HCrO₄⁻ = hidrogenocromato (Stock). Na⁺ sin romano (EO fijo). Al acidificar HCrO₄⁻ se dimeriza a Cr₂O₇²⁻ (dicromato).'
   },
 
+  // ── Sal-ac batch 2: más bicarbonatos, bisulfatos, fosfatos ácidos ──
+  {
+    formula: 'LiHCO₃',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bicarbonato de litio'],
+    stock: ['hidrogenocarbonato de litio'],
+    sist: ['hidrogenocarbonato de litio'],
+    ions: [{t:'cat',l:'Li⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
+    hint: 'HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Li⁺ → litio. H₂CO₃ cedió 1 de 2 H⁺.'
+  },
+  {
+    formula: 'NH₄HCO₃',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bicarbonato de amonio'],
+    stock: ['hidrogenocarbonato de amonio'],
+    sist: ['hidrogenocarbonato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ = catión amonio. HCO₃⁻ = bicarbonato. Presente en polvos de hornear.'
+  },
+  {
+    formula: 'LiHSO₄',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfato de litio'],
+    stock: ['hidrogenosulfato de litio'],
+    sist: ['hidrogenosulfato de litio'],
+    ions: [{t:'cat',l:'Li⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
+    hint: 'HSO₄⁻ = bisulfato (trad.) / hidrogenosulfato (IUPAC). H₂SO₄ cedió 1 de 2 H⁺.'
+  },
+  {
+    formula: 'NH₄HSO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['bisulfato de amonio'],
+    stock: ['hidrogenosulfato de amonio'],
+    sist: ['hidrogenosulfato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ = catión amonio. HSO₄⁻ = bisulfato / hidrogenosulfato. H₂SO₄ parcialmente neutralizado.'
+  },
+  {
+    formula: 'Fe(HSO₄)₂',
+    group: 'sal-ac', level: 'hard',
+    trad: ['bisulfato ferroso'],
+    stock: ['hidrogenosulfato de hierro (II)'],
+    sist: ['bis(hidrogenosulfato) de hierro'],
+    ions: [{t:'cat',l:'Fe²⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'ferroso',t:'cat'}],
+    hint: 'Fe²⁺ (ferroso). 2 aniones HSO₄⁻ para balancear. Fe²⁺ + 2 HSO₄⁻ → Fe(HSO₄)₂.'
+  },
+  {
+    formula: 'Fe(HSO₄)₃',
+    group: 'sal-ac', level: 'hard',
+    trad: ['bisulfato férrico'],
+    stock: ['hidrogenosulfato de hierro (III)'],
+    sist: ['tris(hidrogenosulfato) de hierro'],
+    ions: [{t:'cat',l:'Fe³⁺'},{t:'an',l:'HSO₄⁻'}],
+    tokens: [{w:'bisulfato',t:'ox'},{w:'férrico',t:'cat'}],
+    hint: 'Fe³⁺ (férrico). 3 aniones HSO₄⁻ para balancear. Fe³⁺ + 3 HSO₄⁻ → Fe(HSO₄)₃.'
+  },
+  {
+    formula: 'LiH₂PO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['fosfato ácido de litio', 'dihidrogenofosfato de litio'],
+    stock: ['dihidrogenofosfato de litio'],
+    sist: ['dihidrogenofosfato de litio'],
+    ions: [{t:'cat',l:'Li⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
+    hint: 'H₃PO₄ cedió 1 de 3 H⁺. Anión H₂PO₄⁻ = dihidrogenofosfato. Li⁺ → litio.'
+  },
+  {
+    formula: 'Li₂HPO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['hidrogenofosfato de litio'],
+    stock: ['hidrogenofosfato de litio'],
+    sist: ['hidrogenofosfato de dilítio'],
+    ions: [{t:'cat',l:'Li⁺'},{t:'an',l:'HPO₄²⁻'}],
+    tokens: [{w:'hidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'litio',t:'cat'}],
+    hint: 'H₃PO₄ cedió 2 de 3 H⁺. Anión HPO₄²⁻ = hidrogenofosfato. 2Li⁺ para balancear carga −2.'
+  },
+  {
+    formula: '(NH₄)₂HPO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['hidrogenofosfato de amonio'],
+    stock: ['hidrogenofosfato de amonio'],
+    sist: ['hidrogenofosfato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'HPO₄²⁻'}],
+    tokens: [{w:'hidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ = amonio. HPO₄²⁻ = hidrogenofosfato. Se necesitan 2 NH₄⁺ para balancear la carga −2.'
+  },
+  {
+    formula: 'NH₄H₂PO₄',
+    group: 'sal-ac', level: 'medium',
+    trad: ['dihidrogenofosfato de amonio'],
+    stock: ['dihidrogenofosfato de amonio'],
+    sist: ['dihidrogenofosfato de amonio'],
+    ions: [{t:'cat',l:'NH₄⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'dihidrogenofosfato',t:'ox'},{w:'de',t:'neu'},{w:'amonio',t:'cat'}],
+    hint: 'NH₄⁺ = amonio. H₂PO₄⁻ = dihidrogenofosfato. H₃PO₄ cedió solo 1 H⁺.'
+  },
+  {
+    formula: 'KHSO₃',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bisulfito de potasio'],
+    stock: ['hidrogenosulfito de potasio'],
+    sist: ['hidrogenosulfito de potasio'],
+    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'HSO₃⁻'}],
+    tokens: [{w:'bisulfito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
+    hint: 'HSO₃⁻ = bisulfito (trad.) / hidrogenosulfito (IUPAC). H₂SO₃ cedió 1 de 2 H⁺. K⁺ → potasio.'
+  },
+
 ];
 
 // Total: batch 4 adds 12 ac-hid, 19 hidru, 3 anhid, 3 base, 2 ac-ox
-// sal-ac section: 20 entries (bicarbonatos, bisulfatos, bisulfitos, fosfatos ácidos, cromato ácido)
+// sal-ac section: 31 entries (bicarbonatos, bisulfatos, bisulfitos, fosfatos ácidos, cromato ácido)
