@@ -929,10 +929,10 @@
                        font-family:'Cinzel',serif;font-size:0.65rem;">Uso</th>
           </tr>
           <tr><td style="padding:4px 6px;color:var(--parchment);"><strong>-oso</strong></td>
-              <td style="padding:4px 6px;text-align:center;color:var(--parch-dark);">menor (+2 de 2)</td></tr>
+              <td style="padding:4px 6px;text-align:center;color:var(--parch-dark);">menor (el más bajo del elemento) — Cu-oso=+1, Fe-oso=+2, Sn-oso=+2, Pb-oso=+2</td></tr>
           <tr style="background:rgba(212,175,55,0.04);">
               <td style="padding:4px 6px;color:var(--parchment);"><strong>-ico</strong></td>
-              <td style="padding:4px 6px;text-align:center;color:var(--parch-dark);">mayor (+3 de 2)</td></tr>
+              <td style="padding:4px 6px;text-align:center;color:var(--parch-dark);">mayor (el más alto del elemento) — Cu-ico=+2, Fe-ico=+3, Sn-ico=+4, Pb-ico=+4</td></tr>
           <tr><td style="padding:4px 6px;color:var(--parchment);"><em>hipo- -oso</em></td>
               <td style="padding:4px 6px;text-align:center;color:var(--parch-dark);">menor de 4</td></tr>
           <tr style="background:rgba(212,175,55,0.04);">
@@ -1176,7 +1176,7 @@
 
     <div class="card-action-box">
       <strong>👁️ Espionaje — Espía &nbsp;<span style="background:var(--error);color:white;border-radius:4px;padding:1px 6px;font-size:0.75rem;">×2</span></strong>
-      <p>Ves la mano completa de un oponente. El sistema toma automáticamente su <strong>primer anión</strong> para dártelo.</p>
+      <p>Ves la mano de un oponente y <strong>eliges</strong> qué anión robarle. Si el oponente no tiene aniones disponibles, la carta regresa a tu mano sin consumirse.</p>
     </div>
 
     <div class="card-action-box" style="background:rgba(139,90,60,0.08); border-left:3px solid var(--primary);">
@@ -1465,6 +1465,7 @@ const ANIONS = [
   {symbol:'Cl',  charge:-1, name:'Cloruro',   display:'Cl⁻',   color:'anion'},
   {symbol:'Br',  charge:-1, name:'Bromuro',   display:'Br⁻',   color:'anion'},
   {symbol:'NO₃', charge:-1, name:'Nitrato',   display:'NO₃⁻',  color:'anion'},
+  {symbol:'NO₂', charge:-1, name:'Nitrito',   display:'NO₂⁻',  color:'anion', copias:8},
   {symbol:'HSO₄',charge:-1, name:'Bisulfato', display:'HSO₄⁻', color:'anion'},
   // ANIONES -2 (45%) — 4 tipos → prioridad cationes +2
   {symbol:'O',   charge:-2, name:'Óxido',     display:'O²⁻',   color:'anion'},
@@ -1545,7 +1546,7 @@ const NOMENCLATURE = {
   'Fe(NO3)3': ['nitrato férrico',     'nitrato de hierro(iii)', 'tris(trioxonitrato) de hierro'],
   'Fe(NO3)2': ['nitrato ferroso',     'nitrato de hierro(ii)',  'bis(trioxonitrato) de hierro'],
   'Al(NO3)3': ['nitrato de aluminio', 'nitrato alumínico',  'tris(trioxonitrato) de aluminio'],
-  'AgNO3':    ['nitrato de plata',    'nitrato argéntico',  'trioxonitrato de plata'],
+  'AgNO3':    ['nitrato argéntico',   'nitrato de plata',   'trioxonitrato de plata'],
   
   // CARBONATOS
   'Na2CO3': ['carbonato de sodio','carbonato sódico','trioxocarbonato de disodio'],
@@ -1567,8 +1568,16 @@ const NOMENCLATURE = {
   'ZnSO4': ['sulfato de zinc','sulfato zíncico','tetraoxosulfato de zinc'],
   
   // NITRITOS (menores)
-  'NaNO2': ['nitrito de sodio','nitrito sódico','nitrito de sodio'],
-  'Ca(NO2)2': ['nitrito de calcio','nitrito cálcico','nitrito de calcio'],
+  'NaNO2':    ['nitrito de sodio',     'nitrito sódico',     'dioxonitrato de sodio'],
+  'KNO2':     ['nitrito de potasio',   'nitrito potásico',   'dioxonitrato de potasio'],
+  'LiNO2':    ['nitrito de litio',     'nitrito lítico',     'dioxonitrato de litio'],
+  'Ca(NO2)2': ['nitrito de calcio',    'nitrito cálcico',    'bis(dioxonitrato) de calcio'],
+  'Mg(NO2)2': ['nitrito de magnesio',  'nitrito magnésico',  'bis(dioxonitrato) de magnesio'],
+  'Ba(NO2)2': ['nitrito de bario',     'nitrito bárico',     'bis(dioxonitrato) de bario'],
+  'Fe(NO2)2': ['nitrito ferroso',      'nitrito de hierro(ii)',  'bis(dioxonitrato) de hierro'],
+  'Fe(NO2)3': ['nitrito férrico',      'nitrito de hierro(iii)', 'tris(dioxonitrato) de hierro'],
+  'Al(NO2)3': ['nitrito de aluminio',  'nitrito alumínico',  'tris(dioxonitrato) de aluminio'],
+  'AgNO2':    ['nitrito argéntico',    'nitrito de plata',   'dioxonitrato de plata'],
 
   // FOSFATOS (con PO4 3-)
   'Na3PO4': ['fosfato de sodio','fosfato trisódico','tetraoxofosfato de sodio'],
@@ -1597,7 +1606,7 @@ const NOMENCLATURE = {
   'SnO2':       ['óxido estánnico','óxido de estaño(iv)','dióxido de estaño'],
   // Hidróxidos
   'Sn(OH)2':    ['hidróxido estannoso','hidróxido de estaño(ii)','dihidróxido de estaño'],
-  'Sn(OH)4':    ['hidróxido estánnico','hidróxido de estaño(iv)','tetrahidróxido de estaño'],
+  'Sn(OH)4':    ['hidróxido estánnico','hidróxido de estaño(iv)','tetrahidróxido de estaño'], // ⚠ anfótero: en práctica no existe como hidróxido simple aislable
   // Halogenuros
   'SnCl2':      ['cloruro estannoso','cloruro de estaño(ii)','dicloruro de estaño'],
   'SnCl4':      ['cloruro estánnico','cloruro de estaño(iv)','tetracloruro de estaño'],
@@ -1623,7 +1632,7 @@ const NOMENCLATURE = {
   'PbO2':       ['óxido plúmbico','óxido de plomo(iv)','dióxido de plomo'],
   // Hidróxidos
   'Pb(OH)2':    ['hidróxido plumboso','hidróxido de plomo(ii)','dihidróxido de plomo'],
-  'Pb(OH)4':    ['hidróxido plúmbico','hidróxido de plomo(iv)','tetrahidróxido de plomo'],
+  'Pb(OH)4':    ['hidróxido plúmbico','hidróxido de plomo(iv)','tetrahidróxido de plomo'], // ⚠ anfótero: en práctica no existe como hidróxido simple aislable
   // Halogenuros
   'PbCl2':      ['cloruro plumboso','cloruro de plomo(ii)','dicloruro de plomo'],
   'PbCl4':      ['cloruro plúmbico','cloruro de plomo(iv)','tetracloruro de plomo'],
@@ -1644,26 +1653,26 @@ const NOMENCLATURE = {
   
   // ÁCIDOS (con H⁺)
   'H2O': ['agua','hidróxido de hidrógeno','óxido de dihidrógeno'],
-  'HCl': ['ácido clorhídrico','cloruro de hidrógeno'],
-  'HBr': ['ácido bromhídrico','bromuro de hidrógeno'],
-  'H2S': ['ácido sulfhídrico','sulfuro de hidrógeno'],
+  'HCl': ['ácido clorhídrico','cloruro de hidrógeno','cloruro de hidrógeno'],
+  'HBr': ['ácido bromhídrico','bromuro de hidrógeno','bromuro de hidrógeno'],
+  'H2S': ['ácido sulfhídrico','sulfuro de hidrógeno','monosulfuro de dihidrógeno'],
   'HNO3': ['ácido nítrico','ácido trioxonítrico(v)','trioxonitrato de hidrógeno'],
-  'H2SO4': ['ácido sulfúrico','ácido tetraoxosulfúrico(vi)','tetraoxosulfato de hidrógeno'],
-  'H2CO3': ['ácido carbónico','ácido trioxocarbónico(iv)','trioxocarbonato de hidrógeno'],
+  'H2SO4': ['ácido sulfúrico','ácido tetraoxosulfúrico(vi)','tetraoxosulfato de dihidrógeno'],
+  'H2CO3': ['ácido carbónico','ácido trioxocarbónico(iv)','trioxocarbonato de dihidrógeno'],
   'HNO2': ['ácido nitroso','ácido dioxonítrico(iii)','dioxonitrato de hidrógeno'],
   // ── PLATA ──────────────────────────────────────────────────────────────────
-  'AgCl': ['cloruro de plata','cloruro argéntico','cloruro de plata'],
-  'AgBr': ['bromuro de plata','bromuro argéntico','bromuro de plata'],
-  'Ag2CO3': ['carbonato de plata','carbonato argéntico','trioxocarbonato de diplata'],
-  'Ag2S': ['sulfuro de plata','sulfuro argéntico','sulfuro de diplata'],
-  'Ag2SO4': ['sulfato de plata','sulfato argéntico','tetraoxosulfato de diplata'],
-  'Ag3PO4': ['fosfato de plata','fosfato argéntico','tetraoxofosfato de triplata'],
-  'AgHSO4': ['bisulfato de plata','bisulfato argéntico','hidrogenosulfato de plata'],
+  'AgCl': ['cloruro argéntico','cloruro de plata','monocloruro de plata'],
+  'AgBr': ['bromuro argéntico','bromuro de plata','monobromuro de plata'],
+  'Ag2CO3': ['carbonato argéntico','carbonato de plata','trioxocarbonato de diplata'],
+  'Ag2S': ['sulfuro argéntico','sulfuro de plata','monosulfuro de diplata'],
+  'Ag2SO4': ['sulfato argéntico','sulfato de plata','tetraoxosulfato de diplata'],
+  'Ag3PO4': ['fosfato argéntico','fosfato de plata','tetraoxofosfato de triplata'],
+  'AgHSO4': ['bisulfato argéntico','bisulfato de plata','hidrogenosulfato de plata'],
   // ── ALUMINIO ───────────────────────────────────────────────────────────────
   'AlCl3': ['cloruro de aluminio','cloruro alumínico','tricloruro de aluminio'],
   'AlBr3': ['bromuro de aluminio','bromuro alumínico','tribromuro de aluminio'],
   'Al2S3': ['sulfuro de aluminio','sulfuro alumínico','trisulfuro de dialuminio'],
-  'Al2(CO3)3': ['carbonato de aluminio','carbonato alumínico','tris(trioxocarbonato) de dialuminio'],
+  'Al2(CO3)3': ['carbonato de aluminio','carbonato alumínico','tris(trioxocarbonato) de dialuminio'], // ⚠ inestable: se hidroliza en agua → no existe como sólido aislable
   'Al(HSO4)3': ['bisulfato de aluminio','bisulfato alumínico','tris(hidrogenosulfato) de aluminio'],
   // ── BARIO ──────────────────────────────────────────────────────────────────
   'BaCl2': ['cloruro de bario','cloruro bárico','dicloruro de bario'],
@@ -1678,7 +1687,7 @@ const NOMENCLATURE = {
   'Ca(HSO4)2': ['bisulfato de calcio','bisulfato cálcico','bis(hidrogenosulfato) de calcio'],
   // ── COBRE ──────────────────────────────────────────────────────────────────
   'CuBr': ['bromuro cuproso','bromuro de cobre(i)','monobromuro de cobre'],
-  'Cu2CO3': ['carbonato cuproso','carbonato de cobre(i)','trioxocarbonato de dicobre'],
+  'Cu2CO3': ['carbonato cuproso','carbonato de cobre(i)','trioxocarbonato de dicobre'], // ⚠ inestable: el estable real es el carbonato básico Cu₂(OH)₂CO₃
   'Cu2SO4': ['sulfato cuproso','sulfato de cobre(i)','tetraoxosulfato de dicobre'],
   'CuNO3': ['nitrato cuproso','nitrato de cobre(i)','trioxonitrato de cobre'],
   'Cu3PO4': ['fosfato cuproso','fosfato de cobre(i)','tetraoxofosfato de tricobre'],
@@ -1692,7 +1701,7 @@ const NOMENCLATURE = {
   'Fe3(PO4)2': ['fosfato ferroso','fosfato de hierro(ii)','bis(tetraoxofosfato) de trihierro'],
   'Fe(HSO4)2': ['bisulfato ferroso','bisulfato de hierro(ii)','bis(hidrogenosulfato) de hierro'],
   'FeBr3': ['bromuro férrico','bromuro de hierro(iii)','tribromuro de hierro'],
-  'Fe2(CO3)3': ['carbonato férrico','carbonato de hierro(iii)','tris(trioxocarbonato) de dihierro'],
+  'Fe2(CO3)3': ['carbonato férrico','carbonato de hierro(iii)','tris(trioxocarbonato) de dihierro'], // ⚠ inestable: se hidroliza fácilmente en agua
   'Fe(HSO4)3': ['bisulfato férrico','bisulfato de hierro(iii)','tris(hidrogenosulfato) de hierro'],
   // ── POTASIO ────────────────────────────────────────────────────────────────
   'KBr': ['bromuro de potasio','bromuro potásico','monobromuro de potasio'],
@@ -1729,47 +1738,6 @@ const NOMENCLATURE = {
   'ZnS': ['sulfuro de zinc','sulfuro zíncico','monosulfuro de zinc'],
   'Zn3(PO4)2': ['fosfato de zinc','fosfato zíncico','bis(tetraoxofosfato) de trizinc'],
   'Zn(HSO4)2': ['bisulfato de zinc','bisulfato zíncico','bis(hidrogenosulfato) de zinc'],
-
-  // ── ÁCIDOS (H⁺ como catión con aniones) ─────────────────────────────────────
-  'HCl':          ['ácido clorhídrico',      'cloruro de hidrógeno',               'cloruro de hidrógeno'],
-  'HBr':          ['ácido bromhídrico',       'bromuro de hidrógeno',               'bromuro de hidrógeno'],
-  'HNO3':         ['ácido nítrico',           'trioxonitrato de hidrógeno',         'trioxonitrato de hidrógeno'],
-  'H2S':          ['ácido sulfhídrico',       'sulfuro de hidrógeno',               'monosulfuro de dihidrógeno'],
-  'H2CO3':        ['ácido carbónico',         'trioxocarbonato de dihidrógeno',     'trioxocarbonato de dihidrógeno'],
-  'H2SO4':        ['ácido sulfúrico',         'tetraoxosulfato de dihidrógeno',     'tetraoxosulfato de dihidrógeno'],
-  // ── COBRE(I) — compuestos faltantes ──────────────────────────────────────────
-  'CuBr':         ['bromuro cuproso',         'bromuro de cobre(i)',                'monobromuro de cobre'],
-  'CuNO3':        ['nitrato cuproso',         'nitrato de cobre(i)',                'trioxonitrato de cobre'],
-  'CuHSO4':       ['bisulfato cuproso',       'bisulfato de cobre(i)',              'hidrogenosulfato de cobre'],
-  'Cu2CO3':       ['carbonato cuproso',       'carbonato de cobre(i)',              'trioxocarbonato de dicobre'],
-  'Cu2SO4':       ['sulfato cuproso',         'sulfato de cobre(i)',                'tetraoxosulfato de dicobre'],
-  'Cu3PO4':       ['fosfato cuproso',         'fosfato de cobre(i)',                'tetraoxofosfato de tricobre'],
-  // ── COBRE(II) — compuestos faltantes ─────────────────────────────────────────
-  'CuBr2':        ['bromuro cúprico',         'bromuro de cobre(ii)',               'dibromuro de cobre'],
-  'Cu(NO3)2':     ['nitrato cúprico',         'nitrato de cobre(ii)',               'bis(trioxonitrato) de cobre'],
-  'Cu(HSO4)2':    ['bisulfato cúprico',       'bisulfato de cobre(ii)',             'bis(hidrogenosulfato) de cobre'],
-  'Cu3(PO4)2':    ['fosfato cúprico',         'fosfato de cobre(ii)',               'bis(tetraoxofosfato) de tricobre'],
-  // ── HIERRO(II) — compuestos faltantes ────────────────────────────────────────
-  'FeBr2':        ['bromuro ferroso',         'bromuro de hierro(ii)',              'dibromuro de hierro'],
-  'Fe(HSO4)2':    ['bisulfato ferroso',       'bisulfato de hierro(ii)',            'bis(hidrogenosulfato) de hierro'],
-  'Fe3(PO4)2':    ['fosfato ferroso',         'fosfato de hierro(ii)',              'bis(tetraoxofosfato) de trihierro'],
-  // ── HIERRO(III) — compuestos faltantes ───────────────────────────────────────
-  'FeBr3':        ['bromuro férrico',         'bromuro de hierro(iii)',             'tribromuro de hierro'],
-  'Fe(HSO4)3':    ['bisulfato férrico',       'bisulfato de hierro(iii)',           'tris(hidrogenosulfato) de hierro'],
-  'Fe2(CO3)3':    ['carbonato férrico',       'carbonato de hierro(iii)',           'tris(trioxocarbonato) de dihierro'],
-  // ── ESTAÑO(II) — compuestos faltantes ────────────────────────────────────────
-  'SnBr2':        ['bromuro estannoso',       'bromuro de estaño(ii)',              'dibromuro de estaño'],
-  'SnCO3':        ['carbonato estannoso',     'carbonato de estaño(ii)',            'trioxocarbonato de estaño'],
-  'Sn3(PO4)2':    ['fosfato estannoso',       'fosfato de estaño(ii)',              'bis(tetraoxofosfato) de triestaño'],
-  // ── ESTAÑO(IV) — compuestos faltantes ────────────────────────────────────────
-  'SnBr4':        ['bromuro estánnico',       'bromuro de estaño(iv)',              'tetrabromuro de estaño'],
-  // ── PLOMO(II) — compuestos faltantes ─────────────────────────────────────────
-  'PbBr2':        ['bromuro plumboso',        'bromuro de plomo(ii)',               'dibromuro de plomo'],
-  'Pb(NO3)2':     ['nitrato plumboso',        'nitrato de plomo(ii)',               'bis(trioxonitrato) de plomo'],
-  'PbCO3':        ['carbonato plumboso',      'carbonato de plomo(ii)',             'trioxocarbonato de plomo'],
-  'Pb3(PO4)2':    ['fosfato plumboso',        'fosfato de plomo(ii)',               'bis(tetraoxofosfato) de triplomo'],
-  // ── PLOMO(IV) — compuestos faltantes ─────────────────────────────────────────
-  'PbBr4':        ['bromuro plúmbico',        'bromuro de plomo(iv)',               'tetrabromuro de plomo'],
 
   // ── ÁCIDOS ADICIONALES ─────────────────────────────────────────────────────
   'H3PO4': ['ácido fosfórico','ácido tetraoxofosfórico(v)','tetraoxofosfato de trihidrógeno'],
@@ -1939,11 +1907,36 @@ const COMBINACIONES_INVALIDAS = {
     reaccion: '(NH₄)₂S → 2 NH₃↑ + H₂S↑',
     consejo: 'Usa otros aniones con NH₄⁺ para compuestos más estables.',
   },
+  // Compuestos inestables identificados por catión+carga+anión
+  'Al+CO₃':  {
+    titulo: 'Compuesto inestable',
+    formula: 'Al³⁺ + CO₃²⁻',
+    explicacion: 'El carbonato de aluminio Al₂(CO₃)₃ <strong>no existe como sólido aislable</strong>. Al³⁺ hidroliza inmediatamente al CO₃²⁻ produciendo Al(OH)₃ y CO₂.',
+    reaccion: 'Al₂(CO₃)₃ + 3H₂O → 2Al(OH)₃↓ + 3CO₂↑',
+    consejo: 'Usa SO₄²⁻, Cl⁻ u OH⁻ con Al³⁺ para compuestos estables.',
+  },
+  'Sn(4)+OH':  {
+    titulo: 'Compuesto anfótero inestable',
+    formula: 'Sn⁴⁺ + OH⁻',
+    explicacion: 'El hidróxido de estaño(IV) Sn(OH)₄ <strong>no existe en forma simple</strong>. Es anfótero — actúa tanto como ácido como base — y se forma como óxido hidratado SnO₂·nH₂O, no como hidróxido iónico.',
+    reaccion: 'Sn⁴⁺ + 4OH⁻ → SnO₂·2H₂O (óxido hidratado)',
+    consejo: 'Usa Sn²⁺ con OH⁻ para obtener Sn(OH)₂ (estannito), o Sn⁴⁺ con Cl⁻, SO₄²⁻.',
+  },
+  'Pb(4)+OH':  {
+    titulo: 'Compuesto anfótero inestable',
+    formula: 'Pb⁴⁺ + OH⁻',
+    explicacion: 'El hidróxido de plomo(IV) Pb(OH)₄ <strong>no existe en forma simple</strong>. Es anfótero y se forma como PbO₂ hidratado, no como hidróxido iónico.',
+    reaccion: 'Pb⁴⁺ + 4OH⁻ → PbO₂·2H₂O (óxido hidratado)',
+    consejo: 'Usa Pb²⁺ con OH⁻ para obtener Pb(OH)₂, o Pb⁴⁺ con Cl⁻, SO₄²⁻.',
+  },
 };
 
 function checkCombinacionInvalida(cat, anion){
   const key = cat.symbol + '+' + anion.symbol;
-  return COMBINACIONES_INVALIDAS[key] || null;
+  // Clave con carga efectiva para diferenciar estados de oxidación (ej. Sn²⁺ vs Sn⁴⁺)
+  const effectiveCharge = G.oxidationOverride || cat.charge;
+  const chargeKey = cat.symbol + '(' + effectiveCharge + ')+' + anion.symbol;
+  return COMBINACIONES_INVALIDAS[chargeKey] || COMBINACIONES_INVALIDAS[key] || null;
 }
 
 function showCombinacionInvalidaModal(info){
@@ -2379,7 +2372,12 @@ function showNomModal(comp, showAnswer){
   document.getElementById('nomModalDesc').textContent=
     `Forma: ${G.base.display} + ${comp.nAnion>1?comp.nAnion+'× ':''}${realAnion?realAnion.display:'?'}`;
   if(showAnswer){
-    const nombreTrad=getNombreTrad(formula)||comp.name;
+    // Calcular fórmula desde el estado de juego (formula no existe en este scope)
+    const anionRaw2 = G.pendingPlay
+      ? (G.pendingPlay.anionCards.find(a=>a.effect!=='wildcard')||G.pendingPlay.anionCards[0])
+      : null;
+    const formulaHint = anionRaw2 ? buildFormula(G.base, comp.nAnion, anionRaw2) : null;
+    const nombreTrad = (formulaHint && getNombreTrad(formulaHint)) || comp.name;
     document.getElementById('nomHint').innerHTML=
       `💡 Nombre correcto: <strong style="color:var(--accent-cat)">${nombreTrad}</strong>`;
     document.getElementById('nomInput').value=nombreTrad;
@@ -2707,6 +2705,8 @@ function confirmPlay(){
   const nombreLog=getNombreTrad(formulaForLog)||comp.name;
   let msg=`✅ <strong>${cp.name}</strong>: "${nombreLog}"`;
   if(comp && comp.needsPrefix) msg+=' 🌟 TURNO EXTRA';
+
+  cp.score = (cp.score || 0) + 1; // Sumar 1 punto por compuesto nombrado correctamente
 
   const indicesToRemove=G.selectedCards.slice().sort((a,b)=>b-a);
   indicesToRemove.forEach(i=>cp.hand.splice(i,1));
@@ -3143,15 +3143,20 @@ function playActionCard(card, handIdx){
       addLog(`⚗ ${cp.name} jugó Enlace Iónico (comodín catión).`,'action');
       showWildcardCatChoice(handIdx);
       return;
-    case 'espionage':
-      const victims=G.players.filter((p,i)=>i!==G.currentPlayer&&p.hand.length>0);
-      if(victims.length===0){
-        addLog('👁 Espionaje: sin oponentes con cartas.','bad');
+    case 'espionage': {
+      // Verificar ANTES de consumir la carta si hay víctimas con aniones
+      const victimsWithAnions=G.players.filter((p,i)=>i!==G.currentPlayer&&p.hand.some(c=>c.kind==='anion'));
+      if(victimsWithAnions.length===0){
+        // Devolver la carta — no hay objetivos válidos
+        cp.hand.splice(handIdx, 0, card);
+        G.selectedCards=[];
+        addLog('👁 Espionaje: ningún oponente tiene aniones. La carta regresa a tu mano.','bad');
         renderGame();
-        break;
+        return;
       }
-      showEspionageModal(victims);
+      showEspionageModal(victimsWithAnions);
       return;
+    }
     case 'changecation':
       if(G.cationDeck.length===0){
         addLog('🔄 Cambio de Reactivo: no hay cationes en el mazo.','bad');
@@ -3242,11 +3247,13 @@ function stealAnion(victimIdx, cardIdx){
     advanceTurn();
     return;
   }
-  
-  // Robar anión ALEATORIO (no predecible)
-  const stolenCard=anions[Math.floor(Math.random()*anions.length)];
-  const actualIdx=victim.hand.indexOf(stolenCard);
-  
+
+  // Usar cardIdx directamente (el jugador o la IA eligió esta carta)
+  const stolenCard = (cardIdx >= 0 && cardIdx < victim.hand.length && victim.hand[cardIdx].kind==='anion')
+    ? victim.hand[cardIdx]
+    : anions[0]; // fallback si el índice no apunta a un anión
+  const actualIdx = victim.hand.indexOf(stolenCard);
+
   victim.hand.splice(actualIdx, 1);
   cp.hand.push(stolenCard);
   
@@ -3312,76 +3319,6 @@ function applyOxidation(newCharge){
   addLog(`⚡ <strong>${cp.name}</strong> jugó Estado de Oxidación. ${G.base.symbol} ahora actúa como <strong>${newCharge>0?'+':''}${newCharge}</strong> este turno.`,'action');
   renderGame();
   // No avanza turno — el jugador aún puede jugar aniones en este turno
-}
-
-function showWildcardChoice(anionCards){
-  const base=G.base;
-  const baseCharge=G.oxidationOverride||base.charge;
-
-  // Primero mostrar modal explicativo, luego el de selección
-  const prev=document.getElementById('wildcardInfoModal');
-  if(prev) prev.remove();
-
-  const modal=document.createElement('div');
-  modal.id='wildcardInfoModal';
-  modal.className='modal-overlay active';
-  modal.innerHTML=`
-    <div class="modal" style="max-width:380px; text-align:center; border:2px solid var(--accent-action);">
-      <div style="font-size:2.5rem; margin-bottom:8px;">⚗️</div>
-      <h3 style="color:var(--primary); margin-bottom:10px;">Enlace Covalente — Comodín</h3>
-
-      <div class="modal-info-box">
-        <p>Esta carta actúa como <strong style="color:var(--parchment);">cualquier anión</strong> de carga −1 o −2.</p>
-        <p>Elige con qué carga actuará para completar el compuesto neutro con la base:</p>
-        <div class="modal-base-tag">
-          Base activa: <strong style="color:var(--primary);">${base.display} ${base.name} (+${baseCharge})</strong><br>
-          <span style="font-size:0.75rem;">
-            Con −1 necesitas <strong>${baseCharge}</strong> anión(es) · 
-            Con −2 necesitas <strong>${baseCharge%2===0?baseCharge/2:baseCharge}</strong> anión(es)
-          </span>
-        </div>
-      </div>
-
-      <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:16px;">
-        ⚠️ Después de elegir la carga, deberás <strong>nombrar el compuesto</strong> correctamente para descartar las cartas.
-      </p>
-
-      <button class="btn btn-primary" style="width:100%;"
-        onclick="document.getElementById('wildcardInfoModal').remove(); showWildcardChargeSelect(window.pendingWildAnionCards);">
-        Entendido — Elegir carga
-      </button>
-      <button class="btn btn-secondary" style="width:100%; margin-top:8px;"
-        onclick="document.getElementById('wildcardInfoModal').remove();">
-        Cancelar
-      </button>
-    </div>`;
-  window.pendingWildAnionCards=anionCards;
-  document.body.appendChild(modal);
-}
-
-function showWildcardChargeSelect(anionCards){
-  const base=G.base;
-  const baseCharge=G.oxidationOverride||base.charge;
-
-  document.getElementById('actionModalTitle').textContent='⚗️ Enlace Covalente — Elige la carga';
-  document.getElementById('actionModalDesc').textContent=
-    `Base: ${base.display} ${base.name} (+${baseCharge})`;
-  const btns=document.getElementById('actionModalBtns');
-  btns.innerHTML=`
-    <button class="btn btn-primary" style="flex:1;"
-      onclick="G.wildcardCharge=-1;closeActionModal();resolvePlay(window.pendingAnionCards)">
-      <span style="font-size:1.1rem;font-weight:800;">−1</span><br>
-      <small style="font-weight:400;font-size:0.72rem;">como Cl⁻, OH⁻, Br⁻, NO₃⁻</small>
-    </button>
-    <button class="btn btn-secondary" style="flex:1;"
-      onclick="G.wildcardCharge=-2;closeActionModal();resolvePlay(window.pendingAnionCards)">
-      <span style="font-size:1.1rem;font-weight:800;">−2</span><br>
-      <small style="font-weight:400;font-size:0.72rem;">como O²⁻, S²⁻, SO₄²⁻, CO₃²⁻</small>
-    </button>
-    <button class="btn btn-secondary" style="width:100%;margin-top:6px;background:var(--bg-light);color:var(--text-dark);"
-      onclick="G.selectedCards=[];G.wildcardCharge=-1;closeActionModal()">Cancelar</button>`;
-  window.pendingAnionCards=anionCards;
-  document.getElementById('actionModal').classList.add('active');
 }
 
 function showWildcardCatInfo(){
@@ -3629,6 +3566,7 @@ function aiTurnWithOxidation(newCharge){
       const anionParaNombreOx=anionCards.find(a=>a.effect!=='wildcard')||anionCards[0];
       const formulaAIOx=buildFormula(G.base, comp.nAnion, anionParaNombreOx);
       const nombreAIOx=getNombreTrad(formulaAIOx)||comp.name;
+      cp.score = (cp.score || 0) + 1;
       addLog(`🤖 ${cp.name}: "${nombreAIOx}"${extraTurn?' 🌟':''}`, 'good');
       showAIToast('⚡', `${cp.name} forma compuesto`, nombreAIOx, 2500);
       G.wildcardCharge=-1; // reset
@@ -3674,13 +3612,34 @@ function aiTurn(){
             const anionParaNombre=anionCards.find(a=>a.effect!=='wildcard')||anionCards[0];
             const formulaIA=buildFormula(base, comp.nAnion, anionParaNombre);
             const nombreIA=getNombreTrad(formulaIA)||comp.name;
-            addLog(`🤖 ${cp.name}: "${nombreIA}"${extraTurn?' 🌟':''}`, 'good');
-            showAIToast('⚗️', `${cp.name} forma compuesto`, nombreIA, 2500);
-            G.wildcardCharge=-1; // reset
-            G.oxidationOverride=null;
-            if(checkWin()) return;
-            renderGame();
-            advanceTurn(false,extraTurn);
+
+            // Probabilidad de error según dificultad (F10 — IA también puede fallar)
+            const errRates={easy:0, medium:0.15, hard:0.30};
+            const errRate = errRates[G.difficulty] || 0;
+            const iaFalla = Math.random() < errRate;
+
+            if(iaFalla){
+              // IA comete error: devuelve aniones a la mano, restaura base, roba 2
+              anionCards.forEach(a=>cp.hand.push(a));
+              G.cationDeck.push(G.base); // devolver la nueva base al mazo
+              G.base=base; // restaurar base original
+              drawCards(G.currentPlayer, 2);
+              addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreIA}</strong>". Roba 2 cartas.`,'bad');
+              showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreIA}`, 2800);
+              G.wildcardCharge=-1;
+              G.oxidationOverride=null;
+              renderGame();
+              advanceTurn();
+            } else {
+              cp.score = (cp.score || 0) + 1;
+              addLog(`🤖 ${cp.name}: "${nombreIA}"${extraTurn?' 🌟':''}`, 'good');
+              showAIToast('⚗️', `${cp.name} forma compuesto`, nombreIA, 2500);
+              G.wildcardCharge=-1; // reset
+              G.oxidationOverride=null;
+              if(checkWin()) return;
+              renderGame();
+              advanceTurn(false,extraTurn);
+            }
             return;
           }
         }
@@ -3778,11 +3737,11 @@ function findAIPlay(hand, catCharge){
 // ═════════════════════════════════════════════════════════════════════
 
 function recycleCationDeck(){
-  // Cuando se agota el mazo de cationes, se recicla barajando los ya usados
+  // Cuando se agota el mazo de cationes, se recicla respetando copias por nivel
   const allCats = getActiveCations();
-  const copiasCat = G_MODE==='basico' ? 4 : 2;
   allCats.forEach(c=>{
-    for(let i=0;i<copiasCat;i++) G.cationDeck.push({...c,id:Math.random(),kind:'cation'});
+    const copias = G_MODE==='basico' ? 4 : (c.copias || COPIAS_POR_NIVEL[c.nivel] || 2);
+    for(let i=0;i<copias;i++) G.cationDeck.push({...c,id:Math.random(),kind:'cation'});
   });
   G.cationDeck = shuffle(G.cationDeck);
   addLog('🔄 Mazo de cationes reciclado.','info');
@@ -3809,11 +3768,11 @@ function checkWin(){
     }
 
     const st=document.getElementById('scoreTable');
-    st.innerHTML='<div class="score-row" style="font-weight:700;color:var(--primary)"><span>Jugador</span><span>Cartas</span></div>';
+    st.innerHTML='<div class="score-row" style="font-weight:700;color:var(--primary)"><span>Jugador</span><span>Cartas</span><span>Puntos</span></div>';
     G.players.sort((a,b)=>a.hand.length-b.hand.length).forEach(p=>{
       const esGanador=p.hand.length===minCards;
       st.innerHTML+=`<div class="score-row" ${esGanador?'style="color:var(--primary);font-weight:700;"':''}>
-        <span>${p.name}${esGanador?' 🏆':''}</span><span>${p.hand.length}</span></div>`;
+        <span>${p.name}${esGanador?' 🏆':''}</span><span>${p.hand.length}</span><span>${p.score||0} ⚗</span></div>`;
     });
     showScreen('end');
     return true;
