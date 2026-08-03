@@ -4570,7 +4570,895 @@ const BANCO = [
     hint: 'HSO₃⁻ = bisulfito (trad.) / hidrogenosulfito (IUPAC). H₂SO₃ cedió 1 de 2 H⁺. K⁺ → potasio.'
   },
 
-];
-
 // Total: batch 4 adds 12 ac-hid, 19 hidru, 3 anhid, 3 base, 2 ac-ox
 // sal-ac section: 31 entries (bicarbonatos, bisulfatos, bisulfitos, fosfatos ácidos, cromato ácido)
+
+  // ─────────────────────────────────────────────
+  // REACCION — tipos de reacción química (40 ecuaciones)
+  // ─────────────────────────────────────────────
+
+  // -- Síntesis (10) --
+  {
+    id: 'rx-001',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2H₂ + O₂ → 2H₂O',
+    tipo_rx: 'sintesis',
+    hint: 'Dos sustancias simples se combinan para formar una sola. A + B → AB',
+    col: 'El hidrógeno como combustible limpio es investigado por Ecopetrol en proyectos H2 en los Llanos Orientales.'
+  },
+  {
+    id: 'rx-002',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2Na + Cl₂ → 2NaCl',
+    tipo_rx: 'sintesis',
+    hint: 'Metal + no metal → sal binaria. A + B → AB. Sal de cocina = síntesis directa.',
+    col: 'El cloruro de sodio (NaCl) se extrae en las salinas de Manaure, La Guajira, y en la mina de sal de Zipaquirá, Cundinamarca.'
+  },
+  {
+    id: 'rx-003',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2Fe + 3Cl₂ → 2FeCl₃',
+    tipo_rx: 'sintesis',
+    hint: 'Fe (valencia variable) + Cl₂ → cloruro. El Fe usa su valencia más alta (+3) con Cl₂.',
+    col: 'El hierro colombiano proviene principalmente de la Siderúrgica de Paz de Río en Boyacá.'
+  },
+  {
+    id: 'rx-004',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'N₂ + 3H₂ → 2NH₃',
+    tipo_rx: 'sintesis',
+    hint: 'Dos sustancias simples (N₂ y H₂) forman un único producto (NH₃). Proceso Haber-Bosch.',
+    col: 'El amoníaco (NH₃) es base de los fertilizantes usados en cultivos de la Sabana de Bogotá.'
+  },
+  {
+    id: 'rx-005',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'CaO + H₂O → Ca(OH)₂',
+    tipo_rx: 'sintesis',
+    hint: 'Óxido básico + agua → hidróxido. A + B → AB. Cal viva + agua = cal apagada.',
+    col: 'La cal viva (CaO) se produce en hornos en Cundinamarca y Boyacá para construcción y agricultura.'
+  },
+  {
+    id: 'rx-006',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'SO₃ + H₂O → H₂SO₄',
+    tipo_rx: 'sintesis',
+    hint: 'Óxido ácido + agua → oxoácido. A + B → AB. Lluvia ácida ocurre por este mecanismo.',
+    col: 'El H₂SO₄ industrial se produce en Colombia para minería y procesamiento de minerales.'
+  },
+  {
+    id: 'rx-007',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2Mg + O₂ → 2MgO',
+    tipo_rx: 'sintesis',
+    hint: 'Metal + oxígeno → óxido básico. A + B → AB. El Mg arde con llama blanca brillante.',
+    col: 'El óxido de magnesio (MgO) se usa en refractarios industriales en Colombia.'
+  },
+  {
+    id: 'rx-008',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '4Fe + 3O₂ → 2Fe₂O₃',
+    tipo_rx: 'sintesis',
+    hint: 'Metal + oxígeno → óxido. A + B → AB. Fe₂O₃ es el óxido del hierro (herrumbre).',
+    col: 'La oxidación del hierro (Fe₂O₃) afecta estructuras metálicas en zonas costeras como Cartagena.'
+  },
+  {
+    id: 'rx-009',
+    group: 'reaccion', level: 'hard',
+    ecuacion: 'P₂O₅ + 3H₂O → 2H₃PO₄',
+    tipo_rx: 'sintesis',
+    hint: 'Óxido ácido + agua → oxoácido. P₂O₅ es el anhídrido del ácido fosfórico.',
+    col: 'El ácido fosfórico (H₃PO₄) es base de fertilizantes fosfatados usados en Colombia.'
+  },
+  {
+    id: 'rx-010',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'C + O₂ → CO₂',
+    tipo_rx: 'sintesis',
+    hint: 'No metal + oxígeno → óxido ácido. A + B → AB. El carbón al quemarse forma CO₂.',
+    col: 'El carbón del Cerrejón (La Guajira) y la zona del Cesar al oxidarse produce CO₂.'
+  },
+
+  // -- Descomposición (8) --
+  {
+    id: 'rx-011',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2H₂O → 2H₂ + O₂',
+    tipo_rx: 'descomposicion',
+    hint: 'Una sola sustancia se divide en dos o más. AB → A + B. Electrólisis del agua.',
+    col: 'La electrólisis del agua en proyectos de Ecopetrol genera H₂ limpio en los Llanos Orientales.'
+  },
+  {
+    id: 'rx-012',
+    group: 'reaccion', level: 'easy',
+    ecuacion: '2H₂O₂ → 2H₂O + O₂',
+    tipo_rx: 'descomposicion',
+    hint: 'El agua oxigenada (H₂O₂) se descompone en agua y oxígeno. AB → A + B.',
+    col: 'El agua oxigenada usada en clínicas colombianas se descompone liberando O₂ burbujeante.'
+  },
+  {
+    id: 'rx-013',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'CaCO₃ → CaO + CO₂',
+    tipo_rx: 'descomposicion',
+    hint: 'La piedra caliza se descompone con calor. AB → A + B. Base de la industria del cemento.',
+    col: 'La caliza de Cundinamarca y Boyacá se calcina en hornos para producir cal viva (CaO).'
+  },
+  {
+    id: 'rx-014',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2NaHCO₃ → Na₂CO₃ + H₂O + CO₂',
+    tipo_rx: 'descomposicion',
+    hint: 'El bicarbonato de sodio al calentarse se descompone en tres productos. AB → A + B + C.',
+    col: 'El bicarbonato (NaHCO₃) se usa en cocinas colombianas como polvo de hornear.'
+  },
+  {
+    id: 'rx-015',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2KClO₃ → 2KCl + 3O₂',
+    tipo_rx: 'descomposicion',
+    hint: 'El clorato de potasio produce oxígeno al calentarse. AB → A + B.',
+    col: 'La producción de O₂ por descomposición de KClO₃ se usa en laboratorios de química en Colombia.'
+  },
+  {
+    id: 'rx-016',
+    group: 'reaccion', level: 'hard',
+    ecuacion: '2HgO → 2Hg + O₂',
+    tipo_rx: 'descomposicion',
+    hint: 'El óxido de mercurio se descompone en sus elementos. AB → A + B.',
+    col: 'Esta reacción histórica fue usada por Lavoisier para demostrar la composición del aire.'
+  },
+  {
+    id: 'rx-017',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'NH₄Cl → NH₃ + HCl',
+    tipo_rx: 'descomposicion',
+    hint: 'Una sal de amonio se descompone en gas amoníaco y ácido clorhídrico. AB → A + B.',
+    col: 'El cloruro de amonio (NH₄Cl) se usa en baterías y en metalurgia en Colombia.'
+  },
+  {
+    id: 'rx-018',
+    group: 'reaccion', level: 'hard',
+    ecuacion: '2Fe(OH)₃ → Fe₂O₃ + 3H₂O',
+    tipo_rx: 'descomposicion',
+    hint: 'El hidróxido de hierro (III) al calentarse se descompone en óxido y agua. AB → A + B.',
+    col: 'La herrumbre hidratada Fe(OH)₃ se convierte en Fe₂O₃ con el calor solar en estructuras colombianas.'
+  },
+
+  // -- Sustitución simple (8) --
+  {
+    id: 'rx-019',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'Zn + H₂SO₄ → ZnSO₄ + H₂',
+    tipo_rx: 'sus-simple',
+    hint: 'Metal más activo (Zn) desplaza a H del ácido. A + BC → AC + B.',
+    col: 'El zinc metálico reacciona con ácido sulfúrico diluido en laboratorios colombianos liberando burbujas de H₂. Colombia importa y procesa zinc en la industria metalmecánica.'
+  },
+  {
+    id: 'rx-020',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'Fe + CuSO₄ → FeSO₄ + Cu',
+    tipo_rx: 'sus-simple',
+    hint: 'El Fe más activo que Cu desplaza al Cu²⁺ de su sal. A + BC → AC + B.',
+    col: 'Esta reacción se usa para recuperar cobre de soluciones en minas colombianas.'
+  },
+  {
+    id: 'rx-021',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2Na + 2H₂O → 2NaOH + H₂',
+    tipo_rx: 'sus-simple',
+    hint: 'Metal alcalino desplaza al H del agua. A + BC → AC + B. Reacción vigorosa.',
+    col: 'El sodio reacciona violentamente con agua; se estudia con precaución en laboratorios colombianos.'
+  },
+  {
+    id: 'rx-022',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2Al + 6HCl → 2AlCl₃ + 3H₂',
+    tipo_rx: 'sus-simple',
+    hint: 'El aluminio desplaza al H del HCl. A + BC → AC + B. Necesita balanceo cuidadoso.',
+    col: 'El aluminio producido en Colombia (Alumina S.A.) reacciona con ácidos liberando H₂.'
+  },
+  {
+    id: 'rx-023',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'Mg + H₂SO₄ → MgSO₄ + H₂',
+    tipo_rx: 'sus-simple',
+    hint: 'El Mg más activo que H desplaza al hidrógeno del ácido sulfúrico. A + BC → AC + B.',
+    col: 'El magnesio en contacto con ácido sulfúrico produce burbujas de H₂ visibles en el laboratorio.'
+  },
+  {
+    id: 'rx-024',
+    group: 'reaccion', level: 'hard',
+    ecuacion: 'Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag',
+    tipo_rx: 'sus-simple',
+    hint: 'El Cu más activo que Ag desplaza al Ag⁺. A + BC → AC + B. Se forman cristales de plata.',
+    col: 'Este experimento se hace en laboratorios de química del SENA y universidades colombianas.'
+  },
+  {
+    id: 'rx-025',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'Zn + 2AgNO₃ → Zn(NO₃)₂ + 2Ag',
+    tipo_rx: 'sus-simple',
+    hint: 'El Zn más activo que Ag desplaza a dos Ag⁺. A + BC → AC + B.',
+    col: 'El zinc de la industria colombiana desplaza plata de soluciones en procesos metalúrgicos.'
+  },
+  {
+    id: 'rx-026',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'Ca + 2H₂O → Ca(OH)₂ + H₂',
+    tipo_rx: 'sus-simple',
+    hint: 'El Ca más activo que H₂ desplaza hidrógeno del agua. A + BC → AC + B.',
+    col: 'El calcio metálico reacciona con agua produciendo cal apagada Ca(OH)₂ usada en construcción.'
+  },
+
+  // -- Sustitución doble (8) --
+  {
+    id: 'rx-027',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'NaCl + AgNO₃ → NaNO₃ + AgCl',
+    tipo_rx: 'sus-doble',
+    hint: 'Dos sales intercambian iones. AB + CD → AD + CB. AgCl es precipitado blanco.',
+    col: 'Esta reacción identifica la presencia de cloruros en muestras de agua colombiana.'
+  },
+  {
+    id: 'rx-028',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'Pb(NO₃)₂ + 2KI → PbI₂ + 2KNO₃',
+    tipo_rx: 'sus-doble',
+    hint: 'Dos sales intercambian iones. AB + CD → AD + CB. PbI₂ es precipitado amarillo brillante.',
+    col: 'La formación de PbI₂ (precipitado amarillo) se usa como prueba de laboratorio en universidades colombianas.'
+  },
+  {
+    id: 'rx-029',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'MgSO₄ + 2NaOH → Mg(OH)₂ + Na₂SO₄',
+    tipo_rx: 'sus-doble',
+    hint: 'Intercambio iónico: sal + base → hidróxido precipitado + nueva sal. AB + 2CD → A(OH)₂ + DB.',
+    col: 'El Mg(OH)₂ (precipitado blanco) se usa como antiácido estomacal en farmacias colombianas.'
+  },
+  {
+    id: 'rx-030',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'CaCl₂ + Na₂SO₄ → CaSO₄ + 2NaCl',
+    tipo_rx: 'sus-doble',
+    hint: 'Dos sales intercambian iones. AB + CD → AD + CB. CaSO₄ es yeso, poco soluble.',
+    col: 'El sulfato de calcio (CaSO₄) o yeso se usa ampliamente en construcciones colombianas.'
+  },
+  {
+    id: 'rx-031',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'Pb(NO₃)₂ + Na₂SO₄ → PbSO₄ + 2NaNO₃',
+    tipo_rx: 'sus-doble',
+    hint: 'Intercambio de iones entre dos sales. AB + CD → AD + CB. PbSO₄ precipita.',
+    col: 'El plomo es un metal estudiado en análisis de aguas contaminadas en ríos colombianos.'
+  },
+  {
+    id: 'rx-032',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'BaCl₂ + Na₂SO₄ → BaSO₄ + 2NaCl',
+    tipo_rx: 'sus-doble',
+    hint: 'Intercambio iónico. AB + CD → AD + CB. BaSO₄ es precipitado blanco insoluble.',
+    col: 'El sulfato de bario (BaSO₄) se usa en radiografías médicas en hospitales colombianos.'
+  },
+  {
+    id: 'rx-033',
+    group: 'reaccion', level: 'hard',
+    ecuacion: 'Fe₂(SO₄)₃ + 6NaOH → 2Fe(OH)₃ + 3Na₂SO₄',
+    tipo_rx: 'sus-doble',
+    hint: 'Sal con ion multivalente + base → precipitado. Requiere balanceo cuidadoso.',
+    col: 'El hidróxido de hierro Fe(OH)₃ (color ocre) precipita en análisis de aguas del río Bogotá.'
+  },
+  {
+    id: 'rx-034',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'Na₂CO₃ + CaCl₂ → CaCO₃ + 2NaCl',
+    tipo_rx: 'sus-doble',
+    hint: 'Los iones CO₃²⁻ y Ca²⁺ se atraen y forman un precipitado blanco (CaCO₃). AB + CD → AD + CB.',
+    col: 'El carbonato de calcio CaCO₃ (caliza) que precipita en esta reacción es abundante en Cundinamarca y Boyacá.'
+  },
+
+  // -- Combustión (7) --
+  {
+    id: 'rx-035',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'CH₄ + 2O₂ → CO₂ + 2H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Hidrocarburo + O₂ → CO₂ + H₂O. Combustión completa del metano (gas natural).',
+    col: 'El gas natural (CH₄) distribuido por Gases del Caribe y Surtigas se usa en hogares colombianos.'
+  },
+  {
+    id: 'rx-036',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'C₃H₈ + 5O₂ → 3CO₂ + 4H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Propano + oxígeno → CO₂ + H₂O. Combustión completa. El propano es el gas en cilindros.',
+    col: 'El propano (C₃H₈) en cilindros de gas es el combustible de cocinas en zonas rurales colombianas.'
+  },
+  {
+    id: 'rx-037',
+    group: 'reaccion', level: 'hard',
+    ecuacion: '2C₈H₁₈ + 25O₂ → 16CO₂ + 18H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Octano (gasolina) + O₂ → CO₂ + H₂O. Combustión completa con coeficientes grandes.',
+    col: 'La gasolina (octano C₈H₁₈) refinada en Barrancabermeja mueve los vehículos colombianos.'
+  },
+  {
+    id: 'rx-038',
+    group: 'reaccion', level: 'hard',
+    ecuacion: '2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Acetileno (C₂H₂) + O₂ → CO₂ + H₂O. Combustión completa con llama muy caliente.',
+    col: 'El acetileno (C₂H₂) se usa en soldadura oxiacetilénica en industrias metalmecánicas colombianas.'
+  },
+  {
+    id: 'rx-041',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'C₂H₄ + 3O₂ → 2CO₂ + 2H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Etileno (C₂H₄) + O₂ → CO₂ + H₂O. Combustión completa de un alqueno. C: 2=2, H: 4=4, O: 6=6.',
+    col: 'El etileno C₂H₄ es un gas derivado del petróleo refinado en Barrancabermeja usado en la industria petroquímica colombiana.'
+  },
+  {
+    id: 'rx-042',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Alcohol etílico (etanol) + O₂ → CO₂ + H₂O. Combustión completa del etanol.',
+    col: 'El etanol de caña de azúcar producido en el Valle del Cauca se usa como biocombustible en mezclas E10 en Colombia.'
+  },
+  {
+    id: 'rx-043',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'C₄H₁₀ + 13/2 O₂ → 4CO₂ + 5H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Butano (C₄H₁₀) + O₂ → CO₂ + H₂O. También se escribe: 2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O.',
+    col: 'El butano se usa como gas combustible en encendedores y camping en Colombia.'
+  },
+
+  // -- Neutralización (7) --
+  {
+    id: 'rx-039',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'HCl + NaOH → NaCl + H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido monoprótico + base monovalente → sal + agua. Mol a mol. Ácido clorhídrico + sosa.',
+    col: 'La neutralización de HCl con NaOH se practica en titulaciones ácido-base en laboratorios del SENA Colombia.'
+  },
+  {
+    id: 'rx-040',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido dibásico + 2 bases → sal + agua. El H₂SO₄ aporta 2 H⁺, necesita 2 OH⁻.',
+    col: 'El sulfato de sodio Na₂SO₄ formado se usa en detergentes industriales producidos en Colombia.'
+  },
+  {
+    id: 'rx-044',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido monoprótico + base divalente → sal + agua. Se necesitan 2 mol de HNO₃ por mol de Ca(OH)₂.',
+    col: 'El nitrato de calcio Ca(NO₃)₂ es un fertilizante nitrogenado usado en cultivos de flores en la Sabana de Bogotá.'
+  },
+  {
+    id: 'rx-045',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido dibásico + base monovalente → sal + agua. Se necesitan 2 mol de KOH por mol de H₂SO₄.',
+    col: 'El sulfato de potasio K₂SO₄ es un fertilizante potásico usado en cultivos de banano en el Urabá antioqueño.'
+  },
+  {
+    id: 'rx-046',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'CH₃COOH + NaOH → CH₃COONa + H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido débil (acético) + base fuerte → sal (acetato) + agua. Misma proporción 1:1.',
+    col: 'El vinagre (CH₃COOH) de caña de azúcar colombiana neutralizado con NaOH forma acetato de sodio.'
+  },
+  {
+    id: 'rx-047',
+    group: 'reaccion', level: 'hard',
+    ecuacion: 'H₃PO₄ + 3NaOH → Na₃PO₄ + 3H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido triprótico + 3 bases → sal + agua. El H₃PO₄ aporta 3 H⁺, necesita 3 OH⁻.',
+    col: 'El fosfato trisódico Na₃PO₄ se usa en limpiadores industriales y tratamiento de agua en Colombia.'
+  },
+  {
+    id: 'rx-048',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2HCl + Ca(OH)₂ → CaCl₂ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido monoprótico + base divalente → sal + agua. 2 HCl neutralizan los 2 OH⁻ del Ca(OH)₂.',
+    col: 'El cloruro de calcio CaCl₂ se usa como antiácido estomacal y deshidratante en laboratorios colombianos.'
+  },
+
+  // ─────────────────────────────────────────────
+  // BALANCEO — ecuaciones para balancear (30)
+  // ─────────────────────────────────────────────
+
+  // -- easy (10) --
+  {
+    id: 'bal-001',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'H₂ + O₂ → H₂O',
+    coeficientes: [2, 1, 2],
+    especies: ['H₂', 'O₂', 'H₂O'],
+    hint: 'Cuenta H: 2 izq. → necesitas 2 H₂O. Luego O: 2 der. → 1 O₂.',
+    col: 'El hidrógeno como combustible limpio es investigado por universidades colombianas.'
+  },
+  {
+    id: 'bal-002',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Na + Cl₂ → NaCl',
+    coeficientes: [2, 1, 2],
+    especies: ['Na', 'Cl₂', 'NaCl'],
+    hint: 'Cl₂ aporta 2 Cl → necesitas 2 NaCl → 2 Na. Coeficientes: 2, 1, 2.',
+    col: 'El NaCl se extrae en las salinas de Zipaquirá, Cundinamarca.'
+  },
+  {
+    id: 'bal-003',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Mg + O₂ → MgO',
+    coeficientes: [2, 1, 2],
+    especies: ['Mg', 'O₂', 'MgO'],
+    hint: 'O₂ aporta 2 O → 2 MgO → 2 Mg. Coeficientes: 2, 1, 2.',
+    col: 'El magnesio arde con llama blanca brillante, demostración clásica en laboratorios colombianos.'
+  },
+  {
+    id: 'bal-004',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'H₂O → H₂ + O₂',
+    coeficientes: [2, 2, 1],
+    especies: ['H₂O', 'H₂', 'O₂'],
+    hint: 'O₂ tiene 2 O → 2 H₂O → 4 H → 2 H₂. Coeficientes: 2, 2, 1.',
+    col: 'La electrólisis del agua produce H₂ para celdas de combustible en proyectos colombianos.'
+  },
+  {
+    id: 'bal-005',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'CH₄ + O₂ → CO₂ + H₂O',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['CH₄', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 1=1. H: 4 → 2 H₂O. O der: 2+2=4 → 2 O₂. Coeficientes: 1, 2, 1, 2.',
+    col: 'El gas natural (CH₄) se quema en hogares colombianos para cocinar y calentar agua.'
+  },
+  {
+    id: 'bal-006',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Fe + O₂ → Fe₂O₃',
+    coeficientes: [4, 3, 2],
+    especies: ['Fe', 'O₂', 'Fe₂O₃'],
+    hint: 'Fe₂O₃: 2 Fe y 3 O. MCM(2,3)=6 → 2 Fe₂O₃ → 4 Fe; 3 O₂. Coeficientes: 4, 3, 2.',
+    col: 'La oxidación del hierro (herrumbre) afecta infraestructuras en ciudades colombianas costeras.'
+  },
+  {
+    id: 'bal-007',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'HCl + NaOH → NaCl + H₂O',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['HCl', 'NaOH', 'NaCl', 'H₂O'],
+    hint: 'Ya está balanceada: 1 Na, 1 Cl, 1 O, 2 H en cada lado. Coeficientes: 1, 1, 1, 1.',
+    col: 'La neutralización ácido-base se practica en laboratorios del SENA en toda Colombia.'
+  },
+  {
+    id: 'bal-008',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'CaO + H₂O → Ca(OH)₂',
+    coeficientes: [1, 1, 1],
+    especies: ['CaO', 'H₂O', 'Ca(OH)₂'],
+    hint: 'Ya balanceada: 1 Ca, 1 O+2 O=2 O(+), 2 H. Coeficientes: 1, 1, 1.',
+    col: 'La cal apagada Ca(OH)₂ se usa para encalar cultivos en el campo colombiano.'
+  },
+  {
+    id: 'bal-009',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'N₂ + H₂ → NH₃',
+    coeficientes: [1, 3, 2],
+    especies: ['N₂', 'H₂', 'NH₃'],
+    hint: 'N₂: 2 N → 2 NH₃. 2 NH₃: 6 H → 3 H₂. Coeficientes: 1, 3, 2.',
+    col: 'El amoníaco NH₃ es base de fertilizantes usados en la Sabana de Bogotá.'
+  },
+  {
+    id: 'bal-010',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Zn + HCl → ZnCl₂ + H₂',
+    coeficientes: [1, 2, 1, 1],
+    especies: ['Zn', 'HCl', 'ZnCl₂', 'H₂'],
+    hint: 'ZnCl₂ necesita 2 Cl → 2 HCl → 2 H → 1 H₂. Coeficientes: 1, 2, 1, 1.',
+    col: 'El zinc reacciona con HCl en laboratorios colombianos para producir hidrógeno gaseoso.'
+  },
+
+  // -- medium (12) --
+  {
+    id: 'bal-011',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Al + O₂ → Al₂O₃',
+    coeficientes: [4, 3, 2],
+    especies: ['Al', 'O₂', 'Al₂O₃'],
+    hint: 'Al₂O₃: 2 Al, 3 O. MCM(2,3)=6 → 2 Al₂O₃ → 4 Al; 3 O₂. Coeficientes: 4, 3, 2.',
+    col: 'El óxido de aluminio Al₂O₃ (alúmina) se refina en Colombia para obtener aluminio metálico.'
+  },
+  {
+    id: 'bal-012',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Fe + CuSO₄ → FeSO₄ + Cu',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['Fe', 'CuSO₄', 'FeSO₄', 'Cu'],
+    hint: 'El grupo SO₄ se mantiene. Fe→Fe, Cu→Cu. Ya balanceada: 1, 1, 1, 1.',
+    col: 'La cementación del cobre con hierro recupera Cu de soluciones en minas colombianas.'
+  },
+  {
+    id: 'bal-013',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'H₂SO₄ + NaOH → Na₂SO₄ + H₂O',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['H₂SO₄', 'NaOH', 'Na₂SO₄', 'H₂O'],
+    hint: 'Na₂SO₄ necesita 2 Na → 2 NaOH. 2 NaOH + H₂SO₄ → 2 H₂O. Coeficientes: 1, 2, 1, 2.',
+    col: 'El Na₂SO₄ se usa en detergentes y papel producidos en la industria colombiana.'
+  },
+  {
+    id: 'bal-014',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'KMnO₄ + HCl → KCl + MnCl₂ + H₂O + Cl₂',
+    coeficientes: [2, 16, 2, 2, 8, 5],
+    especies: ['KMnO₄', 'HCl', 'KCl', 'MnCl₂', 'H₂O', 'Cl₂'],
+    hint: 'Reacción redox compleja. Mn pasa de +7 a +2 (gana 5e⁻). Cl⁻ → Cl₂ (pierde 1e⁻). Coeficientes: 2, 16, 2, 2, 8, 5.',
+    col: 'El KMnO₄ se usa en potabilización de agua en plantas de tratamiento colombianas.'
+  },
+  {
+    id: 'bal-015',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'C₃H₈ + O₂ → CO₂ + H₂O',
+    coeficientes: [1, 5, 3, 4],
+    especies: ['C₃H₈', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 3→3CO₂. H: 8→4H₂O. O der: 6+4=10 → 5O₂. Coeficientes: 1, 5, 3, 4.',
+    col: 'El propano (C₃H₈) en cilindros se usa en cocinas de zonas rurales colombianas.'
+  },
+  {
+    id: 'bal-016',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'CaCO₃ + HCl → CaCl₂ + H₂O + CO₂',
+    coeficientes: [1, 2, 1, 1, 1],
+    especies: ['CaCO₃', 'HCl', 'CaCl₂', 'H₂O', 'CO₂'],
+    hint: 'CaCl₂ necesita 2 Cl → 2 HCl → 1 H₂O. CO₃ → CO₂. Coeficientes: 1, 2, 1, 1, 1.',
+    col: 'El mármol (CaCO₃) de Cundinamarca reacciona con ácido clorhídrico diluido en laboratorio.'
+  },
+  {
+    id: 'bal-017',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Na + H₂O → NaOH + H₂',
+    coeficientes: [2, 2, 2, 1],
+    especies: ['Na', 'H₂O', 'NaOH', 'H₂'],
+    hint: 'H₂ tiene 2 H → 2 H₂O → 2 Na. 2 NaOH. Coeficientes: 2, 2, 2, 1.',
+    col: 'El sodio metálico reacciona violentamente con agua; experimento demostrativo en universidades colombianas.'
+  },
+  {
+    id: 'bal-018',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Fe₂O₃ + CO → Fe + CO₂',
+    coeficientes: [1, 3, 2, 3],
+    especies: ['Fe₂O₃', 'CO', 'Fe', 'CO₂'],
+    hint: 'Fe: 2→2Fe. O en Fe₂O₃: 3; CO→CO₂ consume 3 CO. Coeficientes: 1, 3, 2, 3.',
+    col: 'La reducción de Fe₂O₃ con CO es el proceso del alto horno en Paz de Río, Boyacá.'
+  },
+  {
+    id: 'bal-019',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Cu + AgNO₃ → Cu(NO₃)₂ + Ag',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['Cu', 'AgNO₃', 'Cu(NO₃)₂', 'Ag'],
+    hint: 'Cu(NO₃)₂ necesita 2 NO₃ → 2 AgNO₃ → 2 Ag. Coeficientes: 1, 2, 1, 2.',
+    col: 'La plata que desplaza el cobre aparece como cristales brillantes en laboratorios colombianos.'
+  },
+  {
+    id: 'bal-020',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'NH₃ + O₂ → NO + H₂O',
+    coeficientes: [4, 5, 4, 6],
+    especies: ['NH₃', 'O₂', 'NO', 'H₂O'],
+    hint: 'N: 4→4NO. H: 12→6H₂O. O der: 4+6=10 → 5O₂. Coeficientes: 4, 5, 4, 6.',
+    col: 'La oxidación catalítica del NH₃ produce NO, paso clave en la fabricación de ácido nítrico.'
+  },
+  {
+    id: 'bal-021',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'P + O₂ → P₂O₅',
+    coeficientes: [4, 5, 2],
+    especies: ['P', 'O₂', 'P₂O₅'],
+    hint: 'P₂O₅: 2 P, 5 O. MCM(2,5)=10 → 2 P₂O₅ → 4 P; 5 O₂. Coeficientes: 4, 5, 2.',
+    col: 'El pentóxido de fósforo P₂O₅ es precursor del ácido fosfórico para fertilizantes colombianos.'
+  },
+  {
+    id: 'bal-022',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'H₂SO₄ + CaCO₃ → CaSO₄ + H₂O + CO₂',
+    coeficientes: [1, 1, 1, 1, 1],
+    especies: ['H₂SO₄', 'CaCO₃', 'CaSO₄', 'H₂O', 'CO₂'],
+    hint: 'Ca: 1=1. SO₄: 1=1. CO₃→CO₂. 2H→H₂O. Coeficientes: 1, 1, 1, 1, 1.',
+    col: 'El ácido sulfúrico disuelve la caliza (CaCO₃) formando yeso (CaSO₄), usado en construcción.'
+  },
+
+  // -- hard (8) --
+  {
+    id: 'bal-023',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'C₈H₁₈ + O₂ → CO₂ + H₂O',
+    coeficientes: [2, 25, 16, 18],
+    especies: ['C₈H₁₈', 'O₂', 'CO₂', 'H₂O'],
+    hint: '2 C₈H₁₈: 16C→16CO₂; 36H→18H₂O. O der: 32+18=50 → 25O₂. Coeficientes: 2, 25, 16, 18.',
+    col: 'La gasolina (octano C₈H₁₈) refinada en Barrancabermeja requiere balanceo con coeficientes grandes.'
+  },
+  {
+    id: 'bal-024',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Fe₂(SO₄)₃ + NaOH → Fe(OH)₃ + Na₂SO₄',
+    coeficientes: [1, 6, 2, 3],
+    especies: ['Fe₂(SO₄)₃', 'NaOH', 'Fe(OH)₃', 'Na₂SO₄'],
+    hint: 'Fe: 2→2Fe(OH)₃. SO₄: 3→3Na₂SO₄→6Na→6NaOH. Coeficientes: 1, 6, 2, 3.',
+    col: 'El Fe(OH)₃ precipitado ocre se forma al tratar aguas ferrosas en acueductos colombianos.'
+  },
+  {
+    id: 'bal-025',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'MnO₂ + HCl → MnCl₂ + H₂O + Cl₂',
+    coeficientes: [1, 4, 1, 2, 1],
+    especies: ['MnO₂', 'HCl', 'MnCl₂', 'H₂O', 'Cl₂'],
+    hint: 'Mn: +4→+2 (gana 2e⁻). 2 Cl⁻→Cl₂ (pierde 2e⁻). 4 HCl en total. Coeficientes: 1, 4, 1, 2, 1.',
+    col: 'Esta reacción redox se usa en laboratorios colombianos para generar Cl₂ con precaución.'
+  },
+  {
+    id: 'bal-026',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Al + H₂SO₄ → Al₂(SO₄)₃ + H₂',
+    coeficientes: [2, 3, 1, 3],
+    especies: ['Al', 'H₂SO₄', 'Al₂(SO₄)₃', 'H₂'],
+    hint: 'Al₂(SO₄)₃: 2 Al, 3 SO₄ → 3H₂SO₄ → 6H → 3H₂. Coeficientes: 2, 3, 1, 3.',
+    col: 'El aluminio reacciona con H₂SO₄ en laboratorios de química industrial en Colombia.'
+  },
+  {
+    id: 'bal-027',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'K₂Cr₂O₇ + HCl → KCl + CrCl₃ + H₂O + Cl₂',
+    coeficientes: [1, 14, 2, 2, 7, 3],
+    especies: ['K₂Cr₂O₇', 'HCl', 'KCl', 'CrCl₃', 'H₂O', 'Cl₂'],
+    hint: 'Cr: +6→+3 (gana 3e⁻ cada uno, 6e⁻ total). Cl⁻→Cl₂ (pierde 1e⁻ cada par). Coeficientes: 1, 14, 2, 2, 7, 3.',
+    col: 'El dicromato de potasio K₂Cr₂O₇ se usa como oxidante en análisis de DQO en aguas residuales colombianas.'
+  },
+  {
+    id: 'bal-028',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Ca₃(PO₄)₂ + H₂SO₄ → CaSO₄ + H₃PO₄',
+    coeficientes: [1, 3, 3, 2],
+    especies: ['Ca₃(PO₄)₂', 'H₂SO₄', 'CaSO₄', 'H₃PO₄'],
+    hint: 'Ca: 3→3CaSO₄→3H₂SO₄. PO₄: 2→2H₃PO₄. Coeficientes: 1, 3, 3, 2.',
+    col: 'La roca fosfórica Ca₃(PO₄)₂ se trata con H₂SO₄ para producir superfosfato, fertilizante colombiano.'
+  },
+  {
+    id: 'bal-029',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'CuO + NH₃ → Cu + N₂ + H₂O',
+    coeficientes: [3, 2, 3, 1, 3],
+    especies: ['CuO', 'NH₃', 'Cu', 'N₂', 'H₂O'],
+    hint: 'N: 2 NH₃→1 N₂. H: 6 H→3 H₂O→3 O. Cu: 3 CuO→3 Cu. Coeficientes: 3, 2, 3, 1, 3.',
+    col: 'La reducción del óxido de cobre con NH₃ ilustra reacciones redox en laboratorios universitarios.'
+  },
+  {
+    id: 'bal-030',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'HNO₃ + Cu → Cu(NO₃)₂ + NO + H₂O',
+    coeficientes: [8, 3, 3, 2, 4],
+    especies: ['HNO₃', 'Cu', 'Cu(NO₃)₂', 'NO', 'H₂O'],
+    hint: 'Cu: +0→+2 (pierde 2e⁻). N en HNO₃: +5→+2 en NO (gana 3e⁻). MCM(2,3)=6: 3Cu, 2NO. Coeficientes: 8, 3, 3, 2, 4.',
+    col: 'El cobre reacciona con HNO₃ diluido produciendo gas NO (incoloro). Reacción redox clásica.'
+  },
+
+  // ─────────────────────────────────────────────
+  // MOL-MASA — masa molar de compuestos (25)
+  // ─────────────────────────────────────────────
+
+  {
+    formula: 'H₂O',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 18.015,
+    formula_calc: '2(1.008) + 15.999 = 18.015',
+    hint: 'H₂O: 2 átomos de H (1.008 g/mol c/u) + 1 átomo de O (15.999 g/mol) = 18.015 g/mol',
+    col: 'El agua de los ríos colombianos (Magdalena, Cauca) tiene masa molar de 18.015 g/mol.'
+  },
+  {
+    formula: 'NaCl',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 58.44,
+    formula_calc: '22.990 + 35.45 = 58.44',
+    hint: 'NaCl: 1 átomo de Na (22.990 g/mol) + 1 átomo de Cl (35.45 g/mol) = 58.44 g/mol',
+    col: 'La sal de Zipaquirá (NaCl) tiene una masa molar de 58.44 g/mol. En 1 mol caben 6.022×10²³ pares Na⁺Cl⁻.'
+  },
+  {
+    formula: 'CO₂',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 44.009,
+    formula_calc: '12.011 + 2(15.999) = 44.009',
+    hint: 'CO₂: 1 C (12.011) + 2 O (2×15.999=31.998) = 44.009 g/mol',
+    col: 'El CO₂ liberado por la industria y transporte colombiano tiene masa molar de 44.009 g/mol.'
+  },
+  {
+    formula: 'H₂SO₄',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 98.072,
+    formula_calc: '2(1.008) + 32.06 + 4(15.999) = 2.016 + 32.06 + 63.996 = 98.072',
+    hint: 'H₂SO₄: 2H + 1S + 4O = 2.016 + 32.06 + 63.996 = 98.072 g/mol',
+    col: 'El ácido sulfúrico H₂SO₄ (98.072 g/mol) se usa en minería y baterías en toda Colombia.'
+  },
+  {
+    formula: 'HCl',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 36.458,
+    formula_calc: '1.008 + 35.45 = 36.458',
+    hint: 'HCl: 1 H (1.008 g/mol) + 1 Cl (35.45 g/mol) = 36.458 g/mol',
+    col: 'El ácido muriático (HCl) usado en limpieza de pisos en hogares colombianos tiene M = 36.458 g/mol.'
+  },
+  {
+    formula: 'NaOH',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 39.997,
+    formula_calc: '22.990 + 15.999 + 1.008 = 39.997',
+    hint: 'NaOH: 1 Na + 1 O + 1 H = 22.990 + 15.999 + 1.008 = 39.997 g/mol',
+    col: 'La soda cáustica (NaOH) usada en fabricación de jabón artesanal colombiano tiene M = 39.997 g/mol.'
+  },
+  {
+    formula: 'CaCO₃',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 100.086,
+    formula_calc: '40.078 + 12.011 + 3(15.999) = 40.078 + 12.011 + 47.997 = 100.086',
+    hint: 'CaCO₃: 1 Ca + 1 C + 3 O = 40.078 + 12.011 + 47.997 = 100.086 g/mol',
+    col: 'La piedra caliza (CaCO₃) de Cundinamarca y Boyacá tiene una masa molar de 100.086 g/mol.'
+  },
+  {
+    formula: 'O₂',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 31.998,
+    formula_calc: '2(15.999) = 31.998',
+    hint: 'O₂: 2 átomos de O × 15.999 g/mol = 31.998 g/mol',
+    col: 'El oxígeno molecular O₂ usado en hospitales colombianos tiene masa molar de 31.998 g/mol.'
+  },
+  {
+    formula: 'Fe₂O₃',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 159.687,
+    formula_calc: '2(55.845) + 3(15.999) = 111.690 + 47.997 = 159.687',
+    hint: 'Fe₂O₃: 2 Fe (2×55.845=111.690) + 3 O (3×15.999=47.997) = 159.687 g/mol',
+    col: 'El óxido de hierro Fe₂O₃ (herrumbre) presente en estructuras colombianas tiene M = 159.687 g/mol.'
+  },
+  {
+    formula: 'Ca(OH)₂',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 74.092,
+    formula_calc: '40.078 + 2(15.999) + 2(1.008) = 40.078 + 31.998 + 2.016 = 74.092',
+    hint: 'Ca(OH)₂: 1 Ca + 2 O + 2 H = 40.078 + 31.998 + 2.016 = 74.092 g/mol',
+    col: 'La cal apagada Ca(OH)₂ usada en encalado de cultivos colombianos tiene M = 74.092 g/mol.'
+  },
+  {
+    formula: 'NH₃',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 17.031,
+    formula_calc: '14.007 + 3(1.008) = 14.007 + 3.024 = 17.031',
+    hint: 'NH₃: 1 N (14.007) + 3 H (3×1.008=3.024) = 17.031 g/mol',
+    col: 'El amoníaco NH₃ base de los fertilizantes colombianos tiene masa molar de 17.031 g/mol.'
+  },
+  {
+    formula: 'CH₄',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 16.043,
+    formula_calc: '12.011 + 4(1.008) = 12.011 + 4.032 = 16.043',
+    hint: 'CH₄: 1 C (12.011) + 4 H (4×1.008=4.032) = 16.043 g/mol',
+    col: 'El gas natural (CH₄) distribuido en ciudades colombianas tiene masa molar de 16.043 g/mol.'
+  },
+  {
+    formula: 'C₈H₁₈',
+    group: 'mol-masa', level: 'hard',
+    masa_molar: 114.232,
+    formula_calc: '8(12.011) + 18(1.008) = 96.088 + 18.144 = 114.232',
+    hint: 'C₈H₁₈ (octano): 8 C (8×12.011=96.088) + 18 H (18×1.008=18.144) = 114.232 g/mol',
+    col: 'La gasolina (octano C₈H₁₈) refinada en Barrancabermeja tiene masa molar de 114.232 g/mol.'
+  },
+  {
+    formula: 'KMnO₄',
+    group: 'mol-masa', level: 'hard',
+    masa_molar: 158.032,
+    formula_calc: '39.098 + 54.938 + 4(15.999) = 39.098 + 54.938 + 63.996 = 158.032',
+    hint: 'KMnO₄: 1 K (39.098) + 1 Mn (54.938) + 4 O (4×15.999=63.996) = 158.032 g/mol',
+    col: 'El permanganato de potasio KMnO₄ usado en plantas de agua de Colombia tiene M = 158.032 g/mol.'
+  },
+  {
+    formula: 'Na₂SO₄',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 142.036,
+    formula_calc: '2(22.990) + 32.06 + 4(15.999) = 45.980 + 32.06 + 63.996 = 142.036',
+    hint: 'Na₂SO₄: 2 Na (2×22.990=45.980) + 1 S (32.06) + 4 O (4×15.999=63.996) = 142.036 g/mol',
+    col: 'El sulfato de sodio Na₂SO₄ (142.036 g/mol) se usa en detergentes y vidrio en Colombia.'
+  },
+  {
+    formula: 'Al₂O₃',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 101.961,
+    formula_calc: '2(26.982) + 3(15.999) = 53.964 + 47.997 = 101.961',
+    hint: 'Al₂O₃: 2 Al (2×26.982=53.964) + 3 O (3×15.999=47.997) = 101.961 g/mol',
+    col: 'La alúmina Al₂O₃ refractaria usada en industrias colombianas tiene M = 101.961 g/mol.'
+  },
+  {
+    formula: 'MgO',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 40.304,
+    formula_calc: '24.305 + 15.999 = 40.304',
+    hint: 'MgO: 1 Mg (24.305) + 1 O (15.999) = 40.304 g/mol',
+    col: 'El óxido de magnesio MgO (40.304 g/mol) se usa como refractario en industrias metalúrgicas colombianas.'
+  },
+  {
+    formula: 'N₂',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 28.014,
+    formula_calc: '2(14.007) = 28.014',
+    hint: 'N₂: 2 átomos de N × 14.007 g/mol = 28.014 g/mol',
+    col: 'El nitrógeno N₂ (28.014 g/mol) representa el 78% del aire que respiramos en Colombia.'
+  },
+  {
+    formula: 'H₂',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 2.016,
+    formula_calc: '2(1.008) = 2.016',
+    hint: 'H₂: 2 átomos de H × 1.008 g/mol = 2.016 g/mol. El gas más ligero que existe.',
+    col: 'El hidrógeno H₂ (2.016 g/mol) es el combustible limpio investigado en proyectos colombianos.'
+  },
+  {
+    formula: 'Cl₂',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 70.90,
+    formula_calc: '2(35.45) = 70.90',
+    hint: 'Cl₂: 2 átomos de Cl × 35.45 g/mol = 70.90 g/mol',
+    col: 'El cloro Cl₂ (70.90 g/mol) se usa para potabilizar el agua en acueductos de ciudades colombianas.'
+  },
+  {
+    formula: 'FeCl₃',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 162.195,
+    formula_calc: '55.845 + 3(35.45) = 55.845 + 106.35 = 162.195',
+    hint: 'FeCl₃: 1 Fe (55.845) + 3 Cl (3×35.45=106.35) = 162.195 g/mol',
+    col: 'El cloruro de hierro (III) FeCl₃ (162.195 g/mol) se usa como coagulante en plantas de agua colombianas.'
+  },
+  {
+    formula: 'CuSO₄',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 159.602,
+    formula_calc: '63.546 + 32.06 + 4(15.999) = 63.546 + 32.06 + 63.996 = 159.602',
+    hint: 'CuSO₄: 1 Cu (63.546) + 1 S (32.06) + 4 O (4×15.999=63.996) = 159.602 g/mol',
+    col: 'El sulfato de cobre CuSO₄ (159.602 g/mol) se usa en cultivos de flores colombianos como fungicida.'
+  },
+  {
+    formula: 'ZnO',
+    group: 'mol-masa', level: 'easy',
+    masa_molar: 81.379,
+    formula_calc: '65.38 + 15.999 = 81.379',
+    hint: 'ZnO: 1 Zn (65.38) + 1 O (15.999) = 81.379 g/mol',
+    col: 'El óxido de zinc ZnO (81.379 g/mol) se usa en protector solar y pinturas en Colombia.'
+  },
+  {
+    formula: 'K₂Cr₂O₇',
+    group: 'mol-masa', level: 'hard',
+    masa_molar: 294.181,
+    formula_calc: '2(39.098) + 2(51.996) + 7(15.999) = 78.196 + 103.992 + 111.993 = 294.181',
+    hint: 'K₂Cr₂O₇: 2 K (2×39.098=78.196) + 2 Cr (2×51.996=103.992) + 7 O (7×15.999=111.993) = 294.181 g/mol',
+    col: 'El dicromato de potasio K₂Cr₂O₇ (294.181 g/mol) se usa en análisis de DQO en aguas colombianas.'
+  },
+  {
+    formula: 'HNO₃',
+    group: 'mol-masa', level: 'medium',
+    masa_molar: 63.012,
+    formula_calc: '1.008 + 14.007 + 3(15.999) = 1.008 + 14.007 + 47.997 = 63.012',
+    hint: 'HNO₃: 1 H (1.008) + 1 N (14.007) + 3 O (3×15.999=47.997) = 63.012 g/mol',
+    col: 'El ácido nítrico HNO₃ (63.012 g/mol) se usa en producción de fertilizantes nitrogenados en Colombia.'
+  },
+
+
+];
+
+// Total: ~450 entries — nomenclatura + reaccion(40) + balanceo(30) + mol-masa(25)

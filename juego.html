@@ -1122,8 +1122,10 @@ function buildQuestionQueue(pool, n){
 
 function validTypesFor(q, pool){
   const v=new Set(['mc','write-any']);
-  if(q.stock&&q.stock[0]) v.add('write-stock');
-  if(q.sist&&q.sist[0]) v.add('write-sist');
+  // ac-ox and sal-ox: curriculum requires only traditional nomenclature
+  const tradOnly=(q.group==='sal-ox'||q.group==='ac-ox');
+  if(!tradOnly&&q.stock&&q.stock[0]) v.add('write-stock');
+  if(!tradOnly&&q.sist&&q.sist[0]) v.add('write-sist');
   if(extractEO(q)) v.add('ox-state');
   if(buildDrag(q,pool)) v.add('drag');
   if(pool.length>=4) v.add('invert');
@@ -2215,6 +2217,8 @@ function isCorrect(input,q,mode){
     const sistNames=(q.sist||[]).filter(Boolean);
     return sistNames.some(v=>norm(v)===ni);
   }
+  // ac-ox and sal-ox: curriculum requires only traditional nomenclature
+  if(q.group==='sal-ox'||q.group==='ac-ox') return (q.trad||[]).some(v=>norm(v)===ni);
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
   if(allNames.some(v=>norm(v)===ni)) return true;
   if(q.group==='anhid'){
@@ -2234,9 +2238,13 @@ function showFeedback(type,msg,q,noAlts=false){
       const tradStr=q.trad.join(' / ');
       alts.push(`Tradicional: <em>${tradStr}</em>`);
     }
-    if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
-    if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
+    // ac-ox and sal-ox: only show traditional nomenclature per curriculum
+    if(q.group!=='sal-ox'&&q.group!=='ac-ox'){
+      if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
+      if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
+    }
     if(alts.length) html+=`<div class="fb-alts">${alts.join(' · ')}</div>`;
+    if(q.group==='sal-ox'||q.group==='ac-ox') html+=`<div class="fb-hint">📌 Los ácidos oxácidos y oxisales se nombran solo con nomenclatura <strong>tradicional</strong> en este nivel.</div>`;
     if(q.group==='anhid'){
       html+=`<div class="fb-hint">🇨🇴 En Colombia se llaman <strong>óxidos ácidos</strong>. Se aceptan tanto "<em>anhídrido X</em>" como "<em>óxido X</em>".</div>`;
     }

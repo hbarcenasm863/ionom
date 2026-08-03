@@ -374,6 +374,10 @@ const GROUP_LABELS = {
 // Returns {name, system, label}
 function pickName(c, sistema){
   const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'Sistemática'};
+  // Oxyacids and oxysalts: curriculum requires only traditional nomenclature
+  if(c.group === 'ac-ox' || c.group === 'sal-ox'){
+    return {name: c.trad[0] || '—', system: 'trad', label: 'Tradicional'};
+  }
   let candidates = [];
   if(sistema === 'all'){
     if(c.trad && c.trad[0]) candidates.push({name:c.trad[0], system:'trad', label:'Tradicional'});
