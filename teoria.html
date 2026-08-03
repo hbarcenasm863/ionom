@@ -12,6 +12,9 @@
   --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
   --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
   --err:#dc2626;--ok:#16a34a;
+  --rx:#16a34a;--rx-b:#dcfce7;--rx-t:#14532d;
+  --ind:#4338ca;--ind-b:#e0e7ff;--ind-t:#1e1b4b;
+  --red:#dc2626;--red-b:#fee2e2;--red-t:#7f1d1d;
   --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
   --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
   --r:16px;--rs:10px;
@@ -87,6 +90,51 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .tag-an{background:var(--an-b);color:var(--an-t)}
 .tag-oh{background:var(--oh-b);color:var(--oh-t)}
 .tag-ox{background:var(--ox-b);color:var(--ox-t)}
+.tag-rx{background:var(--rx-b);color:var(--rx-t)}
+.tag-ind{background:var(--ind-b);color:var(--ind-t)}
+
+/* NEW COLOR CLASSES for reacciones */
+.color-box.rx{background:var(--rx-b);border-color:var(--rx)}
+.color-box.rx .color-dot{background:var(--rx)}
+.color-box.rx strong{color:var(--rx-t)}
+.color-box.ind{background:var(--ind-b);border-color:var(--ind)}
+.color-box.ind .color-dot{background:var(--ind)}
+.color-box.ind strong{color:var(--ind-t)}
+.color-box.red{background:var(--red-b);border-color:var(--red)}
+.color-box.red .color-dot{background:var(--red)}
+.color-box.red strong{color:var(--red-t)}
+.step-n.rx{background:var(--rx);color:#fff}
+.step-n.ind{background:var(--ind);color:#fff}
+.step-n.red{background:var(--red);color:#fff}
+.step-body.rx strong{color:var(--rx-t)}
+.step-body.ind strong{color:var(--ind-t)}
+.step-body.red strong{color:var(--red-t)}
+.mdec-num.rx{background:var(--rx)}
+.mdec-num.ind{background:var(--ind)}
+.mdec-num.red{background:var(--red)}
+.card.card-rx{border-color:var(--rx);background:linear-gradient(135deg,var(--rx-b),#fff)}
+.card.card-ind{border-color:var(--ind);background:linear-gradient(135deg,var(--ind-b),#fff)}
+.card.card-red{border-color:var(--red);background:linear-gradient(135deg,var(--red-b),#fff)}
+.rx-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.rx-table th{background:var(--rx-b);color:var(--rx-t);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;padding:9px 10px;text-align:left;font-weight:700;border-bottom:2px solid var(--rx)}
+.rx-table td{padding:10px 10px;border-bottom:1px solid var(--brd);vertical-align:top;line-height:1.55}
+.rx-table tr:hover td{background:rgba(22,163,74,.04)}
+.ind-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.ind-table th{background:var(--ind-b);color:var(--ind-t);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;padding:9px 10px;text-align:left;font-weight:700;border-bottom:2px solid var(--ind)}
+.ind-table td{padding:10px 10px;border-bottom:1px solid var(--brd);vertical-align:top;line-height:1.55}
+.mnemonic-box{background:linear-gradient(135deg,#fef3c7,#fef9ee);border:2px solid var(--cat);border-radius:var(--rs);padding:16px 18px;margin:12px 0;text-align:center}
+.mnemonic-box .mnemonic-title{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--cat-t);margin-bottom:6px}
+.mnemonic-box .mnemonic-word{font-family:var(--mono);font-size:1.4rem;font-weight:900;color:var(--cat-t);letter-spacing:.05em;margin-bottom:4px}
+.mnemonic-box .mnemonic-exp{font-size:.8rem;color:var(--dim);line-height:1.6}
+.atom-tbl{border-collapse:collapse;font-size:.82rem;margin:10px auto;width:auto}
+.atom-tbl th{background:var(--cat-b);color:var(--cat-t);padding:7px 14px;font-weight:700;border:1px solid var(--cat)}
+.atom-tbl td{padding:7px 14px;border:1px solid var(--brd);text-align:center}
+.atom-tbl .ok{color:var(--ok);font-weight:700}
+.atom-tbl .no{color:var(--err);font-weight:700}
+.half-rx{background:var(--bg);border:1.5px solid var(--brd);border-radius:var(--rs);padding:12px 16px;margin-bottom:10px;font-family:var(--mono);font-size:.85rem}
+.half-rx .label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.half-rx.ox-rx{border-color:var(--red);background:var(--red-b)}.half-rx.ox-rx .label{color:var(--red-t)}
+.half-rx.red-rx{border-color:var(--an);background:var(--an-b)}.half-rx.red-rx .label{color:var(--an-t)}
 
 /* STEP CARDS */
 .step-row{display:grid;grid-template-columns:36px 1fr;gap:14px;margin-bottom:14px;align-items:start}
@@ -255,6 +303,30 @@ footer a:hover{text-decoration:underline}
       <div class="card-desc">De la nomenclatura a las ecuaciones: DBA 3 del MEN Colombia</div>
       <span class="card-badge">Avanzado</span>
     </div>
+    <div class="card card-rx" onclick="goToSection(7)">
+      <span class="card-icon">⚡</span>
+      <div class="card-title">Tipos de Reacción</div>
+      <div class="card-desc">Síntesis, descomposición, sustitución, combustión y neutralización</div>
+      <span class="card-badge">Reacciones</span>
+    </div>
+    <div class="card card-cat" onclick="goToSection(8)">
+      <span class="card-icon">⚖️</span>
+      <div class="card-title">Balanceo por Tanteo</div>
+      <div class="card-desc">Ley de Lavoisier, coeficientes y ajuste por inspección visual</div>
+      <span class="card-badge">Balanceo</span>
+    </div>
+    <div class="card card-ind" onclick="goToSection(9)">
+      <span class="card-icon">🔢</span>
+      <div class="card-title">Balanceo Algebraico</div>
+      <div class="card-desc">Sistema de ecuaciones lineales para balancear de forma exacta</div>
+      <span class="card-badge">Balanceo</span>
+    </div>
+    <div class="card card-red" onclick="goToSection(10)">
+      <span class="card-icon">⚡🔋</span>
+      <div class="card-title">Balanceo Redox</div>
+      <div class="card-desc">Semirreacciones, estados de oxidación y transferencia de electrones</div>
+      <span class="card-badge">Avanzado</span>
+    </div>
   </div>
 </div>
 
@@ -311,7 +383,11 @@ const SECCIONES = [
   {titulo:'Nomenclatura Sistemática',icon:'⚗️', color:'an'},
   {titulo:'Stock y Tradicional',     icon:'💎', color:'cat'},
   {titulo:'Excepciones',             icon:'⚠️', color:'oh'},
-  {titulo:'Reactividad',             icon:'🔥', color:'ox'}
+  {titulo:'Reactividad',             icon:'🔥', color:'ox'},
+  {titulo:'Tipos de Reacción',       icon:'⚡',  color:'rx'},
+  {titulo:'Balanceo por Tanteo',     icon:'⚖️', color:'cat'},
+  {titulo:'Balanceo Algebraico',     icon:'🔢', color:'ind'},
+  {titulo:'Balanceo Redox',          icon:'🔋', color:'red'}
 ];
 
 // ══════════════════════════════════════════
@@ -967,6 +1043,507 @@ CONTENIDO[6] = `
   <div class="error-box">
     <strong>❌ Error frecuente: "óxido básico" ≠ básico por llamarse así</strong>
     <p>Un óxido básico se llama así porque <strong>reacciona con agua para dar una base</strong> (pH &gt; 7), no por tener "básico" en el nombre. Del mismo modo, un "anhídrido" no es ácido por sí solo — lo es al disolverse en agua. El nombre describe el comportamiento químico, no una propiedad intrínseca del sólido.</p>
+  </div>
+</div>
+`;
+
+// ── Sección 7: Tipos de Reacción ──
+CONTENIDO[7] = `
+<div id="sec-rx-tipos" class="sect">
+  <h2>¿Qué es una reacción química?</h2>
+
+  <div class="color-box rx">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Pre-entrenamiento — términos clave</strong>
+      <span>
+        <strong>Reacción química:</strong> proceso en el que una o más sustancias (reactivos) se transforman en nuevas sustancias (productos) con diferente composición y propiedades.<br>
+        <strong>Reactivos:</strong> sustancias que se consumen — van a la <em>izquierda</em> de la flecha (→).<br>
+        <strong>Productos:</strong> sustancias que se forman — van a la <em>derecha</em> de la flecha.<br>
+        <strong>Ecuación química:</strong> representación simbólica de la reacción: reactivos → productos.<br>
+        <strong>Coeficiente estequiométrico:</strong> número que precede a una fórmula química e indica la cantidad de moles de esa sustancia.
+      </span>
+    </div>
+  </div>
+
+  <p>Hay seis tipos fundamentales de reacciones inorgánicas. Reconocer el tipo te permite predecir los productos antes de hacer el experimento.</p>
+</div>
+
+<div class="sect">
+  <h2>Los seis tipos de reacción</h2>
+
+  <table class="rx-table">
+    <thead>
+      <tr><th>Tipo</th><th>Esquema general</th><th>Descripción</th><th>Ejemplo colombiano</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Síntesis</strong><br><span class="tag tag-rx">A + B → AB</span></td>
+        <td><code>A + B → AB</code></td>
+        <td>Dos o más sustancias simples se combinan para formar una sola sustancia más compleja.</td>
+        <td><code>2 Fe + 3 Cl₂ → 2 FeCl₃</code><br>El hierro de <em>Paz de Río</em> (Boyacá) reacciona con cloro para dar cloruro de hierro(III).</td>
+      </tr>
+      <tr>
+        <td><strong>2. Descomposición</strong><br><span class="tag tag-an">AB → A + B</span></td>
+        <td><code>AB → A + B</code></td>
+        <td>Una sustancia compleja se rompe en dos o más sustancias más simples, generalmente con energía (calor, luz, electricidad).</td>
+        <td><code>2 H₂O → 2 H₂ + O₂</code><br>Electrólisis del agua en laboratorios de colegios públicos en Bogotá.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Sustitución simple</strong><br><span class="tag tag-cat">A + BC → AC + B</span></td>
+        <td><code>A + BC → AC + B</code></td>
+        <td>Un elemento más reactivo desplaza a otro elemento de un compuesto.</td>
+        <td><code>Zn + H₂SO₄ → ZnSO₄ + H₂↑</code><br>El zinc desplaza al hidrógeno del ácido sulfúrico en prácticas de laboratorio.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Sustitución doble</strong><br><span class="tag tag-ox">AB + CD → AD + CB</span></td>
+        <td><code>AB + CD → AD + CB</code></td>
+        <td>Los cationes de dos compuestos se intercambian mutuamente. Suele producir un precipitado, gas o agua.</td>
+        <td><code>AgNO₃ + NaCl → AgCl↓ + NaNO₃</code><br>El precipitado blanco de AgCl es la base de las pruebas de halógenos en química analítica.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Combustión</strong><br><span class="tag tag-cat">CₓHᵧ + O₂ → CO₂ + H₂O</span></td>
+        <td><code>CₓHᵧ + O₂ → CO₂ + H₂O</code></td>
+        <td>Un hidrocarburo (o compuesto con C e H) reacciona con oxígeno y produce dióxido de carbono y agua, liberando calor y luz.</td>
+        <td><code>C₈H₁₈ + O₂ → CO₂ + H₂O</code><br>Combustión del octano en los vehículos que recorren la Autopista Norte de Bogotá; el petróleo viene de los Llanos Orientales.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Neutralización</strong><br><span class="tag tag-oh">Ácido + Base → Sal + H₂O</span></td>
+        <td><code>Ácido + Base → Sal + H₂O</code></td>
+        <td>Un ácido y una base reaccionan para producir una sal y agua, acercando el pH a 7.</td>
+        <td><code>HCl + Ca(OH)₂ → CaCl₂ + H₂O</code><br>El ácido clorhídrico gástrico (acidez estomacal) se neutraliza con hidróxido de calcio — principio activo de algunos antiácidos.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sect">
+  <h2>Mnemotécnico visual — Síntesis y Descomposición</h2>
+
+  <div class="mnemonic-box">
+    <div class="mnemonic-title">Regla de los opuestos</div>
+    <div class="mnemonic-word">SÍNTESIS ↔ DESCOMPOSICIÓN</div>
+    <div class="mnemonic-exp">Son procesos inversos: lo que uno junta, el otro lo separa.<br>
+    Síntesis: muchos → uno &nbsp;|&nbsp; Descomposición: uno → muchos</div>
+  </div>
+
+  <svg viewBox="0 0 420 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:0 auto 12px">
+    <circle cx="40" cy="50" r="22" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="40" y="55" font-size="11" text-anchor="middle" fill="#14532d" font-weight="bold">A</text>
+    <circle cx="100" cy="50" r="22" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+    <text x="100" y="55" font-size="11" text-anchor="middle" fill="#082f49" font-weight="bold">B</text>
+    <text x="148" y="55" font-size="22" fill="#d97706" font-weight="bold">→</text>
+    <rect x="185" y="28" width="80" height="44" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="225" y="55" font-size="11" text-anchor="middle" fill="#92400e" font-weight="bold">AB</text>
+    <text x="62" y="20" font-size="10" fill="#14532d" text-anchor="middle">Síntesis</text>
+    <text x="285" y="88" font-size="9" fill="#92400e" text-anchor="middle">(producto único)</text>
+  </svg>
+
+  <p style="font-size:.83rem;color:var(--dim)">
+    <strong>Truco:</strong> Si en una reacción hay <strong>un solo producto</strong> → probable síntesis. Si hay <strong>un solo reactivo</strong> → probable descomposición. Si hay <strong>intercambio de iones</strong> → sustitución doble.
+  </p>
+</div>
+`;
+
+// ── Sección 8: Balanceo por Tanteo ──
+CONTENIDO[8] = `
+<div id="sec-balanceo-tanteo" class="sect">
+  <h2>Conservación de masa — Ley de Lavoisier</h2>
+
+  <div class="color-box cat">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Pre-entrenamiento — términos clave</strong>
+      <span>
+        <strong>Ley de Lavoisier (1789):</strong> "En una reacción química, la masa total de los reactivos es igual a la masa total de los productos." Los átomos no se crean ni se destruyen — solo se reorganizan.<br>
+        <strong>Coeficiente estequiométrico:</strong> número entero que se escribe <em>delante</em> de una fórmula para indicar cuántas moléculas participan. <strong>Nunca</strong> se cambian los subíndices.<br>
+        <strong>Conservación de masa:</strong> cantidad de átomos de cada elemento igual en reactivos y en productos.<br>
+        <strong>Ecuación balanceada:</strong> ecuación donde todos los elementos tienen el mismo número de átomos en ambos lados.
+      </span>
+    </div>
+  </div>
+
+  <div class="error-box">
+    <strong>Regla de oro: los subíndices son intocables</strong>
+    <p>Para balancear <strong>solo se cambian los coeficientes</strong> (números delante de la fórmula). Cambiar un subíndice cambia la sustancia: H₂O y H₂O₂ son compuestos distintos. Cambiar subíndices para balancear es el error más grave en este tema.</p>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Algoritmo de balanceo por tanteo — 4 pasos</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:16px">Ejemplo guía: <strong>Fe + O₂ → Fe₂O₃</strong> (corrosión del hierro de Paz de Río, Boyacá)</p>
+
+  <div class="step-row">
+    <div class="step-n cat">1</div>
+    <div class="step-body cat">
+      <strong>Escribe la ecuación sin balancear</strong>
+      <p>Identifica reactivos y productos exactamente como están.<br>
+      <code>Fe + O₂ → Fe₂O₃</code></p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n cat">2</div>
+    <div class="step-body cat">
+      <strong>Cuenta los átomos de cada elemento en cada lado</strong>
+      <p>Usa una tabla para no perderte:</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:14px">
+    <table class="atom-tbl">
+      <thead><tr><th>Elemento</th><th>Reactivos</th><th>Productos</th><th>¿Igual?</th></tr></thead>
+      <tbody>
+        <tr><td>Fe</td><td>1</td><td>2</td><td class="no">✗</td></tr>
+        <tr><td>O</td><td>2</td><td>3</td><td class="no">✗</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n cat">3</div>
+    <div class="step-body cat">
+      <strong>Ajusta coeficientes empezando por el elemento menos repetido (no H ni O en combustión)</strong>
+      <p>El Fe aparece en una sola fórmula a cada lado — empieza por él.<br>
+      Para tener 2 Fe en productos, pon <strong>2</strong> delante de Fe:<br>
+      <code>2 Fe + O₂ → Fe₂O₃</code><br>
+      Ahora el O: productos tienen 3 O; reactivos tienen 2 O. El mínimo común múltiplo de 2 y 3 es 6.<br>
+      Pon <strong>3</strong> delante de O₂ (= 6 O) y <strong>2</strong> delante de Fe₂O₃ (= 6 O):<br>
+      <code>4 Fe + 3 O₂ → 2 Fe₂O₃</code></p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n cat">4</div>
+    <div class="step-body cat">
+      <strong>Verifica: todos los elementos balanceados</strong>
+      <p>Tabla de verificación final:</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:14px">
+    <table class="atom-tbl">
+      <thead><tr><th>Elemento</th><th>Reactivos</th><th>Productos</th><th>¿Igual?</th></tr></thead>
+      <tbody>
+        <tr><td>Fe</td><td>4 × 1 = 4</td><td>2 × 2 = 4</td><td class="ok">✓</td></tr>
+        <tr><td>O</td><td>3 × 2 = 6</td><td>2 × 3 = 6</td><td class="ok">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ejemplo">
+    <strong>Ecuación balanceada:</strong> 4 Fe + 3 O₂ → 2 Fe₂O₃<br>
+    <span style="font-size:.8rem;color:var(--dimmer)">Lee: "cuatro átomos de hierro reaccionan con tres moléculas de oxígeno para dar dos unidades de óxido de hierro(III)"</span>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Segundo ejemplo — Combustión de metano (gas natural)</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:12px">
+    El gas natural (metano, CH₄) se usa en cocinas de todo el país. Su combustión libera CO₂ y vapor de agua:
+  </p>
+
+  <div class="mdec-steps">
+    <div class="mdec-step">
+      <div class="mdec-num cat">①</div>
+      <div class="mdec-body">
+        <strong>Sin balancear:</strong>
+        <p><code>CH₄ + O₂ → CO₂ + H₂O</code></p>
+      </div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num cat">②</div>
+      <div class="mdec-body">
+        <strong>Empieza por C: 1 a cada lado ✓. Luego H: 4 en reactivos, 2 en productos → pon 2 H₂O</strong>
+        <p><code>CH₄ + O₂ → CO₂ + 2 H₂O</code></p>
+      </div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num cat">③</div>
+      <div class="mdec-body">
+        <strong>Cuenta O en productos: 2 + 2 = 4. En reactivos: 2. Pon 2 O₂</strong>
+        <p><code>CH₄ + 2 O₂ → CO₂ + 2 H₂O</code></p>
+      </div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num cat">④</div>
+      <div class="mdec-body">
+        <strong>Verifica: C=1✓ H=4✓ O=4✓ — ¡balanceada!</strong>
+        <p><code>CH₄ + 2 O₂ → CO₂ + 2 H₂O ✓</code></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-box cat">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Reglas doradas del tanteo</strong>
+      <span>
+        1. <strong>Nunca cambiar subíndices</strong> — solo coeficientes.<br>
+        2. Los coeficientes deben ser <strong>enteros mínimos</strong> (si todos son pares, divídelos entre 2).<br>
+        3. En combustión, deja el oxígeno (O₂) para el <strong>último paso</strong>.<br>
+        4. Si los coeficientes salen fraccionales, multiplica toda la ecuación por el denominador.
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+// ── Sección 9: Balanceo Algebraico ──
+CONTENIDO[9] = `
+<div id="sec-balanceo-alg" class="sect">
+  <h2>¿Por qué el método algebraico?</h2>
+
+  <div class="color-box ind">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Pre-entrenamiento — términos clave</strong>
+      <span>
+        <strong>Variable:</strong> letra que representa un número desconocido (a, b, c, d…).<br>
+        <strong>Sistema de ecuaciones:</strong> conjunto de ecuaciones que deben cumplirse simultáneamente.<br>
+        <strong>Solución mínima entera:</strong> conjunto de coeficientes enteros positivos sin factor común mayor que 1.<br>
+        <strong>Método algebraico:</strong> se asigna una letra a cada coeficiente y se plantean ecuaciones usando la conservación de cada elemento. Ventaja: funciona siempre, sin importar qué tan compleja sea la reacción.
+      </span>
+    </div>
+  </div>
+
+  <p>Cuando la reacción tiene muchos elementos o el tanteo no converge en pocos pasos, el <strong>método algebraico</strong> es más seguro y sistemático.</p>
+</div>
+
+<div class="sect">
+  <h2>Algoritmo algebraico — 5 pasos</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:16px">Ejemplo guía: <strong>Fe + O₂ → Fe₂O₃</strong></p>
+
+  <div class="step-row">
+    <div class="step-n ind">1</div>
+    <div class="step-body ind">
+      <strong>Asigna letras a cada coeficiente</strong>
+      <p><code>a Fe + b O₂ → c Fe₂O₃</code></p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n ind">2</div>
+    <div class="step-body ind">
+      <strong>Escribe una ecuación por cada elemento (átomos izquierda = átomos derecha)</strong>
+      <p>
+        Fe: &nbsp;<code>a = 2c</code><br>
+        O: &nbsp;<code>2b = 3c</code>
+      </p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n ind">3</div>
+    <div class="step-body ind">
+      <strong>Elige el valor inicial más conveniente (generalmente a = 1 o el que simplifique más)</strong>
+      <p>Elige <code>c = 2</code> (para evitar fracciones inmediatamente).</p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n ind">4</div>
+    <div class="step-body ind">
+      <strong>Resuelve el sistema despejando las demás variables</strong>
+      <p>
+        De <code>a = 2c</code> y <code>c = 2</code> → <code>a = 4</code><br>
+        De <code>2b = 3c</code> y <code>c = 2</code> → <code>2b = 6</code> → <code>b = 3</code>
+      </p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n ind">5</div>
+    <div class="step-body ind">
+      <strong>Verifica que los coeficientes son enteros mínimos (sin factor común)</strong>
+      <p>MCD(4, 3, 2) = 1 → ya son mínimos.<br>
+      <code>4 Fe + 3 O₂ → 2 Fe₂O₃ ✓</code></p>
+    </div>
+  </div>
+
+  <div class="ejemplo">
+    <strong>Sistema resuelto:</strong><br>
+    { a = 2c, 2b = 3c } con c = 2 → a = 4, b = 3, c = 2<br>
+    → <span class="corr">4 Fe + 3 O₂ → 2 Fe₂O₃</span>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Ejemplo más complejo — KMnO₄ + HCl</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:12px">Esta reacción tiene 6 elementos distintos — el tanteo sería muy largo. El álgebra lo organiza:</p>
+  <div class="ejemplo">
+    <strong>Sin balancear:</strong><br>
+    a KMnO₄ + b HCl → c KCl + d MnCl₂ + e H₂O + f Cl₂
+  </div>
+
+  <div class="mdec-steps">
+    <div class="mdec-step">
+      <div class="mdec-num ind">K</div>
+      <div class="mdec-body"><strong>K:</strong> <p><code>a = c</code></p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num ind">Mn</div>
+      <div class="mdec-body"><strong>Mn:</strong> <p><code>a = d</code></p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num ind">O</div>
+      <div class="mdec-body"><strong>O:</strong> <p><code>4a = e</code></p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num ind">H</div>
+      <div class="mdec-body"><strong>H:</strong> <p><code>b = 2e</code></p></div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num ind">Cl</div>
+      <div class="mdec-body"><strong>Cl:</strong> <p><code>b = c + 2d + 2f</code></p></div>
+    </div>
+  </div>
+
+  <p style="font-size:.83rem;color:var(--dim);margin-bottom:8px">Elige <strong>a = 2</strong> → c = 2, d = 2, e = 8, b = 16. Sustituye en Cl: 16 = 2 + 4 + 2f → f = 5.</p>
+  <div class="ejemplo">
+    <strong>Ecuación balanceada:</strong><br>
+    <span class="corr">2 KMnO₄ + 16 HCl → 2 KCl + 2 MnCl₂ + 8 H₂O + 5 Cl₂</span>
+  </div>
+
+  <div class="color-box ind">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Cuándo usar el método algebraico</strong>
+      <span>Cuando hay <strong>4 o más sustancias</strong> diferentes en la ecuación, cuando el tanteo no converge en 3 intentos, o cuando hay elementos que aparecen en más de dos fórmulas a la vez. El método algebraico siempre da la solución correcta y mínima.</span>
+    </div>
+  </div>
+</div>
+`;
+
+// ── Sección 10: Balanceo Redox ──
+CONTENIDO[10] = `
+<div id="sec-balanceo-redox" class="sect">
+  <h2>Oxidación y Reducción — conceptos fundamentales</h2>
+
+  <div class="color-box red">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Pre-entrenamiento — términos clave</strong>
+      <span>
+        <strong>Oxidación:</strong> pérdida de electrones por parte de un átomo. Su estado de oxidación (EO) <em>sube</em> (se hace más positivo).<br>
+        <strong>Reducción:</strong> ganancia de electrones. El EO <em>baja</em> (se hace más negativo).<br>
+        <strong>Agente oxidante:</strong> sustancia que <em>provoca</em> la oxidación de otra — ella misma se reduce (gana e⁻).<br>
+        <strong>Agente reductor:</strong> sustancia que <em>provoca</em> la reducción de otra — ella misma se oxida (pierde e⁻).<br>
+        <strong>Semirreacción:</strong> ecuación que describe solo la parte de oxidación o solo la parte de reducción.
+      </span>
+    </div>
+  </div>
+
+  <div class="mnemonic-box">
+    <div class="mnemonic-title">Mnemotécnico fundamental</div>
+    <div class="mnemonic-word">PERDER e⁻ = OXIDARse &nbsp;·&nbsp; GANAR e⁻ = REDUCIRse</div>
+    <div class="mnemonic-exp">
+      En inglés: OIL RIG → <em>Oxidation Is Loss, Reduction Is Gain</em><br>
+      En español: <strong>"El que pierde se oxida; el que gana se reduce"</strong><br>
+      Recuerda: el óxido es el resultado de que el hierro <em>pierde</em> electrones al oxígeno.
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Cómo identificar oxidación y reducción</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:12px">Ejemplo: <strong>Zn + CuSO₄ → ZnSO₄ + Cu</strong></p>
+
+  <div class="mdec-steps">
+    <div class="mdec-step">
+      <div class="mdec-num red">①</div>
+      <div class="mdec-body">
+        <strong>Asigna EO a cada elemento</strong>
+        <p>Zn en reactivos: EO = 0 (elemento puro)<br>
+        Cu en CuSO₄: EO = +2 (el SO₄²⁻ aporta −2; entonces Cu = +2)<br>
+        Zn en ZnSO₄: EO = +2<br>
+        Cu en productos: EO = 0 (elemento puro)</p>
+      </div>
+    </div>
+    <div class="mdec-step">
+      <div class="mdec-num red">②</div>
+      <div class="mdec-body">
+        <strong>Identifica quién sube y quién baja EO</strong>
+        <p>Zn: 0 → +2 (sube) = se <strong>oxida</strong> (pierde 2 e⁻)<br>
+        Cu: +2 → 0 (baja) = se <strong>reduce</strong> (gana 2 e⁻)</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+    <div class="half-rx ox-rx" style="flex:1;min-width:180px">
+      <div class="label">Semirreacción de oxidación</div>
+      <code>Zn → Zn²⁺ + 2 e⁻</code>
+    </div>
+    <div class="half-rx red-rx" style="flex:1;min-width:180px">
+      <div class="label">Semirreacción de reducción</div>
+      <code>Cu²⁺ + 2 e⁻ → Cu</code>
+    </div>
+  </div>
+
+  <p style="font-size:.83rem;color:var(--dim);margin-bottom:6px">Como ambas semirreacciones transfieren exactamente 2 electrones, se suman directamente:</p>
+  <div class="ejemplo">
+    Zn + Cu²⁺ → Zn²⁺ + Cu<br>
+    → con el sulfato: <span class="corr">Zn + CuSO₄ → ZnSO₄ + Cu</span> (ya balanceada — coeficiente 1 en todo)
+  </div>
+</div>
+
+<div class="sect">
+  <h2>Algoritmo de semirreacciones — 4 pasos generales</h2>
+
+  <div class="step-row">
+    <div class="step-n red">1</div>
+    <div class="step-body red">
+      <strong>Identifica el EO de cada elemento → encuentra quién sube y quién baja EO</strong>
+      <p>Usa las reglas de EO que ya conoces de nomenclatura. El que sube EO se oxida; el que baja se reduce.</p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n red">2</div>
+    <div class="step-body red">
+      <strong>Escribe la semirreacción de oxidación (con e⁻ en los productos)</strong>
+      <p>Oxida el agente reductor y coloca los electrones del lado derecho.<br>
+      <code>especie reducida → especie oxidada + n e⁻</code></p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n red">3</div>
+    <div class="step-body red">
+      <strong>Escribe la semirreacción de reducción (con e⁻ en los reactivos)</strong>
+      <p>El agente oxidante gana electrones del lado izquierdo.<br>
+      <code>especie oxidante + n e⁻ → especie reducida</code></p>
+    </div>
+  </div>
+
+  <div class="step-row">
+    <div class="step-n red">4</div>
+    <div class="step-body red">
+      <strong>Multiplica para igualar los electrones intercambiados → suma las semirreacciones</strong>
+      <p>Los electrones se cancelan por completo. El resultado es la ecuación redox balanceada.</p>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 420 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:14px auto">
+    <rect x="10" y="20" width="80" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="50" y="48" font-size="13" text-anchor="middle" fill="#14532d" font-weight="bold">Zn</text>
+    <text x="50" y="63" font-size="9" text-anchor="middle" fill="#14532d">EO = 0</text>
+    <rect x="330" y="20" width="80" height="50" rx="10" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+    <text x="370" y="48" font-size="13" text-anchor="middle" fill="#082f49" font-weight="bold">Cu²⁺</text>
+    <text x="370" y="63" font-size="9" text-anchor="middle" fill="#082f49">EO = +2</text>
+    <line x1="90" y1="45" x2="330" y2="45" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arr)"/>
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#dc2626"/></marker></defs>
+    <text x="210" y="38" font-size="10" text-anchor="middle" fill="#dc2626" font-weight="bold">2 e⁻</text>
+    <text x="210" y="75" font-size="9" text-anchor="middle" fill="#dim">Flujo de electrones: Zn → Cu²⁺</text>
+  </svg>
+
+  <div class="color-box red">
+    <div class="color-dot"></div>
+    <div>
+      <strong>Conexión con la nomenclatura</strong>
+      <span>Los estados de oxidación que aprendiste para nombrar compuestos (Fe²⁺, Fe³⁺, Cu⁺, Cu²⁺) son exactamente los mismos que aquí. El EO no es solo un número para nombres — describe cuántos electrones ha perdido o ganado el átomo en la reacción. Saber nomenclatura es saber redox.</span>
+    </div>
   </div>
 </div>
 `;
