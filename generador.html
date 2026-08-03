@@ -7,36 +7,99 @@
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
 <link rel="apple-touch-icon" href="assets/iononpwa.png">
 <title>IonNom — Generador de Ejercicios</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root{
-  --cat:#d97706;--cat-b:#fef3c7;
-  --an:#0369a1;--an-b:#e0f2fe;
-  --oh:#7c3aed;--oh-b:#ede9fe;
-  --ox:#0f766e;--ox-b:#ccfbf1;
-  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
-  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
-  --r:16px;--rs:10px;
-  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
-  --sh:0 3px 18px rgba(26,110,168,.10);
+  /* === MDEC semantic palette (existente) === */
+  --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
+  --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* === Surface & text === */
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  /* === Status === */
+  --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d;
+  --err:#dc2626; --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn:#d97706; --warn-b:#fef3c7; --warn-t:#92400e;
+  --info:#0369a1; --info-b:#e0f2fe; --info-t:#082f49;
+  /* === Typography === */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* === Misc === */
+  --r:16px; --rs:10px; --rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
 }
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+    --brd:#1e3a52; --brd2:#2a4d6e;
+    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+    --nav:#091929; --nav-t:#e2eef8;
+    --cat-b:#422006; --cat-t:#fde68a;
+    --an-b:#082f49; --an-t:#7dd3fc;
+    --oh-b:#2e1065; --oh-t:#c4b5fd;
+    --ox-b:#042f2e; --ox-t:#5eead4;
+    --ok-b:#052e16; --ok-t:#86efac;
+    --err-b:#450a0a; --err-t:#fca5a5;
+    --warn-b:#422006; --warn-t:#fde68a;
+    --info-b:#082f49; --info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+  --brd:#1e3a52; --brd2:#2a4d6e;
+  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+  --nav:#091929; --nav-t:#e2eef8;
+  --cat-b:#422006; --cat-t:#fde68a;
+  --an-b:#082f49; --an-t:#7dd3fc;
+  --oh-b:#2e1065; --oh-t:#c4b5fd;
+  --ox-b:#042f2e; --ox-t:#5eead4;
+  --ok-b:#052e16; --ok-t:#86efac;
+  --err-b:#450a0a; --err-t:#fca5a5;
+  --warn-b:#422006; --warn-t:#fde68a;
+  --info-b:#082f49; --info-t:#7dd3fc;
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  --cat-b:#fef3c7; --cat-t:#92400e;
+  --an-b:#e0f2fe; --an-t:#082f49;
+  --oh-b:#ede9fe; --oh-t:#4c1d95;
+  --ox-b:#ccfbf1; --ox-t:#134e4a;
+  --ok-b:#dcfce7; --ok-t:#14532d;
+  --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn-b:#fef3c7; --warn-t:#92400e;
+  --info-b:#e0f2fe; --info-t:#082f49;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
+.nav-brand{color:var(--nav-t);font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
+.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:8px;transition:background .15s}
+.nav-links a:hover{background:rgba(255,255,255,.1)}
+.nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
+#theme-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px;transition:border-color .2s}
+#theme-btn:hover{border-color:rgba(255,255,255,.6)}
 
 /* Group checkboxes */
 .group-check{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.8);font-size:.83rem;border:1.5px solid rgba(255,255,255,.12);transition:background .15s,border-color .15s}
 .group-check:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
 .group-check input[type=checkbox]{accent-color:#fcd34d;width:15px;height:15px;flex-shrink:0;cursor:pointer}
 .group-check.checked{background:rgba(252,211,77,.12);border-color:rgba(252,211,77,.5);color:#fcd34d}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-
-/* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
-.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
-.nav-brand em{color:#fcd34d;font-style:normal}
-.nav-links{display:flex;gap:4px}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:8px;transition:background .15s}
-.nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
 
 /* SCREENS */
 .screen{display:none;min-height:calc(100vh - 48px);flex-direction:column;padding:40px 20px}
@@ -50,45 +113,47 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .form-title{font-size:1.8rem;font-weight:700;margin-bottom:24px;color:#fff}
 .form-group{margin-bottom:24px}
 .form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px;display:block}
-.form-select{width:100%;padding:11px 14px;background:#0d2d42;border:1.5px solid rgba(255,255,255,.25);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
+.form-select{width:100%;padding:11px 14px;background:var(--surf2);border:1.5px solid var(--brd2);border-radius:var(--rs);color:var(--tx);font-family:var(--sans);font-size:.9rem;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:rgba(13,45,66,.7);padding-right:36px;cursor:pointer;color:#fff}
 .form-select option{background:#0d2d42;color:#fff}
 .form-select:focus{outline:none;border-color:#fcd34d;background:#0a3d5e}
 .form-select:hover{border-color:rgba(255,255,255,.45)}
 
 .form-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem}
 .form-input::placeholder{color:rgba(255,255,255,.3)}
+.form-input:focus{outline:none;border-color:#fcd34d}
 
 .btn-gen{width:100%;padding:15px;background:var(--cat);color:#fff;border:none;border-radius:var(--rs);font-family:var(--sans);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:16px}
 .btn-gen:hover{background:#b8860b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,119,6,.4)}
 
+/* Advanced checkbox */
+.chk-avanzados-wrap{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(124,58,237,.1);border:1.5px solid rgba(124,58,237,.3);border-radius:var(--rs);margin-bottom:8px;cursor:pointer;color:rgba(255,255,255,.85);font-size:.84rem}
+.chk-avanzados-wrap input[type=checkbox]{accent-color:#c4b5fd;width:16px;height:16px;flex-shrink:0;cursor:pointer}
+
 #s-preview{background:var(--bg);padding:40px 20px;overflow-y:auto}
 .preview-container{max-width:900px;margin:0 auto}
-.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
-.preview-title{font-size:1.6rem;font-weight:700}
+.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.preview-title{font-size:1.4rem;font-weight:700;color:var(--tx)}
 .btn-pdf{padding:12px 20px;background:#16a34a;color:#fff;border:none;border-radius:var(--rs);font-weight:700;cursor:pointer;font-size:.9rem;transition:all .2s}
 .btn-pdf:hover{background:#15803d;transform:translateY(-2px)}
-.btn-back{padding:10px 16px;background:rgba(0,0,0,.1);color:var(--tx);border:none;border-radius:var(--rs);font-weight:600;cursor:pointer;font-size:.85rem}
-.btn-back:hover{background:rgba(0,0,0,.15)}
+.btn-back{padding:10px 16px;background:var(--surf2);color:var(--tx);border:1.5px solid var(--brd);border-radius:var(--rs);font-weight:600;cursor:pointer;font-size:.85rem}
+.btn-back:hover{background:var(--brd)}
 
 /* Exercise cards */
 .exercise-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px;margin-bottom:20px;box-shadow:var(--sh)}
 .ex-num{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:8px}
+.ex-prompt{font-size:.9rem;color:var(--dim);margin-bottom:16px}
+.ex-blank{border-bottom:2px solid var(--dimmer);height:24px;margin-top:8px}
 
-.ex-type-1 .ex-formula{font-size:1.8rem;font-weight:700;color:var(--cat);margin-bottom:16px;font-family:'Courier New',monospace}
-.ex-type-1 .ex-prompt{font-size:.9rem;color:var(--dim);margin-bottom:16px}
-.ex-type-1 .ex-blank{border-bottom:2px solid var(--dimmer);height:24px;margin-top:8px}
-
-.ex-type-2 .ex-name{font-size:1.1rem;font-weight:700;color:var(--an);margin-bottom:16px;font-style:italic}
-.ex-type-2 .ex-prompt{font-size:.9rem;color:var(--dim);margin-bottom:16px}
-.ex-type-2 .ex-blank{border-bottom:2px solid var(--dimmer);height:24px;margin-top:8px}
+.ex-type-1 .ex-formula{font-size:1.8rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);display:inline-block;padding:6px 16px;border-radius:var(--rm);margin-bottom:16px;font-family:var(--mono)}
+.ex-type-2 .ex-name{font-size:1.1rem;font-weight:700;color:var(--an-t);background:var(--an-b);display:inline-block;padding:6px 14px;border-radius:var(--rm);margin-bottom:16px;font-style:italic}
 
 .ex-type-3{padding:0}
 .table-wrapper{overflow-x:auto}
 table{width:100%;border-collapse:collapse;margin-bottom:12px}
-th,td{padding:12px 8px;text-align:left;border:1px solid var(--brd);font-size:.9rem}
-th{background:rgba(13,74,115,.08);font-weight:700;color:var(--dimmer)}
+th,td{padding:12px 8px;text-align:left;border:1px solid var(--brd);font-size:.9rem;color:var(--tx)}
+th{background:var(--surf2);font-weight:700;color:var(--dimmer)}
 td{height:40px}
-td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
+td.cell-blank{border-bottom:2px solid var(--dimmer);background:var(--bg2)}
 
 .PDF-section{padding:24px;break-inside:avoid}
 
@@ -96,24 +161,37 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
 .hchain{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:16px 0}
 .hchain-node{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:90px}
 .hchain-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dimmer);white-space:nowrap}
-.hchain-box{border:2px solid var(--brd);border-radius:8px;padding:8px 12px;min-width:90px;text-align:center;font-family:'Courier New',monospace;font-size:1rem;font-weight:700;color:var(--tx);background:var(--surf)}
-.hchain-box.hchain-given{background:#f0f9ff;border-color:#7dd3fc;color:#0369a1}
-.hchain-box.hchain-blank{border-style:dashed;border-color:#94a3b8;background:#fafbfc;min-height:42px;min-width:100px}
-.hchain-box.hchain-start{background:#fef3c7;border-color:#f59e0b;color:#92400e;font-size:.92rem}
+.hchain-box{border:2px solid var(--brd);border-radius:8px;padding:8px 12px;min-width:90px;text-align:center;font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--tx);background:var(--surf)}
+.hchain-box.hchain-given{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
+.hchain-box.hchain-blank{border-style:dashed;border-color:var(--brd2);background:var(--surf2);min-height:42px;min-width:100px}
+.hchain-box.hchain-start{background:var(--cat-b);border-color:var(--cat);color:var(--cat-t);font-size:.92rem}
 .hchain-arrow{display:flex;flex-direction:column;align-items:center;color:var(--dimmer);padding:0 6px;font-size:1.1rem;margin-top:16px}
-.hchain-reagent{font-size:.82rem;font-weight:700;color:#0369a1;white-space:nowrap;margin-top:3px;font-family:'Courier New',monospace;background:#e0f2fe;border:1px solid #7dd3fc;border-radius:6px;padding:2px 7px}
+.hchain-reagent{font-size:.82rem;font-weight:700;color:var(--an-t);white-space:nowrap;margin-top:3px;font-family:var(--mono);background:var(--an-b);border:1px solid var(--an);border-radius:6px;padding:2px 7px}
 .hchain-type-badge{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:12px}
-.badge-metal{background:#fef3c7;color:#92400e;border:1px solid #f59e0b}
-.badge-nm{background:#f0fdf4;color:#166534;border:1px solid #4ade80}
+.badge-metal{background:var(--cat-b);color:var(--cat-t);border:1px solid var(--cat)}
+.badge-nm{background:var(--ok-b);color:var(--ok-t);border:1px solid var(--ok)}
+
+/* Footer inside #s-form uses white text; outside uses --tx */
+footer{text-align:center;padding:18px 0;border-top:1px solid var(--brd);font-size:.72rem;color:var(--dimmer);margin-top:8px}
+footer a{color:var(--dim);text-decoration:none;font-weight:600}
 
 @media print{
-  body{background:#fff}
-  .site-nav,.preview-header,.btn-pdf,.btn-back{display:none}
-  #student-header{border:1.5px solid #aaa !important;box-shadow:none !important;margin-bottom:16px !important}
-  details{display:none}
-  #s-preview{padding:0}
-  .preview-container{max-width:100%}
-  .exercise-card{page-break-inside:avoid;border:1px solid #ccc;box-shadow:none}
+  body{background:#fff !important;color:#000 !important}
+  .site-nav,.preview-header,.btn-pdf,.btn-back{display:none !important}
+  #student-header{border:1.5px solid #aaa !important;box-shadow:none !important;margin-bottom:16px !important;background:#fff !important}
+  details{display:none !important}
+  #s-preview{padding:0 !important;background:#fff !important}
+  .preview-container{max-width:100% !important}
+  .exercise-card{page-break-inside:avoid;border:1px solid #ccc;box-shadow:none;background:#fff !important;color:#000 !important}
+  .ex-type-1 .ex-formula{color:#92400e !important;background:#fef3c7 !important}
+  .ex-type-2 .ex-name{color:#082f49 !important;background:#e0f2fe !important}
+  th,td{color:#000 !important;border-color:#ccc !important}
+  th{background:#f0f0f0 !important}
+  .hchain-box{background:#fff !important;color:#000 !important;border-color:#ccc !important}
+  .hchain-box.hchain-given{background:#e0f2fe !important;color:#082f49 !important}
+  .hchain-box.hchain-start{background:#fef3c7 !important;color:#92400e !important}
+  .hchain-reagent{background:#e0f2fe !important;color:#082f49 !important;border-color:#7dd3fc !important}
+  footer{display:none !important}
 }
 </style>
 </head>
@@ -129,6 +207,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
     <a href="juego.html">Juego</a>
     <a href="tabla.html">⚗️ Tabla</a>
     <a href="generador.html" class="active">⚙️ Generador</a>
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema">🌙</button>
   </div>
 </div>
 
@@ -157,6 +236,14 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
       </div>
     </div>
 
+    <!-- Checkbox avanzados -->
+    <div class="form-group" style="margin-bottom:16px">
+      <label class="chk-avanzados-wrap">
+        <input type="checkbox" id="chk-avanzados">
+        <span>Incluir compuestos avanzados <span style="font-size:.72rem;opacity:.7">(Mn, Cr, permanganato, dicromato…)</span></span>
+      </label>
+    </div>
+
     <div class="form-group">
       <label class="form-label">Tipo de ejercicio</label>
       <select id="inp-type" class="form-select">
@@ -167,6 +254,9 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="table-complete">Completar tabla de datos</option>
         <option value="oxidation-state">Calcular estados de oxidación</option>
         <option value="react-chain">Cadenas de reactividad (horizontal)</option>
+        <option value="balanceo">Balanceo de ecuaciones</option>
+        <option value="mol-masa">Mol y masa molar</option>
+        <option value="estequiometria">Estequiometría básica</option>
       </select>
     </div>
 
@@ -194,7 +284,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
   <div class="preview-container">
     <div class="preview-header">
       <h2 class="preview-title" id="prev-title"></h2>
-      <div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn-pdf" onclick="exportToPDF()">📄 Descargar PDF</button>
         <button class="btn-back" onclick="backToForm()">← Atrás</button>
       </div>
@@ -232,14 +322,33 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #fcd34d"><strong style="color:#fcd34d">① Grupos funcionales:</strong><span style="color:rgba(255,255,255,.75)"> selecciona uno o varios grupos que quieres incluir en la hoja de trabajo.</span></div>
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #93c5fd"><strong style="color:#93c5fd">② Tipo de ejercicio:</strong><span style="color:rgba(255,255,255,.75)"> elige si los estudiantes nombrarán fórmulas, escribirán fórmulas a partir del nombre, completarán una tabla o calcularán estados de oxidación.</span></div>
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #5eead4"><strong style="color:#5eead4">③ Sistema de nomenclatura:</strong><span style="color:rgba(255,255,255,.75)"> Tradicional (sufijos -oso/-ico), Stock (números romanos) o Sistemática (prefijos griegos).</span></div>
-      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #86efac"><strong style="color:#86efac">④ Cantidad:</strong><span style="color:rgba(255,255,255,.75)"> entre 3 y 50 ejercicios. El resultado se puede descargar en PDF o imprimir directamente.</span></div>
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #86efac"><strong style="color:#86efac">④ Cantidad:</strong><span style="color:rgba(255,255,255,.75)"> entre 3 y 50 ejercicios. Puedes imprimir o guardar como PDF desde el diálogo de impresión del navegador.</span></div>
     </div>
     <button onclick="closeGenTip()" style="width:100%;padding:12px;background:rgba(217,119,6,.8);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Listo, a generar! →</button>
   </div>
 </div>
 
+<footer>
+  <p><a href="https://hbarcenasm863.github.io/ionom/">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/">HARVEY BARCENAS MORALES</a> — <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+</footer>
+
 <script src="banco.js"></script>
 <script>
+// ── Dark mode toggle ──
+function toggleTheme(){
+  var t=document.documentElement.getAttribute("data-theme");
+  var n=t==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",n);
+  localStorage.setItem("ionom-theme",n);
+  document.getElementById("theme-btn").textContent=n==="dark"?"☀️":"🌙";
+}
+(function(){
+  var s=localStorage.getItem("ionom-theme")||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light");
+  document.documentElement.setAttribute("data-theme",s);
+  var btn=document.getElementById("theme-btn");
+  if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+})();
+
 // ── MAYER: Colombian Spanish voice narration ──
 function speak(text, onEnd) {
   if (!window.speechSynthesis) return;
@@ -255,7 +364,7 @@ function openGenTip() {
   speak('¡Hola! El generador de ejercicios te permite crear hojas de trabajo personalizadas. ' +
     'Primero selecciona los grupos funcionales que quieres practicar: óxidos, bases, ácidos o sales. ' +
     'Luego elige el tipo de ejercicio y el sistema de nomenclatura. ' +
-    'Puedes generar entre tres y cincuenta preguntas, y descargarlas en PDF para trabajar en clase. ¡Inténtalo!');
+    'Puedes generar entre tres y cincuenta preguntas, e imprimirlas o guardarlas como PDF desde el diálogo de impresión del navegador. ¡Inténtalo!');
 }
 
 function closeGenTip() {
@@ -329,30 +438,35 @@ const BANK_FALLBACK = {
   },
   hard: {
     binary: [
-      {formula:'MnO',trad:['óxido manganoso'],stock:['óxido de manganeso II','óxido de manganeso (II)'],sist:['óxido de manganeso'],ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.',group:'ox-bas'},
-      {formula:'MnO₂',trad:[],stock:['óxido de manganeso IV','óxido de manganeso (IV)'],sist:['dióxido de manganeso'],ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],hint:'Mn con EO=+4. Con 4 EO posibles el sistema -oso/-ico es ambiguo; "dióxido de manganeso" es el nombre sistemático, no tradicional. Usa Stock: óxido de manganeso (IV).',group:'ox-bas'},
-      {formula:'Mn₂O₇',trad:['anhídrido permangánico'],stock:['óxido de manganeso VII','óxido de manganeso (VII)'],sist:['heptaóxido de dimanganeso'],ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.',group:'anhid'},
-      {formula:'Cr₂O₃',trad:['óxido crómico'],stock:['óxido de cromo III','óxido de cromo (III)'],sist:['trióxido de dicromo'],ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],hint:'Cr₂O₃: Cr tiene EO = +3. En la serie de óxidos binarios de Cr, EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico. El +6 se comporta como no metal y forma anhídrido, no óxido básico.',group:'ox-bas'},
-      {formula:'CrO₃',trad:['anhídrido crómico'],stock:['óxido de cromo VI','óxido de cromo (VI)'],sist:['trióxido de cromo'],ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.',group:'anhid'},
+      {formula:'MnO',trad:['óxido manganoso'],stock:['óxido de manganeso II','óxido de manganeso (II)'],sist:['óxido de manganeso'],ions:[{t:'cat',l:'Mn²⁺'},{t:'an',l:'O²⁻'}],tokens:[{w:'óxido',t:'an'},{w:'manganoso',t:'cat'}],hint:'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.',group:'ox-bas',avanzado:true},
+      {formula:'MnO₂',trad:[],stock:['óxido de manganeso IV','óxido de manganeso (IV)'],sist:['dióxido de manganeso'],ions:[{t:'cat',l:'Mn⁴⁺'},{t:'an',l:'O²⁻ × 2'}],tokens:[{w:'dióxido',t:'an'},{w:'de',t:'neu'},{w:'manganeso',t:'cat'}],hint:'Mn con EO=+4. Con 4 EO posibles el sistema -oso/-ico es ambiguo; "dióxido de manganeso" es el nombre sistemático. Usa Stock: óxido de manganeso (IV).',group:'ox-bas',avanzado:true},
+      {formula:'Mn₂O₇',trad:['anhídrido permangánico'],stock:['óxido de manganeso VII','óxido de manganeso (VII)'],sist:['heptaóxido de dimanganeso'],ions:[{t:'cat',l:'Mn⁷⁺ × 2'},{t:'an',l:'O²⁻ × 7'}],tokens:[{w:'anhídrido',t:'ox'},{w:'permangánico',t:'cat'}],hint:'Mn con EO=+7 (máxima) y es no metal en este contexto → prefijo per- → permangánico.',group:'anhid',avanzado:true},
+      {formula:'Cr₂O₃',trad:['óxido crómico'],stock:['óxido de cromo III','óxido de cromo (III)'],sist:['trióxido de dicromo'],ions:[{t:'cat',l:'Cr³⁺ × 2'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'óxido',t:'an'},{w:'crómico',t:'cat'}],hint:'Cr₂O₃: Cr tiene EO = +3. EO = +2 (cromoso) es el menor y EO = +3 (crómico) es el mayor → sufijo -ico.',group:'ox-bas',avanzado:true},
+      {formula:'CrO₃',trad:['anhídrido crómico'],stock:['óxido de cromo VI','óxido de cromo (VI)'],sist:['trióxido de cromo'],ions:[{t:'cat',l:'Cr⁶⁺'},{t:'an',l:'O²⁻ × 3'}],tokens:[{w:'anhídrido',t:'ox'},{w:'crómico',t:'cat'}],hint:'Cr con EO=+6, comportamiento de no metal → anhídrido. EO mayor → -ico → crómico.',group:'anhid',avanzado:true},
     ],
     ternary: [
-      {formula:'KMnO₄',trad:['permanganato de potasio'],stock:['permanganato de potasio'],sist:['tetraoxomanganato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.',group:'sal-ox'},
-      {formula:'K₂CrO₄',trad:['cromato de potasio'],stock:['cromato de potasio'],sist:['tetraoxocromato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.',group:'sal-ox'},
-      {formula:'K₂Cr₂O₇',trad:['dicromato de potasio'],stock:['dicromato de potasio'],sist:['heptaoxodicroomato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.',group:'sal-ox'},
-      {formula:'KClO₃',trad:['clorato de potasio'],stock:['clorato de potasio'],sist:['trioxoclorato(V) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₃⁻'}],tokens:[{w:'clorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.',group:'sal-ox'},
-      {formula:'KClO₄',trad:['perclorato de potasio'],stock:['perclorato de potasio'],sist:['tetraoxoclorato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₄⁻'}],tokens:[{w:'perclorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.',group:'sal-ox'},
-      {formula:'KClO',trad:['hipoclorito de potasio'],stock:['hipoclorito de potasio'],sist:['oxoclorato(I) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.',group:'sal-ox'},
+      {formula:'KMnO₄',trad:['permanganato de potasio'],stock:['permanganato de potasio'],sist:['tetraoxomanganato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'MnO₄⁻'}],tokens:[{w:'permanganato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'MnO₄⁻ = permanganato (Mn con EO=+7, prefijo per-). K→potasio.',group:'sal-ox',avanzado:true},
+      {formula:'K₂CrO₄',trad:['cromato de potasio'],stock:['cromato de potasio'],sist:['tetraoxocromato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'CrO₄²⁻'}],tokens:[{w:'cromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'CrO₄²⁻ = cromato (Cr EO=+6). K→potasio.',group:'sal-ox',avanzado:true},
+      {formula:'K₂Cr₂O₇',trad:['dicromato de potasio'],stock:['dicromato de potasio'],sist:['heptaoxodicroomato(VI) de dipotasio'],ions:[{t:'cat',l:'K⁺ × 2'},{t:'ox',l:'Cr₂O₇²⁻'}],tokens:[{w:'dicromato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'Cr₂O₇²⁻ = dicromato (2 átomos de Cr). K→potasio.',group:'sal-ox',avanzado:true},
+      {formula:'KClO₃',trad:['clorato de potasio'],stock:['clorato de potasio'],sist:['trioxoclorato(V) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₃⁻'}],tokens:[{w:'clorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₃⁻ = clorato (Cl EO=+5). K→potasio.',group:'sal-ox',avanzado:true},
+      {formula:'KClO₄',trad:['perclorato de potasio'],stock:['perclorato de potasio'],sist:['tetraoxoclorato(VII) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO₄⁻'}],tokens:[{w:'perclorato',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO₄⁻ = perclorato (Cl EO=+7, máximo → prefijo per-). K→potasio.',group:'sal-ox',avanzado:true},
+      {formula:'KClO',trad:['hipoclorito de potasio'],stock:['hipoclorito de potasio'],sist:['oxoclorato(I) de potasio'],ions:[{t:'cat',l:'K⁺'},{t:'ox',l:'ClO⁻'}],tokens:[{w:'hipoclorito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],hint:'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → prefijo hipo-). K→potasio.',group:'sal-ox',avanzado:true},
     ]
   }
 };
 
 // Use BANCO from banco.js if available, otherwise flatten BANK_FALLBACK
-function getAllCompounds(){
+function getAllCompounds(incluirAvanzados){
   if(typeof BANCO !== 'undefined') return BANCO;
   let arr = [];
   Object.keys(BANK_FALLBACK).forEach(lv => {
-    arr = arr.concat(BANK_FALLBACK[lv].binary || []);
-    arr = arr.concat(BANK_FALLBACK[lv].ternary || []);
+    let bin = BANK_FALLBACK[lv].binary || [];
+    let ter = BANK_FALLBACK[lv].ternary || [];
+    if(!incluirAvanzados){
+      bin = bin.filter(c => !c.avanzado);
+      ter = ter.filter(c => !c.avanzado);
+    }
+    arr = arr.concat(bin).concat(ter);
   });
   return arr;
 }
@@ -371,7 +485,6 @@ const GROUP_LABELS = {
 };
 
 // Pick a name from the compound based on desired system
-// Returns {name, system, label}
 function pickName(c, sistema){
   const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'Sistemática'};
   // Oxyacids and oxysalts: curriculum requires only traditional nomenclature
@@ -388,7 +501,6 @@ function pickName(c, sistema){
   } else {
     const arr = c[sistema] || [];
     if(arr[0]) return {name:arr[0], system:sistema, label:SYS_LABEL[sistema]};
-    // Fallback to trad if this system not available for compound
     return {name:c.trad[0], system:'trad', label:'Tradicional'};
   }
 }
@@ -423,7 +535,6 @@ function toggleReactChain(chk){
   updateCheckStyle(chk);
   if(chk.checked){
     document.getElementById('inp-type').value = 'react-chain';
-    // Uncheck all other group boxes so the form stays valid
     document.querySelectorAll('#group-checks input[type=checkbox]:not(#chk-react):not(#chk-all)').forEach(c=>{
       c.checked=false; updateCheckStyle(c);
     });
@@ -445,7 +556,6 @@ const GEN_REACT_CHAINS=[
   {metal:'Fe',eo:'+3',A:'Fe₂O₃',B:'Fe(OH)₃',salts:[{acid:'HCl',C:'FeCl₃'},{acid:'H₂SO₄',C:'Fe₂(SO₄)₃'},{acid:'HNO₃',C:'Fe(NO₃)₃'}]},
   {metal:'Cu',eo:'+2',A:'CuO', B:'Cu(OH)₂',salts:[{acid:'HCl',C:'CuCl₂'},{acid:'H₂SO₄',C:'CuSO₄'},{acid:'HNO₃',C:'Cu(NO₃)₂'}]},
   {metal:'Zn',eo:'+2',A:'ZnO', B:'Zn(OH)₂',salts:[{acid:'HCl',C:'ZnCl₂'},{acid:'H₂SO₄',C:'ZnSO₄'},{acid:'HNO₃',C:'Zn(NO₃)₂'}]},
-  // Non-metals
   {type:'nm',nonmetal:'S', eo:'+4',A:'SO₂', B:'H₂SO₃',acidName:'ácido sulfuroso', salts:[{base:'NaOH',C:'Na₂SO₃'},{base:'Ca(OH)₂',C:'CaSO₃'},{base:'KOH',C:'K₂SO₃'}]},
   {type:'nm',nonmetal:'S', eo:'+6',A:'SO₃', B:'H₂SO₄',acidName:'ácido sulfúrico',  salts:[{base:'NaOH',C:'Na₂SO₄'},{base:'Ca(OH)₂',C:'CaSO₄'},{base:'KOH',C:'K₂SO₄'}]},
   {type:'nm',nonmetal:'N', eo:'+3',A:'N₂O₃',B:'HNO₂',acidName:'ácido nitroso',    salts:[{base:'NaOH',C:'NaNO₂'},{base:'Ca(OH)₂',C:'Ca(NO₂)₂'},{base:'KOH',C:'KNO₂'}]},
@@ -462,7 +572,6 @@ function generateReactChainExercises(count){
   while(picked.length<count) picked.push(...shuf(GEN_REACT_CHAINS));
   const items=picked.slice(0,count);
 
-  // blank patterns: which of A/B/C to hide (always hide 1–2 boxes for student to fill)
   const patterns=[['A'],['B'],['C'],['A','C'],['B','C'],['A','B']];
 
   let html='';
@@ -470,13 +579,12 @@ function generateReactChainExercises(count){
     const nm=ch.type==='nm';
     const salt=ch.salts[Math.floor(Math.random()*ch.salts.length)];
     const blanks=patterns[Math.floor(Math.random()*patterns.length)];
-    const reagent2=nm?'H₂O':'H₂O';
     const reagent3=nm?salt.base:salt.acid;
     const labels=nm
       ?{start:`${ch.nonmetal}<sup>${ch.eo}</sup>`,A:'A — Anhídrido',B:'B — Ácido oxácido',C:'C — Sal'}
       :{start:`${ch.metal}<sup>${ch.eo}</sup>`,A:'A — Óxido básico',B:'B — Hidróxido',C:'C — Sal'};
     const vals={A:ch.A,B:ch.B,C:salt.C};
-    const reagents={A:'+ O₂',B:`+ ${reagent2}`,C:`+ ${reagent3}`};
+    const reagents={A:'+ O₂',B:'+ H₂O',C:`+ ${reagent3}`};
 
     const node=(key)=>{
       const isBlank=blanks.includes(key);
@@ -498,7 +606,7 @@ function generateReactChainExercises(count){
     const blankList=blanks.map(b=>({A:'A',B:'B',C:'C'}[b])).join(' y ');
     const instruction=`Completa la cadena de reactividad. Escribe la(s) fórmula(s) que falta(n) en el/los recuadro(s) <strong>${blankList}</strong>.`;
 
-    html+=`<div class="exercise-card PDF-section" style="border-left:4px solid ${nm?'#22c55e':'#f59e0b'}">
+    html+=`<div class="exercise-card PDF-section" style="border-left:4px solid ${nm?'var(--ok)':'var(--cat)'}">
       <div class="ex-num">Ejercicio ${i+1}</div>
       ${badge}
       <div style="font-size:.85rem;color:var(--dim);margin-bottom:10px">${instruction}</div>
@@ -516,7 +624,7 @@ function generateReactChainExercises(count){
       </div>
       <details style="margin-top:10px">
         <summary style="font-size:.72rem;color:var(--an);cursor:pointer;user-select:none">💡 Respuesta</summary>
-        <p style="font-size:.78rem;color:var(--dim);margin-top:6px;font-family:'Courier New',monospace;line-height:1.8">
+        <p style="font-size:.78rem;color:var(--dim);margin-top:6px;font-family:var(--mono);line-height:1.8;background:var(--ok-b);color:var(--ok-t);padding:8px 12px;border-radius:8px">
           A = ${ch.A} &nbsp;|&nbsp; B = ${ch.B} &nbsp;|&nbsp; C = ${salt.C}
         </p>
       </details>
@@ -530,6 +638,7 @@ function generateExercises(){
   const type = document.getElementById('inp-type').value;
   const sistema = document.getElementById('inp-sistema').value;
   const count = parseInt(document.getElementById('inp-count').value) || 5;
+  const incluirAvanzados = document.getElementById('chk-avanzados').checked;
 
   // Read selected groups from checkboxes
   const allChk = document.getElementById('chk-all');
@@ -542,10 +651,19 @@ function generateExercises(){
     });
   }
 
-  // react-chain is self-contained — no need for groups or compounds
+  // react-chain is self-contained
   if(type === 'react-chain'){
     document.getElementById('prev-title').textContent = `Cadenas de reactividad — metales y no metales`;
     document.getElementById('exercises-container').innerHTML = generateReactChainExercises(count);
+    showScreen('s-preview');
+    return;
+  }
+
+  // Placeholder message for types not yet implemented
+  if(type === 'balanceo' || type === 'mol-masa' || type === 'estequiometria'){
+    const labels2 = {'balanceo':'Balanceo de ecuaciones','mol-masa':'Mol y masa molar','estequiometria':'Estequiometría básica'};
+    document.getElementById('prev-title').textContent = labels2[type] + ' — próximamente';
+    document.getElementById('exercises-container').innerHTML = `<div class="exercise-card" style="text-align:center;padding:40px;color:var(--dim)"><div style="font-size:2rem;margin-bottom:12px">🚧</div><p style="font-size:1rem;font-weight:700">Este tipo de ejercicio estará disponible próximamente.</p><p style="font-size:.85rem;margin-top:8px">Por ahora puedes usar los tipos de nomenclatura y cadenas de reactividad.</p></div>`;
     showScreen('s-preview');
     return;
   }
@@ -555,7 +673,7 @@ function generateExercises(){
     return;
   }
 
-  let compounds = getAllCompounds();
+  let compounds = getAllCompounds(incluirAvanzados);
 
   if(!selectedGroups.includes('all')){
     compounds = compounds.filter(c => selectedGroups.includes(c.group));
@@ -619,33 +737,33 @@ function generateDiverseExercises(compounds, sistema){
   let html = '';
   let exNum = 1;
 
-  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--an);margin-bottom:16px">Sección 1: Nombrar moléculas (fórmula → nombre)</h3>';
+  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--an-t);background:var(--an-b);display:inline-block;padding:4px 14px;border-radius:20px;margin-bottom:16px">Sección 1: Nombrar moléculas (fórmula → nombre)</h3>';
   part1.forEach((c) => {
     const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-1 PDF-section">
         <div class="ex-num">Ejercicio ${exNum++}</div>
-        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an-t);background:var(--an-b);padding:2px 8px;border-radius:10px;font-weight:700">${sys.label}</span></div>
         <div class="ex-formula">${c.formula}</div>
         <div class="ex-blank"></div>
       </div>`;
   });
   html += '</div>';
 
-  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--cat);margin-bottom:16px">Sección 2: De nombre a fórmula</h3>';
+  html += '<div style="margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--brd)"><h3 style="font-size:.95rem;font-weight:800;color:var(--cat-t);background:var(--cat-b);display:inline-block;padding:4px 14px;border-radius:20px;margin-bottom:16px">Sección 2: De nombre a fórmula</h3>';
   part2.forEach((c) => {
     const sys = pickName(c, sistema);
     html += `
       <div class="exercise-card ex-type-2 PDF-section">
         <div class="ex-num">Ejercicio ${exNum++}</div>
-        <div class="ex-prompt">Escribe la fórmula <span style="font-size:.75rem;color:var(--cat);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-prompt">Escribe la fórmula <span style="font-size:.75rem;color:var(--cat-t);background:var(--cat-b);padding:2px 8px;border-radius:10px;font-weight:700">${sys.label}</span></div>
         <div class="ex-name">${sys.name}</div>
         <div class="ex-blank"></div>
       </div>`;
   });
   html += '</div>';
 
-  html += '<div style="margin-bottom:32px"><h3 style="font-size:.95rem;font-weight:800;color:var(--ox);margin-bottom:16px">Sección 3: Completar tabla</h3>';
+  html += '<div style="margin-bottom:32px"><h3 style="font-size:.95rem;font-weight:800;color:var(--ox-t);background:var(--ox-b);display:inline-block;padding:4px 14px;border-radius:20px;margin-bottom:16px">Sección 3: Completar tabla</h3>';
   html += buildTable(part3, sistema);
   html += '</div>';
 
@@ -659,7 +777,7 @@ function generateFormulaToName(compounds, sistema){
     html += `
       <div class="exercise-card ex-type-1 PDF-section">
         <div class="ex-num">Ejercicio ${i+1}</div>
-        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-prompt">¿Cómo se llama este compuesto? <span style="font-size:.75rem;color:var(--an-t);background:var(--an-b);padding:2px 8px;border-radius:10px;font-weight:700">${sys.label}</span></div>
         <div class="ex-formula">${c.formula}</div>
         <div class="ex-blank"></div>
       </div>`;
@@ -674,7 +792,7 @@ function generateNameToFormula(compounds, sistema){
     html += `
       <div class="exercise-card ex-type-2 PDF-section">
         <div class="ex-num">Ejercicio ${i+1}</div>
-        <div class="ex-prompt">Escribe la fórmula del compuesto <span style="font-size:.75rem;color:var(--cat);font-weight:700">[${sys.label}]</span></div>
+        <div class="ex-prompt">Escribe la fórmula del compuesto <span style="font-size:.75rem;color:var(--cat-t);background:var(--cat-b);padding:2px 8px;border-radius:10px;font-weight:700">${sys.label}</span></div>
         <div class="ex-name">${sys.name}</div>
         <div class="ex-blank"></div>
       </div>`;
@@ -687,7 +805,6 @@ function generateTableComplete(compounds, sistema){
 }
 
 function buildTable(compounds, sistema){
-  // Multi-nomenclature table: columns depend on selected sistema
   const tableSize = 4;
   let html = '';
 
@@ -699,18 +816,16 @@ function buildTable(compounds, sistema){
     const chunk = compounds.slice(t, t + tableSize);
     const tableNum = Math.floor(t / tableSize) + 1;
 
-    // Column headers
     let headers = `<th style="width:18%">Fórmula</th>`;
     if(showTrad)  headers += `<th>Tradicional</th>`;
     if(showStock) headers += `<th>Stock</th>`;
     if(showSist)  headers += `<th>Sistemática</th>`;
 
     html += `<div class="exercise-card ex-type-3 PDF-section">
-      <div class="ex-num">Tabla ${tableNum}</div>
-      <div class="ex-prompt">Completa la tabla con la información faltante</div>
+      <div class="ex-num" style="padding:16px 24px 0">Tabla ${tableNum}</div>
+      <div class="ex-prompt" style="padding:4px 24px 12px">Completa la tabla con la información faltante</div>
       <div class="table-wrapper"><table><thead><tr>${headers}</tr></thead><tbody>`;
 
-    // Decide which cells are blank: rotate which column per row
     const cols = [];
     if(showTrad)  cols.push('trad');
     if(showStock) cols.push('stock');
@@ -732,25 +847,18 @@ function buildTable(compounds, sistema){
 }
 
 function generateOxidationState(compounds){
-  // Extract the metal/non-metal cation and its oxidation state from ions array
   let html = '';
   compounds.forEach((c, i) => {
-    // Find the cation ion entry to extract the EO
     const catIon = c.ions ? c.ions.find(ion => ion.t === 'cat') : null;
-    // Build a simple question: given the formula, find EO of the element indicated
-    // We ask for the EO of the first cation (metal) shown in the formula
     const hint = c.hint || '';
-    // Determine which element to ask about and what the answer is from ions
     let askEl = '';
     let answerEO = '';
     if(catIon){
-      // e.g. "Fe²⁺ (EO=+2)" or "Na⁺ × 2" → parse element symbol
       const m = catIon.l.match(/^([A-Z][a-z]?)/);
       if(m) askEl = m[1];
       const eoMatch = catIon.l.match(/EO=([+\-\d]+)/);
       if(eoMatch) answerEO = eoMatch[1];
       else {
-        // infer from charge notation like Fe²⁺ → +2, Na⁺ → +1
         const chM = catIon.l.match(/([A-Z][a-z]?)(\d*)([+\-])/);
         if(chM) answerEO = chM[3] === '+' ? `+${chM[2]||1}` : `-${chM[2]||1}`;
       }
@@ -763,9 +871,9 @@ function generateOxidationState(compounds){
           Calcula el <strong>estado de oxidación ${questionEl}</strong> en el siguiente compuesto.
           Recuerda: la suma algebraica de todos los estados de oxidación debe ser igual a <strong>0</strong>.
         </div>
-        <div style="font-size:2rem;font-weight:800;color:var(--ox);font-family:'Courier New',monospace;margin-bottom:14px">${c.formula}</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--ox-t);background:var(--ox-b);display:inline-block;padding:6px 18px;border-radius:var(--rm);font-family:var(--mono);margin-bottom:14px">${c.formula}</div>
         <div style="font-size:.8rem;color:var(--dimmer);margin-bottom:10px">
-          Iones presentes: ${(c.ions||[]).map(ion=>`<span style="background:${ion.t==='cat'?'var(--cat-b)':ion.t==='oh'?'var(--oh-b)':'var(--an-b)'};padding:2px 7px;border-radius:6px;font-size:.78rem">${ion.l}</span>`).join(' ')}
+          Iones presentes: ${(c.ions||[]).map(ion=>`<span style="background:${ion.t==='cat'?'var(--cat-b)':ion.t==='oh'?'var(--oh-b)':'var(--an-b)'};color:${ion.t==='cat'?'var(--cat-t)':ion.t==='oh'?'var(--oh-t)':'var(--an-t)'};padding:2px 7px;border-radius:6px;font-size:.78rem">${ion.l}</span>`).join(' ')}
         </div>
         <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
           <span style="font-size:.82rem;color:var(--dimmer)">Estado de oxidación de ${askEl||'?'} =</span>
@@ -773,7 +881,7 @@ function generateOxidationState(compounds){
         </div>
         <details style="margin-top:14px">
           <summary style="font-size:.75rem;color:var(--an);cursor:pointer;user-select:none">💡 Pista</summary>
-          <p style="font-size:.78rem;color:var(--dim);margin-top:6px;line-height:1.5">${hint||'Usa la regla de electroneutralidad: suma de cargas = 0.'}</p>
+          <p style="font-size:.78rem;color:var(--dim);margin-top:6px;line-height:1.5;background:var(--surf2);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 8px 8px 0">${hint||'Usa la regla de electroneutralidad: suma de cargas = 0.'}</p>
         </details>
       </div>`;
   });
@@ -790,28 +898,11 @@ function showScreen(id){
   window.scrollTo(0,0);
 }
 
+// PDF via window.print() — el navegador permite "Guardar como PDF"
 function exportToPDF(){
-  // Wrap student header + exercises into a single element for pdf export
-  const title = document.getElementById('prev-title').textContent;
-  const header = document.getElementById('student-header').outerHTML;
-  const body = document.getElementById('exercises-container').innerHTML;
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'font-family:Arial,sans-serif;color:#0d2d42;background:#fff;padding:4px';
-  wrapper.innerHTML = `<h2 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;color:#0d4a73">${title}</h2>${header}${body}`;
-  wrapper.querySelectorAll('details').forEach(d=>d.remove());
-  const opt = {
-    margin: 10,
-    filename: 'ejercicios-ionom.pdf',
-    image: {type: 'jpeg', quality: 0.98},
-    html2canvas: {scale: 2, backgroundColor:'#ffffff'},
-    jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4'}
-  };
-  html2pdf().set(opt).from(wrapper).save();
+  window.print();
 }
 </script>
-<footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
-  <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
-</footer>
 
 </body>
 </html>
