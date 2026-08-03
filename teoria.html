@@ -30,6 +30,7 @@
   --serif:Georgia,'Times New Roman',serif;
   /* === Misc === */
   --r:16px;--rs:10px;--rm:6px;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -80,6 +81,7 @@
   --err-b:#fee2e2;--err-t:#7f1d1d;
   --warn-b:#fef3c7;--warn-t:#92400e;
   --info-b:#e0f2fe;--info-t:#082f49;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -92,7 +94,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* NAV */
 .site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
-.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-brand em{color:var(--gold);font-style:normal}
 .nav-links{display:flex;gap:4px;align-items:center}
 .nav-links a{color:var(--nav-t);opacity:.8;text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
 .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
@@ -237,12 +239,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .progress-track{width:100%;height:5px;background:var(--brd);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--an),var(--cat));border-radius:3px;transition:width .4s ease}
 #progress-text{font-size:.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
-.intro-strip{background:linear-gradient(135deg,#0d4a73,#1a6ea8);color:#fff;border-radius:var(--r);padding:28px 32px;margin-bottom:28px}
-.intro-strip h2{font-family:var(--serif);font-size:1.3rem;margin-bottom:12px;color:#fcd34d}
+.intro-strip{background:linear-gradient(135deg,var(--nav),#1a6ea8);color:var(--nav-t);border-radius:var(--r);padding:28px 32px;margin-bottom:28px}
+.intro-strip h2{font-family:var(--serif);font-size:1.3rem;margin-bottom:12px;color:var(--warn)}
 .intro-strip p{font-size:.88rem;line-height:1.7;margin-bottom:10px;opacity:.92}
 .intro-strip .lvl-row{display:flex;flex-direction:column;gap:8px;margin:16px 0}
 .intro-strip .lvl{background:rgba(255,255,255,.1);border-left:3px solid var(--cat);border-radius:var(--rs);padding:10px 14px;font-size:.83rem}
-.intro-strip .lvl strong{color:#fcd34d;display:block;margin-bottom:2px}
+.intro-strip .lvl strong{color:var(--gold);display:block;margin-bottom:2px}
 @media(max-width:580px){.cards-grid{grid-template-columns:1fr 1fr}.nav-footer{flex-wrap:wrap}.btn-nav{flex:1}.sect{padding:16px 18px}.comp-grid{grid-template-columns:1fr}}
 @media(max-width:380px){.cards-grid{grid-template-columns:1fr}}
 
@@ -305,7 +307,7 @@ footer a:hover{text-decoration:underline}
   </div>
   <div style="display:flex;align-items:center;gap:6px">
     <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:4px">🌙</button>
-    <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+    <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:var(--gold);color:var(--nav);border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
   </div>
 </nav>
 
@@ -397,8 +399,8 @@ footer a:hover{text-decoration:underline}
 
 </div><!-- .app -->
 
-<button id="speak-btn-float" onclick="speakCurrentSection()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none">🔊 Leer</button>
-<button id="tts-stop-btn" onclick="stopSpeech()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<button id="speak-btn-float" onclick="speakCurrentSection()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:var(--nav);border:none;border-radius:100px;color:var(--nav-t);font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopSpeech()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:var(--err);border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 
 <footer>
   <p><a href="https://hbarcenasm863.github.io/ionom/">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>

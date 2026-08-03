@@ -34,6 +34,7 @@
   --serif:Georgia,'Times New Roman',serif;
   /* === Misc === */
   --r:16px;--rs:10px;--rm:6px;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -84,6 +85,7 @@
   --err-b:#fee2e2;--err-t:#7f1d1d;--errb:#fee2e2;
   --warn-b:#fef3c7;--warn-t:#92400e;--warnb:#fef3c7;
   --info-b:#e0f2fe;--info-t:#082f49;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -96,7 +98,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* NAV */
 .site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
 .nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
-.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-brand em{color:var(--gold);font-style:normal}
 .nav-links{display:flex;gap:4px}
 .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:8px;transition:background .15s,color .15s}
 #theme-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px;transition:all .2s;flex-shrink:0}
@@ -108,9 +110,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #s-portada{background:linear-gradient(145deg,#0d2d42 0%,#0d4a73 55%,#0a3d5e 100%);align-items:center;justify-content:flex-start;position:relative;overflow-x:hidden;overflow-y:auto;padding:40px 0}
 #s-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 40%,rgba(217,119,6,.14),transparent),radial-gradient(ellipse 60% 60% at 80% 70%,rgba(3,105,161,.15),transparent);pointer-events:none}
 .portada-inner{text-align:center;position:relative;z-index:1;padding:0 24px;max-width:560px;width:100%;margin:auto}
-.portada-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:#fcd34d;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.portada-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
 .portada-title{font-family:var(--serif);font-size:3rem;font-weight:700;font-style:italic;color:#fff;line-height:1.1;margin-bottom:8px;letter-spacing:-.04em}
-.portada-title em{color:#fcd34d;font-style:normal}
+.portada-title em{color:var(--gold);font-style:normal}
 .portada-sub{font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:22px}
 .portada-types{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
 .pt-chip{padding:5px 13px;border-radius:100px;font-size:.7rem;font-weight:700;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.07)}
@@ -118,7 +120,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* MODE TABS */
 .mode-tabs{display:flex;gap:8px;margin-bottom:20px}
 .mode-tab{flex:1;padding:10px 0;border-radius:100px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
-.mode-tab.act{background:rgba(217,119,6,.25);border-color:rgba(217,119,6,.6);color:#fcd34d}
+.mode-tab.act{background:rgba(217,119,6,.25);border-color:rgba(217,119,6,.6);color:var(--gold)}
 .mode-tab:hover:not(.act){background:rgba(255,255,255,.13);color:#fff}
 
 /* LOGIN PANEL */
@@ -128,7 +130,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .code-inp{flex:1;padding:11px 14px;border-radius:var(--rs);border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-family:var(--mono);font-size:1rem;font-weight:700;letter-spacing:.1em;outline:none;transition:border-color .2s}
 .code-inp::placeholder{color:rgba(255,255,255,.3);font-weight:400;letter-spacing:0;font-size:.85rem}
 .code-inp:focus{border-color:rgba(217,119,6,.7);background:rgba(255,255,255,.11)}
-.code-btn{padding:11px 18px;background:rgba(217,119,6,.3);border:2px solid rgba(217,119,6,.6);color:#fcd34d;border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap}
+.code-btn{padding:11px 18px;background:rgba(217,119,6,.3);border:2px solid rgba(217,119,6,.6);color:var(--gold);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap}
 .code-btn:hover{background:rgba(217,119,6,.5)}
 .code-ok{margin-top:10px;padding:10px 14px;background:rgba(22,163,74,.15);border:1.5px solid rgba(22,163,74,.4);border-radius:var(--rs);color:#86efac;font-size:.82rem;display:none}
 .code-ok strong{display:block;font-size:.92rem;color:#4ade80}
@@ -152,14 +154,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #s-game{background:var(--bg);overflow-y:auto}
 .game-hdr{background:var(--nav);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;font-style:italic;color:#fff}
-.gh-logo em{color:#fcd34d;font-style:normal}
+.gh-logo em{color:var(--gold);font-style:normal}
 .gh-back{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-family:var(--sans);font-size:.75rem;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s}
 .gh-back:hover{background:rgba(255,255,255,.22)}
 .gh-center{flex:1;display:flex;flex-direction:column;gap:4px}
 .gh-prog{height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
 .gh-progfill{height:100%;background:linear-gradient(90deg,var(--cat),var(--an));transition:width .4s ease;border-radius:3px}
 .gh-pts{font-size:.62rem;color:rgba(255,255,255,.55);text-align:right;margin-top:1px}
-.gh-score{font-family:var(--mono);font-size:.95rem;font-weight:700;color:#fcd34d;white-space:nowrap}
+.gh-score{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--gold);white-space:nowrap}
 .game-body{max-width:620px;margin:0 auto;padding:24px 18px 80px;width:100%}
 .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px}
 .stat-box{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:12px;text-align:center;box-shadow:var(--sh)}
@@ -232,11 +234,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .fb-tip{margin-top:6px;background:var(--info-b);border-left:3px solid var(--info);padding:8px 12px;border-radius:0 8px 8px 0;font-size:.8rem;color:var(--tx);line-height:1.6}
 /* Dual progress bar */
 .gh-prog-dual{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;display:flex;margin-top:2px}
-.gh-progfill-ok{height:100%;background:#22c55e;transition:width .4s ease}
+.gh-progfill-ok{height:100%;background:var(--ok);transition:width .4s ease}
 .gh-progfill-err{height:100%;background:#ef4444;transition:width .4s ease}
 /* Efficiency color helpers */
 .eff-ok{color:#4ade80!important}
-.eff-warn{color:#fcd34d!important}
+.eff-warn{color:var(--gold)!important}
 .eff-err{color:#f87171!important}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .fb-alts{font-size:.78rem;margin-top:8px;opacity:.9;line-height:2}
@@ -252,7 +254,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .medal{font-size:4.5rem;display:block;margin-bottom:12px;animation:bounce .6s ease}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .result-level{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:6px}
-.result-grade{font-family:var(--serif);font-size:3.2rem;font-weight:700;font-style:italic;color:#fcd34d;line-height:1;margin-bottom:6px}
+.result-grade{font-family:var(--serif);font-size:3.2rem;font-weight:700;font-style:italic;color:var(--gold);line-height:1;margin-bottom:6px}
 .result-msg{font-size:.88rem;color:rgba(255,255,255,.75);line-height:1.65}
 .result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
 .rs-box{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:14px;text-align:center;box-shadow:var(--sh)}
@@ -285,7 +287,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .timer-bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:4px}
 .timer-fill{height:100%;border-radius:3px;transition:width 1s linear,background-color .5s}
 .timer-num{font-family:var(--mono);font-size:.72rem;font-weight:700;color:rgba(255,255,255,.65);text-align:right;margin-top:1px}
-.timer-num.warn{color:#fcd34d}
+.timer-num.warn{color:var(--gold)}
 .timer-num.danger{color:#f87171}
 
 /* OX-ASSIGN */
@@ -305,12 +307,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .wm-avatar{width:72px;height:72px;border-radius:50%;background:rgba(217,119,6,.25);border:3px solid rgba(217,119,6,.6);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px}
 .wm-hi{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.55);margin-bottom:4px}
-.wm-name{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:#fcd34d;line-height:1.2;margin-bottom:6px}
-.wm-course{display:inline-block;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:#fcd34d;font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:100px;margin-bottom:20px}
+.wm-name{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:var(--gold);line-height:1.2;margin-bottom:6px}
+.wm-course{display:inline-block;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:100px;margin-bottom:20px}
 .wm-prompt{font-size:.88rem;color:rgba(255,255,255,.75);margin-bottom:22px;line-height:1.6}
 .wm-groups{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .wm-grp{padding:11px 8px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--sans);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.35}
-.wm-grp:hover{background:rgba(217,119,6,.2);border-color:rgba(217,119,6,.6);color:#fcd34d;transform:translateY(-2px)}
+.wm-grp:hover{background:rgba(217,119,6,.2);border-color:rgba(217,119,6,.6);color:var(--gold);transform:translateY(-2px)}
 .wm-grp.full{grid-column:1/-1;background:rgba(217,119,6,.14);border-color:rgba(217,119,6,.4)}
 .wm-grp .wg-icon{font-size:1.1rem;display:block;margin-bottom:3px}
 .wm-grp .wg-sub{font-size:.6rem;opacity:.6;font-weight:400}
@@ -363,7 +365,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
     <div style="display:flex;align-items:center;gap:4px">
       <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema">🌙</button>
-      <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+      <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:var(--gold);color:var(--nav);border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
     </div>
   </nav>
   <div class="portada-inner">
@@ -400,7 +402,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <span class="pt-chip">⚖️ Equilibrio iónico</span>
     </div>
 
-    <button onclick="openHowToPlay()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:#fcd34d;border-radius:100px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:18px;transition:all .2s" onmouseover="this.style.background='rgba(252,211,77,.25)'" onmouseout="this.style.background='rgba(252,211,77,.15)'">🔊 ¿Cómo jugar?</button>
+    <button onclick="openHowToPlay()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:var(--gold);border-radius:100px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:18px;transition:all .2s" onmouseover="this.style.background='rgba(252,211,77,.25)'" onmouseout="this.style.background='rgba(252,211,77,.15)'">🔊 ¿Cómo jugar?</button>
 
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
       <label for="difficulty-sel" style="font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600">Dificultad:</label>
@@ -472,12 +474,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 <!-- ═══════════════ ¿CÓMO JUGAR? MODAL (MAYER) ═══════════════ -->
 <div id="howtoplay-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeHowToPlay()">
-  <div style="background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(252,211,77,.5);border-radius:20px;padding:32px 28px;max-width:420px;width:100%;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.55);position:relative;animation:slideUp .25s ease">
+  <div style="background:linear-gradient(145deg,var(--tx),var(--nav));border:2px solid rgba(252,211,77,.5);border-radius:20px;padding:32px 28px;max-width:420px;width:100%;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.55);position:relative;animation:slideUp .25s ease">
     <button onclick="closeHowToPlay()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
     <div style="text-align:center;margin-bottom:18px">
       <div style="font-size:2.2rem;margin-bottom:6px">🎮</div>
-      <div style="font-size:1.3rem;font-weight:800;color:#fcd34d;font-family:Georgia,serif;font-style:italic">¿Cómo jugar?</div>
-      <div style="font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Ion<span style="color:#fcd34d">Nom</span> — Guía rápida</div>
+      <div style="font-size:1.3rem;font-weight:800;color:var(--gold);font-family:Georgia,serif;font-style:italic">¿Cómo jugar?</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Ion<span style="color:var(--gold)">Nom</span> — Guía rápida</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
       <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.1)">
@@ -552,7 +554,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <span class="gh-logo" style="flex-shrink:0">Ion<em>Nom</em></span>
     <div class="gh-center">
       <div class="gh-prog-dual"><div class="gh-progfill-ok" id="g-prog-ok" style="width:0%"></div><div class="gh-progfill-err" id="g-prog-err" style="width:0%"></div></div>
-      <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;background:#22c55e"></div></div>
+      <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;background:var(--ok)"></div></div>
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div class="gh-pts" id="g-pts">0 / 40 pts</div>
         <div class="timer-num" id="timer-num">60s</div>
@@ -643,7 +645,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
     <div style="display:flex;align-items:center;gap:4px">
       <button id="theme-btn-r" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px">🌙</button>
-      <button style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+      <button style="display:none;padding:7px 14px;background:var(--gold);color:var(--nav);border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
     </div>
   </nav>
   <div class="result-body">
@@ -1160,7 +1162,7 @@ function startTimer(){
   const fill=document.getElementById('timer-fill');
   const num=document.getElementById('timer-num');
   function tick(){
-    if(fill){fill.style.width=(left/TIMER_TOTAL*100)+'%';fill.style.backgroundColor=left>20?'#22c55e':left>10?'#f59e0b':'#ef4444';}
+    if(fill){fill.style.width=(left/TIMER_TOTAL*100)+'%';fill.style.setProperty('background-color',left>20?'var(--ok)':left>10?'var(--warn)':'var(--err)');}
     if(num){num.textContent=left+'s';num.className='timer-num'+(left<=10?' danger':left<=20?' warn':'');}
     if(left<=0){stopTimer();timeOut();return;}
     left--;
@@ -2164,7 +2166,7 @@ function checkReactChainWrite(){
     ST.attempts++;ST.totalAttempts++;
     inp.disabled=true;if(btn)btn.disabled=true;
     if(normalizeFormula(inp.value)===normalizeFormula(correct)){
-      inp.style.borderColor='#16a34a';inp.style.background='#dcfce7';inp.style.color='#14532d';
+      inp.style.setProperty('border-color','var(--ok)');inp.style.setProperty('background','var(--ok-b)');inp.style.setProperty('color','var(--ok-t)');
       document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
       const pts=ST.attempts===1?2:ST.attempts===2?1:0;
       ST.score+=pts;ST.correct++;
@@ -2428,7 +2430,7 @@ function generateStudyFeedback(){
   const groups=Object.keys(byGroup);
   const container=document.getElementById('cert-container');
   if(!groups.length){
-    container.innerHTML='<div style="text-align:center;padding:24px 20px;background:var(--okb);border:2px solid var(--ok);border-radius:var(--r);color:#14532d"><div style="font-size:2.5rem;margin-bottom:10px">🏆</div><strong style="font-size:1rem">¡Sin errores! Dominas todos los grupos de esta sesión.</strong></div>';
+    container.innerHTML='<div style="text-align:center;padding:24px 20px;background:var(--okb);border:2px solid var(--ok);border-radius:var(--r);color:var(--ok-t)"><div style="font-size:2.5rem;margin-bottom:10px">🏆</div><strong style="font-size:1rem">¡Sin errores! Dominas todos los grupos de esta sesión.</strong></div>';
     return;
   }
   container.innerHTML='<div style="background:var(--warnb);border:2px solid var(--warn);border-radius:var(--r);padding:20px"><div style="font-weight:800;font-size:.92rem;color:var(--cat-t);margin-bottom:14px">📚 Temas para repasar</div>'+
@@ -2585,7 +2587,7 @@ window.addEventListener('appinstalled', () => {
       <li>Toca "Añadir" en la esquina superior derecha</li>
       <li>¡Listo! IonNom aparecerá en tu home</li>
     </ol>
-    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:#0d4a73;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
+    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:var(--nav);color:var(--nav-t);border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
   </div>
 </div>
 <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">

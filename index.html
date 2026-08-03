@@ -36,6 +36,7 @@
   --serif:Georgia,"Times New Roman",serif;
   /* Misc */
   --r:16px; --rs:10px; --rm:6px;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -86,6 +87,7 @@
   --err-b:#fee2e2; --err-t:#7f1d1d;
   --warn-b:#fef3c7; --warn-t:#92400e;
   --info-b:#e0f2fe; --info-t:#082f49;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -129,7 +131,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   white-space:nowrap;
   flex-shrink:0;
 }
-.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-brand em{color:var(--gold);font-style:normal}
 .nav-links{
   display:flex;
   gap:2px;
@@ -211,7 +213,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   text-wrap:balance;
   margin-bottom:10px;
 }
-.hero h1 em{color:#fcd34d;font-style:normal}
+.hero h1 em{color:var(--gold);font-style:normal}
 .hero-sub{
   font-size:.92rem;
   color:rgba(255,255,255,.72);
@@ -264,7 +266,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   margin-left:4px;
   line-height:1.55;
 }
-.hd-result strong{color:#fcd34d}
+.hd-result strong{color:var(--gold)}
 
 /* Hero actions */
 .hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -629,7 +631,7 @@ footer a:hover{text-decoration:underline}
     <a href="simulador.html">🔬 <span class="full">Simulador</span></a>
   </div>
   <div class="nav-right">
-    <button id="pwa-install-nav-btn" style="display:none;padding:6px 12px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.76rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+    <button id="pwa-install-nav-btn" style="display:none;padding:6px 12px;background:var(--gold);color:var(--nav);border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.76rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
     <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema">🌙</button>
   </div>
 </nav>
@@ -767,7 +769,7 @@ footer a:hover{text-decoration:underline}
       <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y 3 sistemas</div></div>
     </a>
     <span class="ruta-arrow" aria-hidden="true">→</span>
-    <a class="rs r1" href="funciones.html" style="border-color:#059669;background:var(--ok-b);color:var(--ok-t)">
+    <a class="rs r1" href="funciones.html" style="border-color:var(--ok);background:var(--ok-b);color:var(--ok-t)">
       <span class="rs-n">②</span>
       <div><div class="rs-title">Funciones</div><div class="rs-desc">Ejercicios por los 8 grupos inorgánicos</div></div>
     </a>
@@ -876,19 +878,19 @@ footer a:hover{text-decoration:underline}
   <a class="mod-card duelo" href="nomenClash.html">
     <div class="mod-top">
       <span class="mod-icon">⚔️</span>
-      <div class="mod-paso" style="color:#D4AF37;opacity:.9">⑥ Competencia</div>
+      <div class="mod-paso" style="color:var(--gold);opacity:.9">⑥ Competencia</div>
       <div class="mod-title">NomenClash — El Duelo</div>
       <div class="mod-subtitle" style="color:rgba(242,232,213,.6)">Combina iones, forma compuestos y derrota a la IA</div>
       <div class="mod-desc" style="color:rgba(242,232,213,.72)">Juego de cartas medieval: cationes vs aniones, nombramiento en los 3 sistemas. Modo básico y completo.</div>
     </div>
     <div class="mod-bottom">
       <div class="mod-chips">
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">Cartas</span>
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">IA oponente</span>
+        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">Cartas</span>
+        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">IA oponente</span>
       </div>
       <div class="mod-meta">
         <span class="mod-badge avanzado">Avanzado</span>
-        <span class="mod-arrow" style="color:#D4AF37">→</span>
+        <span class="mod-arrow" style="color:var(--gold)">→</span>
       </div>
     </div>
   </a>

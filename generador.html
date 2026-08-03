@@ -30,6 +30,7 @@
   --serif:Georgia,"Times New Roman",serif;
   /* === Misc === */
   --r:16px; --rs:10px; --rm:6px;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
 }
@@ -64,6 +65,8 @@
   --err-b:#450a0a; --err-t:#fca5a5;
   --warn-b:#422006; --warn-t:#fde68a;
   --info-b:#082f49; --info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
 }
 :root[data-theme="light"]{
   --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
@@ -78,6 +81,9 @@
   --err-b:#fee2e2; --err-t:#7f1d1d;
   --warn-b:#fef3c7; --warn-t:#92400e;
   --info-b:#e0f2fe; --info-t:#082f49;
+  --gold:#fcd34d;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -87,7 +93,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* NAV */
 .site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:10}
 .nav-brand{color:var(--nav-t);font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none}
-.nav-brand em{color:#fcd34d;font-style:normal}
+.nav-brand em{color:var(--gold);font-style:normal}
 .nav-links{display:flex;gap:4px;align-items:center}
 .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:8px;transition:background .15s}
 .nav-links a:hover{background:rgba(255,255,255,.1)}
@@ -98,8 +104,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* Group checkboxes */
 .group-check{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.8);font-size:.83rem;border:1.5px solid rgba(255,255,255,.12);transition:background .15s,border-color .15s}
 .group-check:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
-.group-check input[type=checkbox]{accent-color:#fcd34d;width:15px;height:15px;flex-shrink:0;cursor:pointer}
-.group-check.checked{background:rgba(252,211,77,.12);border-color:rgba(252,211,77,.5);color:#fcd34d}
+.group-check input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;cursor:pointer}
+.group-check.checked{background:rgba(252,211,77,.12);border-color:rgba(252,211,77,.5);color:var(--gold)}
 
 /* SCREENS */
 .screen{display:none;min-height:calc(100vh - 48px);flex-direction:column;padding:40px 20px}
@@ -115,12 +121,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px;display:block}
 .form-select{width:100%;padding:11px 14px;background:var(--surf2);border:1.5px solid var(--brd2);border-radius:var(--rs);color:var(--tx);font-family:var(--sans);font-size:.9rem;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:rgba(13,45,66,.7);padding-right:36px;cursor:pointer;color:#fff}
 .form-select option{background:#0d2d42;color:#fff}
-.form-select:focus{outline:none;border-color:#fcd34d;background:#0a3d5e}
+.form-select:focus{outline:none;border-color:var(--gold);background:#0a3d5e}
 .form-select:hover{border-color:rgba(255,255,255,.45)}
 
 .form-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--rs);color:#fff;font-family:var(--sans);font-size:.9rem}
 .form-input::placeholder{color:rgba(255,255,255,.3)}
-.form-input:focus{outline:none;border-color:#fcd34d}
+.form-input:focus{outline:none;border-color:var(--gold)}
 
 .btn-gen{width:100%;padding:15px;background:var(--cat);color:#fff;border:none;border-radius:var(--rs);font-family:var(--sans);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:16px}
 .btn-gen:hover{background:#b8860b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,119,6,.4)}
@@ -216,7 +222,7 @@ footer a{color:var(--dim);text-decoration:none;font-weight:600}
   <div class="form-container">
     <h1 class="form-title">⚙️ Generador de Ejercicios</h1>
     <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
-      <button onclick="openGenTip()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:#fcd34d;border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s">🔊 ¿Cómo funciona?</button>
+      <button onclick="openGenTip()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:var(--gold);border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s">🔊 ¿Cómo funciona?</button>
     </div>
 
     <div class="form-group">
@@ -311,15 +317,15 @@ footer a{color:var(--dim);text-decoration:none;font-weight:600}
 
 <!-- ═══ GENERADOR TIP MODAL (MAYER) ═══ -->
 <div id="gen-tip-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeGenTip()">
-  <div style="background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(252,211,77,.5);border-radius:20px;padding:32px 28px;max-width:440px;width:100%;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.55);position:relative">
+  <div style="background:linear-gradient(145deg,var(--tx),var(--nav));border:2px solid rgba(252,211,77,.5);border-radius:20px;padding:32px 28px;max-width:440px;width:100%;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.55);position:relative">
     <button onclick="closeGenTip()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
     <div style="text-align:center;margin-bottom:18px">
       <div style="font-size:2rem;margin-bottom:6px">⚙️</div>
-      <div style="font-size:1.2rem;font-weight:800;color:#fcd34d;font-family:Georgia,serif;font-style:italic">Generador de Ejercicios</div>
+      <div style="font-size:1.2rem;font-weight:800;color:var(--gold);font-family:Georgia,serif;font-style:italic">Generador de Ejercicios</div>
       <div style="font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px">Para docentes y estudiantes de 10° — DBA 3 MEN</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;font-size:.82rem">
-      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #fcd34d"><strong style="color:#fcd34d">① Grupos funcionales:</strong><span style="color:rgba(255,255,255,.75)"> selecciona uno o varios grupos que quieres incluir en la hoja de trabajo.</span></div>
+      <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid var(--gold)"><strong style="color:var(--gold)">① Grupos funcionales:</strong><span style="color:rgba(255,255,255,.75)"> selecciona uno o varios grupos que quieres incluir en la hoja de trabajo.</span></div>
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #93c5fd"><strong style="color:#93c5fd">② Tipo de ejercicio:</strong><span style="color:rgba(255,255,255,.75)"> elige si los estudiantes nombrarán fórmulas, escribirán fórmulas a partir del nombre, completarán una tabla o calcularán estados de oxidación.</span></div>
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #5eead4"><strong style="color:#5eead4">③ Sistema de nomenclatura:</strong><span style="color:rgba(255,255,255,.75)"> Tradicional (sufijos -oso/-ico), Stock (números romanos) o Sistemática (prefijos griegos).</span></div>
       <div style="padding:10px;background:rgba(255,255,255,.06);border-radius:8px;border-left:3px solid #86efac"><strong style="color:#86efac">④ Cantidad:</strong><span style="color:rgba(255,255,255,.75)"> entre 3 y 50 ejercicios. Puedes imprimir o guardar como PDF desde el diálogo de impresión del navegador.</span></div>

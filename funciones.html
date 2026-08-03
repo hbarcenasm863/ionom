@@ -30,11 +30,13 @@
   --serif:Georgia,"Times New Roman",serif;
   /* === Misc === */
   --r:16px; --rs:10px; --rm:6px;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
   /* === Dark panel (mapa, mayer modal) === */
   --dp:#0d2d42; --dp-brd:#1e4060; --dp-surf:#0a1f30;
   --dp-tx:#e0f2fe; --dp-tx2:#cbd5e1; --dp-dim:#64748b; --dp-dim2:#94a3b8;
+  --dp-accent:#3b82f6; --dp-lo:#bfdbfe;
 }
 @media(prefers-color-scheme:dark){
   :root{
@@ -85,6 +87,7 @@
   --err-b:#fee2e2; --err-t:#7f1d1d;
   --warn-b:#fef3c7; --warn-t:#92400e;
   --info-b:#e0f2fe; --info-t:#082f49;
+  --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
   --dp:#0d2d42; --dp-brd:#1e4060; --dp-surf:#0a1f30;
@@ -282,14 +285,14 @@ footer a:hover{text-decoration:underline}
 
 /* color variants */
 .rn-metal .rnode-box{background:#78350f;border-color:#d97706;color:#fcd34d}
-.rn-nometal .rnode-box{background:#0c2e5c;border-color:#3b82f6;color:#bfdbfe}
+.rn-nometal .rnode-box{background:#0c2e5c;border-color:var(--dp-accent);color:var(--dp-lo)}
 .rn-oxbas .rnode-box{background:#7c2d12;border-color:#ea580c;color:#fed7aa}
 .rn-anhid .rnode-box{background:#1e3a5f;border-color:#60a5fa;color:#dbeafe}
 .rn-base .rnode-box{background:#4c1d95;border-color:#7c3aed;color:#ede9fe}
 .rn-acox .rnode-box{background:#164e63;border-color:#06b6d4;color:#cffafe}
 .rn-salox .rnode-box{background:#3b0764;border-color:#a855f7;color:#f3e8ff;font-size:.82rem}
 .rn-hidru .rnode-box{background:#713f12;border-color:#ca8a04;color:#fef08a}
-.rn-achid .rnode-box{background:#0f3460;border-color:#2563eb;color:#bfdbfe}
+.rn-achid .rnode-box{background:#0f3460;border-color:#2563eb;color:var(--dp-lo)}
 .rn-salbin .rnode-box{background:#134e4a;border-color:#0d9488;color:#99f6e4}
 
 /* bottom row */
@@ -300,7 +303,7 @@ footer a:hover{text-decoration:underline}
 #react-modal-overlay.open{display:flex}
 .react-modal-box{background:var(--dp);border:1px solid var(--dp-brd);border-radius:var(--r);padding:28px 28px 24px;max-width:500px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
 .react-modal-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding-right:36px}
-.react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:#bfdbfe;margin-bottom:12px;padding-right:36px;line-height:1.4}
+.react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--dp-lo);margin-bottom:12px;padding-right:36px;line-height:1.4}
 .react-modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--dp-dim);font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color .15s}
 .react-modal-close:hover{color:var(--dp-tx)}
 .react-modal-divider{border:none;border-top:1px solid var(--dp-brd);margin:12px 0}
@@ -308,7 +311,7 @@ footer a:hover{text-decoration:underline}
 .react-modal-section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dp-dim);margin-bottom:6px}
 .react-modal-desc{font-size:.82rem;color:var(--dp-tx2);line-height:1.55}
 .react-modal-rxns{list-style:none;display:flex;flex-direction:column;gap:8px}
-.react-modal-rxns li{background:var(--dp-surf);border-left:3px solid #3b82f6;border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:var(--dp-tx);line-height:1.5}
+.react-modal-rxns li{background:var(--dp-surf);border-left:3px solid var(--dp-accent);border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:var(--dp-tx);line-height:1.5}
 .react-modal-cond{font-size:.8rem;color:var(--dp-dim2);line-height:1.5}
 .react-modal-colombia{font-size:.8rem;color:#86efac;line-height:1.5}
 .react-modal-prereq{font-size:.78rem;color:#fcd34d;background:rgba(124,49,0,.3);border:1px solid #78350f;border-radius:6px;padding:7px 10px;line-height:1.45}
@@ -345,9 +348,9 @@ footer a:hover{text-decoration:underline}
 /* ══════════ FEEDBACK WHY BOX ══════════ */
 .fb-why{margin-top:8px;font-size:.82rem;color:var(--tx2);background:var(--surf2);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 8px 8px 0}
 /* ══════════ MAYER CHAIN DIAGRAM ══════════ */
-.mc-node{background:var(--dp-surf);border:1.5px solid var(--dp-brd);border-radius:8px;padding:6px 14px;font-family:'Courier New',monospace;font-weight:700;color:#bfdbfe;text-align:center;transition:box-shadow .3s,border-color .3s;position:relative}
+.mc-node{background:var(--dp-surf);border:1.5px solid var(--dp-brd);border-radius:8px;padding:6px 14px;font-family:'Courier New',monospace;font-weight:700;color:var(--dp-lo);text-align:center;transition:box-shadow .3s,border-color .3s;position:relative}
 .mc-node.mc-dim{opacity:.55}
-.mc-node.mc-glow{opacity:1;box-shadow:0 0 0 2px #3b82f6,0 0 16px rgba(59,130,246,.45);border-color:#3b82f6;color:var(--dp-tx)}
+.mc-node.mc-glow{opacity:1;box-shadow:0 0 0 2px var(--dp-accent),0 0 16px rgba(59,130,246,.45);border-color:var(--dp-accent);color:var(--dp-tx)}
 .mc-lbl{display:block;font-size:.62rem;font-weight:400;color:var(--dp-dim);font-family:'Trebuchet MS',sans-serif;margin-top:2px}
 .mc-arrow{color:var(--dp-dim);font-size:.78rem;text-align:center;line-height:1.8}
 </style>
@@ -562,7 +565,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(0)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(0)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">01</div>
         <div>
@@ -696,7 +699,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(1)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(1)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge an">
         <div class="func-num">02</div>
         <div>
@@ -838,7 +841,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(2)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(2)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">03</div>
         <div>
@@ -966,7 +969,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(3)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(3)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge an">
         <div class="func-num">04</div>
         <div>
@@ -1105,7 +1108,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(4)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(4)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge oh">
         <div class="func-num">05</div>
         <div>
@@ -1232,7 +1235,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(5)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(5)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge ox">
         <div class="func-num">06</div>
         <div>
@@ -1367,7 +1370,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(6)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(6)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">07</div>
         <div>
@@ -1500,7 +1503,7 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="sect">
-      <button onclick="openMayer(7)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(7)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge ox">
         <div class="func-num">08</div>
         <div>
@@ -2410,7 +2413,7 @@ function mayerShowStep(d, idx){
     '<div style="font-size:.88rem;color:var(--dp-tx);line-height:1.65">'+step.text+'</div>';
   var dots = document.getElementById('mayer-progress-dots');
   dots.innerHTML = d.steps.map(function(_,i){
-    return '<div style="width:8px;height:8px;border-radius:50%;background:'+(i<=idx?'#3b82f6':'var(--dp-brd)')+'"></div>';
+    return '<div style="width:8px;height:8px;border-radius:50%;background:'+(i<=idx?'var(--dp-accent)':'var(--dp-brd)')+'"></div>';
   }).join('');
   var nextBtn = document.getElementById('mayer-next-btn');
   if(idx >= d.steps.length-1){
@@ -2470,9 +2473,9 @@ function speakText(btn){
     <button onclick="closeMayer()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--dp-dim);font-size:1.4rem;cursor:pointer">✕</button>
     <div id="mayer-header" style="margin-bottom:14px"></div>
     <div id="mayer-chain" style="margin-bottom:16px"></div>
-    <div id="mayer-step-card" style="background:var(--dp-surf);border-radius:10px;padding:14px 16px;border-left:4px solid #3b82f6;min-height:80px;font-size:.88rem;color:var(--dp-tx2);line-height:1.6"></div>
+    <div id="mayer-step-card" style="background:var(--dp-surf);border-radius:10px;padding:14px 16px;border-left:4px solid var(--dp-accent);min-height:80px;font-size:.88rem;color:var(--dp-tx2);line-height:1.6"></div>
     <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end;align-items:center">
-      <button id="mayer-speak-btn" onclick="mayerSpeak()" style="padding:8px 14px;background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.4);border-radius:8px;color:#93c5fd;font-size:.8rem;cursor:pointer">🔊 Escuchar</button>
+      <button id="mayer-speak-btn" onclick="mayerSpeak()" style="padding:8px 14px;background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.4);border-radius:8px;color:var(--dp-tx);font-size:.8rem;cursor:pointer">🔊 Escuchar</button>
       <button id="mayer-next-btn" onclick="mayerNext()" style="padding:9px 20px;background:var(--cat);border:none;border-radius:8px;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer">Siguiente →</button>
     </div>
     <div id="mayer-progress-dots" style="display:flex;justify-content:center;gap:6px;margin-top:14px"></div>
