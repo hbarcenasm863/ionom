@@ -490,8 +490,8 @@ const GEN_STOICH_LEGACY = [
 // Returns {name, system, label}
 function pickName(c, sistema){
   const SYS_LABEL = {trad:'Tradicional', stock:'Stock', sist:'IUPAC'};
-  // Oxysalts: curriculum only requires traditional nomenclature
-  if(c.group === 'sal-ox'){
+  // Oxysalts and oxyacids: curriculum only requires traditional nomenclature
+  if(c.group === 'sal-ox' || c.group === 'ac-ox'){
     return {name: c.trad[0] || '—', system: 'trad', label: 'Tradicional'};
   }
   let candidates = [];
