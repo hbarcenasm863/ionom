@@ -223,6 +223,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
+
+/* TTS button */
+.tts-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--an-b);border:1.5px solid var(--an);border-radius:var(--rs);font-size:.78rem;font-weight:700;color:var(--an-t);cursor:pointer;transition:background .15s,transform .1s;margin:8px 0 14px}
+.tts-btn:hover{background:var(--an);color:#fff;transform:translateY(-1px)}
+.tts-btn.speaking{background:var(--an);color:#fff}
+
+/* Factor de conversión chain */
+.factor-chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0;background:var(--bg);border:2px solid var(--brd);border-radius:var(--rs);padding:14px 16px;overflow-x:auto}
+.factor-box{display:flex;flex-direction:column;align-items:center;border:2px solid var(--ox);border-radius:8px;overflow:hidden;min-width:90px;font-family:var(--mono);font-size:.82rem}
+.factor-num{background:var(--ox-b);color:var(--ox-t);padding:4px 10px;text-align:center;font-weight:700;width:100%;border-bottom:2px solid var(--ox)}
+.factor-den{background:#fff;color:var(--dim);padding:4px 10px;text-align:center;width:100%}
+.factor-mul{font-size:1.1rem;font-weight:700;color:var(--cat);padding:0 2px}
+.factor-eq{font-size:1rem;font-weight:700;color:var(--ok);padding:0 4px}
+.factor-result{background:var(--rx-b);border:2px solid var(--rx);border-radius:8px;padding:6px 12px;font-family:var(--mono);font-size:.88rem;font-weight:700;color:var(--rx-t)}
+
+/* mol masa molar table color */
+.card.card-mol{border-color:var(--an);background:linear-gradient(135deg,var(--an-b),#fff)}
+.card.card-estoq{border-color:var(--ox);background:linear-gradient(135deg,var(--ox-b),#fff)}
 </style>
 </head>
 <body>
@@ -327,6 +345,18 @@ footer a:hover{text-decoration:underline}
       <div class="card-desc">Semirreacciones, estados de oxidación y transferencia de electrones</div>
       <span class="card-badge">Avanzado</span>
     </div>
+    <div class="card card-mol" onclick="goToSection(11)">
+      <span class="card-icon">⚗️</span>
+      <div class="card-title">Mol y Masa Molar</div>
+      <div class="card-desc">n = m/M, número de Avogadro y cálculo de masas molares</div>
+      <span class="card-badge">Estequiometría</span>
+    </div>
+    <div class="card card-estoq" onclick="goToSection(12)">
+      <span class="card-icon">🔗</span>
+      <div class="card-title">Estequiometría</div>
+      <div class="card-desc">Factores de conversión para calcular masas en reacciones balanceadas</div>
+      <span class="card-badge">Avanzado</span>
+    </div>
   </div>
 </div>
 
@@ -387,7 +417,9 @@ const SECCIONES = [
   {titulo:'Tipos de Reacción',       icon:'⚡',  color:'rx'},
   {titulo:'Balanceo por Tanteo',     icon:'⚖️', color:'cat'},
   {titulo:'Balanceo Algebraico',     icon:'🔢', color:'ind'},
-  {titulo:'Balanceo Redox',          icon:'🔋', color:'red'}
+  {titulo:'Balanceo Redox',          icon:'🔋', color:'red'},
+  {titulo:'Mol y Masa Molar',        icon:'⚗️', color:'an'},
+  {titulo:'Estequiometría',          icon:'🔗', color:'ox'}
 ];
 
 // ══════════════════════════════════════════
