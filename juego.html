@@ -365,8 +365,8 @@ function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 // ── Inline fallback (used only if banco.js fails) ──
 const MINI=[
-  {formula:'NaCl',group:'sal-bin',trad:['cloruro de sodio'],stock:[],sist:['monocloruro de sodio'],hint:'Na⁺ + Cl⁻'},
-  {formula:'CaO',group:'ox-bas',trad:['óxido de calcio'],stock:[],sist:['monóxido de calcio'],hint:'Ca²⁺ + O²⁻'},
+  {formula:'NaCl',group:'sal-bin',trad:['cloruro de sodio'],stock:[],sist:['cloruro de sodio'],hint:'Na⁺ + Cl⁻'},
+  {formula:'CaO',group:'ox-bas',trad:['óxido de calcio'],stock:[],sist:['óxido de calcio'],hint:'Ca²⁺ + O²⁻'},
   {formula:'NaOH',group:'base',trad:['hidróxido de sodio'],stock:[],sist:['hidróxido de sodio'],hint:'Na⁺ + OH⁻'},
   {formula:'H₂SO₄',group:'ac-ox',trad:['ácido sulfúrico'],stock:['ácido tetraoxosulfúrico (VI)'],sist:['ácido sulfúrico'],hint:'H + SO₄²⁻'},
   {formula:'FeCl₂',group:'sal-bin',trad:['cloruro ferroso'],stock:['cloruro de hierro (II)'],sist:['dicloruro de hierro'],hint:'Fe²⁺ EO menor → ferroso'},

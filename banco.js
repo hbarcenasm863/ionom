@@ -2383,18 +2383,18 @@ const BANCO = [
   {
     id: 'rx-028',
     group: 'reaccion', level: 'easy',
-    ecuacion: 'HCl + NaOH → NaCl + H₂O',
+    ecuacion: 'Pb(NO₃)₂ + 2KI → PbI₂ + 2KNO₃',
     tipo_rx: 'sus-doble',
-    hint: 'Ácido + base → sal + agua. Neutralización es un caso especial de sustitución doble.',
-    col: 'La neutralización con NaOH y HCl se practica en laboratorios del SENA en toda Colombia.'
+    hint: 'Dos sales intercambian iones. AB + CD → AD + CB. PbI₂ es precipitado amarillo brillante.',
+    col: 'La formación de PbI₂ (precipitado amarillo) se usa como prueba de laboratorio en universidades colombianas.'
   },
   {
     id: 'rx-029',
     group: 'reaccion', level: 'medium',
-    ecuacion: 'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',
+    ecuacion: 'MgSO₄ + 2NaOH → Mg(OH)₂ + Na₂SO₄',
     tipo_rx: 'sus-doble',
-    hint: 'Ácido dibásico + base → sal + agua. AB + 2CD → AD₂ + 2CB. Necesita coeficiente 2.',
-    col: 'El sulfato de sodio (Na₂SO₄) se usa en detergentes industriales producidos en Colombia.'
+    hint: 'Intercambio iónico: sal + base → hidróxido precipitado + nueva sal. AB + 2CD → A(OH)₂ + DB.',
+    col: 'El Mg(OH)₂ (precipitado blanco) se usa como antiácido estomacal en farmacias colombianas.'
   },
   {
     id: 'rx-030',
@@ -2473,10 +2473,10 @@ const BANCO = [
   {
     id: 'rx-041',
     group: 'reaccion', level: 'easy',
-    ecuacion: 'C + O₂ → CO₂',
+    ecuacion: 'C₂H₄ + 3O₂ → 2CO₂ + 2H₂O',
     tipo_rx: 'combustion',
-    hint: 'No metal (carbón) + O₂ → óxido ácido. Combustión completa del carbono puro.',
-    col: 'El carbón del Cerrejón (La Guajira) y de El Cerro Matoso al quemarse produce CO₂ y calor.'
+    hint: 'Etileno (C₂H₄) + O₂ → CO₂ + H₂O. Combustión completa de un alqueno. C: 2=2, H: 4=4, O: 6=6.',
+    col: 'El etileno C₂H₄ es un gas derivado del petróleo refinado en Barrancabermeja usado en la industria petroquímica colombiana.'
   },
   {
     id: 'rx-042',
