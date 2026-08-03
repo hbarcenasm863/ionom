@@ -2312,7 +2312,7 @@ const BANCO = [
     ecuacion: 'Zn + H₂SO₄ → ZnSO₄ + H₂',
     tipo_rx: 'sus-simple',
     hint: 'Metal más activo (Zn) desplaza a H del ácido. A + BC → AC + B.',
-    col: 'El zinc se produce en Colombia en la mina de Cerro Matoso (aleaciones) y reacciona con ácidos diluidos.'
+    col: 'El zinc metálico reacciona con ácido sulfúrico diluido en laboratorios colombianos liberando burbujas de H₂. Colombia importa y procesa zinc en la industria metalmecánica.'
   },
   {
     id: 'rx-020',
@@ -2430,11 +2430,11 @@ const BANCO = [
   },
   {
     id: 'rx-034',
-    group: 'reaccion', level: 'easy',
-    ecuacion: 'AgNO₃ + NaCl → AgCl + NaNO₃',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'Na₂CO₃ + CaCl₂ → CaCO₃ + 2NaCl',
     tipo_rx: 'sus-doble',
-    hint: 'Intercambio iónico entre dos sales en solución acuosa. AB + CD → AD + CB.',
-    col: 'La prueba de cloruros con AgNO₃ se usa en análisis de agua potable en Colombia.'
+    hint: 'Los iones CO₃²⁻ y Ca²⁺ se atraen y forman un precipitado blanco (CaCO₃). AB + CD → AD + CB.',
+    col: 'El carbonato de calcio CaCO₃ (caliza) que precipita en esta reacción es abundante en Cundinamarca y Boyacá.'
   },
 
   // -- Combustión (4) --
@@ -2474,11 +2474,11 @@ const BANCO = [
   // -- Neutralización (2) --
   {
     id: 'rx-039',
-    group: 'reaccion', level: 'easy',
-    ecuacion: 'HCl + NaOH → NaCl + H₂O',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + 2H₂O',
     tipo_rx: 'neutralizacion',
-    hint: 'Ácido + base → sal + agua. Reacción de neutralización. pH se acerca a 7.',
-    col: 'La neutralización de HCl con NaOH se usa en procesos de tratamiento de aguas residuales industriales en Colombia.'
+    hint: 'Ácido dibásico + base divalente → sal + agua. Se necesitan 2 mol de HNO₃ por mol de Ca(OH)₂.',
+    col: 'El nitrato de calcio Ca(NO₃)₂ es un fertilizante nitrogenado usado en cultivos de flores en la Sabana de Bogotá.'
   },
   {
     id: 'rx-040',
