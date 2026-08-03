@@ -9,32 +9,92 @@
 <title>IonNom — Principios de Nomenclatura Inorgánica</title>
 <style>
 :root{
+  /* === MDEC semantic palette === */
   --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
   --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
   --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
   --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
-  --err:#dc2626;--ok:#16a34a;
-  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
-  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
-  --r:16px;--rs:10px;
-  --mono:'Courier New',monospace;
+  /* === Surface & text === */
+  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
+  --brd:#d0e6f5;--brd2:#b8d4eb;
+  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
+  --nav:#0d4a73;--nav-t:#ffffff;
+  /* === Status === */
+  --ok:#16a34a;--ok-b:#dcfce7;--ok-t:#14532d;
+  --err:#dc2626;--err-b:#fee2e2;--err-t:#7f1d1d;
+  --warn:#d97706;--warn-b:#fef3c7;--warn-t:#92400e;
+  --info:#0369a1;--info-b:#e0f2fe;--info-t:#082f49;
+  /* === Typography === */
   --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
+  --mono:'Courier New',Courier,monospace;
   --serif:Georgia,'Times New Roman',serif;
-  --sh:0 3px 16px rgba(26,110,168,.10);
-  --sh2:0 8px 36px rgba(26,110,168,.18);
+  /* === Misc === */
+  --r:16px;--rs:10px;--rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
+    --brd:#1e3a52;--brd2:#2a4d6e;
+    --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
+    --nav:#091929;--nav-t:#e2eef8;
+    --cat-b:#422006;--cat-t:#fde68a;
+    --an-b:#082f49;--an-t:#7dd3fc;
+    --oh-b:#2e1065;--oh-t:#c4b5fd;
+    --ox-b:#042f2e;--ox-t:#5eead4;
+    --ok-b:#052e16;--ok-t:#86efac;
+    --err-b:#450a0a;--err-t:#fca5a5;
+    --warn-b:#422006;--warn-t:#fde68a;
+    --info-b:#082f49;--info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
+  --brd:#1e3a52;--brd2:#2a4d6e;
+  --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
+  --nav:#091929;--nav-t:#e2eef8;
+  --cat-b:#422006;--cat-t:#fde68a;
+  --an-b:#082f49;--an-t:#7dd3fc;
+  --oh-b:#2e1065;--oh-t:#c4b5fd;
+  --ox-b:#042f2e;--ox-t:#5eead4;
+  --ok-b:#052e16;--ok-t:#86efac;
+  --err-b:#450a0a;--err-t:#fca5a5;
+  --warn-b:#422006;--warn-t:#fde68a;
+  --info-b:#082f49;--info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
+  --brd:#d0e6f5;--brd2:#b8d4eb;
+  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
+  --nav:#0d4a73;--nav-t:#ffffff;
+  --cat-b:#fef3c7;--cat-t:#92400e;
+  --an-b:#e0f2fe;--an-t:#082f49;
+  --oh-b:#ede9fe;--oh-t:#4c1d95;
+  --ox-b:#ccfbf1;--ox-t:#134e4a;
+  --ok-b:#dcfce7;--ok-t:#14532d;
+  --err-b:#fee2e2;--err-t:#7f1d1d;
+  --warn-b:#fef3c7;--warn-t:#92400e;
+  --info-b:#e0f2fe;--info-t:#082f49;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 .app{max-width:860px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:1}
 
 /* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
 .nav-brand em{color:#fcd34d;font-style:normal}
 .nav-links{display:flex;gap:4px;align-items:center}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
+.nav-links a{color:var(--nav-t);opacity:.8;text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
 .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
 .nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
 .nav-links a .full{display:inline}
@@ -43,15 +103,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* PAGE HEADER */
 .page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
 .page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
-.page-hdr p{font-size:.88rem;color:var(--dimmer)}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
 
 /* SECTION CARDS */
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
-.sect h2{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
-.sect h3{font-family:var(--sans);font-size:.92rem;font-weight:800;color:var(--dim);margin:18px 0 10px;text-transform:uppercase;letter-spacing:.06em}
-.sect p{font-size:.88rem;color:var(--dim);line-height:1.72;margin-bottom:10px}
+.sect h2{font-family:var(--sans);font-size:1.2rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-family:var(--sans);font-size:.92rem;font-weight:800;color:var(--dimmer);margin:18px 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
 .sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
-.sect li{font-size:.86rem;color:var(--dim);line-height:1.65;margin-bottom:6px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:6px}
 .sect strong{color:var(--tx)}
 .sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
 
@@ -71,10 +131,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .color-box.an strong{color:var(--an-t)}
 .color-box.oh strong{color:var(--oh-t)}
 .color-box.ox strong{color:var(--ox-t)}
-.color-box span{font-size:.82rem;color:var(--dim);line-height:1.55}
+.color-box span{font-size:.82rem;color:var(--tx2);line-height:1.55}
 
 /* EXAMPLE BOX */
-.ejemplo{background:#f8f5f0;border:1.5px dashed var(--cat);border-radius:var(--rs);padding:16px 18px;margin-bottom:14px;font-family:var(--mono);font-size:.84rem;color:var(--tx);line-height:1.8}
+.ejemplo{background:var(--surf2);border:1.5px dashed var(--cat);border-radius:var(--rs);padding:16px 18px;margin-bottom:14px;font-family:var(--mono);font-size:.84rem;color:var(--tx);line-height:1.8}
 .ejemplo strong{color:var(--cat-t)}
 .ejemplo .corr{font-family:var(--mono);background:var(--an-b);color:var(--an-t);padding:1px 6px;border-radius:4px;font-weight:700}
 
@@ -83,7 +143,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .tbl th,.tbl td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--brd)}
 .tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
 .tbl td code{font-family:var(--mono);background:rgba(217,119,6,.08);padding:1px 5px;border-radius:3px;color:var(--cat-t)}
-.tbl tr:hover td{background:rgba(217,119,6,.04)}
+.tbl tr:hover td{background:var(--surf2)}
 .tbl .tag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.68rem;font-weight:700}
 .tag-cat{background:var(--cat-b);color:var(--cat-t)}
 .tag-an{background:var(--an-b);color:var(--an-t)}
@@ -98,7 +158,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .step-body strong{font-size:.88rem;display:block;margin-bottom:4px}
 .step-body.cat strong{color:var(--cat-t)}.step-body.an strong{color:var(--an-t)}
 .step-body.oh strong{color:var(--oh-t)}.step-body.ox strong{color:var(--ox-t)}
-.step-body p{font-size:.83rem;color:var(--dim);line-height:1.6;margin:0}
+.step-body p{font-size:.83rem;color:var(--tx2);line-height:1.6;margin:0}
 
 /* MDEC reading steps */
 .mdec-steps{display:flex;flex-direction:column;gap:10px;margin:14px 0}
@@ -106,7 +166,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .mdec-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;flex-shrink:0;color:#fff}
 .mdec-num.cat{background:var(--cat)}.mdec-num.an{background:var(--an)}.mdec-num.oh{background:var(--oh)}.mdec-num.ox{background:var(--ox)}.mdec-num.neu{background:var(--dimmer)}
 .mdec-body strong{font-size:.84rem;display:block;margin-bottom:2px}
-.mdec-body p{font-size:.8rem;color:var(--dim);line-height:1.55;margin:0}
+.mdec-body p{font-size:.8rem;color:var(--tx2);line-height:1.55;margin:0}
 .mdec-demo{background:var(--surf);border:2px solid var(--brd);border-radius:var(--rs);padding:14px 16px;margin-top:12px}
 .mdec-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:8px}
 .mdec-token{display:flex;flex-direction:column;align-items:center;gap:3px}
@@ -115,16 +175,18 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .mdec-w.an{background:var(--an-b);color:var(--an-t);border-color:var(--an)}
 .mdec-w.oh{background:var(--oh-b);color:var(--oh-t);border-color:var(--oh)}
 .mdec-w.ox{background:var(--ox-b);color:var(--ox-t);border-color:var(--ox)}
-.mdec-w.neu{background:#f0f4fa;color:var(--dim);border-color:var(--brd)}
+.mdec-w.neu{background:var(--surf2);color:var(--dim);border-color:var(--brd)}
 .mdec-lbl{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
-.mdec-lbl.cat{color:var(--cat-t)}.mdec-lbl.an{color:var(--an-t)}.mdec-lbl.oh{color:var(--oh-t)}.mdec-lbl.ox{color:var(--ox-t)}.mdec-lbl.neu{color:var(--dimmer)}
+.mdec-lbl.cat{color:var(--cat-t)}.mdec-lbl.an{color:var(--an-t)}.mdec-lbl.oh{color:var(--oh-t)}.mdec-lbl.ox{color:var(--ox-t)}.mdec-lbl.neu{color:var(--dim)}
 /* Error frecuente box */
-.error-box{background:#fee2e2;border:1.5px solid #fca5a5;border-left:4px solid #dc2626;border-radius:var(--rs);padding:12px 14px;margin:12px 0}
-.error-box strong{color:#991b1b;font-size:.82rem;display:block;margin-bottom:4px}
-.error-box p{font-size:.8rem;color:#7f1d1d;line-height:1.55;margin:0}
+.error-box{background:var(--err-b);border:1.5px solid var(--err);border-left:4px solid var(--err);border-radius:var(--rs);padding:12px 14px;margin:12px 0}
+.error-box strong{color:var(--err-t);font-size:.82rem;display:block;margin-bottom:4px}
+.error-box p{font-size:.8rem;color:var(--err-t);line-height:1.55;margin:0}
+/* Feedback explicativo (Mayer P5) */
+.fb-why{margin-top:8px;font-size:.82rem;color:var(--tx2);background:var(--surf2);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 8px 8px 0}
 /* Real-world anchor */
 .rw-strip{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.rw-item{background:var(--ox-b);border:1px solid var(--ox);border-radius:var(--rs);padding:6px 10px;font-size:.76rem;color:var(--ox-t)}
+.rw-item{background:var(--ox-b);border:1px solid var(--ox);border-radius:var(--rs);padding:6px 10px;font-size:.76rem;color:var(--ox-t);word-break:break-word}
 .rw-item strong{display:block;font-family:var(--mono);font-weight:700}
 /* COMPARISON */
 .comp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
@@ -136,37 +198,37 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .comp-col.trad .comp-col-lbl{color:var(--cat-t)}
 .comp-col.stock .comp-col-lbl{color:var(--an-t)}
 .comp-col.sist .comp-col-lbl{color:var(--ox-t)}
-.comp-item{font-family:var(--mono);font-size:.82rem;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.08);color:var(--tx)}
+.comp-item{font-family:var(--mono);font-size:.82rem;padding:4px 0;border-bottom:1px solid var(--brd);color:var(--tx)}
 .comp-item:last-child{border-bottom:none}
 
 /* MAYER QUIZ */
 .mayer-quiz{border-top:3px solid var(--ok)!important}
 .mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px}
 .mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--sans);font-size:.83rem;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--sans);font-size:.83rem;cursor:pointer;text-align:left;transition:border-color .15s,background .15s;word-break:break-word}
 .mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
-.mq-fb{font-size:.82rem;min-height:20px}
-.mq-correct{background:#dcfce7!important;border-color:#16a34a!important;color:#14532d!important}
-.mq-wrong{background:#fee2e2!important;border-color:#dc2626!important;color:#991b1b!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
 
 /* NEW: SCREEN SYSTEM */
 .screen{display:none}.screen.active{display:block}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:32px 0}
 .card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:28px 20px;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:180px;justify-content:center}
 .card:hover{transform:translateY(-8px);box-shadow:var(--sh2)}
-.card.card-cat{border-color:var(--cat);background:linear-gradient(135deg,var(--cat-b),#fff)}
-.card.card-an{border-color:var(--an);background:linear-gradient(135deg,var(--an-b),#fff)}
-.card.card-oh{border-color:var(--oh);background:linear-gradient(135deg,var(--oh-b),#fff)}
-.card.card-ox{border-color:var(--ox);background:linear-gradient(135deg,var(--ox-b),#fff)}
+.card.card-cat{border-color:var(--cat);background:linear-gradient(135deg,var(--cat-b),var(--surf))}
+.card.card-an{border-color:var(--an);background:linear-gradient(135deg,var(--an-b),var(--surf))}
+.card.card-oh{border-color:var(--oh);background:linear-gradient(135deg,var(--oh-b),var(--surf))}
+.card.card-ox{border-color:var(--ox);background:linear-gradient(135deg,var(--ox-b),var(--surf))}
 .card-icon{font-size:2.8rem}
 .card-title{font-family:var(--serif);font-size:1.05rem;font-weight:800;color:var(--tx)}
-.card-desc{font-size:.78rem;color:var(--dim);line-height:1.5}
+.card-desc{font-size:.78rem;color:var(--tx2);line-height:1.5}
 .card-badge{font-size:.62rem;font-weight:800;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--an-b);color:var(--an-t);letter-spacing:.08em}
-.breadcrumb-bar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--an-b);border-radius:var(--rs);margin-bottom:24px;border-left:4px solid var(--an)}
+.breadcrumb-bar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--an-b);border-radius:var(--rs);margin-bottom:24px;border-left:4px solid var(--an);color:var(--an-t)}
 .btn-volver{padding:7px 14px;background:var(--surf);border:2px solid var(--brd);border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-volver:hover{border-color:var(--an);color:var(--an)}
 #seccion-titulo{font-weight:800;font-size:1rem;color:var(--tx)}
-.breadcrumb-numero{font-size:.7rem;color:var(--dimmer);display:block}
+.breadcrumb-numero{font-size:.7rem;color:var(--an-t);opacity:.7;display:block}
 .nav-footer{display:flex;align-items:center;gap:12px;padding:20px 0;border-top:2px solid var(--brd);margin-top:32px}
 .btn-nav{flex:.4;padding:11px 16px;background:var(--an);color:#fff;border:none;border-radius:var(--rs);font-weight:800;font-size:.85rem;cursor:pointer;transition:all .2s}
 .btn-nav:hover:not(:disabled){background:var(--an-t);transform:translateY(-2px)}
@@ -174,7 +236,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .progress-indicator{flex-grow:1;display:flex;flex-direction:column;gap:4px;align-items:center}
 .progress-track{width:100%;height:5px;background:var(--brd);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--an),var(--cat));border-radius:3px;transition:width .4s ease}
-#progress-text{font-size:.7rem;font-weight:700;color:var(--dimmer);text-transform:uppercase;letter-spacing:.07em}
+#progress-text{font-size:.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
 .intro-strip{background:linear-gradient(135deg,#0d4a73,#1a6ea8);color:#fff;border-radius:var(--r);padding:28px 32px;margin-bottom:28px}
 .intro-strip h2{font-family:var(--serif);font-size:1.3rem;margin-bottom:12px;color:#fcd34d}
 .intro-strip p{font-size:.88rem;line-height:1.7;margin-bottom:10px;opacity:.92}
@@ -184,7 +246,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @media(max-width:580px){.cards-grid{grid-template-columns:1fr 1fr}.nav-footer{flex-wrap:wrap}.btn-nav{flex:1}.sect{padding:16px 18px}.comp-grid{grid-template-columns:1fr}}
 @media(max-width:380px){.cards-grid{grid-template-columns:1fr}}
 
-footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px;background:var(--bg)}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 
@@ -195,14 +257,17 @@ footer a:hover{text-decoration:underline}
 
 /* P7 Signaling */
 .mayer-hl{background:var(--cat-b);border-radius:4px;padding:1px 6px;font-weight:700;color:var(--cat-t)}
-.mayer-rule{border-left:4px solid var(--cat);background:var(--cat-b);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:.88rem}
+.mayer-rule{border-left:4px solid var(--cat);background:var(--cat-b);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:.88rem;color:var(--cat-t)}
 .mayer-step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--an);color:#fff;border-radius:50%;font-size:.72rem;font-weight:800;margin-right:6px;flex-shrink:0}
 
 /* P5 Pre-training */
-.pretrain-box{background:rgba(13,74,115,.06);border:1.5px solid var(--brd);border-radius:10px;padding:14px 16px;margin-bottom:16px}
-.pretrain-box h4{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:8px}
+.pretrain-box{background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:16px 20px;margin-bottom:20px}
+.pretrain-box h4{color:var(--an-t);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.pretrain-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pt-chip{background:var(--surf);border:1.5px solid var(--brd);border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:600;color:var(--tx)}
+/* legacy */
 .pretrain-row{display:flex;align-items:baseline;gap:8px;margin-bottom:5px;font-size:.85rem}
-.pretrain-term{font-family:'Courier New',monospace;font-weight:700;color:var(--an);min-width:130px}
+.pretrain-term{font-family:var(--mono);font-weight:700;color:var(--an-t);min-width:130px}
 
 /* P9 Modality — visual comparison cards */
 .compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}
@@ -212,10 +277,13 @@ footer a:hover{text-decoration:underline}
 
 /* P12 Guide icon */
 .section-guide{font-size:1.4rem;opacity:.75;flex-shrink:0}
+/* TTS button */
+.tts-btn{background:none;border:1px solid var(--brd);border-radius:20px;padding:3px 10px;font-size:.72rem;color:var(--dim);cursor:pointer;margin-left:8px}
+.tts-btn:hover{background:var(--surf2);border-color:var(--brd2)}
 
 /* P4 Segmenting */
 .seg-details{margin:16px 0}
-.seg-details summary{cursor:pointer;padding:10px 14px;background:var(--an-b);border-radius:8px;font-size:.85rem;font-weight:700;color:var(--an);list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+.seg-details summary{cursor:pointer;padding:10px 14px;background:var(--an-b);border-radius:8px;font-size:.85rem;font-weight:700;color:var(--an-t);list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
 .seg-details summary::-webkit-details-marker{display:none}
 .seg-details[open] summary span.seg-arrow{transform:rotate(90deg);display:inline-block}
 .seg-arrow{transition:transform .2s;display:inline-block}
@@ -235,7 +303,10 @@ footer a:hover{text-decoration:underline}
     <a href="nomenClash.html">⚔️ <span class="full">NomenClash</span></a>
     <a href="simulador.html">🔬 <span class="full">Simulador</span></a>
   </div>
-  <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+  <div style="display:flex;align-items:center;gap:6px">
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:4px">🌙</button>
+    <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+  </div>
 </nav>
 
 <div class="app">
@@ -335,20 +406,41 @@ footer a:hover{text-decoration:underline}
 
 <!-- iOS Install Instructions Modal -->
 <div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
+  <div style="background:var(--surf);border-radius:16px;padding:28px;max-width:380px;box-shadow:var(--sh2);font-family:var(--sans);color:var(--tx)">
     <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>
-    <div style="font-size:12px;color:#666;margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
-    <ol style="font-size:13px;line-height:1.8;color:#333;margin:0 0 20px;padding-left:20px">
+    <div style="font-size:12px;color:var(--dimmer);margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
+    <ol style="font-size:13px;line-height:1.8;color:var(--tx2);margin:0 0 20px;padding-left:20px">
       <li>Toca el icono de compartir <strong>⬆️</strong></li>
       <li>Desplázate y busca "Añadir a pantalla de inicio"</li>
       <li>Toca "Añadir" en la esquina superior derecha</li>
       <li>¡Listo! IonNom aparecerá en tu home</li>
     </ol>
-    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:#0d4a73;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
+    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:var(--nav);color:var(--nav-t);border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
   </div>
 </div>
 
 <script>
+// ══════════════════════════════════════════
+//  THEME TOGGLE
+// ══════════════════════════════════════════
+function toggleTheme(){
+  var t=document.documentElement.getAttribute('data-theme');
+  var n=t==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',n);
+  localStorage.setItem('ionom-theme',n);
+  var btn=document.getElementById('theme-btn');
+  if(btn)btn.textContent=n==='dark'?'☀️':'🌙';
+}
+(function(){
+  var s=localStorage.getItem('ionom-theme')||((window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light');
+  document.documentElement.setAttribute('data-theme',s);
+  // btn may not exist yet at parse time — set after DOM ready
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('theme-btn');
+    if(btn)btn.textContent=s==='dark'?'☀️':'🌙';
+  });
+})();
+
 // ══════════════════════════════════════════
 //  TTS — Web Speech API  (P3, P8, P11)
 // ══════════════════════════════════════════
@@ -386,6 +478,12 @@ function stopSpeech(){
 }
 function speakCurrentSection(){
   if(SEC_DASH[seccionActual]) speak(SEC_DASH[seccionActual].intro);
+}
+// Alias para botones TTS inline con data-text
+function speakText(btn){
+  var txt=btn.getAttribute('data-text')||(btn.closest('[data-speak]')&&btn.closest('[data-speak]').getAttribute('data-speak'));
+  if(!txt)return;
+  speak(txt);
 }
 
 // ══════════════════════════════════════════
@@ -428,11 +526,12 @@ function checkMQ2(sec, qIdx, btn){
   const fb=document.getElementById('mq-fb-'+sec+'-'+qIdx);
   if(isCorrect){
     btn.classList.add('mq-correct');
-    if(fb) fb.innerHTML='<span style="color:#16a34a;font-weight:700">✓ ¡Correcto!</span>';
+    if(fb) fb.innerHTML='<span style="color:var(--ok);font-weight:700">✓ ¡Correcto! Bien hecho.</span>';
   } else {
     btn.classList.add('mq-wrong');
     opts.forEach(b=>{if(b.dataset.correct==='true') b.classList.add('mq-correct');});
-    if(fb) fb.innerHTML='<span style="color:#dc2626;font-weight:700">✗ Incorrecto. La correcta está marcada en verde.</span>';
+    var why=btn.dataset.why||'Revisa la respuesta correcta marcada en verde.';
+    if(fb) fb.innerHTML='<span style="color:var(--err);font-weight:700">✗ Incorrecto.</span><div class="fb-why">'+why+'</div>';
   }
 }
 
@@ -583,9 +682,9 @@ CONTENIDO[0] = `
     <p class="mq-q">¿Qué color representa al catión (metal) en el sistema MDEC?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(0,0,this)">🔴 Ámbar</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🔵 Azul</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🟣 Violeta</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(0,0,this)">🟢 Teal</button>
+      <button class="mq-btn" data-correct="false" data-why="Azul representa al anión simple (no metal que gana electrones). El catión (metal) es siempre ámbar." onclick="checkMQ2(0,0,this)">🔵 Azul</button>
+      <button class="mq-btn" data-correct="false" data-why="Violeta es el color del grupo OH⁻ (hidróxido). El metal/catión siempre va en ámbar." onclick="checkMQ2(0,0,this)">🟣 Violeta</button>
+      <button class="mq-btn" data-correct="false" data-why="Teal representa al oxoanión (SO₄²⁻, NO₃⁻…). El catión metálico siempre es ámbar." onclick="checkMQ2(0,0,this)">🟢 Teal</button>
     </div>
     <div class="mq-fb" id="mq-fb-0-0"></div>
   </div>
@@ -766,9 +865,9 @@ CONTENIDO[1] = `
     <p class="mq-q">En Fe₂O₃, si el EO del O es −2, ¿cuál es el EO del Fe?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(1,0,this)">+3</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">+2</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">+6</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(1,0,this)">−3</button>
+      <button class="mq-btn" data-correct="false" data-why="Si fuera +2: 2(+2)+3(−2)=−2≠0. Recuerda: la suma de EO debe ser cero. 2x+3(−2)=0 → x=+3." onclick="checkMQ2(1,0,this)">+2</button>
+      <button class="mq-btn" data-correct="false" data-why="+6 sería el EO total de ambos Fe juntos, no de cada uno. Divide: 2x=6 → x=+3 por átomo." onclick="checkMQ2(1,0,this)">+6</button>
+      <button class="mq-btn" data-correct="false" data-why="El Fe es un metal: siempre tiene EO positivo (cede electrones). El oxígeno es quien toma electrones (EO negativo)." onclick="checkMQ2(1,0,this)">−3</button>
     </div>
     <div class="mq-fb" id="mq-fb-1-0"></div>
   </div>
@@ -930,9 +1029,9 @@ CONTENIDO[2] = `
     <p class="mq-q">¿Cuál de estos es un anhídrido?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(2,0,this)">SO₃</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">NaOH</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">FeCl₃</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(2,0,this)">Ca(OH)₂</button>
+      <button class="mq-btn" data-correct="false" data-why="NaOH es una base (hidróxido). Los anhídridos son no metal + O (sin metal). Pista: si tiene OH, es base." onclick="checkMQ2(2,0,this)">NaOH</button>
+      <button class="mq-btn" data-correct="false" data-why="FeCl₃ es una sal binaria (metal + halógeno sin O). Los anhídridos siempre tienen oxígeno y ningún metal." onclick="checkMQ2(2,0,this)">FeCl₃</button>
+      <button class="mq-btn" data-correct="false" data-why="Ca(OH)₂ es un hidróxido (base). Los anhídridos son óxidos de no metal que dan ácidos al reaccionar con agua." onclick="checkMQ2(2,0,this)">Ca(OH)₂</button>
     </div>
     <div class="mq-fb" id="mq-fb-2-0"></div>
   </div>
@@ -1029,9 +1128,9 @@ CONTENIDO[3] = `
     <p class="mq-q">¿Cómo se llama P₂O₅ en nomenclatura sistemática?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(3,0,this)">pentaóxido de difósforo</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">óxido de fósforo (V)</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">anhídrido fosfórico</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(3,0,this)">pentóxido de disfósforo</button>
+      <button class="mq-btn" data-correct="false" data-why="Esa es la nomenclatura Stock. Stock usa romano (V), no prefijos. Sistemática siempre usa penta-, di-, tri-…" onclick="checkMQ2(3,0,this)">óxido de fósforo (V)</button>
+      <button class="mq-btn" data-correct="false" data-why="Ese es el nombre tradicional. Sistemática no usa 'anhídrido' — usa prefijos para contar átomos." onclick="checkMQ2(3,0,this)">anhídrido fosfórico</button>
+      <button class="mq-btn" data-correct="false" data-why="Casi, pero el prefijo correcto para 2 es 'di-' (no 'dis-'), y para 5 átomos de O es 'penta-' + óxido = pentaóxido." onclick="checkMQ2(3,0,this)">pentóxido de disfósforo</button>
     </div>
     <div class="mq-fb" id="mq-fb-3-0"></div>
   </div>
@@ -1192,9 +1291,9 @@ CONTENIDO[4] = `
     <p class="mq-q">¿Cuál es el nombre Tradicional de Fe₂O₃?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(4,0,this)">óxido férrico</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">óxido ferroso</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">óxido de hierro</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(4,0,this)">dióxido de dihierro</button>
+      <button class="mq-btn" data-correct="false" data-why="Ferroso = EO +2 (menor). En Fe₂O₃ el EO del Fe es +3 (mayor) → sufijo -ico → férrico. Truco: -oso siempre es el menor." onclick="checkMQ2(4,0,this)">óxido ferroso</button>
+      <button class="mq-btn" data-correct="false" data-why="'Óxido de hierro' es incompleto en Tradicional — falta el sufijo que indica el EO. Sí sirve así en Stock solo si agregas (III)." onclick="checkMQ2(4,0,this)">óxido de hierro</button>
+      <button class="mq-btn" data-correct="false" data-why="'Dióxido de dihierro' es sistemática/IUPAC (contando átomos con prefijos). En Tradicional se usan sufijos -oso/-ico." onclick="checkMQ2(4,0,this)">dióxido de dihierro</button>
     </div>
     <div class="mq-fb" id="mq-fb-4-0"></div>
   </div>
@@ -1258,7 +1357,7 @@ CONTENIDO[5] = `
   <h2>Ácidos hídricos (haluros de hidrógeno)</h2>
   <p>Cuando el hidrógeno se une a un halógeno o no metal sin oxígeno, forma un <strong>ácido hídrico</strong>. En disolución acuosa se llaman ácidos; en estado gaseoso son haluros de hidrógeno.</p>
 
-  <div style="background:var(--warn-bg,#fff8e1);border-left:4px solid #f9a825;border-radius:6px;padding:12px 16px;margin:12px 0;">
+  <div style="background:var(--warn-b);border-left:4px solid var(--warn);border-radius:6px;padding:12px 16px;margin:12px 0;color:var(--warn-t)">
     <strong>⚠️ DOBLE NOMENCLATURA SEGÚN EL ESTADO</strong>
     <ul style="margin:8px 0 0 0;padding-left:18px;">
       <li><strong>Compuesto puro (gas/líquido):</strong> se nombra como haluro o sulfuro de hidrógeno (sistemática/Stock)<br>
@@ -1266,7 +1365,7 @@ CONTENIDO[5] = `
       <li><strong>En solución acuosa:</strong> se nombra como <em>ácido …hídrico</em> (nomenclatura tradicional)<br>
         Ejemplo: <code>HCl(aq)</code> → <strong>ácido clorhídrico</strong></li>
     </ul>
-    <p style="margin:8px 0 0;font-size:.85rem;color:var(--dim)">La misma molécula HX recibe dos nombres diferentes según su estado. Ambos son correctos en sus contextos. En los ejercicios, observa siempre si la fórmula lleva <code>(g)</code> o <code>(aq)</code>.</p>
+    <p style="margin:8px 0 0;font-size:.85rem;color:var(--warn-t)">La misma molécula HX recibe dos nombres diferentes según su estado. Ambos son correctos en sus contextos. En los ejercicios, observa siempre si la fórmula lleva <code>(g)</code> o <code>(aq)</code>.</p>
   </div>
 
   <table class="tbl">
@@ -1323,9 +1422,9 @@ CONTENIDO[5] = `
     <p class="mq-q">El ion Hg₂²⁺ corresponde al estado de oxidación +1 del mercurio. ¿Por qué lleva el subíndice 2?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(5,0,this)">Porque el Hg(I) forma un dímero diatómico (Hg–Hg)</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Por error de nomenclatura</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Porque siempre es divalente</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(5,0,this)">Porque se combina con 2 aniones</button>
+      <button class="mq-btn" data-correct="false" data-why="No es error: Hg₂Cl₂ es la fórmula correcta del cloruro mercurioso. El subíndice 2 refleja la naturaleza del ion Hg₂²⁺." onclick="checkMQ2(5,0,this)">Por error de nomenclatura</button>
+      <button class="mq-btn" data-correct="false" data-why="En Hg₂²⁺, cada Hg tiene EO = +1 (monovalente), no +2. Los dos Hg forman un enlace entre sí → Hg₂²⁺." onclick="checkMQ2(5,0,this)">Porque siempre es divalente</button>
+      <button class="mq-btn" data-correct="false" data-why="Hg₂Cl₂ tiene 2 Cl⁻, sí, pero el subíndice 2 en Hg₂ no es por eso — es porque el catión mercurioso existe como par Hg–Hg." onclick="checkMQ2(5,0,this)">Porque se combina con 2 aniones</button>
     </div>
     <div class="mq-fb" id="mq-fb-5-0"></div>
   </div>
@@ -1418,9 +1517,9 @@ CONTENIDO[6] = `
     <p class="mq-q">En la cadena del no metal, ¿qué se forma cuando el anhídrido reacciona con agua?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(6,0,this)">Ácido oxácido</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Sal oxigenada</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Hidróxido</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(6,0,this)">Sal binaria</button>
+      <button class="mq-btn" data-correct="false" data-why="La sal es el producto final de la cadena: Anhídrido + H₂O → Ácido → Ácido + Base → Sal. Primero se forma el ácido." onclick="checkMQ2(6,0,this)">Sal oxigenada</button>
+      <button class="mq-btn" data-correct="false" data-why="El hidróxido se forma en la cadena del metal (óxido básico + H₂O). La cadena del no metal produce ácido, no base." onclick="checkMQ2(6,0,this)">Hidróxido</button>
+      <button class="mq-btn" data-correct="false" data-why="La sal binaria no tiene oxígeno. Los anhídridos son no metal + O y forman ácidos oxácidos (con O) al hidratarse." onclick="checkMQ2(6,0,this)">Sal binaria</button>
     </div>
     <div class="mq-fb" id="mq-fb-6-0"></div>
   </div>
@@ -1468,28 +1567,28 @@ CONTENIDO[7] = `
     <p class="mq-q">¿Cuál es el nombre <strong>tradicional</strong> de NaHCO₃?</p>
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,0,this)">bicarbonato de sodio</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">hidrogenocarbonato de sodio</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">carbonato de sodio</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,0,this)">dihidrogenocarbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Hidrogenocarbonato es el nombre Stock/IUPAC de HCO₃⁻. La pregunta pedía el nombre tradicional, que usa el prefijo 'bi-'." onclick="checkMQ2(7,0,this)">hidrogenocarbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Carbonato de sodio (Na₂CO₃) no tiene H en el anión. NaHCO₃ conserva un H ionizable → es bicarbonato (sal ácida)." onclick="checkMQ2(7,0,this)">carbonato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Dihidrógeno- se usa cuando quedan 2 H (como H₂PO₄⁻). HCO₃⁻ solo conserva 1 H → prefijo bi- (tradicional)." onclick="checkMQ2(7,0,this)">dihidrogenocarbonato de sodio</button>
     </div>
     <div class="mq-fb" id="mq-fb-7-0"></div>
   </div>
   <div class="mq-question" id="mq-7-1" style="margin-top:14px">
     <p class="mq-q">¿Cuál es el nombre <strong>Stock</strong> de NaHSO₄?</p>
     <div class="mq-opts">
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">bisulfato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Bisulfato es el nombre tradicional de HSO₄⁻. La pregunta pedía el nombre Stock/IUPAC, que usa 'hidrogeno-' en lugar de 'bi-'." onclick="checkMQ2(7,1,this)">bisulfato de sodio</button>
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,1,this)">hidrogenosulfato de sodio</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">sulfato de sodio</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,1,this)">dihidrogenosulfato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Sulfato de sodio (Na₂SO₄) no tiene H. NaHSO₄ conserva 1 H ionizable en el anión → es sal ácida (hidrogenosulfato)." onclick="checkMQ2(7,1,this)">sulfato de sodio</button>
+      <button class="mq-btn" data-correct="false" data-why="Dihidrogeno- se usa cuando quedan 2 H. HSO₄⁻ solo conserva 1 H → hidrogeno- (no dihidrogeno-)." onclick="checkMQ2(7,1,this)">dihidrogenosulfato de sodio</button>
     </div>
     <div class="mq-fb" id="mq-fb-7-1"></div>
   </div>
   <div class="mq-question" id="mq-7-2" style="margin-top:14px">
     <p class="mq-q">En Na₂HPO₄, ¿cuántos H⁺ cedió el H₃PO₄ al neutralizarse?</p>
     <div class="mq-opts">
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,2,this)">1</button>
+      <button class="mq-btn" data-correct="false" data-why="Si cediera 1 H: H₃PO₄ + NaOH → NaH₂PO₄. En Na₂HPO₄ hay 2 Na⁺ → 2 H fueron reemplazados por Na → cedió 2 H." onclick="checkMQ2(7,2,this)">1</button>
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(7,2,this)">2</button>
-      <button class="mq-btn" data-correct="false" onclick="checkMQ2(7,2,this)">3</button>
+      <button class="mq-btn" data-correct="false" data-why="Si cediera los 3 H: H₃PO₄ + 3NaOH → Na₃PO₄ (fosfato normal, no sal ácida). HPO₄²⁻ todavía tiene 1 H sin ceder." onclick="checkMQ2(7,2,this)">3</button>
     </div>
     <div class="mq-fb" id="mq-fb-7-2"></div>
   </div>
@@ -1548,7 +1647,9 @@ function goToSection(idx){
   const pretrainHTML = PRETRAIN[idx] ? `
   <div class="pretrain-box">
     <h4>📌 Antes de comenzar — conceptos clave</h4>
-    ${PRETRAIN[idx].map(p=>`<div class="pretrain-row"><span class="pretrain-term">${p.term}</span><span style="color:var(--dimmer)">→</span><span>${p.def}</span></div>`).join('')}
+    <div class="pretrain-chips">
+      ${PRETRAIN[idx].map(p=>`<span class="pt-chip"><strong>${p.term}</strong>: ${p.def}</span>`).join('')}
+    </div>
   </div>` : '';
   document.getElementById('seccion-content').innerHTML = dashHTML + pretrainHTML + CONTENIDO[idx];
   document.getElementById('seccion-titulo').textContent = SECCIONES[idx].icon + ' ' + SECCIONES[idx].titulo;
