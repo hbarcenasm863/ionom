@@ -161,6 +161,23 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .cert-sig-line{border-top:2px solid #0d2d42;padding-top:6px}
 .cert-footer{font-size:9px;color:#3a5568;margin-top:20px;border-top:1px solid #bae6fd;padding-top:10px;font-family:var(--sans);line-height:1.6}
 
+/* Balance-eq area */
+.balance-eq-display{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--cat-t);margin-bottom:18px;line-height:2;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.balance-eq-display .eq-part{display:flex;align-items:center;gap:4px}
+.balance-coef{width:48px;padding:6px 4px;border:2px solid var(--an);border-radius:8px;text-align:center;font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--an-t);background:var(--an-b);transition:border-color .2s}
+.balance-coef:focus{outline:none;border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
+.balance-coef.ok{border-color:var(--ok)!important;background:var(--okb)!important;color:#14532d!important}
+.balance-coef.err-input{border-color:var(--err)!important;background:var(--errb)!important;color:var(--err)!important}
+.eq-arrow{font-size:1.2rem;color:var(--dimmer);margin:0 4px}
+.eq-plus{font-size:1rem;color:var(--dimmer)}
+.atom-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.8rem;font-family:var(--sans)}
+.atom-table th{background:var(--an-b);color:var(--an-t);padding:6px 10px;text-align:center;font-weight:700;border:1px solid var(--brd)}
+.atom-table td{padding:5px 10px;text-align:center;border:1px solid var(--brd);background:#fff}
+.atom-table tr:nth-child(even) td{background:#fafafa}
+.atom-ok{color:var(--ok);font-weight:700}
+.atom-err{color:var(--err);font-weight:700}
+/* Classify-rx */
+.rx-display{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border:2px solid var(--cat);border-radius:var(--rs);padding:12px 16px;margin-bottom:16px;line-height:1.8;word-break:break-word}
 @media print{.site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}#s-result{display:block!important}body{background:#fff}.cert{box-shadow:none;border-color:#000}}
 @media(max-width:520px){.portada-title{font-size:2.2rem}.group-grid{grid-template-columns:1fr 1fr}.result-stats{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.cert-sigs{grid-template-columns:1fr;gap:20px}}
 </style>
@@ -233,6 +250,21 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <span class="gb-name">Sales oxigenadas</span>
         <span class="gb-sub">Con oxoanión</span>
       </button>
+      <button class="group-btn" onclick="startGame('reaccion')">
+        <span class="gb-icon">⚗️</span>
+        <span class="gb-name">Tipos de reacción</span>
+        <span class="gb-sub">Clasifica la reacción</span>
+      </button>
+      <button class="group-btn" onclick="startGame('balanceo')">
+        <span class="gb-icon">⚖️</span>
+        <span class="gb-name">Balanceo</span>
+        <span class="gb-sub">Ajusta coeficientes</span>
+      </button>
+      <button class="group-btn" onclick="startGame('mol-masa')">
+        <span class="gb-icon">⚖️</span>
+        <span class="gb-name">Mol y Masa Molar</span>
+        <span class="gb-sub">n = m / M</span>
+      </button>
     </div>
   </div>
 </div>
@@ -271,6 +303,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div id="area-drag" style="display:none">
         <div class="drag-name" id="drag-name"></div>
         <div class="drag-bank" id="drag-bank"></div>
+      </div>
+      <div id="area-balance" style="display:none">
+        <div class="balance-eq-display" id="balance-display"></div>
+        <div class="write-btns">
+          <button class="btn-submit" onclick="checkBalanceEq()">Verificar balanceo</button>
+          <button class="btn-hint" id="btn-hint-balance" onclick="showHintBalance()">💡 Pista</button>
+        </div>
       </div>
     </div>
     <div class="feedback" id="feedback"></div>
@@ -341,8 +380,45 @@ const MINI=[
 function getPool(group){
   const all=(typeof BANCO!=='undefined')?BANCO:MINI;
   if(group==='ox-anh') return all.filter(c=>c.group==='ox-bas'||c.group==='anhid');
+  if(group==='all') return all.filter(c=>!['reaccion','balanceo','mol-masa'].includes(c.group));
   if(group!=='all') return all.filter(c=>c.group===group);
   return all;
+}
+
+// ── Chemical formula → HTML (subscripts) ──
+function fmtFormula(f){
+  // Convert numbers after letters to subscript, charge superscripts
+  return String(f)
+    .replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>')
+    .replace(/([⁺⁻±])/g,'<sup>$1</sup>');
+}
+
+// ── Parse formula to atom counts (simple, no nested parens) ──
+function parseFormula(f){
+  // Remove HTML if any
+  const plain=f.replace(/<[^>]+>/g,'');
+  const counts={};
+  // Handle (XY)n groups
+  const withGroups=plain.replace(/\(([^)]+)\)(\d+)/g,(m,inner,n)=>{
+    const nc=parseFormula(inner);
+    Object.keys(nc).forEach(el=>{ counts[el]=(counts[el]||0)+nc[el]*parseInt(n); });
+    return '';
+  });
+  const re=/([A-Z][a-z]?)(\d*)/g; let m;
+  while((m=re.exec(withGroups))!==null){
+    if(m[1]){counts[m[1]]=(counts[m[1]]||0)+parseInt(m[2]||'1');}
+  }
+  return counts;
+}
+
+// Count atoms on one side given array of {formula, coef}
+function countSide(parts){
+  const total={};
+  parts.forEach(({formula,coef})=>{
+    const c=parseFormula(formula);
+    Object.keys(c).forEach(el=>{ total[el]=(total[el]||0)+c[el]*coef; });
+  });
+  return total;
 }
 
 // ── EO extraction from Stock name ──
@@ -385,6 +461,7 @@ function buildDrag(q, pool){
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null};
 const TYPE_POOL=['mc','mc','write-any','write-any','write-any','write-stock','write-sist','ox-state','drag','invert'];
+const RX_TYPE_LABELS={sintesis:'Síntesis',descomposicion:'Descomposición','sus-simple':'Sustitución simple','sus-doble':'Sustitución doble',combustion:'Combustión',neutralizacion:'Neutralización'};
 
 function startGame(group){
   ST.group=group;
@@ -395,13 +472,22 @@ function startGame(group){
   const compounds=base.slice(0,10);
   const types=shuffle([...TYPE_POOL]);
   ST.questions=compounds.map((q,i)=>{
-    let t=types[i];
-    if(t==='write-stock'&&!(q.stock&&q.stock[0])) t='write-any';
-    if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
-    if((t==='write-stock'||t==='write-sist')&&q.group==='sal-ox') t='write-any';
-    if(t==='ox-state'&&!extractEO(q)) t='mc';
-    if(t==='drag'&&!buildDrag(q,pool)) t='mc';
-    if(t==='invert'&&pool.length<4) t='mc';
+    let t;
+    if(group==='reaccion'){
+      t='classify-rx';
+    } else if(group==='balanceo'){
+      t='balance-eq';
+    } else if(group==='mol-masa'){
+      t=Math.random()<0.6?'mol-calc':'mc-masa';
+    } else {
+      t=types[i];
+      if(t==='write-stock'&&!(q.stock&&q.stock[0])) t='write-any';
+      if(t==='write-sist'&&!(q.sist&&q.sist[0])) t='write-any';
+      if((t==='write-stock'||t==='write-sist')&&q.group==='sal-ox') t='write-any';
+      if(t==='ox-state'&&!extractEO(q)) t='mc';
+      if(t==='drag'&&!buildDrag(q,pool)) t='mc';
+      if(t==='invert'&&pool.length<4) t='mc';
+    }
     return {...q,qtype:t};
   });
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
@@ -418,17 +504,21 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 20 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/10';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','classify-rx':'Clasifica la reacción','balance-eq':'Balanceo de ecuaciones','mol-calc':'Cálculo mol ↔ masa','mc-masa':'Masa molar'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 10 · ${typeLabels[q.qtype]||''}`;
-  document.getElementById('q-formula').textContent=q.formula;
+  document.getElementById('q-formula').innerHTML=q.formula?fmtFormula(q.formula):'';
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag'].forEach(id=>document.getElementById(id).style.display='none');
+  ['area-mc','area-write','area-ox','area-drag','area-balance'].forEach(id=>document.getElementById(id).style.display='none');
   if(q.qtype==='mc') renderMC(q);
   else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
   else if(q.qtype==='ox-state') renderOx(q);
   else if(q.qtype==='drag') renderDrag(q);
   else if(q.qtype==='invert') renderInvert(q);
+  else if(q.qtype==='classify-rx') renderClassifyRx(q);
+  else if(q.qtype==='balance-eq') renderBalanceEq(q);
+  else if(q.qtype==='mol-calc') renderMolCalc(q);
+  else if(q.qtype==='mc-masa') renderMcMasa(q);
 }
 
 // ── Build smart distractors (reflect real cognitive errors) ──
@@ -709,6 +799,248 @@ function checkInvert(el,chosen,correct){
   updateStats();
 }
 
+// ── Classify-rx ──
+function renderClassifyRx(q){
+  document.getElementById('q-formula').innerHTML='';
+  document.getElementById('q-prompt').innerHTML='¿Qué <strong>tipo de reacción</strong> representa la siguiente ecuación?';
+  document.getElementById('area-mc').style.display='';
+  const eq=q.ecuacion||q.formula||'';
+  // Inject equation above prompt using q-formula area
+  document.getElementById('q-formula').innerHTML=`<div class="rx-display">${fmtFormula(eq)}</div>`;
+  const allTypes=Object.keys(RX_TYPE_LABELS);
+  const wrong=shuffle(allTypes.filter(t=>t!==q.tipo_rx)).slice(0,3);
+  const opts=shuffle([q.tipo_rx,...wrong]);
+  document.getElementById('q-mc-opts').innerHTML=opts.map(t=>
+    `<button class="mc-opt" onclick="checkClassifyRx(this,'${t}')">${RX_TYPE_LABELS[t]}</button>`
+  ).join('');
+}
+
+function checkClassifyRx(el,chosen){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  const correct=q.tipo_rx;
+  if(chosen===correct){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    let html=`<strong>✓ ¡Correcto! Es una reacción de <em>${RX_TYPE_LABELS[correct]}</em>. +${pts} punto${pts!==1?'s':''}</strong>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ok show';fb.innerHTML=html;
+    scheduleNext(2000);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.getAttribute('onclick')?.includes("'"+correct+"'"))b.classList.add('correct');});
+    let html=`<strong>✗ Incorrecto. La respuesta correcta es <em>${RX_TYPE_LABELS[correct]}</em>.</strong>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback err show';fb.innerHTML=html;
+    scheduleNext(3000);
+  }
+  updateStats();
+}
+
+// ── Balance-eq ──
+function renderBalanceEq(q){
+  document.getElementById('q-formula').innerHTML='';
+  document.getElementById('q-prompt').innerHTML='Ingresa los <strong>coeficientes</strong> para balancear la ecuación. Usa enteros mínimos.';
+  document.getElementById('area-balance').style.display='';
+  // Parse ecuacion_sin_coef: "H2 + O2 -> H2O"
+  const ec=q.ecuacion_sin_coef||q.formula||'';
+  const [leftStr,rightStr]=(ec.includes('->')?ec.split('->'):ec.split('=')).map(s=>s.trim());
+  const reactivos=leftStr.split('+').map(s=>s.trim());
+  const productos=rightStr.split('+').map(s=>s.trim());
+  const all=[...reactivos,...productos];
+  // Store for later use
+  ST._balanceParts={reactivos,productos};
+  let html='';
+  reactivos.forEach((f,i)=>{
+    if(i>0) html+=`<span class="eq-plus">+</span>`;
+    html+=`<span class="eq-part"><input class="balance-coef" id="bcoef-${i}" type="number" min="1" max="20" placeholder="?"></span>`;
+    html+=`<span style="font-family:var(--mono);font-weight:700">${fmtFormula(f)}</span>`;
+  });
+  html+=`<span class="eq-arrow">→</span>`;
+  productos.forEach((f,i)=>{
+    if(i>0) html+=`<span class="eq-plus">+</span>`;
+    const ci=reactivos.length+i;
+    html+=`<span class="eq-part"><input class="balance-coef" id="bcoef-${ci}" type="number" min="1" max="20" placeholder="?"></span>`;
+    html+=`<span style="font-family:var(--mono);font-weight:700">${fmtFormula(f)}</span>`;
+  });
+  document.getElementById('balance-display').innerHTML=html;
+  // Allow Enter to submit
+  document.querySelectorAll('.balance-coef').forEach(inp=>{
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkBalanceEq();});
+  });
+  setTimeout(()=>{const f=document.getElementById('bcoef-0');if(f)f.focus();},80);
+}
+
+function showHintBalance(){
+  const q=ST.questions[ST.idx];
+  const fb=document.getElementById('feedback');
+  fb.className='feedback tip show';
+  fb.innerHTML='💡 <strong>Pista:</strong> '+(q.hint||'Iguala el número de átomos de cada elemento a ambos lados.');
+}
+
+function checkBalanceEq(){
+  const q=ST.questions[ST.idx];
+  const correctCoefs=q.coeficientes||[];
+  const n=correctCoefs.length;
+  const userCoefs=[];
+  for(let i=0;i<n;i++){
+    const v=parseInt(document.getElementById('bcoef-'+i)?.value||'0');
+    userCoefs.push(isNaN(v)||v<1?0:v);
+  }
+  ST.attempts++;ST.totalAttempts++;
+  // Check exact match (already minimal: just compare ratio-normalized)
+  const ok=userCoefs.every((v,i)=>v===correctCoefs[i]);
+  if(ok){
+    document.querySelectorAll('.balance-coef').forEach(el=>el.classList.add('ok'));
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    let html=`<strong>✓ ¡Correcto! Ecuación balanceada. +${pts} punto${pts!==1?'s':''}</strong>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ok show';fb.innerHTML=html;
+    document.querySelectorAll('.balance-coef').forEach(el=>el.disabled=true);
+    scheduleNext(2000);
+  } else {
+    document.querySelectorAll('.balance-coef').forEach((el,i)=>{
+      el.classList.remove('ok','err-input');
+      if(userCoefs[i]!==correctCoefs[i]) el.classList.add('err-input');
+    });
+    // Build atom table feedback
+    const {reactivos,productos}=ST._balanceParts||{reactivos:[],productos:[]};
+    const allFormulas=[...reactivos,...productos];
+    const leftParts=reactivos.map((f,i)=>({formula:f,coef:userCoefs[i]||1}));
+    const rightParts=productos.map((f,i)=>({formula:f,coef:userCoefs[reactivos.length+i]||1}));
+    const leftCounts=countSide(leftParts);
+    const rightCounts=countSide(rightParts);
+    const elements=[...new Set([...Object.keys(leftCounts),...Object.keys(rightCounts)])].sort();
+    let tableRows=elements.map(el=>{
+      const l=leftCounts[el]||0,r=rightCounts[el]||0;
+      const balanced=l===r;
+      return `<tr><td><strong>${el}</strong></td><td>${l}</td><td>${r}</td><td class="${balanced?'atom-ok':'atom-err'}">${balanced?'✓':'✗'}</td></tr>`;
+    }).join('');
+    let html=`<strong>✗ Intento ${ST.attempts} de 3 — revisa los coeficientes.</strong>`;
+    html+=`<table class="atom-table"><thead><tr><th>Elemento</th><th>Izquierda</th><th>Derecha</th><th>¿OK?</th></tr></thead><tbody>${tableRows}</tbody></table>`;
+    if(ST.attempts>=3){
+      document.querySelectorAll('.balance-coef').forEach(el=>el.disabled=true);
+      const ans=correctCoefs.join(', ');
+      html=`<strong>3 intentos agotados. Los coeficientes correctos son: [${ans}]</strong>${html.replace(/<strong>[^<]+<\/strong>/,'')}`;
+      const fb=document.getElementById('feedback');
+      fb.className='feedback reveal show';fb.innerHTML=html;
+      if(q.hint){const fh=document.createElement('div');fh.className='fb-hint';fh.innerHTML='💡 '+q.hint;fb.appendChild(fh);}
+      scheduleNext(4000);
+    } else {
+      const fb=document.getElementById('feedback');
+      fb.className='feedback err show';fb.innerHTML=html;
+    }
+  }
+  updateStats();
+}
+
+// ── Mol-calc ──
+function renderMolCalc(q){
+  const M=q.masa_molar;
+  const formula=q.formula;
+  document.getElementById('q-formula').innerHTML=fmtFormula(formula);
+  // Randomly choose direction: gramos→moles or moles→gramos
+  const dir=Math.random()<0.5?'g2mol':'mol2g';
+  // Generate a nice amount
+  const amounts=[0.5,1,2,5,10,25,50,100,200,250,0.25,0.1,4,3];
+  const X=amounts[Math.floor(Math.random()*amounts.length)];
+  let prompt,correct,chain;
+  if(dir==='g2mol'){
+    correct=+(X/M).toFixed(4);
+    prompt=`¿Cuántos <strong>moles</strong> hay en <strong>${X} g</strong> de ${fmtFormula(formula)}? (M = ${M} g/mol)`;
+    chain=`${X} g × (1 mol / ${M} g) = <strong>${+(X/M).toFixed(3)} mol</strong>`;
+  } else {
+    correct=+(X*M).toFixed(4);
+    prompt=`¿Cuántos <strong>gramos</strong> son <strong>${X} mol</strong> de ${fmtFormula(formula)}? (M = ${M} g/mol)`;
+    chain=`${X} mol × (${M} g / 1 mol) = <strong>${+(X*M).toFixed(2)} g</strong>`;
+  }
+  // Generate 3 distractors (typical errors)
+  const distractors=[];
+  distractors.push(+(X*M).toFixed(4));       // inverted operation
+  distractors.push(+(X/M*2).toFixed(4));     // forgot to simplify factor 2
+  distractors.push(+(X+M).toFixed(4));       // added instead
+  const opts=shuffle([correct,...[...new Set(distractors.filter(d=>Math.abs(d-correct)>0.001))].slice(0,3)]);
+  // Ensure 4 opts
+  while(opts.length<4) opts.push(+(correct*0.5).toFixed(4));
+  const optsF=opts.slice(0,4);
+  document.getElementById('q-prompt').innerHTML=prompt;
+  document.getElementById('area-mc').style.display='';
+  document.getElementById('q-mc-opts').innerHTML=optsF.map(o=>
+    `<button class="mc-opt" onclick="checkMolCalc(this,${o},${correct},'${chain.replace(/'/g,'&#39;')}')">${o} ${dir==='g2mol'?'mol':'g'}</button>`
+  ).join('');
+  ST._molCalcChain=chain;
+}
+
+function checkMolCalc(el,chosen,correct,chain){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(Math.abs(chosen-correct)<0.001){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    let html=`<strong>✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}</strong>`;
+    html+=`<div class="fb-hint">📐 Cadena de factores: ${chain}</div>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ok show';fb.innerHTML=html;
+    scheduleNext(2000);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(Math.abs(parseFloat(b.textContent)-correct)<0.001)b.classList.add('correct');});
+    let html=`<strong>✗ Incorrecto.</strong>`;
+    html+=`<div class="fb-hint">📐 Cadena de factores correcta: ${chain}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback err show';fb.innerHTML=html;
+    scheduleNext(3000);
+  }
+  updateStats();
+}
+
+// ── mc-masa: opción múltiple sobre el valor de la masa molar ──
+function renderMcMasa(q){
+  document.getElementById('q-formula').innerHTML=fmtFormula(q.formula);
+  document.getElementById('q-prompt').innerHTML=`¿Cuál es la <strong>masa molar</strong> de este compuesto?`;
+  document.getElementById('area-mc').style.display='';
+  const M=q.masa_molar;
+  const dists=[M*2,M/2,M+16,M-1,M+14,+(M*1.5).toFixed(1)].filter(d=>Math.abs(d-M)>0.5&&d>0);
+  const opts=shuffle([M,...[...new Set(dists)].slice(0,3)]).slice(0,4);
+  document.getElementById('q-mc-opts').innerHTML=opts.map(o=>
+    `<button class="mc-opt" onclick="checkMcMasa(this,${o},${M})">${o} g/mol</button>`
+  ).join('');
+}
+
+function checkMcMasa(el,chosen,correct){
+  const q=ST.questions[ST.idx];
+  ST.attempts++;ST.totalAttempts++;
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(Math.abs(chosen-correct)<0.01){
+    el.classList.add('correct');
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts;ST.correct++;
+    let html=`<strong>✓ ¡Correcto! M = ${correct} g/mol. +${pts} punto${pts!==1?'s':''}</strong>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ok show';fb.innerHTML=html;
+    scheduleNext(1800);
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(Math.abs(parseFloat(b.textContent)-correct)<0.01)b.classList.add('correct');});
+    let html=`<strong>✗ Incorrecto. La masa molar correcta es ${correct} g/mol.</strong>`;
+    if(q.hint) html+=`<div class="fb-hint">💡 ${q.hint}</div>`;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback err show';fb.innerHTML=html;
+    scheduleNext(3000);
+  }
+  updateStats();
+}
+
 // ── isCorrect ──
 function isCorrect(input,q,mode){
   const ni=norm(input);
@@ -776,7 +1108,7 @@ function endGame(){
   showScreen('s-result');
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar'};
 
 function generateCert(grade,level){
   const now=new Date();
