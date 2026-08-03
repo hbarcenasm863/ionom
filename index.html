@@ -13,169 +13,611 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230d4a73' width='100' height='100'/><text x='50' y='50' font-size='60' font-weight='bold' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>">
 <title>IonNom — Nomenclatura Inorgánica</title>
 <style>
+/* ===== DESIGN SYSTEM TOKENS ===== */
 :root{
-  --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
-  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
-  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
-  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
-  --err:#dc2626;--ok:#16a34a;
-  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
-  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
-  --r:16px;--rs:10px;
-  --mono:'Courier New',monospace;
-  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
-  --serif:Georgia,'Times New Roman',serif;
-  --sh:0 3px 16px rgba(26,110,168,.10);
-  --sh2:0 8px 36px rgba(26,110,168,.18);
+  /* MDEC semantic palette */
+  --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
+  --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* Surface & text */
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  /* Status */
+  --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d;
+  --err:#dc2626; --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn:#d97706; --warn-b:#fef3c7; --warn-t:#92400e;
+  --info:#0369a1; --info-b:#e0f2fe; --info-t:#082f49;
+  /* Typography */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* Misc */
+  --r:16px; --rs:10px; --rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
 }
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+    --brd:#1e3a52; --brd2:#2a4d6e;
+    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+    --nav:#091929; --nav-t:#e2eef8;
+    --cat-b:#422006; --cat-t:#fde68a;
+    --an-b:#082f49; --an-t:#7dd3fc;
+    --oh-b:#2e1065; --oh-t:#c4b5fd;
+    --ox-b:#042f2e; --ox-t:#5eead4;
+    --ok-b:#052e16; --ok-t:#86efac;
+    --err-b:#450a0a; --err-t:#fca5a5;
+    --warn-b:#422006; --warn-t:#fde68a;
+    --info-b:#082f49; --info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+  --brd:#1e3a52; --brd2:#2a4d6e;
+  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+  --nav:#091929; --nav-t:#e2eef8;
+  --cat-b:#422006; --cat-t:#fde68a;
+  --an-b:#082f49; --an-t:#7dd3fc;
+  --oh-b:#2e1065; --oh-t:#c4b5fd;
+  --ox-b:#042f2e; --ox-t:#5eead4;
+  --ok-b:#052e16; --ok-t:#86efac;
+  --err-b:#450a0a; --err-t:#fca5a5;
+  --warn-b:#422006; --warn-t:#fde68a;
+  --info-b:#082f49; --info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  --cat-b:#fef3c7; --cat-t:#92400e;
+  --an-b:#e0f2fe; --an-t:#082f49;
+  --oh-b:#ede9fe; --oh-t:#4c1d95;
+  --ox-b:#ccfbf1; --ox-t:#134e4a;
+  --ok-b:#dcfce7; --ok-t:#14532d;
+  --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn-b:#fef3c7; --warn-t:#92400e;
+  --info-b:#e0f2fe; --info-t:#082f49;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+}
+
+/* ===== RESET & BASE ===== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
-.app{max-width:860px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:1}
+body{
+  background:var(--bg);
+  color:var(--tx);
+  font-family:var(--sans);
+  min-height:100vh;
+  line-height:1.6;
+}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--cat);
+  outline-offset:3px;
+}
 
-/* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
-.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+/* ===== NAV ===== */
+.site-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--nav);
+  padding:0 16px;
+  height:50px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+  gap:8px;
+}
+.nav-brand{
+  color:var(--nav-t);
+  font-weight:800;
+  font-size:.9rem;
+  font-style:italic;
+  letter-spacing:-.02em;
+  text-decoration:none;
+  white-space:nowrap;
+  flex-shrink:0;
+}
 .nav-brand em{color:#fcd34d;font-style:normal}
-.nav-links{display:flex;gap:4px;align-items:center}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
+.nav-links{
+  display:flex;
+  gap:2px;
+  align-items:center;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  color:rgba(255,255,255,.75);
+  text-decoration:none;
+  font-size:.77rem;
+  font-weight:600;
+  padding:5px 11px;
+  border-radius:8px;
+  transition:background .15s,color .15s;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  white-space:nowrap;
+}
 .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
 .nav-links a.active{background:rgba(255,255,255,.2);color:#fff}
 .nav-links a .full{display:inline}
-@media(max-width:480px){
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#theme-btn{
+  background:none;
+  border:1.5px solid rgba(255,255,255,.3);
+  border-radius:20px;
+  padding:4px 10px;
+  color:rgba(255,255,255,.8);
+  cursor:pointer;
+  font-size:.75rem;
+}
+#theme-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+@media(max-width:600px){
   .nav-links a .full{display:none}
   .nav-links a{padding:5px 8px;font-size:.72rem}
   .nav-brand{font-size:.8rem}
 }
 
-/* HEADER */
-.intro-card{background:var(--tx);border-radius:var(--r);padding:30px 36px;margin:28px 0;color:#fff;position:relative;overflow:hidden}
-.intro-card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
-.intro-card h1{font-family:var(--serif);font-size:2rem;font-weight:700;font-style:italic;letter-spacing:-.04em;margin-bottom:8px}
-.intro-card h1 em{color:#fcd34d;font-style:normal}
-.intro-card p{font-size:.9rem;color:rgba(255,255,255,.78);line-height:1.75;max-width:560px}
-.four-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.ft{padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:700;border:1.5px solid;white-space:nowrap}
-.ft.cat{color:#fcd34d;border-color:#fcd34d;background:rgba(217,119,6,.18)}
-.ft.an{color:#93c5fd;border-color:#93c5fd;background:rgba(3,105,161,.18)}
-.ft.oh{color:#c4b5fd;border-color:#c4b5fd;background:rgba(124,58,237,.18)}
-.ft.ox{color:#5eead4;border-color:#5eead4;background:rgba(15,118,110,.18)}
+/* ===== LAYOUT WRAPPER ===== */
+.app{max-width:900px;margin:0 auto;padding:0 18px 80px}
 
-/* 4-PART GRID */
-.parts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
-.part-card{border-radius:var(--rs);padding:16px 18px;border:2px solid;position:relative;overflow:hidden;cursor:default}
-.part-card::before{content:attr(data-sym);position:absolute;top:-4px;right:10px;font-family:var(--mono);font-size:3.2rem;font-weight:700;opacity:.08;line-height:1;pointer-events:none}
+/* ===== HERO ===== */
+.hero{
+  background:var(--nav);
+  border-radius:var(--r);
+  padding:36px 36px 28px;
+  margin:28px 0 24px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-size:.62rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:rgba(255,255,255,.5);
+  margin-bottom:10px;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(1.6rem, 4vw, 2.4rem);
+  font-weight:700;
+  font-style:italic;
+  letter-spacing:-.03em;
+  color:#fff;
+  line-height:1.2;
+  text-wrap:balance;
+  margin-bottom:10px;
+}
+.hero h1 em{color:#fcd34d;font-style:normal}
+.hero-sub{
+  font-size:.92rem;
+  color:rgba(255,255,255,.72);
+  max-width:58ch;
+  line-height:1.7;
+  margin-bottom:22px;
+}
+
+/* Live formula demo inside hero */
+.hero-demo{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  gap:8px;
+  background:rgba(0,0,0,.2);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--rs);
+  padding:14px 18px;
+  margin-bottom:20px;
+  width:fit-content;
+  max-width:100%;
+}
+.hd-label{
+  font-size:.52rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  white-space:nowrap;
+}
+.hd-pill{
+  font-family:var(--mono);
+  font-size:.95rem;
+  font-weight:700;
+  padding:4px 11px;
+  border-radius:6px;
+  border:1.5px solid;
+  line-height:1.3;
+}
+.hd-pill.cat{color:var(--cat-t);background:var(--cat-b);border-color:var(--cat)}
+.hd-pill.an{color:var(--an-t);background:var(--an-b);border-color:var(--an)}
+.hd-pill.oh{color:var(--oh-t);background:var(--oh-b);border-color:var(--oh)}
+.hd-pill.ox{color:var(--ox-t);background:var(--ox-b);border-color:var(--ox)}
+.hd-sep{color:rgba(255,255,255,.4);font-size:1rem;align-self:center}
+.hd-result{
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:rgba(255,255,255,.9);
+  border-left:1px solid rgba(255,255,255,.15);
+  padding-left:12px;
+  margin-left:4px;
+  line-height:1.55;
+}
+.hd-result strong{color:#fcd34d}
+
+/* Hero actions */
+.hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.narr-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 16px;
+  background:rgba(255,255,255,.1);
+  border:1.5px solid rgba(255,255,255,.3);
+  color:rgba(255,255,255,.9);
+  border-radius:100px;
+  font-size:.8rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+}
+.narr-btn:hover,.narr-btn.playing{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+
+/* ===== TIP / CONSEJO ===== */
+.tip-card{
+  background:var(--warn-b);
+  border:1.5px solid var(--warn);
+  border-radius:var(--rs);
+  padding:12px 16px;
+  margin-bottom:24px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.tip-body{flex:1}
+.tip-label{
+  font-size:.55rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--warn-t);
+  margin-bottom:3px;
+}
+.tip-text{font-size:.82rem;color:var(--warn-t);line-height:1.55}
+.tip-close{
+  background:none;
+  border:none;
+  color:var(--warn-t);
+  cursor:pointer;
+  font-size:.95rem;
+  padding:0;
+  flex-shrink:0;
+  opacity:.7;
+  line-height:1;
+}
+.tip-close:hover{opacity:1}
+
+/* ===== PRETRAIN SECTION ===== */
+.pretrain-box{
+  background:var(--an-b);
+  border:2px solid var(--an);
+  border-radius:var(--r);
+  padding:16px 20px;
+  margin-bottom:24px;
+}
+.pretrain-box h4{
+  color:var(--an-t);
+  font-size:.62rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  margin-bottom:10px;
+}
+.pretrain-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pt-chip{
+  background:var(--surf);
+  border:1.5px solid var(--brd);
+  border-radius:20px;
+  padding:5px 14px;
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--tx);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.pt-chip .chip-dot{
+  width:9px;height:9px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+/* ===== REAL-WORLD STRIP ===== */
+.rw-section{margin-bottom:28px}
+.section-lbl{
+  font-size:.58rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--dimmer);
+  margin-bottom:12px;
+}
+.rw-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  gap:8px;
+}
+.rw-card{
+  background:var(--surf);
+  border:1.5px solid var(--brd);
+  border-radius:var(--rs);
+  padding:10px 14px;
+  box-shadow:var(--sh);
+}
+.rw-formula{
+  font-family:var(--mono);
+  font-size:.95rem;
+  font-weight:700;
+  color:var(--cat-t);
+  margin-bottom:2px;
+}
+.rw-name{font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:2px}
+.rw-use{font-size:.68rem;color:var(--dimmer);line-height:1.4}
+
+/* ===== 4-PART GRID ===== */
+.parts-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:28px;
+}
+.part-card{
+  border-radius:var(--rs);
+  padding:16px 18px;
+  border:2px solid;
+  position:relative;
+  overflow:hidden;
+}
+.part-card::before{
+  content:attr(data-sym);
+  position:absolute;
+  top:-4px;right:10px;
+  font-family:var(--mono);
+  font-size:3.2rem;
+  font-weight:700;
+  opacity:.08;
+  line-height:1;
+  pointer-events:none;
+}
 .part-card.cat{border-color:var(--cat);background:var(--cat-b)}
 .part-card.an{border-color:var(--an);background:var(--an-b)}
 .part-card.oh{border-color:var(--oh);background:var(--oh-b)}
 .part-card.ox{border-color:var(--ox);background:var(--ox-b)}
-.part-num{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:4px}
-.part-card.cat .part-num{color:var(--cat-t)}.part-card.an .part-num{color:var(--an-t)}
-.part-card.oh .part-num{color:var(--oh-t)}.part-card.ox .part-num{color:var(--ox-t)}
+.part-num{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:3px}
+.part-card.cat .part-num{color:var(--cat-t)}
+.part-card.an .part-num{color:var(--an-t)}
+.part-card.oh .part-num{color:var(--oh-t)}
+.part-card.ox .part-num{color:var(--ox-t)}
 .part-title{font-size:1rem;font-weight:800;margin-bottom:5px}
-.part-card.cat .part-title{color:var(--cat-t)}.part-card.an .part-title{color:var(--an-t)}
-.part-card.oh .part-title{color:var(--oh-t)}.part-card.ox .part-title{color:var(--ox-t)}
+.part-card.cat .part-title{color:var(--cat-t)}
+.part-card.an .part-title{color:var(--an-t)}
+.part-card.oh .part-title{color:var(--oh-t)}
+.part-card.ox .part-title{color:var(--ox-t)}
 .part-examples{font-family:var(--mono);font-size:.75rem;margin-bottom:4px;font-weight:700}
-.part-card.cat .part-examples{color:var(--cat)}.part-card.an .part-examples{color:var(--an)}
-.part-card.oh .part-examples{color:var(--oh)}.part-card.ox .part-examples{color:var(--ox)}
+.part-card.cat .part-examples{color:var(--cat)}
+.part-card.an .part-examples{color:var(--an)}
+.part-card.oh .part-examples{color:var(--oh)}
+.part-card.ox .part-examples{color:var(--ox)}
 .part-desc{font-size:.78rem;color:var(--dim);line-height:1.55}
 
-/* DEMO NAME */
-.demo-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 24px;margin-bottom:32px;box-shadow:var(--sh)}
-.sec-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--dimmer);margin-bottom:14px}
-.demo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+/* ===== DEMO CARD ===== */
+.demo-card{
+  background:var(--surf);
+  border:1.5px solid var(--brd);
+  border-radius:var(--r);
+  padding:20px 24px;
+  margin-bottom:28px;
+  box-shadow:var(--sh);
+}
+.demo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:14px}
 .dt{display:flex;flex-direction:column;align-items:center;gap:5px}
-.dw{font-family:var(--mono);font-size:1.05rem;font-weight:700;padding:5px 12px;border-radius:6px;line-height:1;border:1.5px solid}
+.dw{
+  font-family:var(--mono);
+  font-size:1.05rem;
+  font-weight:700;
+  padding:5px 12px;
+  border-radius:6px;
+  line-height:1;
+  border:1.5px solid;
+}
 .dw.cat{color:var(--cat-t);background:var(--cat-b);border-color:var(--cat)}
 .dw.an{color:var(--an-t);background:var(--an-b);border-color:var(--an)}
 .dw.oh{color:var(--oh-t);background:var(--oh-b);border-color:var(--oh)}
 .dw.ox{color:var(--ox-t);background:var(--ox-b);border-color:var(--ox)}
-.dw.neu{color:var(--dim);background:#f0f4fa;border-color:var(--brd)}
+.dw.neu{color:var(--dim);background:var(--surf2);border-color:var(--brd)}
 .dl{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;white-space:nowrap}
-.dl.cat{color:var(--cat-t)}.dl.an{color:var(--an-t)}.dl.oh{color:var(--oh-t)}.dl.ox{color:var(--ox-t)}.dl.neu{color:var(--dimmer)}
-.demo-note{font-size:.78rem;color:var(--dimmer);margin-top:14px;padding-top:12px;border-top:1px solid var(--brd)}
+.dl.cat{color:var(--cat-t)} .dl.an{color:var(--an-t)} .dl.oh{color:var(--oh-t)} .dl.ox{color:var(--ox-t)} .dl.neu{color:var(--dimmer)}
+.demo-note{
+  font-size:.78rem;
+  color:var(--dimmer);
+  padding-top:12px;
+  border-top:1px solid var(--brd);
+}
 
-/* MODULES */
-.mods-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--dimmer);margin-bottom:14px}
-.mods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
-.mod-card{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);cursor:pointer;transition:transform .22s,box-shadow .22s;border:2px solid;text-decoration:none;display:flex;flex-direction:column}
-.mod-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
-.mod-card.azul{background:linear-gradient(135deg,#0d2d42,#0d4a73);border-color:#0d4a73}
-.mod-card.ambar{background:linear-gradient(135deg,var(--cat-t),var(--cat));border-color:var(--cat)}
-.mod-card.verde{background:linear-gradient(135deg,#064e3b,#047857);border-color:#059669}
-.mod-card.teal{background:linear-gradient(135deg,#134e4a,#0f766e);border-color:#0d9488}
-.mod-card.violeta{background:linear-gradient(135deg,#3b0764,#6d28d9);border-color:#7c3aed}
-.mod-card.duelo{background:linear-gradient(135deg,#1A0A06,#3D1A0A);border-color:#8B6914}
-.mod-card.span2{grid-column:span 2}
-@media(max-width:560px){.mod-card.span2{grid-column:span 1}}
-.mod-top{padding:22px 24px 16px;flex:1}
-.mod-icon{font-size:2rem;display:block;margin-bottom:8px}
-.mod-paso{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.6);margin-bottom:4px}
-.mod-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;margin-bottom:6px;color:#fff}
-.mod-desc{font-size:.8rem;color:rgba(255,255,255,.78);line-height:1.55}
-.mod-bottom{padding:10px 24px;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;color:rgba(255,255,255,.9);font-size:.8rem;font-weight:700}
-.mod-chips{display:flex;gap:6px;flex-wrap:wrap}
-.mc{background:rgba(255,255,255,.15);padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700}
-.mod-arrow{font-size:1rem;transition:transform .2s}
-.mod-card:hover .mod-arrow{transform:translateX(5px)}
-
-/* RUTA */
-.ruta-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 22px;margin-bottom:32px;box-shadow:var(--sh)}
-.ruta-hdr{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--dimmer);margin-bottom:14px}
-.ruta-steps{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.rs{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--rs);border:2px solid;text-decoration:none;flex:1;min-width:150px;transition:transform .18s,box-shadow .18s}
+/* ===== RUTA RECOMENDADA ===== */
+.ruta-card{
+  background:var(--surf);
+  border:1.5px solid var(--brd);
+  border-radius:var(--r);
+  padding:20px 22px;
+  margin-bottom:28px;
+  box-shadow:var(--sh);
+}
+.ruta-steps{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rs{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 16px;
+  border-radius:var(--rs);
+  border:2px solid;
+  text-decoration:none;
+  flex:1;
+  min-width:140px;
+  transition:transform .18s,box-shadow .18s;
+}
 .rs:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
-.rs.r1{border-color:var(--an);background:#e6f2ff;color:var(--an-t)}
+.rs.r1{border-color:var(--an);background:var(--an-b);color:var(--an-t)}
 .rs.r2{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
 .rs.r3{border-color:#8B6914;background:#fdf6e3;color:#5a3e06}
-.ruta-arrow{color:var(--dimmer);font-size:1.2rem;flex-shrink:0}
+.rs.r3-dark,
+:root[data-theme="dark"] .rs.r3{background:rgba(139,105,20,.12);color:#fde68a}
+.ruta-arrow{color:var(--dimmer);font-size:1.1rem;flex-shrink:0}
 .rs-n{font-family:var(--serif);font-size:1.5rem;font-weight:700;flex-shrink:0;line-height:1}
 .rs-title{font-size:.88rem;font-weight:800;margin-bottom:2px}
 .rs-desc{font-size:.72rem;line-height:1.45;opacity:.8}
+.rs.r1.highlight-signal{
+  box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2);
+  animation:pulse-signal 2.5s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){.rs.r1.highlight-signal{animation:none}}
+@keyframes pulse-signal{
+  0%,100%{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2)}
+  50%{box-shadow:0 0 0 6px rgba(3,105,161,.18),var(--sh2)}
+}
 
-/* Real-world strip */
-.rw-section{margin-bottom:28px}
-.rw-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--dimmer);margin-bottom:10px}
-.rw-row{display:flex;gap:8px;flex-wrap:wrap}
-.rw-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 14px;min-width:120px;flex:1;box-shadow:var(--sh)}
-.rw-formula{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--cat-t);margin-bottom:2px}
-.rw-name{font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:1px}
-.rw-use{font-size:.68rem;color:var(--dimmer);line-height:1.4}
-footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+/* ===== MODULES GRID ===== */
+.mods-lbl{
+  font-size:.58rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--dimmer);
+  margin-bottom:14px;
+}
+.mods{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+  margin-bottom:32px;
+}
+
+/* Module card */
+.mod-card{
+  border-radius:var(--r);
+  overflow:hidden;
+  box-shadow:var(--sh);
+  cursor:pointer;
+  transition:transform .22s,box-shadow .22s;
+  border:2px solid;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+}
+.mod-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.mod-card.azul  {background:linear-gradient(135deg,#0d2d42,#0d4a73);border-color:#0d4a73}
+.mod-card.ambar {background:linear-gradient(135deg,var(--cat-t),var(--cat));border-color:var(--cat)}
+.mod-card.verde {background:linear-gradient(135deg,#064e3b,#047857);border-color:#059669}
+.mod-card.teal  {background:linear-gradient(135deg,#134e4a,#0f766e);border-color:#0d9488}
+.mod-card.violeta{background:linear-gradient(135deg,#3b0764,#6d28d9);border-color:#7c3aed}
+.mod-card.duelo {background:linear-gradient(135deg,#1A0A06,#3D1A0A);border-color:#8B6914}
+.mod-top{padding:20px 22px 14px;flex:1}
+.mod-icon{font-size:1.8rem;display:block;margin-bottom:8px}
+.mod-paso{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.55);margin-bottom:3px}
+.mod-title{font-family:var(--serif);font-size:1.15rem;font-weight:700;font-style:italic;margin-bottom:5px;color:#fff;text-wrap:balance}
+.mod-subtitle{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5;margin-bottom:4px}
+.mod-desc{font-size:.78rem;color:rgba(255,255,255,.72);line-height:1.5}
+.mod-bottom{
+  padding:9px 22px;
+  background:rgba(0,0,0,.2);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.mod-chips{display:flex;gap:5px;flex-wrap:wrap}
+.mc{background:rgba(255,255,255,.15);padding:3px 9px;border-radius:100px;font-size:.66rem;font-weight:700;color:rgba(255,255,255,.9)}
+.mod-meta{display:flex;align-items:center;gap:8px}
+.mod-badge{
+  font-size:.6rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  padding:2px 8px;
+  border-radius:100px;
+  border:1px solid rgba(255,255,255,.25);
+  color:rgba(255,255,255,.75);
+  white-space:nowrap;
+}
+.mod-badge.basico {background:rgba(16,163,74,.25);border-color:rgba(16,163,74,.4);color:#86efac}
+.mod-badge.medio  {background:rgba(217,119,6,.25);border-color:rgba(217,119,6,.4);color:#fde68a}
+.mod-badge.avanzado{background:rgba(220,38,38,.25);border-color:rgba(220,38,38,.4);color:#fca5a5}
+.mod-arrow{font-size:1rem;color:rgba(255,255,255,.8);transition:transform .2s;flex-shrink:0}
+.mod-card:hover .mod-arrow{transform:translateX(5px)}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  padding:24px 0;
+  border-top:1px solid var(--brd);
+  font-size:.77rem;
+  color:var(--dimmer);
+  margin-top:8px;
+}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 
-/* MAYER: narration button */
-.narr-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(3,105,161,.1);border:2px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:18px}
-.narr-btn:hover{background:var(--an);color:#fff}
-.narr-btn.playing{background:var(--an);color:#fff}
+/* ===== iOS MODAL ===== */
+.ios-modal-inner{background:var(--surf);border-radius:16px;padding:28px;max-width:380px;box-shadow:var(--sh2);font-family:var(--sans);color:var(--tx)}
+.ios-modal-inner ol{font-size:.85rem;line-height:1.8;color:var(--tx2);margin:0 0 20px;padding-left:20px}
+.ios-close-btn{width:100%;padding:12px;background:var(--nav);color:var(--nav-t);border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
 
-/* MAYER: tip card */
-.tip-card{background:#fffbeb;border:2px solid #f59e0b;border-radius:var(--rs);padding:14px 18px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start}
-.tip-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
-.tip-body{flex:1}
-.tip-label{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#92400e;margin-bottom:4px}
-.tip-text{font-size:.82rem;color:#78350f;line-height:1.55}
-
-/* MAYER: signal highlight on recommended path */
-.rs.r1.highlight-signal{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2);animation:pulse-signal 2.5s ease-in-out infinite}
-@keyframes pulse-signal{0%,100%{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2)}50%{box-shadow:0 0 0 6px rgba(3,105,161,.18),var(--sh2)}}
-
-@media(max-width:580px){
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
   .parts-grid{grid-template-columns:1fr}
   .mods{grid-template-columns:1fr}
-  .intro-card{padding:22px 20px}
-  .intro-card h1{font-size:1.55rem}
+  .hero{padding:24px 20px 20px}
   .ruta-steps{flex-direction:column}
   .rs{min-width:unset;width:100%}
+  .ruta-arrow{transform:rotate(90deg)}
+}
+@media(min-width:641px) and (max-width:899px){
+  .mods{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:900px){
+  .mods{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
+<!-- ===== NAV ===== -->
 <nav class="site-nav">
-  <a href="index.html" class="nav-brand"><img src="assets/iononpwa.png" alt="IonNom" style="height:32px;vertical-align:middle"></a>
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom" style="height:30px;vertical-align:middle">
+  </a>
   <div class="nav-links">
     <a href="index.html" class="active">🏠 <span class="full">Inicio</span></a>
     <a href="teoria.html">📖 <span class="full">Principios</span></a>
@@ -186,34 +628,83 @@ footer a:hover{text-decoration:underline}
     <a href="nomenClash.html">⚔️ <span class="full">NomenClash</span></a>
     <a href="simulador.html">🔬 <span class="full">Simulador</span></a>
   </div>
-  <button id="pwa-install-nav-btn" style="display:none;padding:7px 14px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+  <div class="nav-right">
+    <button id="pwa-install-nav-btn" style="display:none;padding:6px 12px;background:#fcd34d;color:#0d4a73;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.76rem;white-space:nowrap" onclick="handleInstallClick()">📥 Instalar</button>
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema">🌙</button>
+  </div>
 </nav>
 
 <div class="app">
 
-<div class="intro-card">
-  <img src="assets/logo.png" alt="IonNom" style="max-width:380px;width:90%;display:block;margin:0 auto 20px">
-  <p>Aprende los tres sistemas de nomenclatura inorgánica — Tradicional, Stock e IUPAC — usando el modelo visual de colores <strong>2+matiz</strong>. Cada color representa una función química diferente.</p>
-  <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
-  <div class="four-tags">
-    <span class="ft cat">① Ámbar · Catión</span>
-    <span class="ft an">② Azul · Anión simple</span>
-    <span class="ft oh">③ Violeta · OH⁻</span>
-    <span class="ft ox">④ Teal · Oxoanión</span>
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-eyebrow">Nomenclatura Inorgánica · Sistema MDEC</div>
+  <h1>Nombra cualquier compuesto<br><em>inorgánico</em> sin memorizar</h1>
+  <p class="hero-sub">IonNom te enseña los tres sistemas de nomenclatura — Tradicional, Stock e IUPAC — usando un código de cuatro colores. Identifica la función química de cada parte y construye el nombre paso a paso.</p>
+
+  <!-- Live formula demo — the page demonstrates its own method -->
+  <div class="hero-demo" role="img" aria-label="Ejemplo: sulfato de hierro III = catión Fe más oxoanión SO4">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span class="hd-pill cat">Fe³⁺</span>
+      <span class="hd-label" style="color:rgba(255,255,255,.45)">① Catión</span>
+    </div>
+    <span class="hd-sep">+</span>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span class="hd-pill ox">SO₄²⁻</span>
+      <span class="hd-label" style="color:rgba(255,255,255,.45)">④ Oxoanión</span>
+    </div>
+    <span class="hd-sep">=</span>
+    <div class="hd-result">
+      <strong>Fe₂(SO₄)₃</strong><br>
+      <span style="opacity:.7;font-size:.78rem">sulfato de hierro (III) · sulfato férrico</span>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
   </div>
 </div>
 
+<!-- ===== CONSEJO ===== -->
 <div class="tip-card" id="tip-inicio">
   <div class="tip-icon">💡</div>
   <div class="tip-body">
-    <div class="tip-label">Consejo para empezar</div>
-    <div class="tip-text">¿Primera vez en IonNom? Sigue la <strong>Ruta recomendada</strong>: comienza por <em>Principios</em>, luego <em>Funciones</em> y finalmente pon a prueba lo aprendido en el <em>Juego</em>. ¡Paso a paso llegarás más lejos! 🚀</div>
+    <div class="tip-label">Ruta recomendada para empezar</div>
+    <div class="tip-text">¿Primera vez en IonNom? Comienza por <strong>Principios</strong>, luego practica con <strong>Funciones</strong> y pon a prueba lo que aprendiste en el <strong>Juego</strong>. Paso a paso llegarás más lejos.</div>
   </div>
-  <button onclick="document.getElementById('tip-inicio').style.display='none'" style="background:none;border:none;color:#92400e;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" aria-label="Cerrar consejo">✕</button>
+  <button class="tip-close" onclick="document.getElementById('tip-inicio').style.display='none'" aria-label="Cerrar consejo">✕</button>
 </div>
 
+<!-- ===== PRETRAIN: 4 GRUPOS MDEC ===== -->
+<div class="pretrain-box" role="note">
+  <h4>Antes de empezar — los 4 grupos que verás en toda la app</h4>
+  <div class="pretrain-chips">
+    <span class="pt-chip">
+      <span class="chip-dot" style="background:var(--cat)"></span>
+      <strong style="color:var(--cat-t)">① Ámbar · Catión</strong>
+      <span style="color:var(--dim);font-weight:400">— metal / ion positivo</span>
+    </span>
+    <span class="pt-chip">
+      <span class="chip-dot" style="background:var(--an)"></span>
+      <strong style="color:var(--an-t)">② Azul · Anión simple</strong>
+      <span style="color:var(--dim);font-weight:400">— no metal / ion negativo</span>
+    </span>
+    <span class="pt-chip">
+      <span class="chip-dot" style="background:var(--oh)"></span>
+      <strong style="color:var(--oh-t)">③ Violeta · OH⁻</strong>
+      <span style="color:var(--dim);font-weight:400">— grupo hidroxilo</span>
+    </span>
+    <span class="pt-chip">
+      <span class="chip-dot" style="background:var(--ox)"></span>
+      <strong style="color:var(--ox-t)">④ Teal · Oxoanión</strong>
+      <span style="color:var(--dim);font-weight:400">— anión oxigenado</span>
+    </span>
+  </div>
+</div>
+
+<!-- ===== REAL-WORLD ===== -->
 <div class="rw-section">
-  <div class="rw-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
+  <div class="section-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
   <div class="rw-row">
     <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
     <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
@@ -224,6 +715,7 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ===== 4-PART GRID ===== -->
 <div class="parts-grid">
   <div class="part-card cat" data-sym="⊕">
     <div class="part-num">① Ámbar — Catión</div>
@@ -235,7 +727,7 @@ footer a:hover{text-decoration:underline}
     <div class="part-num">② Azul — Anión simple</div>
     <div class="part-title">No metal / Ion negativo</div>
     <div class="part-examples">Cl⁻  S²⁻  O²⁻  Br⁻</div>
-    <div class="part-desc">No metal que gana electrones. En el nombre termina en <em>-uro</em> o <em>-ido</em>. Forma: <strong>óxidos básicos</strong> (O²⁻ + metal), <strong>sales binarias</strong> (con metal), <strong>haluros no metálicos</strong> (H + halógeno = ácidos hídricos como HCl), y <strong>anhídridos</strong> (no metal + O = óxidos no metálicos).</div>
+    <div class="part-desc">No metal que gana electrones. En el nombre termina en <em>-uro</em> o <em>-ido</em>. Forma óxidos básicos, sales binarias y anhídridos.</div>
   </div>
   <div class="part-card oh" data-sym="OH">
     <div class="part-num">③ Violeta — Grupo OH⁻</div>
@@ -251,8 +743,9 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ===== DEMO CARD ===== -->
 <div class="demo-card">
-  <div class="sec-lbl">Ejemplo — Lectura de un nombre con el sistema de colores</div>
+  <div class="section-lbl">Ejemplo — Lectura de un nombre con el sistema de colores</div>
   <div class="demo-row">
     <div class="dt"><span class="dw ox">sulfato</span><span class="dl ox">④ Oxoanión SO₄²⁻</span></div>
     <div class="dt"><span class="dw neu">de</span><span class="dl neu">enlace</span></div>
@@ -265,24 +758,25 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ===== RUTA RECOMENDADA ===== -->
 <div class="ruta-card">
-  <div class="ruta-hdr">Ruta recomendada</div>
+  <div class="section-lbl">Ruta recomendada</div>
   <div class="ruta-steps">
     <a class="rs r1 highlight-signal" href="teoria.html">
       <span class="rs-n">①</span>
       <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y 3 sistemas</div></div>
     </a>
-    <span class="ruta-arrow">→</span>
-    <a class="rs r1" href="funciones.html" style="border-color:#059669;background:#d1fae5;color:#064e3b">
+    <span class="ruta-arrow" aria-hidden="true">→</span>
+    <a class="rs r1" href="funciones.html" style="border-color:#059669;background:var(--ok-b);color:var(--ok-t)">
       <span class="rs-n">②</span>
       <div><div class="rs-title">Funciones</div><div class="rs-desc">Ejercicios por los 8 grupos inorgánicos</div></div>
     </a>
-    <span class="ruta-arrow">→</span>
+    <span class="ruta-arrow" aria-hidden="true">→</span>
     <a class="rs r2" href="juego.html">
       <span class="rs-n">③</span>
       <div><div class="rs-title">Juego</div><div class="rs-desc">20 preguntas cronometradas · medallas</div></div>
     </a>
-    <span class="ruta-arrow">→</span>
+    <span class="ruta-arrow" aria-hidden="true">→</span>
     <a class="rs r3" href="nomenClash.html">
       <span class="rs-n">④</span>
       <div><div class="rs-title">NomenClash</div><div class="rs-desc">Duelo de iones contra la IA</div></div>
@@ -290,136 +784,147 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ===== MÓDULOS ===== -->
 <div class="mods-lbl">Módulos</div>
 <div class="mods">
+
   <a class="mod-card azul" href="teoria.html">
     <div class="mod-top">
       <span class="mod-icon">📖</span>
       <div class="mod-paso">① Empieza aquí</div>
       <div class="mod-title">Principios</div>
-      <div class="mod-desc">Estados de oxidación, compuestos binarios y ternarios, y los tres sistemas de nomenclatura con reglas y ejemplos paso a paso.</div>
+      <div class="mod-subtitle">Aprenderás: estados de oxidación y los 3 sistemas</div>
+      <div class="mod-desc">Compuestos binarios y ternarios, reglas y ejemplos paso a paso con el modelo de colores.</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">7 temas</span>
-        <span class="mc">Trad · Stock · IUPAC</span>
+      <div class="mod-chips"><span class="mc">7 temas</span><span class="mc">Trad · Stock · IUPAC</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Básico</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
+
   <a class="mod-card verde" href="funciones.html">
     <div class="mod-top">
       <span class="mod-icon">🧪</span>
       <div class="mod-paso">② Practica por grupo</div>
       <div class="mod-title">Funciones Inorgánicas</div>
-      <div class="mod-desc">8 grupos funcionales con teoría, ejercicios interactivos y compuestos reales en contexto colombiano (Cerrejón, Galeras, Paz de Río…).</div>
+      <div class="mod-subtitle">Aprenderás: los 8 grupos funcionales con contexto real</div>
+      <div class="mod-desc">Ejercicios interactivos y compuestos colombianos reales (Cerrejón, Galeras, Paz de Río…).</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">8 grupos</span>
-        <span class="mc">Contexto 🇨🇴</span>
-        <span class="mc">Ejercicios</span>
+      <div class="mod-chips"><span class="mc">8 grupos</span><span class="mc">Contexto 🇨🇴</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
+
   <a class="mod-card ambar" href="juego.html">
     <div class="mod-top">
       <span class="mod-icon">🎮</span>
       <div class="mod-paso">③ Pon a prueba lo aprendido</div>
       <div class="mod-title">Juego</div>
-      <div class="mod-desc">20 preguntas cronometradas (60 s c/u), 13 tipos distintos de pregunta, banco de 459 compuestos + 118 elementos, medallas y retroalimentación de temas a repasar.</div>
+      <div class="mod-subtitle">Aprenderás: a reconocer nombres y fórmulas bajo presión</div>
+      <div class="mod-desc">20 preguntas cronometradas (60 s c/u), 13 tipos distintos, banco de 459 compuestos + 118 elementos.</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">20 preguntas</span>
-        <span class="mc">13 tipos</span>
-        <span class="mc">459 compuestos</span>
-        <span class="mc">⚛️ Elementos</span>
+      <div class="mod-chips"><span class="mc">20 preguntas</span><span class="mc">459 compuestos</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
+
   <a class="mod-card teal" href="tabla.html">
     <div class="mod-top">
       <span class="mod-icon">⚗️</span>
       <div class="mod-paso">④ Referencia</div>
       <div class="mod-title">Tabla Periódica</div>
-      <div class="mod-desc">118 elementos interactivos: símbolo, nombre, masa, estados de oxidación, electronegatividad de Pauling y contexto colombiano de cada elemento.</div>
+      <div class="mod-subtitle">Aprenderás: estados de oxidación y electronegatividad</div>
+      <div class="mod-desc">118 elementos interactivos: símbolo, masa, electronegatividad de Pauling y contexto colombiano.</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">118 elementos</span>
-        <span class="mc">Electroneg. Pauling</span>
-        <span class="mc">Contexto 🇨🇴</span>
+      <div class="mod-chips"><span class="mc">118 elementos</span><span class="mc">Pauling</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Básico</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
+
   <a class="mod-card violeta" href="generador.html">
     <div class="mod-top">
       <span class="mod-icon">⚙️</span>
       <div class="mod-paso">⑤ Para docentes</div>
       <div class="mod-title">Generador de Ejercicios</div>
-      <div class="mod-desc">Genera hojas de trabajo personalizadas por grupo funcional, nivel y cantidad de preguntas. Lista para imprimir o proyectar en clase.</div>
+      <div class="mod-subtitle">Genera hojas de trabajo personalizadas para tu clase</div>
+      <div class="mod-desc">Filtra por grupo funcional, nivel y cantidad. Lista para imprimir o proyectar.</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">8 grupos</span>
-        <span class="mc">Imprimible</span>
-        <span class="mc">Proyectable</span>
+      <div class="mod-chips"><span class="mc">8 grupos</span><span class="mc">Imprimible</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge avanzado">Docente</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
+
   <a class="mod-card duelo" href="nomenClash.html">
     <div class="mod-top">
       <span class="mod-icon">⚔️</span>
       <div class="mod-paso" style="color:#D4AF37;opacity:.9">⑥ Competencia</div>
-      <div class="mod-title">NomenClash — El Duelo de los Iones</div>
-      <div class="mod-desc" style="color:rgba(242,232,213,.78)">Juego de cartas medieval: combina cationes y aniones para formar compuestos neutros, nómbralos correctamente y derrota a la IA. Modo básico y completo.</div>
+      <div class="mod-title">NomenClash — El Duelo</div>
+      <div class="mod-subtitle" style="color:rgba(242,232,213,.6)">Combina iones, forma compuestos y derrota a la IA</div>
+      <div class="mod-desc" style="color:rgba(242,232,213,.72)">Juego de cartas medieval: cationes vs aniones, nombramiento en los 3 sistemas. Modo básico y completo.</div>
     </div>
     <div class="mod-bottom">
       <div class="mod-chips">
         <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">Cartas</span>
         <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">IA oponente</span>
-        <span class="mc" style="background:rgba(212,175,55,.15);color:#D4AF37">Trad · Stock · IUPAC</span>
       </div>
-      <span class="mod-arrow" style="color:#D4AF37">→</span>
+      <div class="mod-meta">
+        <span class="mod-badge avanzado">Avanzado</span>
+        <span class="mod-arrow" style="color:#D4AF37">→</span>
+      </div>
     </div>
   </a>
+
   <a class="mod-card verde" href="simulador.html">
     <div class="mod-top">
       <span class="mod-icon">🔬</span>
-      <div class="mod-paso">⑥ Experimenta</div>
+      <div class="mod-paso">⑦ Experimenta</div>
       <div class="mod-title">Simulador</div>
-      <div class="mod-desc">Simula reacciones inorgánicas para formar los 8 grupos funcionales, y experimenta con un laboratorio virtual de pH con fenolftaleína y repollo morado.</div>
+      <div class="mod-subtitle">Aprenderás: a predecir productos de reacciones inorgánicas</div>
+      <div class="mod-desc">Simula reacciones para los 8 grupos. Laboratorio virtual de pH con fenolftaleína y repollo morado.</div>
     </div>
     <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc">⚗️ Reacciones</span>
-        <span class="mc">🧪 pH virtual</span>
-        <span class="mc">Evaluación</span>
+      <div class="mod-chips"><span class="mc">⚗️ Reacciones</span><span class="mc">🧪 pH virtual</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
       </div>
-      <span class="mod-arrow">→</span>
     </div>
   </a>
-</div>
 
 </div>
+</div>
 
-<!-- iOS Install Instructions Modal -->
-<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#fff;border-radius:16px;padding:28px;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Arial,sans-serif">
-    <div style="font-size:24px;margin-bottom:4px">📱 Instalar en iOS</div>
-    <div style="font-size:12px;color:#666;margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
-    <ol style="font-size:13px;line-height:1.8;color:#333;margin:0 0 20px;padding-left:20px">
+<!-- ===== iOS MODAL ===== -->
+<div id="ios-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;align-items:center;justify-content:center;padding:20px">
+  <div class="ios-modal-inner">
+    <div style="font-size:1.5rem;margin-bottom:4px">📱 Instalar en iOS</div>
+    <div style="font-size:.8rem;color:var(--dimmer);margin-bottom:20px">Sigue estos pasos para instalar IonNom</div>
+    <ol>
       <li>Toca el icono de compartir <strong>⬆️</strong></li>
       <li>Desplázate y busca "Añadir a pantalla de inicio"</li>
       <li>Toca "Añadir" en la esquina superior derecha</li>
-      <li>¡Listo! IonNom aparecerá en tu home</li>
+      <li>¡Listo! IonNom aparecerá en tu pantalla de inicio</li>
     </ol>
-    <button onclick="document.getElementById('ios-modal').style.display='none'" style="width:100%;padding:12px;background:#0d4a73;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Entendido</button>
+    <button class="ios-close-btn" onclick="document.getElementById('ios-modal').style.display='none'">Entendido</button>
   </div>
 </div>
 
@@ -428,6 +933,21 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
+// ── Theme toggle ──
+function toggleTheme(){
+  var t=document.documentElement.getAttribute("data-theme");
+  var n=t==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",n);
+  localStorage.setItem("ionom-theme",n);
+  document.getElementById("theme-btn").textContent=n==="dark"?"☀️":"🌙";
+}
+(function(){
+  var s=localStorage.getItem("ionom-theme")||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light");
+  document.documentElement.setAttribute("data-theme",s);
+  var btn=document.getElementById("theme-btn");
+  if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+})();
+
 // ── MAYER: Colombian Spanish voice narration ──
 function speak(text, onEnd) {
   if (!window.speechSynthesis) return;
@@ -470,7 +990,7 @@ if ('serviceWorker' in navigator) {
   }).catch(err => console.log('IonNom PWA: Error en SW', err));
 }
 
-// PWA Install Handler — modal only opens on button click, never on load
+// PWA Install Handler
 let deferredPrompt;
 const navInstallBtn = document.getElementById('pwa-install-nav-btn');
 
@@ -490,7 +1010,6 @@ function handleInstallClick() {
   }
 }
 
-// Show button on iOS (beforeinstallprompt never fires there)
 if (isIOS()) {
   navInstallBtn.style.display = 'block';
 }
