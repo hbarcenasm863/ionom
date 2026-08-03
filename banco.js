@@ -2437,7 +2437,7 @@ const BANCO = [
     col: 'El carbonato de calcio CaCO₃ (caliza) que precipita en esta reacción es abundante en Cundinamarca y Boyacá.'
   },
 
-  // -- Combustión (4) --
+  // -- Combustión (7) --
   {
     id: 'rx-035',
     group: 'reaccion', level: 'easy',
@@ -2470,23 +2470,87 @@ const BANCO = [
     hint: 'Acetileno (C₂H₂) + O₂ → CO₂ + H₂O. Combustión completa con llama muy caliente.',
     col: 'El acetileno (C₂H₂) se usa en soldadura oxiacetilénica en industrias metalmecánicas colombianas.'
   },
+  {
+    id: 'rx-041',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'C + O₂ → CO₂',
+    tipo_rx: 'combustion',
+    hint: 'No metal (carbón) + O₂ → óxido ácido. Combustión completa del carbono puro.',
+    col: 'El carbón del Cerrejón (La Guajira) y de El Cerro Matoso al quemarse produce CO₂ y calor.'
+  },
+  {
+    id: 'rx-042',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Alcohol etílico (etanol) + O₂ → CO₂ + H₂O. Combustión completa del etanol.',
+    col: 'El etanol de caña de azúcar producido en el Valle del Cauca se usa como biocombustible en mezclas E10 en Colombia.'
+  },
+  {
+    id: 'rx-043',
+    group: 'reaccion', level: 'medium',
+    ecuacion: 'C₄H₁₀ + 13/2 O₂ → 4CO₂ + 5H₂O',
+    tipo_rx: 'combustion',
+    hint: 'Butano (C₄H₁₀) + O₂ → CO₂ + H₂O. También se escribe: 2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O.',
+    col: 'El butano se usa como gas combustible en encendedores y camping en Colombia.'
+  },
 
-  // -- Neutralización (2) --
+  // -- Neutralización (7) --
   {
     id: 'rx-039',
-    group: 'reaccion', level: 'medium',
-    ecuacion: '2HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + 2H₂O',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'HCl + NaOH → NaCl + H₂O',
     tipo_rx: 'neutralizacion',
-    hint: 'Ácido dibásico + base divalente → sal + agua. Se necesitan 2 mol de HNO₃ por mol de Ca(OH)₂.',
-    col: 'El nitrato de calcio Ca(NO₃)₂ es un fertilizante nitrogenado usado en cultivos de flores en la Sabana de Bogotá.'
+    hint: 'Ácido monoprótico + base monovalente → sal + agua. Mol a mol. Ácido clorhídrico + sosa.',
+    col: 'La neutralización de HCl con NaOH se practica en titulaciones ácido-base en laboratorios del SENA Colombia.'
   },
   {
     id: 'rx-040',
     group: 'reaccion', level: 'medium',
+    ecuacion: 'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido dibásico + 2 bases → sal + agua. El H₂SO₄ aporta 2 H⁺, necesita 2 OH⁻.',
+    col: 'El sulfato de sodio Na₂SO₄ formado se usa en detergentes industriales producidos en Colombia.'
+  },
+  {
+    id: 'rx-044',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido monoprótico + base divalente → sal + agua. Se necesitan 2 mol de HNO₃ por mol de Ca(OH)₂.',
+    col: 'El nitrato de calcio Ca(NO₃)₂ es un fertilizante nitrogenado usado en cultivos de flores en la Sabana de Bogotá.'
+  },
+  {
+    id: 'rx-045',
+    group: 'reaccion', level: 'medium',
     ecuacion: 'H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O',
     tipo_rx: 'neutralizacion',
     hint: 'Ácido dibásico + base monovalente → sal + agua. Se necesitan 2 mol de KOH por mol de H₂SO₄.',
-    col: 'El sulfato de potasio (K₂SO₄) es un fertilizante usado en cultivos de flores en la Sabana de Bogotá.'
+    col: 'El sulfato de potasio K₂SO₄ es un fertilizante potásico usado en cultivos de banano en el Urabá antioqueño.'
+  },
+  {
+    id: 'rx-046',
+    group: 'reaccion', level: 'easy',
+    ecuacion: 'CH₃COOH + NaOH → CH₃COONa + H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido débil (acético) + base fuerte → sal (acetato) + agua. Misma proporción 1:1.',
+    col: 'El vinagre (CH₃COOH) de caña de azúcar colombiana neutralizado con NaOH forma acetato de sodio.'
+  },
+  {
+    id: 'rx-047',
+    group: 'reaccion', level: 'hard',
+    ecuacion: 'H₃PO₄ + 3NaOH → Na₃PO₄ + 3H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido triprótico + 3 bases → sal + agua. El H₃PO₄ aporta 3 H⁺, necesita 3 OH⁻.',
+    col: 'El fosfato trisódico Na₃PO₄ se usa en limpiadores industriales y tratamiento de agua en Colombia.'
+  },
+  {
+    id: 'rx-048',
+    group: 'reaccion', level: 'medium',
+    ecuacion: '2HCl + Ca(OH)₂ → CaCl₂ + 2H₂O',
+    tipo_rx: 'neutralizacion',
+    hint: 'Ácido monoprótico + base divalente → sal + agua. 2 HCl neutralizan los 2 OH⁻ del Ca(OH)₂.',
+    col: 'El cloruro de calcio CaCl₂ se usa como antiácido estomacal y deshidratante en laboratorios colombianos.'
   },
 
   // ─────────────────────────────────────────────
@@ -2976,4 +3040,5 @@ const BANCO = [
 
 ];
 
-// Total: 313 compounds (218 originales + 40 reaccion + 30 balanceo + 25 mol-masa)
+// Total: 321 compounds (218 originales + 48 reaccion + 30 balanceo + 25 mol-masa)
+// Grupo reaccion: sintesis(10) descomposicion(8) sus-simple(8) sus-doble(8) combustion(7) neutralizacion(7)
