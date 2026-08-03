@@ -16,8 +16,10 @@
   --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
   --r:16px;--rs:10px;
   --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
+  --mono:'Courier New',Courier,monospace;
   --sh:0 3px 18px rgba(26,110,168,.10);
 }
+.ex-ecuacion{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:#92400e;background:#fef3c7;padding:10px 14px;border-radius:8px;margin:10px 0}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
@@ -125,9 +127,10 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="ac-ox">Ácidos oxácidos</option>
         <option value="sal-bin">Sales binarias</option>
         <option value="sal-ox">Sales oxigenadas</option>
-        <option value="reaccion">Tipos de reacción</option>
-        <option value="balanceo">Balanceo de ecuaciones</option>
-        <option value="stoichiometry">Estequiometría</option>
+        <option value="reaccion">Tipos de Reacción</option>
+        <option value="balanceo">Balanceo por Tanteo</option>
+        <option value="mol-masa">Mol y Masa Molar</option>
+        <option value="estequiometria">Estequiometría</option>
       </select>
     </div>
 
@@ -141,6 +144,7 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="table-complete">Completar tabla de datos</option>
         <option value="classify-rx">Clasificar tipo de reacción</option>
         <option value="balance-eq">Balanceo por tanteo</option>
+        <option value="mol-calc">Cálculo de masa molar / moles</option>
         <option value="stoichiometry">Estequiometría (factores de conversión)</option>
       </select>
     </div>
@@ -283,28 +287,38 @@ const GROUP_LABELS = {
   'ac-ox': 'Ácidos oxácidos',
   'sal-bin': 'Sales binarias',
   'sal-ox': 'Sales oxigenadas',
-  'reaccion': 'Tipos de reacción',
-  'balanceo': 'Balanceo de ecuaciones',
+  'reaccion': 'Tipos de Reacción',
+  'balanceo': 'Balanceo por Tanteo',
+  'mol-masa': 'Mol y Masa Molar',
+  'estequiometria': 'Estequiometría',
   'stoichiometry': 'Estequiometría'
 };
 
+// ── SHUFFLE GLOBAL ───────────────────────────────────────────────────────────
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+
 // ── DATOS FIJOS: ESTEQUIOMETRÍA ─────────────────────────────────────────────
 const GEN_STOICH = [
-  {
-    ecuacion: '2H₂ + O₂ → 2H₂O',
-    coef: {H2:2, O2:1, H2O:2},
-    masas: {H2:2.016, O2:32.00, H2O:18.02},
-    problema: 'Si se dispone de 36.0 g de H₂O, ¿cuántos gramos de O₂ se necesitan para producirla?',
-    dato: {especie:'H₂O', valor:36.0, unidad:'g'},
-    buscar: {especie:'O₂'},
-    solucion_pasos: [
-      '36.0 g H₂O × (1 mol H₂O / 18.02 g H₂O)',
-      '× (1 mol O₂ / 2 mol H₂O)',
-      '× (32.00 g O₂ / 1 mol O₂)',
-      '= 32.0 g O₂'
-    ],
-    col: 'El oxígeno líquido para cohetes es producido en Colombia por Air Products en su planta de Bogotá.'
-  },
+  {reaccion:"2H2 + O2 -> 2H2O",reaccionDisplay:"2H₂ + O₂ → 2H₂O",dato:{formula:"H₂",gramos:4.0},incognita:{formula:"H₂O",respuesta:36.04},cadena:"4.0 g H₂ × (1 mol H₂ / 2.016 g) × (2 mol H₂O / 2 mol H₂) × (18.02 g / 1 mol H₂O)",hint:"Relación H₂:H₂O = 1:1 (molar).",col:"INTL"},
+  {reaccion:"C3H8+5O2->3CO2+4H2O",reaccionDisplay:"C₃H₈ + 5O₂ → 3CO₂ + 4H₂O",dato:{formula:"C₃H₈",gramos:44.0},incognita:{formula:"CO₂",respuesta:132.03},cadena:"44.0 g C₃H₈ × (1 mol / 44.10 g) × (3 mol CO₂ / 1 mol C₃H₈) × (44.01 g / 1 mol CO₂)",hint:"Combustión del propano — gas doméstico en Colombia. Por cada mol de propano se producen 3 mol de CO₂.",col:"CO"},
+  {reaccion:"N2+3H2->2NH3",reaccionDisplay:"N₂ + 3H₂ → 2NH₃",dato:{formula:"N₂",gramos:28.0},incognita:{formula:"NH₃",respuesta:34.06},cadena:"28.0 g N₂ × (1 mol / 28.01 g) × (2 mol NH₃ / 1 mol N₂) × (17.03 g / 1 mol NH₃)",hint:"Proceso Haber-Bosch para fabricar amoniaco — fertilizantes.",col:"INTL"},
+  {reaccion:"CaCO3->CaO+CO2",reaccionDisplay:"CaCO₃ → CaO + CO₂",dato:{formula:"CaCO₃",gramos:100.0},incognita:{formula:"CaO",respuesta:56.08},cadena:"100.0 g CaCO₃ × (1 mol / 100.09 g) × (1 mol CaO / 1 mol CaCO₃) × (56.08 g / 1 mol CaO)",hint:"Descomposición de la caliza — industria cementera (Argos, Cemex Colombia).",col:"CO"},
+  {reaccion:"HCl+NaOH->NaCl+H2O",reaccionDisplay:"HCl + NaOH → NaCl + H₂O",dato:{formula:"HCl",gramos:36.46},incognita:{formula:"NaCl",respuesta:58.44},cadena:"36.46 g HCl × (1 mol / 36.46 g) × (1 mol NaCl / 1 mol HCl) × (58.44 g / 1 mol NaCl)",hint:"Neutralización: HCl del estómago + NaOH → sal de cocina + agua.",col:"CO"},
+  {reaccion:"4Fe+3O2->2Fe2O3",reaccionDisplay:"4Fe + 3O₂ → 2Fe₂O₃",dato:{formula:"Fe",gramos:55.85},incognita:{formula:"Fe₂O₃",respuesta:79.85},cadena:"55.85 g Fe × (1 mol / 55.85 g) × (2 mol Fe₂O₃ / 4 mol Fe) × (159.69 g / 1 mol Fe₂O₃)",hint:"Oxidacion del hierro (herrumbre). Relacion Fe:Fe2O3 = 4:2.",col:"INTL"},
+  {reaccion:"CH4+2O2->CO2+2H2O",reaccionDisplay:"CH₄ + 2O₂ → CO₂ + 2H₂O",dato:{formula:"CH₄",gramos:16.04},incognita:{formula:"CO₂",respuesta:44.01},cadena:"16.04 g CH₄ × (1 mol / 16.04 g) × (1 mol CO₂ / 1 mol CH₄) × (44.01 g / 1 mol CO₂)",hint:"Combustión del metano — gas natural. 1:1 con CO₂.",col:"CO"},
+  {reaccion:"H2SO4+2NaOH->Na2SO4+2H2O",reaccionDisplay:"H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O",dato:{formula:"H₂SO₄",gramos:98.08},incognita:{formula:"Na₂SO₄",respuesta:142.04},cadena:"98.08 g H₂SO₄ × (1 mol / 98.08 g) × (1 mol Na₂SO₄ / 1 mol H₂SO₄) × (142.04 g / 1 mol Na₂SO₄)",hint:"El ácido sulfúrico reacciona con soda cáustica — neutralización 1:2 molar.",col:"INTL"},
+  {reaccion:"2KClO3->2KCl+3O2",reaccionDisplay:"2KClO₃ → 2KCl + 3O₂",dato:{formula:"KClO₃",gramos:122.55},incognita:{formula:"O₂",respuesta:48.0},cadena:"122.55 g KClO₃ × (1 mol / 122.55 g) × (3 mol O₂ / 2 mol KClO₃) × (32.00 g / 1 mol O₂)",hint:"Descomposición del clorato de potasio — fuente de O₂ en laboratorio.",col:"INTL"},
+  {reaccion:"Fe2O3+3CO->2Fe+3CO2",reaccionDisplay:"Fe₂O₃ + 3CO → 2Fe + 3CO₂",dato:{formula:"Fe₂O₃",gramos:159.69},incognita:{formula:"Fe",respuesta:111.7},cadena:"159.69 g Fe₂O₃ × (1 mol / 159.69 g) × (2 mol Fe / 1 mol Fe₂O₃) × (55.85 g / 1 mol Fe)",hint:"Alto horno: reduccion del óxido de hierro con CO — industria siderúrgica.",col:"INTL"},
+  {reaccion:"C12H22O11+12O2->12CO2+11H2O",reaccionDisplay:"C₁₂H₂₂O₁₁ + 12O₂ → 12CO₂ + 11H₂O",dato:{formula:"C₁₂H₂₂O₁₁",gramos:342.0},incognita:{formula:"CO₂",respuesta:528.12},cadena:"342.0 g azúcar × (1 mol / 342.30 g) × (12 mol CO₂ / 1 mol) × (44.01 g / 1 mol CO₂)",hint:"Combustión de la sacarosa (azúcar/panela colombiana) — produce 12 mol de CO₂ por mol.",col:"CO"},
+  {reaccion:"2Al+3CuSO4->Al2(SO4)3+3Cu",reaccionDisplay:"2Al + 3CuSO₄ → Al₂(SO₄)₃ + 3Cu",dato:{formula:"Al",gramos:54.0},incognita:{formula:"Cu",respuesta:190.98},cadena:"54.0 g Al × (1 mol / 26.98 g) × (3 mol Cu / 2 mol Al) × (63.55 g / 1 mol Cu)",hint:"Sustitución simple: el aluminio desplaza al cobre del sulfato cúprico.",col:"INTL"}
+];
+
+// ── DATOS FIJOS: ESTEQUIOMETRÍA LEGACY (formato antiguo, referencia interna) ──
+const GEN_STOICH_LEGACY = [
   {
     ecuacion: '2NaCl → 2Na + Cl₂',
     coef: {NaCl:2, Na:2, Cl2:1},
@@ -506,6 +520,12 @@ function generateExercises(){
     return;
   }
 
+  // ── Routing para grupos nuevos ──────────────────────────────────────────
+  if(group==="reaccion"){generateReaccionExercises(type,count);return;}
+  if(group==="balanceo"){generateBalanceoByGroup(count);return;}
+  if(group==="mol-masa"){generateMolMasaExercises(count);return;}
+  if(group==="estequiometria"||type==="stoichiometry"){generateStoichExercises(count);return;}
+
   // Get all compounds from BANCO (banco.js) or fallback
   let compounds = getAllCompounds();
 
@@ -578,7 +598,7 @@ function generateExercises(){
   } else if(type === 'classify-rx'){
     html = generateClassifyRx(selected);
   } else if(type === 'balance-eq'){
-    html = generateBalanceoExercises(selected);
+    html = generateBalanceoFromSelected(selected);
   } else if(type === 'stoichiometry'){
     html = generateStoichiometryExercises(count);
   }
@@ -761,7 +781,7 @@ function generateClassifyRx(selected){
 }
 
 // ── TIPO 2: balance-eq — Balanceo por tanteo ────────────────────────────────
-function generateBalanceoExercises(selected){
+function generateBalanceoFromSelected(selected){
   if(!selected || selected.length === 0){
     return '<p style="color:#c00;padding:24px">No hay ecuaciones de balanceo disponibles. Asegúrate de que banco.js tenga entradas con group="balanceo".</p>';
   }
@@ -834,14 +854,9 @@ function generateBalanceoExercises(selected){
 
 // ── TIPO 3: stoichiometry — Estequiometría con factores de conversión ────────
 function generateStoichiometryExercises(count){
-  // Shuffle GEN_STOICH and pick `count` problems
-  function shuffle(arr){
-    const a=[...arr];
-    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-    return a;
-  }
-  let pool = shuffle(GEN_STOICH);
-  while(pool.length < count) pool = pool.concat(shuffle(GEN_STOICH));
+  // Shuffle GEN_STOICH_LEGACY and pick `count` problems
+  let pool = shuffle(GEN_STOICH_LEGACY);
+  while(pool.length < count) pool = pool.concat(shuffle(GEN_STOICH_LEGACY));
   const selected = pool.slice(0, count);
 
   let html = `<style>
@@ -897,6 +912,58 @@ function generateStoichiometryExercises(count){
   });
   return html;
 }
+
+// ── NUEVAS FUNCIONES: grupos reaccion / balanceo / mol-masa / estequiometria ─
+
+function showExercisesResult(title, html){
+  document.getElementById('prev-title').textContent = title;
+  document.getElementById('exercises-container').innerHTML = html;
+  showScreen('s-preview');
+}
+
+function generateReaccionExercises(tipo, count){
+  var pool = getAllCompounds().filter(function(c){return c.group === 'reaccion';});
+  if(!pool.length){alert('Carga el banco primero.');return;}
+  if(tipo && tipo !== 'all') pool = pool.filter(function(c){return c.tipo_rx === tipo;});
+  pool = shuffle(pool).slice(0, Math.min(count, pool.length));
+  var html = pool.map(function(r, i){
+    return "<div class='exercise-card'><div class='ex-num'>Ejercicio "+(i+1)+"</div><div class='ex-ecuacion'>"+(r.ecuacion||'')+"</div><p style='margin:10px 0 6px;font-size:.88rem'>Clasifica el tipo de reacción y justifica tu respuesta.</p><div style='margin:8px 0'><strong>Tipo de reacción:</strong> _________________________</div><div><strong>Justificación:</strong><br><div style='border-bottom:1px solid #ccc;margin:8px 0;height:30px'></div><div style='border-bottom:1px solid #ccc;margin:8px 0;height:30px'></div></div></div>";
+  }).join('');
+  showExercisesResult('Taller — Tipos de Reacción', html);
+}
+
+function generateBalanceoByGroup(count){
+  var pool = getAllCompounds().filter(function(c){return c.group === 'balanceo';});
+  if(!pool.length){alert('Carga el banco primero.');return;}
+  pool = shuffle(pool).slice(0, Math.min(count, pool.length));
+  var html = pool.map(function(b, i){
+    return "<div class='exercise-card'><div class='ex-num'>Ejercicio "+(i+1)+"</div><p style='font-family:var(--mono);font-size:1rem;font-weight:700;background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0'>"+(b.ecuacion_sin_coef||b.ecuacion||'')+"</p><p style='font-size:.88rem;margin:8px 0'>Completa los coeficientes para balancear la ecuación (usa mínimos enteros).</p><table style='width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0'><tr><th style='border:1px solid #d0e6f5;padding:6px'>Elemento</th><th style='border:1px solid #d0e6f5;padding:6px'>Reactivos</th><th style='border:1px solid #d0e6f5;padding:6px'>Productos</th><th style='border:1px solid #d0e6f5;padding:6px'>¿Balanceado?</th></tr><tr><td colspan='4' style='border:1px solid #d0e6f5;padding:6px;color:#888;text-align:center'>Completa la verificación</td></tr></table><p style='font-size:.75rem;color:#888;border-top:1px solid #eee;margin-top:8px;padding-top:6px'>Pista: "+(b.hint||'')+"</p></div>";
+  }).join('');
+  showExercisesResult('Taller — Balanceo por Tanteo', html);
+}
+
+function generateMolMasaExercises(count){
+  var pool = getAllCompounds().filter(function(c){return c.group === 'mol-masa';});
+  if(!pool.length){alert('Carga el banco primero.');return;}
+  pool = shuffle(pool).slice(0, Math.min(count, pool.length));
+  var html = pool.flatMap(function(m, i){
+    return [
+      "<div class='exercise-card'><div class='ex-num'>Ejercicio "+(i*2+1)+"</div><p style='font-size:.88rem;margin:8px 0'>Calcula la masa molar de <strong style='font-family:monospace'>"+m.formula+"</strong> y determina cuántos gramos hay en 2.5 mol.</p><div style='background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;margin:8px 0'><div style='font-size:.72rem;font-weight:700;color:#15803d;margin-bottom:4px'>CÁLCULO MM:</div><div style='font-family:monospace;line-height:2'>"+m.formula+" = ________________________________ = _______ g/mol</div><div style='font-size:.72rem;font-weight:700;color:#15803d;margin:8px 0 4px'>FACTORES DE CONVERSIÓN:</div><div style='font-family:monospace;line-height:2'>x = 2.5 mol × (_______ g / 1 mol) = _______ g</div></div></div>",
+      "<div class='exercise-card'><div class='ex-num'>Ejercicio "+(i*2+2)+"</div><p style='font-size:.88rem;margin:8px 0'>¿Cuántos moles hay en "+(m.masa_molar*1.5).toFixed(2)+" g de <strong style='font-family:monospace'>"+m.formula+"</strong>?</p><div style='background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;margin:8px 0'><div style='font-size:.72rem;font-weight:700;color:#15803d;margin-bottom:4px'>FACTORES DE CONVERSIÓN:</div><div style='font-family:monospace;line-height:2'>x = "+(m.masa_molar*1.5).toFixed(2)+" g × (1 mol / _______ g) = _______ mol</div></div></div>"
+    ];
+  }).join('');
+  showExercisesResult('Taller — Mol y Masa Molar', html);
+}
+
+function generateStoichExercises(count){
+  var pool = shuffle(GEN_STOICH.slice()).slice(0, Math.min(count, GEN_STOICH.length));
+  var html = pool.map(function(s, i){
+    return "<div class='exercise-card'><div class='ex-num'>Ejercicio "+(i+1)+"</div><p style='font-family:monospace;font-size:1rem;font-weight:700;background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0'>"+(s.reaccionDisplay||s.reaccion)+"</p><p style='font-size:.88rem;margin:8px 0'>Tienes <strong>"+s.dato.gramos+" g de "+s.dato.formula+"</strong>. ¿Cuántos gramos de <strong>"+s.incognita.formula+"</strong> se forman? <em style='font-size:.75rem;opacity:.7'>(Usa factores de conversión — NO regla de tres)</em></p><div style='background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;margin:8px 0'><div style='font-size:.72rem;font-weight:700;color:#15803d;margin-bottom:8px'>CADENA DE FACTORES DE CONVERSIÓN:</div><div style='font-family:monospace;font-size:.82rem;line-height:2.2'>x = "+s.dato.gramos+" g "+s.dato.formula+" × <span style='border:1.5px dashed #86efac;border-radius:4px;padding:1px 8px;margin:0 2px'>(1 mol "+s.dato.formula+" / _______ g)</span> × <span style='border:1.5px dashed #86efac;border-radius:4px;padding:1px 8px;margin:0 2px'>( _____ mol "+s.incognita.formula+" / _____ mol "+s.dato.formula+")</span> × <span style='border:1.5px dashed #86efac;border-radius:4px;padding:1px 8px;margin:0 2px'>(_______ g "+s.incognita.formula+" / 1 mol "+s.incognita.formula+")</span></div><div style='font-family:monospace;font-weight:700;margin-top:8px;font-size:.95rem'>x = _________ g "+s.incognita.formula+"</div></div><p style='font-size:.75rem;color:#888;border-top:1px solid #eee;margin-top:8px;padding-top:6px'>Pista: "+s.hint+"</p></div>";
+  }).join('');
+  showExercisesResult('Taller — Estequiometría con Factores de Conversión', html);
+}
+
+// ── FIN NUEVAS FUNCIONES ─────────────────────────────────────────────────────
 
 function backToForm(){
   showScreen('s-form');
