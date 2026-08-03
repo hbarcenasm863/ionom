@@ -15,21 +15,84 @@
 <script src="banco.js"></script>
 <style>
 :root {
-  --bg: #0a1f30;
-  --surf: #0d2d42;
-  --brd: #1e4060;
-  --tx: #e0f2fe;
-  --dim: rgba(224,242,254,.65);
-  --dimmer: rgba(224,242,254,.45);
-  --amber: #d97706;
-  --amber-l: #fcd34d;
-  --blue: #3b82f6;
-  --r: 12px;
-  --rs: 8px;
-  --mono: 'Courier New', monospace;
-  --sans: system-ui, -apple-system, sans-serif;
-  --serif: Georgia, 'Times New Roman', serif;
-  --sh: 0 3px 16px rgba(0,0,0,.35);
+  /* === MDEC semantic palette === */
+  --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
+  --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* === Surface & text === */
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  /* === Status === */
+  --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d;
+  --err:#dc2626; --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn:#d97706; --warn-b:#fef3c7; --warn-t:#92400e;
+  --info:#0369a1; --info-b:#e0f2fe; --info-t:#082f49;
+  /* === Typography === */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* === Misc === */
+  --r:16px; --rs:10px; --rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+  /* Legacy compat */
+  --amber:#d97706; --amber-l:#fcd34d; --blue:#0369a1;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+    --brd:#1e3a52; --brd2:#2a4d6e;
+    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+    --nav:#091929; --nav-t:#e2eef8;
+    --cat-b:#422006; --cat-t:#fde68a;
+    --an-b:#082f49; --an-t:#7dd3fc;
+    --oh-b:#2e1065; --oh-t:#c4b5fd;
+    --ox-b:#042f2e; --ox-t:#5eead4;
+    --ok-b:#052e16; --ok-t:#86efac;
+    --err-b:#450a0a; --err-t:#fca5a5;
+    --warn-b:#422006; --warn-t:#fde68a;
+    --info-b:#082f49; --info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+    --amber:#d97706; --amber-l:#fde68a; --blue:#7dd3fc;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+  --brd:#1e3a52; --brd2:#2a4d6e;
+  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+  --nav:#091929; --nav-t:#e2eef8;
+  --cat-b:#422006; --cat-t:#fde68a;
+  --an-b:#082f49; --an-t:#7dd3fc;
+  --oh-b:#2e1065; --oh-t:#c4b5fd;
+  --ox-b:#042f2e; --ox-t:#5eead4;
+  --ok-b:#052e16; --ok-t:#86efac;
+  --err-b:#450a0a; --err-t:#fca5a5;
+  --warn-b:#422006; --warn-t:#fde68a;
+  --info-b:#082f49; --info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+  --amber:#d97706; --amber-l:#fde68a; --blue:#7dd3fc;
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  --cat-b:#fef3c7; --cat-t:#92400e;
+  --an-b:#e0f2fe; --an-t:#082f49;
+  --oh-b:#ede9fe; --oh-t:#4c1d95;
+  --ox-b:#ccfbf1; --ox-t:#134e4a;
+  --ok-b:#dcfce7; --ok-t:#14532d;
+  --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn-b:#fef3c7; --warn-t:#92400e;
+  --info-b:#e0f2fe; --info-t:#082f49;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+  --amber:#d97706; --amber-l:#fcd34d; --blue:#0369a1;
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -45,19 +108,19 @@ body {
 /* NAV */
 .site-nav {
   display: flex; align-items: center; justify-content: space-between;
-  background: #0d2d42; padding: 0 20px; height: 48px;
+  background: var(--nav); padding: 0 20px; height: 48px;
   position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,.4);
-  border-bottom: 1px solid var(--brd);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .nav-brand {
-  color: #fff; font-weight: 800; font-size: .9rem;
+  color: var(--nav-t); font-weight: 800; font-size: .9rem;
   font-style: italic; letter-spacing: -.02em; text-decoration: none; white-space: nowrap;
 }
 .nav-brand em { color: #fcd34d; font-style: normal; }
 .nav-links { display: flex; gap: 4px; align-items: center; }
 .nav-links a {
-  color: rgba(255,255,255,.72); text-decoration: none; font-size: .78rem;
+  color: rgba(255,255,255,.75); text-decoration: none; font-size: .78rem;
   font-weight: 600; padding: 6px 10px; border-radius: 8px;
   transition: background .15s, color .15s; white-space: nowrap;
 }
@@ -82,21 +145,21 @@ body {
 
 /* PAGE HEADER */
 .page-header {
-  background: var(--surf); border: 1px solid var(--brd);
+  background: var(--surf); border: 1.5px solid var(--brd);
   border-radius: var(--r); padding: 28px 32px; margin: 24px 0 20px;
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; box-shadow: var(--sh);
 }
 .page-header::before {
   content: ''; position: absolute; top: -60px; right: -60px;
   width: 200px; height: 200px; border-radius: 50%;
-  background: rgba(59,130,246,.07); pointer-events: none;
+  background: rgba(3,105,161,.06); pointer-events: none;
 }
 .page-header h1 {
   font-family: var(--serif); font-size: 1.8rem; font-weight: 700;
   font-style: italic; letter-spacing: -.03em; margin-bottom: 6px;
   color: var(--tx);
 }
-.page-header h1 em { color: var(--amber-l); font-style: normal; }
+.page-header h1 em { color: var(--cat); font-style: normal; }
 .page-header p { font-size: .88rem; color: var(--dim); max-width: 540px; line-height: 1.7; }
 
 /* TABS */
@@ -106,19 +169,20 @@ body {
   border: 1.5px solid var(--brd); background: var(--surf);
   color: var(--dim); font-family: var(--sans); font-size: .88rem;
   font-weight: 700; cursor: pointer; transition: all .2s; text-align: center;
+  box-shadow: var(--sh);
 }
 .sim-tab.active {
-  background: rgba(59,130,246,.18); border-color: rgba(59,130,246,.5);
-  color: #93c5fd;
+  background: var(--an-b); border-color: var(--an);
+  color: var(--an-t);
 }
-.sim-tab:hover:not(.active) { background: rgba(255,255,255,.06); color: var(--tx); }
+.sim-tab:hover:not(.active) { background: var(--surf2); color: var(--tx); }
 
 .sim-panel { display: none; }
 .sim-panel.active { display: block; }
 
 /* CARD */
 .card {
-  background: var(--surf); border: 1px solid var(--brd);
+  background: var(--surf); border: 1.5px solid var(--brd);
   border-radius: var(--r); padding: 20px 24px; margin-bottom: 16px;
   box-shadow: var(--sh);
 }
@@ -127,6 +191,23 @@ body {
   letter-spacing: .16em; color: var(--dimmer); margin-bottom: 12px;
 }
 
+/* PRETRAIN BOX */
+.pretrain-box {
+  background: var(--an-b); border: 2px solid var(--an);
+  border-radius: var(--r); padding: 16px 20px; margin-bottom: 20px;
+}
+.pretrain-box h4 {
+  color: var(--an-t); font-size: .72rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px;
+}
+.pretrain-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pt-chip {
+  background: var(--surf); border: 1.5px solid var(--brd);
+  border-radius: 20px; padding: 5px 14px; font-size: .78rem;
+  font-weight: 600; color: var(--tx);
+}
+.pt-arrow { color: var(--dimmer); font-size: .9rem; }
+
 /* SUBSTANCE PALETTE */
 .palette-group { margin-bottom: 14px; }
 .palette-group-title {
@@ -134,32 +215,34 @@ body {
   letter-spacing: .12em; margin-bottom: 8px; padding: 3px 8px;
   border-radius: 4px; display: inline-block;
 }
-.palette-group-title.metal   { color: #fcd34d; background: rgba(217,119,6,.18); }
-.palette-group-title.nonmetal{ color: #93c5fd; background: rgba(59,130,246,.18); }
-.palette-group-title.other   { color: #5eead4; background: rgba(20,184,166,.18); }
-.palette-group-title.oxide   { color: #86efac; background: rgba(22,163,74,.18); }
-.palette-group-title.base    { color: #c4b5fd; background: rgba(124,58,237,.18); }
+.palette-group-title.metal   { color: var(--cat-t); background: var(--cat-b); }
+.palette-group-title.nonmetal{ color: var(--an-t);  background: var(--an-b); }
+.palette-group-title.other   { color: var(--ox-t);  background: var(--ox-b); }
+.palette-group-title.oxide   { color: var(--ok-t);  background: var(--ok-b); }
+.palette-group-title.base    { color: var(--oh-t);  background: var(--oh-b); }
 
 .substance-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 .sub-card {
   padding: 8px 10px; border-radius: var(--rs);
-  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--brd); background: var(--surf2);
   cursor: pointer; transition: all .18s; text-align: center;
   min-width: 54px;
 }
-.sub-card:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.25); }
+.sub-card:hover { background: var(--bg2); border-color: var(--brd2); }
 .sub-card.selected-a {
-  background: rgba(217,119,6,.22); border-color: var(--amber);
-  box-shadow: 0 0 0 2px rgba(217,119,6,.35);
+  background: var(--cat-b); border-color: var(--cat);
+  box-shadow: 0 0 0 2px rgba(217,119,6,.3);
 }
 .sub-card.selected-b {
-  background: rgba(59,130,246,.22); border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(59,130,246,.35);
+  background: var(--an-b); border-color: var(--an);
+  box-shadow: 0 0 0 2px rgba(3,105,161,.3);
 }
 .sub-sym {
   font-family: var(--mono); font-size: .9rem; font-weight: 700;
   color: var(--tx); line-height: 1.2;
 }
+.sub-card.selected-a .sub-sym { color: var(--cat-t); }
+.sub-card.selected-b .sub-sym { color: var(--an-t); }
 .sub-name { font-size: .55rem; color: var(--dimmer); margin-top: 2px; line-height: 1.2; }
 
 /* REACTION SLOTS */
@@ -169,104 +252,109 @@ body {
 }
 .reactant-slot {
   flex: 1; min-width: 120px; padding: 14px 16px; border-radius: var(--r);
-  border: 2px dashed var(--brd); background: rgba(255,255,255,.03);
+  border: 2px dashed var(--brd); background: var(--surf2);
   text-align: center; min-height: 68px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: all .2s;
 }
 .reactant-slot.has-val {
-  border-style: solid; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.2);
+  border-style: solid; background: var(--bg2); border-color: var(--brd2);
 }
 .slot-label   { font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--dimmer); margin-bottom: 4px; }
 .slot-sym     { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--tx); line-height: 1; }
 .slot-placeholder { font-size: .78rem; color: var(--dimmer); font-style: italic; }
-.reaction-plus  { font-size: 1.6rem; color: var(--dimmer); flex-shrink: 0; }
-.reaction-arrow { font-size: 1.6rem; color: var(--dimmer); flex-shrink: 0; }
+.reaction-plus  { font-size: 1.6rem; color: var(--dim); flex-shrink: 0; }
+.reaction-arrow { font-size: 1.6rem; color: var(--dim); flex-shrink: 0; }
 
 .react-btn {
   padding: 12px 24px; border-radius: var(--r);
-  background: linear-gradient(135deg, rgba(59,130,246,.35), rgba(59,130,246,.2));
-  border: 1.5px solid rgba(59,130,246,.5); color: #93c5fd;
+  background: var(--an-b); border: 1.5px solid var(--an); color: var(--an-t);
   font-family: var(--sans); font-size: .88rem; font-weight: 700;
   cursor: pointer; transition: all .2s; flex-shrink: 0;
 }
 .react-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, rgba(59,130,246,.55), rgba(59,130,246,.35)); color: #fff;
+  background: var(--an); color: #fff;
 }
-.react-btn:disabled { opacity: .45; cursor: not-allowed; }
+.react-btn:disabled { opacity: .4; cursor: not-allowed; }
 .clear-btn {
   padding: 8px 16px; border-radius: var(--rs);
-  background: transparent; border: 1px solid var(--brd);
+  background: transparent; border: 1.5px solid var(--brd);
   color: var(--dimmer); font-family: var(--sans); font-size: .78rem;
   cursor: pointer; transition: all .2s;
 }
-.clear-btn:hover { border-color: rgba(255,255,255,.3); color: var(--dim); }
+.clear-btn:hover { border-color: var(--brd2); color: var(--dim); }
 
 /* RESULT */
 .result-box {
   border-radius: var(--r); padding: 20px 24px; margin-top: 8px;
-  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--ok); background: var(--ok-b);
   animation: fadeIn .3s ease;
   display: none;
 }
 .result-box.show { display: block; }
+.result-box.no-rxn { background: var(--surf2); border-color: var(--brd); }
 .result-badge {
   display: inline-block; padding: 4px 12px; border-radius: 100px;
   font-size: .65rem; font-weight: 800; text-transform: uppercase;
   letter-spacing: .12em; margin-bottom: 12px;
 }
-.result-badge.ox-bas      { background: rgba(217,119,6,.25); color: #fcd34d; border: 1px solid rgba(217,119,6,.5); }
-.result-badge.anhidrido   { background: rgba(59,130,246,.25); color: #93c5fd; border: 1px solid rgba(59,130,246,.5); }
-.result-badge.base        { background: rgba(124,58,237,.25); color: #c4b5fd; border: 1px solid rgba(124,58,237,.5); }
-.result-badge.ac-oxacido  { background: rgba(20,184,166,.25); color: #5eead4; border: 1px solid rgba(20,184,166,.5); }
-.result-badge.neutraliz   { background: rgba(22,163,74,.25); color: #86efac; border: 1px solid rgba(22,163,74,.5); }
-.result-badge.hidruro     { background: rgba(245,158,11,.25); color: #fde68a; border: 1px solid rgba(245,158,11,.5); }
-.result-badge.ac-hidrico  { background: rgba(239,68,68,.25); color: #fca5a5; border: 1px solid rgba(239,68,68,.5); }
-.result-badge.sal         { background: rgba(168,85,247,.25); color: #d8b4fe; border: 1px solid rgba(168,85,247,.5); }
-.result-badge.no-reaction { background: rgba(100,116,139,.18); color: rgba(224,242,254,.6); border: 1px solid rgba(100,116,139,.3); }
+.result-badge.ox-bas      { background: var(--cat-b); color: var(--cat-t); border: 1px solid var(--cat); }
+.result-badge.anhidrido   { background: var(--an-b);  color: var(--an-t);  border: 1px solid var(--an); }
+.result-badge.base        { background: var(--oh-b);  color: var(--oh-t);  border: 1px solid var(--oh); }
+.result-badge.ac-oxacido  { background: var(--ox-b);  color: var(--ox-t);  border: 1px solid var(--ox); }
+.result-badge.neutraliz   { background: var(--ok-b);  color: var(--ok-t);  border: 1px solid var(--ok); }
+.result-badge.hidruro     { background: var(--warn-b);color: var(--warn-t);border: 1px solid var(--warn); }
+.result-badge.ac-hidrico  { background: var(--err-b); color: var(--err-t); border: 1px solid var(--err); }
+.result-badge.sal         { background: var(--oh-b);  color: var(--oh-t);  border: 1px solid var(--oh); }
+.result-badge.no-reaction { background: var(--surf2); color: var(--dimmer); border: 1px solid var(--brd); }
 
-.result-eq-label { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px; }
+.result-eq-label { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--ok-t); margin-bottom: 6px; }
 .result-eq {
   font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
   color: var(--tx); margin-bottom: 14px; padding: 10px 14px;
-  background: rgba(255,255,255,.05); border-radius: var(--rs);
-  border-left: 3px solid var(--blue);
+  background: var(--surf); border-radius: var(--rs);
+  border-left: 3px solid var(--ok);
 }
 .result-product { font-size: .88rem; color: var(--dim); margin-bottom: 6px; }
-.result-product strong { color: var(--tx); }
-.result-desc { font-size: .82rem; color: var(--dimmer); margin-bottom: 14px; line-height: 1.6; }
+.result-product strong { color: var(--ok-t); font-weight: 800; }
+.result-desc { font-size: .82rem; color: var(--dim); margin-bottom: 14px; line-height: 1.6; }
 .no-reaction-msg { font-size: .88rem; color: var(--dim); line-height: 1.6; font-style: italic; }
 
 /* QUIZ */
 .quiz-box {
-  background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.25);
+  background: var(--info-b); border: 1.5px solid var(--an);
   border-radius: var(--r); padding: 18px 20px; margin-top: 14px;
   animation: fadeIn .3s ease; display: none;
 }
 .quiz-box.show { display: block; }
 .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.quiz-title { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #93c5fd; }
-.quiz-score { font-size: .75rem; font-weight: 700; color: var(--amber-l); }
+.quiz-title { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--an-t); }
+.quiz-score { font-size: .75rem; font-weight: 700; color: var(--cat); }
 .quiz-question { font-size: .92rem; font-weight: 600; color: var(--tx); margin-bottom: 12px; line-height: 1.55; }
 .quiz-opts { display: flex; flex-direction: column; gap: 7px; }
 .quiz-opt {
   padding: 10px 14px; border-radius: var(--rs);
-  border: 1.5px solid var(--brd); background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--brd); background: var(--surf);
   color: var(--dim); font-family: var(--sans); font-size: .84rem;
   cursor: pointer; transition: all .18s; text-align: left;
 }
-.quiz-opt:hover:not(:disabled) { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.2); color: var(--tx); }
-.quiz-opt.correct { background: rgba(22,163,74,.2); border-color: #16a34a; color: #86efac; }
-.quiz-opt.wrong   { background: rgba(220,38,38,.18); border-color: #dc2626; color: #fca5a5; }
+.quiz-opt:hover:not(:disabled) { background: var(--surf2); border-color: var(--brd2); color: var(--tx); }
+.quiz-opt.correct { background: var(--ok-b); border-color: var(--ok); color: var(--ok-t); font-weight: 700; }
+.quiz-opt.wrong   { background: var(--err-b); border-color: var(--err); color: var(--err-t); }
 .quiz-opt:disabled { cursor: default; }
-.quiz-feedback { margin-top: 10px; font-size: .82rem; padding: 8px 12px; border-radius: var(--rs); display: none; }
+.quiz-feedback { margin-top: 10px; font-size: .84rem; padding: 10px 14px; border-radius: var(--rs); display: none; }
 .quiz-feedback.show { display: block; }
-.quiz-feedback.ok  { background: rgba(22,163,74,.15); color: #86efac; border: 1px solid rgba(22,163,74,.35); }
-.quiz-feedback.err { background: rgba(220,38,38,.12); color: #fca5a5; border: 1px solid rgba(220,38,38,.3); }
+.quiz-feedback.ok  { background: var(--ok-b); color: var(--ok-t); border: 1.5px solid var(--ok); }
+.quiz-feedback.err { background: var(--err-b); color: var(--err-t); border: 1.5px solid var(--err); }
+.fb-why {
+  margin-top: 8px; font-size: .82rem; color: var(--tx2);
+  background: var(--surf2); border-left: 3px solid var(--warn);
+  padding: 8px 12px; border-radius: 0 8px 8px 0;
+}
 .completion-badge {
   text-align: center; padding: 20px;
-  background: rgba(217,119,6,.15); border: 1.5px solid rgba(217,119,6,.4);
-  border-radius: var(--r); color: var(--amber-l); font-weight: 700;
+  background: var(--warn-b); border: 1.5px solid var(--warn);
+  border-radius: var(--r); color: var(--warn-t); font-weight: 700;
   font-size: .95rem; line-height: 1.6; display: none; margin-top: 12px;
 }
 .completion-badge.show { display: block; }
@@ -279,19 +367,19 @@ body {
   letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px;
 }
 .ph-select {
-  width: 100%; padding: 10px 14px; border-radius: var(--rs);
-  border: 1.5px solid var(--brd); background: var(--surf);
-  color: var(--tx); font-family: var(--sans); font-size: .88rem;
+  width: 100%; padding: 11px 14px; border-radius: var(--rs);
+  border: 1.5px solid var(--brd); background: var(--surf2);
+  color: var(--tx); font-family: var(--sans); font-size: .9rem;
   outline: none; cursor: pointer; transition: border-color .2s;
 }
-.ph-select:focus { border-color: var(--blue); }
-.ph-select option { background: #0d2d42; color: #e0f2fe; }
+.ph-select:focus { border-color: var(--an); }
+.ph-select option { background: var(--surf); color: var(--tx); }
 .ph-conc-wrap { flex: 1; min-width: 220px; }
 .ph-conc-wrap label {
   display: block; font-size: .6rem; font-weight: 800; text-transform: uppercase;
   letter-spacing: .12em; color: var(--dimmer); margin-bottom: 6px;
 }
-.ph-conc-val { font-size: .82rem; color: var(--amber-l); font-weight: 700; margin-bottom: 6px; }
+.ph-conc-val { font-size: .82rem; color: var(--cat); font-weight: 700; margin-bottom: 6px; }
 .ph-slider {
   width: 100%; height: 6px; border-radius: 3px; cursor: pointer;
   -webkit-appearance: none; appearance: none;
@@ -309,8 +397,8 @@ body {
 @media (max-width: 580px) { .indicators-grid { grid-template-columns: 1fr; } }
 
 .indicator-card {
-  background: var(--surf); border: 1px solid var(--brd); border-radius: var(--r);
-  padding: 16px; text-align: center; transition: all .3s;
+  background: var(--surf); border: 1.5px solid var(--brd); border-radius: var(--r);
+  padding: 16px; text-align: center; transition: all .3s; box-shadow: var(--sh);
 }
 .ind-title { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--dimmer); margin-bottom: 12px; }
 
@@ -365,16 +453,13 @@ body {
 
 /* ── LAB BENCH ── */
 .lab-bench-area {
-  background: linear-gradient(180deg, #0d1f2d 0%, #0a1520 100%);
-  background-image:
-    linear-gradient(180deg, #0d1f2d 0%, #0a1520 100%),
-    repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255,255,255,0.02) 19px, rgba(255,255,255,0.02) 20px),
-    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255,255,255,0.02) 19px, rgba(255,255,255,0.02) 20px);
-  border: 1px solid #1e3a4a;
-  border-radius: 12px;
+  background: var(--bg2);
+  border: 1.5px solid var(--brd);
+  border-radius: var(--r);
   padding: 24px;
   position: relative;
   margin-bottom: 16px;
+  box-shadow: var(--sh);
 }
 .beakers-row {
   display: flex;
@@ -393,11 +478,11 @@ body {
 }
 .beaker-station-label {
   font-size: .6rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .12em; color: rgba(224,242,254,.5);
+  letter-spacing: .12em; color: var(--dimmer);
 }
 .beaker-station-sym {
-  font-family: 'Courier New', monospace; font-size: 1.1rem; font-weight: 700;
-  color: #e0f2fe; min-height: 1.4em; text-align: center;
+  font-family: var(--mono); font-size: 1.1rem; font-weight: 700;
+  color: var(--tx); min-height: 1.4em; text-align: center;
 }
 /* CSS Beaker shape */
 .lab-beaker {
@@ -458,9 +543,9 @@ body {
 /* Violent warning */
 .violent-warning {
   display: none;
-  background: rgba(220,38,38,0.2);
-  border: 1.5px solid rgba(220,38,38,0.6);
-  color: #fca5a5;
+  background: var(--err-b);
+  border: 1.5px solid var(--err);
+  color: var(--err-t);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: .82rem;
@@ -524,6 +609,13 @@ body {
 @media (max-width: 600px) {
   .beakers-row { flex-direction: column; align-items: center; }
   .reaction-operator { padding-bottom: 0; font-size: 1.5rem; }
+  .sim-tabs { flex-direction: column; }
+  .pretrain-chips { flex-direction: column; align-items: flex-start; }
+  .pt-arrow { transform: rotate(90deg); }
+  .page-header { padding: 20px 18px; }
+  .page-header h1 { font-size: 1.4rem; }
+  .card { padding: 16px; }
+  .result-box { padding: 16px; }
 }
 </style>
 </head>
@@ -541,6 +633,7 @@ body {
     <a href="nomenClash.html"><span class="full">NomenClash</span></a>
     <a href="simulador.html" class="active"><span class="full">Simulador</span></a>
     <button id="btn-install">Instalar</button>
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px">🌙</button>
   </div>
 </nav>
 
@@ -549,7 +642,20 @@ body {
   <div class="page-header">
     <h1>Simula<em>dor</em></h1>
     <p>Explora reacciones inorgánicas y el comportamiento del pH con indicadores visuales en tiempo real.</p>
-    <button onclick="openSimIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.45);color:#93c5fd;border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;margin-top:14px;transition:all .2s">🔊 ¿Cómo usar el simulador?</button>
+    <button onclick="openSimIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:var(--an-b);border:1.5px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;margin-top:14px;transition:all .2s">🔊 Como usar el simulador?</button>
+  </div>
+
+  <div class="pretrain-box">
+    <h4>Como usar el simulador</h4>
+    <div class="pretrain-chips">
+      <span class="pt-chip" style="border-color:var(--cat);color:var(--cat-t);background:var(--cat-b)">1 Elige Reactivo A (ambar)</span>
+      <span class="pt-arrow">→</span>
+      <span class="pt-chip" style="border-color:var(--an);color:var(--an-t);background:var(--an-b)">2 Elige Reactivo B (azul)</span>
+      <span class="pt-arrow">→</span>
+      <span class="pt-chip" style="border-color:var(--ok);color:var(--ok-t);background:var(--ok-b)">3 Presiona Mezclar y ve el producto</span>
+      <span class="pt-arrow">→</span>
+      <span class="pt-chip">4 Responde la pregunta de comprension</span>
+    </div>
   </div>
 
   <div class="sim-tabs">
@@ -738,8 +844,8 @@ body {
 
   </div>
 
-  <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
-    <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> &copy; 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
+  <footer style="text-align:center;padding:18px 0;border-top:1.5px solid var(--brd);font-size:.72rem;color:var(--dimmer);margin-top:8px">
+    <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">IONOM</a> &copy; 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
   </footer>
 
 </div>
@@ -1112,6 +1218,7 @@ function runReaction() {
   var rx = findReaction(selA, selB);
   var box = document.getElementById('result-box');
   box.innerHTML = '';
+  box.classList.remove('no-rxn');
   box.classList.add('show');
   r1Answered = false;
 
@@ -1129,6 +1236,7 @@ function runReaction() {
     if (symR) symR.innerHTML = rx.product;
     showQuiz1(rx);
   } else {
+    box.classList.add('no-rxn');
     box.innerHTML =
       '<span class="result-badge no-reaction">Sin reacci&oacute;n directa</span>' +
       '<p class="no-reaction-msg">Estos dos reactivos no forman un compuesto inorg&aacute;nico directo en los grupos estudiados. Prueba otra combinaci&oacute;n.</p>';
@@ -1179,12 +1287,13 @@ function showQuiz1(rx) {
         r1Correct++;
         document.getElementById('score-1').textContent = 'Aciertos: ' + r1Correct + '/' + r1Total;
         fb.className = 'quiz-feedback show ok';
-        fb.innerHTML = '&iexcl;Correcto! ' + (chosen.explain || '');
+        fb.innerHTML = '&#10003; &iexcl;Correcto! ' + (chosen.explain || '');
         if (r1Correct >= 5) document.getElementById('completion-1').classList.add('show');
       } else {
         btn.classList.add('wrong');
         fb.className = 'quiz-feedback show err';
-        fb.innerHTML = 'Incorrecto. La respuesta correcta es: <strong>' + chosen.correctText + '</strong>';
+        fb.innerHTML = '&#10007; Incorrecto. La respuesta correcta es: <strong>' + chosen.correctText + '</strong>'
+          + '<div class="fb-why"><strong>Por que:</strong> ' + (chosen.explain || 'Revisa el tipo de compuesto que se forma con esta reaccion.') + '</div>';
         optsEl.querySelectorAll('.quiz-opt').forEach(function(b){
           if (b.innerHTML === chosen.correctText) b.classList.add('correct');
         });
@@ -1439,12 +1548,13 @@ function generatePHQuiz(ph, subKey, fc, rc) {
         r2Correct++;
         document.getElementById('score-2').textContent = 'Aciertos: ' + r2Correct + '/' + r2Total;
         fb.className = 'quiz-feedback show ok';
-        fb.innerHTML = '&iexcl;Correcto! ' + (chosen.explain || '');
+        fb.innerHTML = '&#10003; &iexcl;Correcto! ' + (chosen.explain || '');
         if (r2Correct >= 5) document.getElementById('completion-2').classList.add('show');
       } else {
         btn.classList.add('wrong');
         fb.className = 'quiz-feedback show err';
-        fb.innerHTML = 'Incorrecto. La respuesta es: <strong>' + chosen.correctText + '</strong>';
+        fb.innerHTML = '&#10007; Incorrecto. La respuesta es: <strong>' + chosen.correctText + '</strong>'
+          + '<div class="fb-why"><strong>Por que:</strong> ' + (chosen.explain || 'Revisa la escala de pH y sus rangos acido/base.') + '</div>';
         optsEl.querySelectorAll('.quiz-opt').forEach(function(b){
           if (b.innerHTML === chosen.correctText) b.classList.add('correct');
         });
@@ -1549,6 +1659,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// ── DARK MODE TOGGLE ─────────────────────────────────────────────────────
+function toggleTheme(){
+  var t=document.documentElement.getAttribute("data-theme");
+  var n=t==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",n);
+  localStorage.setItem("ionom-theme",n);
+  var btn=document.getElementById("theme-btn");
+  if(btn)btn.textContent=n==="dark"?"☀️":"🌙";
+}
+(function(){
+  var s=localStorage.getItem("ionom-theme")||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light");
+  document.documentElement.setAttribute("data-theme",s);
+  var btn=document.getElementById("theme-btn");
+  if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+})();
+
 // ── INIT ─────────────────────────────────────────────────────────────────
 buildPalette();
 updatePH();
@@ -1587,25 +1713,25 @@ if (!localStorage.getItem('ionom_sim_visited')) {
 </script>
 
 <!-- ═══ SIMULADOR INTRO MODAL (MAYER) ═══ -->
-<div id="sim-intro-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeSimIntro()">
-  <div style="background:var(--surf);border:1.5px solid rgba(59,130,246,.5);border-radius:var(--r);padding:32px 28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.6);position:relative">
-    <button onclick="closeSimIntro()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--dimmer);font-size:1.3rem;cursor:pointer;padding:4px 8px">✕</button>
+<div id="sim-intro-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)" onclick="if(event.target===this)closeSimIntro()">
+  <div style="background:var(--surf);border:1.5px solid var(--an);border-radius:var(--r);padding:32px 28px;max-width:440px;width:100%;box-shadow:var(--sh2);position:relative">
+    <button onclick="closeSimIntro()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--dimmer);font-size:1.3rem;cursor:pointer;padding:4px 8px">&#10005;</button>
     <div style="text-align:center;margin-bottom:18px">
       <div style="font-size:2rem;margin-bottom:6px">🔬</div>
-      <div style="font-size:1.2rem;font-weight:800;color:#93c5fd;font-family:Georgia,serif;font-style:italic">¿Cómo usar el Simulador?</div>
+      <div style="font-size:1.2rem;font-weight:800;color:var(--an-t);font-family:var(--serif);font-style:italic">Como usar el Simulador</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
-      <div style="padding:10px 12px;background:rgba(217,119,6,.12);border-radius:8px;border-left:3px solid var(--amber)">
-        <strong style="color:var(--amber-l)">⚗️ Simulador de Reacciones:</strong><span style="color:var(--dim)"> selecciona <strong style="color:var(--amber-l)">Reactivo A</strong> (ámbar) y <strong style="color:#93c5fd">Reactivo B</strong> (azul), luego presiona <em>Reaccionar</em>. Verás el producto, su tipo de compuesto y cómo nombrarlo.</span>
+      <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)">
+        <strong style="color:var(--cat-t)">Simulador de Reacciones:</strong> selecciona <strong>Reactivo A</strong> (ambar) y <strong>Reactivo B</strong> (azul), luego presiona Mezclar. Veras el producto y su tipo de compuesto.
       </div>
-      <div style="padding:10px 12px;background:rgba(59,130,246,.1);border-radius:8px;border-left:3px solid rgba(59,130,246,.6)">
-        <strong style="color:#93c5fd">🧪 Tipos de reacción:</strong><span style="color:var(--dim)"> óxidos básicos y ácidos forman sales, metales con oxígeno forman óxidos, bases con ácidos producen neutralización. El simulador identifica el tipo automáticamente.</span>
+      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)">
+        <strong style="color:var(--an-t)">Tipos de reaccion:</strong> oxidos basicos y acidos forman sales, metales con oxigeno forman oxidos, bases con acidos producen neutralizacion.
       </div>
-      <div style="padding:10px 12px;background:rgba(124,58,237,.1);border-radius:8px;border-left:3px solid rgba(124,58,237,.5)">
-        <strong style="color:#c4b5fd">💧 Simulador de pH:</strong><span style="color:var(--dim)"> experimenta con fenolftaleína (rosa en básico, incolora en ácido) y repollo morado (cambia de rojo a verde según el pH). Responde las preguntas de evaluación al final.</span>
+      <div style="padding:10px 12px;background:var(--oh-b);border-radius:8px;border-left:3px solid var(--oh)">
+        <strong style="color:var(--oh-t)">Simulador de pH:</strong> experimenta con fenolftaleina y repollo morado. Responde las preguntas de evaluacion al final.
       </div>
     </div>
-    <button onclick="closeSimIntro()" style="width:100%;padding:12px;background:rgba(59,130,246,.7);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Entendido, a experimentar! 🧪</button>
+    <button onclick="closeSimIntro()" style="width:100%;padding:12px;background:var(--an);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">Entendido, a experimentar!</button>
   </div>
 </div>
 
