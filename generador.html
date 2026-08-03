@@ -125,6 +125,9 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="ac-ox">Ácidos oxácidos</option>
         <option value="sal-bin">Sales binarias</option>
         <option value="sal-ox">Sales oxigenadas</option>
+        <option value="reaccion">Tipos de reacción</option>
+        <option value="balanceo">Balanceo de ecuaciones</option>
+        <option value="stoichiometry">Estequiometría</option>
       </select>
     </div>
 
@@ -136,6 +139,9 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:rgba(0,0,0,.02)}
         <option value="formula-to-name">Nombrar moléculas (fórmula → nombre)</option>
         <option value="name-to-formula">De nombre a fórmula</option>
         <option value="table-complete">Completar tabla de datos</option>
+        <option value="classify-rx">Clasificar tipo de reacción</option>
+        <option value="balance-eq">Balanceo por tanteo</option>
+        <option value="stoichiometry">Estequiometría (factores de conversión)</option>
       </select>
     </div>
 
@@ -276,8 +282,195 @@ const GROUP_LABELS = {
   'base': 'Bases / Hidróxidos',
   'ac-ox': 'Ácidos oxácidos',
   'sal-bin': 'Sales binarias',
-  'sal-ox': 'Sales oxigenadas'
+  'sal-ox': 'Sales oxigenadas',
+  'reaccion': 'Tipos de reacción',
+  'balanceo': 'Balanceo de ecuaciones',
+  'stoichiometry': 'Estequiometría'
 };
+
+// ── DATOS FIJOS: ESTEQUIOMETRÍA ─────────────────────────────────────────────
+const GEN_STOICH = [
+  {
+    ecuacion: '2H₂ + O₂ → 2H₂O',
+    coef: {H2:2, O2:1, H2O:2},
+    masas: {H2:2.016, O2:32.00, H2O:18.02},
+    problema: 'Si se dispone de 36.0 g de H₂O, ¿cuántos gramos de O₂ se necesitan para producirla?',
+    dato: {especie:'H₂O', valor:36.0, unidad:'g'},
+    buscar: {especie:'O₂'},
+    solucion_pasos: [
+      '36.0 g H₂O × (1 mol H₂O / 18.02 g H₂O)',
+      '× (1 mol O₂ / 2 mol H₂O)',
+      '× (32.00 g O₂ / 1 mol O₂)',
+      '= 32.0 g O₂'
+    ],
+    col: 'El oxígeno líquido para cohetes es producido en Colombia por Air Products en su planta de Bogotá.'
+  },
+  {
+    ecuacion: '2NaCl → 2Na + Cl₂',
+    coef: {NaCl:2, Na:2, Cl2:1},
+    masas: {NaCl:58.44, Na:22.99, Cl2:70.90},
+    problema: 'La sal de las minas de Zipaquirá tiene fórmula NaCl. Si se descomponen 117.0 g de NaCl, ¿cuántos gramos de Na se obtienen?',
+    dato: {especie:'NaCl', valor:117.0, unidad:'g'},
+    buscar: {especie:'Na'},
+    solucion_pasos: [
+      '117.0 g NaCl × (1 mol NaCl / 58.44 g NaCl)',
+      '× (2 mol Na / 2 mol NaCl)',
+      '× (22.99 g Na / 1 mol Na)',
+      '= 46.0 g Na'
+    ],
+    col: 'La sal de Zipaquirá (Cundinamarca) fue explotada por muiscos y españoles; hoy es Patrimonio de la Humanidad.'
+  },
+  {
+    ecuacion: 'CaCO₃ → CaO + CO₂',
+    coef: {CaCO3:1, CaO:1, CO2:1},
+    masas: {CaCO3:100.09, CaO:56.08, CO2:44.01},
+    problema: 'En una planta de cal en Boyacá se calcinan 500.0 g de CaCO₃. ¿Cuántos gramos de CaO (cal viva) se producen?',
+    dato: {especie:'CaCO₃', valor:500.0, unidad:'g'},
+    buscar: {especie:'CaO'},
+    solucion_pasos: [
+      '500.0 g CaCO₃ × (1 mol CaCO₃ / 100.09 g CaCO₃)',
+      '× (1 mol CaO / 1 mol CaCO₃)',
+      '× (56.08 g CaO / 1 mol CaO)',
+      '= 280.2 g CaO'
+    ],
+    col: 'Colombia es uno de los mayores productores de cal de Sudamérica; las plantas de Boyacá y Cundinamarca abastecen la construcción nacional.'
+  },
+  {
+    ecuacion: '4Fe + 3O₂ → 2Fe₂O₃',
+    coef: {Fe:4, O2:3, Fe2O3:2},
+    masas: {Fe:55.85, O2:32.00, Fe2O3:159.70},
+    problema: 'En la siderúrgica de Paz de Río (Boyacá) se procesan 111.7 g de Fe. ¿Cuántos gramos de Fe₂O₃ se forman al oxidarse completamente?',
+    dato: {especie:'Fe', valor:111.7, unidad:'g'},
+    buscar: {especie:'Fe₂O₃'},
+    solucion_pasos: [
+      '111.7 g Fe × (1 mol Fe / 55.85 g Fe)',
+      '× (2 mol Fe₂O₃ / 4 mol Fe)',
+      '× (159.70 g Fe₂O₃ / 1 mol Fe₂O₃)',
+      '= 159.7 g Fe₂O₃'
+    ],
+    col: 'Acerías Paz de Río, en Belencito (Boyacá), fue la primera siderúrgica integrada de Colombia, fundada en 1948.'
+  },
+  {
+    ecuacion: 'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',
+    coef: {H2SO4:1, NaOH:2, Na2SO4:1, H2O:2},
+    masas: {H2SO4:98.09, NaOH:40.00, Na2SO4:142.04, H2O:18.02},
+    problema: 'Se neutralizan 49.0 g de H₂SO₄ con NaOH. ¿Cuántos gramos de NaOH se necesitan?',
+    dato: {especie:'H₂SO₄', valor:49.0, unidad:'g'},
+    buscar: {especie:'NaOH'},
+    solucion_pasos: [
+      '49.0 g H₂SO₄ × (1 mol H₂SO₄ / 98.09 g H₂SO₄)',
+      '× (2 mol NaOH / 1 mol H₂SO₄)',
+      '× (40.00 g NaOH / 1 mol NaOH)',
+      '= 40.0 g NaOH'
+    ],
+    col: 'El H₂SO₄ es el producto químico más producido del mundo; en Colombia se fabrica en Mamonal (Cartagena) por Monómeros.'
+  },
+  {
+    ecuacion: 'CH₄ + 2O₂ → CO₂ + 2H₂O',
+    coef: {CH4:1, O2:2, CO2:1, H2O:2},
+    masas: {CH4:16.04, O2:32.00, CO2:44.01, H2O:18.02},
+    problema: 'El gas natural de los Llanos Orientales es metano (CH₄). Si se queman 32.1 g de CH₄, ¿cuántos gramos de CO₂ se producen?',
+    dato: {especie:'CH₄', valor:32.1, unidad:'g'},
+    buscar: {especie:'CO₂'},
+    solucion_pasos: [
+      '32.1 g CH₄ × (1 mol CH₄ / 16.04 g CH₄)',
+      '× (1 mol CO₂ / 1 mol CH₄)',
+      '× (44.01 g CO₂ / 1 mol CO₂)',
+      '= 88.1 g CO₂'
+    ],
+    col: 'Los campos de Cusiana y Cupiagua (Casanare) son los mayores productores de gas natural de Colombia.'
+  },
+  {
+    ecuacion: '2Al + 3Cl₂ → 2AlCl₃',
+    coef: {Al:2, Cl2:3, AlCl3:2},
+    masas: {Al:26.98, Cl2:70.90, AlCl3:133.33},
+    problema: 'Se hacen reaccionar 54.0 g de Al con exceso de Cl₂. ¿Cuántos gramos de AlCl₃ se producen?',
+    dato: {especie:'Al', valor:54.0, unidad:'g'},
+    buscar: {especie:'AlCl₃'},
+    solucion_pasos: [
+      '54.0 g Al × (1 mol Al / 26.98 g Al)',
+      '× (2 mol AlCl₃ / 2 mol Al)',
+      '× (133.33 g AlCl₃ / 1 mol AlCl₃)',
+      '= 267.0 g AlCl₃'
+    ],
+    col: 'El aluminio se produce a partir de bauxita; Colombia importa este metal principalmente de Jamaica y Brasil.'
+  },
+  {
+    ecuacion: 'N₂ + 3H₂ → 2NH₃',
+    coef: {N2:1, H2:3, NH3:2},
+    masas: {N2:28.02, H2:2.016, NH3:17.03},
+    problema: 'En la síntesis de amoníaco (proceso Haber), ¿cuántos gramos de NH₃ se obtienen a partir de 42.0 g de N₂?',
+    dato: {especie:'N₂', valor:42.0, unidad:'g'},
+    buscar: {especie:'NH₃'},
+    solucion_pasos: [
+      '42.0 g N₂ × (1 mol N₂ / 28.02 g N₂)',
+      '× (2 mol NH₃ / 1 mol N₂)',
+      '× (17.03 g NH₃ / 1 mol NH₃)',
+      '= 51.1 g NH₃'
+    ],
+    col: 'El amoníaco es la base de los fertilizantes nitrogenados como la urea, usada ampliamente en cultivos de café y arroz en Colombia.'
+  },
+  {
+    ecuacion: 'C + O₂ → CO₂',
+    coef: {C:1, O2:1, CO2:1},
+    masas: {C:12.01, O2:32.00, CO2:44.01},
+    problema: 'El carbón del Cerrejón (La Guajira) es principalmente carbono. Si se queman 36.0 g de C, ¿cuántos gramos de CO₂ se liberan?',
+    dato: {especie:'C', valor:36.0, unidad:'g'},
+    buscar: {especie:'CO₂'},
+    solucion_pasos: [
+      '36.0 g C × (1 mol C / 12.01 g C)',
+      '× (1 mol CO₂ / 1 mol C)',
+      '× (44.01 g CO₂ / 1 mol CO₂)',
+      '= 132.0 g CO₂'
+    ],
+    col: 'El Cerrejón, en La Guajira, es la mina de carbón a cielo abierto más grande de América Latina.'
+  },
+  {
+    ecuacion: 'Zn + 2HCl → ZnCl₂ + H₂',
+    coef: {Zn:1, HCl:2, ZnCl2:1, H2:1},
+    masas: {Zn:65.38, HCl:36.46, ZnCl2:136.28, H2:2.016},
+    problema: '¿Cuántos gramos de HCl se necesitan para disolver completamente 65.4 g de Zn?',
+    dato: {especie:'Zn', valor:65.4, unidad:'g'},
+    buscar: {especie:'HCl'},
+    solucion_pasos: [
+      '65.4 g Zn × (1 mol Zn / 65.38 g Zn)',
+      '× (2 mol HCl / 1 mol Zn)',
+      '× (36.46 g HCl / 1 mol HCl)',
+      '= 72.9 g HCl'
+    ],
+    col: 'El zinc se extrae en Colombia del yacimiento de Cerro Matoso (Montelíbano, Córdoba), conocido por su producción de níquel y metales asociados.'
+  },
+  {
+    ecuacion: '2H₂O₂ → 2H₂O + O₂',
+    coef: {H2O2:2, H2O:2, O2:1},
+    masas: {H2O2:34.01, H2O:18.02, O2:32.00},
+    problema: 'Se descomponen 68.0 g de H₂O₂ (agua oxigenada). ¿Cuántos gramos de O₂ se liberan?',
+    dato: {especie:'H₂O₂', valor:68.0, unidad:'g'},
+    buscar: {especie:'O₂'},
+    solucion_pasos: [
+      '68.0 g H₂O₂ × (1 mol H₂O₂ / 34.01 g H₂O₂)',
+      '× (1 mol O₂ / 2 mol H₂O₂)',
+      '× (32.00 g O₂ / 1 mol O₂)',
+      '= 32.0 g O₂'
+    ],
+    col: 'El agua oxigenada se usa en Colombia como blanqueador en la industria papelera del Eje Cafetero y como antiséptico.'
+  },
+  {
+    ecuacion: '2Cu + O₂ → 2CuO',
+    coef: {Cu:2, O2:1, CuO:2},
+    masas: {Cu:63.55, O2:32.00, CuO:79.55},
+    problema: 'Se oxidan 127.1 g de Cu al aire. ¿Cuántos gramos de CuO se forman?',
+    dato: {especie:'Cu', valor:127.1, unidad:'g'},
+    buscar: {especie:'CuO'},
+    solucion_pasos: [
+      '127.1 g Cu × (1 mol Cu / 63.55 g Cu)',
+      '× (2 mol CuO / 2 mol Cu)',
+      '× (79.55 g CuO / 1 mol CuO)',
+      '= 159.1 g CuO'
+    ],
+    col: 'El cobre se extrae en Colombia en Mocoa (Putumayo) y es clave para la industria de cables eléctricos.'
+  }
+];
 
 // Pick a name from the compound based on desired system
 // Returns {name, system, label}
@@ -327,6 +520,16 @@ function generateExercises(){
     compounds = compounds.filter(c => !(c.group === 'ac-ox' && c.level === 'hard'));
   }
 
+  // stoichiometry uses its own data source (GEN_STOICH), no need for compounds
+  if(type === 'stoichiometry'){
+    const html = generateStoichiometryExercises(count);
+    const TYPE_LABELS2 = {'stoichiometry':'Estequiometría (factores de conversión)'};
+    document.getElementById('prev-title').textContent = 'Estequiometría (factores de conversión)';
+    document.getElementById('exercises-container').innerHTML = html;
+    showScreen('s-preview');
+    return;
+  }
+
   if(compounds.length === 0){
     alert('No hay compuestos disponibles para este grupo. Prueba con otro grupo o nivel.');
     return;
@@ -348,12 +551,16 @@ function generateExercises(){
   const selected = pool.slice(0, count);
 
   // Generate HTML
-  const typeLabel = {
+  const TYPE_LABELS = {
     'all': 'Ejercicios diversos',
     'formula-to-name': 'Nombrar moléculas',
     'name-to-formula': 'De nombre a fórmula',
-    'table-complete': 'Completar tabla'
-  }[type];
+    'table-complete': 'Completar tabla',
+    'classify-rx': 'Clasificar tipo de reacción',
+    'balance-eq': 'Balanceo por tanteo',
+    'stoichiometry': 'Estequiometría (factores de conversión)'
+  };
+  const typeLabel = TYPE_LABELS[type] || type;
 
   const sistemaLabel = {all:'Todos los sistemas', trad:'Tradicional', stock:'Stock', sist:'IUPAC'}[sistema];
   const groupLabel = GROUP_LABELS[group] || 'Todos los grupos';
@@ -368,6 +575,12 @@ function generateExercises(){
     html = generateNameToFormula(selected, sistema);
   } else if(type === 'table-complete'){
     html = generateTableComplete(selected, sistema);
+  } else if(type === 'classify-rx'){
+    html = generateClassifyRx(selected);
+  } else if(type === 'balance-eq'){
+    html = generateBalanceoExercises(selected);
+  } else if(type === 'stoichiometry'){
+    html = generateStoichiometryExercises(count);
   }
 
   document.getElementById('exercises-container').innerHTML = html;
@@ -492,6 +705,196 @@ function buildTable(compounds, sistema){
 
     html += `</tbody></table></div></div>`;
   }
+  return html;
+}
+
+// ── TIPO 1: classify-rx — Clasificar tipo de reacción ──────────────────────
+const TIPO_RX_LABEL = {
+  'sintesis':        'Síntesis (combinación)',
+  'descomposicion':  'Descomposición',
+  'sus-simple':      'Sustitución simple',
+  'sus-doble':       'Sustitución doble (doble desplazamiento)',
+  'combustion':      'Combustión',
+  'neutralizacion':  'Neutralización (ácido-base)'
+};
+
+function fmtEcuacion(ec){
+  // Convierte dígitos sueltos a subscript HTML (simplificado)
+  return ec
+    .replace(/(\d+)/g, (m, d) => {
+      // Solo convertir si el dígito está pegado a una letra (subíndice)
+      return d;
+    })
+    // Los tokens ya vienen con Unicode subscripts (₂, ₃…) o texto plano
+    .replace(/→/g, '<span style="margin:0 6px;color:var(--dimmer)">→</span>')
+    .replace(/\+/g, '<span style="margin:0 5px;color:var(--dimmer)">+</span>');
+}
+
+function generateClassifyRx(selected){
+  if(!selected || selected.length === 0){
+    return '<p style="color:#c00;padding:24px">No hay reacciones disponibles en este grupo. Asegúrate de que banco.js tenga entradas con group="reaccion".</p>';
+  }
+  let html = '<style>.rx-eq{font-size:1.1rem;font-weight:700;color:var(--an);font-family:"Courier New",monospace;margin:8px 0 14px;line-height:1.6}.rx-blank{border-bottom:2px solid var(--dimmer);min-height:22px;margin:4px 0 6px}.rx-just{border-bottom:2px solid #aaa;min-height:22px;margin:4px 0 0}.ans-block{background:var(--an-b);border-left:4px solid var(--an);padding:10px 14px;border-radius:6px;font-size:.88rem;margin-top:8px}</style>';
+  selected.forEach((c, i) => {
+    const eq = c.ecuacion || `${(c.reactivos||[]).join(' + ')} → ${(c.productos||[]).join(' + ')}`;
+    const tipoLabel = TIPO_RX_LABEL[c.tipo_rx] || c.tipo_rx || '—';
+    html += `
+      <div class="exercise-card PDF-section" style="break-inside:avoid">
+        <div class="ex-num">Ejercicio ${i+1}</div>
+        <p style="font-size:.88rem;color:var(--dim);margin-bottom:8px">Observa la siguiente reacción química y clasifícala según su tipo:</p>
+        <div class="rx-eq">${fmtEcuacion(eq)}</div>
+        <p style="font-size:.82rem;color:var(--dimmer);margin-bottom:2px"><strong>Tipo de reacción:</strong></p>
+        <div class="rx-blank"></div>
+        <p style="font-size:.82rem;color:var(--dimmer);margin:10px 0 2px"><strong>Justificación</strong> — Porque:</p>
+        <div class="rx-just"></div>
+        <details style="margin-top:12px">
+          <summary style="font-size:.8rem;font-weight:700;color:var(--an);cursor:pointer">Ver respuesta</summary>
+          <div class="ans-block">
+            <strong>Tipo:</strong> ${tipoLabel}<br>
+            <strong>Explicación:</strong> ${c.hint || '—'}
+            ${c.col ? `<br><span style="font-size:.8rem;color:var(--dimmer);font-style:italic">${c.col}</span>` : ''}
+          </div>
+        </details>
+      </div>`;
+  });
+  return html;
+}
+
+// ── TIPO 2: balance-eq — Balanceo por tanteo ────────────────────────────────
+function generateBalanceoExercises(selected){
+  if(!selected || selected.length === 0){
+    return '<p style="color:#c00;padding:24px">No hay ecuaciones de balanceo disponibles. Asegúrate de que banco.js tenga entradas con group="balanceo".</p>';
+  }
+
+  // Helper: formato con blancos antes de cada fórmula
+  function ecConBlancos(ec_sin){
+    // Asume formato: "H2 + O2 → H2O" o "H₂ + O₂ → H₂O"
+    // Separar por + y → y colocar __ antes de cada término
+    return ec_sin
+      .split(/([→+])/)
+      .map(tok => {
+        tok = tok.trim();
+        if(tok === '+') return ' <span style="margin:0 4px;color:var(--dimmer)">+</span> ';
+        if(tok === '→') return ' <span style="margin:0 6px;color:var(--dimmer)">→</span> ';
+        if(tok.length > 0) return `<span style="border-bottom:2px solid var(--dimmer);display:inline-block;min-width:22px;text-align:center;margin-right:2px">&nbsp;&nbsp;&nbsp;</span> ${tok}`;
+        return tok;
+      }).join('');
+  }
+
+  // Helper: ecuacion balanceada con coeficientes
+  function ecBalanceada(ec_sin, coefs){
+    const partes = ec_sin.split(/([→+])/);
+    let idx = 0;
+    return partes.map(tok => {
+      tok = tok.trim();
+      if(tok === '+') return ' <span style="margin:0 4px;color:var(--dimmer)">+</span> ';
+      if(tok === '→') return ' <span style="margin:0 6px;color:var(--dimmer)">→</span> ';
+      if(tok.length > 0){
+        const c = coefs[idx++];
+        const prefix = (c && c !== 1) ? `<strong style="color:var(--cat)">${c}</strong>&thinsp;` : (c === 1 ? '' : '');
+        return prefix + tok;
+      }
+      return tok;
+    }).join('');
+  }
+
+  let html = '<style>.bal-eq{font-size:1.05rem;font-weight:600;color:var(--an);font-family:"Courier New",monospace;margin:8px 0 16px;line-height:2}.bal-table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:.85rem}.bal-table th{background:rgba(13,74,115,.08);padding:6px 10px;border:1px solid var(--brd);font-weight:700;color:var(--dimmer)}.bal-table td{padding:6px 10px;border:1px solid var(--brd);height:32px}.ans-block-b{background:var(--ox-b);border-left:4px solid var(--ox);padding:10px 14px;border-radius:6px;font-size:.88rem;margin-top:8px}</style>';
+
+  selected.forEach((c, i) => {
+    const coefs = c.coeficientes || [];
+    // Extraer elementos para la tabla de verificación (simplificado: primeras 3 especies)
+    html += `
+      <div class="exercise-card PDF-section" style="break-inside:avoid">
+        <div class="ex-num">Ejercicio ${i+1} — Balanceo por tanteo</div>
+        <p style="font-size:.85rem;color:var(--dim);margin-bottom:6px">Coloca los coeficientes correctos y verifica en la tabla:</p>
+        <div class="bal-eq">${ecConBlancos(c.ecuacion_sin_coef || c.ecuacion || '')}</div>
+        <p style="font-size:.78rem;font-weight:700;color:var(--dimmer);margin-bottom:4px">Tabla de verificación de átomos:</p>
+        <table class="bal-table">
+          <thead><tr><th>Elemento</th><th>Lado izquierdo</th><th>Lado derecho</th><th>¿Igual? ✓</th></tr></thead>
+          <tbody>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+        <details style="margin-top:12px">
+          <summary style="font-size:.8rem;font-weight:700;color:var(--ox);cursor:pointer">Ver respuesta</summary>
+          <div class="ans-block-b">
+            <strong>Ecuación balanceada:</strong><br>
+            <span style="font-family:'Courier New',monospace;font-size:1rem">${ecBalanceada(c.ecuacion_sin_coef || c.ecuacion || '', coefs)}</span><br>
+            <span style="font-size:.82rem;color:var(--dimmer);margin-top:6px;display:block"><strong>Coeficientes en orden:</strong> ${coefs.join(' — ')}</span>
+            <span style="font-size:.82rem;color:var(--dimmer);margin-top:4px;display:block">${c.hint || ''}</span>
+          </div>
+        </details>
+      </div>`;
+  });
+  return html;
+}
+
+// ── TIPO 3: stoichiometry — Estequiometría con factores de conversión ────────
+function generateStoichiometryExercises(count){
+  // Shuffle GEN_STOICH and pick `count` problems
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+    return a;
+  }
+  let pool = shuffle(GEN_STOICH);
+  while(pool.length < count) pool = pool.concat(shuffle(GEN_STOICH));
+  const selected = pool.slice(0, count);
+
+  let html = `<style>
+.stoich-eq{font-size:1rem;font-weight:700;color:var(--ox);font-family:"Courier New",monospace;background:var(--ox-b);padding:8px 14px;border-radius:6px;display:inline-block;margin:6px 0 10px}
+.stoich-prob{font-size:.95rem;color:var(--tx);margin-bottom:14px;line-height:1.5}
+.factor-chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.9rem;margin:8px 0 14px;font-family:"Courier New",monospace}
+.factor{display:inline-flex;flex-direction:column;align-items:center;gap:0}
+.factor-num{border-bottom:2px solid var(--dimmer);padding:2px 8px;min-width:80px;text-align:center;min-height:22px}
+.factor-den{padding:2px 8px;min-width:80px;text-align:center;min-height:22px}
+.factor-op{font-size:1.2rem;color:var(--dimmer);align-self:center;padding:0 2px}
+.factor-result{border-bottom:2px solid var(--cat);min-width:60px;display:inline-block;height:22px;margin-left:6px}
+.ans-block-s{background:var(--cat-b);border-left:4px solid var(--cat);padding:10px 14px;border-radius:6px;font-size:.88rem;margin-top:8px}
+.chain-step{font-family:"Courier New",monospace;font-size:.9rem;margin:3px 0;color:var(--tx)}
+</style>`;
+
+  selected.forEach((p, i) => {
+    // Blank factor chain guide (3 factors: g→mol→mol→g)
+    html += `
+      <div class="exercise-card PDF-section" style="break-inside:avoid">
+        <div class="ex-num">Ejercicio ${i+1} — Estequiometría</div>
+        <div class="stoich-eq">${p.ecuacion}</div>
+        <p class="stoich-prob">${p.problema}</p>
+        <p style="font-size:.8rem;font-weight:700;color:var(--dimmer);margin-bottom:6px">Resuelve usando cadena de factores de conversión:</p>
+        <div class="factor-chain">
+          <div class="factor">
+            <div class="factor-num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="factor-den">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          </div>
+          <span class="factor-op">×</span>
+          <div class="factor">
+            <div class="factor-num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="factor-den">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          </div>
+          <span class="factor-op">×</span>
+          <div class="factor">
+            <div class="factor-num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="factor-den">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          </div>
+          <span class="factor-op">=</span>
+          <div style="text-align:center">
+            <div class="factor-result"></div>
+            <div style="font-size:.75rem;color:var(--dimmer)">g ${p.buscar.especie}</div>
+          </div>
+        </div>
+        <details style="margin-top:4px">
+          <summary style="font-size:.8rem;font-weight:700;color:var(--cat);cursor:pointer">Ver solución completa</summary>
+          <div class="ans-block-s">
+            ${p.solucion_pasos.map(s => `<div class="chain-step">${s}</div>`).join('')}
+            ${p.col ? `<p style="font-size:.8rem;color:var(--dimmer);font-style:italic;margin-top:8px;border-top:1px solid rgba(0,0,0,.1);padding-top:6px">${p.col}</p>` : ''}
+          </div>
+        </details>
+      </div>`;
+  });
   return html;
 }
 
