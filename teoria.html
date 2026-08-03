@@ -1369,47 +1369,40 @@ CONTENIDO[9] = `
 </div>
 
 <div class="sect">
-  <h2>Ejemplo más complejo — KMnO₄ + HCl</h2>
-  <p style="font-size:.84rem;color:var(--dim);margin-bottom:12px">Esta reacción tiene 6 elementos distintos — el tanteo sería muy largo. El álgebra lo organiza:</p>
+  <h2>Segundo ejemplo — Combustión del propano (cilindros de gas)</h2>
+  <p style="font-size:.84rem;color:var(--dim);margin-bottom:12px">El propano (C₃H₈) se usa en cilindros de gas en zonas rurales de Colombia. Con el método algebraico es más rápido que el tanteo:</p>
   <div class="ejemplo">
     <strong>Sin balancear:</strong><br>
-    a KMnO₄ + b HCl → c KCl + d MnCl₂ + e H₂O + f Cl₂
+    a C₃H₈ + b O₂ → c CO₂ + d H₂O
   </div>
 
   <div class="mdec-steps">
     <div class="mdec-step">
-      <div class="mdec-num ind">K</div>
-      <div class="mdec-body"><strong>K:</strong> <p><code>a = c</code></p></div>
-    </div>
-    <div class="mdec-step">
-      <div class="mdec-num ind">Mn</div>
-      <div class="mdec-body"><strong>Mn:</strong> <p><code>a = d</code></p></div>
-    </div>
-    <div class="mdec-step">
-      <div class="mdec-num ind">O</div>
-      <div class="mdec-body"><strong>O:</strong> <p><code>4a = e</code></p></div>
+      <div class="mdec-num ind">C</div>
+      <div class="mdec-body"><strong>Carbono:</strong> <p><code>3a = c</code></p></div>
     </div>
     <div class="mdec-step">
       <div class="mdec-num ind">H</div>
-      <div class="mdec-body"><strong>H:</strong> <p><code>b = 2e</code></p></div>
+      <div class="mdec-body"><strong>Hidrógeno:</strong> <p><code>8a = 2d</code> → <code>d = 4a</code></p></div>
     </div>
     <div class="mdec-step">
-      <div class="mdec-num ind">Cl</div>
-      <div class="mdec-body"><strong>Cl:</strong> <p><code>b = c + 2d + 2f</code></p></div>
+      <div class="mdec-num ind">O</div>
+      <div class="mdec-body"><strong>Oxígeno:</strong> <p><code>2b = 2c + d = 6a + 4a = 10a</code> → <code>b = 5a</code></p></div>
     </div>
   </div>
 
-  <p style="font-size:.83rem;color:var(--dim);margin-bottom:8px">Elige <strong>a = 2</strong> → c = 2, d = 2, e = 8, b = 16. Sustituye en Cl: 16 = 2 + 4 + 2f → f = 5.</p>
+  <p style="font-size:.83rem;color:var(--dim);margin-bottom:8px">Elige <strong>a = 1</strong> (el valor mínimo): c = 3, d = 4, b = 5. MCD(1, 5, 3, 4) = 1 → ya son mínimos.</p>
   <div class="ejemplo">
     <strong>Ecuación balanceada:</strong><br>
-    <span class="corr">2 KMnO₄ + 16 HCl → 2 KCl + 2 MnCl₂ + 8 H₂O + 5 Cl₂</span>
+    <span class="corr">C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O</span><br>
+    <span style="font-size:.8rem;color:var(--dimmer)">Verificación: C=3✓ H=8✓ O=10=6+4✓</span>
   </div>
 
   <div class="color-box ind">
     <div class="color-dot"></div>
     <div>
       <strong>Cuándo usar el método algebraico</strong>
-      <span>Cuando hay <strong>4 o más sustancias</strong> diferentes en la ecuación, cuando el tanteo no converge en 3 intentos, o cuando hay elementos que aparecen en más de dos fórmulas a la vez. El método algebraico siempre da la solución correcta y mínima.</span>
+      <span>Cuando el tanteo no converge fácilmente, o cuando hay 3 o más elementos diferentes que balancear al mismo tiempo. El método algebraico organiza el problema en ecuaciones claras y siempre llega a la solución mínima entera. <strong>Pasos clave:</strong> (1) asigna letras, (2) escribe una ecuación por elemento, (3) elige un valor inicial para la variable más sencilla (generalmente a = 1), (4) despeja las demás.</span>
     </div>
   </div>
 </div>
