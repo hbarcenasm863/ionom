@@ -11,29 +11,147 @@
 <meta name="apple-mobile-web-app-title" content="IonNom">
 <title>Tabla Periódica — IonNom</title>
 <style>
+/* ═══════════════════════════════════════════
+   SISTEMA DE DISEÑO COMPARTIDO — MDEC tokens
+   ═══════════════════════════════════════════ */
 :root{
+  /* MDEC semantic palette (existente, no tocar) */
   --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
-  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
-  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
-  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
-  --err:#dc2626;--ok:#16a34a;
-  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
-  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
-  --r:16px;--rs:10px;
-  --mono:'Courier New',monospace;
-  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
-  --serif:Georgia,'Times New Roman',serif;
-  --sh:0 3px 16px rgba(26,110,168,.10);
-  --sh2:0 8px 36px rgba(26,110,168,.18);
+  --an:#0369a1; --an-b:#e0f2fe; --an-t:#082f49;
+  --oh:#7c3aed; --oh-b:#ede9fe; --oh-t:#4c1d95;
+  --ox:#0f766e; --ox-b:#ccfbf1; --ox-t:#134e4a;
+  /* Surface & text (dark mode) */
+  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
+  --brd:#d0e6f5;--brd2:#b8d4eb;
+  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
+  --nav:#0d4a73;--nav-t:#ffffff;
+  /* Status */
+  --ok:#16a34a;--ok-b:#dcfce7;--ok-t:#14532d;
+  --err:#dc2626;--err-b:#fee2e2;--err-t:#7f1d1d;
+  --warn:#d97706;--warn-b:#fef3c7;--warn-t:#92400e;
+  --info:#0369a1;--info-b:#e0f2fe;--info-t:#082f49;
+  /* Typography */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* Misc */
+  --r:16px;--rs:10px;--rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+
+  /* ═══ Paleta "geológica" para tabla periódica ═══
+     DISTINTA del sistema MDEC para no confundir transfer */
+  --el-alc:#dc2626;      /* rojo vivo — metales alcalinos */
+  --el-alc-b:#fee2e2;    --el-alc-t:#7f1d1d;
+  --el-alct:#ea580c;     /* naranja — alcalinotérreos */
+  --el-alct-b:#ffedd5;   --el-alct-t:#7c2d12;
+  --el-trans:#6d28d9;    /* púrpura oscuro — transición (≠ --oh violeta claro) */
+  --el-trans-b:#ede9fe;  --el-trans-t:#3b0764;
+  --el-posttrans:#0891b2;/* cian oscuro — post-transición */
+  --el-posttrans-b:#cffafe; --el-posttrans-t:#164e63;
+  --el-metal:#15803d;    /* verde oscuro — metaloides */
+  --el-metal-b:#dcfce7;  --el-metal-t:#14532d;
+  --el-nomet:#be185d;    /* rosa oscuro — no metales */
+  --el-nomet-b:#fce7f3;  --el-nomet-t:#831843;
+  --el-hal:#0d9488;      /* teal oscuro — halógenos (≠ --ox teal claro) */
+  --el-hal-b:#ccfbf1;    --el-hal-t:#134e4a;
+  --el-gas:#6366f1;      /* índigo — gases nobles */
+  --el-gas-b:#e0e7ff;    --el-gas-t:#312e81;
+  --el-lan:#92400e;      /* marrón — lantánidos */
+  --el-lan-b:#fef3c7;    --el-lan-t:#451a03;
+  --el-act:#374151;      /* gris pizarra — actínidos */
+  --el-act-b:#f3f4f6;    --el-act-t:#111827;
 }
+
+/* ── Dark mode (media query) ── */
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
+    --brd:#1e3a52;--brd2:#2a4d6e;
+    --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
+    --nav:#091929;--nav-t:#e2eef8;
+    --cat-b:#422006;--cat-t:#fde68a;
+    --an-b:#082f49;--an-t:#7dd3fc;
+    --oh-b:#2e1065;--oh-t:#c4b5fd;
+    --ox-b:#042f2e;--ox-t:#5eead4;
+    --ok-b:#052e16;--ok-t:#86efac;
+    --err-b:#450a0a;--err-t:#fca5a5;
+    --warn-b:#422006;--warn-t:#fde68a;
+    --info-b:#082f49;--info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+    --el-alc:#f87171;     --el-alc-b:#450a0a;  --el-alc-t:#fca5a5;
+    --el-alct:#fb923c;    --el-alct-b:#431407; --el-alct-t:#fed7aa;
+    --el-trans:#a78bfa;   --el-trans-b:#2e1065;--el-trans-t:#ddd6fe;
+    --el-posttrans:#22d3ee;--el-posttrans-b:#083344;--el-posttrans-t:#a5f3fc;
+    --el-metal:#4ade80;   --el-metal-b:#052e16;--el-metal-t:#bbf7d0;
+    --el-nomet:#f472b6;   --el-nomet-b:#500724;--el-nomet-t:#fbcfe8;
+    --el-hal:#2dd4bf;     --el-hal-b:#042f2e; --el-hal-t:#99f6e4;
+    --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
+    --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
+    --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
+  }
+}
+/* ── Data-theme overrides (toggle JS) ── */
+:root[data-theme="dark"]{
+  --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
+  --brd:#1e3a52;--brd2:#2a4d6e;
+  --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
+  --nav:#091929;--nav-t:#e2eef8;
+  --cat-b:#422006;--cat-t:#fde68a;
+  --an-b:#082f49;--an-t:#7dd3fc;
+  --oh-b:#2e1065;--oh-t:#c4b5fd;
+  --ox-b:#042f2e;--ox-t:#5eead4;
+  --ok-b:#052e16;--ok-t:#86efac;
+  --err-b:#450a0a;--err-t:#fca5a5;
+  --warn-b:#422006;--warn-t:#fde68a;
+  --info-b:#082f49;--info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+  --el-alc:#f87171;     --el-alc-b:#450a0a;  --el-alc-t:#fca5a5;
+  --el-alct:#fb923c;    --el-alct-b:#431407; --el-alct-t:#fed7aa;
+  --el-trans:#a78bfa;   --el-trans-b:#2e1065;--el-trans-t:#ddd6fe;
+  --el-posttrans:#22d3ee;--el-posttrans-b:#083344;--el-posttrans-t:#a5f3fc;
+  --el-metal:#4ade80;   --el-metal-b:#052e16;--el-metal-t:#bbf7d0;
+  --el-nomet:#f472b6;   --el-nomet-b:#500724;--el-nomet-t:#fbcfe8;
+  --el-hal:#2dd4bf;     --el-hal-b:#042f2e; --el-hal-t:#99f6e4;
+  --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
+  --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
+  --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
+  --brd:#d0e6f5;--brd2:#b8d4eb;
+  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
+  --nav:#0d4a73;--nav-t:#ffffff;
+  --cat-b:#fef3c7;--cat-t:#92400e;
+  --an-b:#e0f2fe;--an-t:#082f49;
+  --oh-b:#ede9fe;--oh-t:#4c1d95;
+  --ox-b:#ccfbf1;--ox-t:#134e4a;
+  --ok-b:#dcfce7;--ok-t:#14532d;
+  --err-b:#fee2e2;--err-t:#7f1d1d;
+  --warn-b:#fef3c7;--warn-t:#92400e;
+  --info-b:#e0f2fe;--info-t:#082f49;
+  --el-alc:#dc2626;     --el-alc-b:#fee2e2;  --el-alc-t:#7f1d1d;
+  --el-alct:#ea580c;    --el-alct-b:#ffedd5; --el-alct-t:#7c2d12;
+  --el-trans:#6d28d9;   --el-trans-b:#ede9fe;--el-trans-t:#3b0764;
+  --el-posttrans:#0891b2;--el-posttrans-b:#cffafe;--el-posttrans-t:#164e63;
+  --el-metal:#15803d;   --el-metal-b:#dcfce7;--el-metal-t:#14532d;
+  --el-nomet:#be185d;   --el-nomet-b:#fce7f3;--el-nomet-t:#831843;
+  --el-hal:#0d9488;     --el-hal-b:#ccfbf1; --el-hal-t:#134e4a;
+  --el-gas:#6366f1;     --el-gas-b:#e0e7ff; --el-gas-t:#312e81;
+  --el-lan:#92400e;     --el-lan-b:#fef3c7; --el-lan-t:#451a03;
+  --el-act:#374151;     --el-act-b:#f3f4f6; --el-act-t:#111827;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6;transition:background .2s,color .2s}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 
 /* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
-.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:var(--nav-t);font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
 .nav-links{display:flex;gap:4px;align-items:center}
 .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .15s,color .15s;display:flex;align-items:center;gap:5px}
 .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
@@ -47,8 +165,20 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* PAGE WRAPPER */
 .page{padding:20px 16px 80px;position:relative;z-index:1}
-.page-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;font-style:italic;color:#0d4a73;margin-bottom:4px;letter-spacing:-.02em}
-.page-subtitle{font-size:.85rem;color:var(--dimmer);margin-bottom:20px}
+.page-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;font-style:italic;color:var(--an);margin-bottom:4px;letter-spacing:-.02em}
+.page-subtitle{font-size:.85rem;color:var(--dimmer);margin-bottom:16px}
+
+/* ── PRETRAIN BOX (Mayer principio 8) ── */
+.pretrain-box{background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;max-width:780px}
+.pretrain-box h4{color:var(--an-t);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.pretrain-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.pt-chip{background:var(--surf);border:1.5px solid var(--brd);border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:600;color:var(--tx);display:flex;align-items:center;gap:6px}
+.pt-chip strong{color:var(--an-t)}
+.pretrain-nota{font-size:.75rem;color:var(--an-t);margin-top:6px;opacity:.9}
+
+/* ── AVISO PALETA (señalización importante) ── */
+.paleta-aviso{background:var(--surf2);border:1.5px solid var(--brd2);border-radius:var(--rs);padding:10px 14px;margin-bottom:18px;max-width:780px;font-size:.75rem;color:var(--tx2)}
+.paleta-aviso strong{color:var(--tx)}
 
 /* TABLE SCROLL CONTAINER */
 .tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px}
@@ -86,33 +216,33 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   user-select:none;
   position:relative;
 }
-.el-tile:hover{transform:scale(1.18);box-shadow:0 4px 16px rgba(0,0,0,.28);z-index:10;filter:brightness(1.08)}
+.el-tile:hover{transform:scale(1.18);box-shadow:0 4px 16px rgba(0,0,0,.32);z-index:10;filter:brightness(1.08)}
 .el-z{font-size:.48rem;font-weight:700;opacity:.85;line-height:1;color:inherit}
 .el-sym{font-size:1.05rem;font-weight:800;line-height:1;text-align:center;margin-top:1px;color:inherit}
 .el-name{font-size:.32rem;font-weight:600;line-height:1.1;text-align:center;opacity:.85;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit}
 
-/* TYPE COLORS */
-.el-tile.alkali    {background:#fee2e2;border-color:#ef4444;color:#7f1d1d}
-.el-tile.alkaline  {background:#ffedd5;border-color:#f97316;color:#7c2d12}
-.el-tile.transition{background:#dbeafe;border-color:#3b82f6;color:#1e3a8a}
-.el-tile.post      {background:#cffafe;border-color:#06b6d4;color:#164e63}
-.el-tile.metalloid {background:#dcfce7;border-color:#22c55e;color:#14532d}
-.el-tile.nonmetal  {background:#fef9c3;border-color:#eab308;color:#713f12}
-.el-tile.halogen   {background:#f3e8ff;border-color:#a855f7;color:#581c87}
-.el-tile.noble     {background:#f3f4f6;border-color:#6b7280;color:#1f2937}
-.el-tile.lanthanide{background:#fce7f3;border-color:#ec4899;color:#831843}
-.el-tile.actinide  {background:#f5f0ef;border-color:#78716c;color:#292524}
+/* ═══ PALETA GEOLÓGICA (distinta de MDEC) ═══ */
+.el-tile.alkali    {background:var(--el-alc-b);border-color:var(--el-alc);color:var(--el-alc-t)}
+.el-tile.alkaline  {background:var(--el-alct-b);border-color:var(--el-alct);color:var(--el-alct-t)}
+.el-tile.transition{background:var(--el-trans-b);border-color:var(--el-trans);color:var(--el-trans-t)}
+.el-tile.post      {background:var(--el-posttrans-b);border-color:var(--el-posttrans);color:var(--el-posttrans-t)}
+.el-tile.metalloid {background:var(--el-metal-b);border-color:var(--el-metal);color:var(--el-metal-t)}
+.el-tile.nonmetal  {background:var(--el-nomet-b);border-color:var(--el-nomet);color:var(--el-nomet-t)}
+.el-tile.halogen   {background:var(--el-hal-b);border-color:var(--el-hal);color:var(--el-hal-t)}
+.el-tile.noble     {background:var(--el-gas-b);border-color:var(--el-gas);color:var(--el-gas-t)}
+.el-tile.lanthanide{background:var(--el-lan-b);border-color:var(--el-lan);color:var(--el-lan-t)}
+.el-tile.actinide  {background:var(--el-act-b);border-color:var(--el-act);color:var(--el-act-t)}
 
-/* PLACEHOLDER TILE (gap for La/Ac row) */
+/* PLACEHOLDER TILE */
 .el-placeholder{
   background:transparent;
-  border:1.5px dashed #c0d8e8;
+  border:1.5px dashed var(--brd2);
   border-radius:5px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:.5rem;
-  color:#a0b8c8;
+  color:var(--dimmer);
   cursor:default;
 }
 
@@ -131,20 +261,22 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   padding-left:2px;
 }
 
-/* LEGEND */
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:14px;background:var(--surf);border-radius:10px;border:1.5px solid var(--brd);width:max-content;max-width:100%}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:.68rem;font-weight:600;white-space:nowrap}
+/* ── LEYENDA ── */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:14px;background:var(--surf);border-radius:var(--rs);border:1.5px solid var(--brd);box-shadow:var(--sh);width:max-content;max-width:100%}
+.legend-title{width:100%;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);margin-bottom:4px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:.68rem;font-weight:600;white-space:nowrap;color:var(--tx2)}
 .legend-dot{width:12px;height:12px;border-radius:3px;border:1.5px solid}
-.ld-alkali    {background:#fee2e2;border-color:#ef4444}
-.ld-alkaline  {background:#ffedd5;border-color:#f97316}
-.ld-transition{background:#dbeafe;border-color:#3b82f6}
-.ld-post      {background:#cffafe;border-color:#06b6d4}
-.ld-metalloid {background:#dcfce7;border-color:#22c55e}
-.ld-nonmetal  {background:#fef9c3;border-color:#eab308}
-.ld-halogen   {background:#f3e8ff;border-color:#a855f7}
-.ld-noble     {background:#f3f4f6;border-color:#6b7280}
-.ld-lanthanide{background:#fce7f3;border-color:#ec4899}
-.ld-actinide  {background:#f5f0ef;border-color:#78716c}
+/* dots via CSS vars */
+.ld-alkali    {background:var(--el-alc-b);border-color:var(--el-alc)}
+.ld-alkaline  {background:var(--el-alct-b);border-color:var(--el-alct)}
+.ld-transition{background:var(--el-trans-b);border-color:var(--el-trans)}
+.ld-post      {background:var(--el-posttrans-b);border-color:var(--el-posttrans)}
+.ld-metalloid {background:var(--el-metal-b);border-color:var(--el-metal)}
+.ld-nonmetal  {background:var(--el-nomet-b);border-color:var(--el-nomet)}
+.ld-halogen   {background:var(--el-hal-b);border-color:var(--el-hal)}
+.ld-noble     {background:var(--el-gas-b);border-color:var(--el-gas)}
+.ld-lanthanide{background:var(--el-lan-b);border-color:var(--el-lan)}
+.ld-actinide  {background:var(--el-act-b);border-color:var(--el-act)}
 
 /* DETAIL PANEL */
 .detail-panel{
@@ -152,7 +284,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   top:48px;right:0;bottom:0;
   width:320px;
   background:var(--surf);
-  box-shadow:-4px 0 24px rgba(0,0,0,.15);
+  box-shadow:-4px 0 24px rgba(0,0,0,.2),var(--sh2);
   z-index:300;
   overflow-y:auto;
   transform:translateX(100%);
@@ -160,20 +292,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   border-left:2px solid var(--brd);
 }
 .detail-panel.open{transform:translateX(0)}
-.dp-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;background:var(--bg);border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:background .15s}
+.dp-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;background:var(--bg2);border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:background .15s}
 .dp-close:hover{background:var(--brd)}
 .dp-header{padding:20px 20px 12px;border-bottom:1.5px solid var(--brd)}
 .dp-z{font-size:.65rem;font-weight:800;color:var(--dimmer);letter-spacing:.1em;text-transform:uppercase}
-.dp-sym{font-size:3.5rem;font-weight:900;line-height:1;font-family:var(--mono)}
-.dp-name{font-size:1.05rem;font-weight:700;margin-top:2px}
+.dp-sym{font-size:3.5rem;font-weight:900;line-height:1;font-family:var(--mono);color:var(--tx)}
+.dp-name{font-size:1.05rem;font-weight:700;margin-top:2px;color:var(--tx)}
 .dp-type-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:.65rem;font-weight:700;border:1.5px solid;margin-top:6px}
 .dp-body{padding:16px 20px}
 .dp-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;font-size:.82rem}
 .dp-lbl{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer);white-space:nowrap;min-width:80px}
 .dp-val{font-weight:600;color:var(--tx)}
 .dp-chips{display:flex;flex-wrap:wrap;gap:4px}
-.dp-chip{padding:2px 8px;border-radius:100px;font-size:.72rem;font-weight:700;background:var(--bg);border:1.5px solid var(--brd);font-family:var(--mono);color:var(--dim)}
-.dp-valence{font-family:var(--mono);font-size:.82rem;font-weight:700;color:#1e3a8a;background:#dbeafe;padding:3px 10px;border-radius:6px;border:1.5px solid #3b82f6}
+/* Chips de estados de oxidación: positivos=amber, negativos=azul (señalización) */
+.dp-chip{padding:2px 8px;border-radius:100px;font-size:.72rem;font-weight:700;font-family:var(--mono)}
+.dp-chip.pos{background:var(--cat-b);color:var(--cat-t);border:1px solid var(--cat)}
+.dp-chip.neg{background:var(--an-b);color:var(--an-t);border:1px solid var(--an)}
+.dp-chip.zero{background:var(--surf2);color:var(--dim);border:1.5px solid var(--brd)}
+.dp-valence{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--el-trans-t);background:var(--el-trans-b);padding:3px 10px;border-radius:6px;border:1.5px solid var(--el-trans)}
 .dp-section{margin-top:14px;padding-top:12px;border-top:1.5px solid var(--brd)}
 .dp-section-title{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dimmer);margin-bottom:7px}
 .dp-col-text{font-size:.8rem;color:var(--dim);line-height:1.6}
@@ -218,6 +354,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <a href="funciones.html">🧪 <span class="full">Funciones</span></a>
     <a href="juego.html">🎮 <span class="full">Juego</span></a>
     <a href="tabla.html" class="active">⚗️ <span class="full">Tabla</span></a>
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px">🌙</button>
   </div>
 </nav>
 
@@ -228,21 +365,38 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
   <p class="page-subtitle">118 elementos — toca cualquier elemento para escuchar su información en voz</p>
 
+  <!-- ── PRETRAIN BOX: qué información tiene cada celda ── -->
+  <div class="pretrain-box" role="note" aria-label="Orientación: información en cada celda">
+    <h4>¿Qué muestra cada celda?</h4>
+    <div class="pretrain-chips">
+      <div class="pt-chip"><strong>Z</strong> Número atómico (esquina sup. izq.)</div>
+      <div class="pt-chip"><strong>Símbolo</strong> abreviatura del elemento (centro)</div>
+      <div class="pt-chip"><strong>Nombre</strong> completo (fila inferior)</div>
+    </div>
+    <p class="pretrain-nota">👆 Toca cualquier celda para ver masa, electronegatividad, estados de oxidación y contexto colombiano.</p>
+  </div>
+
+  <!-- ── Aviso de paleta independiente ── -->
+  <div class="paleta-aviso" role="note">
+    <strong>Nota sobre los colores:</strong> los colores de esta tabla son una <em>paleta geológica independiente</em> del sistema MDEC (donde amber = catión, azul = anión, etc.). Aquí <strong>púrpura = metales de transición</strong>, <strong>teal = halógenos</strong>. La leyenda debajo explica cada categoría.
+  </div>
+
   <div class="tabla-scroll">
-    <!-- MAIN TABLE (periods 1-7, groups 1-18) -->
+    <!-- MAIN TABLE -->
     <div class="pt-grid" id="pt-main"></div>
 
     <!-- F-BLOCK ROWS -->
-    <div class="f-row-label">Lantánidos (período 6)</div>
+    <div class="f-row-label">Lantánidos (período 6) / Actínidos (período 7)</div>
     <div class="pt-f-block" id="pt-fblock"></div>
   </div>
 
-  <!-- LEGEND -->
-  <div class="legend">
+  <!-- ── LEYENDA ── -->
+  <div class="legend" aria-label="Leyenda de categorías de elementos">
+    <div class="legend-title">Categorías de elementos</div>
     <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
     <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
     <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
-    <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-trans.</div>
+    <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-transición</div>
     <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
     <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
     <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
@@ -261,8 +415,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div style="font-size:1.2rem;font-weight:800;color:var(--an-t);font-family:Georgia,serif;font-style:italic">¿Cómo usar la tabla?</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
-      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> cada color representa un tipo de elemento. La leyenda está justo debajo de la tabla.</div>
-      <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)"><strong style="color:var(--cat-t)">👆 Toca o haz clic:</strong> selecciona cualquier elemento para ver su número atómico, masa, estados de oxidación, electronegatividad y contexto colombiano.</div>
+      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> esta tabla usa una paleta geológica propia, diferente al sistema MDEC de las otras páginas. La leyenda debajo de la tabla explica cada color.</div>
+      <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)"><strong style="color:var(--cat-t)">👆 Toca o haz clic:</strong> selecciona cualquier elemento para ver su número atómico, masa, estados de oxidación (en chips amber/azul), electronegatividad y contexto colombiano.</div>
       <div style="padding:10px 12px;background:var(--ox-b);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">🔊 Narración de voz:</strong> al abrir un elemento, escucharás su información en voz para reforzar el aprendizaje visual y auditivo.</div>
     </div>
     <button onclick="closeTablaIntro()" style="width:100%;padding:12px;background:var(--an);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Entendido! Explorar →</button>
@@ -273,8 +427,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="backdrop" id="backdrop" onclick="closePanel()"></div>
 
 <!-- DETAIL PANEL -->
-<div class="detail-panel" id="detail-panel">
-  <button class="dp-close" onclick="closePanel()">✕</button>
+<div class="detail-panel" id="detail-panel" role="complementary" aria-label="Detalle del elemento">
+  <button class="dp-close" onclick="closePanel()" aria-label="Cerrar panel">✕</button>
   <div class="dp-header">
     <div class="dp-z" id="dp-z"></div>
     <div class="dp-sym" id="dp-sym"></div>
@@ -305,6 +459,21 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </div>
 
 <script>
+// ── Dark mode toggle ──
+function toggleTheme(){
+  var t=document.documentElement.getAttribute("data-theme");
+  var n=t==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",n);
+  localStorage.setItem("ionom-theme",n);
+  document.getElementById("theme-btn").textContent=n==="dark"?"☀️":"🌙";
+}
+(function(){
+  var s=localStorage.getItem("ionom-theme")||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light");
+  document.documentElement.setAttribute("data-theme",s);
+  var btn=document.getElementById("theme-btn");
+  if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+})();
+
 const ELEMENTS = {
   1: {sym:'H', name:'Hidrógeno', mass:1.008, type:'nonmetal', period:1, group:1, ox:['+1','-1'], valence:'1s¹', col:'Fundamental en la industria petrolera colombiana (refinería de Barrancabermeja). Investigado como combustible limpio por Ecopetrol.', en:2.2},
   2: {sym:'He', name:'Helio', mass:4.003, type:'noble', period:1, group:18, ox:[], valence:'1s²', col:'Usado en soldadura de precisión y en equipos MRI de hospitales colombianos como la Clínica del Country y el Hospital Militar.', en:null},
@@ -397,7 +566,7 @@ const ELEMENTS = {
   89: {sym:'Ac', name:'Actinio', mass:227, type:'actinide', period:7, group:3, ox:['+3'], valence:'6d¹7s²', col:'Radiactivo; investigado en medicina nuclear. El INEA regula todos los radioisótopos en Colombia, incluyendo el actinio usado experimentalmente en oncología.', en:1.1},
   90: {sym:'Th', name:'Torio', mass:232.04, type:'actinide', period:7, group:4, ox:['+4'], valence:'6d²7s²', col:'Posible combustible nuclear de cuarta generación. El INEA regula las trazas de torio en monacita de playas colombianas del Pacífico.', en:1.3},
   91: {sym:'Pa', name:'Protactinio', mass:231.04, type:'actinide', period:7, group:5, ox:['+5'], valence:'5f²6d¹7s²', col:'Radiactivo; sin usos industriales. Solo existen miligramos en todo el mundo. Monitoreado por el INEA en Colombia como traza de series radiactivas naturales.', en:1.5},
-  92: {sym:'U', name:'Uranio', mass:238.03, type:'actinide', period:7, group:6, ox:['+3','+4','+6'], valence:'5f³6d¹7s²', col:'Colombia tiene pequeños depósitos de uranio en Boyacá y Vaupes. El Servicio Geológico Colombiano hace inventario de minerales radiactivos para exploración futura.', en:1.38},
+  92: {sym:'U', name:'Uranio', mass:238.03, type:'actinide', period:7, group:6, ox:['+3','+4','+6'], valence:'5f³6d¹7s²', col:'Colombia tiene pequeños depósitos de uranio en Boyacá y Vaupés. El Servicio Geológico Colombiano hace inventario de minerales radiactivos para exploración futura.', en:1.38},
   93: {sym:'Np', name:'Neptunio', mass:237, type:'actinide', period:7, group:7, ox:['+4','+5'], valence:'5f⁴6d¹7s²', col:'Transuránico; producido en reactores nucleares. Sin uso práctico en Colombia. Objeto de estudio académico en física nuclear avanzada.', en:1.36},
   94: {sym:'Pu', name:'Plutonio', mass:244, type:'actinide', period:7, group:8, ox:['+3','+4'], valence:'5f⁶7s²', col:'Combustible nuclear y arma nuclear. Colombia no tiene reactores nucleares de potencia. El INEA regula estrictamente cualquier material nuclear en el país.', en:1.28},
   95: {sym:'Am', name:'Americio', mass:243, type:'actinide', period:7, group:9, ox:['+3'], valence:'5f⁷7s²', col:'Presente en detectores de humo domésticos (²⁴¹Am). Las normas colombianas de seguridad (RETIE) regulan la instalación y disposición de detectores iónicos en edificios.', en:1.3},
@@ -431,11 +600,24 @@ const TYPE_LABELS = {
   post:'Metal post-transición', metalloid:'Metaloide', nonmetal:'No metal',
   halogen:'Halógeno', noble:'Gas noble', lanthanide:'Lantánido', actinide:'Actínido'
 };
-const TYPE_COLORS = {
-  alkali:'#ef4444', alkaline:'#f97316', transition:'#3b82f6', post:'#06b6d4',
-  metalloid:'#22c55e', nonmetal:'#eab308', halogen:'#a855f7', noble:'#6b7280',
-  lanthanide:'#ec4899', actinide:'#78716c'
+
+// Colores del badge usando las variables CSS geológicas vía getComputedStyle
+const TYPE_VAR = {
+  alkali:['--el-alc','--el-alc-b','--el-alc-t'],
+  alkaline:['--el-alct','--el-alct-b','--el-alct-t'],
+  transition:['--el-trans','--el-trans-b','--el-trans-t'],
+  post:['--el-posttrans','--el-posttrans-b','--el-posttrans-t'],
+  metalloid:['--el-metal','--el-metal-b','--el-metal-t'],
+  nonmetal:['--el-nomet','--el-nomet-b','--el-nomet-t'],
+  halogen:['--el-hal','--el-hal-b','--el-hal-t'],
+  noble:['--el-gas','--el-gas-b','--el-gas-t'],
+  lanthanide:['--el-lan','--el-lan-b','--el-lan-t'],
+  actinide:['--el-act','--el-act-b','--el-act-t']
 };
+
+function cssVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
 
 function classOf(type){
   if(['alkali','alkaline','transition','post','lanthanide','actinide'].includes(type)) return 'Metal';
@@ -450,29 +632,30 @@ function makeTile(z){
   div.className = `el-tile ${el.type}`;
   div.dataset.z = z;
   div.setAttribute('onclick',`showEl(${z})`);
+  // Accesibilidad: title con nombre completo
+  div.setAttribute('title', `${el.name} (${el.sym}) — Z=${z}`);
+  div.setAttribute('aria-label', `${el.name}, símbolo ${el.sym}, número atómico ${z}`);
+  div.setAttribute('role','button');
+  div.setAttribute('tabindex','0');
+  div.addEventListener('keydown', function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showEl(z);}});
   div.innerHTML = `<div class="el-z">${z}</div><div class="el-sym">${el.sym}</div><div class="el-name">${el.name}</div>`;
   return div;
 }
 
 function buildMain(){
   const grid = document.getElementById('pt-main');
-  // Elements placed in main grid by period/group
-  // Skip lanthanides 58-71 and actinides 90-103 (they go in f-block)
-  // La(57) goes at period 6, group 3; Ac(89) goes at period 7, group 3
   const mainElements = new Set([...Array.from({length:56},(_,i)=>i+1), 57,
-    ...Array.from({length:16},(_,i)=>i+72), // 72-87
+    ...Array.from({length:16},(_,i)=>i+72),
     88, 89,
-    ...Array.from({length:15},(_,i)=>i+104) // 104-118
+    ...Array.from({length:15},(_,i)=>i+104)
   ]);
 
-  // Build a map of (period, group) -> z
   const pos = {};
   for(const z of mainElements){
     const el = ELEMENTS[z];
     pos[`${el.period},${el.group}`] = z;
   }
 
-  // Grid is 18 cols x 7 rows
   for(let row=1;row<=7;row++){
     for(let col=1;col<=18;col++){
       const key = `${row},${col}`;
@@ -489,10 +672,8 @@ function buildMain(){
 
 function buildFBlock(){
   const fblock = document.getElementById('pt-fblock');
-  // Row 1: lanthanides Ce(58)-Lu(71), starting at col 3
-  // Row 2: actinides Th(90)-Lr(103), starting at col 3
-  const lans = Array.from({length:14},(_,i)=>i+58); // 58-71
-  const acts = Array.from({length:14},(_,i)=>i+90); // 90-103
+  const lans = Array.from({length:14},(_,i)=>i+58);
+  const acts = Array.from({length:14},(_,i)=>i+90);
 
   lans.forEach((z,i)=>{
     const tile = makeTile(z);
@@ -508,6 +689,13 @@ function buildFBlock(){
   });
 }
 
+function chipClass(ox){
+  if(ox === '0') return 'zero';
+  if(ox.startsWith('+')) return 'pos';
+  if(ox.startsWith('-')) return 'neg';
+  return 'zero';
+}
+
 function showEl(z){
   const el = ELEMENTS[z];
   document.getElementById('dp-z').textContent = `Elemento #${z}`;
@@ -516,9 +704,10 @@ function showEl(z){
 
   const badge = document.getElementById('dp-badge');
   badge.textContent = TYPE_LABELS[el.type];
-  badge.style.background = TYPE_COLORS[el.type]+'22';
-  badge.style.borderColor = TYPE_COLORS[el.type];
-  badge.style.color = TYPE_COLORS[el.type];
+  const vars = TYPE_VAR[el.type];
+  badge.style.background = cssVar(vars[1]);
+  badge.style.borderColor = cssVar(vars[0]);
+  badge.style.color = cssVar(vars[2]);
 
   document.getElementById('dp-mass').textContent = el.mass + ' u';
   document.getElementById('dp-pg').textContent = `Período ${el.period} / Grupo ${el.group}`;
@@ -526,8 +715,8 @@ function showEl(z){
 
   const oxDiv = document.getElementById('dp-ox');
   oxDiv.innerHTML = el.ox.length
-    ? el.ox.map(o=>`<span class="dp-chip">${o}</span>`).join('')
-    : '<span style="font-size:.75rem;color:#9ca3af;font-style:italic">—</span>';
+    ? el.ox.map(o=>`<span class="dp-chip ${chipClass(o)}">${o}</span>`).join('')
+    : '<span style="font-size:.75rem;color:var(--dimmer);font-style:italic">—</span>';
 
   document.getElementById('dp-en').textContent = el.en != null ? el.en.toFixed(2) : '—';
   document.getElementById('dp-valence').textContent = el.valence;
@@ -558,9 +747,9 @@ function speak(text, onEnd) {
 function openTablaIntro() {
   document.getElementById('tabla-intro-overlay').style.display = 'flex';
   speak('¡Bienvenido a la tabla periódica de IonNom! Toca o haz clic en cualquier elemento para escuchar su información. ' +
-    'Los colores indican el tipo de elemento: rojo para metales alcalinos, naranja para alcalinotérreos, ' +
-    'azul para metales de transición, amarillo para no metales, y así. ' +
-    'La leyenda en la parte inferior te explica cada color. ¡Explora!');
+    'Los colores indican el tipo de elemento usando una paleta geológica: rojo para metales alcalinos, naranja para alcalinotérreos, ' +
+    'púrpura para metales de transición, teal para halógenos, y así. ' +
+    'La leyenda debajo te explica cada color. ¡Explora!');
 }
 
 function closeTablaIntro() {
@@ -588,8 +777,8 @@ if (!localStorage.getItem('ionom_tabla_visited')) {
   });
 }
 </script>
-<footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
-  <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
+<footer style="text-align:center;padding:18px 0;border-top:1px solid var(--brd);font-size:.72rem;color:var(--dimmer);margin-top:8px">
+  <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
 </footer>
 </body>
 </html>
