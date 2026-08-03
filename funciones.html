@@ -9,19 +9,85 @@
 <title>IonNom — Funciones Inorgánicas</title>
 <style>
 :root{
-  --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
-  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
-  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
-  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
-  --err:#dc2626;--ok:#16a34a;
-  --bg:#f6fafe;--surf:#fff;--brd:#d0e6f5;
-  --tx:#0d2d42;--dim:#2a3f52;--dimmer:#3a5568;
-  --r:16px;--rs:10px;
-  --mono:'Courier New',monospace;
-  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
-  --serif:Georgia,'Times New Roman',serif;
-  --sh:0 3px 16px rgba(26,110,168,.10);
-  --sh2:0 8px 36px rgba(26,110,168,.18);
+  /* === MDEC semantic palette === */
+  --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
+  --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* === Surface & text === */
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  /* === Status === */
+  --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d;
+  --err:#dc2626; --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn:#d97706; --warn-b:#fef3c7; --warn-t:#92400e;
+  --info:#0369a1; --info-b:#e0f2fe; --info-t:#082f49;
+  /* === Typography === */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* === Misc === */
+  --r:16px; --rs:10px; --rm:6px;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+  /* === Dark panel (mapa, mayer modal) === */
+  --dp:#0d2d42; --dp-brd:#1e4060; --dp-surf:#0a1f30;
+  --dp-tx:#e0f2fe; --dp-tx2:#cbd5e1; --dp-dim:#64748b; --dp-dim2:#94a3b8;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+    --brd:#1e3a52; --brd2:#2a4d6e;
+    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+    --nav:#091929; --nav-t:#e2eef8;
+    --cat-b:#422006; --cat-t:#fde68a;
+    --an-b:#082f49;  --an-t:#7dd3fc;
+    --oh-b:#2e1065;  --oh-t:#c4b5fd;
+    --ox-b:#042f2e;  --ox-t:#5eead4;
+    --ok-b:#052e16;  --ok-t:#86efac;
+    --err-b:#450a0a; --err-t:#fca5a5;
+    --warn-b:#422006; --warn-t:#fde68a;
+    --info-b:#082f49; --info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+    --dp:#091929; --dp-brd:#1e3a52; --dp-surf:#0d1b2a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+  --brd:#1e3a52; --brd2:#2a4d6e;
+  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+  --nav:#091929; --nav-t:#e2eef8;
+  --cat-b:#422006; --cat-t:#fde68a;
+  --an-b:#082f49;  --an-t:#7dd3fc;
+  --oh-b:#2e1065;  --oh-t:#c4b5fd;
+  --ox-b:#042f2e;  --ox-t:#5eead4;
+  --ok-b:#052e16;  --ok-t:#86efac;
+  --err-b:#450a0a; --err-t:#fca5a5;
+  --warn-b:#422006; --warn-t:#fde68a;
+  --info-b:#082f49; --info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+  --dp:#091929; --dp-brd:#1e3a52; --dp-surf:#0d1b2a;
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  --cat-b:#fef3c7; --cat-t:#92400e;
+  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  --ok-b:#dcfce7;  --ok-t:#14532d;
+  --err-b:#fee2e2; --err-t:#7f1d1d;
+  --warn-b:#fef3c7; --warn-t:#92400e;
+  --info-b:#e0f2fe; --info-t:#082f49;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+  --dp:#0d2d42; --dp-brd:#1e4060; --dp-surf:#0a1f30;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -30,7 +96,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .app{max-width:860px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:1}
 
 /* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:#0d4a73;padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
 .nav-brand em{color:#fcd34d;font-style:normal}
 .nav-links{display:flex;gap:4px;align-items:center}
@@ -93,7 +159,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
 .sect h2{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
 .sect h3{font-family:var(--sans);font-size:.92rem;font-weight:800;color:var(--dim);margin:18px 0 10px;text-transform:uppercase;letter-spacing:.06em}
-.sect p{font-size:.88rem;color:var(--dim);line-height:1.72;margin-bottom:10px}
+.sect p{font-size:.9rem;color:var(--dim);line-height:1.65;margin-bottom:10px}
 .sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
 .sect li{font-size:.86rem;color:var(--dim);line-height:1.65;margin-bottom:6px}
 .sect strong{color:var(--tx)}
@@ -126,7 +192,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .pw-n{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:#fff;flex-shrink:0}
 .pw-n.cat{background:var(--cat)}.pw-n.an{background:var(--an)}.pw-n.oh{background:var(--oh)}.pw-n.ox{background:var(--ox)}.pw-n.neu{background:var(--dimmer)}
 .pw-title{font-size:.85rem;font-weight:700;color:var(--tx)}
-.pw-body{padding:10px 14px 12px 54px;font-size:.82rem;color:var(--dim);line-height:1.65;border-top:1px solid var(--brd);background:#fff}
+.pw-body{padding:10px 14px 12px 54px;font-size:.82rem;color:var(--dim);line-height:1.65;border-top:1px solid var(--brd);background:var(--surf)}
 .pw-body.hidden{display:none}
 .pw-next-btn{display:block;margin:12px auto 0;padding:8px 22px;background:var(--cat);color:#fff;border:none;border-radius:100px;font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer}
 .pw-next-btn:hover{background:var(--cat-t)}
@@ -135,8 +201,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ex-formula-disp{font-family:var(--mono);font-size:1.7rem;font-weight:700;color:var(--cat-t);text-align:center;padding:14px;background:var(--cat-b);border:2px solid var(--cat);border-radius:var(--rs);margin-bottom:16px;letter-spacing:.04em}
 .ex-step{border:1.5px solid var(--brd);border-radius:var(--rs);padding:14px 16px;margin-bottom:10px;transition:all .3s}
 .ex-step.locked{opacity:.38;pointer-events:none}
-.ex-step.active{border-color:var(--an);background:rgba(3,105,161,.04);box-shadow:0 0 0 3px rgba(3,105,161,.12)}
-.ex-step.done{border-color:#16a34a;background:#f0fdf4}
+.ex-step.active{border-color:var(--an);background:var(--an-b);box-shadow:0 0 0 3px rgba(3,105,161,.12)}
+.ex-step.done{border-color:var(--ok);background:var(--ok-b)}
 .ex-step-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .ex-snum{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0}
 .locked .ex-snum{background:var(--brd);color:var(--dimmer)}
@@ -146,12 +212,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ex-done-mark{color:#16a34a;font-size:.9rem;display:none}
 .done .ex-done-mark{display:inline}
 .ex-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
-.ex-opt{padding:9px 14px;border:1.5px solid var(--brd);border-radius:var(--rs);background:#fff;color:var(--dim);font-family:var(--sans);font-size:.83rem;text-align:left;cursor:pointer;transition:all .18s}
+.ex-opt{padding:9px 14px;border:1.5px solid var(--brd);border-radius:var(--rs);background:var(--surf);color:var(--dim);font-family:var(--sans);font-size:.83rem;text-align:left;cursor:pointer;transition:all .18s}
 .ex-opt:hover:not(:disabled){border-color:var(--an);background:var(--an-b);color:var(--an-t)}
-.ex-opt.correct{border-color:#16a34a;background:#dcfce7;color:#14532d;pointer-events:none}
-.ex-opt.wrong{border-color:var(--err);background:#fee2e2;color:var(--err);pointer-events:none}
+.ex-opt.correct{border-color:var(--ok);background:var(--ok-b);color:var(--ok-t);pointer-events:none}
+.ex-opt.wrong{border-color:var(--err);background:var(--err-b);color:var(--err-t);pointer-events:none}
 .ex-write-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.ex-inp{flex:1;min-width:180px;padding:9px 12px;border:1.5px solid var(--brd);border-radius:var(--rs);font-family:var(--sans);font-size:.88rem;color:var(--tx)}
+.ex-inp{flex:1;min-width:180px;padding:9px 12px;border:1.5px solid var(--brd);border-radius:var(--rs);font-family:var(--sans);font-size:.88rem;color:var(--tx);background:var(--surf)}
 .ex-inp:focus{outline:none;border-color:var(--an)}
 .ex-inp.shake{animation:shake .3s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
@@ -160,12 +226,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ex-submit-btn:disabled{opacity:.45;cursor:default}
 .ex-fb{font-size:.81rem;margin-top:6px;padding:7px 10px;border-radius:6px;display:none}
 .ex-fb.show{display:block}
-.ex-fb.ok{background:#dcfce7;color:#14532d;border-left:3px solid #16a34a}
-.ex-fb.err{background:#fee2e2;color:#991b1b;border-left:3px solid var(--err)}
+.ex-fb.ok{background:var(--ok-b);color:var(--ok-t);border-left:3px solid var(--ok)}
+.ex-fb.err{background:var(--err-b);color:var(--err-t);border-left:3px solid var(--err)}
 .ex-hint{font-size:.77rem;color:var(--cat-t);font-style:italic;margin-top:5px;display:none}
-.ex-complete{background:#dcfce7;border:2px solid #16a34a;border-radius:var(--r);padding:18px 22px;margin-top:14px;text-align:center;display:none}
-.ex-complete strong{color:#14532d;font-size:.95rem;display:block;margin-bottom:4px}
-.ex-complete p{font-size:.82rem;color:#14532d}
+.ex-complete{background:var(--ok-b);border:2px solid var(--ok);border-radius:var(--r);padding:18px 22px;margin-top:14px;text-align:center;display:none}
+.ex-complete strong{color:var(--ok-t);font-size:.95rem;display:block;margin-bottom:4px}
+.ex-complete p{font-size:.82rem;color:var(--ok-t)}
 
 /* CONTEXT CARDS */
 .ctx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:4px}
@@ -179,8 +245,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ctx-tag.ind{background:var(--an-b);color:var(--an-t)}
 .ctx-tag.bio{background:var(--oh-b);color:var(--oh-t)}
 .ctx-tag.amb{background:var(--ox-b);color:var(--ox-t)}
-footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
-footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px;background:var(--bg)}
+footer a{color:var(--an);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 
 @media(max-width:580px){
@@ -190,29 +256,29 @@ footer a:hover{text-decoration:underline}
 @media(max-width:360px){.cards-grid{grid-template-columns:1fr}}
 
 /* ══════════ MAPA DE REACTIVIDAD ══════════ */
-.react-map-section{margin:0 0 32px;padding:24px;background:#0d2d42;border:1px solid #1e4060;border-radius:var(--r);box-shadow:var(--sh2)}
-.react-map-section h2{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:#e0f2fe;margin-bottom:20px;text-align:center;letter-spacing:-.02em}
+.react-map-section{margin:0 0 32px;padding:24px;background:var(--dp);border:1px solid var(--dp-brd);border-radius:var(--r);box-shadow:var(--sh2)}
+.react-map-section h2{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--dp-tx);margin-bottom:20px;text-align:center;letter-spacing:-.02em}
 .react-map-section h2 span{color:#fcd34d}
 
 /* map two-column vertical layout */
 .rmap{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;max-width:560px;margin:0 auto}
 .rmap-col{display:flex;flex-direction:column;align-items:center;gap:0}
 .rmap-arrow-v{display:flex;flex-direction:column;align-items:center;gap:0;margin:2px 0}
-.rmap-arrow-v::before{content:'↓';color:#64748b;font-size:1.2rem;line-height:1}
-.rmap-arrow-v-lbl{font-size:.6rem;color:#94a3b8;text-align:center;margin-top:1px}
+.rmap-arrow-v::before{content:'↓';color:var(--dp-dim);font-size:1.2rem;line-height:1}
+.rmap-arrow-v-lbl{font-size:.6rem;color:var(--dp-dim2);text-align:center;margin-top:1px}
 .rmap-merge{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:0;margin-top:6px;width:100%}
 .rmap-merge-line{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:4px 0}
-.rmap-merge-line::before,.rmap-merge-line::after{content:'';flex:1;height:1px;background:#475569;max-width:80px}
-.rmap-merge-connector{color:#64748b;font-size:.7rem}
+.rmap-merge-line::before,.rmap-merge-line::after{content:'';flex:1;height:1px;background:var(--dp-dim);max-width:80px}
+.rmap-merge-connector{color:var(--dp-dim);font-size:.7rem}
 .rmap-merge-arrow{display:flex;flex-direction:column;align-items:center;gap:0;margin:2px 0}
-.rmap-merge-arrow::before{content:'↓';color:#64748b;font-size:1.2rem;line-height:1}
-.rmap-merge-arrow-lbl{font-size:.6rem;color:#94a3b8;text-align:center}
+.rmap-merge-arrow::before{content:'↓';color:var(--dp-dim);font-size:1.2rem;line-height:1}
+.rmap-merge-arrow-lbl{font-size:.6rem;color:var(--dp-dim2);text-align:center}
 
 /* node buttons */
 .rnode{background:none;border:none;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;gap:0}
 .rnode-box{padding:8px 14px;border-radius:8px;font-size:.78rem;font-weight:700;text-align:center;line-height:1.3;transition:filter .15s,transform .15s;border:2px solid transparent;min-width:110px}
 .rnode:hover .rnode-box{filter:brightness(1.2);transform:translateY(-2px)}
-.rnode-label{font-size:.65rem;color:#94a3b8;margin-top:3px;text-align:center}
+.rnode-label{font-size:.65rem;color:var(--dp-dim2);margin-top:3px;text-align:center}
 
 /* color variants */
 .rn-metal .rnode-box{background:#78350f;border-color:#d97706;color:#fcd34d}
@@ -227,25 +293,25 @@ footer a:hover{text-decoration:underline}
 .rn-salbin .rnode-box{background:#134e4a;border-color:#0d9488;color:#99f6e4}
 
 /* bottom row */
-.rmap-bottom{display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid #1e4060;width:100%}
+.rmap-bottom{display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--dp-brd);width:100%}
 
 /* modal */
 #react-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
 #react-modal-overlay.open{display:flex}
-.react-modal-box{background:#0d2d42;border:1px solid #2a5080;border-radius:var(--r);padding:28px 28px 24px;max-width:500px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
+.react-modal-box{background:var(--dp);border:1px solid var(--dp-brd);border-radius:var(--r);padding:28px 28px 24px;max-width:500px;width:100%;box-shadow:0 16px 60px rgba(0,0,0,.5);position:relative;max-height:90vh;overflow-y:auto}
 .react-modal-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding-right:36px}
 .react-modal-box h3{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:#bfdbfe;margin-bottom:12px;padding-right:36px;line-height:1.4}
-.react-modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#64748b;font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color .15s}
-.react-modal-close:hover{color:#e0f2fe}
-.react-modal-divider{border:none;border-top:1px solid #1e4060;margin:12px 0}
+.react-modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--dp-dim);font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color .15s}
+.react-modal-close:hover{color:var(--dp-tx)}
+.react-modal-divider{border:none;border-top:1px solid var(--dp-brd);margin:12px 0}
 .react-modal-section{margin-bottom:10px}
-.react-modal-section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:6px}
-.react-modal-desc{font-size:.82rem;color:#cbd5e1;line-height:1.55}
+.react-modal-section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dp-dim);margin-bottom:6px}
+.react-modal-desc{font-size:.82rem;color:var(--dp-tx2);line-height:1.55}
 .react-modal-rxns{list-style:none;display:flex;flex-direction:column;gap:8px}
-.react-modal-rxns li{background:#0a1f30;border-left:3px solid #3b82f6;border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:#e0f2fe;line-height:1.5}
-.react-modal-cond{font-size:.8rem;color:#94a3b8;line-height:1.5}
+.react-modal-rxns li{background:var(--dp-surf);border-left:3px solid #3b82f6;border-radius:0 6px 6px 0;padding:8px 12px;font-family:var(--mono);font-size:.82rem;color:var(--dp-tx);line-height:1.5}
+.react-modal-cond{font-size:.8rem;color:var(--dp-dim2);line-height:1.5}
 .react-modal-colombia{font-size:.8rem;color:#86efac;line-height:1.5}
-.react-modal-prereq{font-size:.78rem;color:#fcd34d;background:#1c1200;border:1px solid #78350f;border-radius:6px;padding:7px 10px;line-height:1.45}
+.react-modal-prereq{font-size:.78rem;color:#fcd34d;background:rgba(124,49,0,.3);border:1px solid #78350f;border-radius:6px;padding:7px 10px;line-height:1.45}
 /* badge pills */
 .react-badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
 .react-badge-acid{background:#450a0a;color:#ef4444;border:1px solid #ef4444}
@@ -264,12 +330,26 @@ footer a:hover{text-decoration:underline}
   .rnode-box{min-width:80px;font-size:.72rem;padding:6px 8px}
   .rmap-bottom{gap:10px}
 }
+/* ══════════ PRETRAIN BOX (Mayer principio 6) ══════════ */
+.pretrain-box{background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:16px 20px;margin-bottom:20px}
+.pretrain-box h4{color:var(--an-t);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.pretrain-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pt-chip{background:var(--surf);border:1.5px solid var(--brd);border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:600;color:var(--tx)}
+.pt-chip.cat{background:var(--cat-b);border-color:var(--cat);color:var(--cat-t)}
+.pt-chip.an{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
+.pt-chip.oh{background:var(--oh-b);border-color:var(--oh);color:var(--oh-t)}
+.pt-chip.ox{background:var(--ox-b);border-color:var(--ox);color:var(--ox-t)}
+/* ══════════ TTS BUTTON ══════════ */
+.tts-btn{background:none;border:1px solid var(--brd);border-radius:20px;padding:3px 10px;font-size:.72rem;color:var(--dim);cursor:pointer;margin-left:8px;vertical-align:middle}
+.tts-btn:hover{border-color:var(--an);color:var(--an)}
+/* ══════════ FEEDBACK WHY BOX ══════════ */
+.fb-why{margin-top:8px;font-size:.82rem;color:var(--tx2);background:var(--surf2);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 8px 8px 0}
 /* ══════════ MAYER CHAIN DIAGRAM ══════════ */
-.mc-node{background:#0a3d5e;border:1.5px solid #2a5080;border-radius:8px;padding:6px 14px;font-family:'Courier New',monospace;font-weight:700;color:#bfdbfe;text-align:center;transition:box-shadow .3s,border-color .3s;position:relative}
+.mc-node{background:var(--dp-surf);border:1.5px solid var(--dp-brd);border-radius:8px;padding:6px 14px;font-family:'Courier New',monospace;font-weight:700;color:#bfdbfe;text-align:center;transition:box-shadow .3s,border-color .3s;position:relative}
 .mc-node.mc-dim{opacity:.55}
-.mc-node.mc-glow{opacity:1;box-shadow:0 0 0 2px #3b82f6,0 0 16px rgba(59,130,246,.45);border-color:#3b82f6;color:#e0f2fe}
-.mc-lbl{display:block;font-size:.62rem;font-weight:400;color:#64748b;font-family:'Trebuchet MS',sans-serif;margin-top:2px}
-.mc-arrow{color:#64748b;font-size:.78rem;text-align:center;line-height:1.8}
+.mc-node.mc-glow{opacity:1;box-shadow:0 0 0 2px #3b82f6,0 0 16px rgba(59,130,246,.45);border-color:#3b82f6;color:var(--dp-tx)}
+.mc-lbl{display:block;font-size:.62rem;font-weight:400;color:var(--dp-dim);font-family:'Trebuchet MS',sans-serif;margin-top:2px}
+.mc-arrow{color:var(--dp-dim);font-size:.78rem;text-align:center;line-height:1.8}
 </style>
 </head>
 <body>
@@ -284,6 +364,7 @@ footer a:hover{text-decoration:underline}
     <a href="tabla.html">⚗️ <span class="full">Tabla</span></a>
     <a href="nomenClash.html">⚔️ <span class="full">NomenClash</span></a>
     <a href="simulador.html">🔬 <span class="full">Simulador</span></a>
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema" style="background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 10px;color:rgba(255,255,255,.8);cursor:pointer;font-size:.75rem;margin-left:8px">🌙</button>
   </div>
 </nav>
 
@@ -467,8 +548,21 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 0: ÓXIDOS BÁSICOS ── -->
   <div id="sec-0" class="sec-panel">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip cat">Metal</span>
+        <span class="pt-chip cat">Oxígeno (O, EO = −2)</span>
+        <span class="pt-chip cat">Estado de oxidación (EO)</span>
+        <span class="pt-chip cat">Regla cruce de valencias</span>
+        <span class="pt-chip">Sistema Tradicional</span>
+        <span class="pt-chip">Sistema Stock</span>
+        <span class="pt-chip">Sistema Sistemático</span>
+        <span class="pt-chip">Sufijos -oso / -ico</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(0)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(0)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">01</div>
         <div>
@@ -476,7 +570,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal_a + O_b · EO(O) = −2</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Los óxidos básicos son compuestos binarios formados por un metal y oxígeno. El metal actúa con estado de oxidación positivo, mientras el oxígeno siempre tiene estado de oxidación menos dos. Para nombrarlos se usan tres sistemas: tradicional con sufijos oso e ico, Stock con número romano, y sistemático con prefijos numéricos.">🔊</button></h2>
       <p>Compuesto binario formado por un <strong>metal</strong> y <strong>oxígeno</strong>. El metal actúa con estado de oxidación positivo, el oxígeno siempre con EO = −2.</p>
       <ul>
         <li>Solo 2 elementos en la fórmula.</li>
@@ -589,8 +683,20 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 1: ANHÍDRIDOS ── -->
   <div id="sec-1" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip an">No metal</span>
+        <span class="pt-chip an">Oxígeno (O, EO = −2)</span>
+        <span class="pt-chip an">Anhídrido = óxido ácido</span>
+        <span class="pt-chip">Ácido padre</span>
+        <span class="pt-chip">Adjetivo del ácido (-oso/-ico)</span>
+        <span class="pt-chip">Sistema Stock</span>
+        <span class="pt-chip">Prefijos numéricos</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(1)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(1)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge an">
         <div class="func-num">02</div>
         <div>
@@ -598,7 +704,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">No metal_a + O_b · EO(O) = −2</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Los anhídridos, también llamados óxidos ácidos en Colombia, son compuestos binarios de no metal con oxígeno. Al disolverse en agua generan un ácido oxácido. Se nombran con el adjetivo del ácido correspondiente: por ejemplo, el SO tres es el anhídrido sulfúrico porque proviene del ácido sulfúrico.">🔊</button></h2>
       <p>Compuesto binario formado por un <strong>no metal</strong> y <strong>oxígeno</strong>. El no metal actúa como ácido-formador: al disolverse en agua genera un ácido oxácido.</p>
       <ul>
         <li>Solo 2 elementos en la fórmula.</li>
@@ -720,8 +826,19 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 2: HIDRUROS ── -->
   <div id="sec-2" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip cat">Metal</span>
+        <span class="pt-chip cat">Hidrógeno como H⁻ (EO = −1)</span>
+        <span class="pt-chip cat">Hidruro (anión)</span>
+        <span class="pt-chip">Valencia fija vs. variable</span>
+        <span class="pt-chip">H al final de la fórmula</span>
+        <span class="pt-chip">No confundir con ácidos hídricos</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(2)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(2)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">03</div>
         <div>
@@ -729,7 +846,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal_a + H_b · EO(H) = −1</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Los hidruros metálicos son compuestos binarios de metal e hidrógeno. Aquí el hidrógeno actúa como anión hidruro con estado de oxidación menos uno. El hidrógeno va siempre al final de la fórmula. No confundir con los ácidos hídricos donde el hidrógeno va al inicio. Se nombran hidruro de y el nombre del metal.">🔊</button></h2>
       <p>Compuesto binario formado por un <strong>metal</strong> e <strong>hidrógeno</strong>, donde el H actúa como anión (H⁻ = hidruro), con EO = −1. A diferencia de los ácidos, aquí el H va al final de la fórmula.</p>
       <ul>
         <li>Solo 2 elementos: metal + H.</li>
@@ -836,8 +953,20 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 3: ÁCIDOS HÍDRICOS ── -->
   <div id="sec-3" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip an">No metal</span>
+        <span class="pt-chip an">Hidrógeno como H⁺ (EO = +1)</span>
+        <span class="pt-chip an">Solución acuosa (aq)</span>
+        <span class="pt-chip">Raíz del no metal (Cl→clor, S→sulf)</span>
+        <span class="pt-chip">Sufijo -hídrico en solución</span>
+        <span class="pt-chip">Gas vs. solución acuosa</span>
+        <span class="pt-chip">HX(g) = [anión]-uro de hidrógeno</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(3)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(3)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge an">
         <div class="func-num">04</div>
         <div>
@@ -845,9 +974,9 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">HₙX (aq) · X = no metal (sin O)</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Los ácidos hídricos se forman cuando un hidruro de no metal se disuelve en agua. La misma molécula tiene dos nombres: en estado gaseoso se llama anión-uro de hidrógeno, y en solución acuosa se llama ácido más la raíz del no metal más el sufijo hídrico. Por ejemplo, el HCl gas es cloruro de hidrógeno, y el HCl en agua es ácido clorhídrico.">🔊</button></h2>
       <p>Cuando un <strong>hidruro de no metal</strong> se disuelve en agua, forma un ácido hídrico. La distinción entre gas y solución es crucial para el nombre.</p>
-      <div style="background:var(--warn-bg,#fff8e1);border-left:4px solid #f9a825;border-radius:6px;padding:12px 16px;margin:12px 0;">
+      <div style="background:var(--warn-b);border-left:4px solid var(--warn);border-radius:6px;padding:12px 16px;margin:12px 0;">
         <strong>⚠️ NOMBRE SEGÚN EL ESTADO</strong>
         <ul style="margin:8px 0 0 0;padding-left:18px;">
           <li><strong>Compuesto puro (gas/líquido):</strong> se nombra como haluro/sulfuro de hidrógeno (nomenclatura sistemática/Stock)<br>
@@ -963,8 +1092,20 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 4: BASES ── -->
   <div id="sec-4" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip oh">Metal</span>
+        <span class="pt-chip oh">Grupo OH⁻ (hidroxilo, EO = −1)</span>
+        <span class="pt-chip oh">Base de Arrhenius (libera OH⁻)</span>
+        <span class="pt-chip">Valencia fija vs. variable</span>
+        <span class="pt-chip">Sufijos -oso / -ico</span>
+        <span class="pt-chip">Número romano (Stock)</span>
+        <span class="pt-chip">Neutralización: base + ácido → sal + H₂O</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(4)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(4)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge oh">
         <div class="func-num">05</div>
         <div>
@@ -972,7 +1113,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal + (OH)ₙ · EO(OH) = −1</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Las bases o hidróxidos son compuestos ternarios de metal y el grupo OH menos, llamado hidroxilo. En agua liberan iones OH menos, lo que las hace bases según Arrhenius. Se nombran hidróxido de más el nombre del metal. Si el metal tiene valencia variable, se usan los sufijos oso e ico en tradicional, o número romano en Stock.">🔊</button></h2>
       <p>Compuesto ternario formado por un <strong>metal</strong> y el grupo <strong>OH⁻</strong> (hidroxilo). En agua libera iones OH⁻ (base de Arrhenius).</p>
       <ul>
         <li>Contiene metal + grupo OH.</li>
@@ -1078,8 +1219,20 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 5: ÁCIDOS OXÁCIDOS ── -->
   <div id="sec-5" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip ox">H + no metal + O</span>
+        <span class="pt-chip ox">Oxoanión (anión con O)</span>
+        <span class="pt-chip ox">-ato → ácido -ico</span>
+        <span class="pt-chip ox">-ito → ácido -oso</span>
+        <span class="pt-chip">Prefijo per- (EO máximo)</span>
+        <span class="pt-chip">Prefijo hipo- (EO mínimo)</span>
+        <span class="pt-chip">Neutralización: ácido oxácido + base → sal oxigenada</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(5)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(5)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge ox">
         <div class="func-num">06</div>
         <div>
@@ -1087,7 +1240,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">H + no metal + O · EO(H)=+1, EO(O)=−2</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Los ácidos oxácidos son compuestos ternarios de hidrógeno, no metal y oxígeno. El nombre del ácido depende del oxoanión que forma al perder los hidrógenos. Si el oxoanión termina en ato, el ácido termina en ico. Si termina en ito, el ácido termina en oso. Por ejemplo el sulfato da ácido sulfúrico y el sulfito da ácido sulfuroso.">🔊</button></h2>
       <p>Compuesto ternario formado por <strong>H + no metal + O</strong>. El anión que resulta al perder los H es un oxoanión. El nombre del ácido depende del nombre del oxoanión.</p>
       <ul>
         <li>Empieza con H (uno o varios) y contiene O.</li>
@@ -1200,8 +1353,21 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 6: SALES BINARIAS ── -->
   <div id="sec-6" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip cat">Metal</span>
+        <span class="pt-chip cat">No metal (sin oxígeno)</span>
+        <span class="pt-chip cat">Anión con sufijo -uro</span>
+        <span class="pt-chip">Cl⁻ = cloruro</span>
+        <span class="pt-chip">S²⁻ = sulfuro</span>
+        <span class="pt-chip">Br⁻ = bromuro</span>
+        <span class="pt-chip">Sufijos -oso / -ico (Tradicional)</span>
+        <span class="pt-chip">Número romano (Stock)</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(6)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(6)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge cat">
         <div class="func-num">07</div>
         <div>
@@ -1209,7 +1375,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal_a + No metal_b · (sin O)</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Las sales binarias son compuestos de metal y no metal sin oxígeno. El no metal actúa como anión y recibe el sufijo uro. Por ejemplo el cloro da cloruro, el azufre da sulfuro, el bromo da bromuro. Se nombran igual que los óxidos básicos según el estado de oxidación del metal.">🔊</button></h2>
       <p>Compuesto binario formado por un <strong>metal</strong> y un <strong>no metal</strong> distinto del oxígeno. El no metal actúa como anión y recibe el sufijo <em>-uro</em>.</p>
       <ul>
         <li>Solo 2 elementos: metal + no metal (Cl, S, Br, I, F, N, P…).</li>
@@ -1320,8 +1486,21 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 7: SALES OXIGENADAS ── -->
   <div id="sec-7" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip ox">Metal</span>
+        <span class="pt-chip ox">Oxoanión (anión con O)</span>
+        <span class="pt-chip ox">SO₄²⁻ = sulfato</span>
+        <span class="pt-chip ox">NO₃⁻ = nitrato</span>
+        <span class="pt-chip ox">CO₃²⁻ = carbonato</span>
+        <span class="pt-chip ox">PO₄³⁻ = fosfato</span>
+        <span class="pt-chip">Neutralización: base + ácido oxácido</span>
+        <span class="pt-chip">Número romano si metal variable (Stock)</span>
+      </div>
+    </div>
     <div class="sect">
-      <button onclick="openMayer(7)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,#1e4060,#0d2d42);border:1.5px solid #2a5080;border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
+      <button onclick="openMayer(7)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:#93c5fd;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
       <div class="func-badge ox">
         <div class="func-num">08</div>
         <div>
@@ -1329,7 +1508,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal + Oxoanión</div>
         </div>
       </div>
-      <h2>Descripción e identificación</h2>
+      <h2>Descripción e identificación <button class="tts-btn" onclick="speakText(this)" data-text="Las sales oxigenadas se forman por la combinación de un catión metálico con un oxoanión, es decir, un anión que contiene oxígeno. Los oxoaniones más comunes son el sulfato, el nitrato, el carbonato y el fosfato. El nombre de la sal es el nombre del oxoanión seguido de de y el nombre del metal.">🔊</button></h2>
       <p>Compuesto formado por un <strong>metal</strong> y un <strong>oxoanión</strong> (anión que contiene oxígeno). El oxoanión tiene nombre propio que hay que memorizar.</p>
       <ul>
         <li>Contiene metal + anión con O (sulfato, nitrato, fosfato…).</li>
@@ -1453,6 +1632,18 @@ footer a:hover{text-decoration:underline}
 
   <!-- ── SEC 8: SALES ÁCIDAS ── -->
   <div id="sec-8" class="sec-panel" style="display:none">
+    <div class="pretrain-box">
+      <h4>Conceptos clave de esta sección</h4>
+      <div class="pretrain-chips">
+        <span class="pt-chip ox">Ácido poliprótico (más de 1 H ionizable)</span>
+        <span class="pt-chip ox">Neutralización parcial</span>
+        <span class="pt-chip ox">HCO₃⁻ = bicarbonato / hidrogenocarbonato</span>
+        <span class="pt-chip ox">HSO₄⁻ = bisulfato / hidrogenosulfato</span>
+        <span class="pt-chip">Prefijo bi- (Tradicional)</span>
+        <span class="pt-chip">Prefijo hidrogeno- (Stock)</span>
+        <span class="pt-chip">H₂CO₃, H₂SO₄, H₃PO₄ como ácidos origen</span>
+      </div>
+    </div>
     <div class="sect">
       <div class="func-badge ox">
         <div class="func-num">09</div>
@@ -1461,7 +1652,7 @@ footer a:hover{text-decoration:underline}
           <div class="func-pattern">Metal + Anión con H residual</div>
         </div>
       </div>
-      <h2>¿Qué son las sales ácidas?</h2>
+      <h2>¿Qué son las sales ácidas? <button class="tts-btn" onclick="speakText(this)" data-text="Las sales ácidas se forman cuando un ácido poliprótico es parcialmente neutralizado. El catión reemplaza solo algunos de los hidrógenos ionizables, y el resto permanece en el anión. Por ejemplo, el bicarbonato de sodio tiene un hidrógeno residual en el anión HCO3 menos. En nomenclatura tradicional se usa el prefijo bi, y en Stock se usa el prefijo hidrogeno.">🔊</button></h2>
       <p>Se forman cuando un <strong>ácido poliprótico</strong> (con más de un H ionizable) es <strong>parcialmente neutralizado</strong>: el catión reemplaza solo <em>algunos</em> de los H⁺, y el resto permanece en el anión.</p>
       <ul>
         <li>El anión resultante <strong>aún contiene hidrógeno</strong> ionizable.</li>
@@ -1711,7 +1902,7 @@ function nextPWStep(wid, cur, total){
     } else {
       btn.textContent = '✓ Ejemplo completo';
       btn.disabled = true;
-      btn.style.background = '#16a34a';
+      btn.style.background = 'var(--ok)';
     }
   }
   if(body) body.scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -2147,7 +2338,7 @@ function openMayer(secIdx){
   document.getElementById('mayer-header').innerHTML =
     '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">' +
     '<span style="font-size:1.5rem">'+d.icon+'</span>' +
-    '<span style="font-size:1rem;font-weight:800;color:#bfdbfe">'+d.title+'</span>' +
+    '<span style="font-size:1rem;font-weight:800;color:var(--dp-tx)">'+d.title+'</span>' +
     '</div>';
   mayerRenderChain(d);
   mayerShowStep(d, 0);
@@ -2215,11 +2406,11 @@ function mayerShowStep(d, idx){
     if(el) el.classList.add('mc-glow');
   }
   document.getElementById('mayer-step-card').innerHTML =
-    '<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b;margin-bottom:6px">Paso '+(idx+1)+': '+step.label+'</div>' +
-    '<div style="font-size:.88rem;color:#e0f2fe;line-height:1.65">'+step.text+'</div>';
+    '<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dp-dim);margin-bottom:6px">Paso '+(idx+1)+': '+step.label+'</div>' +
+    '<div style="font-size:.88rem;color:var(--dp-tx);line-height:1.65">'+step.text+'</div>';
   var dots = document.getElementById('mayer-progress-dots');
   dots.innerHTML = d.steps.map(function(_,i){
-    return '<div style="width:8px;height:8px;border-radius:50%;background:'+(i<=idx?'#3b82f6':'#1e3a5f')+'"></div>';
+    return '<div style="width:8px;height:8px;border-radius:50%;background:'+(i<=idx?'#3b82f6':'var(--dp-brd)')+'"></div>';
   }).join('');
   var nextBtn = document.getElementById('mayer-next-btn');
   if(idx >= d.steps.length-1){
@@ -2244,18 +2435,45 @@ function mayerSpeak(){
   var step = d.steps[MAYER_IDX];
   if(step) speak(step.speak||step.text);
 }
+
+/* ══════════ TEMA CLARO / OSCURO ══════════ */
+function toggleTheme(){
+  var t = document.documentElement.getAttribute('data-theme');
+  var n = t === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', n);
+  localStorage.setItem('ionom-theme', n);
+  var btn = document.getElementById('theme-btn');
+  if(btn) btn.textContent = n === 'dark' ? '☀️' : '🌙';
+}
+(function(){
+  var s = localStorage.getItem('ionom-theme') || ((window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches) ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', s);
+  var btn = document.getElementById('theme-btn');
+  if(btn) btn.textContent = s === 'dark' ? '☀️' : '🌙';
+})();
+
+/* ══════════ TTS speakText ══════════ */
+function speakText(btn){
+  var txt = btn.getAttribute('data-text');
+  if(!txt) return;
+  var u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'es-CO';
+  u.rate = 0.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
 </script>
 
 <!-- ══════════ MAYER STEP-BY-STEP MODAL ══════════ -->
 <div id="mayer-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);z-index:600;align-items:center;justify-content:center;padding:16px" onclick="if(event.target===this)closeMayer()">
-  <div id="mayer-box" style="background:#0d2d42;border:1.5px solid #2a5080;border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative">
-    <button onclick="closeMayer()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:#64748b;font-size:1.4rem;cursor:pointer">✕</button>
+  <div id="mayer-box" style="background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative">
+    <button onclick="closeMayer()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--dp-dim);font-size:1.4rem;cursor:pointer">✕</button>
     <div id="mayer-header" style="margin-bottom:14px"></div>
     <div id="mayer-chain" style="margin-bottom:16px"></div>
-    <div id="mayer-step-card" style="background:#0a1f30;border-radius:10px;padding:14px 16px;border-left:4px solid #3b82f6;min-height:80px;font-size:.88rem;color:#cbd5e1;line-height:1.6"></div>
+    <div id="mayer-step-card" style="background:var(--dp-surf);border-radius:10px;padding:14px 16px;border-left:4px solid #3b82f6;min-height:80px;font-size:.88rem;color:var(--dp-tx2);line-height:1.6"></div>
     <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end;align-items:center">
       <button id="mayer-speak-btn" onclick="mayerSpeak()" style="padding:8px 14px;background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.4);border-radius:8px;color:#93c5fd;font-size:.8rem;cursor:pointer">🔊 Escuchar</button>
-      <button id="mayer-next-btn" onclick="mayerNext()" style="padding:9px 20px;background:#d97706;border:none;border-radius:8px;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer">Siguiente →</button>
+      <button id="mayer-next-btn" onclick="mayerNext()" style="padding:9px 20px;background:var(--cat);border:none;border-radius:8px;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer">Siguiente →</button>
     </div>
     <div id="mayer-progress-dots" style="display:flex;justify-content:center;gap:6px;margin-top:14px"></div>
   </div>
