@@ -468,6 +468,21 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <span class="gb-name">Cadena de reactividad</span>
         <span class="gb-sub">Óxido → Base → Sal</span>
       </button>
+      <button class="group-btn" onclick="pickGroup('reaccion')">
+        <span class="gb-icon">⚗️</span>
+        <span class="gb-name">Tipos de reacción</span>
+        <span class="gb-sub">Síntesis, combustión…</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('balanceo')">
+        <span class="gb-icon">⚖️</span>
+        <span class="gb-name">Balanceo</span>
+        <span class="gb-sub">Coeficientes por tanteo</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('mol-masa')">
+        <span class="gb-icon">⚛️</span>
+        <span class="gb-name">Mol y masa molar</span>
+        <span class="gb-sub">n = m / M, Avogadro</span>
+      </button>
     </div>
   </div>
 </div>
@@ -1276,6 +1291,18 @@ function makeReactChain(){
 
 function startGame(group){
   ST.group=group;
+  // ── Nuevos grupos: reaccion, balanceo, mol-masa ──
+  if(group==='reaccion'||group==='balanceo'||group==='mol-masa'){
+    const pool=getPool(group);
+    if(!pool.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
+    const specialType={'reaccion':'classify-rx','balanceo':'balance-eq','mol-masa':'mol-calc'};
+    const qtype=specialType[group];
+    const shuffled=shuffle([...pool]);
+    while(shuffled.length<20) shuffled.push(...shuffle([...pool]));
+    ST.questions=shuffled.slice(0,20).map(q=>({...q,qtype}));
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    showScreen('s-game');loadQuestion();return;
+  }
   if(group==='reactividad'){
     ST.questions=Array.from({length:20},()=>makeReactChain());
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
@@ -1321,7 +1348,7 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','react-chain':'Cadena de reactividad'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   const fb=document.getElementById('feedback');
@@ -1337,6 +1364,9 @@ function loadQuestion(){
   else if(q.qtype==='balance') renderBalance(q);
   else if(q.qtype==='ox-assign') renderOxAssign(q);
   else if(q.qtype==='react-chain') renderReactChain(q);
+  else if(q.qtype==='classify-rx') renderClassifyRx(q);
+  else if(q.qtype==='balance-eq') renderBalanceEq(q);
+  else if(q.qtype==='mol-calc') renderMolCalc(q);
   startTimer();
 }
 
@@ -2416,7 +2446,7 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar'};
 
 const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻ (bi-/hidrogeno-), H₂PO₄⁻ (dihidrogeno-), HPO₄²⁻ (hidrogeno-). Nombre trad: prefijo bi- para diprót. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica. Los electrones de valencia se deducen del grupo.'};
 
@@ -2574,6 +2604,133 @@ window.addEventListener('beforeinstallprompt', (e) => {
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null; navInstallBtn.style.display = 'none';
 });
+
+// ══════════════════════════════════════════════
+// NUEVOS TIPOS: classify-rx, balance-eq, mol-calc
+// ══════════════════════════════════════════════
+const TIPO_RX_LABELS = {
+  sintesis: 'Síntesis  (A + B → AB)',
+  descomposicion: 'Descomposición  (AB → A + B)',
+  'sus-simple': 'Sustitución simple  (A + BC → AC + B)',
+  'sus-doble': 'Sustitución doble  (AB + CD → AD + CB)',
+  combustion: 'Combustión  (hidrocarburo + O₂ → CO₂ + H₂O)',
+  neutralizacion: 'Neutralización  (ácido + base → sal + H₂O)'
+};
+
+function renderClassifyRx(q){
+  document.getElementById('q-meta').textContent = 'Pregunta '+(ST.idx+1)+' de 20 · Clasificar tipo de reacción';
+  document.getElementById('q-formula').textContent = '';
+  document.getElementById('q-prompt').innerHTML = '<span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:8px 14px;display:inline-block;margin-bottom:6px">'+q.ecuacion+'</span><br><span style="font-size:.88rem;color:var(--dim)">¿Qué tipo de reacción química es esta ecuación?</span>';
+  const area = document.getElementById('area-classify');
+  area.style.display = '';
+  const tipos = Object.keys(TIPO_RX_LABELS);
+  const correct = q.tipo_rx;
+  const wrong = shuffle(tipos.filter(t=>t!==correct)).slice(0,3);
+  const opts = shuffle([correct,...wrong]);
+  area.innerHTML = opts.map(t=>'<button class="mc-opt" onclick="checkClassifyRx(this,\''+t+'\',\''+correct+'\')">'+TIPO_RX_LABELS[t]+'</button>').join('');
+}
+
+function checkClassifyRx(btn, chosen, correct){
+  if(btn.classList.contains('disabled')) return;
+  document.querySelectorAll('#area-classify .mc-opt').forEach(b=>b.classList.add('disabled'));
+  const ok = chosen === correct;
+  if(ok){ btn.classList.add('correct'); scoreOk(); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#area-classify .mc-opt').forEach(b=>{
+      if(b.textContent.startsWith(TIPO_RX_LABELS[correct].substring(0,8))) b.classList.add('correct');
+    });
+    scoreErr();
+  }
+  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], ST.questions[ST.idx]);
+}
+
+function renderBalanceEq(q){
+  document.getElementById('q-meta').textContent = 'Pregunta '+(ST.idx+1)+' de 20 · Balanceo por tanteo';
+  document.getElementById('q-formula').textContent = '';
+  document.getElementById('q-prompt').innerHTML = '<span style="font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--an-t);background:var(--an-b);border-radius:8px;padding:8px 14px;display:inline-block;margin-bottom:6px">'+q.ecuacion_sin_coef+'</span><br><span style="font-size:.85rem;color:var(--dim)">Ingresa los coeficientes correctos para balancear la ecuación.</span>';
+  const area = document.getElementById('area-balance');
+  area.style.display = '';
+  const inputs = (q.especies||[]).map(function(sp,i){
+    return '<label style="display:inline-flex;align-items:center;gap:5px;margin:4px 6px"><input id="bi'+i+'" type="number" min="1" max="20" placeholder="?" style="width:46px;padding:5px;text-align:center;border:2px solid var(--brd);border-radius:6px;font-family:var(--mono);font-size:.95rem;background:var(--surf);color:var(--tx)"><span style="font-family:var(--mono);font-weight:700">'+sp+'</span></label>';
+  }).join(' → ');
+  area.innerHTML = '<div style="margin-bottom:12px">'+inputs+'</div>'
+    +'<button class="btn-submit" onclick="checkBalanceEq()">Verificar</button>'
+    +'<button class="btn-submit" style="background:var(--dim);margin-left:8px" onclick="showBalanceAnswer()">Ver respuesta</button>'
+    +'<div id="balance-fb" style="margin-top:10px"></div>';
+  area._attempts = 0;
+}
+
+function checkBalanceEq(){
+  const q = ST.questions[ST.idx];
+  const entered = (q.especies||[]).map(function(_,i){ return parseInt(document.getElementById('bi'+i).value)||0; });
+  const correct = q.coeficientes||[];
+  const ok = entered.length===correct.length && entered.every(function(v,i){ return v===correct[i]; });
+  const area = document.getElementById('area-balance');
+  area._attempts = (area._attempts||0)+1;
+  if(ok){
+    document.getElementById('balance-fb').innerHTML = '<span style="color:var(--ok);font-weight:700">✓ ¡Ecuación balanceada correctamente!</span>';
+    scoreOk();
+    showFeedback('ok','✓ ¡Correcto! Coeficientes: ['+correct.join(', ')+']', q);
+  } else {
+    if(area._attempts>=2){
+      showBalanceAnswer();
+      scoreErr();
+    } else {
+      document.getElementById('balance-fb').innerHTML = '<span style="color:var(--warn);font-weight:700">Incorrecto — intento '+area._attempts+'/2. Pista: '+q.hint+'</span>';
+    }
+  }
+}
+
+function showBalanceAnswer(){
+  const q = ST.questions[ST.idx];
+  document.getElementById('balance-fb').innerHTML = '<span style="color:var(--err);font-weight:700">Respuesta: ['+((q.coeficientes||[]).join(', '))+']</span>';
+  showFeedback('err','Coeficientes correctos: ['+((q.coeficientes||[]).join(', '))+']', q);
+}
+
+function renderMolCalc(q){
+  document.getElementById('q-meta').textContent = 'Pregunta '+(ST.idx+1)+' de 20 · Mol y masa molar';
+  document.getElementById('q-formula').textContent = q.formula;
+  const MM = q.masa_molar;
+  const tipo = Math.floor(Math.random()*2);
+  var pregunta, respuesta, cadena;
+  if(tipo===0){
+    const n = parseFloat((Math.random()*4+0.5).toFixed(1));
+    pregunta = '¿Cuántos gramos hay en '+n+' mol de '+q.formula+'?';
+    respuesta = parseFloat((n*MM).toFixed(2));
+    cadena = n+' mol × ('+MM+' g/mol) = '+respuesta+' g';
+  } else {
+    const g = parseFloat((MM*(Math.random()*3+0.5)).toFixed(2));
+    pregunta = '¿Cuántos moles hay en '+g+' g de '+q.formula+'?';
+    respuesta = parseFloat((g/MM).toFixed(3));
+    cadena = g+' g ÷ ('+MM+' g/mol) = '+respuesta+' mol';
+  }
+  document.getElementById('q-prompt').textContent = pregunta;
+  const area = document.getElementById('area-mol');
+  area.style.display = '';
+  const unidad = tipo===0?' g':' mol';
+  const d = [parseFloat((respuesta*1.12).toFixed(3)), parseFloat((respuesta*0.78).toFixed(3)), parseFloat((respuesta*2.01).toFixed(3))];
+  const opts = shuffle([respuesta,...d]);
+  area.innerHTML = opts.map(v=>'<button class="mc-opt" onclick="checkMolCalc(this,'+v+','+respuesta+',\''+cadena+'\',\''+q.formula_calc+'\')">'+v+unidad+'</button>').join('');
+}
+
+function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
+  if(btn.classList.contains('disabled')) return;
+  document.querySelectorAll('#area-mol .mc-opt').forEach(b=>b.classList.add('disabled'));
+  const ok = Math.abs(chosen-correct) < Math.abs(correct)*0.02;
+  const q = ST.questions[ST.idx];
+  if(ok){ btn.classList.add('correct'); ST.score+=2; ST.correct++; }
+  else { btn.classList.add('wrong'); }
+  ST.totalAttempts++; updateStats();
+  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — la respuesta es '+correct, q);
+  // Append conversion chain to feedback
+  const fb = document.getElementById('feedback');
+  fb.innerHTML += '<div class="fb-why">Cadena de factores: <code style="font-family:var(--mono)">'+cadena+'</code></div>';
+  if(formula_calc) fb.innerHTML += '<div class="fb-tip">MM de '+q.formula+': '+formula_calc+'</div>';
+}
+
+function scoreOk(){ ST.score+=2; ST.correct++; ST.totalAttempts++; updateStats(); }
+function scoreErr(){ ST.totalAttempts++; updateStats(); }
 </script>
 
 <!-- iOS Install Instructions Modal — starts hidden, shown only on button click -->
