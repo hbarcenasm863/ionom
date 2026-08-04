@@ -46,16 +46,32 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
 .app{max-width:860px;margin:0 auto;padding:0 18px 80px;position:relative}
 
-/* NAV */
-.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 20px;height:48px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
-.nav-brand{color:#fff;font-weight:800;font-size:.9rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .nav-brand em{color:var(--gold);font-style:normal}
-.nav-links{display:flex;gap:4px;align-items:center}
-.nav-links a{color:var(--nav-t);opacity:.8;text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 10px;border-radius:8px;transition:background .15s}
-.nav-links a:hover{background:rgba(255,255,255,.12);opacity:1}
-.nav-links a.active{background:rgba(255,255,255,.2);opacity:1}
-.theme-btn{background:none;border:none;cursor:pointer;color:var(--nav-t);font-size:1.1rem;padding:6px;line-height:1;opacity:.8;transition:opacity .15s}
-.theme-btn:hover{opacity:1}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
 
 /* PAGE HEADER */
 .page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
@@ -126,17 +142,36 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 </head>
 <body>
 <nav class="site-nav">
-  <a class="nav-brand" href="index.html">Ion<em>Nom</em></a>
-  <div class="nav-links">
-    <a href="index.html">Inicio</a>
-    <a href="teoria.html">Nomenclatura</a>
-    <a href="reacciones.html" class="active">Reacciones</a>
-    <a href="balanceo.html">Balanceo</a>
-    <a href="moles.html">Moles</a>
-    <a href="juego.html">Juego</a>
-    <button class="theme-btn" id="theme-toggle" title="Cambiar tema">🌙</button>
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
   </div>
 </nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="reacciones.html" class="active"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="generador.html"><span class="dl-icon">⚙️</span><span class="dl-name">Generador</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+  </nav>
+</div>
 
 <div class="app">
   <div class="page-hdr">
@@ -266,13 +301,14 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 (function(){
   const saved=localStorage.getItem('ion-theme');
   if(saved) document.documentElement.setAttribute('data-theme',saved);
+  var _tb=document.getElementById('theme-btn');if(_tb)_tb.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');
 })();
-document.getElementById('theme-toggle').addEventListener('click',function(){
+document.getElementById('theme-btn').addEventListener('click',function(){
   const cur=document.documentElement.getAttribute('data-theme');
   const next=cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',next);
   localStorage.setItem('ion-theme',next);
-});
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
 
 // QUIZ
 const PREGUNTAS=[
@@ -320,6 +356,20 @@ function checkQ(btn,chosen,correct){
 }
 
 renderQ();
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
 </script>
 </body>
 </html>
