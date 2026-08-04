@@ -1992,7 +1992,7 @@ const BANCO = [
   // ── ÁCIDOS OXÁCIDOS (banco adicional) ──
   {
     formula: 'HIO₂',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'hard',
     trad: ['ácido yodoso'],
     stock: ['ácido dioxoyódico (III)'],
     sist: ['dioxoyodato (III) de hidrógeno'],
@@ -2000,7 +2000,7 @@ const BANCO = [
   },
   {
     formula: 'H₂SO₂',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'hard',
     trad: ['ácido hiposulfuroso'],
     stock: ['ácido dioxosulfúrico (II)'],
     sist: ['dioxosulfato (II) de dihidrógeno'],
@@ -2016,7 +2016,7 @@ const BANCO = [
   },
   {
     formula: 'HBO₂',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'hard',
     trad: ['ácido metabórico'],
     stock: ['ácido dioxobórico (III)'],
     sist: ['dioxoborato (III) de hidrógeno'],
@@ -3731,7 +3731,7 @@ const BANCO = [
   },
   {
     formula: 'NaBO₂',
-    group: 'sal-ox', level: 'medium',
+    group: 'sal-ox', level: 'hard',
     trad: ['metaborato de sodio'],
     stock: [],
     sist: ['metaborato de sodio'],
