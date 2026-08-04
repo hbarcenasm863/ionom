@@ -656,7 +656,7 @@ const BANCO = [
   },
   {
     formula: 'HCl',
-    group: 'ac-hid', level: 'easy',
+    group: 'ac-hid', level: 'hard',
     trad: ['ácido clorhídrico'],
     stock: [],
     sist: ['cloruro de hidrógeno'],
@@ -664,7 +664,7 @@ const BANCO = [
   },
   {
     formula: 'HBr',
-    group: 'ac-hid', level: 'easy',
+    group: 'ac-hid', level: 'hard',
     trad: ['ácido bromhídrico'],
     stock: [],
     sist: ['bromuro de hidrógeno'],
@@ -672,7 +672,7 @@ const BANCO = [
   },
   {
     formula: 'HI',
-    group: 'ac-hid', level: 'easy',
+    group: 'ac-hid', level: 'hard',
     trad: ['ácido yodhídrico'],
     stock: [],
     sist: ['yoduro de hidrógeno'],
@@ -680,7 +680,7 @@ const BANCO = [
   },
   {
     formula: 'H₂S',
-    group: 'ac-hid', level: 'easy',
+    group: 'ac-hid', level: 'hard',
     trad: ['ácido sulfhídrico'],
     stock: [],
     sist: ['sulfuro de hidrógeno'],
@@ -3934,6 +3934,61 @@ const BANCO = [
     ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
     tokens: [{w:'sulfuro',t:'an'},{w:'de',t:'neu'},{w:'dihidrógeno',t:'cat'}],
     hint: 'H₂S como gas huele a huevo podrido y es muy tóxico. Nombre como compuesto puro: sulfuro de dihidrógeno. En solución: ácido sulfhídrico. Presente en volcanes colombianos.'
+  },
+  // ── AC-HID: formas acuosas (ácido ___hídrico) ──
+  {
+    formula: 'HCl(aq)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['ácido clorhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'Cl⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'clorhídrico',t:'an'}],
+    hint: 'HCl disuelto en agua: ácido clorhídrico. Es el ácido del estómago (jugo gástrico). Diferente al gas cloruro de hidrógeno.'
+  },
+  {
+    formula: 'HBr(aq)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['ácido bromhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'Br⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'bromhídrico',t:'an'}],
+    hint: 'HBr disuelto en agua: ácido bromhídrico. Ácido fuerte; se usa en síntesis orgánica.'
+  },
+  {
+    formula: 'HI(aq)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['ácido yodhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'I⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'yodhídrico',t:'an'}],
+    hint: 'HI disuelto en agua: ácido yodhídrico. Ácido fuerte. El yoduro se usa en medicina como antiséptico.'
+  },
+  {
+    formula: 'H₂S(aq)',
+    group: 'ac-hid', level: 'easy',
+    trad: ['ácido sulfhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'S²⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'sulfhídrico',t:'an'}],
+    hint: 'H₂S disuelto en agua: ácido sulfhídrico. Ácido débil, presente en fuentes termales y aguas sulfurosas.'
+  },
+  {
+    formula: 'H₂Se(aq)',
+    group: 'ac-hid', level: 'medium',
+    trad: ['ácido selenhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺ × 2'},{t:'an',l:'Se²⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'selenhídrico',t:'an'}],
+    hint: 'H₂Se disuelto en agua: ácido selenhídrico. Más ácido que H₂S.'
+  },
+  {
+    formula: 'HCN(aq)',
+    group: 'ac-hid', level: 'medium',
+    trad: ['ácido cianhídrico'],
+    stock: [], sist: [],
+    ions: [{t:'cat',l:'H⁺'},{t:'an',l:'CN⁻'}],
+    tokens: [{w:'ácido',t:'cat'},{w:'cianhídrico',t:'an'}],
+    hint: 'HCN disuelto en agua: ácido cianhídrico (también llamado ácido prúsico). Muy tóxico; el antídoto es el tiosulfato de sodio.'
   },
   {
     formula: 'H₂Se(g)',

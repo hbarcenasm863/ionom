@@ -2441,8 +2441,8 @@ function isCorrect(input,q,mode){
     const sistNames=(q.sist||[]).filter(Boolean);
     return sistNames.some(v=>norm(v)===ni);
   }
-  // ac-ox and sal-ox: curriculum requires only traditional nomenclature
-  if(q.group==='sal-ox'||q.group==='ac-ox') return (q.trad||[]).some(v=>norm(v)===ni);
+  // ac-ox, sal-ox and ac-hid: curriculum requires only traditional nomenclature
+  if(q.group==='sal-ox'||q.group==='ac-ox'||q.group==='ac-hid') return (q.trad||[]).some(v=>norm(v)===ni);
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
   if(allNames.some(v=>norm(v)===ni)) return true;
   if(q.group==='anhid'){
@@ -2473,12 +2473,14 @@ function showFeedback(type,msg,q,noAlts=false){
       const tradStr=q.trad.join(' / ');
       alts.push(`Tradicional: <em>${tradStr}</em>`);
     }
-    if(q.group!=='sal-ox'&&q.group!=='ac-ox'){
+    const tradOnly = q.group==='sal-ox'||q.group==='ac-ox'||q.group==='ac-hid';
+    if(!tradOnly){
       if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
       if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
     }
     if(alts.length) html+=`<div class="fb-alts">${alts.join(' · ')}</div>`;
     if(q.group==='sal-ox'||q.group==='ac-ox') html+=`<div class="fb-hint">📌 Los ácidos oxácidos y oxisales se nombran solo con nomenclatura <strong>tradicional</strong> en este nivel.</div>`;
+    if(q.group==='ac-hid') html+=`<div class="fb-hint">📌 Los ácidos hídricos se nombran solo con nomenclatura <strong>tradicional</strong>: <em>___uro de hidrógeno</em> (gas/puro) o <em>ácido ___hídrico</em> (solución acuosa).</div>`;
     if(q.group==='anhid') html+=`<div class="fb-hint">🇨🇴 En Colombia se llaman <strong>óxidos ácidos</strong>. Se aceptan tanto "<em>anhídrido X</em>" como "<em>óxido X</em>".</div>`;
     // Por qué es incorrecto (solo en error)
     if(type==='err'||type==='reveal'){
@@ -2737,6 +2739,7 @@ function checkClassifyRx(btn, chosen, correct){
   if(btn.classList.contains('disabled')) return;
   document.querySelectorAll('#area-classify .mc-opt').forEach(b=>b.classList.add('disabled'));
   const ok = chosen === correct;
+  const qcr = ST.questions[ST.idx];
   if(ok){ btn.classList.add('correct'); scoreOk(); }
   else {
     btn.classList.add('wrong');
@@ -2744,8 +2747,9 @@ function checkClassifyRx(btn, chosen, correct){
       if(b.textContent.startsWith(TIPO_RX_LABELS[correct].substring(0,8))) b.classList.add('correct');
     });
     scoreErr();
+    if(!ST.errors.find(e=>e.formula===qcr.formula)) ST.errors.push({group:qcr.group||'reaccion',formula:qcr.formula||qcr.ecuacion||'?',name:(qcr.trad&&qcr.trad[0])||''});
   }
-  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], ST.questions[ST.idx]);
+  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], qcr);
   scheduleNext(0);
 }
 
@@ -2790,6 +2794,7 @@ function showBalanceAnswer(){
   const q = ST.questions[ST.idx];
   document.getElementById('balance-fb').innerHTML = '<span style="color:var(--err);font-weight:700">Respuesta: ['+((q.coeficientes||[]).join(', '))+']</span>';
   scoreErr();
+  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group||'balanceo',formula:q.formula||q.ecuacion||'?',name:(q.trad&&q.trad[0])||''});
   showFeedback('err','Coeficientes correctos: ['+((q.coeficientes||[]).join(', '))+']', q);
   scheduleNext(0);
 }
@@ -2798,26 +2803,53 @@ function renderMolCalc(q){
   document.getElementById('q-meta').textContent = 'Pregunta '+(ST.idx+1)+' de 20 · Mol y masa molar';
   document.getElementById('q-formula').textContent = q.formula;
   const MM = q.masa_molar;
-  const tipo = Math.floor(Math.random()*2);
-  var pregunta, respuesta, cadena;
+  const NA = 6.022e23;
+  const tipo = Math.floor(Math.random()*4);
+  var pregunta, respuesta, cadena, unidad;
   if(tipo===0){
+    // moles → gramos
     const n = parseFloat((Math.random()*4+0.5).toFixed(1));
     pregunta = '¿Cuántos gramos hay en '+n+' mol de '+q.formula+'?';
     respuesta = parseFloat((n*MM).toFixed(2));
     cadena = n+' mol × ('+MM+' g/mol) = '+respuesta+' g';
-  } else {
+    unidad = ' g';
+  } else if(tipo===1){
+    // gramos → moles
     const g = parseFloat((MM*(Math.random()*3+0.5)).toFixed(2));
     pregunta = '¿Cuántos moles hay en '+g+' g de '+q.formula+'?';
     respuesta = parseFloat((g/MM).toFixed(3));
     cadena = g+' g ÷ ('+MM+' g/mol) = '+respuesta+' mol';
+    unidad = ' mol';
+  } else if(tipo===2){
+    // moles → moléculas (×Nₐ)
+    const n2 = parseFloat((Math.random()*2+0.5).toFixed(1));
+    const raw = n2*NA;
+    respuesta = parseFloat(raw.toExponential(3));
+    pregunta = '¿Cuántas moléculas hay en '+n2+' mol de '+q.formula+'?';
+    cadena = n2+' mol × (6.022×10²³ mol⁻¹) = '+n2*6.022+'×10²³ moléculas ≈ '+respuesta+' moléculas';
+    unidad = ' moléculas';
+  } else {
+    // gramos → número de moléculas
+    const g2 = parseFloat((MM*(Math.random()*2+0.5)).toFixed(2));
+    const moles2 = g2/MM;
+    const raw2 = moles2*NA;
+    respuesta = parseFloat(raw2.toExponential(3));
+    pregunta = '¿Cuántas moléculas hay en '+g2+' g de '+q.formula+'?';
+    cadena = '('+g2+' g ÷ '+MM+' g/mol) × 6.022×10²³ = '+moles2.toFixed(3)+' mol × Nₐ ≈ '+respuesta+' moléculas';
+    unidad = ' moléculas';
   }
   document.getElementById('q-prompt').textContent = pregunta;
   const area = document.getElementById('area-mol');
   area.style.display = '';
-  const unidad = tipo===0?' g':' mol';
-  const d = [parseFloat((respuesta*1.12).toFixed(3)), parseFloat((respuesta*0.78).toFixed(3)), parseFloat((respuesta*2.01).toFixed(3))];
+  var d;
+  if(tipo<=1){
+    d = [parseFloat((respuesta*1.12).toFixed(3)), parseFloat((respuesta*0.78).toFixed(3)), parseFloat((respuesta*2.01).toFixed(3))];
+  } else {
+    // scientific notation distractors
+    d = [parseFloat((respuesta*1.5).toExponential(3)), parseFloat((respuesta*0.5).toExponential(3)), parseFloat((respuesta*3).toExponential(3))];
+  }
   const opts = shuffle([respuesta,...d]);
-  area.innerHTML = opts.map(v=>'<button class="mc-opt" onclick="checkMolCalc(this,'+v+','+respuesta+',\''+cadena+'\',\''+q.formula_calc+'\')">'+v+unidad+'</button>').join('');
+  area.innerHTML = opts.map(v=>'<button class="mc-opt" onclick="checkMolCalc(this,'+v+','+respuesta+',\''+cadena.replace(/'/g,"\\'")+'\',\''+q.formula_calc+'\')">'+v+unidad+'</button>').join('');
 }
 
 function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
@@ -2826,7 +2858,11 @@ function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
   const ok = Math.abs(chosen-correct) < Math.abs(correct)*0.02;
   const q = ST.questions[ST.idx];
   if(ok){ btn.classList.add('correct'); ST.score+=2; ST.correct++; }
-  else { btn.classList.add('wrong'); }
+  else {
+    btn.classList.add('wrong');
+    const q2 = ST.questions[ST.idx];
+    if(!ST.errors.find(e=>e.formula===q2.formula)) ST.errors.push({group:q2.group,formula:q2.formula,name:(q2.trad&&q2.trad[0])||''});
+  }
   ST.totalAttempts++; updateStats();
   showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — la respuesta es '+correct, q);
   // Append conversion chain to feedback
