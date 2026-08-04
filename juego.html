@@ -357,9 +357,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <div class="nav-links">
       <a href="index.html">🏠</a>
       <a href="teoria.html">📖</a>
+      <a href="reacciones.html">⚗️</a>
+      <a href="balanceo.html">⚖️</a>
+      <a href="moles.html">⚛️</a>
       <a href="funciones.html">🧪</a>
       <a href="juego.html" class="active">🎮</a>
-      <a href="tabla.html">⚗️</a>
+      <a href="tabla.html">📊</a>
       <a href="generador.html">⚙️</a>
       <a href="nomenClash.html">⚔️</a>
     </div>
@@ -652,9 +655,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <div class="nav-links">
       <a href="index.html">🏠</a>
       <a href="teoria.html">📖</a>
+      <a href="reacciones.html">⚗️</a>
+      <a href="balanceo.html">⚖️</a>
+      <a href="moles.html">⚛️</a>
       <a href="funciones.html">🧪</a>
       <a href="juego.html">🎮</a>
-      <a href="tabla.html">⚗️</a>
+      <a href="tabla.html">📊</a>
       <a href="generador.html">⚙️</a>
       <a href="nomenClash.html">⚔️</a>
     </div>
@@ -2643,6 +2649,7 @@ function checkClassifyRx(btn, chosen, correct){
     scoreErr();
   }
   showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], ST.questions[ST.idx]);
+  scheduleNext(0);
 }
 
 function renderBalanceEq(q){
@@ -2672,10 +2679,10 @@ function checkBalanceEq(){
     document.getElementById('balance-fb').innerHTML = '<span style="color:var(--ok);font-weight:700">✓ ¡Ecuación balanceada correctamente!</span>';
     scoreOk();
     showFeedback('ok','✓ ¡Correcto! Coeficientes: ['+correct.join(', ')+']', q);
+    scheduleNext(0);
   } else {
     if(area._attempts>=2){
       showBalanceAnswer();
-      scoreErr();
     } else {
       document.getElementById('balance-fb').innerHTML = '<span style="color:var(--warn);font-weight:700">Incorrecto — intento '+area._attempts+'/2. Pista: '+q.hint+'</span>';
     }
@@ -2685,7 +2692,9 @@ function checkBalanceEq(){
 function showBalanceAnswer(){
   const q = ST.questions[ST.idx];
   document.getElementById('balance-fb').innerHTML = '<span style="color:var(--err);font-weight:700">Respuesta: ['+((q.coeficientes||[]).join(', '))+']</span>';
+  scoreErr();
   showFeedback('err','Coeficientes correctos: ['+((q.coeficientes||[]).join(', '))+']', q);
+  scheduleNext(0);
 }
 
 function renderMolCalc(q){
@@ -2727,6 +2736,7 @@ function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
   const fb = document.getElementById('feedback');
   fb.innerHTML += '<div class="fb-why">Cadena de factores: <code style="font-family:var(--mono)">'+cadena+'</code></div>';
   if(formula_calc) fb.innerHTML += '<div class="fb-tip">MM de '+q.formula+': '+formula_calc+'</div>';
+  scheduleNext(0);
 }
 
 function scoreOk(){ ST.score+=2; ST.correct++; ST.totalAttempts++; updateStats(); }
