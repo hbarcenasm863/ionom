@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Balanceo Algebraico y Redox</title>
+<style>
+:root{
+  --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
+  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
+  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
+  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
+  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
+  --brd:#d0e6f5;--brd2:#b8d4eb;
+  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
+  --nav:#0d4a73;--nav-t:#ffffff;
+  --ok:#16a34a;--ok-b:#dcfce7;--ok-t:#14532d;
+  --err:#dc2626;--err-b:#fee2e2;--err-t:#7f1d1d;
+  --warn:#d97706;--warn-b:#fef3c7;--warn-t:#92400e;
+  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
+  --mono:'Courier New',Courier,monospace;
+  --serif:Georgia,'Times New Roman',serif;
+  --r:16px;--rs:10px;
+  --gold:#fcd34d;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+  /* Redox colors */
+  --ox-red:#b45309;--ox-red-b:#fef3c7;
+  --red-col:#0369a1;--red-col-b:#e0f2fe;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
+  --brd:#1e3a52;--brd2:#2a4d6e;
+  --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
+  --nav:#091929;--nav-t:#e2eef8;
+  --cat-b:#422006;--cat-t:#fde68a;--an-b:#082f49;--an-t:#7dd3fc;
+  --oh-b:#2e1065;--oh-t:#c4b5fd;--ox-b:#042f2e;--ox-t:#5eead4;
+  --ok-b:#052e16;--ok-t:#86efac;--err-b:#450a0a;--err-t:#fca5a5;
+  --warn-b:#422006;--warn-t:#fde68a;
+  --sh:0 2px 12px rgba(0,0,0,.3);--sh2:0 6px 32px rgba(0,0,0,.5);
+}}
+:root[data-theme="dark"]{--bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;--brd:#1e3a52;--brd2:#2a4d6e;--tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;--nav:#091929;--nav-t:#e2eef8;--cat-b:#422006;--cat-t:#fde68a;--an-b:#082f49;--an-t:#7dd3fc;--oh-b:#2e1065;--oh-t:#c4b5fd;--ox-b:#042f2e;--ox-t:#5eead4;--ok-b:#052e16;--ok-t:#86efac;--err-b:#450a0a;--err-t:#fca5a5;--warn-b:#422006;--warn-t:#fde68a;--sh:0 2px 12px rgba(0,0,0,.3);--sh2:0 6px 32px rgba(0,0,0,.5);}
+:root[data-theme="light"]{--bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;--brd:#d0e6f5;--brd2:#b8d4eb;--tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;--nav:#0d4a73;--nav-t:#ffffff;--cat-b:#fef3c7;--cat-t:#92400e;--an-b:#e0f2fe;--an-t:#082f49;--oh-b:#ede9fe;--oh-t:#4c1d95;--ox-b:#ccfbf1;--ox-t:#134e4a;--ok-b:#dcfce7;--ok-t:#14532d;--err-b:#fee2e2;--err-t:#7f1d1d;--warn-b:#fef3c7;--warn-t:#92400e;--sh:0 2px 12px rgba(13,74,115,.08);--sh2:0 6px 32px rgba(13,74,115,.16);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:880px;margin:0 auto;padding:0 18px 80px}
+
+/* NAV */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300}
+.nav-overlay.open{display:block}
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.dl-name{flex:1}
+
+/* TAB SWITCHER */
+.tab-bar{display:flex;gap:8px;margin:24px 0 20px;border-bottom:2px solid var(--brd)}
+.tab-btn{padding:10px 20px;background:none;border:none;border-bottom:3px solid transparent;font-family:var(--sans);font-size:.88rem;font-weight:700;color:var(--dim);cursor:pointer;transition:color .15s,border-color .15s;margin-bottom:-2px}
+.tab-btn.active{color:var(--an);border-bottom-color:var(--an)}
+.tab-btn:hover:not(.active){color:var(--tx);border-bottom-color:var(--brd2)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* PAGE */
+.page-hdr{padding:32px 0 20px;border-bottom:2px solid var(--brd)}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t);line-height:1.6}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t);line-height:1.6}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t);line-height:1.6}
+
+/* STEP CARDS */
+.steps{display:flex;flex-direction:column;gap:14px;margin:16px 0}
+.step{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:14px 16px}
+.step-n{width:40px;height:40px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0}
+.step-n.alg{background:var(--oh)}
+.step-n.rdx{background:var(--ox)}
+.step-title{font-size:.88rem;font-weight:800;display:block;margin-bottom:4px}
+.step-title.alg{color:var(--oh-t)}
+.step-title.rdx{color:var(--ox-t)}
+.step-body p{font-size:.83rem;color:var(--tx2);line-height:1.6;margin:4px 0}
+
+/* ALGEBRAIC EQUATION SYSTEM */
+.eq-sys{background:var(--surf2);border:1.5px solid var(--brd2);border-radius:var(--rs);padding:14px 18px;margin:12px 0;font-family:var(--mono);font-size:.85rem;line-height:2}
+.eq-sys .var{color:var(--oh-t);font-weight:800}
+.eq-sys .coef{color:var(--cat-t);font-weight:700}
+.eq-sys .eq-line{padding:2px 0;border-bottom:1px dashed var(--brd)}
+.eq-sys .eq-line:last-child{border-bottom:none}
+
+/* REDOX HALF-REACTIONS */
+.half-rx{border-radius:var(--rs);padding:14px 16px;margin:10px 0;font-family:var(--mono);font-size:.85rem;line-height:1.8;border:2px solid}
+.half-rx.oxid{background:var(--cat-b);border-color:var(--cat);color:var(--cat-t)}
+.half-rx.reduc{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
+.half-rx-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;display:block}
+.half-rx.oxid .half-rx-label{color:var(--cat-t)}
+.half-rx.reduc .half-rx-label{color:var(--an-t)}
+.eo-chip{display:inline-block;font-family:var(--sans);font-size:.7rem;font-weight:800;padding:1px 7px;border-radius:100px;margin:0 3px;vertical-align:middle}
+.eo-chip.up{background:var(--err);color:#fff}
+.eo-chip.dn{background:var(--ok);color:#fff}
+
+/* WORKED EXAMPLE */
+.worked{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 24px;margin:14px 0}
+.worked-title{font-weight:800;font-size:.9rem;color:var(--tx);margin-bottom:12px}
+.worked-eq{font-family:var(--mono);font-size:.9rem;text-align:center;background:var(--surf2);border-radius:var(--rs);padding:10px 14px;margin:10px 0;color:var(--an-t);font-weight:700;border:1.5px dashed var(--brd2)}
+.ws{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;margin:10px 0}
+.ws-n{width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.ws-n.alg{background:var(--oh)}
+.ws-n.rdx{background:var(--ox)}
+.ws-body{font-size:.83rem;color:var(--tx2);line-height:1.6}
+.ws-body strong{color:var(--tx)}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.55;white-space:pre-wrap}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.85rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px;line-height:1.55}
+.mq-next{margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+@media(max-width:540px){.mq-opts{grid-template-columns:1fr}.tab-btn{padding:8px 12px;font-size:.8rem}}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema">🌙</button>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú">☰</button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo (tanteo)</span></a>
+    <a href="balanceo-avanzado.html" class="active"><span class="dl-icon">🔬</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🔗</span><span class="dl-name">Estequiometría</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="generador.html"><span class="dl-icon">⚙️</span><span class="dl-name">Generador</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🔬 Balanceo Avanzado</h1>
+    <p>Método algebraico y método redox por semirreacciones. Para cuando el tanteo no es suficiente. DBA 3 — Grados 10-11</p>
+  </div>
+
+  <!-- TABS — Mayer P8 Segmentation -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('alg',this)">⚙️ Método Algebraico</button>
+    <button class="tab-btn" onclick="switchTab('rdx',this)">⚡ Método Redox</button>
+    <button class="tab-btn" onclick="switchTab('quiz',this)">✅ Practica</button>
+  </div>
+
+  <!-- ══════════ TAB ALGEBRAICO ══════════ -->
+  <div class="tab-panel active" id="tab-alg">
+
+    <!-- PRE-ENTRENAMIENTO — Mayer P9 -->
+    <div class="sect" style="border-left:4px solid var(--oh)">
+      <h2>📌 ¿Cuándo usar el método algebraico?</h2>
+      <p>El método de tanteo funciona muy bien para ecuaciones simples. El <strong>método algebraico</strong> es útil cuando:</p>
+      <ul>
+        <li>Hay <strong>muchas especies</strong> (4 o más fórmulas) y el tanteo se vuelve difícil</li>
+        <li>La ecuación tiene coeficientes grandes o no obvios</li>
+        <li>Quieres un procedimiento sistemático que siempre funcione</li>
+      </ul>
+      <div class="info-box">El método algebraico asigna una variable (a, b, c…) a cada coeficiente y construye un sistema de ecuaciones, una por cada elemento. Luego resuelves el sistema.</div>
+    </div>
+
+    <!-- PASOS -->
+    <div class="sect">
+      <h2>📋 Los 5 pasos del método algebraico</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n alg">1</div>
+          <div class="step-body">
+            <span class="step-title alg">Asigna variables a cada coeficiente</span>
+            <p>Llama a, b, c, d… a los coeficientes de cada fórmula en orden de izquierda a derecha.</p>
+            <p>Ejemplo: <code>a N₂ + b H₂ → c NH₃</code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n alg">2</div>
+          <div class="step-body">
+            <span class="step-title alg">Escribe una ecuación por cada elemento</span>
+            <p>Para cada elemento: <em>suma de átomos en reactivos = suma en productos</em>. El coeficiente multiplica el subíndice.</p>
+            <p>N: <code>2a = c</code> · H: <code>2b = 3c</code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n alg">3</div>
+          <div class="step-body">
+            <span class="step-title alg">Fija una variable como 1 (o un valor conveniente)</span>
+            <p>El sistema tiene infinitas soluciones proporcionales. Fija <code>a = 1</code> y resuelve en cascada.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n alg">4</div>
+          <div class="step-body">
+            <span class="step-title alg">Resuelve el sistema de ecuaciones</span>
+            <p>Sustituye de arriba hacia abajo. Si obtienes fracciones, multiplica todo por el mínimo común múltiplo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n alg">5</div>
+          <div class="step-body">
+            <span class="step-title alg">Verifica que todos los átomos cuadren</span>
+            <p>Cuenta átomos de cada elemento en reactivos y productos. Deben coincidir exactamente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO ALGEBRAICO 1 -->
+    <div class="sect">
+      <h2>✏️ Ejemplo 1 — Síntesis del amoniaco</h2>
+      <div class="worked">
+        <div class="worked-title">Balancear: N₂ + H₂ → NH₃</div>
+        <div class="worked-eq">a N₂ + b H₂ → c NH₃</div>
+        <div class="ws"><div class="ws-n alg">1</div><div class="ws-body"><strong>Ecuaciones por elemento:</strong><br>N: 2a = c · H: 2b = 3c</div></div>
+        <div class="ws"><div class="ws-n alg">2</div><div class="ws-body"><strong>Fija a = 1:</strong><br>c = 2(1) = 2 · b: 2b = 3(2) = 6 → b = 3</div></div>
+        <div class="ws"><div class="ws-n alg">3</div><div class="ws-body"><strong>Resultado:</strong> a=1, b=3, c=2</div></div>
+        <div class="ok-box">✅ <code>N₂ + 3 H₂ → 2 NH₃</code> — Verificación: N: 2=2 ✓ · H: 6=6 ✓</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO ALGEBRAICO 2 — más complejo -->
+    <div class="sect">
+      <h2>✏️ Ejemplo 2 — Combustión del propano</h2>
+      <div class="worked">
+        <div class="worked-title">🇨🇴 Balancear la combustión del propano (gas de cocina en Colombia): C₃H₈ + O₂ → CO₂ + H₂O</div>
+        <div class="worked-eq">a C₃H₈ + b O₂ → c CO₂ + d H₂O</div>
+        <div class="ws"><div class="ws-n alg">1</div><div class="ws-body"><strong>Ecuaciones por elemento:</strong></div></div>
+        <div class="eq-sys">
+          <div class="eq-line">C: <span class="coef">3</span><span class="var">a</span> = <span class="var">c</span></div>
+          <div class="eq-line">H: <span class="coef">8</span><span class="var">a</span> = <span class="coef">2</span><span class="var">d</span></div>
+          <div class="eq-line">O: <span class="coef">2</span><span class="var">b</span> = <span class="coef">2</span><span class="var">c</span> + <span class="var">d</span></div>
+        </div>
+        <div class="ws"><div class="ws-n alg">2</div><div class="ws-body"><strong>Fija a = 1:</strong><br>C: c = 3(1) = <strong>3</strong><br>H: d = 8(1)/2 = <strong>4</strong><br>O: 2b = 2(3) + 4 = 10 → b = <strong>5</strong></div></div>
+        <div class="ws"><div class="ws-n alg">3</div><div class="ws-body"><strong>Todos enteros:</strong> a=1, b=5, c=3, d=4</div></div>
+        <div class="ok-box">✅ <code>C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O</code><br>Verificación: C: 3=3 ✓ · H: 8=8 ✓ · O: 10=10 ✓</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO ALGEBRAICO 3 — fracciones -->
+    <div class="sect">
+      <h2>✏️ Ejemplo 3 — Cuando salen fracciones</h2>
+      <div class="worked">
+        <div class="worked-title">Balancear: Al + O₂ → Al₂O₃</div>
+        <div class="worked-eq">a Al + b O₂ → c Al₂O₃</div>
+        <div class="ws"><div class="ws-n alg">1</div><div class="ws-body">Al: a = 2c · O: 2b = 3c</div></div>
+        <div class="ws"><div class="ws-n alg">2</div><div class="ws-body">Fija c = 1: a = 2, 2b = 3 → b = 3/2 (fracción)</div></div>
+        <div class="ws"><div class="ws-n alg">3</div><div class="ws-body"><strong>Multiplica todo × 2:</strong> a=4, b=3, c=2</div></div>
+        <div class="ok-box">✅ <code>4 Al + 3 O₂ → 2 Al₂O₃</code></div>
+      </div>
+      <div class="warn-box">⚠️ Si obtienes fracciones, multiplica <strong>todos</strong> los coeficientes por el mismo número (el denominador o el MCM) para obtener enteros mínimos.</div>
+    </div>
+
+  </div><!-- /tab-alg -->
+
+  <!-- ══════════ TAB REDOX ══════════ -->
+  <div class="tab-panel" id="tab-rdx">
+
+    <!-- PRE-ENTRENAMIENTO -->
+    <div class="sect" style="border-left:4px solid var(--ox)">
+      <h2>📌 ¿Qué es una reacción redox?</h2>
+      <p>Una reacción <strong>redox</strong> (reducción-oxidación) es aquella en la que los <strong>estados de oxidación</strong> de algunos elementos cambian durante la reacción. Hay una transferencia de electrones.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">
+        <div class="half-rx oxid">
+          <span class="half-rx-label">Oxidación</span>
+          Una especie <strong>pierde electrones</strong> (e⁻). Su EO <strong>aumenta</strong>. Se llama <strong>agente reductor</strong>.
+          <br><br>Ejemplo: Fe⁰ → Fe²⁺ + 2e⁻ <span class="eo-chip up">EO +2</span>
+        </div>
+        <div class="half-rx reduc">
+          <span class="half-rx-label">Reducción</span>
+          Una especie <strong>gana electrones</strong> (e⁻). Su EO <strong>disminuye</strong>. Se llama <strong>agente oxidante</strong>.
+          <br><br>Ejemplo: Cu²⁺ + 2e⁻ → Cu⁰ <span class="eo-chip dn">EO -2</span>
+        </div>
+      </div>
+      <div class="info-box">Regla mnemotécnica: <strong>OIL RIG</strong> en inglés = <em>Oxidation Is Loss, Reduction Is Gain</em> (de electrones). O en español: <strong>PGAR</strong> — <em>Pierde Gana, Agente Reductor/oxidante</em>.</div>
+    </div>
+
+    <!-- ESTADOS DE OXIDACIÓN RÁPIDOS -->
+    <div class="sect">
+      <h2>📋 Reglas para asignar estados de oxidación (EO)</h2>
+      <ol>
+        <li>Un elemento puro (H₂, O₂, Fe) tiene EO = 0.</li>
+        <li>En un monoión simple, el EO = su carga (Fe²⁺ → EO +2).</li>
+        <li>En compuestos: O casi siempre es −2 (excepto peróxidos: −1). H casi siempre es +1 (excepto hidruros metálicos: −1).</li>
+        <li>La suma de todos los EO en un compuesto neutro = 0.</li>
+        <li>La suma de todos los EO en un ion poliátomico = carga del ion.</li>
+      </ol>
+    </div>
+
+    <!-- MÉTODO SEMIRREACCIONES -->
+    <div class="sect">
+      <h2>⚡ Método de semirreacciones (ion-electrón)</h2>
+      <p>Este método separa la reacción en dos semirreacciones: la de oxidación y la de reducción. Se balancea cada una por separado y luego se suman.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n rdx">1</div>
+          <div class="step-body">
+            <span class="step-title rdx">Identifica las especies que cambian su EO</span>
+            <p>Asigna EO a todos los elementos. Los que cambian participan en el intercambio de electrones.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n rdx">2</div>
+          <div class="step-body">
+            <span class="step-title rdx">Escribe las dos semirreacciones separadas</span>
+            <p><strong>Oxidación:</strong> la especie que pierde e⁻. <strong>Reducción:</strong> la especie que gana e⁻. Balancea el elemento que cambia su EO en cada una.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n rdx">3</div>
+          <div class="step-body">
+            <span class="step-title rdx">Balancea los átomos de O y H</span>
+            <p>En <strong>medio ácido</strong>: O se balancea con H₂O, H con H⁺.<br>En <strong>medio básico</strong>: O con H₂O, H con OH⁻.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n rdx">4</div>
+          <div class="step-body">
+            <span class="step-title rdx">Balancea las cargas con electrones (e⁻)</span>
+            <p>Agrega e⁻ al lado que sea necesario para que las cargas totales sean iguales a ambos lados.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n rdx">5</div>
+          <div class="step-body">
+            <span class="step-title rdx">Iguala los electrones en ambas semirreacciones</span>
+            <p>Multiplica cada semirreacción por el coeficiente necesario para que el número de e⁻ perdidos = e⁻ ganados.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n rdx">6</div>
+          <div class="step-body">
+            <span class="step-title rdx">Suma las semirreacciones y simplifica</span>
+            <p>Los e⁻ deben cancelarse exactamente. Si aparecen H₂O o H⁺ a ambos lados, resta los que sobren.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO REDOX 1 — Fe + CuSO4 -->
+    <div class="sect">
+      <h2>✏️ Ejemplo 1 — Fe + CuSO₄ (medio acuoso)</h2>
+      <div class="worked">
+        <div class="worked-title">🇨🇴 Cementation: hierro desplaza cobre (usado en minería artesanal en Colombia)</div>
+        <div class="worked-eq">Fe + CuSO₄ → FeSO₄ + Cu</div>
+
+        <div class="ws"><div class="ws-n rdx">1</div><div class="ws-body"><strong>EO:</strong> Fe: 0 → +2 (pierde 2 e⁻ — OXIDACIÓN) · Cu: +2 → 0 (gana 2 e⁻ — REDUCCIÓN) · SO₄²⁻ no cambia</div></div>
+
+        <div class="ws"><div class="ws-n rdx">2</div><div class="ws-body"><strong>Semirreacciones:</strong></div></div>
+        <div class="half-rx oxid"><span class="half-rx-label">Oxidación (pierde e⁻)</span>Fe⁰ → Fe²⁺ + 2 e⁻</div>
+        <div class="half-rx reduc"><span class="half-rx-label">Reducción (gana e⁻)</span>Cu²⁺ + 2 e⁻ → Cu⁰</div>
+
+        <div class="ws"><div class="ws-n rdx">3</div><div class="ws-body"><strong>Los electrones ya son iguales (2 e⁻ en cada lado).</strong> Suma directo:</div></div>
+        <div class="ws"><div class="ws-n rdx">4</div><div class="ws-body">Fe + Cu²⁺ → Fe²⁺ + Cu · (el SO₄²⁻ es espectador)</div></div>
+        <div class="ok-box">✅ <code>Fe + CuSO₄ → FeSO₄ + Cu</code> ya estaba balanceada. Verificación: Fe: 1=1 ✓ · Cu: 1=1 ✓ · SO₄: 1=1 ✓</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO REDOX 2 — MnO4- + Fe2+ (medio ácido) -->
+    <div class="sect">
+      <h2>✏️ Ejemplo 2 — KMnO₄ + FeCl₂ en medio ácido</h2>
+      <div class="worked">
+        <div class="worked-title">Balancear: MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ (medio ácido, H⁺ presente)</div>
+
+        <div class="ws"><div class="ws-n rdx">1</div><div class="ws-body"><strong>EO:</strong> Mn: +7 → +2 (gana 5 e⁻ — REDUCCIÓN) · Fe: +2 → +3 (pierde 1 e⁻ — OXIDACIÓN)</div></div>
+
+        <div class="ws"><div class="ws-n rdx">2</div><div class="ws-body"><strong>Semirreacciones iniciales:</strong></div></div>
+        <div class="half-rx reduc">
+          <span class="half-rx-label">Reducción — Mn <span class="eo-chip dn">+7 → +2</span></span>
+          MnO₄⁻ → Mn²⁺
+        </div>
+        <div class="half-rx oxid">
+          <span class="half-rx-label">Oxidación — Fe <span class="eo-chip up">+2 → +3</span></span>
+          Fe²⁺ → Fe³⁺
+        </div>
+
+        <div class="ws"><div class="ws-n rdx">3</div><div class="ws-body"><strong>Balancea O con H₂O y H con H⁺ (medio ácido):</strong><br>MnO₄⁻ → Mn²⁺ + 4 H₂O · (agrego 4 H₂O a la derecha para O)<br>8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O · (agrego 8 H⁺ a la izquierda para H)</div></div>
+
+        <div class="ws"><div class="ws-n rdx">4</div><div class="ws-body"><strong>Balancea cargas con e⁻:</strong><br>Reducción: carga izq = 8(+1) + (-1) = +7 · carga der = +2 → necesito 5 e⁻ a la izquierda<br><code>5 e⁻ + 8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O</code><br>Oxidación: Fe²⁺ → Fe³⁺ + 1 e⁻</div></div>
+
+        <div class="ws"><div class="ws-n rdx">5</div><div class="ws-body"><strong>Iguala e⁻:</strong> Reducción gana 5 e⁻, oxidación pierde 1 e⁻. Multiplica oxidación × 5:<br><code>5 Fe²⁺ → 5 Fe³⁺ + 5 e⁻</code></div></div>
+
+        <div class="ws"><div class="ws-n rdx">6</div><div class="ws-body"><strong>Suma y cancela e⁻:</strong><br>5 e⁻ + 8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺ + 5 e⁻</div></div>
+
+        <div class="ok-box">✅ Ecuación iónica neta:<br><code>8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺</code></div>
+      </div>
+    </div>
+
+    <!-- COMPARACIÓN MÉTODOS -->
+    <div class="sect">
+      <h2>🗺️ ¿Cuándo usar cada método?</h2>
+      <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.83rem">
+        <thead><tr>
+          <th style="background:var(--an-b);color:var(--an-t);padding:10px;border-bottom:2px solid var(--brd);text-align:left">Método</th>
+          <th style="background:var(--an-b);color:var(--an-t);padding:10px;border-bottom:2px solid var(--brd);text-align:left">Mejor para…</th>
+          <th style="background:var(--an-b);color:var(--an-t);padding:10px;border-bottom:2px solid var(--brd);text-align:left">No tan bueno para…</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:10px;border-bottom:1px solid var(--brd)"><strong>Tanteo</strong></td><td style="padding:10px;border-bottom:1px solid var(--brd)">Ecuaciones simples (2-3 especies), combustiones, neutralizaciones</td><td style="padding:10px;border-bottom:1px solid var(--brd)">Ecuaciones con muchas especies o coeficientes grandes</td></tr>
+          <tr><td style="padding:10px;border-bottom:1px solid var(--brd)"><strong>Algebraico</strong></td><td style="padding:10px;border-bottom:1px solid var(--brd)">Cualquier ecuación, sistemático y riguroso</td><td style="padding:10px;border-bottom:1px solid var(--brd)">Reacciones redox complejas (puede generar sistemas grandes)</td></tr>
+          <tr><td style="padding:10px"><strong>Semirreacciones</strong></td><td style="padding:10px">Reacciones redox, especialmente en solución acuosa (ácida o básica)</td><td style="padding:10px">Reacciones sin cambio de EO (no redox)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+  </div><!-- /tab-rdx -->
+
+  <!-- ══════════ TAB QUIZ ══════════ -->
+  <div class="tab-panel" id="tab-quiz">
+    <div class="sect quiz-sect" style="margin-top:0">
+      <h2>✅ Practica — Balanceo avanzado</h2>
+      <div id="quiz-area"></div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="estequiometria.html">Siguiente: Estequiometría →</a> &nbsp;|&nbsp; <a href="balanceo.html">← Balanceo por tanteo</a><br><br>
+    <a href="index.html">IonNom</a> · Química inorgánica para Colombia · DBA 3
+  </footer>
+</div>
+
+<script>
+// Theme
+(function(){const s=localStorage.getItem('ion-theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('ion-theme',n);}
+document.getElementById('theme-btn').addEventListener('click',toggleTheme);
+
+// Hamburger
+(function(){
+  const ham=document.getElementById('ham-btn'),drawer=document.getElementById('nav-drawer'),overlay=document.getElementById('nav-overlay'),close=document.getElementById('drawer-close');
+  function open(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function shut(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham)ham.addEventListener('click',open);
+  if(close)close.addEventListener('click',shut);
+  if(overlay)overlay.addEventListener('click',shut);
+  document.querySelectorAll('.drawer-links a').forEach(a=>a.addEventListener('click',shut));
+})();
+
+// Tabs
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// QUIZ
+const QUIZ=[
+  {q:'Método algebraico: a H₂ + b O₂ → c H₂O\nSi a=2, ¿cuáles son b y c?', opts:['b=1, c=2','b=2, c=1','b=1, c=1','b=2, c=4'], ans:0, exp:'H: 2a=2c → c=2. O: 2b=c → 2b=2 → b=1. Respuesta: b=1, c=2.'},
+  {q:'¿Qué ocurre con el estado de oxidación en la OXIDACIÓN?', opts:['Aumenta (pierde e⁻)','Disminuye (gana e⁻)','No cambia','Depende del compuesto'], ans:0, exp:'Oxidación = pérdida de electrones = aumento del EO. "OIL" = Oxidation Is Loss.'},
+  {q:'Método algebraico: a Al + b O₂ → c Al₂O₃\nSi c=2, ¿cuánto valen a y b?', opts:['a=4, b=3','a=2, b=3','a=4, b=6','a=2, b=1'], ans:0, exp:'Al: a=2c=4. O: 2b=3c=6 → b=3. Ecuación: 4Al + 3O₂ → 2Al₂O₃.'},
+  {q:'En la semirreacción de REDUCCIÓN del MnO₄⁻ en ácido:\nMnO₄⁻ → Mn²⁺\n¿Cuántos e⁻ se ganan?', opts:['5 e⁻','3 e⁻','7 e⁻','2 e⁻'], ans:0, exp:'Mn cambia de +7 a +2: diferencia de 5. Se ganan 5 e⁻ en la reducción.'},
+  {q:'Método algebraico: a C₃H₈ + b O₂ → c CO₂ + d H₂O\nSi a=1, ¿cuánto vale b?', opts:['b=5','b=3','b=4','b=8'], ans:0, exp:'C: c=3. H: d=4. O: 2b=2c+d=6+4=10 → b=5.'},
+  {q:'¿Qué especie se llama "agente oxidante" en una reacción redox?', opts:['La que gana e⁻ (se reduce)','La que pierde e⁻ (se oxida)','La que no cambia','El solvente'], ans:0, exp:'El agente oxidante es la especie que OXIDA a la otra, por lo tanto ella misma se REDUCE (gana electrones).'},
+  {q:'En el método de semirreacciones en medio ácido,\n¿con qué se balancea el O?', opts:['H₂O','OH⁻','H⁺','O₂'], ans:0, exp:'En medio ácido: O se balancea agregando H₂O al lado que le falta O; luego H se balancea con H⁺.'},
+  {q:'¿Cuál es la regla de la suma de estados de oxidación en un compuesto neutro?', opts:['Suma = 0','Suma = carga del ion','Suma = número de electrones','No hay regla fija'], ans:0, exp:'En cualquier compuesto neutro, la suma de todos los estados de oxidación de todos los átomos (multiplicados por su cantidad) debe ser cero.'},
+];
+
+let qi=0,score=0;
+const shuf=[...QUIZ].sort(()=>Math.random()-.5);
+
+function renderQ(){
+  if(qi>=shuf.length){
+    document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong> Aciertos: '+score+' / '+shuf.length+'. '+(score>=6?'¡Dominio excelente!':score>=4?'Buen avance. Repasa los que fallaste.':'Vuelve a leer los ejemplos paso a paso.')+'</div><button onclick="qi=0;score=0;shuf.sort(()=>Math.random()-.5);renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
+    return;
+  }
+  const q=shuf[qi];
+  const indexed=q.opts.map((o,i)=>({o,correct:i===q.ans})).sort(()=>Math.random()-.5);
+  const correctLabel=indexed.find(x=>x.correct).o;
+  document.getElementById('quiz-area').innerHTML=
+    '<p class="mq-q">Pregunta '+(qi+1)+' de '+shuf.length+':\n'+q.q+'</p>'
+    +'<div class="mq-opts">'+indexed.map(x=>'<button class="mq-btn" onclick="checkQ(this,'+JSON.stringify(x.o)+','+JSON.stringify(correctLabel)+')">'+x.o+'</button>').join('')+'</div>'
+    +'<div class="mq-fb" id="mq-fb"></div>'
+    +'<button class="mq-next" id="mq-next" onclick="qi++;renderQ()">Siguiente →</button>';
+}
+
+function checkQ(btn,chosen,correct){
+  document.querySelectorAll('.mq-btn').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'mq-correct':'mq-wrong');
+  if(!ok)document.querySelectorAll('.mq-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('mq-correct');});
+  if(ok)score++;
+  document.getElementById('mq-fb').innerHTML=(ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ Correcta: <strong>'+correct+'</strong></span> ')+'— '+shuf[qi].exp;
+  document.getElementById('mq-next').style.display='inline-block';
+}
+
+renderQ();
+</script>
+</body>
+</html>
