@@ -375,7 +375,7 @@ const BANCO = [
   },
   {
     formula: 'Cl₂O₃',
-    group: 'anhid', level: 'medium',
+    group: 'anhid', level: 'easy',
     trad: ['anhídrido cloroso', 'óxido cloroso'],
     stock: [],
     sist: ['trióxido de dicloro'],
@@ -383,7 +383,7 @@ const BANCO = [
   },
   {
     formula: 'Cl₂O₅',
-    group: 'anhid', level: 'medium',
+    group: 'anhid', level: 'easy',
     trad: ['anhídrido clórico', 'óxido clórico'],
     stock: [],
     sist: ['pentaóxido de dicloro'],
@@ -391,7 +391,7 @@ const BANCO = [
   },
   {
     formula: 'Cl₂O₇',
-    group: 'anhid', level: 'medium',
+    group: 'anhid', level: 'easy',
     trad: ['anhídrido perclórico', 'óxido perclórico'],
     stock: [],
     sist: ['heptaóxido de dicloro'],
@@ -1042,7 +1042,7 @@ const BANCO = [
   },
   {
     formula: 'HClO₄',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'easy',
     trad: ['ácido perclórico'],
     stock: [],
     sist: ['ácido perclórico'],
@@ -1050,7 +1050,7 @@ const BANCO = [
   },
   {
     formula: 'HClO₃',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'easy',
     trad: ['ácido clórico'],
     stock: [],
     sist: ['ácido clórico'],
@@ -1058,7 +1058,7 @@ const BANCO = [
   },
   {
     formula: 'HClO₂',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'easy',
     trad: ['ácido cloroso'],
     stock: [],
     sist: ['ácido cloroso'],
@@ -1066,7 +1066,7 @@ const BANCO = [
   },
   {
     formula: 'HClO',
-    group: 'ac-ox', level: 'medium',
+    group: 'ac-ox', level: 'easy',
     trad: ['ácido hipocloroso'],
     stock: [],
     sist: ['ácido hipocloroso'],
@@ -4490,6 +4490,16 @@ const BANCO = [
     hint: 'HSO₄⁻ = bisulfato (trad.) / hidrogenosulfato (IUPAC). H₂SO₄ cedió 1 de 2 H⁺.'
   },
   {
+    formula: 'Ca(HCO₃)₂',
+    group: 'sal-ac', level: 'easy',
+    trad: ['bicarbonato de calcio'],
+    stock: ['hidrogenocarbonato de calcio'],
+    sist: ['hidrogenocarbonato de calcio'],
+    ions: [{t:'cat',l:'Ca²⁺'},{t:'an',l:'HCO₃⁻'}],
+    tokens: [{w:'bicarbonato',t:'ox'},{w:'de',t:'neu'},{w:'calcio',t:'cat'}],
+    hint: 'Ca²⁺ necesita 2×HCO₃⁻. HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Causa la dureza temporal del agua.'
+  },
+  {
     formula: 'NH₄HSO₄',
     group: 'sal-ac', level: 'medium',
     trad: ['bisulfato de amonio'],
@@ -4560,14 +4570,14 @@ const BANCO = [
     hint: 'NH₄⁺ = amonio. H₂PO₄⁻ = dihidrogenofosfato. H₃PO₄ cedió solo 1 H⁺.'
   },
   {
-    formula: 'KHSO₃',
+    formula: 'NaH₂PO₄',
     group: 'sal-ac', level: 'easy',
-    trad: ['bisulfito de potasio'],
-    stock: ['hidrogenosulfito de potasio'],
-    sist: ['hidrogenosulfito de potasio'],
-    ions: [{t:'cat',l:'K⁺'},{t:'an',l:'HSO₃⁻'}],
-    tokens: [{w:'bisulfito',t:'ox'},{w:'de',t:'neu'},{w:'potasio',t:'cat'}],
-    hint: 'HSO₃⁻ = bisulfito (trad.) / hidrogenosulfito (IUPAC). H₂SO₃ cedió 1 de 2 H⁺. K⁺ → potasio.'
+    trad: ['fosfato ácido de sodio', 'dihidrogenofosfato de sodio'],
+    stock: ['dihidrogenofosfato de sodio'],
+    sist: ['dihidrogenofosfato de sodio'],
+    ions: [{t:'cat',l:'Na⁺'},{t:'an',l:'H₂PO₄⁻'}],
+    tokens: [{w:'fosfato',t:'ox'},{w:'ácido',t:'neu'},{w:'de',t:'neu'},{w:'sodio',t:'cat'}],
+    hint: 'H₃PO₄ (triprót.) cedió 1 de 3 H⁺. Anión H₂PO₄⁻ = dihidrogenofosfato. Na⁺ → sodio. Se usa como aditivo alimentario (E339).'
   },
 
 // Total: batch 4 adds 12 ac-hid, 19 hidru, 3 anhid, 3 base, 2 ac-ox
@@ -5072,7 +5082,7 @@ const BANCO = [
   // -- medium (12) --
   {
     id: 'bal-011',
-    group: 'balanceo', level: 'medium',
+    group: 'balanceo', level: 'easy',
     ecuacion_sin_coef: 'Al + O₂ → Al₂O₃',
     coeficientes: [4, 3, 2],
     especies: ['Al', 'O₂', 'Al₂O₃'],
@@ -5081,7 +5091,7 @@ const BANCO = [
   },
   {
     id: 'bal-012',
-    group: 'balanceo', level: 'medium',
+    group: 'balanceo', level: 'easy',
     ecuacion_sin_coef: 'Fe + CuSO₄ → FeSO₄ + Cu',
     coeficientes: [1, 1, 1, 1],
     especies: ['Fe', 'CuSO₄', 'FeSO₄', 'Cu'],
@@ -5090,7 +5100,7 @@ const BANCO = [
   },
   {
     id: 'bal-013',
-    group: 'balanceo', level: 'medium',
+    group: 'balanceo', level: 'easy',
     ecuacion_sin_coef: 'H₂SO₄ + NaOH → Na₂SO₄ + H₂O',
     coeficientes: [1, 2, 1, 2],
     especies: ['H₂SO₄', 'NaOH', 'Na₂SO₄', 'H₂O'],

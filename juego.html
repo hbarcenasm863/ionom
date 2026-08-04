@@ -1315,20 +1315,41 @@ function startGame(group){
     if(!pool.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
     const specialType={'reaccion':'classify-rx','balanceo':'balance-eq','mol-masa':'mol-calc'};
     const qtype=specialType[group];
-    const shuffled=shuffle([...pool]);
-    while(shuffled.length<20) shuffled.push(...shuffle([...pool]));
-    ST.questions=shuffled.slice(0,20).map(q=>({...q,qtype}));
+    // Use buildQuestionQueue for anti-consecutive bag-refill (same as nomenclature groups)
+    ST.questions=buildQuestionQueue(pool,20).map(q=>({...q,qtype}));
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
     showScreen('s-game');loadQuestion();return;
   }
   if(group==='reactividad'){
-    ST.questions=Array.from({length:20},()=>makeReactChain());
+    // Deduplicate by chain+salt+step key; 18 chains × salts × 3 steps >> 20
+    const seen=new Set();
+    const qs=[];
+    let tries=0;
+    while(qs.length<20 && tries<300){
+      tries++;
+      const q=makeReactChain();
+      const key=(q.A||'')+'|'+(q.C||'')+'|'+q.step;
+      if(!seen.has(key)){seen.add(key);qs.push(q);}
+    }
+    while(qs.length<20) qs.push(makeReactChain());
+    ST.questions=qs;
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
     showScreen('s-game');loadQuestion();return;
   }
   if(group==='elemento'){
-    // All 20 questions are element questions — no compound pool needed
-    ST.questions=Array.from({length:20},()=>makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
+    // Deduplicate by element+type key; 118 elements × 6 types = 708 unique combos >> 20
+    const seen=new Set();
+    const qs=[];
+    let tries=0;
+    while(qs.length<20 && tries<400){
+      tries++;
+      const type=EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)];
+      const q=makeElementQuestion(type);
+      const key=q.z+'|'+type;
+      if(!seen.has(key)){seen.add(key);qs.push(q);}
+    }
+    while(qs.length<20) qs.push(makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
+    ST.questions=qs;
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
     showScreen('s-game');
     loadQuestion();
