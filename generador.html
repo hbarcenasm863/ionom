@@ -505,7 +505,10 @@ const BANK_FALLBACK = {
 
 // Use BANCO from banco.js if available, otherwise flatten BANK_FALLBACK
 function getAllCompounds(incluirAvanzados){
-  if(typeof BANCO !== 'undefined') return BANCO;
+  if(typeof BANCO !== 'undefined'){
+    // Exclude level:'hard' compounds unless teacher explicitly opted in
+    return incluirAvanzados ? BANCO : BANCO.filter(c => c.level !== 'hard');
+  }
   let arr = [];
   Object.keys(BANK_FALLBACK).forEach(lv => {
     let bin = BANK_FALLBACK[lv].binary || [];
@@ -615,10 +618,16 @@ const GEN_REACT_CHAINS=[
 
 function generateReactChainExercises(count){
   function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-  const pool=shuf(GEN_REACT_CHAINS);
-  const picked=[];
-  while(picked.length<count) picked.push(...shuf(GEN_REACT_CHAINS));
-  const items=picked.slice(0,count);
+  // Deduplicate: each chain appears at most once (18 chains; falls back to repeats only if count > 18)
+  const seen=new Set();
+  const items=[];
+  let tries=0;
+  while(items.length<count&&tries<300){
+    tries++;
+    const ch=GEN_REACT_CHAINS[Math.floor(Math.random()*GEN_REACT_CHAINS.length)];
+    if(!seen.has(ch.A)||seen.size>=GEN_REACT_CHAINS.length){seen.add(ch.A);items.push(ch);}
+  }
+  while(items.length<count) items.push(GEN_REACT_CHAINS[Math.floor(Math.random()*GEN_REACT_CHAINS.length)]);
 
   const patterns=[['A'],['B'],['C'],['A','C'],['B','C'],['A','B']];
 
@@ -746,9 +755,21 @@ function generateExercises(){
     return a;
   }
 
-  let pool = shuffle(compounds);
-  while(pool.length < count) pool = pool.concat(shuffle(compounds));
-  const selected = pool.slice(0, count);
+  // Anti-consecutive bag-refill: avoids same compound back-to-back when pool < count
+  function pickN(src, n){
+    if(src.length >= n) return shuffle(src).slice(0, n);
+    const result = [];
+    let bag = [];
+    while(result.length < n){
+      if(!bag.length) bag = shuffle([...src]);
+      const last = result.length ? result[result.length-1].formula : null;
+      let idx = bag.findIndex(c => c.formula !== last);
+      if(idx < 0) idx = 0;
+      result.push(bag.splice(idx, 1)[0]);
+    }
+    return result;
+  }
+  const selected = pickN(compounds, count);
 
   const typeLabel = {
     'all': 'Ejercicios diversos',
@@ -967,9 +988,11 @@ function _showTaller(titulo, html){
   showScreen('s-preview');
 }
 
+function _pickN(src,n){if(src.length>=n)return _shuffle(src).slice(0,n);const r=[];let b=[];while(r.length<n){if(!b.length)b=_shuffle([...src]);const last=r.length?r[r.length-1].formula||r[r.length-1].ecuacion:'';let idx=b.findIndex(c=>(c.formula||c.ecuacion)!==last);if(idx<0)idx=0;r.push(b.splice(idx,1)[0]);}return r;}
+
 function genReaccionTaller(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _shuffle(BANCO_ALL.filter(c=>c.group==='reaccion')).slice(0,Math.min(count,40));
+  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='reaccion'), count);
   if(!pool.length){alert('El banco no tiene ecuaciones de reacción cargadas.');return;}
   const html = pool.map(function(r,i){
     return '<div class="exercise-card">'
@@ -987,7 +1010,7 @@ function genReaccionTaller(count){
 
 function genBalanceoTaller(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _shuffle(BANCO_ALL.filter(c=>c.group==='balanceo')).slice(0,Math.min(count,30));
+  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='balanceo'), count);
   if(!pool.length){alert('El banco no tiene ecuaciones de balanceo cargadas.');return;}
   const html = pool.map(function(b,i){
     return '<div class="exercise-card">'
@@ -1010,7 +1033,8 @@ function genBalanceoTaller(count){
 
 function genMolMasaTaller(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _shuffle(BANCO_ALL.filter(c=>c.group==='mol-masa')).slice(0,Math.min(count,25));
+  // count here is number of compounds; each generates 2 exercise cards
+  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='mol-masa'), count);
   if(!pool.length){alert('El banco no tiene compuestos de mol/masa molar cargados.');return;}
   const html = pool.flatMap(function(m,i){
     return [
@@ -1053,11 +1077,19 @@ const GEN_STOICH=[
   {rx:'2KClO₃ → 2KCl + 3O₂',dato:{f:'KClO₃',g:122.55},inc:{f:'O₂',r:48.0},cadena:'122.55 g KClO₃ × (1 mol/122.55 g) × (3 mol O₂/2 mol KClO₃) × (32.00 g/1 mol O₂)',hint:'Descomposición del clorato de potasio — fuente de O₂ en laboratorio.'},
   {rx:'Fe₂O₃ + 3CO → 2Fe + 3CO₂',dato:{f:'Fe₂O₃',g:159.69},inc:{f:'Fe',r:111.7},cadena:'159.69 g Fe₂O₃ × (1 mol/159.69 g) × (2 mol Fe/1 mol Fe₂O₃) × (55.85 g/1 mol Fe)',hint:'Alto horno — siderurgia. Por cada mol de Fe₂O₃ se obtienen 2 mol de Fe.'},
   {rx:'C₁₂H₂₂O₁₁ + 12O₂ → 12CO₂ + 11H₂O',dato:{f:'C₁₂H₂₂O₁₁',g:342.0},inc:{f:'CO₂',r:528.12},cadena:'342.0 g sacarosa × (1 mol/342.30 g) × (12 mol CO₂/1 mol) × (44.01 g/1 mol CO₂)',hint:'Combustión del azúcar (panela colombiana) — 1 mol produce 12 mol de CO₂.'},
-  {rx:'2Al + 3CuSO₄ → Al₂(SO₄)₃ + 3Cu',dato:{f:'Al',g:54.0},inc:{f:'Cu',r:190.98},cadena:'54.0 g Al × (1 mol/26.98 g) × (3 mol Cu/2 mol Al) × (63.55 g/1 mol Cu)',hint:'Sustitución simple: el aluminio desplaza al cobre del sulfato cúprico.'}
+  {rx:'2Al + 3CuSO₄ → Al₂(SO₄)₃ + 3Cu',dato:{f:'Al',g:54.0},inc:{f:'Cu',r:190.98},cadena:'54.0 g Al × (1 mol/26.98 g) × (3 mol Cu/2 mol Al) × (63.55 g/1 mol Cu)',hint:'Sustitución simple: el aluminio desplaza al cobre del sulfato cúprico.'},
+  {rx:'S + O₂ → SO₂',dato:{f:'S',g:32.07},inc:{f:'SO₂',r:64.07},cadena:'32.07 g S × (1 mol/32.06 g) × (1 mol SO₂/1 mol S) × (64.06 g/1 mol SO₂)',hint:'Síntesis directa. Relación S:SO₂ = 1:1. SO₂ es precursor del H₂SO₄ industrial.'},
+  {rx:'Mg + 2HCl → MgCl₂ + H₂',dato:{f:'Mg',g:24.31},inc:{f:'H₂',r:2.02},cadena:'24.31 g Mg × (1 mol/24.31 g) × (1 mol H₂/1 mol Mg) × (2.016 g/1 mol H₂)',hint:'Sustitución simple. Por cada mol de Mg se libera 1 mol de H₂.'},
+  {rx:'2NaOH + CO₂ → Na₂CO₃ + H₂O',dato:{f:'CO₂',g:44.01},inc:{f:'Na₂CO₃',r:105.99},cadena:'44.01 g CO₂ × (1 mol/44.01 g) × (1 mol Na₂CO₃/1 mol CO₂) × (105.99 g/1 mol Na₂CO₃)',hint:'Absorción de CO₂ con soda cáustica. Relación CO₂:Na₂CO₃ = 1:1.'},
+  {rx:'Ca(OH)₂ + CO₂ → CaCO₃ + H₂O',dato:{f:'Ca(OH)₂',g:74.09},inc:{f:'CaCO₃',r:100.09},cadena:'74.09 g Ca(OH)₂ × (1 mol/74.09 g) × (1 mol CaCO₃/1 mol Ca(OH)₂) × (100.09 g/1 mol CaCO₃)',hint:'Agua de cal + CO₂ → caliza. Relación 1:1. Prueba de CO₂ en laboratorio.'},
+  {rx:'Zn + H₂SO₄ → ZnSO₄ + H₂',dato:{f:'Zn',g:65.38},inc:{f:'H₂',r:2.02},cadena:'65.38 g Zn × (1 mol/65.38 g) × (1 mol H₂/1 mol Zn) × (2.016 g/1 mol H₂)',hint:'Sustitución simple. El zinc desplaza el hidrógeno del ácido. Relación 1:1.'},
+  {rx:'2H₂O → 2H₂ + O₂',dato:{f:'H₂O',g:36.04},inc:{f:'H₂',r:4.04},cadena:'36.04 g H₂O × (1 mol/18.02 g) × (2 mol H₂/2 mol H₂O) × (2.016 g/1 mol H₂)',hint:'Electrólisis del agua. Relación H₂O:H₂ = 1:1 (2:2 = 1:1).'},
+  {rx:'2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O',dato:{f:'C₂H₂',g:26.04},inc:{f:'CO₂',r:88.02},cadena:'26.04 g C₂H₂ × (1 mol/26.04 g) × (4 mol CO₂/2 mol C₂H₂) × (44.01 g/1 mol CO₂)',hint:'Combustión del acetileno (soldadura oxiacetilénica). Relación C₂H₂:CO₂ = 1:2.'}
 ];
 
 function genEstequiometriaTaller(count){
   const pool = _shuffle(GEN_STOICH.slice()).slice(0,Math.min(count,GEN_STOICH.length));
+  if(count > GEN_STOICH.length) count = GEN_STOICH.length;
   const html = pool.map(function(s,i){
     return '<div class="exercise-card">'
       +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
