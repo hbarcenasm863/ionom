@@ -924,7 +924,6 @@ function generateOxidationState(compounds){
   let html = '';
   compounds.forEach((c, i) => {
     const catIon = c.ions ? c.ions.find(ion => ion.t === 'cat') : null;
-    const hint = c.hint || '';
     let askEl = '';
     let answerEO = '';
     if(catIon){
@@ -953,10 +952,6 @@ function generateOxidationState(compounds){
           <span style="font-size:.82rem;color:var(--dimmer)">Estado de oxidación de ${askEl||'?'} =</span>
           <div style="border-bottom:2px solid var(--dimmer);width:60px;height:22px"></div>
         </div>
-        <details style="margin-top:14px">
-          <summary style="font-size:.75rem;color:var(--an);cursor:pointer;user-select:none">💡 Pista</summary>
-          <p style="font-size:.78rem;color:var(--dim);margin-top:6px;line-height:1.5;background:var(--surf2);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 8px 8px 0">${hint||'Usa la regla de electroneutralidad: suma de cargas = 0.'}</p>
-        </details>
       </div>`;
   });
   return html;
@@ -1002,7 +997,7 @@ function genReaccionTaller(count){
       +'<div style="margin:8px 0;font-size:.88rem"><strong>Tipo de reacción:</strong> _________________________</div>'
       +'<div style="font-size:.88rem"><strong>Justificación:</strong><div style="border-bottom:1px solid var(--brd);margin:8px 0;height:28px"></div><div style="border-bottom:1px solid var(--brd);margin:8px 0;height:28px"></div></div>'
       +'<details style="margin-top:10px;font-size:.78rem;color:var(--dim)"><summary style="cursor:pointer">Ver respuesta</summary>'
-      +'<div style="margin-top:6px;padding:8px;background:var(--ok-b);border-radius:6px;color:var(--ok-t)"><strong>'+r.tipo_rx+'</strong> — '+r.hint+'</div></details>'
+      +'<div style="margin-top:6px;padding:8px;background:var(--ok-b);border-radius:6px;color:var(--ok-t)"><strong>'+r.tipo_rx+'</strong></div></details>'
       +'</div>';
   }).join('');
   _showTaller('Taller — Tipos de Reacción Química', html);
@@ -1023,7 +1018,6 @@ function genBalanceoTaller(count){
       +'<th style="border:1px solid var(--brd);padding:6px;background:var(--bg2)">Productos</th>'
       +'<th style="border:1px solid var(--brd);padding:6px;background:var(--bg2)">¿Balanceado?</th></tr>'
       +'<tr><td colspan="4" style="border:1px solid var(--brd);padding:8px;color:var(--dim);text-align:center;font-style:italic">Completa la verificación contando átomos</td></tr></table>'
-      +'<p style="font-size:.75rem;color:var(--dim);border-top:1px solid var(--brd);margin-top:8px;padding-top:6px">Pista: '+b.hint+'</p>'
       +'<details style="margin-top:6px;font-size:.78rem"><summary style="cursor:pointer;color:var(--dim)">Ver coeficientes</summary>'
       +'<div style="margin-top:6px;padding:8px;background:var(--ok-b);border-radius:6px;color:var(--ok-t);font-family:var(--mono)">['+(b.coeficientes||[]).join(', ')+']</div></details>'
       +'</div>';
@@ -1105,7 +1099,6 @@ function genEstequiometriaTaller(count){
       +'</div>'
       +'<div style="font-family:var(--mono);font-weight:700;font-size:.95rem;margin-top:10px;color:var(--ok-t)">x = __________ g '+s.inc.f+'</div>'
       +'</div>'
-      +'<p style="font-size:.75rem;color:var(--dim);border-top:1px solid var(--brd);margin-top:8px;padding-top:6px">Pista: '+s.hint+'</p>'
       +'<details style="font-size:.78rem"><summary style="cursor:pointer;color:var(--dim)">Ver solución completa</summary>'
       +'<div style="margin-top:6px;padding:8px;background:var(--info-b);border-radius:6px;color:var(--info-t);font-family:var(--mono);font-size:.8rem">'+s.cadena+' = <strong>'+s.inc.r+' g</strong></div></details>'
       +'</div>';
