@@ -724,40 +724,47 @@ function generateExercises(){
   if(selectedGroups.includes('reaccion')) specialSections.push('reaccion');
 
   if(specialSections.length > 0){
-    // Distribute count among sections; each gets at least 2
-    const perSection = Math.max(2, Math.round(count / specialSections.length));
+    const n = specialSections.length;
+    // Distribute count as equally as possible; remainder goes to first section
+    const base = Math.max(2, Math.floor(count / n));
+    const remainder = count - base * n;
     const sectionParts = [];
     const sectionTitles = [];
-    specialSections.forEach(function(sec){
+    var globalOffset = 0;
+    specialSections.forEach(function(sec, idx){
+      const perSection = base + (idx === 0 ? remainder : 0);
+      var h = null;
       if(sec === 'balanceo'){
-        const h = _buildBalanceoHTML(perSection);
-        if(h){ sectionParts.push(h); sectionTitles.push('⚖️ Balanceo de Ecuaciones'); }
+        h = _buildBalanceoHTML(perSection, globalOffset);
+        if(h){ sectionTitles.push('⚖️ Balanceo de Ecuaciones'); globalOffset += perSection; }
       } else if(sec === 'mol-masa'){
-        const h = _buildMolMasaHTML(Math.max(2, Math.round(perSection/2)));
-        if(h){ sectionParts.push(h); sectionTitles.push('⚛️ Mol y Masa Molar'); }
+        // mol-masa generates 2 cards per compound; perSection = number of cards
+        const evenCount = perSection % 2 === 0 ? perSection : perSection + 1;
+        h = _buildMolMasaHTML(evenCount, globalOffset);
+        if(h){ sectionTitles.push('⚛️ Mol y Masa Molar'); globalOffset += evenCount; }
       } else if(sec === 'estequiometria'){
-        const h = _buildEstequiometriaHTML(perSection);
-        if(h){ sectionParts.push(h); sectionTitles.push('🧮 Estequiometría'); }
+        h = _buildEstequiometriaHTML(perSection, globalOffset);
+        if(h){ sectionTitles.push('🧮 Estequiometría'); globalOffset += perSection; }
       } else if(sec === 'reaccion'){
-        const h = _buildReaccionHTML(perSection);
-        if(h){ sectionParts.push(h); sectionTitles.push('⚗️ Tipos de Reacción'); }
+        h = _buildReaccionHTML(perSection, globalOffset);
+        if(h){ sectionTitles.push('⚗️ Tipos de Reacción'); globalOffset += perSection; }
       }
+      if(h) sectionParts.push({html: h, title: sectionTitles[sectionTitles.length-1]});
     });
     if(!sectionParts.length){ alert('El banco no tiene ejercicios disponibles para los grupos seleccionados.'); return; }
-    const titulo = specialSections.length === 1
-      ? 'Taller — ' + sectionTitles[0]
-      : 'Taller Integrado — ' + sectionTitles.join(' · ');
-    // Wrap each section with a header when there are multiple
+    const titulo = sectionParts.length === 1
+      ? 'Taller — ' + sectionParts[0].title
+      : 'Taller Integrado — ' + sectionParts.map(function(s){return s.title;}).join(' · ');
     let combined;
     if(sectionParts.length === 1){
-      combined = sectionParts[0];
+      combined = sectionParts[0].html;
     } else {
-      combined = sectionParts.map(function(html, idx){
+      combined = sectionParts.map(function(s){
         return '<div style="margin:24px 0 8px;padding:10px 16px;background:var(--cat-b);border-radius:var(--r);font-weight:800;font-size:.95rem;color:var(--cat-t)">'
-          + sectionTitles[idx] + '</div>' + html;
+          + s.title + '</div>' + s.html;
       }).join('');
     }
-    _showTaller(titulo, combined);
+    _showTaller(titulo + ' — ' + globalOffset + ' ejercicios', combined);
     return;
   }
 
@@ -1016,13 +1023,14 @@ function _showTaller(titulo, html){
 
 function _pickN(src,n){if(src.length>=n)return _shuffle(src).slice(0,n);const r=[];let b=[];while(r.length<n){if(!b.length)b=_shuffle([...src]);const last=r.length?r[r.length-1].formula||r[r.length-1].ecuacion:'';let idx=b.findIndex(c=>(c.formula||c.ecuacion)!==last);if(idx<0)idx=0;r.push(b.splice(idx,1)[0]);}return r;}
 
-function _buildReaccionHTML(count){
+function _buildReaccionHTML(count, offset){
+  offset = offset||0;
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
   const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='reaccion';}), count);
   if(!pool.length) return null;
   return pool.map(function(r,i){
     return '<div class="exercise-card">'
-      +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
+      +'<div class="ex-num">Ejercicio '+(offset+i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+r.ecuacion+'</div>'
       +'<p style="font-size:.88rem;margin:8px 0">Clasifica el tipo de reacción y justifica tu respuesta.</p>'
       +'<div style="margin:8px 0;font-size:.88rem"><strong>Tipo de reacción:</strong> _________________________</div>'
@@ -1038,13 +1046,14 @@ function genReaccionTaller(count){
   _showTaller('Taller — Tipos de Reacción Química', h);
 }
 
-function _buildBalanceoHTML(count){
+function _buildBalanceoHTML(count, offset){
+  offset = offset||0;
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
   const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='balanceo';}), count);
   if(!pool.length) return null;
   return pool.map(function(b,i){
     return '<div class="exercise-card">'
-      +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
+      +'<div class="ex-num">Ejercicio '+(offset+i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--an-t);background:var(--an-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+b.ecuacion_sin_coef+'</div>'
       +'<p style="font-size:.88rem;margin:6px 0">Completa los coeficientes para balancear la ecuación (usa mínimos enteros).</p>'
       +'<table style="width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0"><tr>'
@@ -1064,14 +1073,17 @@ function genBalanceoTaller(count){
   _showTaller('Taller — Balanceo de Ecuaciones por Tanteo', h);
 }
 
-function _buildMolMasaHTML(count){
+// count = número de TARJETAS de ejercicio (2 tarjetas por compuesto); offset = numeración global
+function _buildMolMasaHTML(count, offset){
+  offset = offset||0;
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='mol-masa';}), count);
+  const numCompounds = Math.max(1, Math.ceil(count/2));
+  const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='mol-masa';}), numCompounds);
   if(!pool.length) return null;
   return pool.flatMap(function(m,i){
     return [
       '<div class="exercise-card">'
-        +'<div class="ex-num">Ejercicio '+(i*2+1)+'</div>'
+        +'<div class="ex-num">Ejercicio '+(offset+i*2+1)+'</div>'
         +'<p style="font-size:.88rem;margin:8px 0">Calcula la masa molar de <strong style="font-family:var(--mono)">'+m.formula+'</strong> y determina cuántos gramos hay en <strong>2.5 mol</strong>.</p>'
         +'<div style="background:var(--ok-b);border:1.5px solid var(--ok);border-radius:8px;padding:12px;margin:10px 0">'
         +'<div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ok-t);margin-bottom:6px">CÁLCULO MASA MOLAR:</div>'
@@ -1083,7 +1095,7 @@ function _buildMolMasaHTML(count){
         +'<div style="margin-top:6px;padding:8px;background:var(--info-b);border-radius:6px;color:var(--info-t);font-family:var(--mono)">'+m.formula_calc+' → x = 2.5 × '+m.masa_molar+' = '+(2.5*m.masa_molar).toFixed(2)+' g</div></details>'
         +'</div>',
       '<div class="exercise-card">'
-        +'<div class="ex-num">Ejercicio '+(i*2+2)+'</div>'
+        +'<div class="ex-num">Ejercicio '+(offset+i*2+2)+'</div>'
         +'<p style="font-size:.88rem;margin:8px 0">¿Cuántos moles hay en <strong>'+(m.masa_molar*1.5).toFixed(2)+' g</strong> de <strong style="font-family:var(--mono)">'+m.formula+'</strong>?</p>'
         +'<div style="background:var(--ok-b);border:1.5px solid var(--ok);border-radius:8px;padding:12px;margin:10px 0">'
         +'<div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ok-t);margin-bottom:6px">FACTORES DE CONVERSIÓN:</div>'
@@ -1096,7 +1108,8 @@ function _buildMolMasaHTML(count){
   }).join('');
 }
 function genMolMasaTaller(count){
-  const h = _buildMolMasaHTML(Math.max(2, Math.round(count/2)));
+  // standalone: count = number of exercise cards desired
+  const h = _buildMolMasaHTML(count);
   if(!h){alert('El banco no tiene compuestos de mol/masa molar cargados.');return;}
   _showTaller('Taller — Mol y Masa Molar', h);
 }
@@ -1123,13 +1136,14 @@ const GEN_STOICH=[
   {rx:'2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O',dato:{f:'C₂H₂',g:26.04},inc:{f:'CO₂',r:88.02},cadena:'26.04 g C₂H₂ × (1 mol/26.04 g) × (4 mol CO₂/2 mol C₂H₂) × (44.01 g/1 mol CO₂)',hint:'Combustión del acetileno (soldadura oxiacetilénica). Relación C₂H₂:CO₂ = 1:2.'}
 ];
 
-function _buildEstequiometriaHTML(count){
+function _buildEstequiometriaHTML(count, offset){
+  offset = offset||0;
   const n = Math.min(count, GEN_STOICH.length);
   const pool = _shuffle(GEN_STOICH.slice()).slice(0, n);
   if(!pool.length) return null;
   return pool.map(function(s,i){
     return '<div class="exercise-card">'
-      +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
+      +'<div class="ex-num">Ejercicio '+(offset+i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+s.rx+'</div>'
       +'<p style="font-size:.88rem;margin:8px 0">Tienes <strong>'+s.dato.g+' g de '+s.dato.f+'</strong>. ¿Cuántos gramos de <strong>'+s.inc.f+'</strong> se producen?<br><em style="font-size:.75rem;opacity:.7">Usa factores de conversión — NO regla de tres.</em></p>'
       +'<div style="background:var(--ok-b);border:1.5px solid var(--ok);border-radius:8px;padding:12px;margin:10px 0">'
