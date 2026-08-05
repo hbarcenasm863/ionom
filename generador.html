@@ -716,18 +716,49 @@ function generateExercises(){
     return;
   }
 
-  // ── Nuevos tipos de taller curricular ──
-  if(type === 'balanceo' || selectedGroups.includes('balanceo-grupo')){
-    genBalanceoTaller(count); return;
-  }
-  if(type === 'mol-masa' || selectedGroups.includes('mol-masa-grupo')){
-    genMolMasaTaller(count); return;
-  }
-  if(type === 'estequiometria'){
-    genEstequiometriaTaller(count); return;
-  }
-  if(selectedGroups.includes('reaccion')){
-    genReaccionTaller(count); return;
+  // ── Tipos de taller curricular: pueden combinarse ──
+  const specialSections = [];
+  if(type === 'balanceo' || selectedGroups.includes('balanceo-grupo')) specialSections.push('balanceo');
+  if(type === 'mol-masa'  || selectedGroups.includes('mol-masa-grupo'))  specialSections.push('mol-masa');
+  if(type === 'estequiometria') specialSections.push('estequiometria');
+  if(selectedGroups.includes('reaccion')) specialSections.push('reaccion');
+
+  if(specialSections.length > 0){
+    // Distribute count among sections; each gets at least 2
+    const perSection = Math.max(2, Math.round(count / specialSections.length));
+    const sectionParts = [];
+    const sectionTitles = [];
+    specialSections.forEach(function(sec){
+      if(sec === 'balanceo'){
+        const h = _buildBalanceoHTML(perSection);
+        if(h){ sectionParts.push(h); sectionTitles.push('⚖️ Balanceo de Ecuaciones'); }
+      } else if(sec === 'mol-masa'){
+        const h = _buildMolMasaHTML(Math.max(2, Math.round(perSection/2)));
+        if(h){ sectionParts.push(h); sectionTitles.push('⚛️ Mol y Masa Molar'); }
+      } else if(sec === 'estequiometria'){
+        const h = _buildEstequiometriaHTML(perSection);
+        if(h){ sectionParts.push(h); sectionTitles.push('🧮 Estequiometría'); }
+      } else if(sec === 'reaccion'){
+        const h = _buildReaccionHTML(perSection);
+        if(h){ sectionParts.push(h); sectionTitles.push('⚗️ Tipos de Reacción'); }
+      }
+    });
+    if(!sectionParts.length){ alert('El banco no tiene ejercicios disponibles para los grupos seleccionados.'); return; }
+    const titulo = specialSections.length === 1
+      ? 'Taller — ' + sectionTitles[0]
+      : 'Taller Integrado — ' + sectionTitles.join(' · ');
+    // Wrap each section with a header when there are multiple
+    let combined;
+    if(sectionParts.length === 1){
+      combined = sectionParts[0];
+    } else {
+      combined = sectionParts.map(function(html, idx){
+        return '<div style="margin:24px 0 8px;padding:10px 16px;background:var(--cat-b);border-radius:var(--r);font-weight:800;font-size:.95rem;color:var(--cat-t)">'
+          + sectionTitles[idx] + '</div>' + html;
+      }).join('');
+    }
+    _showTaller(titulo, combined);
+    return;
   }
 
   if(selectedGroups.length === 0 || !type){
@@ -985,11 +1016,11 @@ function _showTaller(titulo, html){
 
 function _pickN(src,n){if(src.length>=n)return _shuffle(src).slice(0,n);const r=[];let b=[];while(r.length<n){if(!b.length)b=_shuffle([...src]);const last=r.length?r[r.length-1].formula||r[r.length-1].ecuacion:'';let idx=b.findIndex(c=>(c.formula||c.ecuacion)!==last);if(idx<0)idx=0;r.push(b.splice(idx,1)[0]);}return r;}
 
-function genReaccionTaller(count){
+function _buildReaccionHTML(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='reaccion'), count);
-  if(!pool.length){alert('El banco no tiene ecuaciones de reacción cargadas.');return;}
-  const html = pool.map(function(r,i){
+  const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='reaccion';}), count);
+  if(!pool.length) return null;
+  return pool.map(function(r,i){
     return '<div class="exercise-card">'
       +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+r.ecuacion+'</div>'
@@ -1000,14 +1031,18 @@ function genReaccionTaller(count){
       +'<div style="margin-top:6px;padding:8px;background:var(--ok-b);border-radius:6px;color:var(--ok-t)"><strong>'+r.tipo_rx+'</strong></div></details>'
       +'</div>';
   }).join('');
-  _showTaller('Taller — Tipos de Reacción Química', html);
+}
+function genReaccionTaller(count){
+  const h = _buildReaccionHTML(count);
+  if(!h){alert('El banco no tiene ecuaciones de reacción cargadas.');return;}
+  _showTaller('Taller — Tipos de Reacción Química', h);
 }
 
-function genBalanceoTaller(count){
+function _buildBalanceoHTML(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='balanceo'), count);
-  if(!pool.length){alert('El banco no tiene ecuaciones de balanceo cargadas.');return;}
-  const html = pool.map(function(b,i){
+  const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='balanceo';}), count);
+  if(!pool.length) return null;
+  return pool.map(function(b,i){
     return '<div class="exercise-card">'
       +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--an-t);background:var(--an-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+b.ecuacion_sin_coef+'</div>'
@@ -1022,15 +1057,18 @@ function genBalanceoTaller(count){
       +'<div style="margin-top:6px;padding:8px;background:var(--ok-b);border-radius:6px;color:var(--ok-t);font-family:var(--mono)">['+(b.coeficientes||[]).join(', ')+']</div></details>'
       +'</div>';
   }).join('');
-  _showTaller('Taller — Balanceo de Ecuaciones por Tanteo', html);
+}
+function genBalanceoTaller(count){
+  const h = _buildBalanceoHTML(count);
+  if(!h){alert('El banco no tiene ecuaciones de balanceo cargadas.');return;}
+  _showTaller('Taller — Balanceo de Ecuaciones por Tanteo', h);
 }
 
-function genMolMasaTaller(count){
+function _buildMolMasaHTML(count){
   const BANCO_ALL = typeof BANCO!=='undefined'?BANCO:[];
-  // count here is number of compounds; each generates 2 exercise cards
-  const pool = _pickN(BANCO_ALL.filter(c=>c.group==='mol-masa'), count);
-  if(!pool.length){alert('El banco no tiene compuestos de mol/masa molar cargados.');return;}
-  const html = pool.flatMap(function(m,i){
+  const pool = _pickN(BANCO_ALL.filter(function(c){return c.group==='mol-masa';}), count);
+  if(!pool.length) return null;
+  return pool.flatMap(function(m,i){
     return [
       '<div class="exercise-card">'
         +'<div class="ex-num">Ejercicio '+(i*2+1)+'</div>'
@@ -1056,7 +1094,11 @@ function genMolMasaTaller(count){
         +'</div>'
     ];
   }).join('');
-  _showTaller('Taller — Mol y Masa Molar', html);
+}
+function genMolMasaTaller(count){
+  const h = _buildMolMasaHTML(Math.max(2, Math.round(count/2)));
+  if(!h){alert('El banco no tiene compuestos de mol/masa molar cargados.');return;}
+  _showTaller('Taller — Mol y Masa Molar', h);
 }
 
 const GEN_STOICH=[
@@ -1081,10 +1123,11 @@ const GEN_STOICH=[
   {rx:'2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O',dato:{f:'C₂H₂',g:26.04},inc:{f:'CO₂',r:88.02},cadena:'26.04 g C₂H₂ × (1 mol/26.04 g) × (4 mol CO₂/2 mol C₂H₂) × (44.01 g/1 mol CO₂)',hint:'Combustión del acetileno (soldadura oxiacetilénica). Relación C₂H₂:CO₂ = 1:2.'}
 ];
 
-function genEstequiometriaTaller(count){
-  const pool = _shuffle(GEN_STOICH.slice()).slice(0,Math.min(count,GEN_STOICH.length));
-  if(count > GEN_STOICH.length) count = GEN_STOICH.length;
-  const html = pool.map(function(s,i){
+function _buildEstequiometriaHTML(count){
+  const n = Math.min(count, GEN_STOICH.length);
+  const pool = _shuffle(GEN_STOICH.slice()).slice(0, n);
+  if(!pool.length) return null;
+  return pool.map(function(s,i){
     return '<div class="exercise-card">'
       +'<div class="ex-num">Ejercicio '+(i+1)+'</div>'
       +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+s.rx+'</div>'
@@ -1103,7 +1146,11 @@ function genEstequiometriaTaller(count){
       +'<div style="margin-top:6px;padding:8px;background:var(--info-b);border-radius:6px;color:var(--info-t);font-family:var(--mono);font-size:.8rem">'+s.cadena+' = <strong>'+s.inc.r+' g</strong></div></details>'
       +'</div>';
   }).join('');
-  _showTaller('Taller — Estequiometría con Factores de Conversión', html);
+}
+function genEstequiometriaTaller(count){
+  const h = _buildEstequiometriaHTML(count);
+  if(!h){alert('No hay ejercicios de estequiometría disponibles.');return;}
+  _showTaller('Taller — Estequiometría con Factores de Conversión', h);
 }
 
 // ── Hamburger nav ──
