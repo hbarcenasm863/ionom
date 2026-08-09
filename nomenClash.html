@@ -2304,6 +2304,7 @@ function nextPlayerIndex(skip=false){
 
 function advanceTurn(skip=false, extraTurn=false){
   G.oxidationOverride=null;
+  G.discardCationUsedThisTurn=false;
   if(extraTurn){
     addLog(`🌟 ¡Turno Extra para ${currentPlayer().name}!`,'good');
     renderGame();
@@ -2533,6 +2534,12 @@ function showDiscardForCationModal(){
 function executeDiscardForCation(){
   document.getElementById('discardCationModal').remove();
   const cp=currentPlayer();
+  if(G.discardCationUsedThisTurn){
+    addLog('🔀 Ya cambiaste la base este turno — solo una vez por turno.','bad');
+    G.selectedCards=[];
+    renderGame();
+    return;
+  }
   if(G.cationDeck.length===0){
     addLog('🔀 No hay cationes en el mazo para cambiar la base.','bad');
     G.selectedCards=[];
@@ -2546,6 +2553,7 @@ function executeDiscardForCation(){
   if(G.cationDeck.length===0) recycleCationDeck();
   G.base=G.cationDeck.pop();
   G.selectedCards=[];
+  G.discardCationUsedThisTurn=true;
   // Robar 2 cartas para compensar el descarte — mano queda igual
   drawCards(G.currentPlayer,2);
   addLog(`🔀 ${cp.name} descartó 2 acciones → nueva base: <strong>${G.base.display} ${G.base.name}</strong>. Roba 2 cartas.`,'action');
@@ -3288,6 +3296,10 @@ function drawCard(){
     if(!checkWin()) advanceTurn();
     return;
   }
+  if(currentPlayer().hand.length>=MAX_HAND){
+    addLog(`Mano llena (máx ${MAX_HAND} cartas). Juega primero.`,'bad');
+    return;
+  }
   drawCards(G.currentPlayer,1);
   if(G.mustPlayAnion){
     addLog(`${currentPlayer().name} no pudo jugar anión tras el Cambio de Reactivo — pierde el turno.`,'bad');
@@ -3300,9 +3312,11 @@ function drawCard(){
   advanceTurn();
 }
 
+const MAX_HAND=12;
 function drawCards(playerIdx, n){
   for(let i=0;i<n;i++){
-    if(G.gameDeck.length>0) G.players[playerIdx].hand.push(G.gameDeck.pop());
+    if(G.gameDeck.length>0 && G.players[playerIdx].hand.length<MAX_HAND)
+      G.players[playerIdx].hand.push(G.gameDeck.pop());
   }
 }
 
@@ -3318,15 +3332,16 @@ function playActionCard(card, handIdx){
   const nextName=G.players[nextIdx].name;
 
   switch(card.effect){
-    case 'reverse':
+    case 'reverse': {
+      const drawTargetIdx=nextPlayerIndex(); // capture BEFORE flipping direction
       G.direction*=-1;
-      drawCards(nextPlayerIndex(),2);
+      drawCards(drawTargetIdx,2);
       addLog(`↺ ${cp.name} jugó Hidrólisis. Sentido invertido. ${nextName} roba 2.`,'action');
       renderGame();
       advanceTurn();
       break;
+    }
     case 'skip':
-      G.skipNext=true;
       addLog(`⚠ ${cp.name} jugó ¡Ácido! ${nextName} pierde su turno.`,'action');
       renderGame();
       advanceTurn(true);
@@ -3590,7 +3605,8 @@ function applyWildcardCatDouble(){
   if(idx!==undefined) cp.hand.splice(idx,1);
   G.selectedCards=[];
 
-  const chargeReal=G.oxidationOverride||G.base.charge;
+  const chargeReal=G.base.charge; // always use the base charge, not oxidationOverride
+  G.oxidationOverride=null;       // clear any prior oxidation so they don't stack
   const chargeDoble=chargeReal*2;
 
   // override = carga doble, pero el símbolo del catión sigue siendo el mismo
@@ -3648,9 +3664,10 @@ function aiPlayAction(cp, card, handIdx){
 
   switch(card.effect){
 
-    case 'reverse':
+    case 'reverse': {
+      const drawTargetIdx=nextPlayerIndex(); // capture BEFORE flipping direction
       G.direction*=-1;
-      drawCards(nextPlayerIndex(),2);
+      drawCards(drawTargetIdx,2);
       addLog(`↺ 🤖 ${cp.name} jugó Hidrólisis. Sentido invertido. ${nextName} roba 2.`,'action');
       showAIToast('↺', `${cp.name} jugó Hidrólisis`, `Sentido invertido · ${nextName} roba 2`, 2000);
       renderGame();
@@ -3661,9 +3678,9 @@ function aiPlayAction(cp, card, handIdx){
         'advanceTurn', []
       );
       break;
+    }
 
     case 'skip':
-      G.skipNext=true;
       addLog(`⚠ 🤖 ${cp.name} jugó ¡Ácido! ${nextName} pierde su turno.`,'action');
       showAIToast('⚠️', `${cp.name} jugó ¡Ácido!`, `${nextName} pierde su turno`, 2000);
       renderGame();
@@ -3806,7 +3823,8 @@ function aiTurnWithOxidation(newCharge){
   if(aiPlayOx){
     if(aiPlayOx.wildcardCharge!==null) G.wildcardCharge=aiPlayOx.wildcardCharge;
     const anionCards=aiPlayOx.cards;
-    const comp=neutralCompound(G.base, anionCards);
+    const playedBase=G.base; // capture BEFORE advancing the deck
+    const comp=neutralCompound(playedBase, anionCards);
     if(comp){
       const extraTurn=(comp&&comp.needsPrefix)||false;
       const indices=anionCards.map(a=>cp.hand.indexOf(a));
@@ -3814,7 +3832,7 @@ function aiTurnWithOxidation(newCharge){
       if(G.cationDeck.length===0) recycleCationDeck();
       G.base=G.cationDeck.pop();
       const anionParaNombreOx=anionCards.find(a=>a.effect!=='wildcard')||anionCards[0];
-      const formulaAIOx=buildFormula(G.base, comp.nAnion, anionParaNombreOx);
+      const formulaAIOx=buildFormula(playedBase, comp.nAnion, anionParaNombreOx);
       const nombreAIOx=getNombreTrad(formulaAIOx)||comp.name;
       cp.score = (cp.score || 0) + 1;
       addLog(`🤖 ${cp.name}: "${nombreAIOx}"${extraTurn?' 🌟':''}`, 'good');
@@ -4019,7 +4037,7 @@ function checkWin(){
 
     const st=document.getElementById('scoreTable');
     st.innerHTML='<div class="score-row" style="font-weight:700;color:var(--primary)"><span>Jugador</span><span>Cartas</span><span>Puntos</span></div>';
-    G.players.sort((a,b)=>a.hand.length-b.hand.length).forEach(p=>{
+    [...G.players].sort((a,b)=>a.hand.length-b.hand.length).forEach(p=>{
       const esGanador=p.hand.length===minCards;
       st.innerHTML+=`<div class="score-row" ${esGanador?'style="color:var(--primary);font-weight:700;"':''}>
         <span>${p.name}${esGanador?' 🏆':''}</span><span>${p.hand.length}</span><span>${p.score||0} ⚗</span></div>`;
