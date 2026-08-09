@@ -1342,7 +1342,7 @@
 
     <div class="card-action-box">
       <strong>🔄 Cambio de Reactivo — Reactivo &nbsp;<span style="background:var(--primary);color:white;border-radius:4px;padding:1px 6px;font-size:0.75rem;">×4</span></strong>
-      <p>Toma un catión nuevo del mazo → nueva base para todos. El siguiente jugador <strong>pierde su turno</strong>.</p>
+      <p>Toma un catión nuevo del mazo → nueva base. <strong>Debes jugar un anión inmediatamente</strong> (en el mismo turno). Si no puedes, <strong>pierdes tu propio turno</strong>.</p>
     </div>
 
     <div class="card-action-box">
@@ -1955,7 +1955,7 @@ const ACTIONS = [
   {symbol:'👁',charge:0,name:'Espionaje',        display:'Espía',   color:'action',
    effect:'espionage',   desc:'Ve mano oponente − roba 1 anión.',          copias:2},
   {symbol:'🔄',charge:0,name:'Cambio de Reactivo',display:'Reactivo',color:'action',
-   effect:'changecation',desc:'Nuevo catión = nueva base. Siguiente pierde turno.', copias:4},
+   effect:'changecation',desc:'Nuevo catión = nueva base. Debes jugar anión o pierdes tu turno.', copias:4},
 ];
 
 const GREEK = ['','','Di','Tri','Tetra','Penta','Hexa','Hepta','Octa','Nona','Deca'];
@@ -2277,7 +2277,7 @@ function startGame(){
     skipNext: false,
     pendingPlay: null,
     wildcardCharge: -1,
-    // Sin límite de acciones ni comodines
+    mustPlayAnion: false,   // true after changecation: player must play anion or lose own turn
     oxidationOverride: null,
     difficulty,
     log:[],
@@ -2449,8 +2449,19 @@ function tryPlay(){
   const cp=currentPlayer();
   const cards=G.selectedCards.map(i=>cp.hand[i]);
 
+  // ── Tras Cambio de Reactivo: solo se permiten aniones ────────────────────
+  if(G.mustPlayAnion){
+    const hasAction=cards.some(c=>c.kind==='action'&&c.effect!=='wildcard');
+    if(hasAction){
+      addLog('⚠️ Tras un Cambio de Reactivo debes jugar aniones — no puedes jugar otra carta de acción.','bad');
+      G.selectedCards=[];
+      renderGame();
+      return;
+    }
+  }
+
   // ── NUEVA MECÁNICA: 2 cartas de acción → cambiar catión base ──────────────
-  if(cards.length===2&&cards.every(c=>c.kind==='action')){
+  if(!G.mustPlayAnion && cards.length===2&&cards.every(c=>c.kind==='action')){
     showDiscardForCationModal();
     return;
   }
@@ -2693,6 +2704,7 @@ function checkNom(){
     drawCards(G.currentPlayer, 2);
     G.pendingPlay=null;
     G.selectedCards=[];
+    G.mustPlayAnion=false;
     renderGame();
     advanceTurn();
   }
@@ -2925,6 +2937,7 @@ function confirmPlay(){
   G.selectedCards=[];
   G.oxidationOverride=null;
   G.wildcardCharge=-1; // reset comodín
+  G.mustPlayAnion=false; // si había cambio de base pendiente, ya se cumplió
 }
 
 function showCompoundModal(cation, anion, comp, formula, extraTurn){
@@ -3114,8 +3127,8 @@ const CARD_INFO = {
     nombre: 'Cambio de Reactivo',
     icono: '🔄',
     tipo: 'Carta de Acción',
-    efecto: 'Toma un nuevo catión del mazo como base. El siguiente jugador <strong>pierde su turno</strong>.',
-    uso: 'Juégala cuando la base actual no encaja con tus aniones. Útil para cambiar a algo manejable.',
+    efecto: 'Toma un nuevo catión del mazo como base. <strong>Debes jugar un anión inmediatamente</strong> en el mismo turno. Si no puedes, <strong>pierdes tu propio turno</strong>.',
+    uso: 'Juégala solo cuando tienes aniones compatibles con la nueva base. Cambiar sin poder jugar anión = perder el turno.',
     ejemplo: 'Base Al³⁺ (difícil) → Cambio de Reactivo → nueva base Na⁺ → fácil de neutralizar.',
     notas: '4 copias en el mazo. Doble efecto: nueva base + castigo al siguiente.',
     color: 'var(--cobalt-light)',
@@ -3271,11 +3284,17 @@ function mostrarInfoBase(){
 function drawCard(){
   if(G.gameDeck.length===0){
     addLog('El mazo está vacío.','bad');
+    G.mustPlayAnion=false;
     if(!checkWin()) advanceTurn();
     return;
   }
   drawCards(G.currentPlayer,1);
-  addLog(`${currentPlayer().name} robó una carta.`,'info');
+  if(G.mustPlayAnion){
+    addLog(`${currentPlayer().name} no pudo jugar anión tras el Cambio de Reactivo — pierde el turno.`,'bad');
+    G.mustPlayAnion=false;
+  } else {
+    addLog(`${currentPlayer().name} robó una carta.`,'info');
+  }
   G.selectedCards=[];
   renderGame();
   advanceTurn();
@@ -3357,14 +3376,17 @@ function playActionCard(card, handIdx){
     case 'changecation':
       if(G.cationDeck.length===0){
         addLog('🔄 Cambio de Reactivo: no hay cationes en el mazo.','bad');
+        cp.hand.splice(handIdx,0,card);
+        G.selectedCards=[];
         renderGame();
-        break;
+        return;
       }
       G.base=G.cationDeck.pop();
-      G.skipNext=true;
-      addLog(`🔄 ${cp.name} jugó Cambio de Reactivo. Nueva base: ${G.base.display}. Siguiente pierde turno.`,'action');
+      G.mustPlayAnion=true;
+      G.selectedCards=[];
+      addLog(`🔄 ${cp.name} jugó Cambio de Reactivo. Nueva base: <strong>${G.base.display} ${G.base.name}</strong>. Debes jugar un anión ahora o pierdes el turno.`,'action');
       renderGame();
-      advanceTurn(true);
+      return; // No avanzar turno — el jugador debe jugar anión
   }
 }
 
@@ -3678,20 +3700,51 @@ function aiPlayAction(cp, card, handIdx){
       break;
     }
 
-    case 'changecation':
+    case 'changecation': {
       if(G.cationDeck.length===0) recycleCationDeck();
+      const oldBase = G.base;
       G.base=G.cationDeck.pop();
-      G.skipNext=true;
-      addLog(`🔄 🤖 ${cp.name} jugó Cambio de Reactivo. Nueva base: ${G.base.display}. ${nextName} pierde turno.`,'action');
+      addLog(`🔄 🤖 ${cp.name} jugó Cambio de Reactivo. Nueva base: ${G.base.display} ${G.base.name}.`,'action');
       showAIToast('🔄', `${cp.name} cambia la base`, `Nueva base: ${G.base.display} ${G.base.name}`, 2000);
       renderGame();
+      // IA debe jugar anión inmediatamente o pierde su propio turno
+      const newCatCharge = G.base.charge;
+      const followPlay = findAIPlay(cp.hand, newCatCharge);
+      if(followPlay){
+        if(followPlay.wildcardCharge!==null) G.wildcardCharge=followPlay.wildcardCharge;
+        const comp=neutralCompound(G.base, followPlay.cards);
+        if(comp){
+          const indices=followPlay.cards.map(a=>cp.hand.indexOf(a));
+          indices.sort((a,b)=>b-a).forEach(i=>cp.hand.splice(i,1));
+          const anionParaNombre=followPlay.cards.find(a=>a.effect!=='wildcard')||followPlay.cards[0];
+          const formulaIA=buildFormula(G.base, comp.nAnion, anionParaNombre);
+          const nombreIA=getNombreTrad(formulaIA)||comp.name;
+          cp.score=(cp.score||0)+1;
+          if(G.cationDeck.length===0) recycleCationDeck();
+          G.base=G.cationDeck.pop();
+          G.wildcardCharge=-1;
+          addLog(`⚗ 🤖 ${cp.name} jugó anión tras Cambio de Reactivo: "<strong>${nombreIA}</strong>".`,'good');
+          showAIActionModal(
+            `🤖 ${cp.name} jugó Cambio de Reactivo + Anión`,
+            '🔄',
+            `Nueva base <strong>${oldBase.display}</strong> → <strong>${G.base.display}</strong>. Formó: <strong>${nombreIA}</strong>.`,
+            'advanceTurn', []
+          );
+          if(checkWin()) return;
+          renderGame();
+          return;
+        }
+      }
+      // No pudo jugar anión — pierde su propio turno (sin saltar al rival)
+      addLog(`🔄 🤖 ${cp.name} no pudo jugar anión tras Cambio de Reactivo — pierde su turno.`,'bad');
       showAIActionModal(
         `🤖 ${cp.name} jugó Cambio de Reactivo`,
         '🔄',
-        `El catión base cambió a <strong>${G.base.display} ${G.base.name}</strong>.<br><strong>${nextName}</strong> pierde su próximo turno.`,
-        'advanceTurnSkip', []
+        `Nueva base: <strong>${G.base.display} ${G.base.name}</strong>.<br>La IA no pudo jugar un anión — pierde su propio turno.`,
+        'advanceTurn', []
       );
       break;
+    }
 
     case 'espionage': {
       const victims=G.players.filter((p,i)=>i!==G.currentPlayer&&p.hand.length>0);
