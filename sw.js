@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v8';
+const CACHE_NAME = 'ionom-v9';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -56,7 +56,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for everything else within scope
+  // HTML navigation: network-first so updates load on next visit
+  if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(event.request).then((cached) => cached || caches.match('/ionom/index.html'))
+        )
+    );
+    return;
+  }
+
+  // Cache-first for JS, CSS, images, fonts
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;

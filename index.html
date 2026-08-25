@@ -614,8 +614,13 @@ footer a:hover{text-decoration:underline}
 
 <!-- ===== HERO ===== -->
 <div class="hero">
-  <div class="hero-eyebrow">Nomenclatura Inorgánica · Sistema MDEC</div>
-  <h1>Nombra cualquier compuesto<br><em>inorgánico</em> sin memorizar</h1>
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:4px">
+    <img src="assets/logo.png" alt="IonNom" style="height:60px;width:60px;object-fit:contain;border-radius:12px;flex-shrink:0;" onerror="this.style.display='none'">
+    <div>
+      <div class="hero-eyebrow" style="margin-bottom:4px">Nomenclatura Inorgánica · Sistema MDEC</div>
+      <h1 style="margin-bottom:0">Nombra cualquier compuesto<br><em>inorgánico</em> sin memorizar</h1>
+    </div>
+  </div>
   <p class="hero-sub">IonNom te enseña los tres sistemas de nomenclatura — Tradicional, Stock e IUPAC — usando un código de cuatro colores. Identifica la función química de cada parte y construye el nombre paso a paso.</p>
 
   <!-- Live formula demo — the page demonstrates its own method -->
@@ -1044,11 +1049,24 @@ function toggleNarration() {
   });
 }
 
-// Register Service Worker
+// Register Service Worker with auto-update on new version
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/ionom/sw.js', {scope: '/ionom/'}).then(() => {
-    console.log('IonNom PWA: Service Worker registrado');
+  navigator.serviceWorker.register('/ionom/sw.js', {scope: '/ionom/'}).then(reg => {
+    reg.update(); // check for newer SW on every page load
+    reg.addEventListener('updatefound', () => {
+      const sw = reg.installing;
+      sw.addEventListener('statechange', () => {
+        if (sw.state === 'activated' && navigator.serviceWorker.controller) {
+          location.reload();
+        }
+      });
+    });
   }).catch(err => console.log('IonNom PWA: Error en SW', err));
+
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!reloading) { reloading = true; location.reload(); }
+  });
 }
 
 // PWA Install Handler
