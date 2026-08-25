@@ -168,7 +168,10 @@ footer a:hover{text-decoration:underline}
 <div class="app">
 
 <div class="intro-card">
-  <h1>Ion<em>Nom</em></h1>
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:10px">
+    <img src="assets/logo.png" alt="IonNom logo" style="height:64px;width:64px;object-fit:contain;border-radius:12px;flex-shrink:0;" onerror="this.style.display='none'">
+    <h1>Ion<em>Nom</em></h1>
+  </div>
   <p>Aprende los tres sistemas de nomenclatura inorgánica — Tradicional, Stock e IUPAC — usando el modelo visual de colores <strong>2+matiz</strong>. Cada color representa una función química diferente.</p>
   <div class="four-tags">
     <span class="ft cat">① Ámbar · Catión</span>
@@ -327,11 +330,28 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
-// Register Service Worker
+// Register Service Worker with auto-update on new version
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then(() => {
-    console.log('IonNom PWA: Service Worker registrado');
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    // Check for a newer SW immediately on every page load
+    reg.update();
+
+    reg.addEventListener('updatefound', () => {
+      const sw = reg.installing;
+      sw.addEventListener('statechange', () => {
+        // New SW activated and a previous one was controlling — reload to use fresh cache
+        if (sw.state === 'activated' && navigator.serviceWorker.controller) {
+          location.reload();
+        }
+      });
+    });
   }).catch(err => console.log('IonNom PWA: Error en SW', err));
+
+  // Guard against double-reload
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!reloading) { reloading = true; location.reload(); }
+  });
 }
 
 // PWA Install Handler — modal only opens on button click, never on load
