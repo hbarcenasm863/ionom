@@ -2518,16 +2518,12 @@ function updateStats(){
 
 function scheduleNext(ms){
   stopTimer();
-  if(ms>0){
-    setTimeout(()=>{ST.idx++;loadQuestion();},ms);
-  } else {
-    const fb=document.getElementById('feedback');
-    const btn=document.createElement('button');
-    btn.className='btn-next';
-    btn.textContent='Siguiente pregunta →';
-    btn.onclick=()=>{ST.idx++;loadQuestion();};
-    fb.appendChild(btn);
-  }
+  const fb=document.getElementById('feedback');
+  const btn=document.createElement('button');
+  btn.className='btn-next';
+  btn.textContent='Siguiente pregunta →';
+  btn.onclick=()=>{ST.idx++;loadQuestion();};
+  fb.appendChild(btn);
 }
 
 // ── End ──
