@@ -314,16 +314,25 @@ function speak(text){
   window.speechSynthesis.cancel();
   document.getElementById('tts-stop-btn').style.display='block';
   _ttsUtt=new SpeechSynthesisUtterance(text);
-  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.92; _ttsUtt.pitch=1.05;
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
   _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
-  function loadVoice(){
+  function pickVoice(){
     const v=window.speechSynthesis.getVoices();
-    const esp=v.find(x=>/es(-CO|-419|-ES|-MX)?/i.test(x.lang));
-    if(esp) _ttsUtt.voice=esp;
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
     window.speechSynthesis.speak(_ttsUtt);
   }
-  if(window.speechSynthesis.getVoices().length) loadVoice();
-  else window.speechSynthesis.onvoiceschanged=loadVoice;
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
 }
 function stopTTS(){
   window.speechSynthesis && window.speechSynthesis.cancel();

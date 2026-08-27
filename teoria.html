@@ -497,8 +497,11 @@ function speak(text, onEnd){
   };
   const loadVoice = () => {
     const voices = window.speechSynthesis.getVoices();
-    const esp = voices.find(v=>v.lang==='es-CO')||voices.find(v=>v.lang.startsWith('es'))||voices[0];
-    if(esp) _ttsUtt.voice = esp;
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL'];
+    let chosen=null;
+    for(const lang of prefs){ chosen=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase()); if(chosen) break; }
+    if(!chosen) chosen=voices.find(v=>/^es/i.test(v.lang)&&!/^pt/i.test(v.lang));
+    if(chosen) _ttsUtt.voice=chosen;
     window.speechSynthesis.speak(_ttsUtt);
   };
   if(window.speechSynthesis.getVoices().length) loadVoice();

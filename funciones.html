@@ -2182,15 +2182,20 @@ function speak(text, onEnd){
   TTS_UTT.lang = 'es-CO';
   TTS_UTT.rate = 0.92;
   TTS_UTT.pitch = 1.05;
-  const voices = window.speechSynthesis.getVoices();
-  const esp = voices.find(function(v){return v.lang.startsWith('es');})||voices[0];
-  if(esp) TTS_UTT.voice = esp;
   if(onEnd) TTS_UTT.onend = onEnd;
-  window.speechSynthesis.speak(TTS_UTT);
+  function pickVoice(){
+    const voices = window.speechSynthesis.getVoices();
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL'];
+    let chosen=null;
+    for(const lang of prefs){ chosen=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase()); if(chosen) break; }
+    if(!chosen) chosen=voices.find(v=>/^es/i.test(v.lang)&&!/^pt/i.test(v.lang));
+    if(chosen) TTS_UTT.voice=chosen;
+    window.speechSynthesis.speak(TTS_UTT);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
 }
 function stopSpeech(){ window.speechSynthesis && window.speechSynthesis.cancel(); }
-// Preload voices
-if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); };
 
 /* ══════════ MAYER_DATA ══════════ */
 const MAYER_DATA = [
@@ -2494,12 +2499,7 @@ function toggleTheme(){
 /* ══════════ TTS speakText ══════════ */
 function speakText(btn){
   var txt = btn.getAttribute('data-text');
-  if(!txt) return;
-  var u = new SpeechSynthesisUtterance(txt);
-  u.lang = 'es-CO';
-  u.rate = 0.9;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  if(txt) speak(txt);
 }
 
 // ── Hamburger nav ──
