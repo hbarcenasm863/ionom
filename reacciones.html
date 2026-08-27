@@ -138,6 +138,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
 </style>
 </head>
 <body>
@@ -183,7 +185,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── INTRO ── -->
   <div class="sect">
-    <h2>¿Qué es una reacción química?</h2>
+    <h2>¿Qué es una reacción química? <button class="tts-btn" onclick="speakText(this)" data-text="Una reacción química ocurre cuando uno o más reactivos se transforman en productos nuevos. Los átomos no desaparecen: se reorganizan. La ley de Conservación de la Masa, de Lavoisier, dice que la masa total de los reactivos siempre es igual a la masa total de los productos.">🔊 Escuchar</button></h2>
     <p>Una <strong>reacción química</strong> ocurre cuando una o más sustancias (<strong>reactivos</strong>) se transforman en sustancias nuevas (<strong>productos</strong>). Los átomos no desaparecen ni aparecen de la nada: se reorganizan.</p>
     <p>La ecuación química la representamos así:</p>
     <div style="background:var(--surf2);border:1.5px dashed var(--brd2);border-radius:var(--rs);padding:14px 18px;font-family:var(--mono);font-size:.95rem;margin:10px 0;text-align:center">
@@ -198,7 +200,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── 6 TIPOS ── -->
   <div class="sect">
-    <h2>Los 6 tipos de reacción</h2>
+    <h2>Los 6 tipos de reacción <button class="tts-btn" onclick="speakText(this)" data-text="Existen seis tipos principales de reacción química. La síntesis une sustancias para formar una sola. La descomposición divide una sustancia en varias. La sustitución simple reemplaza un elemento en un compuesto. La sustitución doble intercambia partes entre dos compuestos. La combustión quema un combustible con oxígeno. La neutralización combina un ácido con una base para formar sal y agua.">🔊 Escuchar</button></h2>
     <div class="rx-grid">
 
       <div class="rx-card sintesis">
@@ -254,7 +256,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── TABLA RESUMEN ── -->
   <div class="sect">
-    <h2>Tabla resumen</h2>
+    <h2>Tabla resumen <button class="tts-btn" onclick="speakText(this)" data-text="Esta tabla resume los seis tipos de reacción con su esquema general y una clave para reconocerlos. Síntesis: varios reactivos forman un producto. Descomposición: un reactivo produce varios. Sustitución simple: un elemento entra y otro sale. Sustitución doble: dos compuestos intercambian partes. Combustión: hay oxígeno como reactivo y se producen dióxido de carbono y agua. Neutralización: siempre produce sal y agua.">🔊 Escuchar</button></h2>
     <div style="overflow-x:auto">
     <table class="tbl">
       <thead><tr>
@@ -274,7 +276,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── SEÑALES DE RECONOCIMIENTO ── -->
   <div class="sect">
-    <h2>Señales visuales para identificar el tipo</h2>
+    <h2>Señales visuales para identificar el tipo <button class="tts-btn" onclick="speakText(this)" data-text="Para identificar el tipo de reacción, sigue estos pasos: si hay un solo producto, es síntesis. Si hay un solo reactivo, es descomposición. Si el oxígeno es reactivo y se producen dióxido de carbono y agua, es combustión. Si un ácido y una base producen sal y agua, es neutralización. Si un elemento reemplaza a otro en un compuesto, es sustitución simple. Si dos compuestos intercambian sus partes, es sustitución doble.">🔊 Escuchar</button></h2>
     <div class="warn-box">⚠️ <strong>Truco del experto:</strong> primero cuenta los reactivos y los productos. Luego busca O₂ como reactivo (combustión) o H₂O como producto junto a una sal (neutralización).</div>
     <ol style="margin-left:20px;margin-top:12px">
       <li style="margin-bottom:10px"><strong>¿Hay un solo producto?</strong> → Síntesis</li>
@@ -288,7 +290,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── QUIZ ── -->
   <div class="sect quiz-sect" id="quiz-sect">
-    <h2>✅ Practica — ¿Qué tipo es?</h2>
+    <h2>✅ Practica — ¿Qué tipo es? <button class="tts-btn" onclick="speakText(this)" data-text="Pon a prueba tus conocimientos. Se te mostrará una ecuación química y deberás identificar a qué tipo de reacción pertenece entre las seis categorías que aprendiste.">🔊 Escuchar</button></h2>
     <div id="quiz-area"></div>
   </div>
 
@@ -298,7 +300,36 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
   </footer>
 </div>
 
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 <script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.92; _ttsUtt.pitch=1.05;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function loadVoice(){
+    const v=window.speechSynthesis.getVoices();
+    const esp=v.find(x=>/es(-CO|-419|-ES|-MX)?/i.test(x.lang));
+    if(esp) _ttsUtt.voice=esp;
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) loadVoice();
+  else window.speechSynthesis.onvoiceschanged=loadVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const el=document.querySelector('main,.content,.page-content,.app');
+  const txt=(el?el.innerText:document.body.innerText).replace(/\s+/g,' ').trim();
+  speak(txt.slice(0,4000));
+}
 // Theme persistence
 (function(){
   const saved=localStorage.getItem('ion-theme');

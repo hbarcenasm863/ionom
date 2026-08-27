@@ -132,6 +132,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
 </style>
 </head>
 <body>
@@ -177,7 +179,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── POR QUÉ BALANCEAR ── -->
   <div class="sect">
-    <h2>¿Por qué hay que balancear?</h2>
+    <h2>¿Por qué hay que balancear? <button class="tts-btn" onclick="speakText(this)" data-text="La ley de Conservación de la Masa establece que los átomos no se crean ni se destruyen en una reacción. Balancear una ecuación significa ajustar los coeficientes estequiométricos para que el número de átomos de cada elemento sea igual en reactivos y en productos. Solo se pueden cambiar los coeficientes, nunca los subíndices de las fórmulas.">🔊 Escuchar</button></h2>
     <p>La <strong>Ley de Conservación de la Masa</strong> dice que los átomos no se crean ni se destruyen en una reacción: los que entran como reactivos son exactamente los mismos que salen como productos, reorganizados.</p>
     <p>Cuando escribimos una ecuación sin balancear, estamos diciendo que "aparecen" o "desaparecen" átomos, lo cual es físicamente imposible. Balancear es ajustar los <strong>coeficientes estequiométricos</strong> (los números delante de cada fórmula) hasta que los átomos cuadren.</p>
     <div class="info-box">
@@ -193,7 +195,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── MÉTODO DE TANTEO ── -->
   <div class="sect">
-    <h2>Método de tanteo (inspección)</h2>
+    <h2>Método de tanteo (inspección) <button class="tts-btn" onclick="speakText(this)" data-text="El método de tanteo consiste en ajustar los coeficientes observando la ecuación. Primero lista los átomos de cada elemento. Empieza por el elemento que aparece en menos compuestos. Coloca coeficientes y ajusta en cascada. Verifica que todos los átomos cuadren en reactivos y productos. Si hay fracciones, multiplica toda la ecuación para obtener coeficientes enteros.">🔊 Escuchar</button></h2>
     <p>El método de tanteo consiste en ajustar los coeficientes <strong>observando</strong> la ecuación e intentando hasta que coincidan. Hay una estrategia que hace el proceso más rápido:</p>
     <div class="steps">
       <div class="step">
@@ -236,7 +238,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── EJEMPLO PASO A PASO ── -->
   <div class="sect">
-    <h2>Ejemplo completo paso a paso</h2>
+    <h2>Ejemplo completo paso a paso <button class="tts-btn" onclick="speakText(this)" data-text="Se balancea la ecuación aluminio más oxígeno produce trióxido de dialuminio. Primero se balancea el aluminio poniendo 2 aluminio a la izquierda. Luego se balancea el oxígeno usando la fracción 3 medios de oxígeno molecular. Finalmente se multiplica toda la ecuación por 2 para eliminar la fracción. El resultado es: 4 aluminio más 3 oxígeno molecular produce 2 trióxido de dialuminio.">🔊 Escuchar</button></h2>
     <p><strong>Ecuación:</strong> Al + O₂ → Al₂O₃</p>
     <div class="steps">
       <div class="step">
@@ -286,7 +288,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── REGLAS PRÁCTICAS ── -->
   <div class="sect">
-    <h2>Reglas prácticas (trucos)</h2>
+    <h2>Reglas prácticas (trucos) <button class="tts-btn" onclick="speakText(this)" data-text="En la combustión de hidrocarburos, balancea primero el carbono, luego el hidrógeno y por último el oxígeno. Si un ion poliatómico como sulfato o nitrato aparece intacto en ambos lados, trátalo como una unidad. Usa siempre la mínima expresión entera de coeficientes. El coeficiente 1 no se escribe delante de una fórmula. Recuerda que el coeficiente multiplica a todos los átomos de esa fórmula.">🔊 Escuchar</button></h2>
     <ul>
       <li><strong>Combustión de hidrocarburos Cₓ Hᵧ + O₂ → CO₂ + H₂O:</strong> Balancea C primero con CO₂, luego H con H₂O, y finalmente ajusta O con O₂.</li>
       <li><strong>Iones poliatómicos (SO₄²⁻, NO₃⁻, PO₄³⁻…):</strong> Si el grupo aparece intacto en ambos lados, trátalo como una unidad y no lo descompongas en átomos.</li>
@@ -298,7 +300,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── PRÁCTICA INTERACTIVA ── -->
   <div class="sect" style="border-top:3px solid var(--ok)!important">
-    <h2>✅ Práctica interactiva</h2>
+    <h2>✅ Práctica interactiva <button class="tts-btn" onclick="speakText(this)" data-text="Practica balanceando ecuaciones ingresando los coeficientes correctos. Puedes pedir una pista si te atascas o ver la respuesta. El coeficiente 1 también debe escribirse en los campos de entrada.">🔊 Escuchar</button></h2>
     <p style="font-size:.84rem;color:var(--tx2)">Ingresa los coeficientes para balancear. El coeficiente 1 también hay que escribirlo aquí.</p>
     <div id="bal-container"></div>
   </div>
@@ -309,7 +311,36 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
   </footer>
 </div>
 
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 <script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.92; _ttsUtt.pitch=1.05;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function loadVoice(){
+    const v=window.speechSynthesis.getVoices();
+    const esp=v.find(x=>/es(-CO|-419|-ES|-MX)?/i.test(x.lang));
+    if(esp) _ttsUtt.voice=esp;
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) loadVoice();
+  else window.speechSynthesis.onvoiceschanged=loadVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const el=document.querySelector('main,.content,.page-content,.app');
+  const txt=(el?el.innerText:document.body.innerText).replace(/\s+/g,' ').trim();
+  speak(txt.slice(0,4000));
+}
 (function(){const saved=localStorage.getItem('ion-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
   const cur=document.documentElement.getAttribute('data-theme');
