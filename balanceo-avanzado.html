@@ -154,6 +154,15 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 @media(max-width:540px){.mq-opts{grid-template-columns:1fr}.tab-btn{padding:8px 12px;font-size:.8rem}}
 .tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap}
 .tts-btn:hover{background:rgba(0,0,0,.05)}
+/* pw-step pattern */
+.pw-steps{display:flex;flex-direction:column;gap:0}
+.pw-step{border:1.5px solid var(--brd,#d0e6f5);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.pw-step:not(.active){opacity:.45;pointer-events:none}
+.pw-step.active{opacity:1;pointer-events:auto;border-color:var(--an,#0369a1)}
+.pw-step-header{background:var(--an-b,#e0f2fe);color:var(--an-t,#082f49);font-weight:700;padding:10px 16px;font-size:.88rem}
+.pw-step.active .pw-step-header{background:var(--an,#0369a1);color:#fff}
+.pw-step-body{padding:14px 16px;font-size:.88rem;color:var(--tx,#0d2d42)}
+.pw-next-btn{display:block;margin:8px 16px 14px auto;padding:6px 16px;background:var(--an,#0369a1);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.82rem}
 </style>
 </head>
 <body>
@@ -207,7 +216,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
     <!-- PRE-ENTRENAMIENTO — Mayer P9 -->
     <div class="sect" style="border-left:4px solid var(--oh)">
-      <h2>📌 ¿Cuándo usar el método algebraico? <button class="tts-btn" onclick="speakText(this)" data-text="El método algebraico para balancear ecuaciones es útil cuando hay muchas especies en la ecuación, cuando los coeficientes son grandes o no obvios, o cuando se quiere un procedimiento sistemático que siempre funcione. Consiste en asignar variables a cada coeficiente y construir un sistema de ecuaciones, una por cada elemento, para luego resolverlo.">🔊 Escuchar</button></h2>
+      <h2>📌 ¿Cuándo usar el método algebraico? <button class="tts-btn" onclick="speakText(this)" data-text="El tanteo se queda corto cuando hay cuatro o más fórmulas en la ecuación — empiezas a dar vueltas sin llegar a ningún lado. El método algebraico convierte el problema de química en un problema de álgebra que sabes resolver. Si puedes plantear ecuaciones lineales, puedes balancear cualquier ecuación química, sin importar qué tan complicada parezca.">🔊 Escuchar</button></h2>
       <p>El método de tanteo funciona muy bien para ecuaciones simples. El <strong>método algebraico</strong> es útil cuando:</p>
       <ul>
         <li>Hay <strong>muchas especies</strong> (4 o más fórmulas) y el tanteo se vuelve difícil</li>
@@ -219,7 +228,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
     <!-- PASOS -->
     <div class="sect">
-      <h2>📋 Los 5 pasos del método algebraico <button class="tts-btn" onclick="speakText(this)" data-text="El método algebraico tiene cinco pasos. Primero, asigna letras a cada coeficiente de izquierda a derecha. Segundo, escribe una ecuación por cada elemento igualando átomos en reactivos y productos. Tercero, fija una variable como 1 para simplificar. Cuarto, resuelve el sistema en cascada. Quinto, si hay fracciones, multiplica todos los coeficientes por el mínimo común múltiplo para obtener enteros.">🔊 Escuchar</button></h2>
+      <h2>📋 Los 5 pasos del método algebraico <button class="tts-btn" onclick="speakText(this)" data-text="El paso más importante es el segundo: escribir la ecuación por cada elemento. Ahí es donde el método cobra vida porque convierte la química en matemática. Una vez tienes el sistema de ecuaciones, lo resuelves como cualquier sistema lineal. El truco de fijar una variable en uno al principio simplifica todo y evita que el sistema tenga infinitas soluciones.">🔊 Escuchar</button></h2>
       <div class="steps">
         <div class="step">
           <div class="step-n alg">1</div>
@@ -313,7 +322,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
     <!-- PRE-ENTRENAMIENTO -->
     <div class="sect" style="border-left:4px solid var(--ox)">
-      <h2>📌 ¿Qué es una reacción redox? <button class="tts-btn" onclick="speakText(this)" data-text="Una reacción redox, de reduccion-oxidacion, es aquella en la que los estados de oxidacion de algunos elementos cambian porque hay una transferencia de electrones. La especie que pierde electrones se oxida y se llama agente reductor. La especie que gana electrones se reduce y se llama agente oxidante.">🔊 Escuchar</button></h2>
+      <h2>📌 ¿Qué es una reacción redox? <button class="tts-btn" onclick="speakText(this)" data-text="Las reacciones redox son las más comunes en la naturaleza: la respiración, la oxidación del hierro y las baterías son todas redox. Entender que hay una transferencia real de electrones entre sustancias es clave. La especie que pierde electrones se oxida — su estado de oxidación sube. La que gana electrones se reduce — su estado baja. Ese intercambio es lo que hay que balancear.">🔊 Escuchar</button></h2>
       <p>Una reacción <strong>redox</strong> (reducción-oxidación) es aquella en la que los <strong>estados de oxidación</strong> de algunos elementos cambian durante la reacción. Hay una transferencia de electrones.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">
         <div class="half-rx oxid">
@@ -332,7 +341,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
     <!-- ESTADOS DE OXIDACIÓN RÁPIDOS -->
     <div class="sect">
-      <h2>📋 Reglas para asignar estados de oxidación (EO) <button class="tts-btn" onclick="speakText(this)" data-text="Las reglas para asignar estados de oxidacion son: un elemento puro tiene estado de oxidacion cero. En un monoion, el estado de oxidacion es igual a su carga. En compuestos, el oxigeno casi siempre vale menos dos y el hidrogeno mas uno. La suma de todos los estados de oxidacion en un compuesto neutro es cero, y en un ion poliatómico es igual a su carga.">🔊 Escuchar</button></h2>
+      <h2>📋 Reglas para asignar estados de oxidación (EO) <button class="tts-btn" onclick="speakText(this)" data-text="Asignar estados de oxidación parece tedioso, pero es el paso que te dice qué elemento está ganando y cuál está perdiendo electrones. La regla más útil es la última: en un compuesto neutro la suma es cero. Eso te permite calcular el estado de oxidación del elemento desconocido por diferencia — sin necesidad de memorizar tablas.">🔊 Escuchar</button></h2>
       <ol>
         <li>Un elemento puro (H₂, O₂, Fe) tiene EO = 0.</li>
         <li>En un monoión simple, el EO = su carga (Fe²⁺ → EO +2).</li>
@@ -344,7 +353,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
     <!-- MÉTODO SEMIRREACCIONES -->
     <div class="sect">
-      <h2>⚡ Método de semirreacciones (ion-electrón) <button class="tts-btn" onclick="speakText(this)" data-text="El método de semirreacciones separa la reaccion redox en dos semirreacciones: la de oxidacion y la de reduccion. Se balancea cada una por separado: primero los átomos del elemento que cambia, luego el oxígeno con agua, el hidrógeno con protones en medio ácido, y finalmente las cargas con electrones. Luego se multiplica cada semirreaccion para igualar los electrones y se suman.">🔊 Escuchar</button></h2>
+      <h2>⚡ Método de semirreacciones (ion-electrón) <button class="tts-btn" onclick="speakText(this)" data-text="El método de semirreacciones parece largo la primera vez, pero tiene una lógica muy clara: divide el problema en dos problemas más pequeños y resuelve cada uno por separado. La clave es que los electrones que pierde uno deben ser exactamente los mismos que gana el otro. Cuando eso cuadra, la reacción está balanceada tanto en átomos como en cargas — y eso es lo que exige el método.">🔊 Escuchar</button></h2>
       <p>Este método separa la reacción en dos semirreacciones: la de oxidación y la de reducción. Se balancea cada una por separado y luego se suman.</p>
       <div class="steps">
         <div class="step">
@@ -411,39 +420,84 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
       </div>
     </div>
 
-    <!-- EJEMPLO REDOX 2 — MnO4- + Fe2+ (medio ácido) -->
+    <!-- EJEMPLO REDOX 2 — KMnO4 + FeCl2 (medio ácido) — pw-steps -->
     <div class="sect">
-      <h2>✏️ Ejemplo 2 — KMnO₄ + FeCl₂ en medio ácido</h2>
-      <div class="worked">
-        <div class="worked-title">Balancear: MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ (medio ácido, H⁺ presente)</div>
+      <h2>✏️ Ejemplo 2 — permanganato de potasio + cloruro de hierro dos en medio ácido</h2>
+      <p style="font-size:.84rem;color:var(--tx2);margin-bottom:12px">Balancear la forma iónica: MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ (medio ácido, con H⁺ presente). Cada paso se revela uno a uno.</p>
+      <div class="pw-steps">
 
-        <div class="ws"><div class="ws-n rdx">1</div><div class="ws-body"><strong>EO:</strong> Mn: +7 → +2 (gana 5 e⁻ — REDUCCIÓN) · Fe: +2 → +3 (pierde 1 e⁻ — OXIDACIÓN)</div></div>
-
-        <div class="ws"><div class="ws-n rdx">2</div><div class="ws-body"><strong>Semirreacciones iniciales:</strong></div></div>
-        <div class="half-rx reduc">
-          <span class="half-rx-label">Reducción — Mn <span class="eo-chip dn">+7 → +2</span></span>
-          MnO₄⁻ → Mn²⁺
-        </div>
-        <div class="half-rx oxid">
-          <span class="half-rx-label">Oxidación — Fe <span class="eo-chip up">+2 → +3</span></span>
-          Fe²⁺ → Fe³⁺
+        <div class="pw-step active">
+          <div class="pw-step-header">Paso 1 — Identificar cambios de estado de oxidación</div>
+          <div class="pw-step-body">
+            <p><strong>Manganeso (Mn):</strong> en MnO₄⁻ tiene estado más siete → en Mn²⁺ queda en más dos. <em>Gana 5 electrones — REDUCCIÓN.</em></p>
+            <p><strong>Hierro (Fe):</strong> en Fe²⁺ tiene estado más dos → en Fe³⁺ queda en más tres. <em>Pierde 1 electrón — OXIDACIÓN.</em></p>
+            <p>El oxígeno y el hidrógeno no cambian su estado — son espectadores de transferencia.</p>
+          </div>
+          <button class="pw-next-btn" onclick="pwNext(this)">Siguiente paso →</button>
         </div>
 
-        <div class="ws"><div class="ws-n rdx">3</div><div class="ws-body"><strong>Balancea O con H₂O y H con H⁺ (medio ácido):</strong><br>MnO₄⁻ → Mn²⁺ + 4 H₂O · (agrego 4 H₂O a la derecha para O)<br>8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O · (agrego 8 H⁺ a la izquierda para H)</div></div>
+        <div class="pw-step">
+          <div class="pw-step-header">Paso 2 — Escribir las dos semirreacciones separadas</div>
+          <div class="pw-step-body">
+            <div class="half-rx reduc" style="margin-bottom:10px">
+              <span class="half-rx-label">Reducción — Mn <span class="eo-chip dn">más 7 → más 2</span></span>
+              MnO₄⁻ → Mn²⁺
+            </div>
+            <div class="half-rx oxid">
+              <span class="half-rx-label">Oxidación — Fe <span class="eo-chip up">más 2 → más 3</span></span>
+              Fe²⁺ → Fe³⁺
+            </div>
+            <p style="margin-top:10px">Aún faltan los átomos de oxígeno e hidrógeno — los balancearemos en el siguiente paso.</p>
+          </div>
+          <button class="pw-next-btn" onclick="pwNext(this)">Siguiente paso →</button>
+        </div>
 
-        <div class="ws"><div class="ws-n rdx">4</div><div class="ws-body"><strong>Balancea cargas con e⁻:</strong><br>Reducción: carga izq = 8(+1) + (-1) = +7 · carga der = +2 → necesito 5 e⁻ a la izquierda<br><code>5 e⁻ + 8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O</code><br>Oxidación: Fe²⁺ → Fe³⁺ + 1 e⁻</div></div>
+        <div class="pw-step">
+          <div class="pw-step-header">Paso 3 — Balancear O con agua y H con H⁺ (medio ácido)</div>
+          <div class="pw-step-body">
+            <p><strong>Semirreacción de reducción:</strong></p>
+            <p>MnO₄⁻ tiene 4 oxígenos → agrego 4 moléculas de agua al lado derecho:<br><code>MnO₄⁻ → Mn²⁺ + 4 H₂O</code></p>
+            <p>Ahora hay 8 hidrógenos a la derecha → agrego 8 H⁺ a la izquierda:<br><code>8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O</code></p>
+            <p><strong>Semirreacción de oxidación:</strong> Fe²⁺ → Fe³⁺ — no tiene O ni H, no cambia.</p>
+          </div>
+          <button class="pw-next-btn" onclick="pwNext(this)">Siguiente paso →</button>
+        </div>
 
-        <div class="ws"><div class="ws-n rdx">5</div><div class="ws-body"><strong>Iguala e⁻:</strong> Reducción gana 5 e⁻, oxidación pierde 1 e⁻. Multiplica oxidación × 5:<br><code>5 Fe²⁺ → 5 Fe³⁺ + 5 e⁻</code></div></div>
+        <div class="pw-step">
+          <div class="pw-step-header">Paso 4 — Balancear cargas con electrones e igualar</div>
+          <div class="pw-step-body">
+            <p><strong>Reducción — balance de cargas:</strong><br>
+            Izquierda: 8(+1) + (−1) = +7 &nbsp;|&nbsp; Derecha: +2<br>
+            Diferencia = 5 → agrego 5 e⁻ a la izquierda:<br>
+            <code>5 e⁻ + 8 H⁺ + MnO₄⁻ → Mn²⁺ + 4 H₂O</code></p>
+            <p><strong>Oxidación — balance de cargas:</strong><br>
+            Izquierda: +2 &nbsp;|&nbsp; Derecha: +3<br>
+            Diferencia = 1 → agrego 1 e⁻ a la derecha:<br>
+            <code>Fe²⁺ → Fe³⁺ + 1 e⁻</code></p>
+            <p><strong>Para igualar e⁻:</strong> la reducción gana 5 e⁻, la oxidación pierde 1 e⁻. Multiplico oxidación por 5:<br>
+            <code>5 Fe²⁺ → 5 Fe³⁺ + 5 e⁻</code></p>
+          </div>
+          <button class="pw-next-btn" onclick="pwNext(this)">Siguiente paso →</button>
+        </div>
 
-        <div class="ws"><div class="ws-n rdx">6</div><div class="ws-body"><strong>Suma y cancela e⁻:</strong><br>5 e⁻ + 8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺ + 5 e⁻</div></div>
+        <div class="pw-step">
+          <div class="pw-step-header">Paso 5 — Sumar semirreacciones y verificar</div>
+          <div class="pw-step-body">
+            <p>Sumo las dos semirreacciones y cancelo los 5 e⁻ que aparecen en ambos lados:</p>
+            <code style="display:block;background:var(--surf2);padding:10px 14px;border-radius:8px;margin:8px 0;line-height:2">
+              5 e⁻ + 8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺ + 5 e⁻
+            </code>
+            <div class="ok-box">✅ Ecuación iónica neta:<br><code>8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺</code><br>
+            Verificación: Mn: 1=1 ✓ · Fe: 5=5 ✓ · O: 4=4 ✓ · H: 8=8 ✓ · Cargas: +8−1+10=+17 = +2+15=+17 ✓</div>
+          </div>
+        </div>
 
-        <div class="ok-box">✅ Ecuación iónica neta:<br><code>8 H⁺ + MnO₄⁻ + 5 Fe²⁺ → Mn²⁺ + 4 H₂O + 5 Fe³⁺</code></div>
       </div>
     </div>
 
     <!-- COMPARACIÓN MÉTODOS -->
     <div class="sect">
-      <h2>🗺️ ¿Cuándo usar cada método? <button class="tts-btn" onclick="speakText(this)" data-text="El método de tanteo sirve para ecuaciones simples de dos o tres especies. El método algebraico es riguroso y funciona para cualquier ecuacion, especialmente con muchas especies. El método de semirreacciones es el mejor para reacciones redox en solucion acuosa, ya sea en medio ácido o básico.">🔊 Escuchar</button></h2>
+      <h2>🗺️ ¿Cuándo usar cada método? <button class="tts-btn" onclick="speakText(this)" data-text="Saber cuándo usar cada método te ahorra tiempo y evita errores. Para los exámenes de grado once: si la ecuación tiene dos o tres especies y sin cambio de estado de oxidación, usa tanteo. Si tiene cuatro o más, usa algebraico. Si hay cambio de estados de oxidación visibles, usa semirreacciones. Esa decisión toma cinco segundos y define si el balanceo te sale en dos minutos o en diez.">🔊 Escuchar</button></h2>
       <div style="overflow-x:auto">
       <table style="width:100%;border-collapse:collapse;font-size:.83rem">
         <thead><tr>
@@ -465,7 +519,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
   <!-- ══════════ TAB QUIZ ══════════ -->
   <div class="tab-panel" id="tab-quiz">
     <div class="sect quiz-sect" style="margin-top:0">
-      <h2>✅ Practica — Balanceo avanzado <button class="tts-btn" onclick="speakText(this)" data-text="Practica los métodos algebraico y redox respondiendo preguntas de opción múltiple. Revisa las explicaciones para entender el procedimiento correcto en cada caso.">🔊 Escuchar</button></h2>
+      <h2>✅ Practica — Balanceo avanzado <button class="tts-btn" onclick="speakText(this)" data-text="Estas ocho preguntas combinan los dos métodos avanzados. Antes de responder, identifica si la pregunta pide algebraico o redox — esa decisión ya vale la mitad del ejercicio. Si fallas alguna, la explicación tiene el razonamiento completo para que puedas ver dónde estuvo el error.">🔊 Escuchar</button></h2>
       <div id="quiz-area"></div>
     </div>
   </div>
@@ -523,6 +577,14 @@ document.getElementById('theme-btn').addEventListener('click',toggleTheme);
   document.querySelectorAll('.drawer-links a').forEach(a=>a.addEventListener('click',shut));
 })();
 
+// pw-step reveal
+function pwNext(btn){
+  const step=btn.closest('.pw-step');
+  step.classList.remove('active');
+  const next=step.nextElementSibling;
+  if(next&&next.classList.contains('pw-step')) next.classList.add('active');
+}
+
 // Tabs
 function switchTab(id,btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -572,6 +634,15 @@ function checkQ(btn,chosen,correct){
 }
 
 renderQ();
+
+// Auto-narración de bienvenida (Mayer P8 — Modalidad)
+(function(){
+  if(sessionStorage.getItem('tts-intro-balavz')) return;
+  sessionStorage.setItem('tts-intro-balavz','1');
+  setTimeout(()=>{
+    if(window.speechSynthesis) speak('Esta sección es para cuando el tanteo no alcanza. Vas a aprender dos métodos más potentes: el algebraico y el de óxido-reducción. Son los que necesitas para reacciones complejas en química de once.');
+  }, 1500);
+})();
 </script>
 </body>
 </html>

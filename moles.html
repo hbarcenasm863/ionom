@@ -169,7 +169,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── EL MOL ── -->
   <div class="sect">
-    <h2>¿Qué es el mol? <button class="tts-btn" onclick="speakText(this)" data-text="El mol es una unidad que permite contar partículas muy pequeñas como átomos y moléculas. Un mol equivale a 6 coma 022 por 10 elevado a la 23 partículas, número conocido como la constante de Avogadro. Es como una docena gigante usada por los químicos para relacionar la cantidad de sustancia con su masa.">🔊 Escuchar</button></h2>
+    <h2>¿Qué es el mol? <button class="tts-btn" onclick="speakText(this)" data-text="Sin el mol, la química sería imposible de hacer en el laboratorio — los átomos son demasiado pequeños para contarlos uno a uno. El mol es como una docena, pero gigantesca: 6 coma 022 por diez elevado a la veintitrés partículas. Ese número se llama constante de Avogadro y es el puente entre el mundo invisible de los átomos y la balanza que sí puedes usar en clase.">🔊 Escuchar</button></h2>
     <p>Los átomos y moléculas son tan pequeños que es imposible contarlos uno a uno. Los químicos usan una unidad llamada <strong>mol</strong> para referirse a una cantidad gigantesca pero precisa de partículas: el <strong>número de Avogadro</strong>.</p>
     <div class="big-formula">
       <div class="lhs">1 mol = 6.022 × 10²³ partículas</div>
@@ -183,7 +183,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── MASA MOLAR ── -->
   <div class="sect">
-    <h2>Masa molar (MM) <button class="tts-btn" onclick="speakText(this)" data-text="La masa molar es la masa en gramos de exactamente un mol de una sustancia. Se expresa en gramos por mol. Para calcularla, suma las masas atómicas de todos los átomos en la fórmula multiplicadas por sus subíndices. Por ejemplo, la masa molar del cloruro de sodio es 58 punto 44 gramos por mol.">🔊 Escuchar</button></h2>
+    <h2>Masa molar (MM) <button class="tts-btn" onclick="speakText(this)" data-text="Necesitas la masa molar porque el laboratorio mide gramos, no moléculas. Es el puente entre lo que pesas en la balanza y la cantidad real de átomos con la que trabajas. Se calcula sumando las masas atómicas de la tabla periódica, y se expresa en gramos por mol. Una vez que tienes la masa molar, puedes convertir cualquier cantidad entre gramos y moles.">🔊 Escuchar</button></h2>
     <p>La <strong>masa molar</strong> es la masa (en gramos) que tiene exactamente 1 mol de una sustancia. Se expresa en <strong>g/mol</strong>.</p>
     <p>Para calcularla, suma las masas atómicas de todos los átomos en la fórmula (los valores de la tabla periódica).</p>
     <div class="big-formula">
@@ -239,7 +239,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <!-- ── CONVERSIÓN mol ↔ g ── -->
   <div class="sect">
-    <h2>Convertir entre moles y gramos <button class="tts-btn" onclick="speakText(this)" data-text="La masa molar actúa como factor de conversión entre moles y gramos. Para pasar de moles a gramos, multiplica por la masa molar. Para pasar de gramos a moles, divide entre la masa molar. Siempre construye la cadena de factores verificando que las unidades indeseadas se cancelen.">🔊 Escuchar</button></h2>
+    <h2>Convertir entre moles y gramos <button class="tts-btn" onclick="speakText(this)" data-text="Este es el cálculo que más se repite en todo el año de química — siempre aparece en estequiometría y en soluciones. El truco es construir la fracción de conversión de tal manera que la unidad que no quieres quede abajo y se cancele. Nunca apliques regla de tres directo: siempre escribe la cadena de factores para que puedas ver qué unidades sobreviven.">🔊 Escuchar</button></h2>
     <p>La masa molar actúa como un <strong>factor de conversión</strong>: multiplicas por la fracción que cancela la unidad que no quieres y deja la que sí quieres.</p>
 
     <h3>De moles a gramos</h3>
@@ -283,55 +283,19 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
     <div class="warn-box">⚠️ <strong>Nunca uses "regla de tres"</strong> directamente. Siempre construye la cadena de factores: escribe la cantidad dada, multiplica por el factor de conversión con las unidades correctas y verifica que las unidades indeseadas se cancelen.</div>
   </div>
 
-  <!-- ── ESTEQUIOMETRÍA ── -->
-  <div class="sect">
-    <h2>Estequiometría — de la ecuación a la masa <button class="tts-btn" onclick="speakText(this)" data-text="La estequiometría usa los coeficientes de una ecuación balanceada como factores de conversión entre moles de distintas sustancias. El camino es siempre el mismo: convertir gramos del reactivo a moles, aplicar la razón molar de la ecuación, y convertir los moles del producto a gramos usando su masa molar.">🔊 Escuchar</button></h2>
-    <p>La <strong>estequiometría</strong> usa los coeficientes de una ecuación balanceada como factores de conversión entre moles de distintas sustancias.</p>
-
-    <h3>Los coeficientes son razones molares</h3>
-    <p>En la ecuación: <code>N₂ + 3 H₂ → 2 NH₃</code></p>
-    <ul>
-      <li>1 mol de N₂ reacciona con 3 mol de H₂ para producir 2 mol de NH₃</li>
-      <li>El factor molar entre H₂ y NH₃ es <strong>2 mol NH₃ / 3 mol H₂</strong></li>
-    </ul>
-
-    <h3>Mapa del camino estequiométrico</h3>
-    <div class="chain" style="justify-content:center;flex-direction:column;gap:10px;text-align:center">
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center">
-        <span class="chain-val">g de A (dato)</span>
-        <span class="chain-arrow">→</span>
-        <div class="chain-factor"><span class="chain-num">1 mol A</span><span class="chain-den">MM(A) g</span></div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-factor"><span class="chain-num">coef B mol B</span><span class="chain-den">coef A mol A</span></div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-factor"><span class="chain-num">MM(B) g</span><span class="chain-den">1 mol B</span></div>
-        <span class="chain-arrow">→</span>
-        <span class="chain-result">g de B</span>
-      </div>
+  <!-- ── TRANSICIÓN A ESTEQUIOMETRÍA ── -->
+  <div style="background:var(--an-b,#e0f2fe);border:2px solid var(--an,#0369a1);border-radius:12px;padding:20px 24px;margin:28px 0;display:flex;align-items:center;gap:16px">
+    <span style="font-size:2rem;flex-shrink:0">⚗️</span>
+    <div>
+      <div style="font-weight:800;color:var(--an-t,#082f49);margin-bottom:4px">¿Listo para el siguiente nivel?</div>
+      <p style="font-size:.88rem;color:var(--an-t,#082f49);margin-bottom:12px">Ya dominas el mol y la masa molar. El siguiente paso es usar esos conocimientos para predecir cuánto producto se forma en una reacción real — eso es la estequiometría.</p>
+      <a href="estequiometria.html" style="display:inline-block;padding:8px 18px;background:var(--an,#0369a1);color:#fff;border-radius:8px;text-decoration:none;font-weight:700;font-size:.85rem">Ir a Estequiometría →</a>
     </div>
-
-    <h3>Ejemplo completo: síntesis de agua</h3>
-    <p><strong>Ecuación balanceada:</strong> <code>2 H₂ + O₂ → 2 H₂O</code></p>
-    <p><strong>Pregunta:</strong> Si reaccionan 4 g de H₂, ¿cuántos gramos de H₂O se producen?</p>
-    <div class="chain" style="flex-direction:column;gap:10px">
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-        <span class="chain-val">4 g H₂</span>
-        <span class="chain-arrow">×</span>
-        <div class="chain-factor"><span class="chain-num">1 mol H₂</span><span class="chain-den">2.016 g</span></div>
-        <span class="chain-arrow">×</span>
-        <div class="chain-factor"><span class="chain-num">2 mol H₂O</span><span class="chain-den">2 mol H₂</span></div>
-        <span class="chain-arrow">×</span>
-        <div class="chain-factor"><span class="chain-num">18.015 g</span><span class="chain-den">1 mol H₂O</span></div>
-        <span class="chain-arrow">=</span>
-        <span class="chain-result">35.74 g H₂O</span>
-      </div>
-    </div>
-    <div class="ok-box">✅ Respuesta: Se producen <strong>35.74 g de agua</strong>.</div>
   </div>
 
   <!-- ── QUIZ ── -->
   <div class="sect quiz-sect">
-    <h2>✅ Practica — Mol y masa molar <button class="tts-btn" onclick="speakText(this)" data-text="Pon a prueba tus conocimientos sobre el mol, la masa molar y la conversión entre gramos y moles. Responde las preguntas de opción múltiple y revisa las explicaciones para reforzar lo aprendido.">🔊 Escuchar</button></h2>
+    <h2>✅ Practica — Mol y masa molar <button class="tts-btn" onclick="speakText(this)" data-text="Llegaste a la parte más importante: la práctica. Estos ejercicios cubren exactamente lo que preguntan en los exámenes de grado once. Si te equivocas, no te saltes la explicación — ahí está el razonamiento que necesitas. Con seis o más bien ya tienes la base para pasar a estequiometría.">🔊 Escuchar</button></h2>
     <div id="quiz-area"></div>
   </div>
 
