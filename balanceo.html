@@ -337,9 +337,10 @@ function stopTTS(){
 }
 function speakText(btn){ speak(btn.getAttribute('data-text')); }
 function speakPage(){
-  const el=document.querySelector('main,.content,.page-content,.app');
-  const txt=(el?el.innerText:document.body.innerText).replace(/\s+/g,' ').trim();
-  speak(txt.slice(0,4000));
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
 }
 (function(){const saved=localStorage.getItem('ion-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
