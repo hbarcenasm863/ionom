@@ -96,7 +96,7 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.6}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
-.app{max-width:860px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:1}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px;position:relative;z-index:1}
 
 /* ── HAMBURGER NAV ── */
 .site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
@@ -369,6 +369,13 @@ footer a:hover{text-decoration:underline}
 .mc-node.mc-glow{opacity:1;box-shadow:0 0 0 2px var(--dp-accent),0 0 16px rgba(59,130,246,.45);border-color:var(--dp-accent);color:var(--dp-tx)}
 .mc-lbl{display:block;font-size:.62rem;font-weight:400;color:var(--dp-dim);font-family:'Trebuchet MS',sans-serif;margin-top:2px}
 .mc-arrow{color:var(--dp-dim);font-size:.78rem;text-align:center;line-height:1.8}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+body{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
 </style>
 </head>
 <body>
@@ -380,6 +387,11 @@ footer a:hover{text-decoration:underline}
   </a>
   <div class="nav-right">
     <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
     <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
   </div>
 </nav>
@@ -2531,5 +2543,20 @@ function speakText(btn){
     <div id="mayer-progress-dots" style="display:flex;justify-content:center;gap:6px;margin-top:14px"></div>
   </div>
 </div>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>
