@@ -123,34 +123,66 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .drawer-links a .dl-name{flex:1}
 
 /* PORTADA */
-#s-portada{background:linear-gradient(145deg,#0d2d42 0%,#0d4a73 55%,#0a3d5e 100%);align-items:center;justify-content:flex-start;position:relative;overflow-x:hidden;overflow-y:auto;padding:40px 0}
-#s-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 40%,rgba(217,119,6,.14),transparent),radial-gradient(ellipse 60% 60% at 80% 70%,rgba(3,105,161,.15),transparent);pointer-events:none}
-.portada-inner{text-align:center;position:relative;z-index:1;padding:0 24px;max-width:560px;width:100%;margin:auto}
-.portada-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
-.portada-title{font-family:var(--serif);font-size:3rem;font-weight:700;font-style:italic;color:#fff;line-height:1.1;margin-bottom:8px;letter-spacing:-.04em}
-.portada-title em{color:var(--gold);font-style:normal}
-.portada-sub{font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:22px}
-.portada-types{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
-.pt-chip{padding:5px 13px;border-radius:100px;font-size:.7rem;font-weight:700;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.07)}
+/* ═══════════ PORTADA REDISEÑADA ═══════════ */
+#s-portada{background:linear-gradient(160deg,#091929 0%,#0d4a73 60%,#0a3d5e 100%);align-items:flex-start;justify-content:flex-start;position:relative;overflow-x:hidden;overflow-y:auto;padding:0}
+#s-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 30%,rgba(217,119,6,.1),transparent),radial-gradient(ellipse 50% 60% at 90% 80%,rgba(3,105,161,.12),transparent);pointer-events:none}
+.portada-inner{position:relative;z-index:1;width:100%;max-width:800px;margin:0 auto;padding:28px 20px 60px}
 
-/* MODE TABS */
-.mode-tabs{display:flex;gap:8px;margin-bottom:20px}
-.mode-tab{flex:1;padding:10px 0;border-radius:100px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
-.mode-tab.act{background:rgba(217,119,6,.25);border-color:rgba(217,119,6,.6);color:var(--gold)}
-.mode-tab:hover:not(.act){background:rgba(255,255,255,.13);color:#fff}
+/* Header compacto */
+.p-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.p-brand{font-family:var(--serif);font-size:1.5rem;font-weight:700;font-style:italic;color:#fff;letter-spacing:-.03em}
+.p-brand em{color:var(--gold);font-style:normal}
+.p-howto{display:flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:100px;color:rgba(255,255,255,.75);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.p-howto:hover{background:rgba(255,255,255,.15);color:#fff}
 
-/* LOGIN PANEL */
-.login-panel{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:20px;margin-bottom:20px;text-align:left}
-.login-panel label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+/* Selector de modo */
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.mode-tab{padding:16px 12px;border-radius:14px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.4}
+.mode-tab .mt-icon{font-size:1.5rem;display:block;margin-bottom:5px}
+.mode-tab .mt-sub{display:block;font-size:.7rem;font-weight:500;color:rgba(255,255,255,.45);margin-top:3px}
+.mode-tab.act{background:rgba(217,119,6,.2);border-color:rgba(217,119,6,.7);color:#fff}
+.mode-tab.act .mt-sub{color:rgba(252,211,77,.6)}
+.mode-tab:hover:not(.act){background:rgba(255,255,255,.11);color:#fff}
+
+/* Panel login estudiante */
+.login-panel{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:14px;padding:20px 22px;margin-bottom:22px;display:none}
+.login-panel label{display:block;font-size:.73rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;margin-bottom:9px}
 .code-row{display:flex;gap:8px}
-.code-inp{flex:1;padding:11px 14px;border-radius:var(--rs);border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-family:var(--mono);font-size:1rem;font-weight:700;letter-spacing:.1em;outline:none;transition:border-color .2s}
-.code-inp::placeholder{color:rgba(255,255,255,.3);font-weight:400;letter-spacing:0;font-size:.85rem}
-.code-inp:focus{border-color:rgba(217,119,6,.7);background:rgba(255,255,255,.11)}
-.code-btn{padding:11px 18px;background:rgba(217,119,6,.3);border:2px solid rgba(217,119,6,.6);color:var(--gold);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap}
-.code-btn:hover{background:rgba(217,119,6,.5)}
-.code-ok{margin-top:10px;padding:10px 14px;background:rgba(22,163,74,.15);border:1.5px solid rgba(22,163,74,.4);border-radius:var(--rs);color:#86efac;font-size:.82rem;display:none}
-.code-ok strong{display:block;font-size:.92rem;color:#4ade80}
-.code-err{margin-top:10px;padding:9px 14px;background:rgba(220,38,38,.15);border:1.5px solid rgba(220,38,38,.4);border-radius:var(--rs);color:#fca5a5;font-size:.8rem;display:none}
+.code-inp{flex:1;padding:12px 16px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-family:var(--mono);font-size:1.1rem;font-weight:700;letter-spacing:.12em;outline:none;transition:border-color .2s}
+.code-inp::placeholder{color:rgba(255,255,255,.28);font-weight:400;letter-spacing:0;font-size:.85rem}
+.code-inp:focus{border-color:rgba(217,119,6,.8);background:rgba(255,255,255,.11)}
+.code-btn{padding:12px 20px;background:rgba(217,119,6,.35);border:2px solid rgba(217,119,6,.7);color:var(--gold);border-radius:10px;font-family:var(--sans);font-size:.85rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap}
+.code-btn:hover{background:rgba(217,119,6,.55)}
+.code-err{margin-top:10px;padding:9px 14px;background:rgba(220,38,38,.15);border:1.5px solid rgba(220,38,38,.4);border-radius:8px;color:#fca5a5;font-size:.82rem;display:none}
+
+/* Bienvenida inline (reemplaza modal) */
+.welcome-inline{display:none;margin-bottom:22px;padding:18px 20px;background:rgba(22,163,74,.12);border:2px solid rgba(22,163,74,.35);border-radius:14px;animation:fadeIn .3s ease}
+.wi-row{display:flex;align-items:center;gap:14px}
+.wi-avatar{font-size:2rem;flex-shrink:0}
+.wi-name{font-size:1rem;font-weight:800;color:#4ade80;line-height:1.2}
+.wi-course{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:2px}
+.wi-prompt{font-size:.8rem;color:rgba(255,255,255,.65);margin-top:8px}
+
+/* Sección de grupo */
+.p-section-lbl{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.4);margin-bottom:12px}
+
+/* Dificultad */
+.diff-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.diff-row label{font-size:.78rem;color:rgba(255,255,255,.6);font-weight:600;white-space:nowrap}
+.diff-sel{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.09);color:#fff;font-size:.82rem;cursor:pointer;outline:none}
+.diff-sel option{background:#0d2d42;color:#fff}
+
+/* Grid de grupos */
+.group-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:600px){.group-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:380px){.group-grid{grid-template-columns:1fr}}
+.group-btn{padding:14px 10px;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;font-family:var(--sans);cursor:pointer;transition:all .2s;text-align:center;line-height:1.3}
+.group-btn .gb-icon{font-size:1.35rem;display:block;margin-bottom:5px}
+.group-btn .gb-name{display:block;font-size:.82rem;font-weight:800}
+.group-btn .gb-sub{display:block;font-size:.63rem;color:rgba(255,255,255,.45);margin-top:2px}
+.group-btn:hover,.group-btn:focus{background:rgba(255,255,255,.13);border-color:rgba(217,119,6,.6);transform:translateY(-2px);outline:none}
+.group-btn.full{grid-column:1/-1;background:rgba(217,119,6,.12);border-color:rgba(217,119,6,.35)}
+.group-btn.full:hover{background:rgba(217,119,6,.22)}
 
 /* SEND STATUS in result */
 .send-status{padding:12px 16px;border-radius:var(--rs);font-size:.84rem;margin-bottom:16px;border-left:4px solid;display:none}
@@ -317,24 +349,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .oxa-sub{font-size:.7rem;color:var(--dimmer);text-align:center}
 .oxa-plus{font-family:var(--mono);font-size:.85rem;color:var(--dimmer);align-self:center;padding-bottom:8px}
 
-/* WELCOME MODAL */
-.wm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);animation:fadeIn .2s ease}
-.wm-box{background:linear-gradient(145deg,#0d2d42,#0d4a73);border:2px solid rgba(217,119,6,.5);border-radius:20px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideUp .25s ease;position:relative}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.wm-avatar{width:72px;height:72px;border-radius:50%;background:rgba(217,119,6,.25);border:3px solid rgba(217,119,6,.6);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px}
-.wm-hi{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.55);margin-bottom:4px}
-.wm-name{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:var(--gold);line-height:1.2;margin-bottom:6px}
-.wm-course{display:inline-block;background:rgba(217,119,6,.2);border:1px solid rgba(217,119,6,.45);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:100px;margin-bottom:20px}
-.wm-prompt{font-size:.88rem;color:rgba(255,255,255,.75);margin-bottom:22px;line-height:1.6}
-.wm-groups{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.wm-grp{padding:11px 8px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--sans);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.35}
-.wm-grp:hover{background:rgba(217,119,6,.2);border-color:rgba(217,119,6,.6);color:var(--gold);transform:translateY(-2px)}
-.wm-grp.full{grid-column:1/-1;background:rgba(217,119,6,.14);border-color:rgba(217,119,6,.4)}
-.wm-grp .wg-icon{font-size:1.1rem;display:block;margin-bottom:3px}
-.wm-grp .wg-sub{font-size:.6rem;opacity:.6;font-weight:400}
-.wm-close{position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:color .15s}
-.wm-close:hover{color:#fff}
-
 /* ELEMENT QUESTION DISPLAY */
 .el-tile-lg{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:14px;font-family:var(--serif);font-size:2.4rem;font-weight:900;border:2.5px solid;box-shadow:var(--sh);line-height:1}
 .el-name-lg{font-family:var(--serif);font-size:2rem;font-weight:700;font-style:italic;color:var(--an-t);text-align:center;line-height:1.1}
@@ -424,54 +438,69 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <!-- ═══════════════ PORTADA ═══════════════ -->
 <div id="s-portada" class="screen active">
 <div class="portada-inner">
-    <div class="portada-badge">⚛ Nomenclatura Inorgánica</div>
-    <div class="portada-title">Ion<em>Nom</em></div>
-    <div class="portada-sub">20 preguntas variadas · 40 puntos posibles.</div>
 
-    <!-- Mode selector -->
-    <div class="mode-tabs">
-      <button class="mode-tab act" id="tab-libre" onclick="setMode('libre')">🎮 Modo Libre</button>
-      <button class="mode-tab" id="tab-student" onclick="setMode('student')">🏫 Modo Estudiante</button>
+  <!-- Header -->
+  <div class="p-header">
+    <div class="p-brand">Ion<em>Nom</em> <span style="font-size:.75rem;font-weight:500;color:rgba(255,255,255,.45);font-style:normal;letter-spacing:0">— Modo Juego</span></div>
+    <button class="p-howto" onclick="openHowToPlay()">❓ ¿Cómo jugar?</button>
+  </div>
+
+  <!-- Selector de modo -->
+  <div class="mode-tabs">
+    <button class="mode-tab act" id="tab-libre" onclick="setMode('libre')">
+      <span class="mt-icon">🎮</span>
+      Modo Libre
+      <span class="mt-sub">Sin registro · practica a tu ritmo</span>
+    </button>
+    <button class="mode-tab" id="tab-student" onclick="setMode('student')">
+      <span class="mt-icon">🏫</span>
+      Modo Estudiante
+      <span class="mt-sub">Ingresa tu código · resultados al docente</span>
+    </button>
+  </div>
+
+  <!-- Panel login estudiante -->
+  <div class="login-panel" id="login-panel">
+    <label for="code-inp">Código de estudiante (6 dígitos)</label>
+    <div class="code-row">
+      <input class="code-inp" id="code-inp" type="text" maxlength="6"
+             placeholder="Ej: 100401" inputmode="numeric"
+             oninput="this.value=this.value.replace(/\D/g,'')"
+             onkeydown="if(event.key==='Enter')validateCode()">
+      <button class="code-btn" onclick="validateCode()">Verificar →</button>
     </div>
+    <div class="code-err" id="code-err"></div>
+  </div>
 
-    <!-- Student login panel -->
-    <div class="login-panel" id="login-panel" style="display:none">
-      <label for="code-inp">Ingresa tu código de estudiante</label>
-      <div class="code-row">
-        <input class="code-inp" id="code-inp" type="text" maxlength="6"
-               placeholder="Ej: 100401" inputmode="numeric"
-               oninput="this.value=this.value.replace(/\D/g,'')"
-               onkeydown="if(event.key==='Enter')validateCode()">
-        <button class="code-btn" onclick="validateCode()">Verificar →</button>
+  <!-- Bienvenida inline (aparece tras verificar código) -->
+  <div class="welcome-inline" id="welcome-inline">
+    <div class="wi-row">
+      <div class="wi-avatar">🎓</div>
+      <div>
+        <div class="wi-name" id="wi-name"></div>
+        <div class="wi-course" id="wi-course"></div>
       </div>
-      <div class="code-ok" id="code-ok"></div>
-      <div class="code-err" id="code-err"></div>
     </div>
+    <div class="wi-prompt">¡Listo! Elige un tema para comenzar tu sesión de práctica.</div>
+  </div>
 
-    <div class="portada-types">
-      <span class="pt-chip">🔵 Opción múltiple</span>
-      <span class="pt-chip">✏️ Escritura libre</span>
-      <span class="pt-chip">⚡ Estado de oxidación</span>
-      <span class="pt-chip">🧩 Completar nombre</span>
-      <span class="pt-chip">🔄 Nombre→Fórmula</span>
-      <span class="pt-chip">⚖️ Equilibrio iónico</span>
-    </div>
-
-    <button onclick="openHowToPlay()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(252,211,77,.15);border:2px solid rgba(252,211,77,.5);color:var(--gold);border-radius:100px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:18px;transition:all .2s" onmouseover="this.style.background='rgba(252,211,77,.25)'" onmouseout="this.style.background='rgba(252,211,77,.15)'">🔊 ¿Cómo jugar?</button>
-
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
-      <label for="difficulty-sel" style="font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600">Dificultad:</label>
-      <select id="difficulty-sel" style="padding:6px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:.8rem;cursor:pointer">
-        <option value="easy">🟢 Fácil (solo compuestos básicos)</option>
-        <option value="normal" selected>🟡 Normal (básico + intermedio)</option>
-        <option value="all">🔴 Completo (todos los compuestos)</option>
+  <!-- Dificultad + grupos -->
+  <div id="group-section">
+    <div class="diff-row">
+      <label for="difficulty-sel">Dificultad:</label>
+      <select id="difficulty-sel" class="diff-sel">
+        <option value="easy">🟢 Fácil — solo compuestos básicos</option>
+        <option value="normal" selected>🟡 Normal — básico + intermedio</option>
+        <option value="all">🔴 Completo — todos los compuestos</option>
       </select>
     </div>
-    <div class="group-grid" id="group-grid">
+
+    <div class="p-section-lbl">Elige un tema</div>
+    <div class="group-grid">
       <button class="group-btn full" onclick="pickGroup('all')">
         <span class="gb-icon">🔬</span>
         <span class="gb-name">Todos los grupos</span>
-        <span class="gb-sub">Mezcla completa</span>
+        <span class="gb-sub">Mezcla completa · recomendado para repaso</span>
       </button>
       <button class="group-btn" onclick="pickGroup('ox-anh')">
         <span class="gb-icon">💨</span>
@@ -511,20 +540,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <button class="group-btn" onclick="pickGroup('sal-ac')">
         <span class="gb-icon">🧪</span>
         <span class="gb-name">Sales ácidas</span>
-        <span class="gb-sub">bi-, hidrogeno-, H parcial</span>
-      </button>
-      <button class="group-btn full" onclick="pickGroup('elemento')">
-        <span class="gb-icon">⚛️</span>
-        <span class="gb-name">Tabla periódica</span>
-        <span class="gb-sub">Símbolos, nombres, config. electrónica</span>
-      </button>
-      <button class="group-btn full" onclick="pickGroup('reactividad')">
-        <span class="gb-icon">🔗</span>
-        <span class="gb-name">Cadena de reactividad</span>
-        <span class="gb-sub">Óxido → Base → Sal</span>
+        <span class="gb-sub">bi-, hidrogeno-</span>
       </button>
       <button class="group-btn" onclick="pickGroup('reaccion')">
-        <span class="gb-icon">⚗️</span>
+        <span class="gb-icon">🔁</span>
         <span class="gb-name">Tipos de reacción</span>
         <span class="gb-sub">Síntesis, combustión…</span>
       </button>
@@ -534,12 +553,24 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <span class="gb-sub">Coeficientes por tanteo</span>
       </button>
       <button class="group-btn" onclick="pickGroup('mol-masa')">
-        <span class="gb-icon">⚛️</span>
+        <span class="gb-icon">🔢</span>
         <span class="gb-name">Mol y masa molar</span>
         <span class="gb-sub">n = m / M, Avogadro</span>
       </button>
+      <button class="group-btn full" onclick="pickGroup('elemento')">
+        <span class="gb-icon">⚛️</span>
+        <span class="gb-name">Tabla periódica</span>
+        <span class="gb-sub">Símbolos, nombres, configuración electrónica</span>
+      </button>
+      <button class="group-btn full" onclick="pickGroup('reactividad')">
+        <span class="gb-icon">🔗</span>
+        <span class="gb-name">Cadena de reactividad</span>
+        <span class="gb-sub">Óxido → Base → Sal · recorre la cadena completa</span>
+      </button>
     </div>
   </div>
+
+</div>
 </div>
 
 <!-- ═══════════════ ¿CÓMO JUGAR? MODAL (MAYER) ═══════════════ -->
@@ -570,50 +601,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
     </div>
     <button onclick="closeHowToPlay()" style="width:100%;padding:13px;background:rgba(217,119,6,.8);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s">¡Entendido, a jugar! 🚀</button>
-  </div>
-</div>
-
-<!-- ═══════════════ WELCOME MODAL ═══════════════ -->
-<div id="wm-overlay" class="wm-overlay" style="display:none" onclick="if(event.target===this)closeWelcome()">
-  <div class="wm-box">
-    <button class="wm-close" onclick="closeWelcome()">✕</button>
-    <div class="wm-avatar">🎓</div>
-    <div class="wm-hi">¡Bienvenido/a!</div>
-    <div class="wm-name" id="wm-name"></div>
-    <div class="wm-course" id="wm-course"></div>
-    <div class="wm-prompt">Selecciona un grupo funcional para comenzar tu sesión:</div>
-    <div class="wm-groups">
-      <button class="wm-grp full" onclick="closeAndPick('all')">
-        <span class="wg-icon">🔬</span>Todos los grupos<br><span class="wg-sub">Mezcla completa</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('ox-anh')">
-        <span class="wg-icon">💨</span>Óxidos y Anhídridos<br><span class="wg-sub">Básicos + ácidos</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('hidru')">
-        <span class="wg-icon">⚗️</span>Hidruros<br><span class="wg-sub">Metal + H⁻</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('ac-hid')">
-        <span class="wg-icon">🧪</span>Ácidos hídricos<br><span class="wg-sub">Sin oxígeno</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('base')">
-        <span class="wg-icon">🟣</span>Bases<br><span class="wg-sub">Hidróxidos</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('ac-ox')">
-        <span class="wg-icon">⚡</span>Ácidos oxácidos<br><span class="wg-sub">Con oxoanión</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('sal-bin')">
-        <span class="wg-icon">🔵</span>Sales binarias<br><span class="wg-sub">Metal + halógeno/S</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('sal-ox')">
-        <span class="wg-icon">🟠</span>Sales oxigenadas<br><span class="wg-sub">Con oxoanión</span>
-      </button>
-      <button class="wm-grp" onclick="closeAndPick('sal-ac')">
-        <span class="wg-icon">🧪</span>Sales ácidas<br><span class="wg-sub">bi-, hidrogeno-</span>
-      </button>
-      <button class="wm-grp full" onclick="closeAndPick('elemento')">
-        <span class="wg-icon">⚛️</span>Tabla periódica<br><span class="wg-sub">Símbolos, nombres, config. electrónica</span>
-      </button>
-    </div>
   </div>
 </div>
 
@@ -879,8 +866,19 @@ function setMode(mode){
   GAME_MODE = mode;
   document.getElementById('tab-libre').classList.toggle('act', mode==='libre');
   document.getElementById('tab-student').classList.toggle('act', mode==='student');
-  document.getElementById('login-panel').style.display = mode==='student' ? '' : 'none';
-  if(mode==='libre'){ CODE_VERIFIED=false; STUDENT_CODE=''; STUDENT_NAME=''; }
+  const lp = document.getElementById('login-panel');
+  const wi = document.getElementById('welcome-inline');
+  if(mode==='student'){
+    lp.style.display = '';
+  } else {
+    lp.style.display = 'none';
+    wi.style.display = 'none';
+    CODE_VERIFIED=false; STUDENT_CODE=''; STUDENT_NAME='';
+    const inp = document.getElementById('code-inp');
+    if(inp) inp.value='';
+    const errEl = document.getElementById('code-err');
+    if(errEl) errEl.style.display='none';
+  }
 }
 
 function validateCode(){
@@ -898,22 +896,11 @@ function validateCode(){
   STUDENT_NAME = name;
   STUDENT_COURSE = parseCourse(code);
   CODE_VERIFIED = true;
-  openWelcome();
-}
-
-function openWelcome(){
-  document.getElementById('wm-name').textContent = STUDENT_NAME;
-  document.getElementById('wm-course').textContent = 'Curso ' + STUDENT_COURSE + ' · Código ' + STUDENT_CODE;
-  document.getElementById('wm-overlay').style.display = 'flex';
-}
-
-function closeWelcome(){
-  document.getElementById('wm-overlay').style.display = 'none';
-}
-
-function closeAndPick(group){
-  closeWelcome();
-  startGame(group);
+  document.getElementById('login-panel').style.display = 'none';
+  const wi = document.getElementById('welcome-inline');
+  document.getElementById('wi-name').textContent = STUDENT_NAME;
+  document.getElementById('wi-course').textContent = 'Curso ' + STUDENT_COURSE + ' · Código ' + STUDENT_CODE;
+  wi.style.display = 'block';
 }
 
 function pickGroup(group){
