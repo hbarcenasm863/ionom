@@ -5319,6 +5319,287 @@ const BANCO = [
   },
 
   // ─────────────────────────────────────────────
+  // BALANCEO ADICIONAL — 30 ecuaciones pedagógicas
+  // Easy: síntesis y descomposición; Medium: desplazamiento y doble sustitución; Hard: combustiones
+  // ─────────────────────────────────────────────
+
+  // -- easy adicionales (10) --
+  {
+    id: 'bal-031',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'H₂ + O₂ → H₂O',
+    coeficientes: [2, 1, 2],
+    especies: ['H₂', 'O₂', 'H₂O'],
+    hint: 'Balancea H primero: necesitas 2 H₂O para tener 4 H. Luego O: 2 en productos → 1 O₂.',
+    col: 'La combustión del hidrógeno es la base de pilas de combustible estudiadas en universidades colombianas.'
+  },
+  {
+    id: 'bal-032',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Mg + O₂ → MgO',
+    coeficientes: [2, 1, 2],
+    especies: ['Mg', 'O₂', 'MgO'],
+    hint: 'O₂ aporta 2 O → necesitas 2 MgO → 2 Mg. Verifica: 2 Mg = 2 Mg, 2 O = 2 O.',
+    col: 'El MgO (magnesia) se usa en refractarios industriales en Medellín y Barranquilla.'
+  },
+  {
+    id: 'bal-033',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Na + Cl₂ → NaCl',
+    coeficientes: [2, 1, 2],
+    especies: ['Na', 'Cl₂', 'NaCl'],
+    hint: 'Cl₂ aporta 2 Cl → necesitas 2 NaCl → 2 Na. Coeficientes: 2, 1, 2.',
+    col: 'El NaCl se produce comercialmente en las Salinas de Manaure, La Guajira.'
+  },
+  {
+    id: 'bal-034',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'N₂ + H₂ → NH₃',
+    coeficientes: [1, 3, 2],
+    especies: ['N₂', 'H₂', 'NH₃'],
+    hint: 'N₂ da 2 N → 2 NH₃. Luego H: 2×3=6 H en productos → 3 H₂. Coeficientes: 1, 3, 2.',
+    col: 'El NH₃ (amoniaco) es materia prima de fertilizantes usados en Colombia para café y flores.'
+  },
+  {
+    id: 'bal-035',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'H₂O₂ → H₂O + O₂',
+    coeficientes: [2, 2, 1],
+    especies: ['H₂O₂', 'H₂O', 'O₂'],
+    hint: 'O₂ contiene 2 O → necesitas 2 H₂O para balancear O. Luego H: 2×2=4 H → 2 H₂O₂.',
+    col: 'El H₂O₂ (agua oxigenada) se descompone espontáneamente. Se usa en hospitales colombianos para desinfección.'
+  },
+  {
+    id: 'bal-036',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'CaCO₃ → CaO + CO₂',
+    coeficientes: [1, 1, 1],
+    especies: ['CaCO₃', 'CaO', 'CO₂'],
+    hint: 'Todos los coeficientes son 1. Verifica: 1 Ca, 1 C, 3 O a ambos lados (1 en CaO + 2 en CO₂).',
+    col: 'La descomposición de CaCO₃ (calcita) a altas temperaturas produce cal viva (CaO) en hornos colombianos.'
+  },
+  {
+    id: 'bal-037',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'KClO₃ → KCl + O₂',
+    coeficientes: [2, 2, 3],
+    especies: ['KClO₃', 'KCl', 'O₂'],
+    hint: 'O₂ tiene 2 O. K y Cl son 1:1. Busca MCM para O: 3 O₂ = 6 O → 2 KClO₃ (6 O) y 2 KCl.',
+    col: 'El KClO₃ se descompone con calor produciendo O₂, base de experimentos de laboratorio escolar.'
+  },
+  {
+    id: 'bal-038',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'Fe + O₂ → Fe₂O₃',
+    coeficientes: [4, 3, 2],
+    especies: ['Fe', 'O₂', 'Fe₂O₃'],
+    hint: 'Fe₂O₃ tiene 2 Fe y 3 O. 2 Fe₂O₃ → 4 Fe y 6 O → 3 O₂. Coeficientes: 4, 3, 2.',
+    col: 'El óxido de hierro (Fe₂O₃) es la herrumbre que afecta estructuras metálicas en zonas costeras colombianas.'
+  },
+  {
+    id: 'bal-039',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'P₄ + O₂ → P₂O₅',
+    coeficientes: [1, 5, 2],
+    especies: ['P₄', 'O₂', 'P₂O₅'],
+    hint: 'P₄ da 4 P → 2 P₂O₅. Luego O: 2×5=10 O → 5 O₂. Coeficientes: 1, 5, 2.',
+    col: 'El P₂O₅ es el anhídrido fosfórico, base de fosfatos usados en fertilizantes agrícolas colombianos.'
+  },
+  {
+    id: 'bal-040',
+    group: 'balanceo', level: 'easy',
+    ecuacion_sin_coef: 'S₈ + O₂ → SO₂',
+    coeficientes: [1, 8, 8],
+    especies: ['S₈', 'O₂', 'SO₂'],
+    hint: 'S₈ da 8 S → 8 SO₂. Luego O: 8×2=16 O → 8 O₂. Coeficientes: 1, 8, 8.',
+    col: 'El SO₂ producido en erupciones del volcán Galeras (Nariño) afecta la calidad del aire local.'
+  },
+
+  // -- medium adicionales: desplazamiento y doble sustitución (10) --
+  {
+    id: 'bal-041',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Zn + HCl → ZnCl₂ + H₂',
+    coeficientes: [1, 2, 1, 1],
+    especies: ['Zn', 'HCl', 'ZnCl₂', 'H₂'],
+    hint: 'ZnCl₂ necesita 2 Cl → 2 HCl. H₂ contiene 2 H, y 2 HCl aportan 2 H. Coeficientes: 1, 2, 1, 1.',
+    col: 'El Zn reacciona con HCl en laboratorios escolares para producir H₂. Reacción de desplazamiento simple.'
+  },
+  {
+    id: 'bal-042',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Fe + CuSO₄ → FeSO₄ + Cu',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['Fe', 'CuSO₄', 'FeSO₄', 'Cu'],
+    hint: 'Todos los coeficientes son 1. El Fe desplaza al Cu porque es más reactivo. El SO₄²⁻ no cambia.',
+    col: 'Esta reacción se observa al sumergir un clavo de hierro en solución de sulfato de cobre: el clavo se cobre de cobre metálico.'
+  },
+  {
+    id: 'bal-043',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Al + HCl → AlCl₃ + H₂',
+    coeficientes: [2, 6, 2, 3],
+    especies: ['Al', 'HCl', 'AlCl₃', 'H₂'],
+    hint: 'AlCl₃ necesita 3 Cl → 3 HCl por Al. 2 Al → 6 HCl → 2 AlCl₃. 6 H → 3 H₂. Coeficientes: 2, 6, 2, 3.',
+    col: 'El Al de latas de gaseosa reacciona con ácidos produciendo H₂. Importante en reciclaje de aluminio.'
+  },
+  {
+    id: 'bal-044',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Mg + H₂O → Mg(OH)₂ + H₂',
+    coeficientes: [1, 2, 1, 1],
+    especies: ['Mg', 'H₂O', 'Mg(OH)₂', 'H₂'],
+    hint: 'Mg(OH)₂ necesita 2 OH⁻. 2 H₂O aportan 2 OH y 2 H. H₂ contiene 2 H. Coeficientes: 1, 2, 1, 1.',
+    col: 'El Mg reacciona con agua caliente. La "leche de magnesia" Mg(OH)₂ se usa como antiácido en Colombia.'
+  },
+  {
+    id: 'bal-045',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'NaOH + HCl → NaCl + H₂O',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['NaOH', 'HCl', 'NaCl', 'H₂O'],
+    hint: 'Todos los coeficientes son 1. Reacción de neutralización: base + ácido → sal + agua.',
+    col: 'La neutralización NaOH + HCl es la base de la volumetría ácido-base en laboratorios colombianos.'
+  },
+  {
+    id: 'bal-046',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'BaCl₂ + Na₂SO₄ → BaSO₄ + NaCl',
+    coeficientes: [1, 1, 1, 2],
+    especies: ['BaCl₂', 'Na₂SO₄', 'BaSO₄', 'NaCl'],
+    hint: 'Ba y SO₄ son 1:1. Na₂SO₄ da 2 Na → 2 NaCl. BaCl₂ da 2 Cl → 2 NaCl. Coeficientes: 1, 1, 1, 2.',
+    col: 'El BaSO₄ precipita blanco en solución. Se usa en diagnóstico gastrointestinal en clínicas colombianas.'
+  },
+  {
+    id: 'bal-047',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'AgNO₃ + NaCl → AgCl + NaNO₃',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['AgNO₃', 'NaCl', 'AgCl', 'NaNO₃'],
+    hint: 'Todos los coeficientes son 1. El Ag⁺ precipita como AgCl (blanco) al añadir Cl⁻.',
+    col: 'La prueba con AgNO₃ detecta cloruros en agua. Se usa para controlar calidad del agua potable en Colombia.'
+  },
+  {
+    id: 'bal-048',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'CaCO₃ + HCl → CaCl₂ + H₂O + CO₂',
+    coeficientes: [1, 2, 1, 1, 1],
+    especies: ['CaCO₃', 'HCl', 'CaCl₂', 'H₂O', 'CO₂'],
+    hint: 'CaCl₂ necesita 2 Cl → 2 HCl. Los 2 H van a H₂O. El CO₃²⁻ forma CO₂ + O para H₂O. Coeficientes: 1, 2, 1, 1, 1.',
+    col: 'CaCO₃ + HCl ocurre al verter vinagre sobre conchas de caracol. Reacción visible en costas colombianas.'
+  },
+  {
+    id: 'bal-049',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'KOH + HNO₃ → KNO₃ + H₂O',
+    coeficientes: [1, 1, 1, 1],
+    especies: ['KOH', 'HNO₃', 'KNO₃', 'H₂O'],
+    hint: 'Todos los coeficientes son 1. Neutralización: K⁺ + NO₃⁻ → KNO₃ (salitre). OH⁻ + H⁺ → H₂O.',
+    col: 'El KNO₃ (salitre) se extraía históricamente en Colombia y se usa en fertilizantes y pólvora negra.'
+  },
+  {
+    id: 'bal-050',
+    group: 'balanceo', level: 'medium',
+    ecuacion_sin_coef: 'Pb(NO₃)₂ + KI → PbI₂ + KNO₃',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['Pb(NO₃)₂', 'KI', 'PbI₂', 'KNO₃'],
+    hint: 'PbI₂ necesita 2 I⁻ → 2 KI. Eso da 2 K → 2 KNO₃. Pb(NO₃)₂ da 2 NO₃⁻ → 2 KNO₃. Coeficientes: 1, 2, 1, 2.',
+    col: 'El PbI₂ precipita amarillo brillante. Reacción usada en demostraciones de precipitación en clase.'
+  },
+
+  // -- hard adicionales: combustiones y coeficientes altos (10) --
+  {
+    id: 'bal-051',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'CH₄ + O₂ → CO₂ + H₂O',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['CH₄', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'Orden: C, H, O. C: 1 CO₂. H: 4 H → 2 H₂O. O: 2+2=4 O → 2 O₂. Coeficientes: 1, 2, 1, 2.',
+    col: 'El CH₄ (gas natural) es el combustible más usado en Colombia; su combustión completa produce CO₂ y H₂O.'
+  },
+  {
+    id: 'bal-052',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'C₃H₈ + O₂ → CO₂ + H₂O',
+    coeficientes: [1, 5, 3, 4],
+    especies: ['C₃H₈', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 3 CO₂. H: 8 H → 4 H₂O. O: 3×2 + 4 = 10 O → 5 O₂. Coeficientes: 1, 5, 3, 4.',
+    col: 'El propano (C₃H₈) se usa en pipetas de gas en hogares colombianos sin red de gas natural.'
+  },
+  {
+    id: 'bal-053',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'C₄H₁₀ + O₂ → CO₂ + H₂O',
+    coeficientes: [2, 13, 8, 10],
+    especies: ['C₄H₁₀', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 4 CO₂. H: 10 H → 5 H₂O. O: 4×2+5=13 O → 6.5 O₂. Multiplica ×2: 2 C₄H₁₀ + 13 O₂ → 8 CO₂ + 10 H₂O.',
+    col: 'El butano (C₄H₁₀) está en encendedores desechables. Los coeficientes impares obligan a multiplicar ×2.'
+  },
+  {
+    id: 'bal-054',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'C₂H₅OH + O₂ → CO₂ + H₂O',
+    coeficientes: [1, 3, 2, 3],
+    especies: ['C₂H₅OH', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 2 CO₂. H: 6 H → 3 H₂O. O (izq): 1 en etanol. O (der): 4+3=7, menos 1 = 6 → 3 O₂.',
+    col: 'El etanol (C₂H₅OH) como biocombustible se mezcla con gasolina en Colombia (E10: 10% etanol).'
+  },
+  {
+    id: 'bal-055',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'C₂H₆ + O₂ → CO₂ + H₂O',
+    coeficientes: [2, 7, 4, 6],
+    especies: ['C₂H₆', 'O₂', 'CO₂', 'H₂O'],
+    hint: 'C: 2 CO₂. H: 6 H → 3 H₂O. O: 4+3=7 → 3.5 O₂. Multiplica ×2: 2 C₂H₆ + 7 O₂ → 4 CO₂ + 6 H₂O.',
+    col: 'El etano (C₂H₆) se obtiene del gas natural colombiano en refinerías como la de Barrancabermeja.'
+  },
+  {
+    id: 'bal-056',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Al₂(SO₄)₃ + KOH → Al(OH)₃ + K₂SO₄',
+    coeficientes: [1, 6, 2, 3],
+    especies: ['Al₂(SO₄)₃', 'KOH', 'Al(OH)₃', 'K₂SO₄'],
+    hint: 'Al₂(SO₄)₃ tiene 2 Al → 2 Al(OH)₃. Necesitas 6 OH⁻ → 6 KOH. 3 SO₄²⁻ → 3 K₂SO₄ → 6 K. Verifica K: 6 KOH = 6 K, 3 K₂SO₄ = 6 K.',
+    col: 'El Al(OH)₃ precipita en aguas residuales industriales. Es usado en plantas de tratamiento en Colombia.'
+  },
+  {
+    id: 'bal-057',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'BaCl₂ + Na₃PO₄ → Ba₃(PO₄)₂ + NaCl',
+    coeficientes: [3, 2, 1, 6],
+    especies: ['BaCl₂', 'Na₃PO₄', 'Ba₃(PO₄)₂', 'NaCl'],
+    hint: 'Ba₃(PO₄)₂ necesita 3 Ba → 3 BaCl₂ y 2 PO₄ → 2 Na₃PO₄. 3 BaCl₂ da 6 Cl. 2 Na₃PO₄ da 6 Na → 6 NaCl.',
+    col: 'El Ba₃(PO₄)₂ precipita blanco. Los fosfatos de sodio son comunes en detergentes colombianos.'
+  },
+  {
+    id: 'bal-058',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Fe₂O₃ + CO → Fe + CO₂',
+    coeficientes: [1, 3, 2, 3],
+    especies: ['Fe₂O₃', 'CO', 'Fe', 'CO₂'],
+    hint: 'Fe₂O₃ tiene 2 Fe → 2 Fe. O₃ → necesitas 3 CO para capturar 3 O → 3 CO₂. Coeficientes: 1, 3, 2, 3.',
+    col: 'Fe₂O₃ + CO es la reacción en altos hornos de aceración. La industria siderúrgica (Paz del Río) usó este proceso en Colombia.'
+  },
+  {
+    id: 'bal-059',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Fe(OH)₃ → Fe₂O₃ + H₂O',
+    coeficientes: [2, 1, 3],
+    especies: ['Fe(OH)₃', 'Fe₂O₃', 'H₂O'],
+    hint: 'Fe₂O₃ necesita 2 Fe → 2 Fe(OH)₃. 6 OH = 3 H₂O + 3 O (ya en Fe₂O₃). Coeficientes: 2, 1, 3.',
+    col: 'El hidróxido de hierro(III) se forma en corrosión húmeda y se deshidrata a Fe₂O₃ al secar estructuras metálicas.'
+  },
+  {
+    id: 'bal-060',
+    group: 'balanceo', level: 'hard',
+    ecuacion_sin_coef: 'Cu + AgNO₃ → Cu(NO₃)₂ + Ag',
+    coeficientes: [1, 2, 1, 2],
+    especies: ['Cu', 'AgNO₃', 'Cu(NO₃)₂', 'Ag'],
+    hint: 'Cu(NO₃)₂ necesita 2 NO₃⁻ → 2 AgNO₃. Eso produce 2 Ag. Cu: 1. Coeficientes: 1, 2, 1, 2.',
+    col: 'Al sumergir cobre en AgNO₃ el Cu se disuelve y el Ag metálico precipita con brillo plateado. Reacción de desplazamiento.'
+  },
+
+  // ─────────────────────────────────────────────
   // MOL-MASA — masa molar de compuestos (25)
   // ─────────────────────────────────────────────
 

@@ -869,7 +869,7 @@ function setMode(mode){
   const lp = document.getElementById('login-panel');
   const wi = document.getElementById('welcome-inline');
   if(mode==='student'){
-    lp.style.display = '';
+    lp.style.display = 'block';
   } else {
     lp.style.display = 'none';
     wi.style.display = 'none';
@@ -886,11 +886,11 @@ function validateCode(){
   const code = inp.value.trim();
   const errEl = document.getElementById('code-err');
   errEl.style.display='none';
-  if(!code){errEl.textContent='Ingresa tu código.';errEl.style.display='';return;}
+  if(!code){errEl.textContent='Ingresa tu código.';errEl.style.display='block';return;}
   const name = STUDENTS[code];
   if(!name){
     errEl.textContent='Código no encontrado. Verifica con tu docente.';
-    errEl.style.display=''; CODE_VERIFIED=false; return;
+    errEl.style.display='block'; CODE_VERIFIED=false; return;
   }
   STUDENT_CODE = code;
   STUDENT_NAME = name;
@@ -906,12 +906,8 @@ function validateCode(){
 function pickGroup(group){
   if(GAME_MODE==='student' && !CODE_VERIFIED){
     document.getElementById('code-err').textContent='Verifica tu código primero.';
-    document.getElementById('code-err').style.display='';
+    document.getElementById('code-err').style.display='block';
     document.getElementById('code-inp').focus();
-    return;
-  }
-  if(GAME_MODE==='student'){
-    openWelcome();
     return;
   }
   startGame(group);
