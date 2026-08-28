@@ -381,6 +381,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .el-sym{font-size:.85rem}
   .el-name{font-size:.28rem}
 }
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:inherit}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
 </style>
 </head>
 <body>
@@ -392,6 +399,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </a>
   <div class="nav-right">
     <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
     <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
   </div>
 </nav>
