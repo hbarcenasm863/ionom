@@ -1363,6 +1363,7 @@ function startGame(group){
     // Use buildQuestionQueue for anti-consecutive bag-refill (same as nomenclature groups)
     ST.questions=buildQuestionQueue(pool,20).map(q=>({...q,qtype}));
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
   if(group==='reactividad'){
@@ -1379,6 +1380,7 @@ function startGame(group){
     while(qs.length<20) qs.push(makeReactChain());
     ST.questions=qs;
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
   if(group==='elemento'){
@@ -1396,6 +1398,7 @@ function startGame(group){
     while(qs.length<20) qs.push(makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
     ST.questions=qs;
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');
     loadQuestion();
     return;
@@ -1419,6 +1422,7 @@ function startGame(group){
   }
   ST.questions=questions;
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+  sendProgress('inicio'); _startProgressTracking();
   showScreen('s-game');
   loadQuestion();
 }
@@ -2552,25 +2556,79 @@ function generateStudyFeedback(){
     '</div>';
 }
 
-// ── Send results to Apps Script ──
-function sendResults(grade, level, pct){
-  const ss = document.getElementById('send-status');
-  ss.className='send-status sending show';
-  ss.innerHTML='⏳ Enviando resultados al registro del docente…';
-  const payload = {
+// ── Registro progresivo de sesión ──
+let _progressInterval = null;
+
+function _buildPayload(razon, extra){
+  const respondidas = ST.idx || 0;
+  const pct = respondidas > 0 ? Math.round(ST.correct / respondidas * 100) : 0;
+  return Object.assign({
     codigo: STUDENT_CODE,
     nombre: STUDENT_NAME,
     curso: STUDENT_COURSE,
-    grupo: GROUP_LABELS[ST.group]||ST.group,
+    grupo: GROUP_LABELS[ST.group] || ST.group,
     correctas: ST.correct,
+    intentos: ST.totalAttempts || 0,
+    respondidas,
+    total_preguntas: (ST.questions && ST.questions.length) || 20,
     puntaje: ST.score,
-    total: 40,
-    intentos: ST.totalAttempts,
     porcentaje: pct,
-    calificacion: grade,
-    nivel: level,
+    calificacion: extra.calificacion || '—',
+    nivel: extra.nivel || '—',
+    razon,
     timestamp: new Date().toISOString()
-  };
+  }, extra);
+}
+
+function sendProgress(razon, extra){
+  if(GAME_MODE !== 'student' || !CODE_VERIFIED) return;
+  extra = extra || {};
+  const payload = _buildPayload(razon, extra);
+  // sendBeacon is fire-and-forget, ideal for beforeunload/visibilitychange
+  if(razon === 'abandono' && navigator.sendBeacon){
+    navigator.sendBeacon(APPS_SCRIPT_URL, JSON.stringify(payload));
+    return;
+  }
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+function _startProgressTracking(){
+  _stopProgressTracking();
+  _progressInterval = setInterval(()=>{
+    if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
+      sendProgress('progreso');
+    }
+  }, 60000);
+}
+
+function _stopProgressTracking(){
+  if(_progressInterval){ clearInterval(_progressInterval); _progressInterval=null; }
+}
+
+// Envía al cerrar pestaña, recargar o navegar atrás
+window.addEventListener('beforeunload', ()=>{
+  if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
+    sendProgress('abandono');
+  }
+});
+// Envía cuando la pestaña pasa a segundo plano (móvil)
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState==='hidden' && GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
+    sendProgress('abandono');
+  }
+});
+
+// ── Send final results to Apps Script ──
+function sendResults(grade, level, pct){
+  _stopProgressTracking();
+  const ss = document.getElementById('send-status');
+  ss.className='send-status sending show';
+  ss.innerHTML='⏳ Enviando resultados al registro del docente…';
+  const payload = _buildPayload('fin', {calificacion: grade, nivel: level, porcentaje: pct});
   fetch(APPS_SCRIPT_URL, {
     method:'POST',
     mode:'no-cors',
@@ -2594,6 +2652,7 @@ function confirmExit(){
 
 function resetGame(){
   stopTimer();
+  _stopProgressTracking();
   ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
   // Keep student logged in for another round; just hide send-status
   const ss=document.getElementById('send-status');
