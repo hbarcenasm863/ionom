@@ -372,7 +372,7 @@ footer a:hover{text-decoration:underline}
 
 /* ── Tamaño de letra adaptable ── */
 :root{--base-fs:16px}
-body{font-size:var(--base-fs)}
+html{font-size:var(--base-fs)}
 .font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
 .font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
 .font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
@@ -2549,7 +2549,7 @@ function speakText(btn){
   var STEPS=[13,14,15,16,17,18,20,22];
   var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
   function apply(){
-    document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
     var d=document.getElementById('font-disp');
     if(d)d.textContent='A'+STEPS[idx];
   }
