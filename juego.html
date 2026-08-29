@@ -2882,11 +2882,15 @@ function sendResults(grade, level, pct){
     keepalive: true
   }).then(()=>{
     ss.className='send-status ok show';
-    ss.innerHTML='✅ <strong>Resultados enviados correctamente.</strong> El docente recibirá tu puntaje.';
+    ss.innerHTML='✅ <strong>Resultados registrados.</strong> Tu docente recibirá tu puntaje automáticamente.';
   }).catch(()=>{
+    const nota = Math.round(pct / 100 * 5 * 10) / 10;
     ss.className='send-status err show';
-    ss.innerHTML='⚠️ No se pudo enviar. Muéstrale esta pantalla al docente: '+
-      STUDENT_NAME+' · '+ST.score+'/20 · '+pct+'%';
+    ss.innerHTML=
+      '📵 <strong>Sin conexión al servidor.</strong> Toma una captura de pantalla y muéstrasela a tu docente.<br>'+
+      '<span style="display:inline-block;margin-top:8px;padding:8px 14px;background:rgba(0,0,0,.08);border-radius:8px;font-family:var(--mono);font-size:.9rem">'+
+      STUDENT_NAME+' &nbsp;|&nbsp; '+ST.group.toUpperCase()+' &nbsp;|&nbsp; '+ST.correct+'/'+ST.questions.length+' correctas &nbsp;|&nbsp; '+pct+'% &nbsp;|&nbsp; Nota: '+nota+
+      '</span>';
   });
 }
 
