@@ -202,6 +202,17 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <div class="portada-badge">⚛ Nomenclatura Inorgánica</div>
     <div class="portada-title">Ion<em>Nom</em></div>
     <div class="portada-sub">Elige un grupo funcional para comenzar.<br>10 preguntas variadas · 20 puntos posibles.</div>
+    <!-- Identificación opcional del estudiante -->
+    <div id="login-strip" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span id="login-label" style="font-size:.78rem;color:rgba(255,255,255,.7);flex-shrink:0">Código estudiante:</span>
+      <input id="login-code" type="text" maxlength="10" placeholder="Ej: 110106"
+        style="flex:1;min-width:100px;padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-size:.85rem;font-family:var(--sans);outline:none"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+        onkeydown="if(event.key==='Enter')loginStudent()">
+      <button onclick="loginStudent()" style="padding:8px 18px;background:#fcd34d;color:#0d4a73;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap">Entrar</button>
+      <span id="login-ok" style="display:none;font-size:.8rem;color:#6ee7b7;font-weight:700"></span>
+    </div>
+
     <div class="portada-types">
       <span class="pt-chip">🔵 Opción múltiple</span>
       <span class="pt-chip">✏️ Escritura libre</span>
@@ -351,6 +362,88 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 </div>
 
 <script>
+// ── Google Sheets tracking (una sola fila por sesión) ──────────────────────
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyHa4A97pssgxoOuBk6dR9PlphplxUoK_LGTDRaxtmnoHyJkC6u3yjknCnnjxWtMJVB/exec';
+
+// Datos del estudiante activo — se leen de localStorage si hay sesión de estudiante
+let _ses = (()=>{
+  try { return JSON.parse(localStorage.getItem('ionom-student')||'null'); } catch(e){ return null; }
+})();
+let _gameStarted = false;
+
+function _tsColombia() {
+  return new Date().toLocaleString('sv-SE', {timeZone:'America/Bogota'}).replace(' ','T');
+}
+
+function _buildPayload(razon) {
+  const pct  = ST.questions.length ? Math.round((ST.score / 20) * 100) : 0;
+  const nota = pct>=90?5.0:pct>=80?4.5:pct>=70?4.0:pct>=60?3.5:pct>=50?3.0:2.0;
+  return JSON.stringify({
+    codigo:          (_ses&&_ses.codigo)  || '',
+    nombre:          (_ses&&_ses.nombre)  || '',
+    curso:           (_ses&&_ses.curso)   || '',
+    grupo:           ST.group             || '',
+    nivel:           'medium',
+    razon,
+    respondidas:     Math.min(ST.idx, ST.questions.length),
+    total_preguntas: 10,
+    correctas:       ST.correct           || 0,
+    intentos:        ST.totalAttempts     || 0,
+    puntaje:         ST.score             || 0,
+    porcentaje:      pct,
+    calificacion:    nota,
+    timestamp:       _tsColombia()
+  });
+}
+
+function _sendFin() {
+  if (!_gameStarted) return;
+  _gameStarted = false;
+  try { fetch(GAS_URL, {method:'POST', body:_buildPayload('fin'), keepalive:true}); } catch(e){}
+}
+
+function _sendAbandono() {
+  if (!_gameStarted) return;
+  _gameStarted = false;
+  try { navigator.sendBeacon(GAS_URL, _buildPayload('abandono')); } catch(e){}
+}
+
+// Cierre / recarga de pestaña → abandono
+window.addEventListener('beforeunload', _sendAbandono);
+// Cambio de tab a segundo plano (móvil) → abandono
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') _sendAbandono();
+});
+
+// ── Roster de estudiantes (código → {nombre, curso}) ──────────────────────
+// Agrega aquí los códigos de tus estudiantes
+const ROSTER = {
+  '110106': {nombre:'GARCIA ERAZO VALENTINA',   curso:'11°01'},
+  '100201': {nombre:'ESTUDIANTE DEMO',            curso:'10°02'},
+};
+
+function loginStudent() {
+  const code = (document.getElementById('login-code').value||'').trim();
+  if (!code) return;
+  const info = ROSTER[code] || {nombre:'', curso:''};
+  _ses = {codigo: code, nombre: info.nombre, curso: info.curso};
+  try { localStorage.setItem('ionom-student', JSON.stringify(_ses)); } catch(e){}
+  const ok = document.getElementById('login-ok');
+  ok.textContent = info.nombre ? '✓ ' + info.nombre : '✓ Código ' + code;
+  ok.style.display = 'inline';
+  document.getElementById('login-code').disabled = true;
+}
+
+// Al cargar: si ya hay sesión guardada, mostrarla
+document.addEventListener('DOMContentLoaded', () => {
+  if (_ses && _ses.codigo) {
+    const inp = document.getElementById('login-code');
+    const ok  = document.getElementById('login-ok');
+    if (inp) { inp.value = _ses.codigo; inp.disabled = true; }
+    if (ok)  { ok.textContent = '✓ ' + (_ses.nombre || _ses.codigo); ok.style.display = 'inline'; }
+  }
+});
+
 // ── Helpers ──
 function shuffle(arr){
   const a=[...arr];
@@ -491,6 +584,7 @@ function startGame(group){
     return {...q,qtype:t};
   });
   ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;
+  _gameStarted = true;
   showScreen('s-game');
   loadQuestion();
 }
@@ -1105,6 +1199,7 @@ function endGame(){
   document.getElementById('r-score').textContent=ST.score+'/20';
   document.getElementById('r-pct').textContent=pct+'%';
   generateCert(grade,level);
+  _sendFin();
   showScreen('s-result');
 }
 
