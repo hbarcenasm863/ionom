@@ -2793,7 +2793,10 @@ function generateStudyFeedback(){
 }
 
 // ── Registro de sesión — UNA sola fila por sesión ──────────────────────────
-// Se envía solo al terminar (fin) o al salir/cerrar (abandono). Sin interval.
+// Se envía al terminar (fin) o al salir/cerrar (abandono). Sin interval.
+// _sessionSent evita doble envío si el usuario vuelve al juego tras pasar a segundo plano.
+
+let _sessionSent = false;
 
 function _tsColombia(){
   return new Date().toLocaleString('sv-SE',{timeZone:'America/Bogota'}).replace(' ','T');
@@ -2804,7 +2807,9 @@ function _buildPayload(razon, extra){
   const respondidas = ST.idx || 0;
   const pct = extra.porcentaje !== undefined ? extra.porcentaje
               : (respondidas > 0 ? Math.round(ST.correct / respondidas * 100) : 0);
-  const nota = pct>=90?5.0:pct>=80?4.5:pct>=70?4.0:pct>=60?3.5:pct>=50?3.0:2.0;
+  // Nota lineal: 0%→0.0 · 50%→2.5 · 100%→5.0
+  const nota = extra.calificacion !== undefined ? extra.calificacion
+               : Math.round(pct / 100 * 5 * 10) / 10;
   return {
     codigo:          STUDENT_CODE,
     nombre:          STUDENT_NAME,
@@ -2816,7 +2821,7 @@ function _buildPayload(razon, extra){
     total_preguntas: (ST.questions && ST.questions.length) || 20,
     puntaje:         ST.score || 0,
     porcentaje:      pct,
-    calificacion:    extra.calificacion || nota,
+    calificacion:    nota,
     nivel:           extra.nivel || '—',
     razon,
     timestamp:       _tsColombia()
@@ -2824,7 +2829,8 @@ function _buildPayload(razon, extra){
 }
 
 function _post(payload){
-  if(GAME_MODE !== 'student' || !CODE_VERIFIED) return;
+  if(GAME_MODE !== 'student' || !CODE_VERIFIED || _sessionSent) return;
+  _sessionSent = true;
   if(payload.razon === 'abandono' && navigator.sendBeacon){
     navigator.sendBeacon(APPS_SCRIPT_URL, JSON.stringify(payload));
     return;
@@ -2832,27 +2838,29 @@ function _post(payload){
   fetch(APPS_SCRIPT_URL, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    keepalive: true
   }).catch(()=>{});
 }
 
-// sendProgress: alias para compatibilidad con código existente
-// Solo 'abandono' y 'fin' generan envío real; 'inicio'/'progreso' se ignoran
+// sendProgress: alias para compatibilidad con llamadas existentes
+// 'inicio' y 'progreso' no generan fila — solo 'abandono' y 'fin'
 function sendProgress(razon, extra){
-  if(razon === 'inicio' || razon === 'progreso') return; // no generar filas intermedias
+  if(razon === 'inicio' || razon === 'progreso') return;
   _post(_buildPayload(razon, extra));
 }
 
-function _startProgressTracking(){ /* desactivado — sin envíos periódicos */ }
+function _startProgressTracking(){ /* desactivado */ }
 function _stopProgressTracking(){}
 
-// Cierre / recarga de pestaña → abandono (solo si el juego fue iniciado)
+// Cierre / recarga → abandono (solo si el juego está en curso)
 window.addEventListener('beforeunload', ()=>{
   if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
     _post(_buildPayload('abandono'));
   }
 });
-// Cambio a segundo plano en móvil → abandono
+// Segundo plano (móvil) → abandono; si el usuario regresa y termina, _sessionSent
+// ya es true y sendResults no enviará una segunda fila.
 document.addEventListener('visibilitychange', ()=>{
   if(document.visibilityState==='hidden' && GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
     _post(_buildPayload('abandono'));
@@ -2864,7 +2872,8 @@ function sendResults(grade, level, pct){
   const ss = document.getElementById('send-status');
   ss.className='send-status sending show';
   ss.innerHTML='⏳ Enviando resultados al registro del docente…';
-  const payload = _buildPayload('fin', {calificacion: grade, nivel: level, porcentaje: pct});
+  const nota = Math.round(pct / 100 * 5 * 10) / 10;
+  const payload = _buildPayload('fin', {calificacion: nota, nivel: level, porcentaje: pct});
   fetch(APPS_SCRIPT_URL, {
     method:'POST',
     mode:'no-cors',
