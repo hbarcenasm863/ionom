@@ -509,7 +509,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .cert-sig-line{border-top:2px solid #0d2d42;padding-top:6px}
 .cert-footer{font-size:9px;color:#3a5568;margin-top:20px;border-top:1px solid #bae6fd;padding-top:10px;font-family:var(--sans);line-height:1.6}
 
-@media print{.site-nav,.game-hdr,.btn-row,.result-card,.result-stats{display:none!important}#s-result{display:block!important}body{background:#fff}.cert{box-shadow:none;border-color:#000}}
+@media print{*{visibility:hidden}.cert,#print-cert,.cert *,#print-cert *{visibility:visible!important}#print-cert{position:fixed;inset:0;margin:auto;box-shadow:none;border-color:#000}}
 @media(max-width:520px){.portada-title{font-size:2.2rem}.group-grid{grid-template-columns:1fr 1fr}.result-stats{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.cert-sigs{grid-template-columns:1fr;gap:20px}}
 
 /* TIMER */
@@ -2772,9 +2772,46 @@ function endGame(){
 
 const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar'};
 
-const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻ (bi-/hidrogeno-), H₂PO₄⁻ (dihidrogeno-), HPO₄²⁻ (hidrogeno-). Nombre trad: prefijo bi- para diprót. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica. Los electrones de valencia se deducen del grupo.'};
+const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (hidrocarburo+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
+  const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
+  const nota = Math.round(pct/100*5*10)/10;
+  let medal='🔰',level='Principiante';
+  if(pct>=90){medal='🥇';level='Experto';}
+  else if(pct>=70){medal='🥈';level='Avanzado';}
+  else if(pct>=50){medal='🥉';level='En Progreso';}
+  const total=ST.questions.length||20;
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const studentLine=GAME_MODE==='student'&&STUDENT_NAME?STUDENT_NAME:'Modo libre';
+
+  // ── Certificado imprimible ──
+  const certHtml=`
+  <div class="cert" id="print-cert">
+    <div class="cert-hdr">Colegio Rufino José Cuervo I.E.D.</div>
+    <div style="font-size:3rem;margin-bottom:6px">${medal}</div>
+    <div class="cert-title">Certificado de Logro</div>
+    <div class="cert-sub">Nomenclatura Inorgánica · IonNom · ${GROUP_LABELS[ST.group]||ST.group}</div>
+    <div class="cert-body">
+      <p style="font-size:16px;font-weight:700;margin-bottom:4px">${studentLine}</p>
+      <p>completó esta sesión de práctica con nivel de desempeño:</p>
+      <p style="font-size:18px;font-weight:700;color:#0d4a73;margin-top:4px">${level}</p>
+    </div>
+    <div class="cert-stats">
+      <div class="cert-stat"><div class="cert-stat-val">${ST.correct}/${total}</div><div class="cert-stat-lbl">Respuestas correctas</div></div>
+      <div class="cert-stat"><div class="cert-stat-val">${ST.score}/${total*2}</div><div class="cert-stat-lbl">Puntos obtenidos</div></div>
+      <div class="cert-stat"><div class="cert-stat-val">${pct}%</div><div class="cert-stat-lbl">Porcentaje</div></div>
+      <div class="cert-stat"><div class="cert-stat-val">${nota}/5.0</div><div class="cert-stat-lbl">Calificación</div></div>
+    </div>
+    <div class="cert-sigs">
+      <div><div class="cert-sig-line"></div><p>Firma del estudiante</p></div>
+      <div><div class="cert-sig-line"></div><p>Docente responsable</p></div>
+    </div>
+    <div class="cert-footer">Fecha: ${dateStr}<br>IonNom © 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</div>
+  </div>`;
+
+  // ── Temas para repasar ──
   const errors=ST.errors||[];
   const byGroup={};
   errors.forEach(e=>{
@@ -2782,14 +2819,22 @@ function generateStudyFeedback(){
     if(!byGroup[e.group].find(x=>x.formula===e.formula)) byGroup[e.group].push(e);
   });
   const groups=Object.keys(byGroup);
-  const container=document.getElementById('cert-container');
-  if(!groups.length){
-    container.innerHTML='<div style="text-align:center;padding:24px 20px;background:var(--okb);border:2px solid var(--ok);border-radius:var(--r);color:var(--ok-t)"><div style="font-size:2.5rem;margin-bottom:10px">🏆</div><strong style="font-size:1rem">¡Sin errores! Dominas todos los grupos de esta sesión.</strong></div>';
-    return;
-  }
-  container.innerHTML='<div style="background:var(--warnb);border:2px solid var(--warn);border-radius:var(--r);padding:20px"><div style="font-weight:800;font-size:.92rem;color:var(--cat-t);margin-bottom:14px">📚 Temas para repasar</div>'+
-    groups.map(g=>'<div style="margin-bottom:12px;padding:12px;background:var(--surf);border-radius:var(--rs);border-left:4px solid var(--warn)"><div style="font-weight:800;font-size:.85rem;color:var(--tx);margin-bottom:3px">'+(GROUP_LABELS[g]||g)+'</div><div style="font-size:.75rem;color:var(--dimmer);margin-bottom:7px">'+(STUDY_TIPS[g]||'Revisa las reglas de nomenclatura para este grupo.')+'</div><div style="display:flex;flex-wrap:wrap;gap:6px">'+byGroup[g].map(e=>'<span style="font-family:var(--mono);font-size:.8rem;background:var(--warnb);padding:3px 8px;border-radius:6px;border:1px solid var(--warn);color:var(--cat-t)">'+e.formula+'</span>').join('')+'</div></div>').join('')+
-    '</div>';
+  const repasaHtml=groups.length===0
+    ?'<div style="text-align:center;padding:20px;background:var(--okb);border:2px solid var(--ok);border-radius:var(--r);color:var(--ok-t)"><div style="font-size:2rem;margin-bottom:6px">🏆</div><strong>¡Sin errores! Dominas todos los grupos de esta sesión.</strong></div>'
+    :'<div style="background:var(--warnb);border:2px solid var(--warn);border-radius:var(--r);padding:20px"><div style="font-weight:800;font-size:.92rem;color:var(--cat-t);margin-bottom:14px">📚 Temas para repasar</div>'+
+      groups.map(g=>{
+        const items=byGroup[g].map(e=>{
+          // Para balanceo y reaccion mostrar ecuacion si existe, si no formula
+          const label=e.ecuacion||e.ecuacion_sin_coef||e.formula||'';
+          return '<span style="font-family:var(--mono);font-size:.78rem;background:var(--warnb);padding:3px 8px;border-radius:6px;border:1px solid var(--warn);color:var(--cat-t)">'+label+'</span>';
+        }).join('');
+        return '<div style="margin-bottom:12px;padding:12px;background:var(--surf);border-radius:var(--rs);border-left:4px solid var(--warn)">'+
+          '<div style="font-weight:800;font-size:.85rem;color:var(--tx);margin-bottom:3px">'+(GROUP_LABELS[g]||g)+'</div>'+
+          '<div style="font-size:.75rem;color:var(--dimmer);margin-bottom:7px">'+(STUDY_TIPS[g]||'Revisa las reglas para este grupo.')+'</div>'+
+          '<div style="display:flex;flex-wrap:wrap;gap:6px">'+items+'</div></div>';
+      }).join('')+'</div>';
+
+  document.getElementById('cert-container').innerHTML=certHtml+repasaHtml;
 }
 
 // ── Registro de sesión — UNA sola fila por sesión ──────────────────────────
