@@ -55,7 +55,7 @@ function registrar(d) {
   const pct  = Number(d.porcentaje) || 0;
   const nota = calcNota(pct);
   sh.appendRow([
-    d.timestamp   || new Date().toISOString(),
+    d.timestamp   || Utilities.formatDate(new Date(), 'America/Bogota', "yyyy-MM-dd'T'HH:mm:ss"),
     d.codigo      || '',
     d.nombre      || '',
     d.curso       || '',
@@ -99,7 +99,7 @@ function updateStats(d) {
   const nota    = calcNota(pct);
   const razon   = d.razon || '';
   const estado  = razon === 'fin' ? 'Finalizó' : razon === 'abandono' ? 'Abandonó' : 'En curso';
-  const ts      = d.timestamp || new Date().toISOString();
+  const ts      = d.timestamp || Utilities.formatDate(new Date(), 'America/Bogota', "yyyy-MM-dd'T'HH:mm:ss");
 
   // Buscar fila existente del estudiante (columna A = Código)
   const data = sh.getDataRange().getValues();
