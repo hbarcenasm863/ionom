@@ -308,5 +308,5 @@ function inicializarHojas() {
   ensureSheet('Estadísticas',    EST_HEADERS, '#1a1a2e');
   ensureSheet('Resumen por Curso', RES_HEADERS, '#0d6efd');
 
-  SpreadsheetApp.getUi().alert('Hojas de IonNom creadas correctamente.');
+  Logger.log('Hojas de IonNom listas.');
 }
