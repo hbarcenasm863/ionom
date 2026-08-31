@@ -1598,7 +1598,7 @@ function startGame(group){
     const qtype=specialType[group];
     // Use buildQuestionQueue for anti-consecutive bag-refill (same as nomenclature groups)
     ST.questions=buildQuestionQueue(pool,20).map(q=>({...q,qtype}));
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1615,7 +1615,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeReactChain());
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1633,7 +1633,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');
     loadQuestion();
@@ -1657,7 +1657,7 @@ function startGame(group){
     replaceAt.forEach((i,j)=>{if(chainQs[j])questions[i]=chainQs[j];});
   }
   ST.questions=questions;
-  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];
+  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
   sendProgress('inicio'); _startProgressTracking();
   showScreen('s-game');
   loadQuestion();
@@ -2849,10 +2849,15 @@ function _tsColombia(){
 
 function _buildPayload(razon, extra){
   extra = extra || {};
-  const respondidas = ST.idx || 0;
+  const total      = (ST.questions && ST.questions.length) || 20;
+  // respondidas: preguntas realmente contestadas (no el índice en curso)
+  // ST.idx es el índice de la pregunta actual; si ya respondió y espera "siguiente",
+  // ST.correct ya incluye esa pregunta. Usamos min(correct + wrong, total) como proxy seguro.
+  const respondidas = Math.min(ST.idx, total);
+  const correctas   = Math.min(ST.correct || 0, respondidas);
+  const puntaje     = Math.min(ST.score   || 0, total * 2);
   const pct = extra.porcentaje !== undefined ? extra.porcentaje
-              : (respondidas > 0 ? Math.round(ST.correct / respondidas * 100) : 0);
-  // Nota lineal: 0%→0.0 · 50%→2.5 · 100%→5.0
+              : (respondidas > 0 ? Math.round(puntaje / (total * 2) * 100) : 0);
   const nota = extra.calificacion !== undefined ? extra.calificacion
                : Math.round(pct / 100 * 5 * 10) / 10;
   return {
@@ -2860,11 +2865,11 @@ function _buildPayload(razon, extra){
     nombre:          STUDENT_NAME,
     curso:           STUDENT_COURSE,
     grupo:           GROUP_LABELS[ST.group] || ST.group,
-    correctas:       ST.correct || 0,
+    correctas,
     intentos:        ST.totalAttempts || 0,
     respondidas,
-    total_preguntas: (ST.questions && ST.questions.length) || 20,
-    puntaje:         ST.score || 0,
+    total_preguntas: total,
+    puntaje,
     porcentaje:      pct,
     calificacion:    nota,
     nivel:           extra.nivel || '—',
@@ -2914,6 +2919,8 @@ document.addEventListener('visibilitychange', ()=>{
 
 // ── Send final results to Apps Script ──
 function sendResults(grade, level, pct){
+  if(GAME_MODE !== 'student' || !CODE_VERIFIED) return;
+  _sessionSent = true; // bloquea abandono posterior (visibilitychange tras terminar)
   const ss = document.getElementById('send-status');
   ss.className='send-status sending show';
   ss.innerHTML='⏳ Enviando resultados al registro del docente…';
