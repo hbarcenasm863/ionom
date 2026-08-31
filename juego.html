@@ -1363,7 +1363,7 @@ function buildDrag(q, pool){
 }
 
 // ── State ──
-let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
+let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[],answered:false};
 const TYPE_POOL_BASE=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance'];
 const TYPE_POOL_EL=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el'];
 // TYPE_POOL kept for legacy references
@@ -1598,7 +1598,7 @@ function startGame(group){
     const qtype=specialType[group];
     // Use buildQuestionQueue for anti-consecutive bag-refill (same as nomenclature groups)
     ST.questions=buildQuestionQueue(pool,20).map(q=>({...q,qtype}));
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1615,7 +1615,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeReactChain());
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1633,7 +1633,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');
     loadQuestion();
@@ -1675,6 +1675,7 @@ function loadQuestion(){
   const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
+  ST.answered=false;
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
   ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
@@ -1751,9 +1752,10 @@ function renderMC(q){
 }
 
 function checkMC(el){
+  if(ST.answered)return;
   const q=ST.questions[ST.idx];
   ST.attempts++;ST.totalAttempts++;
-  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{b.disabled=true;b.classList.add('disabled');});
   if(isCorrect(el.textContent,q,'any')){
     el.classList.add('correct');
     const pts=ST.attempts===1?2:ST.attempts===2?1:0;
@@ -1858,12 +1860,13 @@ function renderMC_fallback(q){
 }
 
 function checkElMC(el){
+  if(ST.answered)return;
   try{
     const q=ST.questions[ST.idx];
     const chosen=el.textContent;
     const correct=document.getElementById('q-mc-opts').dataset.elCorrect;
     ST.attempts++;ST.totalAttempts++;
-    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{b.disabled=true;b.classList.add('disabled');});
     if(chosen===correct){
       el.classList.add('correct');
       const pts=ST.attempts===1?2:ST.attempts===2?1:0;
@@ -1879,7 +1882,7 @@ function checkElMC(el){
         scheduleNext(3000);
       } else {
         document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.remove('correct'));
-        document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b!==el)b.classList.remove('disabled');});
+        document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b!==el){b.disabled=false;b.classList.remove('disabled');}});
         showElFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null);
       }
     }
@@ -1982,6 +1985,7 @@ function renderWrite(q){
 }
 
 function submitWrite(){
+  if(ST.answered)return;
   const q=ST.questions[ST.idx];
   const val=document.getElementById('q-input').value.trim();
   if(!val) return;
@@ -2009,6 +2013,7 @@ function submitWrite(){
 }
 
 function showHint(){
+  if(ST.answered)return;
   const q=ST.questions[ST.idx];
   document.getElementById('feedback').className='feedback tip show';
   document.getElementById('feedback').innerHTML='💡 <strong>Pista:</strong> '+(q.hint||'Revisa el estado de oxidación y el grupo funcional.');
@@ -2119,6 +2124,7 @@ function renderOxAssign(q){
 }
 
 function checkOxAssign(){
+  if(ST.answered)return;
   const q=ST.questions[ST.idx];
   const row=document.getElementById('ox-assign-row');
   const data=JSON.parse(row.dataset.oxdata||'[]');
@@ -2513,6 +2519,7 @@ function normalizeFormula(f){
 }
 
 function checkReactChainWrite(){
+  if(ST.answered)return;
   try{
     const q=ST.questions[ST.idx];
     const correct=q[q.step];
@@ -2544,6 +2551,7 @@ function checkReactChainWrite(){
 }
 
 function checkReactChain(el){
+  if(ST.answered)return;
   try{
     const q=ST.questions[ST.idx];
     const correct=document.getElementById('react-mc-opts').dataset.correct;
@@ -2594,6 +2602,7 @@ function renderBalance(q){
 }
 
 function checkBalance(el,chosen,correct){
+  if(ST.answered)return;
   const q=ST.questions[ST.idx];
   const b=extractBalance(q);
   ST.attempts++;ST.totalAttempts++;
@@ -2740,12 +2749,21 @@ function updateStats(){
 }
 
 function scheduleNext(ms){
+  if(ST.answered)return;
+  ST.answered=true;
   stopTimer();
+  // disable remaining action buttons so nothing can overwrite the feedback+button
+  const submitBtn=document.querySelector('.btn-submit');
+  if(submitBtn)submitBtn.disabled=true;
+  const hintBtn=document.getElementById('btn-hint-el');
+  if(hintBtn)hintBtn.style.display='none';
+  document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=true);
   const fb=document.getElementById('feedback');
   const btn=document.createElement('button');
   btn.className='btn-next';
   btn.textContent='Siguiente pregunta →';
-  btn.onclick=()=>{ST.idx++;loadQuestion();};
+  let _used=false;
+  btn.onclick=()=>{if(_used)return;_used=true;ST.idx++;loadQuestion();};
   fb.appendChild(btn);
 }
 
@@ -2955,7 +2973,7 @@ function confirmExit(){
 function resetGame(){
   stopTimer();
   _stopProgressTracking();
-  ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[]};
+  ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[],answered:false};
   // Keep student logged in for another round; just hide send-status
   const ss=document.getElementById('send-status');
   if(ss) ss.className='send-status';
@@ -3076,6 +3094,7 @@ function renderClassifyRx(q){
 }
 
 function checkClassifyRx(btn, chosen, correct){
+  if(ST.answered)return;
   if(btn.classList.contains('disabled')) return;
   document.querySelectorAll('#area-classify .mc-opt').forEach(b=>b.classList.add('disabled'));
   const ok = chosen === correct;
@@ -3110,6 +3129,7 @@ function renderBalanceEq(q){
 }
 
 function checkBalanceEq(){
+  if(ST.answered)return;
   const q = ST.questions[ST.idx];
   const entered = (q.especies||[]).map(function(_,i){ return parseInt(document.getElementById('bi'+i).value)||0; });
   const correct = q.coeficientes||[];
@@ -3193,6 +3213,7 @@ function renderMolCalc(q){
 }
 
 function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
+  if(ST.answered)return;
   if(btn.classList.contains('disabled')) return;
   document.querySelectorAll('#area-mol .mc-opt').forEach(b=>b.classList.add('disabled'));
   const ok = Math.abs(chosen-correct) < Math.abs(correct)*0.02;
