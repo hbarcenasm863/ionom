@@ -1676,6 +1676,9 @@ function loadQuestion(){
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   ST.answered=false;
+  // reactivar botones que scheduleNext() deshabilitó en la pregunta anterior
+  document.querySelectorAll('.btn-submit').forEach(b=>b.disabled=false);
+  document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=false);
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
   ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
