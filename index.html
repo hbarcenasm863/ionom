@@ -1022,6 +1022,7 @@ function toggleTheme(){
   document.documentElement.setAttribute("data-theme",s);
   var btn=document.getElementById("theme-btn");
   if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+  if(btn)btn.addEventListener('click',toggleTheme);
 })();
 
 // ── MAYER: Colombian Spanish voice narration ──
@@ -1094,25 +1095,28 @@ function handleInstallClick() {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       deferredPrompt = null;
-      navInstallBtn.style.display = 'none';
+      if (navInstallBtn) navInstallBtn.style.display = 'none';
     });
   }
 }
 
-if (isIOS()) {
+// No existe un botón #pwa-install-nav-btn en esta página todavía —
+// sin esta guarda, cualquier visitante en iOS lanzaba un TypeError aquí
+// que detenía el resto del script (menú hamburguesa incluido).
+if (isIOS() && navInstallBtn) {
   navInstallBtn.style.display = 'block';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  navInstallBtn.style.display = 'block';
+  if (navInstallBtn) navInstallBtn.style.display = 'block';
 });
 
 window.addEventListener('appinstalled', () => {
   console.log('IonNom PWA instalada');
   deferredPrompt = null;
-  navInstallBtn.style.display = 'none';
+  if (navInstallBtn) navInstallBtn.style.display = 'none';
 });
 
 // ── Hamburger nav ──
@@ -1130,5 +1134,20 @@ window.addEventListener('appinstalled', () => {
 })();
 </script>
 
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>

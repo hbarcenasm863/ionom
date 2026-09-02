@@ -4146,11 +4146,28 @@ function flashEl(id,type){
   if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
   if(overlay) overlay.addEventListener('click',closeDrawer);
   document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+  var themeBtnNav=document.getElementById('theme-btn');
+  if(themeBtnNav) themeBtnNav.addEventListener('click',toggleTheme);
 })();
 </script>
 <footer style="text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:rgba(255,255,255,.45);margin-top:8px">
   <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:rgba(255,255,255,.6);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:rgba(255,255,255,.6);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;filter:invert(1) opacity(.45)"></p>
 </footer>
 
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>

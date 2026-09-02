@@ -593,7 +593,7 @@ document.getElementById('theme-btn').addEventListener('click',toggleTheme);
 const QUIZ=[
   {
     q:'Ecuación: N₂ + 3 H₂ → 2 NH₃\nSi tienes 14 g de N₂ (MM=28.014), ¿cuántos gramos de NH₃ (MM=17.031) se producen?',
-    opts:['17.03 g','34.06 g','8.52 g','51.09 g'], ans:1,
+    opts:['17.03 g','34.06 g','8.52 g','51.09 g'], ans:0,
     exp:'14 g N₂ × (1 mol/28.014 g) × (2 mol NH₃/1 mol N₂) × (17.031 g/1 mol) = 0.4998 × 2 × 17.031 = 17.03 g. ¡Cuidado! 14 g de N₂ es solo 0.5 mol; multiplica por 2 para NH₃ = 1 mol × 17.031 = 17.03 g.',
     cadena:'14 g N₂ × (1 mol/28.014 g) × (2 mol NH₃/1 mol N₂) × (17.031 g/mol) = 17.03 g NH₃'
   },
@@ -605,8 +605,8 @@ const QUIZ=[
   },
   {
     q:'Ecuación: 2 HCl + Ca(OH)₂ → CaCl₂ + 2 H₂O\nMM: HCl=36.461 g/mol · CaCl₂=110.983 g/mol\n¿Cuántos g de CaCl₂ se producen a partir de 73.0 g de HCl?',
-    opts:['55.49 g','110.98 g','37.0 g','221.97 g'], ans:0,
-    exp:'73 g HCl × (1 mol/36.461 g) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 2.002 × 0.5 × 110.983 = 111.1 g. Espera — revisemos: 73/36.461=2.002 mol HCl → 1.001 mol CaCl₂ → 111.1 g. La opción más cercana es 110.98 g (redondeando).',
+    opts:['55.49 g','110.98 g','37.0 g','221.97 g'], ans:1,
+    exp:'73 g HCl × (1 mol/36.461 g) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 2.002 mol HCl → 1.001 mol CaCl₂ → 111.1 g ≈ 110.98 g (redondeando).',
     cadena:'73 g HCl × (1 mol/36.461) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 111.1 g CaCl₂'
   },
   {

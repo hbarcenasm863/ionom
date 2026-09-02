@@ -418,6 +418,12 @@ html{font-size:var(--base-fs)}
       <div class="card-desc">De la nomenclatura a las ecuaciones: DBA 3 del MEN Colombia</div>
       <span class="card-badge">Avanzado</span>
     </div>
+    <div class="card card-an" onclick="goToSection(7)">
+      <span class="card-icon">🧂</span>
+      <div class="card-title">Sales Ácidas</div>
+      <div class="card-desc">Prefijos bi- (tradicional) e hidrogeno-/dihidrogeno- (Stock)</div>
+      <span class="card-badge">Avanzado</span>
+    </div>
   </div>
 </div>
 
@@ -1754,16 +1760,19 @@ function handleInstallClick() {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(() => {
       deferredPrompt = null;
-      navInstallBtn.style.display = 'none';
+      if (navInstallBtn) navInstallBtn.style.display = 'none';
     });
   }
 }
-if (isIOS()) navInstallBtn.style.display = 'block';
+// No existe un botón #pwa-install-nav-btn en esta página todavía —
+// sin esta guarda, cualquier visitante en iOS lanzaba un TypeError aquí
+// que detenía el resto del script (menú hamburguesa incluido).
+if (isIOS() && navInstallBtn) navInstallBtn.style.display = 'block';
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); deferredPrompt = e; navInstallBtn.style.display = 'block';
+  e.preventDefault(); deferredPrompt = e; if (navInstallBtn) navInstallBtn.style.display = 'block';
 });
 window.addEventListener('appinstalled', () => {
-  deferredPrompt = null; navInstallBtn.style.display = 'none';
+  deferredPrompt = null; if (navInstallBtn) navInstallBtn.style.display = 'none';
 });
 
 // ── Hamburger nav ──

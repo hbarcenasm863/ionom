@@ -545,6 +545,7 @@ function toggleTheme(){
   document.documentElement.setAttribute("data-theme",s);
   var btn=document.getElementById("theme-btn");
   if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+  if(btn)btn.addEventListener('click',toggleTheme);
 })();
 
 const ELEMENTS = {
@@ -783,7 +784,12 @@ function showEl(z){
   badge.style.color = cssVar(vars[2]);
 
   document.getElementById('dp-mass').textContent = el.mass + ' u';
-  document.getElementById('dp-pg').textContent = `Período ${el.period} / Grupo ${el.group}`;
+  // Lantánidos/actínidos (excepto La/Ac) no tienen número de grupo IUPAC estándar —
+  // su campo .group solo se usa internamente para alinearlos en la fila-f del layout.
+  const isFBlockNoGroup = (el.type==='lanthanide'||el.type==='actinide') && el.sym!=='La' && el.sym!=='Ac';
+  document.getElementById('dp-pg').textContent = isFBlockNoGroup
+    ? `Período ${el.period} / ${el.type==='lanthanide'?'Lantánido':'Actínido'}`
+    : `Período ${el.period} / Grupo ${el.group}`;
   document.getElementById('dp-class').textContent = classOf(el.type);
 
   const oxDiv = document.getElementById('dp-ox');
@@ -959,5 +965,20 @@ if (!localStorage.getItem('ionom_tabla_visited')) {
 <footer style="text-align:center;padding:18px 0;border-top:1px solid var(--brd);font-size:.72rem;color:var(--dimmer);margin-top:8px">
   <p><a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/" style="color:var(--dim);text-decoration:none;font-weight:600">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
 </footer>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>

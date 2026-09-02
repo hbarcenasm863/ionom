@@ -14,7 +14,7 @@ const BANCO = [
     group: 'ox-bas', level: 'easy',
     trad: ['óxido de litio'],
     stock: [],
-    sist: ['óxido de dilítio'],
+    sist: ['óxido de dilitio'],
     hint: 'Li tiene valencia fija +1. Dos Li⁺ compensan un O²⁻. Grupo 1A → óxido básico.'
   },
   {
@@ -1149,7 +1149,7 @@ const BANCO = [
   {
     formula: 'H₂Cr₂O₇',
     group: 'ac-ox', level: 'hard',
-    trad: ['ácido dicromatoso', 'ácido dicrómico'],
+    trad: ['ácido dicrómico'],
     stock: [],
     sist: ['ácido dicrómico'],
     hint: 'H₂ + Cr₂O₇²⁻ (dicromato). Dos átomos de Cr con EO=+6 cada uno.'
@@ -2017,10 +2017,10 @@ const BANCO = [
   {
     formula: 'H₂TeO₃',
     group: 'ac-ox', level: 'hard',
-    trad: ['ácido telluroso'],
+    trad: ['ácido teluroso'],
     stock: ['ácido trioxotelúrico (IV)'],
     sist: ['trioxotelurato (IV) de dihidrógeno'],
-    hint: 'Te en EO +4 → telluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
+    hint: 'Te en EO +4 → teluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
   },
   {
     formula: 'HBO₂',

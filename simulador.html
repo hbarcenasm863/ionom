@@ -1428,15 +1428,15 @@ function switchTab(name) {
 
 // ── pH SIMULATOR ─────────────────────────────────────────────────────────
 var PH_SUBSTANCES = {
-  'HCl-sa':     {type:'sa', name:'HCl',               fullName:'&Aacute;cido clor&iacute;drico'},
-  'H2SO4-sa':   {type:'sa', name:'H&#8322;SO&#8324;',  fullName:'&Aacute;cido sulf&uacute;rico'},
-  'HNO3-sa':    {type:'sa', name:'HNO&#8323;',          fullName:'&Aacute;cido n&iacute;trico'},
+  'HCl-sa':     {type:'sa', n:1, name:'HCl',               fullName:'&Aacute;cido clor&iacute;drico'},
+  'H2SO4-sa':   {type:'sa', n:2, name:'H&#8322;SO&#8324;',  fullName:'&Aacute;cido sulf&uacute;rico'},
+  'HNO3-sa':    {type:'sa', n:1, name:'HNO&#8323;',          fullName:'&Aacute;cido n&iacute;trico'},
   'H2CO3-wa':   {type:'wa', Ka:4.3e-7, name:'H&#8322;CO&#8323;',  fullName:'&Aacute;cido carb&oacute;nico'},
   'H2S-wa':     {type:'wa', Ka:9.5e-8, name:'H&#8322;S',          fullName:'&Aacute;cido sulfh&iacute;drico'},
   'CH3COOH-wa': {type:'wa', Ka:1.8e-5, name:'CH&#8323;COOH',      fullName:'&Aacute;cido ac&eacute;tico'},
-  'NaOH-sb':    {type:'sb', name:'NaOH',              fullName:'Hidr&oacute;xido de sodio'},
-  'CaOH2-sb':   {type:'sb', name:'Ca(OH)&#8322;',      fullName:'Hidr&oacute;xido de calcio'},
-  'KOH-sb':     {type:'sb', name:'KOH',               fullName:'Hidr&oacute;xido de potasio'},
+  'NaOH-sb':    {type:'sb', n:1, name:'NaOH',              fullName:'Hidr&oacute;xido de sodio'},
+  'CaOH2-sb':   {type:'sb', n:2, name:'Ca(OH)&#8322;',      fullName:'Hidr&oacute;xido de calcio'},
+  'KOH-sb':     {type:'sb', n:1, name:'KOH',               fullName:'Hidr&oacute;xido de potasio'},
   'NH3-wb':     {type:'wb', Kb:1.8e-5, name:'NH&#8323;',           fullName:'Amon&iacute;aco'},
   'NH4OH-wb':   {type:'wb', Kb:1.8e-5, name:'NH&#8324;OH',         fullName:'Hidr&oacute;xido de amonio'},
   'H2O-n':      {type:'n',              name:'H&#8322;O',           fullName:'Agua pura'}
@@ -1450,8 +1450,8 @@ function calcPH(subKey, conc) {
   var s = PH_SUBSTANCES[subKey];
   if (!s) return 7;
   if (s.type === 'n') return 7;
-  if (s.type === 'sa') return Math.max(0, -Math.log10(conc));
-  if (s.type === 'sb') return Math.min(14, 14 - Math.max(0, -Math.log10(conc)));
+  if (s.type === 'sa') return Math.max(0, -Math.log10(conc * (s.n || 1)));
+  if (s.type === 'sb') return Math.min(14, 14 - Math.max(0, -Math.log10(conc * (s.n || 1))));
   if (s.type === 'wa') {
     var pKa = -Math.log10(s.Ka);
     return Math.min(14, Math.max(0, 0.5 * (pKa - Math.log10(conc))));
@@ -1665,18 +1665,22 @@ function makeQ2type5() {
 }
 
 // ── PWA ──────────────────────────────────────────────────────────────────
+// No existe un botón #btn-install en esta página todavía — sin las guardas de
+// abajo, addEventListener sobre null lanzaba un TypeError que detenía el resto
+// del script (buildPalette/updatePH, el menú hamburguesa y el tema oscuro).
 var deferredPrompt = null;
+var btnInstall = document.getElementById('btn-install');
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('btn-install').style.display = 'inline-block';
+  if (btnInstall) btnInstall.style.display = 'inline-block';
 });
-document.getElementById('btn-install').addEventListener('click', function() {
+if (btnInstall) btnInstall.addEventListener('click', function() {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(function() {
     deferredPrompt = null;
-    document.getElementById('btn-install').style.display = 'none';
+    if (btnInstall) btnInstall.style.display = 'none';
   });
 });
 if ('serviceWorker' in navigator) {
@@ -1699,6 +1703,7 @@ function toggleTheme(){
   document.documentElement.setAttribute("data-theme",s);
   var btn=document.getElementById("theme-btn");
   if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+  if(btn)btn.addEventListener('click',toggleTheme);
 })();
 
 // ── INIT ─────────────────────────────────────────────────────────────────
@@ -1775,5 +1780,20 @@ if (!localStorage.getItem('ionom_sim_visited')) {
   </div>
 </div>
 
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>
