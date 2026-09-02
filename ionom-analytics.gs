@@ -24,6 +24,12 @@ function rowColor(pct) {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+    // El cliente actual solo envía razon='fin' o 'abandono'. Cualquier otro valor
+    // (vacío, 'inicio', o de una versión de caché vieja del juego con otro formato)
+    // no corresponde a una sesión válida — se descarta para no ensuciar el registro.
+    if (data.razon !== 'fin' && data.razon !== 'abandono') {
+      return ContentService.createTextOutput('ignorado: razon invalida');
+    }
     registrar(data);
     updateStats(data);
     return ContentService.createTextOutput('ok');
@@ -130,7 +136,10 @@ function updateStats(d) {
   } else {
     // Actualizar fila existente
     const prev      = data[rowIdx - 1];
-    const sesiones  = (Number(prev[4]) || 0) + (razon === 'inicio' ? 1 : 0);
+    // El cliente nunca envía razon='inicio' (sendProgress la descarta para no generar
+    // filas de ruido) — solo llegan 'fin' y 'abandono'. Cada una de esas es una sesión.
+    const esFinDeSesion = razon === 'fin' || razon === 'abandono';
+    const sesiones  = (Number(prev[4]) || 0) + (esFinDeSesion ? 1 : 0);
     const totResp   = (Number(prev[5]) || 0) + (Number(d.respondidas) || 0);
     const totCorr   = (Number(prev[6]) || 0) + (Number(d.correctas)   || 0);
     const mejorPct  = Math.max(Number(prev[7]) || 0, pct);
@@ -141,9 +150,9 @@ function updateStats(d) {
       d.nombre || prev[1],
       d.curso  || prev[2],
       d.grupo  || prev[3],
-      razon === 'inicio' ? sesiones : prev[4],
-      razon === 'fin' || razon === 'abandono' ? totResp : prev[5],
-      razon === 'fin' || razon === 'abandono' ? totCorr : prev[6],
+      esFinDeSesion ? sesiones : prev[4],
+      esFinDeSesion ? totResp : prev[5],
+      esFinDeSesion ? totCorr : prev[6],
       mejorPct,
       pct,
       mejorNota,
