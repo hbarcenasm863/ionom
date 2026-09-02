@@ -3308,7 +3308,11 @@ function drawCard(){
     if(!checkWin()) advanceTurn();
     return;
   }
-  if(currentPlayer().hand.length>=MAX_HAND){
+  // El límite de mano no debe bloquear el robo forzado tras Cambio de Reactivo:
+  // si no se deja pasar, el jugador queda sin ninguna forma de terminar su turno
+  // (no puede jugar otra acción y no puede robar). drawCards() ya no agrega
+  // cartas de más si la mano está llena, así que dejarlo pasar aquí es seguro.
+  if(currentPlayer().hand.length>=MAX_HAND && !G.mustPlayAnion){
     addLog(`Mano llena (máx ${MAX_HAND} cartas). Juega primero.`,'bad');
     return;
   }
@@ -3383,8 +3387,9 @@ function playActionCard(card, handIdx){
       renderGame();
       break;
     case 'wildcard_cat':
-      addLog(`⚗ ${cp.name} jugó Enlace Iónico (comodín catión).`,'action');
-      showWildcardCatChoice(handIdx);
+      // La carta ya fue removida de la mano y G.selectedCards ya está vacío
+      // (ver arriba) — applyWildcardCatDouble() no necesita volver a descartarla.
+      showWildcardCatInfo();
       return;
     case 'espionage': {
       // Verificar ANTES de consumir la carta si hay víctimas con aniones
@@ -3846,6 +3851,27 @@ function aiTurnWithOxidation(newCharge){
       const anionParaNombreOx=anionCards.find(a=>a.effect!=='wildcard')||anionCards[0];
       const formulaAIOx=buildFormula(playedBase, comp.nAnion, anionParaNombreOx);
       const nombreAIOx=getNombreTrad(formulaAIOx)||comp.name;
+
+      // Probabilidad de error según dificultad (misma mecánica que aiTurn() —
+      // antes se saltaba aquí, haciendo que la IA nunca fallara al usar Estado de Oxidación)
+      const errRates={easy:0, medium:0.15, hard:0.30};
+      const errRate = errRates[G.difficulty] || 0;
+      const iaFalla = Math.random() < errRate;
+
+      if(iaFalla){
+        anionCards.forEach(a=>cp.hand.push(a));
+        G.cationDeck.push(G.base); // devolver la nueva base al mazo
+        G.base=playedBase; // restaurar base original
+        drawCards(G.currentPlayer, 2);
+        addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreAIOx}</strong>". Roba 2 cartas.`,'bad');
+        showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreAIOx}`, 2800);
+        G.wildcardCharge=-1;
+        G.oxidationOverride=null;
+        renderGame();
+        advanceTurn();
+        return;
+      }
+
       cp.score = (cp.score || 0) + 1;
       addLog(`🤖 ${cp.name}: "${nombreAIOx}"${extraTurn?' 🌟':''}`, 'good');
       showAIToast('⚡', `${cp.name} forma compuesto`, nombreAIOx, 2500);
