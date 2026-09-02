@@ -407,6 +407,7 @@ function toggleTheme(){
   document.documentElement.setAttribute("data-theme",s);
   var btn=document.getElementById("theme-btn");
   if(btn)btn.textContent=s==="dark"?"☀️":"🌙";
+  if(btn)btn.addEventListener('click',toggleTheme);
 })();
 
 // ── MAYER: Colombian Spanish voice narration ──
@@ -1127,8 +1128,8 @@ function genMolMasaTaller(count){
 }
 
 const GEN_STOICH=[
-  {rx:'2H₂ + O₂ → 2H₂O',dato:{f:'H₂',g:4.0},inc:{f:'H₂O',r:36.04},cadena:'4.0 g H₂ × (1 mol H₂/2.016 g) × (2 mol H₂O/2 mol H₂) × (18.02 g/1 mol H₂O)',hint:'Relación H₂:H₂O = 1:1 (molar).'},
-  {rx:'C₃H₈ + 5O₂ → 3CO₂ + 4H₂O',dato:{f:'C₃H₈',g:44.0},inc:{f:'CO₂',r:132.03},cadena:'44.0 g C₃H₈ × (1 mol/44.10 g) × (3 mol CO₂/1 mol C₃H₈) × (44.01 g/1 mol CO₂)',hint:'Combustión del propano — gas doméstico en Colombia. 1 mol → 3 mol CO₂.'},
+  {rx:'2H₂ + O₂ → 2H₂O',dato:{f:'H₂',g:4.0},inc:{f:'H₂O',r:35.75},cadena:'4.0 g H₂ × (1 mol H₂/2.016 g) × (2 mol H₂O/2 mol H₂) × (18.02 g/1 mol H₂O)',hint:'Relación H₂:H₂O = 1:1 (molar).'},
+  {rx:'C₃H₈ + 5O₂ → 3CO₂ + 4H₂O',dato:{f:'C₃H₈',g:44.0},inc:{f:'CO₂',r:131.73},cadena:'44.0 g C₃H₈ × (1 mol/44.10 g) × (3 mol CO₂/1 mol C₃H₈) × (44.01 g/1 mol CO₂)',hint:'Combustión del propano — gas doméstico en Colombia. 1 mol → 3 mol CO₂.'},
   {rx:'N₂ + 3H₂ → 2NH₃',dato:{f:'N₂',g:28.0},inc:{f:'NH₃',r:34.06},cadena:'28.0 g N₂ × (1 mol/28.01 g) × (2 mol NH₃/1 mol N₂) × (17.03 g/1 mol NH₃)',hint:'Proceso Haber-Bosch — fertilizantes. Relación N₂:NH₃ = 1:2.'},
   {rx:'CaCO₃ → CaO + CO₂',dato:{f:'CaCO₃',g:100.0},inc:{f:'CaO',r:56.08},cadena:'100.0 g CaCO₃ × (1 mol/100.09 g) × (1 mol CaO/1 mol CaCO₃) × (56.08 g/1 mol CaO)',hint:'Descomposición de la caliza — industria cementera (Argos, Cemex Colombia). Relación 1:1.'},
   {rx:'HCl + NaOH → NaCl + H₂O',dato:{f:'HCl',g:36.46},inc:{f:'NaCl',r:58.44},cadena:'36.46 g HCl × (1 mol/36.46 g) × (1 mol NaCl/1 mol HCl) × (58.44 g/1 mol NaCl)',hint:'Neutralización. Ácido clorhídrico + soda → sal de cocina. Relación 1:1.'},
@@ -1137,8 +1138,8 @@ const GEN_STOICH=[
   {rx:'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',dato:{f:'H₂SO₄',g:98.08},inc:{f:'Na₂SO₄',r:142.04},cadena:'98.08 g H₂SO₄ × (1 mol/98.08 g) × (1 mol Na₂SO₄/1 mol H₂SO₄) × (142.04 g/1 mol Na₂SO₄)',hint:'Neutralización. El ácido sulfúrico necesita 2 mol de NaOH. Relación ácido:sal = 1:1.'},
   {rx:'2KClO₃ → 2KCl + 3O₂',dato:{f:'KClO₃',g:122.55},inc:{f:'O₂',r:48.0},cadena:'122.55 g KClO₃ × (1 mol/122.55 g) × (3 mol O₂/2 mol KClO₃) × (32.00 g/1 mol O₂)',hint:'Descomposición del clorato de potasio — fuente de O₂ en laboratorio.'},
   {rx:'Fe₂O₃ + 3CO → 2Fe + 3CO₂',dato:{f:'Fe₂O₃',g:159.69},inc:{f:'Fe',r:111.7},cadena:'159.69 g Fe₂O₃ × (1 mol/159.69 g) × (2 mol Fe/1 mol Fe₂O₃) × (55.85 g/1 mol Fe)',hint:'Alto horno — siderurgia. Por cada mol de Fe₂O₃ se obtienen 2 mol de Fe.'},
-  {rx:'C₁₂H₂₂O₁₁ + 12O₂ → 12CO₂ + 11H₂O',dato:{f:'C₁₂H₂₂O₁₁',g:342.0},inc:{f:'CO₂',r:528.12},cadena:'342.0 g sacarosa × (1 mol/342.30 g) × (12 mol CO₂/1 mol) × (44.01 g/1 mol CO₂)',hint:'Combustión del azúcar (panela colombiana) — 1 mol produce 12 mol de CO₂.'},
-  {rx:'2Al + 3CuSO₄ → Al₂(SO₄)₃ + 3Cu',dato:{f:'Al',g:54.0},inc:{f:'Cu',r:190.98},cadena:'54.0 g Al × (1 mol/26.98 g) × (3 mol Cu/2 mol Al) × (63.55 g/1 mol Cu)',hint:'Sustitución simple: el aluminio desplaza al cobre del sulfato cúprico.'},
+  {rx:'C₁₂H₂₂O₁₁ + 12O₂ → 12CO₂ + 11H₂O',dato:{f:'C₁₂H₂₂O₁₁',g:342.0},inc:{f:'CO₂',r:527.66},cadena:'342.0 g sacarosa × (1 mol/342.30 g) × (12 mol CO₂/1 mol) × (44.01 g/1 mol CO₂)',hint:'Combustión del azúcar (panela colombiana) — 1 mol produce 12 mol de CO₂.'},
+  {rx:'2Al + 3CuSO₄ → Al₂(SO₄)₃ + 3Cu',dato:{f:'Al',g:54.0},inc:{f:'Cu',r:190.79},cadena:'54.0 g Al × (1 mol/26.98 g) × (3 mol Cu/2 mol Al) × (63.55 g/1 mol Cu)',hint:'Sustitución simple: el aluminio desplaza al cobre del sulfato cúprico.'},
   {rx:'S + O₂ → SO₂',dato:{f:'S',g:32.07},inc:{f:'SO₂',r:64.07},cadena:'32.07 g S × (1 mol/32.06 g) × (1 mol SO₂/1 mol S) × (64.06 g/1 mol SO₂)',hint:'Síntesis directa. Relación S:SO₂ = 1:1. SO₂ es precursor del H₂SO₄ industrial.'},
   {rx:'Mg + 2HCl → MgCl₂ + H₂',dato:{f:'Mg',g:24.31},inc:{f:'H₂',r:2.02},cadena:'24.31 g Mg × (1 mol/24.31 g) × (1 mol H₂/1 mol Mg) × (2.016 g/1 mol H₂)',hint:'Sustitución simple. Por cada mol de Mg se libera 1 mol de H₂.'},
   {rx:'2NaOH + CO₂ → Na₂CO₃ + H₂O',dato:{f:'CO₂',g:44.01},inc:{f:'Na₂CO₃',r:105.99},cadena:'44.01 g CO₂ × (1 mol/44.01 g) × (1 mol Na₂CO₃/1 mol CO₂) × (105.99 g/1 mol Na₂CO₃)',hint:'Absorción de CO₂ con soda cáustica. Relación CO₂:Na₂CO₃ = 1:1.'},
@@ -1194,5 +1195,20 @@ function genEstequiometriaTaller(count){
 })();
 </script>
 
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body>
 </html>
