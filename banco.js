@@ -3137,6 +3137,20 @@ const BANCO = [
   {formula:'Na₃PO₄', group:'sal-ox',level:'medium',  trad:['fosfato de sodio'],   stock:[],                          sist:['fosfato de trisodio'],        hint:'Na⁺ + PO₄³⁻. 3 Na⁺ para equilibrar la carga −3 del fosfato.'},
   {formula:'Ca₃(PO₄)₂',group:'sal-ox',level:'medium',trad:['fosfato de calcio'],  stock:[],                         sist:['difosfato de tricalcio'],     hint:'Ca²⁺ + PO₄³⁻. Mineral principal de los huesos.'},
   {formula:'MgSO₄',  group:'sal-ox',level:'easy',    trad:['sulfato de magnesio'],stock:[],                          sist:['sulfato de magnesio'],        hint:'Mg²⁺ + SO₄²⁻. "Sal de Epsom" — purgante y fertilizante.'},
+
+  // ── sal-ac: sales ácidas — el anión conserva 1 o 2 H⁺ del ácido poliprótico ──
+  {formula:'NaHCO₃', group:'sal-ac',level:'easy',   trad:['bicarbonato de sodio'],  stock:['hidrogenocarbonato de sodio'],   sist:[], hint:'Na⁺ + HCO₃⁻ (CO₃²⁻ retuvo 1 H⁺). Trad: bi- + oxoanión. Stock: hidrogeno- + oxoanión. Base del polvo de hornear.'},
+  {formula:'KHCO₃',  group:'sal-ac',level:'easy',   trad:['bicarbonato de potasio'],stock:['hidrogenocarbonato de potasio'], sist:[], hint:'K⁺ + HCO₃⁻. Mismo patrón que el bicarbonato de sodio.'},
+  {formula:'NaHSO₄', group:'sal-ac',level:'easy',   trad:['bisulfato de sodio'],    stock:['hidrogenosulfato de sodio'],     sist:[], hint:'Na⁺ + HSO₄⁻ (SO₄²⁻ retuvo 1 H⁺). Trad: bi-. Stock: hidrogeno-.'},
+  {formula:'NaHSO₃', group:'sal-ac',level:'medium', trad:['bisulfito de sodio'],    stock:['hidrogenosulfito de sodio'],     sist:[], hint:'Na⁺ + HSO₃⁻ (SO₃²⁻ retuvo 1 H⁺). Sulfito ≠ sulfato — cuidado con el sufijo.'},
+  {formula:'KHSO₄',  group:'sal-ac',level:'medium', trad:['bisulfato de potasio'],  stock:['hidrogenosulfato de potasio'],   sist:[], hint:'K⁺ + HSO₄⁻. Mismo patrón que el bisulfato de sodio.'},
+  {formula:'NH₄HCO₃',group:'sal-ac',level:'medium', trad:['bicarbonato de amonio'], stock:['hidrogenocarbonato de amonio'],  sist:[], hint:'NH₄⁺ + HCO₃⁻. El amonio actúa como catión de carga fija +1.'},
+  {formula:'Ca(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de calcio'],stock:['hidrogenocarbonato de calcio'],  sist:[], hint:'Ca²⁺ + 2 HCO₃⁻. Responsable de la dureza temporal del agua.'},
+  {formula:'Mg(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de magnesio'],stock:['hidrogenocarbonato de magnesio'],sist:[], hint:'Mg²⁺ + 2 HCO₃⁻. Igual razonamiento que el bicarbonato de calcio.'},
+  {formula:'Ca(HSO₃)₂',group:'sal-ac',level:'hard', trad:['bisulfito de calcio'],   stock:['hidrogenosulfito de calcio'],    sist:[], hint:'Ca²⁺ + 2 HSO₃⁻ (carga −1 cada uno, 2 para neutralizar +2).'},
+  {formula:'Na₂HPO₄',group:'sal-ac',level:'hard',   trad:['fosfato monoácido de sodio'],stock:['hidrogenofosfato de sodio'], sist:[], hint:'2 Na⁺ + HPO₄²⁻ (PO₄³⁻ retuvo 1 H⁺, queda carga −2). Un solo "hidrogeno-" → 1 H conservado.'},
+  {formula:'NaH₂PO₄',group:'sal-ac',level:'hard',   trad:['fosfato diácido de sodio'],  stock:['dihidrogenofosfato de sodio'],sist:[], hint:'Na⁺ + H₂PO₄⁻ (PO₄³⁻ retuvo 2 H⁺, queda carga −1). "Dihidrogeno-" → 2 H conservados.'},
+  {formula:'KH₂PO₄', group:'sal-ac',level:'hard',   trad:['fosfato diácido de potasio'],stock:['dihidrogenofosfato de potasio'],sist:[], hint:'K⁺ + H₂PO₄⁻. Mismo patrón que el fosfato diácido de sodio.'},
 ];
 
 // Total: ~450 compounds

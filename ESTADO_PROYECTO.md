@@ -59,11 +59,12 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Al terminar, envía automáticamente los resultados a Google Sheets vía **Google Apps Script** (`fetch` con `no-cors`).
 - **Datos enviados**: fecha/hora, código, nombre, curso, grupo funcional, correctas, puntaje, total, intentos, porcentaje, calificación /5, nivel.
 
-### 5. Apps Script (`appscript/Registro.gs`)
+### 5. Apps Script (`ionom-analytics.gs`)
 - Script de Google Apps Script listo para desplegar como aplicación web.
-- Crea automáticamente la hoja "Resultados" con encabezados formateados si no existe.
-- `doGet()` de prueba responde `IonNom registro activo ✓`.
+- Crea automáticamente las hojas `Registro`, `Estadísticas`, `Resumen por Curso` y una `Curso X` por curso si no existen.
 - **URL de producción ya configurada** en `juego.html`.
+- Nota: este archivo vive en el repositorio, pero el Apps Script en producción es una copia separada — cualquier cambio requiere volver a implementarlo manualmente en script.google.com (Implementar → Gestionar implementaciones → Nueva versión) para que tenga efecto.
+- (El archivo `appscript/Registro.gs` que se mencionaba aquí antes era una plantilla vieja con un esquema de hoja distinto y nunca fue la que está en producción; se eliminó del repositorio para evitar desplegar el script equivocado.)
 
 ---
 
@@ -74,14 +75,14 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 | Código fuente (`main`) | ✅ Completo y empujado |
 | Apps Script desplegado | ✅ Activo |
 | URL conectada en `juego.html` | ✅ Configurada |
-| Hoja de cálculo de resultados | ⚠️ Verificar que existe y tiene el ID correcto en `Registro.gs` |
+| Hoja de cálculo de resultados | ⚠️ Verificar que existe y tiene el ID correcto en `ionom-analytics.gs` |
 
 ---
 
 ## Pendiente / Próximos pasos
 
 ### Obligatorio antes de usar con estudiantes
-- [ ] **Verificar la hoja de cálculo**: confirmar que el `SPREADSHEET_ID` en `Registro.gs` apunta a una hoja real en tu Google Drive y que tienes permisos de edición.
+- [ ] **Verificar la hoja de cálculo**: confirmar que el `SPREADSHEET_ID` en `ionom-analytics.gs` apunta a una hoja real en tu Google Drive y que tienes permisos de edición.
 - [ ] **Prueba de extremo a extremo**: completar una partida en Modo Estudiante con un código válido y confirmar que el registro aparece en la hoja.
 
 ### Mejoras opcionales sugeridas
@@ -102,8 +103,7 @@ ionom/
 ├── teoria.html             # Módulo de teoría (7 secciones)
 ├── funciones.html          # Módulo de ejercicios (8 grupos)
 ├── juego.html              # Módulo de juego (Libre + Estudiante)
-├── banco.js                # 301 compuestos inorgánicos
-├── appscript/
-│   └── Registro.gs         # Google Apps Script para Google Sheets
+├── banco.js                # Compuestos y ejercicios inorgánicos
+├── ionom-analytics.gs      # Google Apps Script para Google Sheets
 └── ESTADO_PROYECTO.md      # Este archivo
 ```
