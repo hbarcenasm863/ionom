@@ -3047,8 +3047,6 @@ const BANCO = [
   {formula:'NiO',  group:'ox-bas',level:'medium', trad:['óxido niqueloso'],  stock:['óxido de níquel (II)'],   sist:['óxido de níquel'],         hint:'Ni²⁺ (EO menor) → -oso → niqueloso.'},
   {formula:'CoO',  group:'ox-bas',level:'medium', trad:['óxido cobaltoso'],  stock:['óxido de cobalto (II)'],  sist:['óxido de cobalto'],        hint:'Co²⁺ (EO menor) → -oso → cobaltoso.'},
   {formula:'Co₂O₃',group:'ox-bas',level:'medium', trad:['óxido cobáltico'],  stock:['óxido de cobalto (III)'], sist:['trióxido de dico balto'],  hint:'Co³⁺ (EO mayor) → -ico → cobáltico.'},
-  {formula:'TiO₂', group:'ox-bas',level:'hard',   trad:[],                   stock:['óxido de titanio (IV)'],  sist:['dióxido de titanio'],      hint:'Ti con EO=+4. Se conoce como dióxido de titanio (pigmento blanco).'},
-  {formula:'V₂O₅', group:'ox-bas',level:'hard',   trad:[],                   stock:['óxido de vanadio (V)'],   sist:['pentaóxido de divanadio'], hint:'V con EO=+5 (máximo). Catalizador en síntesis de H₂SO₄.'},
 
   // ── Anhídridos adicionales ──
   {formula:'N₂O',  group:'anhid',level:'easy',  trad:['anhídrido hiponitroso'],stock:[],                      sist:['óxido de dinitrógeno'],    hint:'N con EO=+1 (mínimo para N con O) → hipo- → hiponitroso.'},
