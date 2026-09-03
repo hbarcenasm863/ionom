@@ -976,14 +976,24 @@ function reordenarHojas() {
     posicion++;
   });
 
+  // No se mueven de posición: una hoja oculta no aparece en la barra de
+  // pestañas, así que su posición es irrelevante — y activarla primero
+  // (como hace el bucle de arriba con setActiveSheet) arriesgaría
+  // des-ocultarla, justo lo contrario de lo que esta función busca.
+  const ocultadas = [];
   HOJAS_LEGADAS.forEach(function (nombre) {
     const sh = ss.getSheetByName(nombre);
     if (!sh) return;
-    try { sh.hideSheet(); } catch (err) { /* no crítico si ya estaba oculta */ }
-    ss.setActiveSheet(sh);
-    ss.moveActiveSheet(posicion);
-    posicion++;
+    try {
+      sh.hideSheet();
+      ocultadas.push(nombre);
+    } catch (err) {
+      // Apps Script no deja ocultar la última hoja visible del libro; si
+      // pasa, se deja esa pestaña visible en vez de fallar toda la función.
+      registrarError('reordenarHojas', err);
+    }
   });
 
-  Logger.log('Pestañas reordenadas. Ocultas (no borradas): ' + HOJAS_LEGADAS.join(', ') + '.');
+  Logger.log('Pestañas reordenadas. Ocultas (no borradas): ' +
+    (ocultadas.length ? ocultadas.join(', ') : 'ninguna') + '.');
 }
