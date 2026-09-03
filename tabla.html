@@ -236,30 +236,31 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .color-mode-btn:hover{border-color:var(--nav)}
 .color-mode-btn.active{background:var(--nav);border-color:var(--nav);color:var(--nav-t)}
 
-/* TABLE SCROLL CONTAINER */
-.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px}
+/* TABLE SCROLL CONTAINER — fluido: la tabla usa todo el ancho disponible (hasta un tope razonable) */
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;container-type:inline-size}
 
 /* MAIN GRID */
 .pt-grid{
   display:grid;
-  grid-template-columns:repeat(18,44px);
-  grid-template-rows:repeat(7,44px);
+  grid-template-columns:repeat(18,minmax(0,1fr));
   gap:3px;
-  width:max-content;
+  width:100%;
+  max-width:1500px;
 }
 
 /* SEPARATE ROWS FOR LANTHANIDES/ACTINIDES */
 .pt-f-block{
   display:grid;
-  grid-template-columns:repeat(18,44px);
-  grid-template-rows:repeat(2,44px);
+  grid-template-columns:repeat(18,minmax(0,1fr));
   gap:3px;
-  width:max-content;
+  width:100%;
+  max-width:1500px;
   margin-top:6px;
 }
 
 /* ELEMENT TILE */
 .el-tile{
+  aspect-ratio:1/1;
   border-radius:5px;
   padding:2px 2px 2px 3px;
   cursor:pointer;
@@ -273,9 +274,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   position:relative;
 }
 .el-tile:hover{transform:scale(1.18);box-shadow:0 4px 16px rgba(0,0,0,.32);z-index:10;filter:brightness(1.08)}
-.el-z{font-size:.48rem;font-weight:700;opacity:.85;line-height:1;color:inherit}
-.el-sym{font-size:1.05rem;font-weight:800;line-height:1;text-align:center;margin-top:1px;color:inherit}
-.el-name{font-size:.32rem;font-weight:600;line-height:1.1;text-align:center;opacity:.85;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit}
+.el-z{font-size:clamp(.4rem,.97cqw,.65rem);font-weight:700;opacity:.85;line-height:1;color:inherit}
+.el-sym{font-size:clamp(.85rem,2.1cqw,1.5rem);font-weight:800;line-height:1;text-align:center;margin-top:1px;color:inherit}
+.el-name{font-size:clamp(.22rem,.65cqw,.48rem);font-weight:600;line-height:1.1;text-align:center;opacity:.85;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit}
 
 /* ═══ PALETA GEOLÓGICA (distinta de MDEC) ═══ */
 .el-tile.alkali    {background:var(--el-alc-b);border-color:var(--el-alc);color:var(--el-alc-t)}
@@ -428,16 +429,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .detail-panel.open{transform:translateY(0)}
 }
 
-/* SMALL SCREEN TABLE */
+/* SMALL SCREEN TABLE — vuelve a tamaño fijo con scroll horizontal (no cabe fluida) */
 @media(max-width:600px){
-  .pt-grid{
+  .pt-grid,.pt-f-block{
     grid-template-columns:repeat(18,36px);
-    grid-template-rows:repeat(7,36px);
+    width:max-content;
+    max-width:none;
   }
-  .pt-f-block{
-    grid-template-columns:repeat(18,36px);
-    grid-template-rows:repeat(2,36px);
-  }
+  .el-z{font-size:.4rem}
   .el-sym{font-size:.85rem}
   .el-name{font-size:.28rem}
 }
