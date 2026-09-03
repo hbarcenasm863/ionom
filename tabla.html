@@ -62,6 +62,17 @@
   --el-lan-b:#fef3c7;    --el-lan-t:#451a03;
   --el-act:#374151;      /* gris pizarra — actínidos */
   --el-act-b:#f3f4f6;    --el-act-t:#111827;
+
+  /* ═══ Paleta "metales / no metales / metaloides" ═══ */
+  --mn-metal:#2563eb;     --mn-metal-b:#dbeafe;     --mn-metal-t:#1e3a8a;
+  --mn-nonmetal:#ca8a04;  --mn-nonmetal-b:#fef9c3;  --mn-nonmetal-t:#713f12;
+  --mn-metalloid:#059669; --mn-metalloid-b:#d1fae5; --mn-metalloid-t:#064e3b;
+
+  /* ═══ Paleta "bloques s/p/d/f" ═══ */
+  --blk-s:#e11d48; --blk-s-b:#ffe4e6; --blk-s-t:#881337;
+  --blk-p:#d97706; --blk-p-b:#fef3c7; --blk-p-t:#78350f;
+  --blk-d:#2563eb; --blk-d-b:#dbeafe; --blk-d-t:#1e3a8a;
+  --blk-f:#7c3aed; --blk-f-b:#ede9fe; --blk-f-t:#4c1d95;
 }
 
 /* ── Dark mode (media query) ── */
@@ -91,6 +102,13 @@
     --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
     --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
     --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
+    --mn-metal:#60a5fa;     --mn-metal-b:#1e3a8a;     --mn-metal-t:#bfdbfe;
+    --mn-nonmetal:#facc15;  --mn-nonmetal-b:#422006;  --mn-nonmetal-t:#fef08a;
+    --mn-metalloid:#34d399; --mn-metalloid-b:#022c22; --mn-metalloid-t:#a7f3d0;
+    --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
+    --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
+    --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
+    --blk-f:#a78bfa; --blk-f-b:#2e1065; --blk-f-t:#ddd6fe;
   }
 }
 /* ── Data-theme overrides (toggle JS) ── */
@@ -119,6 +137,13 @@
   --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
   --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
   --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
+  --mn-metal:#60a5fa;     --mn-metal-b:#1e3a8a;     --mn-metal-t:#bfdbfe;
+  --mn-nonmetal:#facc15;  --mn-nonmetal-b:#422006;  --mn-nonmetal-t:#fef08a;
+  --mn-metalloid:#34d399; --mn-metalloid-b:#022c22; --mn-metalloid-t:#a7f3d0;
+  --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
+  --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
+  --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
+  --blk-f:#a78bfa; --blk-f-b:#2e1065; --blk-f-t:#ddd6fe;
 }
 :root[data-theme="light"]{
   --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
@@ -143,6 +168,13 @@
   --el-gas:#6366f1;     --el-gas-b:#e0e7ff; --el-gas-t:#312e81;
   --el-lan:#92400e;     --el-lan-b:#fef3c7; --el-lan-t:#451a03;
   --el-act:#374151;     --el-act-b:#f3f4f6; --el-act-t:#111827;
+  --mn-metal:#2563eb;     --mn-metal-b:#dbeafe;     --mn-metal-t:#1e3a8a;
+  --mn-nonmetal:#ca8a04;  --mn-nonmetal-b:#fef9c3;  --mn-nonmetal-t:#713f12;
+  --mn-metalloid:#059669; --mn-metalloid-b:#d1fae5; --mn-metalloid-t:#064e3b;
+  --blk-s:#e11d48; --blk-s-b:#ffe4e6; --blk-s-t:#881337;
+  --blk-p:#d97706; --blk-p-b:#fef3c7; --blk-p-t:#78350f;
+  --blk-d:#2563eb; --blk-d-b:#dbeafe; --blk-d-t:#1e3a8a;
+  --blk-f:#7c3aed; --blk-f-b:#ede9fe; --blk-f-t:#4c1d95;
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -197,6 +229,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .paleta-aviso{background:var(--surf2);border:1.5px solid var(--brd2);border-radius:var(--rs);padding:10px 14px;margin-bottom:18px;max-width:780px;font-size:.75rem;color:var(--tx2)}
 .paleta-aviso strong{color:var(--tx)}
 
+/* COLOR MODE BUTTON BAR */
+.color-mode-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:16px}
+.color-mode-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--dimmer);margin-right:2px}
+.color-mode-btn{background:var(--surf);border:1.5px solid var(--brd2);border-radius:999px;padding:7px 14px;font-size:.75rem;font-weight:700;color:var(--tx2);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.color-mode-btn:hover{border-color:var(--nav)}
+.color-mode-btn.active{background:var(--nav);border-color:var(--nav);color:var(--nav-t)}
+
 /* TABLE SCROLL CONTAINER */
 .tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px}
 
@@ -250,6 +289,17 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .el-tile.lanthanide{background:var(--el-lan-b);border-color:var(--el-lan);color:var(--el-lan-t)}
 .el-tile.actinide  {background:var(--el-act-b);border-color:var(--el-act);color:var(--el-act-t)}
 
+/* ═══ PALETA "METALES / NO METALES / METALOIDES" (modo alterno) ═══ */
+.el-tile.mn-metal    {background:var(--mn-metal-b);border-color:var(--mn-metal);color:var(--mn-metal-t)}
+.el-tile.mn-nonmetal {background:var(--mn-nonmetal-b);border-color:var(--mn-nonmetal);color:var(--mn-nonmetal-t)}
+.el-tile.mn-metalloid{background:var(--mn-metalloid-b);border-color:var(--mn-metalloid);color:var(--mn-metalloid-t)}
+
+/* ═══ PALETA "BLOQUES s/p/d/f" (modo alterno) ═══ */
+.el-tile.blk-s{background:var(--blk-s-b);border-color:var(--blk-s);color:var(--blk-s-t)}
+.el-tile.blk-p{background:var(--blk-p-b);border-color:var(--blk-p);color:var(--blk-p-t)}
+.el-tile.blk-d{background:var(--blk-d-b);border-color:var(--blk-d);color:var(--blk-d-t)}
+.el-tile.blk-f{background:var(--blk-f-b);border-color:var(--blk-f);color:var(--blk-f-t)}
+
 /* PLACEHOLDER TILE */
 .el-placeholder{
   background:transparent;
@@ -294,6 +344,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ld-noble     {background:var(--el-gas-b);border-color:var(--el-gas)}
 .ld-lanthanide{background:var(--el-lan-b);border-color:var(--el-lan)}
 .ld-actinide  {background:var(--el-act-b);border-color:var(--el-act)}
+.ld-mn-metal    {background:var(--mn-metal-b);border-color:var(--mn-metal)}
+.ld-mn-nonmetal {background:var(--mn-nonmetal-b);border-color:var(--mn-nonmetal)}
+.ld-mn-metalloid{background:var(--mn-metalloid-b);border-color:var(--mn-metalloid)}
+.ld-blk-s{background:var(--blk-s-b);border-color:var(--blk-s)}
+.ld-blk-p{background:var(--blk-p-b);border-color:var(--blk-p)}
+.ld-blk-d{background:var(--blk-d-b);border-color:var(--blk-d)}
+.ld-blk-f{background:var(--blk-f-b);border-color:var(--blk-f)}
 
 /* DETAIL PANEL */
 .detail-panel{
@@ -457,6 +514,14 @@ html{font-size:var(--base-fs)}
     <strong>Nota sobre los colores:</strong> los colores de esta tabla son una <em>paleta geológica independiente</em> del sistema MDEC (donde amber = catión, azul = anión, etc.). Aquí <strong>púrpura = metales de transición</strong>, <strong>teal = halógenos</strong>. La leyenda debajo explica cada categoría.
   </div>
 
+  <!-- ── Selector de modo de color ── -->
+  <div class="color-mode-bar" role="group" aria-label="Modo de coloreado de la tabla">
+    <span class="color-mode-label">Ver por:</span>
+    <button type="button" class="color-mode-btn active" data-mode="family" onclick="setColorMode('family')">🧪 Familias</button>
+    <button type="button" class="color-mode-btn" data-mode="metal" onclick="setColorMode('metal')">⚙️ Metales / No metales</button>
+    <button type="button" class="color-mode-btn" data-mode="block" onclick="setColorMode('block')">🔲 Bloques s·p·d·f</button>
+  </div>
+
   <div class="tabla-scroll">
     <!-- MAIN TABLE -->
     <div class="pt-grid" id="pt-main"></div>
@@ -468,17 +533,19 @@ html{font-size:var(--base-fs)}
 
   <!-- ── LEYENDA ── -->
   <div class="legend" aria-label="Leyenda de categorías de elementos">
-    <div class="legend-title">Categorías de elementos</div>
-    <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
-    <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
-    <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
-    <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-transición</div>
-    <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
-    <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
-    <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
-    <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
-    <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
-    <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>
+    <div class="legend-title" id="legend-title">Categorías de elementos</div>
+    <div id="legend-items" style="display:contents">
+      <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
+      <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
+      <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
+      <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-transición</div>
+      <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
+      <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
+      <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
+      <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
+      <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
+      <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>
+    </div>
   </div>
 </div>
 
@@ -695,6 +762,79 @@ const TYPE_VAR = {
 
 function cssVar(name){
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// ═══ Modo de color alterno: metales/no metales/metaloides y bloques s·p·d·f ═══
+const MN_CLASSES = ['mn-metal','mn-nonmetal','mn-metalloid'];
+const BLK_CLASSES = ['blk-s','blk-p','blk-d','blk-f'];
+const FAMILY_CLASSES = Object.keys(TYPE_LABELS);
+
+function metalClassOf(type){
+  if(type === 'metalloid') return 'mn-metalloid';
+  if(type === 'nonmetal' || type === 'halogen' || type === 'noble') return 'mn-nonmetal';
+  return 'mn-metal';
+}
+
+function blockOf(el){
+  if(el.type === 'lanthanide' || el.type === 'actinide') return 'blk-f';
+  if(el.sym === 'He') return 'blk-s'; // Helio: configuración 1s², bloque s pese a estar en el grupo 18
+  if(el.group === 1 || el.group === 2) return 'blk-s';
+  if(el.group >= 13 && el.group <= 18) return 'blk-p';
+  return 'blk-d';
+}
+
+function modeClassFor(el, mode){
+  if(mode === 'metal') return metalClassOf(el.type);
+  if(mode === 'block') return blockOf(el);
+  return el.type;
+}
+
+const LEGEND_HTML = {
+  family: `
+    <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
+    <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
+    <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
+    <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-transición</div>
+    <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
+    <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
+    <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
+    <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
+    <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
+    <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>`,
+  metal: `
+    <div class="legend-item"><div class="legend-dot ld-mn-metal"></div>Metal</div>
+    <div class="legend-item"><div class="legend-dot ld-mn-nonmetal"></div>No metal</div>
+    <div class="legend-item"><div class="legend-dot ld-mn-metalloid"></div>Metaloide</div>`,
+  block: `
+    <div class="legend-item"><div class="legend-dot ld-blk-s"></div>Bloque s</div>
+    <div class="legend-item"><div class="legend-dot ld-blk-p"></div>Bloque p</div>
+    <div class="legend-item"><div class="legend-dot ld-blk-d"></div>Bloque d</div>
+    <div class="legend-item"><div class="legend-dot ld-blk-f"></div>Bloque f</div>`
+};
+const LEGEND_TITLE = {
+  family: 'Categorías de elementos',
+  metal: 'Metales, no metales y metaloides',
+  block: 'Bloques s, p, d y f'
+};
+
+let currentColorMode = 'family';
+
+function setColorMode(mode){
+  if(!LEGEND_HTML[mode]) return;
+  currentColorMode = mode;
+  document.querySelectorAll('.el-tile[data-z]').forEach(tile=>{
+    const el = ELEMENTS[tile.dataset.z];
+    if(!el) return;
+    tile.classList.remove(...FAMILY_CLASSES, ...MN_CLASSES, ...BLK_CLASSES);
+    tile.classList.add(modeClassFor(el, mode));
+  });
+  const legendItems = document.getElementById('legend-items');
+  if(legendItems) legendItems.innerHTML = LEGEND_HTML[mode];
+  const legendTitle = document.getElementById('legend-title');
+  if(legendTitle) legendTitle.textContent = LEGEND_TITLE[mode];
+  document.querySelectorAll('.color-mode-btn').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
 }
 
 function classOf(type){
