@@ -52,7 +52,7 @@ const BUILD_TAG = 'IonNom Analytics v2.0 — 2026-09-03';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
-const FECHA_INICIO_PERIODO = '2026-08-31'; // yyyy-MM-dd
+const FECHA_INICIO_PERIODO = '2026-08-10'; // yyyy-MM-dd
 const FECHA_FIN_PERIODO    = '2026-10-30'; // yyyy-MM-dd
 const SESIONES_ESPERADAS   = 22;           // ≈ 2 veces por semana durante el periodo
 
