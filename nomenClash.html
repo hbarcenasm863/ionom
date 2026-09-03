@@ -3302,6 +3302,7 @@ function mostrarInfoBase(){
 }
 
 function drawCard(){
+  if(currentPlayer().type!=='human') return;
   if(G.gameDeck.length===0){
     addLog('El mazo está vacío.','bad');
     G.mustPlayAnion=false;
@@ -3507,7 +3508,12 @@ function stealAnion(victimIdx, cardIdx){
 
   victim.hand.splice(actualIdx, 1);
   cp.hand.push(stolenCard);
-  
+  // Quedarse sin cartas porque te las ROBARON no es lo mismo que ganar
+  // jugando un compuesto — sin esto, checkWin() (llamado desde
+  // advanceTurn() tras CUALQUIER acción) declaraba ganador a la víctima
+  // del espionaje si esa era su última carta.
+  if(victim.hand.length===0) victim._vaciadaPorRobo=true;
+
   addLog(`👁 ${cp.name} vio la mano de ${victim.name} y robó ${stolenCard.display}.`,'action');
   G.selectedCards=[];
   renderGame();
@@ -3801,6 +3807,9 @@ function aiPlayAction(cp, card, handIdx){
       const stolen=anions[Math.floor(Math.random()*anions.length)];
       target.hand.splice(target.hand.indexOf(stolen),1);
       cp.hand.push(stolen);
+      // Ver stealAnion(): quedarse sin cartas por robo de espionaje no
+      // cuenta como ganar.
+      if(target.hand.length===0) target._vaciadaPorRobo=true;
       addLog(`👁 🤖 ${cp.name} espió a ${target.name} y robó ${stolen.display}.`,'action');
       G.selectedCards=[];
       renderGame();
@@ -4054,7 +4063,11 @@ function recycleCationDeck(){
 }
 
 function checkWin(){
-  const winner=G.players.find(p=>p.hand.length===0);
+  // Limpia la bandera en cuanto el jugador vuelve a tener cartas (solo
+  // puede pasar robando en su turno, ya que con la mano vacía no puede
+  // jugar nada) — así una vaciada por robo futura se sigue detectando.
+  G.players.forEach(p=>{ if(p.hand.length>0) p._vaciadaPorRobo=false; });
+  const winner=G.players.find(p=>p.hand.length===0 && !p._vaciadaPorRobo);
   if(winner||G.gameDeck.length===0){
     // Detectar empate real
     const minCards=Math.min(...G.players.map(p=>p.hand.length));
