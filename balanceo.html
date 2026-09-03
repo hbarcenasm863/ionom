@@ -363,12 +363,12 @@ function speakPage(){
   const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
   speak(parts.join('. '));
 }
-(function(){const saved=localStorage.getItem('ion-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
   const cur=document.documentElement.getAttribute('data-theme');
   const next=cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem('ion-theme',next);
+  localStorage.setItem('ionom-theme',next);
 var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
 
 const EJERCICIOS=[

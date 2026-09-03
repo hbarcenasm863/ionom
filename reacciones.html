@@ -354,7 +354,7 @@ function speakPage(){
 }
 // Theme persistence
 (function(){
-  const saved=localStorage.getItem('ion-theme');
+  const saved=localStorage.getItem('ionom-theme');
   if(saved) document.documentElement.setAttribute('data-theme',saved);
   var _tb=document.getElementById('theme-btn');if(_tb)_tb.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');
 })();
@@ -362,7 +362,7 @@ document.getElementById('theme-btn').addEventListener('click',function(){
   const cur=document.documentElement.getAttribute('data-theme');
   const next=cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem('ion-theme',next);
+  localStorage.setItem('ionom-theme',next);
 var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
 
 // QUIZ

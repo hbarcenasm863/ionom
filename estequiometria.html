@@ -574,8 +574,8 @@ function speakPage(){
   speak(parts.join('. '));
 }
 // Theme
-(function(){const s=localStorage.getItem('ion-theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
-function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('ion-theme',n);}
+(function(){const s=localStorage.getItem('ionom-theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('ionom-theme',n);}
 document.getElementById('theme-btn').addEventListener('click',toggleTheme);
 
 // Hamburger

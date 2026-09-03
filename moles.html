@@ -164,6 +164,8 @@ html{font-size:var(--base-fs)}
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
     <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
     <a href="moles.html" class="active"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
     <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
     <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
     <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
@@ -357,12 +359,12 @@ function speakPage(){
   const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
   speak(parts.join('. '));
 }
-(function(){const saved=localStorage.getItem('ion-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
   const cur=document.documentElement.getAttribute('data-theme');
   const next=cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem('ion-theme',next);
+  localStorage.setItem('ionom-theme',next);
 var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
 
 const MOLES_QUIZ=[
