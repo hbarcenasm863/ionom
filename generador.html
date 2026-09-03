@@ -971,23 +971,145 @@ function buildTable(compounds, sistema){
   return html;
 }
 
+// Parser de fórmulas químicas (subíndices unicode + paréntesis) a
+// {elem,n}[] — igual al usado en juego.html para su ejercicio "ox-state".
+function parseFormulaOx(f){
+  f=(f||'').replace(/\((aq|g|l|s)\)$/i,'').trim();
+  const SUBS={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  let s=f.replace(/[₀-₉]/g,c=>SUBS[c]||c);
+  const result={};
+  function pg(str,mult){
+    let i=0;
+    while(i<str.length){
+      if(str[i]==='('){
+        let j=str.indexOf(')',i),ns='',k=j+1;
+        while(k<str.length&&/\d/.test(str[k])){ns+=str[k];k++;}
+        pg(str.slice(i+1,j),mult*(ns?parseInt(ns):1));i=k;
+      } else if(/[A-Z]/.test(str[i])){
+        let sym=str[i];i++;
+        while(i<str.length&&/[a-z]/.test(str[i])){sym+=str[i];i++;}
+        let ns='';
+        while(i<str.length&&/\d/.test(str[i])){ns+=str[i];i++;}
+        result[sym]=(result[sym]||0)+(ns?parseInt(ns):1)*mult;
+      } else {i++;}
+    }
+  }
+  pg(s,1);
+  return Object.entries(result).map(([elem,n])=>({elem,n}));
+}
+
+// Oxoaniones comunes (carga total conocida) para sales oxigenadas/ácidas —
+// SO4/NO3/PO4/etc. no se resuelven por balance simple de 2 incógnitas
+// porque tanto el metal COMO el elemento central del oxoanión son
+// desconocidos a la vez. Con la carga del oxoanión ya conocida (hecho de
+// química estándar), se puede despejar primero el metal y luego, dentro
+// del propio oxoanión, el elemento central. Orden: patrones más largos
+// primero, para que "H2PO4"/"HSO4"/"HCO3" no se confundan con "PO4"/
+// "SO4"/"CO3" al buscarlos como sufijo de la fórmula.
+const OXOANIONES=[
+  ['Cr2O7',-2],['H2PO4',-1],
+  ['ClO4',-1],['ClO3',-1],['ClO2',-1],['HSO4',-1],['HSO3',-1],['HPO4',-2],['HCO3',-1],['BrO3',-1],['MnO4',-1],['CrO4',-2],
+  ['SO4',-2],['SO3',-2],['NO3',-1],['NO2',-1],['PO4',-3],['CO3',-2],['ClO',-1]
+];
+
+function detectOxoanion_(formulaNorm){
+  const m=formulaNorm.match(/\(([A-Za-z0-9]+)\)(\d*)$/);
+  if(m){
+    const hit=OXOANIONES.find(([p])=>p===m[1]);
+    if(hit) return {anion:m[1],charge:hit[1],count:m[2]?parseInt(m[2],10):1,metalPart:formulaNorm.slice(0,m.index)};
+  }
+  for(const [pattern,charge] of OXOANIONES){
+    if(formulaNorm.length>pattern.length && formulaNorm.endsWith(pattern)){
+      return {anion:pattern,charge,count:1,metalPart:formulaNorm.slice(0,formulaNorm.length-pattern.length)};
+    }
+  }
+  return null;
+}
+
+// Resuelve sal-ox/sal-ac vía el oxoanión: primero despeja el metal
+// (carga del oxoanión × su cantidad = -(EO del metal × cantidad de metal)),
+// luego, dentro del oxoanión, despeja su elemento central (O siempre -2,
+// H siempre +1) para poder mostrar el desglose completo.
+function resolverOxoanion_(formula, group){
+  if(group!=='sal-ox' && group!=='sal-ac') return null;
+  const SUBS={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  const norm=(formula||'').replace(/[₀-₉]/g,c=>SUBS[c]||c);
+  const oa=detectOxoanion_(norm);
+  if(!oa) return null;
+  const metalAtoms=parseFormulaOx(oa.metalPart);
+  if(metalAtoms.length!==1) return null; // p. ej. NH₄ (amonio) no es un solo elemento — no se resuelve
+  const {elem:metalEl,n:metalN}=metalAtoms[0];
+  const metalEO=-(oa.charge*oa.count)/metalN;
+  if(!Number.isInteger(metalEO)||metalEO===0||Math.abs(metalEO)>8) return null;
+
+  const states={};
+  states[metalEl]=metalEO;
+  const anionAtoms=parseFormulaOx(oa.anion);
+  const oCount=(anionAtoms.find(a=>a.elem==='O')||{n:0}).n;
+  const hCount=(anionAtoms.find(a=>a.elem==='H')||{n:0}).n;
+  if(oCount) states['O']=-2;
+  if(hCount) states['H']=1;
+  const central=anionAtoms.find(a=>a.elem!=='O'&&a.elem!=='H');
+  if(central){
+    const centralEO=(oa.charge-(-2*oCount)-(1*hCount))/central.n;
+    if(Number.isInteger(centralEO)) states[central.elem]=centralEO;
+  }
+
+  const raw=parseFormulaOx(formula);
+  return {data:raw.map(({elem,n})=>({elem,n,state:states[elem]!==undefined?states[elem]:null})), askElem:metalEl};
+}
+
+// Calcula el estado de oxidación de cada elemento de un compuesto por
+// reglas fijas (O, H, halógenos según el grupo) + balance de carga para
+// el elemento restante (normalmente el metal/no metal "central", que es
+// el que tiene sentido preguntar). Devuelve {data, askElem} o null si no
+// se puede resolver (p. ej. grupos no cubiertos por las reglas).
+function getOxidationStatesGen(formula, group){
+  const porOxoanion=resolverOxoanion_(formula, group);
+  if(porOxoanion) return porOxoanion;
+
+  const raw=parseFormulaOx(formula);
+  if(!raw||raw.length<2) return null;
+  const elems={};raw.forEach(({elem,n})=>{elems[elem]=n;});
+  const states={};
+  if(elems['O']) states['O']=-2;
+  if(elems['H']) states['H']=(group==='hidru')?-1:+1;
+  ['F','Cl','Br','I'].forEach(el=>{if(elems[el]&&(group==='sal-bin'||group==='ac-hid'))states[el]=-1;});
+  if(elems['S']&&(group==='ac-hid'||group==='sal-bin')) states['S']=-2;
+  if(elems['N']&&group==='ac-hid') states['N']=-3;
+  if(elems['P']&&group==='ac-hid') states['P']=-3;
+  const unknown=Object.keys(elems).filter(el=>states[el]===undefined);
+  let askElem=null;
+  if(unknown.length===0){
+    const sum=Object.entries(elems).reduce((a,[el,n])=>a+states[el]*n,0);
+    if(sum!==0) return null;
+    // Todo fijo por regla (p. ej. HCl): se pregunta por el elemento que
+    // no sea O ni H, que es el que realmente identifica al compuesto.
+    askElem=(raw.find(({elem})=>elem!=='O'&&elem!=='H')||raw[0]).elem;
+  } else if(unknown.length===1){
+    const kSum=Object.entries(states).reduce((a,[el,st])=>a+st*elems[el],0);
+    const u=unknown[0];
+    const uSt=-kSum/elems[u];
+    if(!Number.isInteger(uSt)||uSt===0||Math.abs(uSt)>8) return null;
+    states[u]=uSt;
+    askElem=u;
+  } else { return null; }
+  return {data:raw.map(({elem,n})=>({elem,n,state:states[elem]})), askElem};
+}
+
 function generateOxidationState(compounds){
   let html = '';
   compounds.forEach((c, i) => {
-    const catIon = c.ions ? c.ions.find(ion => ion.t === 'cat') : null;
-    let askEl = '';
-    let answerEO = '';
-    if(catIon){
-      const m = catIon.l.match(/^([A-Z][a-z]?)/);
-      if(m) askEl = m[1];
-      const eoMatch = catIon.l.match(/EO=([+\-\d]+)/);
-      if(eoMatch) answerEO = eoMatch[1];
-      else {
-        const chM = catIon.l.match(/([A-Z][a-z]?)(\d*)([+\-])/);
-        if(chM) answerEO = chM[3] === '+' ? `+${chM[2]||1}` : `-${chM[2]||1}`;
-      }
-    }
-    const questionEl = askEl ? `del <strong>${askEl}</strong>` : 'del metal';
+    const resuelto = getOxidationStatesGen(c.formula, c.group);
+    const askEl = resuelto ? resuelto.askElem : '';
+    const questionEl = askEl ? `del <strong>${askEl}</strong>` : 'del elemento indicado';
+    const ionesHtml = resuelto
+      ? resuelto.data.map(({elem,n,state})=>{
+          const destacado = elem===askEl;
+          const signo = destacado ? '?' : (state==null ? '?' : (state>0?`+${state}`:state));
+          return `<span style="background:${destacado?'var(--cat-b)':'var(--an-b)'};color:${destacado?'var(--cat-t)':'var(--an-t)'};padding:2px 7px;border-radius:6px;font-size:.78rem">${elem}${n>1?'×'+n:''} (EO=${signo})</span>`;
+        }).join(' ')
+      : '<span style="color:var(--dimmer)">—</span>';
     html += `
       <div class="exercise-card PDF-section" style="border-left:4px solid var(--ox)">
         <div class="ex-num">Ejercicio ${i+1}</div>
@@ -997,7 +1119,7 @@ function generateOxidationState(compounds){
         </div>
         <div style="font-size:2rem;font-weight:800;color:var(--ox-t);background:var(--ox-b);display:inline-block;padding:6px 18px;border-radius:var(--rm);font-family:var(--mono);margin-bottom:14px">${c.formula}</div>
         <div style="font-size:.8rem;color:var(--dimmer);margin-bottom:10px">
-          Iones presentes: ${(c.ions||[]).map(ion=>`<span style="background:${ion.t==='cat'?'var(--cat-b)':ion.t==='oh'?'var(--oh-b)':'var(--an-b)'};color:${ion.t==='cat'?'var(--cat-t)':ion.t==='oh'?'var(--oh-t)':'var(--an-t)'};padding:2px 7px;border-radius:6px;font-size:.78rem">${ion.l}</span>`).join(' ')}
+          Iones presentes: ${ionesHtml}
         </div>
         <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
           <span style="font-size:.82rem;color:var(--dimmer)">Estado de oxidación de ${askEl||'?'} =</span>
