@@ -945,3 +945,45 @@ function inicializarHojas() {
   recalcularTodasLasEstadisticas();
   Logger.log('Hojas de IonNom listas: ' + ss.getUrl());
 }
+
+// Ordena las pestañas en un orden fijo y predecible — Registro, Estadísticas,
+// Eficacia por tema, una por cada "Curso X" (alfabético), Errores al final —
+// y OCULTA (sin borrar) las pestañas heredadas de versiones anteriores del
+// script ("Hoja 1", "Resultados", "Sesiones", el "Resumen por Curso" viejo):
+// sus datos ya quedaron incorporados a "Registro" por la migración, así que
+// solo estorban al navegar. No se borra nada — si hace falta revisarlas,
+// se pueden volver a mostrar manualmente (clic derecho en la barra de
+// pestañas → Mostrar hojas ocultas).
+function reordenarHojas() {
+  const ss = obtenerSpreadsheet();
+  const HOJAS_LEGADAS = ['Hoja 1', 'Resultados', 'Sesiones', 'Resumen por Curso'];
+
+  const hojasCurso = ss.getSheets()
+    .map(function (sh) { return sh.getName(); })
+    .filter(function (n) { return n.indexOf('Curso ') === 0; })
+    .sort();
+
+  const ordenDeseado = ['Registro', 'Estadísticas', 'Eficacia por tema']
+    .concat(hojasCurso)
+    .concat(['Errores']);
+
+  let posicion = 1;
+  ordenDeseado.forEach(function (nombre) {
+    const sh = ss.getSheetByName(nombre);
+    if (!sh) return;
+    ss.setActiveSheet(sh);
+    ss.moveActiveSheet(posicion);
+    posicion++;
+  });
+
+  HOJAS_LEGADAS.forEach(function (nombre) {
+    const sh = ss.getSheetByName(nombre);
+    if (!sh) return;
+    try { sh.hideSheet(); } catch (err) { /* no crítico si ya estaba oculta */ }
+    ss.setActiveSheet(sh);
+    ss.moveActiveSheet(posicion);
+    posicion++;
+  });
+
+  Logger.log('Pestañas reordenadas. Ocultas (no borradas): ' + HOJAS_LEGADAS.join(', ') + '.');
+}
