@@ -1320,7 +1320,16 @@ function getPool(group){
   const diff=getDifficultyFilter();
   if(group==='ox-anh') return all.filter(c=>(c.group==='ox-bas'||c.group==='anhid')&&diff(c));
   if(group!=='all') return all.filter(c=>c.group===group&&diff(c));
-  return all.filter(diff);
+  // "Todos los grupos" es un modo de NOMENCLATURA (nombrar compuestos). Los
+  // grupos reaccion/balanceo/mol-masa tienen una forma de datos totalmente
+  // distinta (ecuacion/coeficientes, sin formula/trad/stock/sist) y ya
+  // tienen su propio modo de juego dedicado (ver startGame). Si se colaban
+  // aquí, assignTypes() les asignaba 'mc'/'write-any' igual que a un
+  // compuesto real y renderMC() truena porque esas entradas no tienen
+  // "trad" — esto era justo lo que congelaba "Todos los grupos" (pantalla
+  // en blanco, sin opciones, cronómetro parado).
+  const NOMENCLATURE_ONLY=new Set(['reaccion','balanceo','mol-masa']);
+  return all.filter(c=>!NOMENCLATURE_ONLY.has(c.group)&&diff(c));
 }
 
 // ── EO extraction from Stock name ──
@@ -1682,19 +1691,31 @@ function loadQuestion(){
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
   ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
-  if(['el-sym2name','el-name2sym','el-z2name','el-sym2type'].includes(q.qtype)) renderElMC(q);
-  else if(['el-config2val','el-config2el'].includes(q.qtype)) renderElConfig(q);
-  else if(q.qtype==='mc') renderMC(q);
-  else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
-  else if(q.qtype==='ox-state') renderOx(q);
-  else if(q.qtype==='drag') renderDrag(q);
-  else if(q.qtype==='invert') renderInvert(q);
-  else if(q.qtype==='balance') renderBalance(q);
-  else if(q.qtype==='ox-assign') renderOxAssign(q);
-  else if(q.qtype==='react-chain') renderReactChain(q);
-  else if(q.qtype==='classify-rx') renderClassifyRx(q);
-  else if(q.qtype==='balance-eq') renderBalanceEq(q);
-  else if(q.qtype==='mol-calc') renderMolCalc(q);
+  // Red de seguridad: un error inesperado al renderizar (dato de compuesto
+  // incompleto, tipo de pregunta mal asignado, etc.) ya no debe congelar la
+  // partida completa —sin esto, una excepción aquí dejaba la pantalla sin
+  // opciones/input y el cronómetro nunca arrancaba, porque startTimer()
+  // vive después de este bloque y una excepción se lo saltaba entero—.
+  // En vez de eso, se muestra un aviso con un botón "Siguiente" que sí
+  // funciona, igual que ya hacía renderMC_fallback() para otros casos.
+  try {
+    if(['el-sym2name','el-name2sym','el-z2name','el-sym2type'].includes(q.qtype)) renderElMC(q);
+    else if(['el-config2val','el-config2el'].includes(q.qtype)) renderElConfig(q);
+    else if(q.qtype==='mc') renderMC(q);
+    else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
+    else if(q.qtype==='ox-state') renderOx(q);
+    else if(q.qtype==='drag') renderDrag(q);
+    else if(q.qtype==='invert') renderInvert(q);
+    else if(q.qtype==='balance') renderBalance(q);
+    else if(q.qtype==='ox-assign') renderOxAssign(q);
+    else if(q.qtype==='react-chain') renderReactChain(q);
+    else if(q.qtype==='classify-rx') renderClassifyRx(q);
+    else if(q.qtype==='balance-eq') renderBalanceEq(q);
+    else if(q.qtype==='mol-calc') renderMolCalc(q);
+  } catch(err) {
+    console.error('Error renderizando la pregunta, se salta a la siguiente:', err, q);
+    renderMC_fallback(q);
+  }
   startTimer();
 }
 
@@ -1735,7 +1756,7 @@ function renderMC(q){
   document.getElementById('q-prompt').textContent='¿Cómo se llama este compuesto? (cualquier nomenclatura válida)';
   document.getElementById('area-mc').style.display='';
   const allValid=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
-  const correct=allValid[Math.floor(Math.random()*allValid.length)]||q.trad[0];
+  const correct=allValid[Math.floor(Math.random()*allValid.length)]||(q.trad&&q.trad[0])||'—';
   const pool=getPool(ST.group);
   const distractors=buildSmartDistractors(q,pool);
   // Emergency fallback: pull random names from full bank (should never trigger with 301 entries)
