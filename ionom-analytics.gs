@@ -548,7 +548,7 @@ function leerRegistroDeduplicado(ss) {
   const filas = datos.map(function (r, idx) {
     return {
       fecha: normalizarFecha(r[COL.FECHA - 1]),
-      hora: String(r[COL.HORA - 1] || ''),
+      hora: normalizarHora(r[COL.HORA - 1]),
       nombre: String(r[COL.NOMBRE - 1] || ''),
       curso: String(r[COL.CURSO - 1] || '').trim(),
       sesion: String(r[COL.SESION - 1] || '').trim(),
@@ -577,6 +577,17 @@ function leerRegistroDeduplicado(ss) {
 
 function normalizarFecha(v) {
   if (v instanceof Date) return Utilities.formatDate(v, TZ, 'yyyy-MM-dd');
+  return String(v || '').trim();
+}
+
+// Misma Regla 4 aplicada a "Hora": una celda escrita como texto "14:09:12"
+// puede volver de getValues() como un objeto Date (con fecha base
+// 30/12/1899, el epoch de "solo hora" de Sheets) en vez del texto original.
+// Sin esto, String(esaFecha) produce basura tipo "Sat Dec 30 1899 14:09:12
+// GMT-0456 (Colombia Standard Time)" — justo lo que se vio en "Última
+// sesión" de las hojas "Curso X".
+function normalizarHora(v) {
+  if (v instanceof Date) return Utilities.formatDate(v, TZ, 'HH:mm:ss');
   return String(v || '').trim();
 }
 
