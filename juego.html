@@ -2541,6 +2541,7 @@ function checkReactChainWrite(){
     } else {
       inp.style.borderColor='#dc2626';inp.style.background='#fee2e2';inp.style.color='#991b1b';
       if(ST.attempts>=3){
+        if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
         document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
         showFeedback('err',`✗ La fórmula correcta es: ${correct}`,q);
         scheduleNext(2500);
@@ -2584,7 +2585,10 @@ function checkReactChain(el){
             :`Recuerda: hidróxido + ácido → sal + H₂O. Cruza las cargas del catión y del anión ácido.`
       }[q.step];
       showFeedback('err',`✗ Incorrecto. ${hint}`,q);
-      if(ST.attempts>=2){scheduleNext(2000);}
+      if(ST.attempts>=2){
+        if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
+        scheduleNext(2000);
+      }
     }
   }catch(err){scheduleNext(0);}
 }
@@ -2791,7 +2795,7 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
 const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (hidrocarburo+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
@@ -3027,6 +3031,13 @@ function sendResults(grade, level, pct){
 
 function confirmExit(){
   if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')){
+    // Salir por el botón del menú es una navegación DENTRO de la SPA — no
+    // dispara beforeunload ni visibilitychange, así que sin este envío la
+    // sesión parcial jugada se perdía por completo (nunca llegaba a
+    // "Registro"), a diferencia de cerrar la pestaña o cambiar de app.
+    if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx>0){
+      _post(_buildPayload('abandono'));
+    }
     resetGame();
   }
 }

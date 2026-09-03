@@ -78,6 +78,7 @@ const TEMAS_PRINCIPALES = [
   'Tipos de reacción',
   'Balanceo de ecuaciones',
   'Mol y masa molar',
+  'Cadena de reactividad',
   'Todos los grupos'
 ];
 
@@ -122,6 +123,22 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  // Con toda una clase (~25-30 estudiantes) terminando casi al mismo tiempo,
+  // varias ejecuciones de doPost pueden solaparse: cada una busca/actualiza
+  // una fila en "Registro" y luego BORRA Y REESCRIBE por completo
+  // Estadísticas/Eficacia por tema/Curso X. Sin un lock, dos ejecuciones
+  // intercaladas pueden pisarse esas hojas entre sí (una termina de escribir
+  // su versión y la otra, que leyó "Registro" un instante antes, la
+  // sobreescribe con datos ya desactualizados). Un lock de script serializa
+  // las ejecuciones de doPost para que esto no pase.
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(30000);
+  } catch (err) {
+    registrarError('doPost', new Error('No se obtuvo el lock (servidor congestionado): ' + err));
+    return salidaJSON({ ok: false, error: 'servidor ocupado, intenta de nuevo en unos segundos' });
+  }
+
   // Regla 10: todo el ciclo va en try/catch y siempre responde JSON — un
   // frontend con mode:'no-cors' no puede leer la respuesta, pero otros
   // clientes (pruebas, Postman, un futuro panel docente) sí, y el catch
@@ -135,6 +152,8 @@ function doPost(e) {
   } catch (err) {
     registrarError('doPost', err);
     return salidaJSON({ ok: false, error: String((err && err.message) || err) });
+  } finally {
+    lock.releaseLock();
   }
 }
 
@@ -865,10 +884,26 @@ function recalcularTodasLasEstadisticas() {
 // editor de Apps Script (▶ Ejecutar), no se llaman desde doPost/doGet.
 // ══════════════════════════════════════════════════════════════════════════
 
+// Igual que en doPost: estas funciones también reescriben por completo las
+// hojas de estadísticas, así que toman el mismo lock antes de tocar nada —
+// si un estudiante termina una partida (doPost) justo mientras el docente
+// corre esto manualmente, uno espera al otro en vez de pisarse.
+function conLockDeScript_(fn) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    fn();
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 // Fuerza el recálculo completo de Estadísticas / Eficacia por tema / Curso X
 // a partir de lo que ya hay en "Registro", sin esperar una nueva partida.
 function recalcularAhora() {
-  recalcularTodasLasEstadisticas();
+  conLockDeScript_(function () {
+    recalcularTodasLasEstadisticas();
+  });
   Logger.log('Recálculo completo ejecutado. Revisa la hoja "Errores" si algo falló.');
 }
 
@@ -877,6 +912,10 @@ function recalcularAhora() {
 // la de mayor Total de cada una. Recorre de abajo hacia arriba para no
 // desfasar los índices de fila al ir borrando.
 function limpiarRegistroDuplicados() {
+  conLockDeScript_(function () { limpiarRegistroDuplicados_(); });
+}
+
+function limpiarRegistroDuplicados_() {
   const ss = obtenerSpreadsheet();
   const sh = obtenerHojaRegistro(ss); // migra el esquema viejo si hace falta antes de tocar filas
   if (!sh || sh.getLastRow() < 2) {
