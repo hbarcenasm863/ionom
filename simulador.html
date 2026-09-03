@@ -790,7 +790,7 @@ html{font-size:var(--base-fs)}
       <div class="ph-controls">
         <div class="ph-select-wrap">
           <label for="ph-substance">Sustancia</label>
-          <select class="ph-select" id="ph-substance" onchange="updatePH()">
+          <select class="ph-select" id="ph-substance" onchange="updatePH(true)">
             <optgroup label="&#193;cidos fuertes">
               <option value="HCl-sa">HCl &mdash; &aacute;cido clor&iacute;drico</option>
               <option value="H2SO4-sa">H&#8322;SO&#8324; &mdash; &aacute;cido sulf&uacute;rico</option>
@@ -1501,7 +1501,7 @@ function repolloColor(ph) {
 
 var phQuizPending = false;
 
-function updatePH() {
+function updatePH(nuevoEscenario) {
   var subKey = document.getElementById('ph-substance').value;
   var sliderVal = parseInt(document.getElementById('ph-slider').value, 10);
   var conc = sliderToConc(sliderVal);
@@ -1536,8 +1536,15 @@ function updatePH() {
   document.getElementById('beaker-repollo').style.backgroundColor = rc.color;
   document.getElementById('beaker-repollo-name').textContent = rc.name;
 
-  // Generate quiz if not answered yet
-  if (!r2Answered && r2Correct < 5) {
+  // Solo se genera una pregunta nueva cuando cambia la SUSTANCIA (o al
+  // cargar la página) — nunca al arrastrar el slider de concentración.
+  // Antes esto corría en cada 'input' del slider mientras !r2Answered, lo
+  // que (a) inflaba r2Total si el estudiante movía el slider antes de
+  // responder, y (b) dejaba el quiz trabado para siempre tras la primera
+  // respuesta: r2Answered solo se resetea DENTRO de generatePHQuiz(), y esa
+  // función nunca se volvía a llamar una vez r2Answered pasaba a true
+  // (el guardián de esta misma condición lo impedía).
+  if (nuevoEscenario && r2Correct < 5) {
     generatePHQuiz(ph, subKey, fc, rc);
   }
 }
@@ -1708,7 +1715,7 @@ function toggleTheme(){
 
 // ── INIT ─────────────────────────────────────────────────────────────────
 buildPalette();
-updatePH();
+updatePH(true);
 
 // ── MAYER: Colombian Spanish voice narration ──
 function speak(text, onEnd) {
