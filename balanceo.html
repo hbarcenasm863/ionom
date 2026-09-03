@@ -400,13 +400,63 @@ function renderEj(){
   attempts=0;
 }
 
+// Parser de fórmulas químicas (subíndices unicode ₀-₉, paréntesis con
+// multiplicador) a conteo de átomos por elemento — p. ej. "Fe₂O₃" → {Fe:2,O:3}.
+function parseFormula(formula){
+  const norm=formula.replace(/[₀₁₂₃₄₅₆₇₈₉]/g,d=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(d));
+  function parseGroup(s,i){
+    const counts={};
+    while(i<s.length && s[i]!==')'){
+      if(s[i]==='('){
+        const res=parseGroup(s,i+1); i=res[1];
+        let num=''; while(i<s.length && /[0-9]/.test(s[i])){num+=s[i];i++;}
+        const mult=num?parseInt(num,10):1;
+        for(const el in res[0]) counts[el]=(counts[el]||0)+res[0][el]*mult;
+      } else if(/[A-Z]/.test(s[i])){
+        let sym=s[i]; i++;
+        if(i<s.length && /[a-z]/.test(s[i])){sym+=s[i];i++;}
+        let num=''; while(i<s.length && /[0-9]/.test(s[i])){num+=s[i];i++;}
+        counts[sym]=(counts[sym]||0)+(num?parseInt(num,10):1);
+      } else { i++; }
+    }
+    return [counts,i+1];
+  }
+  return parseGroup(norm,0)[0];
+}
+
+function gcdArr(arr){
+  const gcd2=(a,b)=>b?gcd2(b,a%b):a;
+  return arr.reduce(gcd2);
+}
+
+// Verifica que la ecuación quede realmente balanceada (mismos átomos de
+// cada elemento en reactivos y productos) en vez de comparar contra un
+// único juego de coeficientes hardcodeado — así un múltiplo válido como
+// [4,2,4] no se rechaza cuando la respuesta guardada es [2,1,2].
 function checkBal(){
   const e=EJERCICIOS[ei];
   const entered=e.especies.map((_,i)=>parseInt(document.getElementById('ci'+i).value)||0);
-  const ok=entered.every((v,i)=>v===e.coef[i]);
   attempts++;
-  if(ok){
-    document.getElementById('bal-fb').innerHTML='<div class="ok-box">✓ ¡Correcto! Coeficientes: ['+e.coef.join(', ')+']<br>'+(ei+1<EJERCICIOS.length?'<button onclick="ei++;renderEj()" style="margin-top:8px;padding:7px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Siguiente ejercicio →</button>':'<span>¡Terminaste todos los ejercicios! 🎉</span>')+'</div>';
+
+  if(entered.some(v=>v<1)){
+    document.getElementById('bal-fb').innerHTML='<span style="color:var(--warn-t)">✗ Intento '+attempts+'. Todos los coeficientes deben ser enteros positivos.</span>';
+    return;
+  }
+
+  const numReactivos=e.sin.split('→')[0].split('+').length;
+  const balance={};
+  e.especies.forEach((formula,i)=>{
+    const atomos=parseFormula(formula);
+    const signo=i<numReactivos?1:-1;
+    for(const el in atomos) balance[el]=(balance[el]||0)+signo*atomos[el]*entered[i];
+  });
+  const balanceado=Object.keys(balance).every(el=>balance[el]===0);
+  const esMinimo=gcdArr(entered)===1;
+
+  if(balanceado && esMinimo){
+    document.getElementById('bal-fb').innerHTML='<div class="ok-box">✓ ¡Correcto! Coeficientes: ['+entered.join(', ')+']<br>'+(ei+1<EJERCICIOS.length?'<button onclick="ei++;renderEj()" style="margin-top:8px;padding:7px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Siguiente ejercicio →</button>':'<span>¡Terminaste todos los ejercicios! 🎉</span>')+'</div>';
+  } else if(balanceado){
+    document.getElementById('bal-fb').innerHTML='<span style="color:var(--warn-t)">✓ Está balanceado, pero no es la expresión mínima — divide todos los coeficientes entre '+gcdArr(entered)+' e intenta de nuevo.</span>';
   } else {
     const conteo=e.especies.map((sp,i)=>'<span style="color:'+(entered[i]===e.coef[i]?'var(--ok-t)':'var(--err-t)')+'">'+sp+'='+entered[i]+'</span>').join(', ');
     document.getElementById('bal-fb').innerHTML='<span style="color:var(--warn-t)">✗ Intento '+attempts+'. Tu propuesta: '+conteo+'</span>';
