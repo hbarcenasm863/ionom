@@ -352,6 +352,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .dp-section{margin-top:14px;padding-top:12px;border-top:1.5px solid var(--brd)}
 .dp-section-title{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dimmer);margin-bottom:7px}
 .dp-col-text{font-size:.8rem;color:var(--dim);line-height:1.6}
+.dp-tts-btn{width:100%;margin-top:6px;padding:11px 14px;border:none;border-radius:var(--rs);background:var(--nav);color:var(--nav-t);font-weight:700;font-size:.85rem;cursor:pointer;transition:opacity .15s}
+.dp-tts-btn:hover{opacity:.88}
+.dp-tts-btn:disabled{opacity:.55;cursor:default}
 
 /* BACKDROP */
 .backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:250}
@@ -528,6 +531,7 @@ html{font-size:var(--base-fs)}
       <div class="dp-section-title">🇨🇴 En Colombia</div>
       <p class="dp-col-text" id="dp-col"></p>
     </div>
+    <button class="dp-tts-btn" id="dp-tts-btn" onclick="speakCurrentElement()">🔊 Escuchar información</button>
   </div>
 </div>
 
@@ -808,6 +812,7 @@ function showEl(z){
 function closePanel(){
   document.getElementById('detail-panel').classList.remove('open');
   document.getElementById('backdrop').classList.remove('open');
+  if (window.speechSynthesis) speechSynthesis.cancel();
 }
 
 buildMain();
@@ -836,17 +841,31 @@ function closeTablaIntro() {
   speechSynthesis.cancel();
 }
 
-// Voice narration on element click — patch showEl to add voice
+// Voice narration on element click — patch showEl to prepare the voice text
+// SIN reproducirlo automáticamente. El estudiante decide si quiere oírlo con
+// el botón "🔊 Escuchar información" del panel de detalle (antes se
+// reproducía solo al abrir cada elemento, sin poder desactivarlo).
+let _pendingSpeakText = null;
 const _origShowEl = showEl;
 showEl = function(z) {
   _origShowEl(z);
+  speechSynthesis.cancel();
   const el = ELEMENTS[z];
   const oxText = el.ox.length ? 'sus estados de oxidación son ' + el.ox.join(', ') + '.' : '';
   const enText = el.en != null ? 'Electronegatividad de Pauling: ' + el.en.toFixed(2) + '.' : '';
-  speak(`${el.name}. Símbolo: ${el.sym}. Número atómico: ${z}. Masa atómica: ${el.mass} u. ` +
+  _pendingSpeakText = `${el.name}. Símbolo: ${el.sym}. Número atómico: ${z}. Masa atómica: ${el.mass} u. ` +
     `${classOf(el.type)}. Período ${el.period}, grupo ${el.group}. ` +
-    oxText + ' ' + enText);
+    oxText + ' ' + enText;
+  const btn = document.getElementById('dp-tts-btn');
+  if (btn) { btn.disabled = false; btn.textContent = '🔊 Escuchar información'; }
 };
+
+function speakCurrentElement() {
+  if (!_pendingSpeakText) return;
+  const btn = document.getElementById('dp-tts-btn');
+  speak(_pendingSpeakText, () => { if (btn) btn.textContent = '🔊 Escuchar información'; });
+  if (btn) btn.textContent = '🔊 Reproduciendo…';
+}
 
 // Show intro for first-time visitors
 if (!localStorage.getItem('ionom_tabla_visited')) {
