@@ -1497,7 +1497,7 @@ function timeOut(){
   document.querySelectorAll('.mc-opt,.drag-chip,.drag-slot').forEach(el=>{el.disabled=true;el.style.pointerEvents='none';});
   const inp=document.getElementById('q-input');if(inp){inp.disabled=true;}
   const oxa=document.querySelectorAll('.oxa-inp');oxa.forEach(i=>i.disabled=true);
-  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
   if(q.isElement) showElFeedback('err','⏱ Tiempo agotado.',q);
   else showFeedback('err','⏱ Tiempo agotado. La respuesta era:',q);
   scheduleNext(3500);
@@ -1598,7 +1598,7 @@ function startGame(group){
     const qtype=specialType[group];
     // Use buildQuestionQueue for anti-consecutive bag-refill (same as nomenclature groups)
     ST.questions=buildQuestionQueue(pool,20).map(q=>({...q,qtype}));
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;_nuevaSesionCodigo();
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1615,7 +1615,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeReactChain());
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;_nuevaSesionCodigo();
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
@@ -1633,7 +1633,7 @@ function startGame(group){
     }
     while(qs.length<20) qs.push(makeElementQuestion(EL_TYPES[Math.floor(Math.random()*EL_TYPES.length)]));
     ST.questions=qs;
-    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;_sessionSent=false;_nuevaSesionCodigo();
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');
     loadQuestion();
@@ -1657,7 +1657,7 @@ function startGame(group){
     replaceAt.forEach((i,j)=>{if(chainQs[j])questions[i]=chainQs[j];});
   }
   ST.questions=questions;
-  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;
+  ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];_sessionSent=false;_nuevaSesionCodigo();
   sendProgress('inicio'); _startProgressTracking();
   showScreen('s-game');
   loadQuestion();
@@ -1768,7 +1768,7 @@ function checkMC(el){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(isCorrect(b.textContent,q,'any'))b.classList.add('correct');});
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err','✗ Incorrecto.',q);
     scheduleNext(3000);
   }
@@ -1880,7 +1880,7 @@ function checkElMC(el){
       el.classList.add('wrong');
       document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('correct');});
       if(ST.attempts>=3){
-        if(!ST.errors.find(e=>e.formula===q.formula&&e.group==='elemento')) ST.errors.push({group:'elemento',formula:q.formula,name:(q.trad&&q.trad[0])||''});
+        if(!ST.errors.find(e=>e.formula===q.formula&&e.group==='elemento')) ST.errors.push({group:'elemento',formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
         showElFeedback('err','✗ La respuesta correcta era: '+correct,q);
         scheduleNext(3000);
       } else {
@@ -2008,7 +2008,7 @@ function submitWrite(){
   } else {
     document.getElementById('q-input').disabled=true;
     document.getElementById('btn-hint-el').style.display='none';
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
     scheduleNext(3500);
   }
@@ -2049,7 +2049,7 @@ function checkOx(el,chosen,correct){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>{if(b.textContent.includes('('+correct+')'))b.classList.add('correct');});
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ El estado de oxidación correcto es ${correct} (+${ROMAN[correct]}).`,q);
     scheduleNext(3000);
   }
@@ -2151,7 +2151,7 @@ function checkOxAssign(){
     showFeedback('ok',`✓ ¡Correcto! Suma = ${sum}. +${pts} punto${pts!==1?'s':''}`,q);
     scheduleNext(1800);
   } else if(ST.attempts>=3){
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     data.forEach(({state},i)=>{
       const inp=document.getElementById('oxa-inp-'+i);
       if(inp){inp.value=(state>0?'+':'')+state;inp.disabled=true;inp.classList.remove('err');inp.classList.add('ok');}
@@ -2243,7 +2243,7 @@ function checkDrag(){
     if(ST.attempts>=3){
       ds.locked=true;
       document.querySelectorAll('.drag-chip').forEach(b=>b.style.pointerEvents='none');
-      if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+      if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
       showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
       scheduleNext(3500);
     } else {
@@ -2619,7 +2619,7 @@ function checkBalance(el,chosen,correct){
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>{if(btn.textContent.startsWith(correct+' '))btn.classList.add('correct');});
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ La respuesta es ${correct}. Regla: ${b?b.eo:''} ÷ ${b?Math.abs(b.anCharge):''} = ${correct} iones.`,q);
     scheduleNext(3000);
   }
@@ -2657,7 +2657,7 @@ function checkInvert(el,chosen,correct){
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
     document.getElementById('q-formula').textContent=q.formula;
-    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ La fórmula correcta es ${q.formula}.`,q);
     scheduleNext(3000);
   }
@@ -2864,8 +2864,32 @@ function generateStudyFeedback(){
 
 let _sessionSent = false;
 
+// Código único por partida (regla de "upsert por sesión" del backend): el
+// mismo código viaja en todos los eventos de una misma partida (por ahora
+// solo se envía uno, en 'fin' o 'abandono', pero en producción ya se vieron
+// casos reales donde 'fin' y 'abandono' se dispararon casi al mismo tiempo
+// para la MISMA partida — ese código es lo que le permite al backend
+// reconocerlos como una sola sesión en vez de duplicarla).
+let _sesionCodigo = '';
+function _nuevaSesionCodigo(){
+  _sesionCodigo = 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
 function _tsColombia(){
   return new Date().toLocaleString('sv-SE',{timeZone:'America/Bogota'}).replace(' ','T');
+}
+
+// Agrupa los ~19 subtipos internos de pregunta (mc, drag, write-any,
+// ox-state, el-sym2name, balance-eq, mol-calc...) en las 4 categorías amplias
+// que pide el registro del docente (MC/Drag/ID/Write) — el docente compara
+// desempeño por esas 4, no por la mecánica interna exacta de cada tipo.
+function _qtypeBucket(qtype){
+  if (qtype === 'drag') return 'drag';
+  if (qtype === 'write-any' || qtype === 'write-stock' || qtype === 'write-sist') return 'write';
+  if (qtype === 'mc' || qtype === 'classify-rx' || (qtype && qtype.indexOf('el-') === 0)) return 'mc';
+  // ox-state, ox-assign, invert, balance, react-chain, balance-eq, mol-calc:
+  // tareas de identificar/asignar/calcular un valor, no de elegir ni arrastrar.
+  return 'id';
 }
 
 function _buildPayload(razon, extra){
@@ -2881,20 +2905,54 @@ function _buildPayload(razon, extra){
               : (respondidas > 0 ? Math.round(puntaje / (total * 2) * 100) : 0);
   const nota = extra.calificacion !== undefined ? extra.calificacion
                : Math.round(pct / 100 * 5 * 10) / 10;
+  const tema = GROUP_LABELS[ST.group] || ST.group;
+
+  // errores_por_tema y moleculas_falladas salen directo de ST.errors (ya se
+  // acumula en cada pregunta fallada, sin necesidad de un contador aparte).
+  // aciertos_por_tema solo se puede atribuir con certeza cuando la sesión
+  // fue de UN solo grupo funcional — en modo "Todos los grupos" (ST.group
+  // === 'all') no hay forma de saber a qué tema pertenece cada acierto sin
+  // instrumentar cada pregunta individualmente, así que se deja vacío en
+  // vez de inventar un reparto que sería incorrecto.
+  const erroresPorTema = {};
+  const bucketCounts = { mc: 0, drag: 0, id: 0, write: 0 };
+  (ST.errors || []).forEach(function (e) {
+    const t = GROUP_LABELS[e.group] || e.group || tema;
+    erroresPorTema[t] = (erroresPorTema[t] || 0) + 1;
+    bucketCounts[_qtypeBucket(e.qtype)]++;
+  });
+  const aciertosPorTema = {};
+  if (ST.group !== 'all') aciertosPorTema[tema] = correctas;
+  const moleculasFalladas = (ST.errors || []).map(function (e) { return e.formula; }).filter(Boolean);
+
   return {
+    sesion:          _sesionCodigo,
     codigo:          STUDENT_CODE,
     nombre:          STUDENT_NAME,
     curso:           STUDENT_COURSE,
-    grupo:           GROUP_LABELS[ST.group] || ST.group,
+    grupo:           tema,
     correctas,
     intentos:        ST.totalAttempts || 0,
     respondidas,
     total_preguntas: total,
     puntaje,
     porcentaje:      pct,
+    pct,
     calificacion:    nota,
     nivel:           extra.nivel || '—',
+    errores_mc:      bucketCounts.mc,
+    errores_drag:    bucketCounts.drag,
+    errores_id:      bucketCounts.id,
+    errores_write:   bucketCounts.write,
+    // El juego no tiene cronómetro por pregunta (es práctica sin límite de
+    // tiempo), así que no hay forma real de detectar "tiempo agotado" — se
+    // manda siempre 0 en vez de inventar un dato que no existe.
+    tiempo_agotado:  0,
+    errores_por_tema:  erroresPorTema,
+    aciertos_por_tema: aciertosPorTema,
+    moleculas_falladas: moleculasFalladas,
     razon,
+    trigger:         razon,
     timestamp:       _tsColombia()
   };
 }
@@ -3112,7 +3170,7 @@ function checkClassifyRx(btn, chosen, correct){
       if(b.textContent.startsWith(TIPO_RX_LABELS[correct].substring(0,8))) b.classList.add('correct');
     });
     scoreErr();
-    if(!ST.errors.find(e=>e.formula===qcr.formula)) ST.errors.push({group:qcr.group||'reaccion',formula:qcr.formula||qcr.ecuacion||'?',name:(qcr.trad&&qcr.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===qcr.formula)) ST.errors.push({group:qcr.group||'reaccion',formula:qcr.formula||qcr.ecuacion||'?',name:(qcr.trad&&qcr.trad[0])||'',qtype:ST.qtype});
   }
   showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], qcr);
   scheduleNext(0);
@@ -3160,7 +3218,7 @@ function showBalanceAnswer(){
   const q = ST.questions[ST.idx];
   document.getElementById('balance-fb').innerHTML = '<span style="color:var(--err);font-weight:700">Respuesta: ['+((q.coeficientes||[]).join(', '))+']</span>';
   scoreErr();
-  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group||'balanceo',formula:q.formula||q.ecuacion||'?',name:(q.trad&&q.trad[0])||''});
+  if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group||'balanceo',formula:q.formula||q.ecuacion||'?',name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
   showFeedback('err','Coeficientes correctos: ['+((q.coeficientes||[]).join(', '))+']', q);
   scheduleNext(0);
 }
@@ -3228,7 +3286,7 @@ function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
   else {
     btn.classList.add('wrong');
     const q2 = ST.questions[ST.idx];
-    if(!ST.errors.find(e=>e.formula===q2.formula)) ST.errors.push({group:q2.group,formula:q2.formula,name:(q2.trad&&q2.trad[0])||''});
+    if(!ST.errors.find(e=>e.formula===q2.formula)) ST.errors.push({group:q2.group,formula:q2.formula,name:(q2.trad&&q2.trad[0])||'',qtype:ST.qtype});
   }
   ST.totalAttempts++; updateStats();
   showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — la respuesta es '+correct, q);

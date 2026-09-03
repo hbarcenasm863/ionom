@@ -5,28 +5,34 @@
  * Misma arquitectura y mismas reglas de negocio que Chromanom Analytics
  * (nomenclatura orgánica), adaptado a los temas y al periodo de IonNom.
  *
- * FORMATO DEL PAYLOAD que el frontend debe enviar por POST (JSON):
+ * FORMATO DEL PAYLOAD que envía juego.html por POST (JSON) — ver _buildPayload
+ * en juego.html para la implementación real:
  * {
- *   sesion:          'abc123',          // código único de la sesión de juego,
- *                                        // el MISMO en todos los eventos de esa partida
- *   trigger:         'inicio'|'fin_partida'|'cierre'|'manual',
+ *   sesion:          'S1a2b3c4',         // código único por partida, el MISMO
+ *                                        // en todos los eventos de esa sesión
+ *   trigger:         'fin'|'abandono',   // (alias: 'razon', por compatibilidad)
  *   nombre:          'Juan Pérez',
  *   curso:           '10-1',
- *   nivel:           'Óxidos básicos',  // tema/nivel jugado en este evento
+ *   grupo:           'Óxidos y Anhídridos', // TEMA jugado — esto es lo que llena
+ *                                        // la columna "Nivel" de Registro (ver
+ *                                        // TEMAS_PRINCIPALES para la lista completa)
+ *   nivel:           'Experto',          // rango de desempeño de la sesión — NO es
+ *                                        // el tema; se ignora para la columna "Nivel"
  *   correctas:       15,
- *   total:           20,
- *   errores_mc:      2,                 // errores por tipo de pregunta
- *   errores_drag:    1,
- *   errores_id:      0,
- *   errores_write:   2,
- *   tiempo_agotado:  1,                 // veces que se acabó el tiempo sin responder
- *   errores_tema:    {'Óxidos básicos': 2, 'Sales binarias': 1},
- *   aciertos_tema:   {'Óxidos básicos': 8, 'Sales binarias': 5},
- *   fallados:        ['Fe2O3', 'NaCl']  // fórmulas/compuestos fallados en el evento
+ *   total:           20,   (alias: total_preguntas)
+ *   pct / porcentaje: 75,               // informativos — el % real se recalcula
+ *                                        // siempre desde correctas/total
+ *   errores_mc, errores_drag, errores_id, errores_write: number, // por tipo de pregunta
+ *   tiempo_agotado:  0,                 // el juego no tiene cronómetro; siempre 0
+ *   errores_por_tema:  {'Óxidos y Anhídridos': 2, 'Sales binarias': 1},
+ *   aciertos_por_tema: {'Óxidos y Anhídridos': 8}, // solo se llena si la sesión
+ *                                        // fue de un único grupo (no en modo
+ *                                        // "Todos los grupos")
+ *   moleculas_falladas: ['Fe2O3', 'NaCl'] // fórmulas falladas en la sesión
  * }
  * Se aceptan alias en camelCase para los campos nuevos (erroresMc, tiempoAgotado,
- * etc.) y 'razon' como alias de 'trigger' por compatibilidad con versiones previas
- * del frontend. Los campos no reconocidos simplemente se ignoran.
+ * etc.) y nombres previos (errores_tema/aciertos_tema, fallados) por compatibilidad
+ * con versiones previas del payload. Los campos no reconocidos se ignoran.
  */
 
 // ── Configuración general ───────────────────────────────────────────────────
@@ -50,21 +56,29 @@ const FECHA_INICIO_PERIODO = '2026-08-31'; // yyyy-MM-dd
 const FECHA_FIN_PERIODO    = '2026-10-30'; // yyyy-MM-dd
 const SESIONES_ESPERADAS   = 22;           // ≈ 2 veces por semana durante el periodo
 
-// Temas principales de nomenclatura inorgánica del juego. Se usan como columnas
-// fijas de "% acierto por tema" en Estadísticas y como filas base de "Eficacia
-// por tema" (cualquier tema adicional que llegue en los datos igual se agrega
-// dinámicamente, para no perder información por un nombre de tema no previsto
-// aquí — ver calcularEficaciaPorTema).
+// Grupos funcionales/temas del juego — deben coincidir EXACTAMENTE con los
+// valores de GROUP_LABELS en juego.html (es lo que el frontend manda como
+// "grupo"/tema de cada sesión). Se usan como columnas fijas de "% acierto por
+// tema" en Estadísticas y como filas base de "Eficacia por tema" (cualquier
+// tema adicional que llegue en los datos igual se agrega dinámicamente, para
+// no perder información por un nombre de tema no previsto aquí — ver
+// calcularEficaciaPorTema). El juego cubre más que solo nomenclatura
+// inorgánica (también balanceo, estequiometría, tabla periódica, tipos de
+// reacción), así que la lista refleja eso.
 const TEMAS_PRINCIPALES = [
-  'Óxidos básicos',
-  'Óxidos ácidos (anhídridos)',
+  'Óxidos y Anhídridos',
   'Hidruros',
-  'Ácidos hidrácidos',
-  'Hidróxidos (bases)',
+  'Ácidos hídricos',
+  'Bases',
   'Ácidos oxácidos',
   'Sales binarias',
   'Sales oxigenadas',
-  'Sales ácidas'
+  'Sales ácidas',
+  'Tabla periódica y configuración electrónica',
+  'Tipos de reacción',
+  'Balanceo de ecuaciones',
+  'Mol y masa molar',
+  'Todos los grupos'
 ];
 
 // ── Columnas de "Registro" (1-based) ────────────────────────────────────────
@@ -160,11 +174,16 @@ function upsertRegistro(ss, d) {
   const correctas = total > 0 ? Math.min(correctasCrudas, total) : correctasCrudas;
   const pct = total > 0 ? Math.round((correctas / total) * 100) : Math.round(Number(d.porcentaje || 0) || 0);
 
-  const erroresTema = (d.errores_tema || d.erroresTema || {});
-  const aciertosTema = (d.aciertos_tema || d.aciertosTema || {});
-  const fallados = d.fallados || d.compuestos_fallados || d.moleculas_falladas || [];
+  const erroresTema = (d.errores_por_tema || d.errores_tema || d.erroresTema || {});
+  const aciertosTema = (d.aciertos_por_tema || d.aciertos_tema || d.aciertosTema || {});
+  const fallados = d.moleculas_falladas || d.fallados || d.compuestos_fallados || [];
   const falladosTxt = Array.isArray(fallados) ? fallados.join(', ') : String(fallados || '');
   const trigger = String(d.trigger || d.razon || d.evento || '').trim();
+  // El "Nivel" de esta hoja es el TEMA/grupo funcional jugado, que el frontend
+  // manda en "grupo" (p. ej. "Óxidos y Anhídridos"). El campo "nivel" que
+  // manda juego.html es en realidad el rango de desempeño (Experto/Avanzado/
+  // Principiante...), no un tema — por eso "grupo" tiene prioridad aquí.
+  const tema = String(d.grupo || d.nivel || '').trim();
 
   // Buscar la fila de esta sesión, si ya existe.
   let filaExistente = -1;
@@ -191,7 +210,7 @@ function upsertRegistro(ss, d) {
 
   const fila = [
     timestamp, fecha, hora,
-    String(d.nombre || ''), String(d.curso || ''), String(d.nivel || ''),
+    String(d.nombre || ''), String(d.curso || ''), tema,
     sesionCod, correctas, total, pct,
     Number(d.errores_mc || d.erroresMc || 0) || 0,
     Number(d.errores_drag || d.erroresDrag || 0) || 0,
@@ -220,11 +239,17 @@ function obtenerHojaRegistro(ss) {
   if (!sh) {
     sh = ss.insertSheet('Registro');
     escribirEncabezadosRegistro(sh);
-    return sh;
+  } else {
+    // La hoja ya existía (posiblemente con datos del esquema anterior de
+    // IonNom Analytics v1) — migrarla si hace falta antes de usarla.
+    migrarRegistroSiEsNecesario(sh);
   }
-  // La hoja ya existía (posiblemente con datos del esquema anterior de
-  // IonNom Analytics v1) — migrarla si hace falta antes de usarla.
-  migrarRegistroSiEsNecesario(sh);
+  // Con cada versión anterior del script, los datos reales quedaron
+  // repartidos en OTRAS pestañas del mismo spreadsheet (ver
+  // migrarDatosHistoricosSiEsNecesario_) — se incorporan aquí también, una
+  // sola vez, para que esas sesiones jugadas antes de este despliegue sigan
+  // contando.
+  migrarDatosHistoricosSiEsNecesario_(ss, sh);
   return sh;
 }
 
@@ -320,6 +345,191 @@ function migrarRegistroSiEsNecesario(sh) {
     sh.getRange(2, 1, filasNuevas.length, REG_HEADERS.length).setBackgrounds(colores);
   }
   Logger.log('Migración de "Registro" completada: ' + filasNuevas.length + ' fila(s) antiguas convertidas al nuevo esquema.');
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// MIGRACIÓN DE OTRAS PESTAÑAS HISTÓRICAS ("Hoja 1"/"Resultados"/"Sesiones")
+// ══════════════════════════════════════════════════════════════════════════
+// Con cada versión anterior de este script, los datos reales terminaron
+// repartidos en pestañas con nombres y esquemas distintos dentro del MISMO
+// spreadsheet (no solo el esquema viejo de "Registro" ya cubierto arriba).
+// Se ejecuta una sola vez (marcador en PropertiesService) para no reprocesar
+// estas pestañas — que NO cambian solas— en cada petición.
+function migrarDatosHistoricosSiEsNecesario_(ss, shRegistro) {
+  const props = PropertiesService.getScriptProperties();
+  if (props.getProperty('MIGRACION_HISTORICA_V2') === 'hecha') return;
+
+  const filasNuevas = [];
+  Array.prototype.push.apply(filasNuevas, migrarHojasResultadosV0_(ss));
+  Array.prototype.push.apply(filasNuevas, migrarHojaSesiones_(ss));
+
+  if (filasNuevas.length) {
+    const inicio = shRegistro.getLastRow() + 1;
+    shRegistro.getRange(inicio, 1, filasNuevas.length, REG_HEADERS.length).setValues(filasNuevas);
+    const colores = filasNuevas.map(function (f) {
+      return new Array(REG_HEADERS.length).fill(colorPorPorcentaje(f[9]));
+    });
+    shRegistro.getRange(inicio, 1, filasNuevas.length, REG_HEADERS.length).setBackgrounds(colores);
+  }
+
+  props.setProperty('MIGRACION_HISTORICA_V2', 'hecha');
+  Logger.log('Migración histórica completa: ' + filasNuevas.length + ' sesión(es) antigua(s) incorporada(s) a "Registro" desde otras pestañas.');
+}
+
+// "Hoja 1" (nombre por defecto que Sheets le da a la primera pestaña) y
+// "Resultados" fueron, en distintos momentos, el destino del esquema MÁS
+// viejo del proyecto: una fila = una sesión ya terminada, sin código de
+// sesión ni columna de Trigger. Si ambas pestañas existen y coinciden en
+// contenido (se vio en producción que son una copia exacta la una de la
+// otra), un mismo "fingerprint" por fila evita migrar la misma sesión dos
+// veces así aparezca en las dos pestañas.
+function migrarHojasResultadosV0_(ss) {
+  const HEADERS_V0 = ['Fecha/Hora', 'Código', 'Nombre', 'Curso', 'Grupo funcional',
+    'Correctas', 'Puntaje', 'Total', 'Intentos', 'Porcentaje', 'Calificación /5', 'Nivel'];
+  const NOMBRES_POSIBLES = ['Resultados', 'Hoja 1', 'Hoja1'];
+  const vistos = {};
+  const filasNuevas = [];
+
+  NOMBRES_POSIBLES.forEach(function (nombreHoja) {
+    const sh = ss.getSheetByName(nombreHoja);
+    if (!sh || sh.getLastRow() < 2) return;
+    const encabezado = sh.getRange(1, 1, 1, HEADERS_V0.length).getValues()[0].map(String);
+    const esV0 = HEADERS_V0.every(function (h, i) { return encabezado[i] === h; });
+    if (!esV0) return;
+
+    const filas = sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS_V0.length).getValues();
+    filas.forEach(function (r, i) {
+      const tsCruda = r[0] instanceof Date ? r[0] : new Date(r[0]);
+      const timestamp = (tsCruda instanceof Date && !isNaN(tsCruda)) ? tsCruda : new Date();
+      const codigoEstudiante = String(r[1] || '');
+      const nombre = String(r[2] || '');
+      const curso = String(r[3] || '');
+      const tema = String(r[4] || '');
+      const correctas = Number(r[5]) || 0;
+      const total = Number(r[7]) || 0;
+      // "Porcentaje" en v0 se guarda como fracción (0.93), no como 0-100 —
+      // se recalcula desde Correctas/Total para no depender de ese formato.
+      const pct = total > 0 ? Math.round((correctas / total) * 100) : Math.round((Number(r[9]) || 0) * 100);
+
+      const huella = codigoEstudiante + '|' + Utilities.formatDate(timestamp, TZ, "yyyyMMdd'T'HHmmss") + '|' + correctas + '|' + total;
+      if (vistos[huella]) return; // ya migrada desde otra pestaña con el mismo contenido
+      vistos[huella] = true;
+
+      const fecha = Utilities.formatDate(timestamp, TZ, 'yyyy-MM-dd');
+      const hora = Utilities.formatDate(timestamp, TZ, 'HH:mm:ss');
+      const sesionSintetica = 'MIGV0_' + codigoEstudiante + '_' +
+        Utilities.formatDate(timestamp, TZ, "yyyyMMdd'T'HHmmss") + '_' + i;
+
+      const aciertosTema = {}, erroresTema = {};
+      if (tema) { aciertosTema[tema] = correctas; erroresTema[tema] = Math.max(total - correctas, 0); }
+
+      filasNuevas.push([
+        timestamp, fecha, hora, nombre, curso, tema, sesionSintetica,
+        correctas, total, pct,
+        0, 0, 0, 0, 0,
+        JSON.stringify(erroresTema), JSON.stringify(aciertosTema),
+        '', 'fin' // v0 solo guardaba sesiones ya completadas
+      ]);
+    });
+  });
+  return filasNuevas;
+}
+
+// "Sesiones" fue un experimento breve (un solo día, 28/ago/2026) de registrar
+// el progreso de la partida cada ~60s (Razón='progreso'), además de 'inicio'/
+// 'fin'/'abandono' — se abandonó ese mismo día (ver _startProgressTracking
+// desactivado en juego.html) a favor de mandar solo un evento final. Contar
+// cada tick de 'progreso' como una sesión distinta multiplicaría por ~10 el
+// número real de partidas jugadas ese día, así que:
+//  1) se ignoran 'inicio' y 'progreso' — no son el final de una sesión;
+//  2) las filas 'fin'/'abandono' del MISMO Código+Grupo funcional que caen
+//     dentro de una ventana corta (≤3 min) se tratan como el mismo cierre de
+//     sesión (se vio en los datos reales: un 'fin' seguido de un 'abandono'
+//     segundos después por el evento beforeunload/visibilitychange del
+//     navegador — el mismo bug de fondo que la Regla 1 de este script existe
+//     para evitar) y se conserva solo la fila más completa de ese grupo
+//     (con 'fin' explícito si lo hay, si no la de mayor Correctas/Respondidas).
+function migrarHojaSesiones_(ss) {
+  const sh = ss.getSheetByName('Sesiones');
+  if (!sh || sh.getLastRow() < 2) return [];
+
+  const HEADERS_SES = ['Fecha/Hora (Bogotá)', 'Fecha', 'Hora', 'Código', 'Nombre', 'Curso',
+    'Grupo funcional', 'Razón', 'Respondidas', 'Total preguntas', 'Correctas', 'Intentos',
+    'Puntaje', 'Porcentaje', 'Calificación /5', 'Nivel'];
+  const encabezado = sh.getRange(1, 1, 1, HEADERS_SES.length).getValues()[0].map(String);
+  const esSesiones = HEADERS_SES.every(function (h, i) { return encabezado[i] === h; });
+  if (!esSesiones) return [];
+
+  const VENTANA_MS = 3 * 60 * 1000; // 3 minutos
+  const filas = sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS_SES.length).getValues()
+    .map(function (r) {
+      const ts = r[0] instanceof Date ? r[0] : new Date(r[0]);
+      return {
+        ts: (ts instanceof Date && !isNaN(ts)) ? ts : null,
+        codigo: String(r[3] || ''),
+        nombre: String(r[4] || ''),
+        curso: String(r[5] || ''),
+        tema: String(r[6] || ''),
+        razon: String(r[7] || ''),
+        respondidas: Number(r[8]) || 0,
+        total: Number(r[9]) || 0,
+        correctas: Number(r[10]) || 0
+      };
+    })
+    .filter(function (f) { return f.ts && (f.razon === 'fin' || f.razon === 'abandono'); })
+    .sort(function (a, b) {
+      if (a.codigo !== b.codigo) return a.codigo < b.codigo ? -1 : 1;
+      if (a.tema !== b.tema) return a.tema < b.tema ? -1 : 1;
+      return a.ts - b.ts;
+    });
+
+  const filasNuevas = [];
+  let cluster = [];
+
+  function cerrarCluster(idx) {
+    if (!cluster.length) return;
+    // Se prefiere una fila con Razón='fin' (cierre real); si no hay, la de
+    // mayor Respondidas/Correctas (la más completa de ese grupo de eventos).
+    let mejor = cluster[0];
+    cluster.forEach(function (f) {
+      const mejorEsFin = mejor.razon === 'fin';
+      const actualEsFin = f.razon === 'fin';
+      if (actualEsFin && !mejorEsFin) { mejor = f; return; }
+      if (actualEsFin === mejorEsFin && (f.respondidas > mejor.respondidas ||
+        (f.respondidas === mejor.respondidas && f.correctas > mejor.correctas))) { mejor = f; }
+    });
+
+    const timestamp = mejor.ts;
+    const fecha = Utilities.formatDate(timestamp, TZ, 'yyyy-MM-dd');
+    const hora = Utilities.formatDate(timestamp, TZ, 'HH:mm:ss');
+    const total = mejor.total;
+    const correctas = Math.min(mejor.correctas, total || mejor.correctas);
+    const pct = total > 0 ? Math.round((correctas / total) * 100) : 0;
+    const sesionSintetica = 'MIGSES_' + mejor.codigo + '_' +
+      Utilities.formatDate(timestamp, TZ, "yyyyMMdd'T'HHmmss") + '_' + idx;
+
+    const aciertosTema = {}, erroresTema = {};
+    if (mejor.tema) { aciertosTema[mejor.tema] = correctas; erroresTema[mejor.tema] = Math.max(total - correctas, 0); }
+
+    filasNuevas.push([
+      timestamp, fecha, hora, mejor.nombre, mejor.curso, mejor.tema, sesionSintetica,
+      correctas, total, pct,
+      0, 0, 0, 0, 0,
+      JSON.stringify(erroresTema), JSON.stringify(aciertosTema),
+      '', mejor.razon
+    ]);
+  }
+
+  filas.forEach(function (f, idx) {
+    const anterior = cluster.length ? cluster[cluster.length - 1] : null;
+    const mismoGrupo = anterior && anterior.codigo === f.codigo && anterior.tema === f.tema &&
+      (f.ts - anterior.ts) <= VENTANA_MS;
+    if (anterior && !mismoGrupo) { cerrarCluster(idx); cluster = []; }
+    cluster.push(f);
+  });
+  cerrarCluster(filas.length);
+
+  return filasNuevas;
 }
 
 // ══════════════════════════════════════════════════════════════════════════
