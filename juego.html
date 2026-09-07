@@ -292,7 +292,17 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 }
 .wi-name{font-size:1rem;font-weight:800;color:#4ade80;line-height:1.2}
 .wi-course{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:2px}
-.wi-prompt{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
+.wi-stats{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:4px}
+.wi-stat-row{display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.8)}
+.wi-stat-ico{font-size:.9rem;flex-shrink:0}
+.wi-stat-loading{font-size:.76rem;color:rgba(255,255,255,.4);font-style:italic}
+.wi-prompt{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:10px}
+.wi-change-link{
+  display:inline-block;margin-top:10px;background:none;border:none;padding:0;
+  color:rgba(255,255,255,.5);font-family:var(--sans);font-size:.72rem;
+  text-decoration:underline;cursor:pointer;
+}
+.wi-change-link:hover{color:#fff}
 
 /* ── DIFICULTAD (pills) ── */
 .diff-pills{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
@@ -688,7 +698,9 @@ html{font-size:var(--base-fs)}
           <div class="wi-course" id="wi-course"></div>
         </div>
       </div>
+      <div class="wi-stats" id="wi-stats"></div>
       <div class="wi-prompt">¡Listo! Elige un tema para comenzar tu sesión de práctica.</div>
+      <button type="button" class="wi-change-link" onclick="cambiarEstudiante()">Cambiar de estudiante</button>
     </div>
 
     <!-- Dificultad pills -->
@@ -1187,7 +1199,42 @@ function validateCode(){
   document.getElementById('wi-name').textContent = STUDENT_NAME;
   document.getElementById('wi-course').textContent = 'Curso ' + STUDENT_COURSE + ' · Código ' + STUDENT_CODE;
   wi.style.display = 'block';
+  loadStudentStats();
   setTimeout(openPrizeModal, 400);
+}
+
+// Estadísticas del estudiante (sesiones jugadas, preguntas respondidas,
+// % de acierto, nota de juego) traídas del mismo backend (Apps Script) al
+// que se envían los resultados — Regla 5 de ionom-analytics.gs calcula la
+// nota; aquí solo se pide y se muestra. Si falla (sin conexión, CORS,
+// backend caído) se oculta la caja en silencio: no debe bloquear el juego.
+function loadStudentStats(){
+  const box = document.getElementById('wi-stats');
+  if(!box) return;
+  box.innerHTML = '<div class="wi-stat-loading">Cargando tus estadísticas…</div>';
+  const url = APPS_SCRIPT_URL + '?accion=stats&nombre=' + encodeURIComponent(STUDENT_NAME) + '&curso=' + encodeURIComponent(STUDENT_COURSE);
+  fetch(url).then(function(r){ return r.json(); }).then(function(d){
+    if(!d || !d.ok){ box.innerHTML=''; return; }
+    const nota = (Math.round((Number(d.notaJuego)||0)*10)/10).toFixed(1);
+    box.innerHTML =
+      '<div class="wi-stat-row"><span class="wi-stat-ico">🎮</span>' + (Number(d.numSesiones)||0) + ' sesiones jugadas</div>' +
+      '<div class="wi-stat-row"><span class="wi-stat-ico">📝</span>' + (Number(d.totalPreguntas)||0) + ' preguntas respondidas</div>' +
+      '<div class="wi-stat-row"><span class="wi-stat-ico">✅</span>' + (Number(d.pctGlobal)||0) + '% de acierto</div>' +
+      '<div class="wi-stat-row"><span class="wi-stat-ico">🏆</span>Nota juego actual: ' + nota + ' / 5.0</div>';
+  }).catch(function(){ box.innerHTML=''; });
+}
+
+// Vuelve a mostrar el login de código, para que otro estudiante use el
+// mismo equipo sin recargar la página.
+function cambiarEstudiante(){
+  CODE_VERIFIED = false; STUDENT_CODE=''; STUDENT_NAME=''; STUDENT_COURSE='';
+  document.getElementById('welcome-inline').style.display = 'none';
+  document.getElementById('wi-stats').innerHTML = '';
+  document.getElementById('login-panel').style.display = 'block';
+  const inp = document.getElementById('code-inp');
+  if(inp){ inp.value=''; inp.focus(); }
+  const errEl = document.getElementById('code-err');
+  if(errEl) errEl.style.display='none';
 }
 
 function openPrizeModal(){

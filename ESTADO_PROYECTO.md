@@ -58,6 +58,7 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
   - *Modo Estudiante*: el alumno ingresa su código de 6 dígitos; el sistema valida contra el listado oficial (~160 estudiantes de 10° y 11°) y muestra nombre y curso.
 - Al terminar, envía automáticamente los resultados a Google Sheets vía **Google Apps Script** (`fetch` con `no-cors`).
 - **Datos enviados**: fecha/hora, código, nombre, curso, grupo funcional, correctas, puntaje, total, intentos, porcentaje, calificación /5, nivel.
+- **Estadísticas al ingresar el código**: justo después de validar el código, `juego.html` consulta `ionom-analytics.gs` (`GET ?accion=stats&nombre=...&curso=...`) y muestra sesiones jugadas, preguntas respondidas, % de acierto y nota de juego actual del estudiante (misma lógica que ChromaNom). Incluye enlace "Cambiar de estudiante" para que otro alumno use el mismo equipo sin recargar.
 
 ### 5. Apps Script (`ionom-analytics.gs`)
 - Script de Google Apps Script listo para desplegar como aplicación web.

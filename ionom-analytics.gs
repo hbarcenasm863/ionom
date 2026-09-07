@@ -33,6 +33,15 @@
  * Se aceptan alias en camelCase para los campos nuevos (erroresMc, tiempoAgotado,
  * etc.) y nombres previos (errores_tema/aciertos_tema, fallados) por compatibilidad
  * con versiones previas del payload. Los campos no reconocidos se ignoran.
+ *
+ * ENDPOINT GET ?accion=stats&nombre=...&curso=... — usado por juego.html
+ * (loadStudentStats) justo después de validar el código del alumno, para
+ * mostrarle sus métricas acumuladas (sesiones jugadas, preguntas respondidas,
+ * % de acierto, nota de juego). Responde JSON:
+ * { ok:true, existe:true|false, numSesiones, totalPreguntas, pctGlobal, notaJuego }
+ * "nombre" y "curso" son los mismos STUDENT_NAME/STUDENT_COURSE que el
+ * frontend ya resolvió desde su listado de códigos — el backend no conoce el
+ * código del alumno, solo Nombre/Curso (lo que upsertRegistro guarda).
  */
 
 // ── Configuración general ───────────────────────────────────────────────────
@@ -48,7 +57,7 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v2.0 — 2026-09-03';
+const BUILD_TAG = 'IonNom Analytics v2.1 — 2026-09-07';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
@@ -114,12 +123,53 @@ const CURSO_HEADERS = [
 // ══════════════════════════════════════════════════════════════════════════
 
 function doGet(e) {
+  const accion = String((e && e.parameter && e.parameter.accion) || '').trim();
+  if (accion === 'stats') return responderEstadisticasEstudiante(e);
+
   // Texto plano simple: sirve para confirmar en el navegador, sin ambigüedad,
   // qué implementación (deployment) está realmente activa en producción.
   const texto = 'IonNom Analytics activo.\n' +
     'BUILD_TAG: ' + BUILD_TAG + '\n' +
     'Spreadsheet: ' + obtenerSpreadsheet().getUrl();
   return ContentService.createTextOutput(texto).setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ── Estadísticas de UN estudiante (sesiones, preguntas, % acierto, nota) ────
+// Llamado por juego.html justo después de validar el código de acceso, para
+// mostrarle sus métricas acumuladas (igual que hace Chromanom con las suyas).
+// El backend no conoce el código del alumno (solo Nombre/Curso, que es lo
+// que upsertRegistro guarda) — por eso recibe nombre y curso por query string,
+// los mismos valores (STUDENT_NAME/STUDENT_COURSE) que el frontend ya resolvió
+// desde su propio listado de códigos antes de llamar aquí.
+function responderEstadisticasEstudiante(e) {
+  try {
+    const nombre = String((e && e.parameter && e.parameter.nombre) || '').trim();
+    const curso = String((e && e.parameter && e.parameter.curso) || '').trim();
+    if (!nombre) return salidaJSON({ ok: false, error: 'falta nombre' });
+
+    const ss = obtenerSpreadsheet();
+    const filasDedup = leerRegistroDeduplicado(ss);
+    const grupos = agruparPorEstudiante(filasDedup);
+
+    const normKey = normalizarNombreClave(nombre);
+    const clave = normKey + '|' + (curso || '(Sin curso)');
+    const grupo = grupos[clave];
+    if (!grupo) {
+      return salidaJSON({ ok: true, existe: false, numSesiones: 0, totalPreguntas: 0, pctGlobal: 0, notaJuego: 0 });
+    }
+
+    const st = calcularEstadisticasEstudiante(grupo);
+    return salidaJSON({
+      ok: true, existe: true,
+      numSesiones: st.numSesiones,
+      totalPreguntas: st.totalPreguntas,
+      pctGlobal: st.pctGlobal,
+      notaJuego: st.notaJuego
+    });
+  } catch (err) {
+    registrarError('responderEstadisticasEstudiante', err);
+    return salidaJSON({ ok: false, error: String((err && err.message) || err) });
+  }
 }
 
 function doPost(e) {
