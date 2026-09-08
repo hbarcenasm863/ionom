@@ -53,6 +53,10 @@
  * "nombre" y "curso" son los mismos STUDENT_NAME/STUDENT_COURSE que el
  * frontend ya resolvió desde su listado de códigos — el backend no conoce el
  * código del alumno, solo Nombre/Curso (lo que upsertRegistro guarda).
+ * Lee de la hoja "Estadísticas" ya calculada (disparador automático cada 30
+ * min, o recalcularAhora()) — NO recalcula nada al vuelo desde "Registro",
+ * misma arquitectura que Chromanom Analytics. El dato puede tener hasta ~30
+ * min de rezago frente a la última partida jugada.
  */
 
 // ── Configuración general ───────────────────────────────────────────────────
@@ -68,7 +72,7 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v2.2 — 2026-09-08';
+const BUILD_TAG = 'IonNom Analytics v3.0 — 2026-09-08';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
@@ -122,6 +126,13 @@ const EST_HEADERS_BASE = [
   '% Acierto global', 'Nota juego (0-5)'
 ];
 
+// Van al FINAL de "Estadísticas" (después de las columnas por tema), igual
+// que "Errores Build"/"Errores Rxnq" al final de Registro en Chromanom: así
+// no corren el índice fijo de columnas 1-6 que ya lee responderEstadisticasEstudiante().
+const EST_HEADERS_PERIODO = [
+  'Sesiones en el periodo', 'Preguntas en el periodo', '% Acierto en el periodo'
+];
+
 const EFI_HEADERS = ['Tema', 'Correctas', 'Errores', 'Total intentos', '% Acierto'];
 
 const CURSO_HEADERS = [
@@ -152,80 +163,142 @@ function doGet(e) {
 // que upsertRegistro guarda) — por eso recibe nombre y curso por query string,
 // los mismos valores (STUDENT_NAME/STUDENT_COURSE) que el frontend ya resolvió
 // desde su propio listado de códigos antes de llamar aquí.
+//
+// Lee de la hoja "Estadísticas" YA CALCULADA por el disparador automático
+// cada 30 min (o por recalcularAhora()) — NO recalcula nada al vuelo desde
+// "Registro". Recalcular en cada consulta competiría por el mismo
+// LockService que usa upsertRegistro() y arriesgaría la misma sobrecarga
+// ("Too many simultaneous invocations: Spreadsheets") que ya afectaba los
+// envíos de resultados con varios estudiantes entrando su código a la vez.
+// El dato puede tener hasta ~30 min de rezago — aceptable para un resumen
+// de "cómo voy", igual que en Chromanom.
 function responderEstadisticasEstudiante(e) {
-  try {
-    const nombre = String((e && e.parameter && e.parameter.nombre) || '').trim();
-    const curso = String((e && e.parameter && e.parameter.curso) || '').trim();
-    if (!nombre) return salidaJSON({ ok: false, error: 'falta nombre' });
-
-    const ss = obtenerSpreadsheet();
-    const filasDedup = leerRegistroDeduplicado(ss);
-    const grupos = agruparPorEstudiante(filasDedup);
-
-    const normKey = normalizarNombreClave(nombre);
-    const clave = normKey + '|' + (curso || '(Sin curso)');
-    const grupo = grupos[clave];
-    const periodo = { inicio: FECHA_INICIO_PERIODO, fin: FECHA_FIN_PERIODO, sesionesEsperadas: SESIONES_ESPERADAS };
-    if (!grupo) {
-      return salidaJSON({
-        ok: true, existe: false,
-        numSesiones: 0, totalPreguntas: 0, pctGlobal: 0, notaJuego: 0,
-        numSesionesPeriodo: 0, totalPreguntasPeriodo: 0, pctGlobalPeriodo: 0,
-        periodo: periodo
-      });
-    }
-
-    const st = calcularEstadisticasEstudiante(grupo);
-    return salidaJSON({
-      ok: true, existe: true,
-      numSesiones: st.numSesiones,
-      totalPreguntas: st.totalPreguntas,
-      pctGlobal: st.pctGlobal,
-      notaJuego: st.notaJuego,
-      numSesionesPeriodo: st.numSesionesPeriodo,
-      totalPreguntasPeriodo: st.totalPreguntasPeriodo,
-      pctGlobalPeriodo: st.pctGlobalPeriodo,
+  const nombre = String((e && e.parameter && e.parameter.nombre) || '').trim();
+  const curso = String((e && e.parameter && e.parameter.curso) || '').trim();
+  const periodo = { inicio: FECHA_INICIO_PERIODO, fin: FECHA_FIN_PERIODO, sesionesEsperadas: SESIONES_ESPERADAS };
+  const vacio = function () {
+    return {
+      ok: true, existe: false,
+      numSesiones: 0, totalPreguntas: 0, pctGlobal: 0, notaJuego: 0,
+      numSesionesPeriodo: 0, totalPreguntasPeriodo: 0, pctGlobalPeriodo: 0,
       periodo: periodo
-    });
-  } catch (err) {
-    registrarError('responderEstadisticasEstudiante', err);
-    return salidaJSON({ ok: false, error: String((err && err.message) || err) });
+    };
+  };
+  if (!nombre) return salidaJSON({ ok: false, error: 'falta nombre' });
+
+  // Reintento corto con jitter (sin lock propio: esta es una lectura, no
+  // compite por el mismo LockService que usan upsertRegistro/recalcularTodasLasEstadisticas)
+  // por si toda una clase consulta su progreso casi al mismo tiempo al
+  // arrancar sesión y la hoja tropieza con el mismo error transitorio de
+  // cuota que puede darse en escrituras concurrentes.
+  const INTENTOS = 3;
+  let ultimoError;
+  for (let intento = 0; intento < INTENTOS; intento++) {
+    try {
+      const ss = obtenerSpreadsheet();
+      const sh = ss.getSheetByName('Estadísticas');
+      if (!sh || sh.getLastRow() < 2) return salidaJSON(vacio());
+
+      // Columnas fijas de "Estadísticas" (ver calcularEstadisticas()): Nombre,
+      // Curso, Sesiones, Preguntas respondidas, % Acierto global, Nota juego,
+      // ...(% por tema, TEMAS_PRINCIPALES.length columnas)..., Sesiones en el
+      // periodo, Preguntas en el periodo, % Acierto en el periodo (últimas 3).
+      const totalCols = EST_HEADERS_BASE.length + TEMAS_PRINCIPALES.length + EST_HEADERS_PERIODO.length;
+      const datos = sh.getRange(2, 1, sh.getLastRow() - 1, totalCols).getValues();
+      const pOffset = EST_HEADERS_BASE.length + TEMAS_PRINCIPALES.length; // índice 0-based de la 1ª columna de periodo
+      const buscado = normalizarNombreClave(nombre) + '|' + (curso || '(Sin curso)');
+      for (let i = 0; i < datos.length; i++) {
+        const r = datos[i];
+        const claveFila = normalizarNombreClave(r[0]) + '|' + String(r[1] || '(Sin curso)');
+        if (claveFila !== buscado) continue;
+        return salidaJSON({
+          ok: true, existe: true,
+          numSesiones: Number(r[2]) || 0,
+          totalPreguntas: Number(r[3]) || 0,
+          pctGlobal: Number(r[4]) || 0,
+          notaJuego: Number(r[5]) || 0,
+          numSesionesPeriodo: Number(r[pOffset]) || 0,
+          totalPreguntasPeriodo: Number(r[pOffset + 1]) || 0,
+          pctGlobalPeriodo: Number(r[pOffset + 2]) || 0,
+          periodo: periodo
+        });
+      }
+      return salidaJSON(vacio());
+    } catch (err) {
+      ultimoError = err;
+      if (intento < INTENTOS - 1) {
+        const base = 400 * Math.pow(1.8, intento);
+        const jitter = Math.random() * 300;
+        Utilities.sleep(Math.min(base + jitter, 1500));
+      }
+    }
   }
+  registrarError('responderEstadisticasEstudiante', ultimoError);
+  return salidaJSON({ ok: false, error: String((ultimoError && ultimoError.message) || ultimoError) });
 }
 
+// OJO: ya NO recalcula Estadísticas/Eficacia por tema/Curso X en cada envío
+// (a diferencia de versiones anteriores de este script). Con una clase
+// completa (~25-30 estudiantes) terminando casi al mismo tiempo, hacerlo
+// aquí saturaba la ejecución y producía el error transitorio de Google
+// "Too many simultaneous invocations: Spreadsheets" — que el frontend
+// mostraba como un genérico "error al enviar", sin relación real con la
+// URL del Apps Script. El recálculo pesado ahora lo hace solo el
+// disparador automático cada 30 min (ver actualizarEstadisticasAutomatico)
+// o recalcularAhora() manualmente — misma arquitectura que Chromanom.
+// appendRow (vía upsertRegistro) es rápido y sigue pasando al instante.
 function doPost(e) {
-  // Con toda una clase (~25-30 estudiantes) terminando casi al mismo tiempo,
-  // varias ejecuciones de doPost pueden solaparse: cada una busca/actualiza
-  // una fila en "Registro" y luego BORRA Y REESCRIBE por completo
-  // Estadísticas/Eficacia por tema/Curso X. Sin un lock, dos ejecuciones
-  // intercaladas pueden pisarse esas hojas entre sí (una termina de escribir
-  // su versión y la otra, que leyó "Registro" un instante antes, la
-  // sobreescribe con datos ya desactualizados). Un lock de script serializa
-  // las ejecuciones de doPost para que esto no pase.
-  const lock = LockService.getScriptLock();
+  // El JSON se parsea UNA sola vez, fuera del bucle de reintentos: un
+  // payload malformado fallaría siempre igual, así que reintentarlo no
+  // ayudaría — solo desperdiciaría los 6 intentos que sí sirven para el
+  // error transitorio de cuota de Spreadsheets.
+  let d;
   try {
-    lock.waitLock(30000);
-  } catch (err) {
-    registrarError('doPost', new Error('No se obtuvo el lock (servidor congestionado): ' + err));
-    return salidaJSON({ ok: false, error: 'servidor ocupado, intenta de nuevo en unos segundos' });
-  }
-
-  // Regla 10: todo el ciclo va en try/catch y siempre responde JSON — un
-  // frontend con mode:'no-cors' no puede leer la respuesta, pero otros
-  // clientes (pruebas, Postman, un futuro panel docente) sí, y el catch
-  // evita que un error deje al estudiante con un POST colgado sin registrar.
-  try {
-    const d = JSON.parse(e.postData.contents);
-    const ss = obtenerSpreadsheet();
-    upsertRegistro(ss, d);
-    recalcularTodasLasEstadisticas();
-    return salidaJSON({ ok: true });
+    d = JSON.parse(e.postData ? e.postData.contents : '{}');
   } catch (err) {
     registrarError('doPost', err);
-    return salidaJSON({ ok: false, error: String((err && err.message) || err) });
-  } finally {
-    lock.releaseLock();
+    return salidaJSON({ ok: false, error: 'JSON inválido: ' + String((err && err.message) || err) });
   }
+
+  const INTENTOS = 6;
+  let ultimoError;
+  for (let intento = 0; intento < INTENTOS; intento++) {
+    // La búsqueda/escritura de la fila en "Registro" va bajo lock (evita que
+    // dos envíos concurrentes calculen la misma fila destino y se pisen),
+    // pero el lock se toma y suelta EN CADA INTENTO, no una sola vez afuera:
+    // así, si updateStats() (disparador de 30 min o recalcularAhora) tiene
+    // el lock ocupado en ese instante, este intento falla rápido y el
+    // siguiente (con jitter) tiene otra oportunidad, en vez de quedarse
+    // esperando cerca del límite de ejecución de Apps Script (6 min).
+    const lock = LockService.getScriptLock();
+    try {
+      lock.waitLock(15000);
+    } catch (err) {
+      ultimoError = new Error('No se obtuvo el lock (servidor congestionado): ' + err);
+      if (intento < INTENTOS - 1) {
+        const base = 1200 * Math.pow(1.7, intento);
+        const jitter = Math.random() * 1000;
+        Utilities.sleep(Math.min(base + jitter, 8000));
+      }
+      continue;
+    }
+    try {
+      const ss = obtenerSpreadsheet();
+      upsertRegistro(ss, d);
+      return salidaJSON({ ok: true });
+    } catch (err) {
+      ultimoError = err;
+      if (intento < INTENTOS - 1) {
+        const base = 1200 * Math.pow(1.7, intento);
+        const jitter = Math.random() * 1000;
+        Utilities.sleep(Math.min(base + jitter, 8000));
+      }
+    } finally {
+      lock.releaseLock();
+    }
+  }
+  registrarError('doPost', ultimoError);
+  return salidaJSON({ ok: false, error: String((ultimoError && ultimoError.message) || ultimoError) });
 }
 
 function salidaJSON(obj) {
@@ -841,13 +914,16 @@ function calcularEstadisticas() {
   const filasDedup = leerRegistroDeduplicado(ss);
   const grupos = agruparPorEstudiante(filasDedup);
 
-  const headers = EST_HEADERS_BASE.concat(TEMAS_PRINCIPALES.map(function (t) { return '% ' + t; }));
+  const headers = EST_HEADERS_BASE
+    .concat(TEMAS_PRINCIPALES.map(function (t) { return '% ' + t; }))
+    .concat(EST_HEADERS_PERIODO);
 
   const filas = Object.keys(grupos).map(function (clave) {
     const g = grupos[clave];
     const st = calcularEstadisticasEstudiante(g);
     const fila = [g.nombreDisplay, g.curso, st.numSesiones, st.totalPreguntas, st.pctGlobal, st.notaJuego];
     TEMAS_PRINCIPALES.forEach(function (t) { fila.push(st.pctPorTema[t]); });
+    fila.push(st.numSesionesPeriodo, st.totalPreguntasPeriodo, st.pctGlobalPeriodo);
     return fila;
   });
 
@@ -986,6 +1062,40 @@ function recalcularAhora() {
     recalcularTodasLasEstadisticas();
   });
   Logger.log('Recálculo completo ejecutado. Revisa la hoja "Errores" si algo falló.');
+}
+
+// ── Actualización automática (para no depender de recalcularAhora()) ───────
+// doPost() YA NO recalcula Estadísticas en cada partida (ver el comentario
+// en doPost más arriba). Este disparador de tiempo es la única forma en que
+// Estadísticas se mantiene al día sola, cada 30 minutos, sin que el docente
+// tenga que entrar a ejecutar nada manualmente. Misma arquitectura que
+// Chromanom Analytics.
+const NOMBRE_FUNCION_AUTO = 'actualizarEstadisticasAutomatico';
+
+function actualizarEstadisticasAutomatico() {
+  conLockDeScript_(function () {
+    recalcularTodasLasEstadisticas();
+  });
+}
+
+// ── Ejecutar UNA SOLA VEZ desde el editor (▶, eligiendo esta función) para
+// instalar el disparador automático de arriba. Es idempotente: si ya existe
+// un disparador para actualizarEstadisticasAutomatico lo reemplaza en vez de
+// duplicarlo, para no terminar con dos ejecuciones simultáneas cada 30 min
+// pisándose entre sí (el mismo tipo de duplicado por el que existe la Regla
+// 1/2 de deduplicación de sesiones, pero aplicado a disparadores).
+function instalarActualizacionAutomatica() {
+  ScriptApp.getProjectTriggers()
+    .filter(function (t) { return t.getHandlerFunction() === NOMBRE_FUNCION_AUTO; })
+    .forEach(function (t) { ScriptApp.deleteTrigger(t); });
+
+  ScriptApp.newTrigger(NOMBRE_FUNCION_AUTO)
+    .timeBased()
+    .everyMinutes(30)
+    .create();
+
+  Logger.log('Disparador automático instalado: Estadísticas se recalculará sola cada 30 minutos.');
+  return 'Disparador automático instalado: Estadísticas se recalculará sola cada 30 minutos.';
 }
 
 // A diferencia de recalcularAhora(), ESTA función SÍ modifica "Registro":

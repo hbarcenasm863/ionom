@@ -66,6 +66,7 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Script de Google Apps Script listo para desplegar como aplicación web.
 - Crea automáticamente las hojas `Registro`, `Estadísticas`, `Resumen por Curso` y una `Curso X` por curso si no existen.
 - **URL de producción ya configurada** en `juego.html`.
+- **Arquitectura de recálculo (v3.0, 2026-09-08 — alineada con Chromanom Analytics)**: `doPost` (guardar una partida) ya NO recalcula "Estadísticas"/"Eficacia por tema"/"Curso X" en cada envío — con un curso completo (~25-30 estudiantes) jugando a la vez, eso saturaba la ejecución y producía el error transitorio de Google "Too many simultaneous invocations: Spreadsheets", que el frontend mostraba como un genérico "error al enviar" sin relación real con la URL. Ahora ese recálculo lo hace un **disparador automático cada 30 min** (`actualizarEstadisticasAutomatico`, instalado una sola vez con `instalarActualizacionAutomatica`) o `recalcularAhora()` manualmente. `doPost` y el endpoint `GET ?accion=stats` (lectura de la hoja "Estadísticas" ya calculada, no recálculo en vivo) llevan además reintentos con espera aleatoria (*jitter*) para sobrevivir ese mismo error transitorio si ocurre. Contrapartida: las estadísticas que ve el estudiante pueden tener hasta ~30 min de rezago frente a su última partida — aceptable para un resumen de "cómo voy".
 - Nota: este archivo vive en el repositorio, pero el Apps Script en producción es una copia separada — cualquier cambio requiere volver a implementarlo manualmente en script.google.com (Implementar → Gestionar implementaciones → Nueva versión) para que tenga efecto.
 - (El archivo `appscript/Registro.gs` que se mencionaba aquí antes era una plantilla vieja con un esquema de hoja distinto y nunca fue la que está en producción; se eliminó del repositorio para evitar desplegar el script equivocado.)
 
@@ -87,6 +88,7 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 ### Obligatorio antes de usar con estudiantes
 - [ ] **Verificar la hoja de cálculo**: confirmar que el `SPREADSHEET_ID` en `ionom-analytics.gs` apunta a una hoja real en tu Google Drive y que tienes permisos de edición.
 - [ ] **Prueba de extremo a extremo**: completar una partida en Modo Estudiante con un código válido y confirmar que el registro aparece en la hoja.
+- [ ] **Instalar el disparador automático (una sola vez, tras cada redespliegue)**: en el editor de Apps Script, ejecutar la función `instalarActualizacionAutomatica` (▶ Ejecutar). Desde la v3.0, `doPost` ya NO recalcula "Estadísticas" en cada partida (eso saturaba la ejecución con un curso completo jugando a la vez) — el recálculo lo hace este disparador cada 30 min. Sin instalarlo, la hoja "Estadísticas" (y por lo tanto la caja de estadísticas del estudiante) se queda desactualizada.
 
 ### Mejoras opcionales sugeridas
 - [ ] **Panel docente**: página `docente.html` que lea la hoja de resultados vía Apps Script y muestre estadísticas por curso (promedio, compuestos con más errores, progreso por estudiante).
