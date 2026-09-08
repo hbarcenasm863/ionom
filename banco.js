@@ -2022,31 +2022,6 @@ const BANCO = [
     sist: ['trioxotelurato (IV) de dihidrógeno'],
     hint: 'Te en EO +4 → teluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
   },
-  {
-    formula: 'HBO₂',
-    group: 'ac-ox', level: 'medium',
-    trad: ['ácido metabórico'],
-    stock: ['ácido dioxobórico (III)'],
-    sist: ['dioxoborato (III) de hidrógeno'],
-    hint: 'Forma meta del ácido bórico (B en EO +3). H⁺ + BO₂⁻ → HBO₂.'
-  },
-  {
-    formula: 'HPO₃',
-    group: 'ac-ox', level: 'hard',
-    trad: ['ácido metafosfórico'],
-    stock: ['ácido trioxofosfórico (V)'],
-    sist: ['trioxofosfato (V) de hidrógeno'],
-    hint: 'Forma meta del ácido fosfórico (P en EO +5). H⁺ + PO₃⁻ → HPO₃.'
-  },
-  {
-    formula: 'H₄P₂O₇',
-    group: 'ac-ox', level: 'hard',
-    trad: ['ácido pirofosfórico'],
-    stock: ['ácido heptaoxodifosfórico (V)'],
-    sist: ['heptaoxodifosfato (V) de tetrahidrógeno'],
-    hint: 'Forma piro (dos unidades de fósforo +5 condensadas). 4H⁺ + P₂O₇⁴⁻ → H₄P₂O₇.'
-  },
-
   // ── SALES BINARIAS (banco adicional) ──
   {
     formula: 'LiF',
@@ -3038,102 +3013,28 @@ const BANCO = [
     col: 'El ácido nítrico HNO₃ (63.012 g/mol) se usa en producción de fertilizantes nitrogenados en Colombia.'
   },
 
-  // ── Óxidos básicos adicionales ──
-  {formula:'BaO',  group:'ox-bas',level:'easy',  trad:['óxido de bario'],   stock:[],                         sist:['óxido de bario'],         hint:'Ba²⁺ + O²⁻. Valencia fija +2 (grupo 2A).'},
-  {formula:'Li₂O', group:'ox-bas',level:'easy',  trad:['óxido de litio'],   stock:[],                         sist:['óxido de litio'],          hint:'Li⁺ (grupo 1A, valencia fija +1). 2 Li + O.'},
-  {formula:'K₂O',  group:'ox-bas',level:'easy',  trad:['óxido de potasio'], stock:[],                         sist:['óxido de potasio'],        hint:'K⁺ (grupo 1A). 2 K + O.'},
-  {formula:'SrO',  group:'ox-bas',level:'easy',  trad:['óxido de estroncio'],stock:[],                        sist:['óxido de estroncio'],      hint:'Sr²⁺ (grupo 2A). Vale igual que CaO.'},
-  {formula:'Ag₂O', group:'ox-bas',level:'medium', trad:['óxido de plata'],   stock:['óxido de plata (I)'],     sist:['óxido de plata'],          hint:'Ag tiene valencia habitual +1. 2 Ag⁺ + O²⁻.'},
-  {formula:'NiO',  group:'ox-bas',level:'medium', trad:['óxido niqueloso'],  stock:['óxido de níquel (II)'],   sist:['óxido de níquel'],         hint:'Ni²⁺ (EO menor) → -oso → niqueloso.'},
-  {formula:'CoO',  group:'ox-bas',level:'medium', trad:['óxido cobaltoso'],  stock:['óxido de cobalto (II)'],  sist:['óxido de cobalto'],        hint:'Co²⁺ (EO menor) → -oso → cobaltoso.'},
-  {formula:'Co₂O₃',group:'ox-bas',level:'medium', trad:['óxido cobáltico'],  stock:['óxido de cobalto (III)'], sist:['trióxido de dico balto'],  hint:'Co³⁺ (EO mayor) → -ico → cobáltico.'},
-
-  // ── Anhídridos adicionales ──
-  {formula:'N₂O',  group:'anhid',level:'easy',  trad:['anhídrido hiponitroso'],stock:[],                      sist:['óxido de dinitrógeno'],    hint:'N con EO=+1 (mínimo para N con O) → hipo- → hiponitroso.'},
-  {formula:'N₂O₃', group:'anhid',level:'medium', trad:['anhídrido nitroso'],   stock:['óxido de nitrógeno (III)'],sist:['trióxido de dinitrógeno'],hint:'N con EO=+3 → -oso → nitroso. El EO menor par de N.'},
-  {formula:'SeO₂', group:'anhid',level:'hard',   trad:['anhídrido selenioso'], stock:['óxido de selenio (IV)'], sist:['dióxido de selenio'],      hint:'Se actúa como no metal. EO=+4 (menor) → -oso → selenioso.'},
-  {formula:'SeO₃', group:'anhid',level:'hard',   trad:['anhídrido selénico'],  stock:['óxido de selenio (VI)'], sist:['trióxido de selenio'],     hint:'Se EO=+6 (mayor) → -ico → selénico.'},
-  {formula:'As₂O₃',group:'anhid',level:'hard',   trad:['anhídrido arsenioso'], stock:['óxido de arsénico (III)'],sist:['trióxido de diarsénico'], hint:'As EO=+3 (menor) → -oso → arsenioso.'},
-  {formula:'As₂O₅',group:'anhid',level:'hard',   trad:['anhídrido arsénico'],  stock:['óxido de arsénico (V)'],  sist:['pentaóxido de diarsénico'],hint:'As EO=+5 (mayor) → -ico → arsénico.'},
-
   // ── Hidruros adicionales ──
-  {formula:'KH',   group:'hidru',level:'easy',  trad:['hidruro de potasio'],   stock:[],                        sist:['hidruro de potasio'],      hint:'K⁺ (grupo 1A) + H⁻. Igual para todos los metales alcalinos.'},
-  {formula:'BaH₂', group:'hidru',level:'easy',  trad:['hidruro de bario'],     stock:[],                        sist:['hidruro de bario'],         hint:'Ba²⁺ (grupo 2A) + 2 H⁻.'},
   {formula:'AlH₃', group:'hidru',level:'medium', trad:['hidruro de aluminio'],  stock:[],                        sist:['trihidruro de aluminio'],   hint:'Al³⁺ + 3 H⁻. En todos los sistemas: hidruro de aluminio.'},
-  {formula:'LiH',  group:'hidru',level:'easy',  trad:['hidruro de litio'],     stock:[],                        sist:['hidruro de litio'],         hint:'Li⁺ + H⁻. Hidruro iónico del litio.'},
-  {formula:'CuH',  group:'hidru',level:'medium', trad:['hidruro cuproso'],      stock:['hidruro de cobre (I)'],  sist:['hidruro de cobre'],         hint:'Cu⁺ (EO menor) → -oso → cuproso → hidruro cuproso.'},
-  {formula:'MgH₂', group:'hidru',level:'easy',  trad:['hidruro de magnesio'],  stock:[],                        sist:['dihidruro de magnesio'],    hint:'Mg²⁺ + 2 H⁻. Mismo nombre en los tres sistemas.'},
-  {formula:'ZnH₂', group:'hidru',level:'medium', trad:['hidruro de zinc'],      stock:[],                        sist:['dihidruro de zinc'],        hint:'Zn²⁺ + 2 H⁻. Valencia fija +2.'},
-
-  // ── Ácidos hídricos adicionales ──
-  {formula:'HBr',  group:'ac-hid',level:'easy',  trad:['ácido bromhídrico'],   stock:['bromuro de hidrógeno'],   sist:['bromuro de hidrógeno'],    hint:'HBr en solución = ácido bromhídrico. Br⁻ → brom- → bromhídrico.'},
-  {formula:'HI',   group:'ac-hid',level:'easy',  trad:['ácido yodhídrico'],    stock:['yoduro de hidrógeno'],    sist:['yoduro de hidrógeno'],     hint:'HI en solución = ácido yodhídrico. I⁻ → yod- → yodhídrico.'},
-  {formula:'HF',   group:'ac-hid',level:'easy',  trad:['ácido fluorhídrico'],  stock:['fluoruro de hidrógeno'],  sist:['fluoruro de hidrógeno'],   hint:'HF = ácido fluorhídrico. F⁻ → fluor- → fluorhídrico. El más débil de los haluros.'},
-  {formula:'H₂Se', group:'ac-hid',level:'hard',  trad:['ácido selenhídrico'],  stock:['seleniuro de hidrógeno'], sist:['seleniuro de dihidrógeno'],hint:'H₂Se en solución = ácido selenhídrico. Se²⁻ → selen- → selenhídrico.'},
-  {formula:'H₂Te', group:'ac-hid',level:'hard',  trad:['ácido telurhídrico'],  stock:['telururo de hidrógeno'],  sist:['telururo de dihidrógeno'], hint:'H₂Te = ácido telurhídrico. Te²⁻ → telur- → telurhídrico.'},
-
-  // ── Bases adicionales ──
-  {formula:'LiOH', group:'base',level:'easy',  trad:['hidróxido de litio'],   stock:[],                         sist:['hidróxido de litio'],       hint:'Li⁺ + OH⁻. Valencia fija +1.'},
-  {formula:'Sr(OH)₂',group:'base',level:'easy',trad:['hidróxido de estroncio'],stock:[],                       sist:['dihidróxido de estroncio'],hint:'Sr²⁺ + 2 OH⁻. Grupo 2A, valencia +2.'},
-  {formula:'Ba(OH)₂',group:'base',level:'easy',trad:['hidróxido de bario'],   stock:[],                         sist:['dihidróxido de bario'],    hint:'Ba²⁺ + 2 OH⁻. La base fuerte del grupo 2A más soluble.'},
-  {formula:'Mn(OH)₂',group:'base',level:'medium',trad:['hidróxido manganoso'],stock:['hidróxido de manganeso (II)'],sist:['dihidróxido de manganeso'],hint:'Mn²⁺ (EO menor) → -oso → manganoso → hidróxido manganoso.',avanzado:true},
-  {formula:'Ni(OH)₂',group:'base',level:'medium',trad:['hidróxido niqueloso'],stock:['hidróxido de níquel (II)'],sist:['dihidróxido de níquel'],  hint:'Ni²⁺ (EO menor) → -oso → niqueloso → hidróxido niqueloso.',avanzado:true},
-  {formula:'Co(OH)₂',group:'base',level:'medium',trad:['hidróxido cobaltoso'],stock:['hidróxido de cobalto (II)'],sist:['dihidróxido de cobalto'],hint:'Co²⁺ (EO menor) → -oso → cobaltoso → hidróxido cobaltoso.',avanzado:true},
-  {formula:'AgOH',group:'base',level:'medium', trad:['hidróxido de plata'],   stock:['hidróxido de plata (I)'],  sist:['hidróxido de plata'],      hint:'Ag⁺ + OH⁻. Valencia habitual +1.'},
-  {formula:'Cr(OH)₃',group:'base',level:'hard', trad:['hidróxido crómico'],   stock:['hidróxido de cromo (III)'],sist:['trihidróxido de cromo'],   hint:'Cr³⁺ (EO mayor habitual) → -ico → crómico. Anfótero.',avanzado:true},
-
-  // ── Ácidos oxácidos adicionales ──
-  {formula:'H₂SO₃',group:'ac-ox',level:'medium', trad:['ácido sulfuroso'],  stock:[],                           sist:['ácido sulfuroso'],          hint:'SO₃²⁻ = sulfito. Derivado del SO₂. Menos oxidante que H₂SO₄.'},
-  {formula:'H₃PO₄',group:'ac-ox',level:'medium', trad:['ácido fosfórico'],  stock:[],                           sist:['ácido fosfórico'],          hint:'PO₄³⁻ = fosfato. Tres H⁺ reemplazables.'},
-  {formula:'H₃PO₃',group:'ac-ox',level:'hard',   trad:['ácido fosforoso'],  stock:[],                           sist:['ácido fosforoso'],          hint:'HPO₃²⁻ = fosfonato. Solo 2 H⁺ ácidos (el tercero está unido al P).'},
-  {formula:'H₂CO₃',group:'ac-ox',level:'easy',   trad:['ácido carbónico'],  stock:[],                           sist:['ácido carbónico'],          hint:'CO₃²⁻ = carbonato. H₂O + CO₂ en solución.'},
-  {formula:'HClO', group:'ac-ox',level:'medium',  trad:['ácido hipocloroso'],stock:[],                           sist:['ácido hipocloroso'],        hint:'ClO⁻ = hipoclorito. Cl EO=+1 (mínimo) → prefijo hipo-.'},
-  {formula:'HClO₂',group:'ac-ox',level:'medium',  trad:['ácido cloroso'],    stock:[],                           sist:['ácido cloroso'],            hint:'ClO₂⁻ = clorito. Cl EO=+3 → -oso → cloroso.'},
-  {formula:'HClO₃',group:'ac-ox',level:'medium',  trad:['ácido clórico'],    stock:[],                           sist:['ácido clórico'],            hint:'ClO₃⁻ = clorato. Cl EO=+5 → -ico → clórico.'},
-  {formula:'HClO₄',group:'ac-ox',level:'hard',    trad:['ácido perclórico'], stock:[],                           sist:['ácido perclórico'],         hint:'ClO₄⁻ = perclorato. Cl EO=+7 (máximo) → per- → perclórico.'},
-  {formula:'HNO₂',  group:'ac-ox',level:'medium',  trad:['ácido nitroso'],    stock:[],                           sist:['ácido nitroso'],            hint:'NO₂⁻ = nitrito. N EO=+3 (menor) → -oso → nitroso.'},
-  {formula:'H₂CrO₄',group:'ac-ox',level:'hard',   trad:['ácido crómico'],    stock:[],                           sist:['ácido crómico'],            hint:'CrO₄²⁻ = cromato. Cr EO=+6.',avanzado:true},
-  {formula:'H₂Cr₂O₇',group:'ac-ox',level:'hard',  trad:['ácido dicroómico'], stock:[],                           sist:['ácido dicroómico'],         hint:'Cr₂O₇²⁻ = dicromato. Cr EO=+6 en dos átomos.',avanzado:true},
-  {formula:'H₃BO₃', group:'ac-ox',level:'hard',   trad:['ácido bórico'],     stock:[],                           sist:['ácido bórico'],             hint:'BO₃³⁻ = borato. B EO=+3. Ácido muy débil.'},
-
   // ── Sales binarias adicionales ──
-  {formula:'AgCl',   group:'sal-bin',level:'easy',   trad:['cloruro de plata'],   stock:['cloruro de plata (I)'],    sist:['cloruro de plata'],          hint:'Ag⁺ + Cl⁻. Precipitado blanco insoluble.'},
   {formula:'AgBr',   group:'sal-bin',level:'easy',   trad:['bromuro de plata'],   stock:['bromuro de plata (I)'],    sist:['bromuro de plata'],           hint:'Ag⁺ + Br⁻. Sensible a la luz (fotografía antigua).'},
   {formula:'AgI',    group:'sal-bin',level:'easy',   trad:['yoduro de plata'],    stock:['yoduro de plata (I)'],     sist:['yoduro de plata'],            hint:'Ag⁺ + I⁻. Precipitado amarillo insoluble.'},
   {formula:'BaS',    group:'sal-bin',level:'easy',   trad:['sulfuro de bario'],   stock:[],                          sist:['sulfuro de bario'],           hint:'Ba²⁺ + S²⁻. Ambos con valencia fija.'},
   {formula:'CaS',    group:'sal-bin',level:'easy',   trad:['sulfuro de calcio'],  stock:[],                          sist:['sulfuro de calcio'],          hint:'Ca²⁺ + S²⁻.'},
   {formula:'NaF',    group:'sal-bin',level:'easy',   trad:['fluoruro de sodio'],  stock:[],                          sist:['fluoruro de sodio'],          hint:'Na⁺ + F⁻. Presente en pastas dentales.'},
-  {formula:'MgBr₂',  group:'sal-bin',level:'easy',   trad:['bromuro de magnesio'],stock:[],                          sist:['dibromuro de magnesio'],      hint:'Mg²⁺ + 2 Br⁻.'},
-  {formula:'NiCl₂',  group:'sal-bin',level:'medium',  trad:['cloruro niqueloso'],  stock:['cloruro de níquel (II)'],  sist:['dicloruro de níquel'],        hint:'Ni²⁺ (EO menor) → -oso → niqueloso.',avanzado:true},
   {formula:'CoCl₂',  group:'sal-bin',level:'medium',  trad:['cloruro cobaltoso'],  stock:['cloruro de cobalto (II)'], sist:['dicloruro de cobalto'],       hint:'Co²⁺ (EO menor) → -oso → cobaltoso.',avanzado:true},
   {formula:'CoCl₃',  group:'sal-bin',level:'medium',  trad:['cloruro cobáltico'],  stock:['cloruro de cobalto (III)'],sist:['tricloruro de cobalto'],      hint:'Co³⁺ (EO mayor) → -ico → cobáltico.',avanzado:true},
-  {formula:'MnCl₂',  group:'sal-bin',level:'medium',  trad:['cloruro manganoso'],  stock:['cloruro de manganeso (II)'],sist:['dicloruro de manganeso'],    hint:'Mn²⁺ (EO menor) → -oso → manganoso.',avanzado:true},
   {formula:'SnS',    group:'sal-bin',level:'medium',  trad:['sulfuro estannoso'],  stock:['sulfuro de estaño (II)'],  sist:['sulfuro de estaño'],          hint:'Sn²⁺ + S²⁻. EO menor → -oso → estannoso.'},
   {formula:'SnS₂',   group:'sal-bin',level:'medium',  trad:['sulfuro estánnico'],  stock:['sulfuro de estaño (IV)'],  sist:['disulfuro de estaño'],        hint:'Sn⁴⁺ + 2 S²⁻. EO mayor → -ico → estánnico.'},
   {formula:'PbS',    group:'sal-bin',level:'medium',  trad:['sulfuro plumboso'],   stock:['sulfuro de plomo (II)'],   sist:['sulfuro de plomo'],           hint:'Pb²⁺ + S²⁻. EO menor → -oso → plumboso.'},
-  {formula:'PbCl₂',  group:'sal-bin',level:'medium',  trad:['cloruro plumboso'],   stock:['cloruro de plomo (II)'],   sist:['dicloruro de plomo'],         hint:'Pb²⁺ + 2 Cl⁻. EO menor → plumboso.'},
-  {formula:'PbCl₄',  group:'sal-bin',level:'hard',    trad:['cloruro plúmbico'],   stock:['cloruro de plomo (IV)'],   sist:['tetracloruro de plomo'],      hint:'Pb⁴⁺ + 4 Cl⁻. EO mayor → -ico → plúmbico.'},
-
   // ── Sales oxigenadas adicionales ──
-  {formula:'BaSO₄',  group:'sal-ox',level:'easy',   trad:['sulfato de bario'],    stock:[],                          sist:['sulfato de bario'],           hint:'Ba²⁺ + SO₄²⁻. Muy insoluble — contraste en rayos X.'},
-  {formula:'CaCO₃',  group:'sal-ox',level:'easy',   trad:['carbonato de calcio'], stock:[],                          sist:['carbonato de calcio'],        hint:'Ca²⁺ + CO₃²⁻. Piedra caliza, mármol, conchas marinas.'},
   {formula:'MgCO₃',  group:'sal-ox',level:'easy',   trad:['carbonato de magnesio'],stock:[],                         sist:['carbonato de magnesio'],      hint:'Mg²⁺ + CO₃²⁻. Antácido estomacal.'},
-  {formula:'K₂SO₄',  group:'sal-ox',level:'easy',   trad:['sulfato de potasio'],  stock:[],                          sist:['sulfato de dipotasio'],       hint:'K⁺ + SO₄²⁻. Fertilizante agrícola.'},
-  {formula:'Na₂CO₃', group:'sal-ox',level:'easy',   trad:['carbonato de sodio'],  stock:[],                          sist:['carbonato de disodio'],       hint:'Na⁺ + CO₃²⁻. Soda (carbonato de soda).'},
   {formula:'AgNO₃',  group:'sal-ox',level:'easy',   trad:['nitrato de plata'],    stock:['nitrato de plata (I)'],     sist:['nitrato de plata'],           hint:'Ag⁺ + NO₃⁻. Reactivo para detectar haluros.'},
   {formula:'Ba(NO₃)₂',group:'sal-ox',level:'easy',  trad:['nitrato de bario'],   stock:[],                           sist:['dinitrato de bario'],         hint:'Ba²⁺ + 2 NO₃⁻. Color verde en pirotecnia.'},
-  {formula:'Mg(NO₃)₂',group:'sal-ox',level:'easy',  trad:['nitrato de magnesio'],stock:[],                           sist:['dinitrato de magnesio'],      hint:'Mg²⁺ + 2 NO₃⁻. Fertilizante.'},
   {formula:'FeSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito ferroso'],    stock:['sulfito de hierro (II)'],   sist:['sulfito de hierro'],          hint:'Fe²⁺ + SO₃²⁻. Distinguir sulfito (SO₃) de sulfato (SO₄).'},
-  {formula:'Fe₂(SO₄)₃',group:'sal-ox',level:'medium',trad:['sulfato férrico'],   stock:['sulfato de hierro (III)'],  sist:['trisulfato de dihierro'],     hint:'Fe³⁺ + SO₄²⁻. EO mayor → -ico → férrico.'},
   {formula:'NiSO₄',  group:'sal-ox',level:'medium',  trad:['sulfato niqueloso'],  stock:['sulfato de níquel (II)'],   sist:['sulfato de níquel'],          hint:'Ni²⁺ + SO₄²⁻ → sulfato niqueloso.',avanzado:true},
   {formula:'CoPO₄',  group:'sal-ox',level:'hard',    trad:['fosfato cobáltico'],  stock:['fosfato de cobalto (III)'], sist:['fosfato de cobalto'],         hint:'Co³⁺ + PO₄³⁻. EO mayor → -ico → cobáltico.',avanzado:true},
-  {formula:'Pb(NO₃)₂',group:'sal-ox',level:'medium', trad:['nitrato plumboso'],   stock:['nitrato de plomo (II)'],    sist:['dinitrato de plomo'],         hint:'Pb²⁺ + 2 NO₃⁻. EO menor → -oso → plumboso.'},
-  {formula:'Cu(NO₃)₂',group:'sal-ox',level:'medium', trad:['nitrato cúprico'],    stock:['nitrato de cobre (II)'],    sist:['dinitrato de cobre'],         hint:'Cu²⁺ + 2 NO₃⁻. EO mayor → cúprico.'},
-  {formula:'Al₂(SO₄)₃',group:'sal-ox',level:'medium',trad:['sulfato de aluminio'],stock:[],                          sist:['trisulfato de dialuminio'],   hint:'Al³⁺ (fijo) + SO₄²⁻. 2 Al³⁺ necesitan 3 SO₄²⁻.'},
   {formula:'Na₂SO₃', group:'sal-ox',level:'medium',  trad:['sulfito de sodio'],   stock:[],                          sist:['sulfito de disodio'],         hint:'Na⁺ + SO₃²⁻. Sulfito ≠ sulfato (SO₄²⁻).'},
   {formula:'CaSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito de calcio'],  stock:[],                          sist:['sulfito de calcio'],          hint:'Ca²⁺ + SO₃²⁻.'},
-  {formula:'Na₃PO₄', group:'sal-ox',level:'medium',  trad:['fosfato de sodio'],   stock:[],                          sist:['fosfato de trisodio'],        hint:'Na⁺ + PO₄³⁻. 3 Na⁺ para equilibrar la carga −3 del fosfato.'},
-  {formula:'Ca₃(PO₄)₂',group:'sal-ox',level:'medium',trad:['fosfato de calcio'],  stock:[],                         sist:['difosfato de tricalcio'],     hint:'Ca²⁺ + PO₄³⁻. Mineral principal de los huesos.'},
   {formula:'MgSO₄',  group:'sal-ox',level:'easy',    trad:['sulfato de magnesio'],stock:[],                          sist:['sulfato de magnesio'],        hint:'Mg²⁺ + SO₄²⁻. "Sal de Epsom" — purgante y fertilizante.'},
 
   // ── sal-ac: sales ácidas — el anión conserva 1 o 2 H⁺ del ácido poliprótico ──
@@ -3149,7 +3050,26 @@ const BANCO = [
   {formula:'Na₂HPO₄',group:'sal-ac',level:'hard',   trad:['fosfato monoácido de sodio'],stock:['hidrogenofosfato de sodio'], sist:[], hint:'2 Na⁺ + HPO₄²⁻ (PO₄³⁻ retuvo 1 H⁺, queda carga −2). Un solo "hidrogeno-" → 1 H conservado.'},
   {formula:'NaH₂PO₄',group:'sal-ac',level:'hard',   trad:['fosfato diácido de sodio'],  stock:['dihidrogenofosfato de sodio'],sist:[], hint:'Na⁺ + H₂PO₄⁻ (PO₄³⁻ retuvo 2 H⁺, queda carga −1). "Dihidrogeno-" → 2 H conservados.'},
   {formula:'KH₂PO₄', group:'sal-ac',level:'hard',   trad:['fosfato diácido de potasio'],stock:['dihidrogenofosfato de potasio'],sist:[], hint:'K⁺ + H₂PO₄⁻. Mismo patrón que el fosfato diácido de sodio.'},
+  // ── Sales ácidas adicionales (mayor variedad, sin formas meta/piro/hidratadas) ──
+  {formula:'LiHCO₃', group:'sal-ac',level:'easy',  trad:['bicarbonato de litio'],   stock:['hidrogenocarbonato de litio'],  sist:[], hint:'Li⁺ + HCO₃⁻ (CO₃²⁻ retuvo 1 H⁺). Li⁺ es de valencia fija +1, igual que Na⁺ y K⁺.'},
+  {formula:'LiHSO₄', group:'sal-ac',level:'easy',  trad:['bisulfato de litio'],     stock:['hidrogenosulfato de litio'],    sist:[], hint:'Li⁺ + HSO₄⁻ (SO₄²⁻ retuvo 1 H⁺). Mismo patrón que el bisulfato de sodio.'},
+  {formula:'NaHS',   group:'sal-ac',level:'easy',  trad:['bisulfuro de sodio'],     stock:['hidrogenosulfuro de sodio'],    sist:[], hint:'Na⁺ + HS⁻ (S²⁻ del H₂S retuvo 1 H⁺). El H₂S es diprótico, igual que el H₂CO₃ o el H₂SO₄.'},
+  {formula:'KHS',    group:'sal-ac',level:'easy',  trad:['bisulfuro de potasio'],   stock:['hidrogenosulfuro de potasio'],  sist:[], hint:'K⁺ + HS⁻. Mismo patrón que el bisulfuro de sodio.'},
+  {formula:'LiHS',   group:'sal-ac',level:'easy',  trad:['bisulfuro de litio'],     stock:['hidrogenosulfuro de litio'],    sist:[], hint:'Li⁺ + HS⁻. Valencia fija +1, igual razonamiento que NaHS y KHS.'},
+  {formula:'RbHCO₃', group:'sal-ac',level:'easy',  trad:['bicarbonato de rubidio'], stock:['hidrogenocarbonato de rubidio'],sist:[], hint:'Rb⁺ + HCO₃⁻. Rb es un metal alcalino, valencia fija +1.'},
+  {formula:'CsHCO₃', group:'sal-ac',level:'easy',  trad:['bicarbonato de cesio'],   stock:['hidrogenocarbonato de cesio'],  sist:[], hint:'Cs⁺ + HCO₃⁻. Cs es un metal alcalino, valencia fija +1.'},
+  {formula:'Ba(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de bario'],  stock:['hidrogenocarbonato de bario'],  sist:[], hint:'Ba²⁺ + 2 HCO₃⁻. Catión divalente, mismo patrón que el bicarbonato de calcio.'},
+  {formula:'Sr(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de estroncio'],stock:['hidrogenocarbonato de estroncio'],sist:[], hint:'Sr²⁺ + 2 HCO₃⁻. Igual razonamiento que el bicarbonato de calcio o magnesio.'},
+  {formula:'NH₄HSO₄',group:'sal-ac',level:'medium', trad:['bisulfato de amonio'],   stock:['hidrogenosulfato de amonio'],   sist:[], hint:'NH₄⁺ + HSO₄⁻. El amonio actúa como catión de carga fija +1.'},
+  {formula:'Fe(HCO₃)₂',group:'sal-ac',level:'hard',  trad:['bicarbonato ferroso'],   stock:['hidrogenocarbonato de hierro (II)'],sist:[], hint:'Fe²⁺ (EO menor) + 2 HCO₃⁻ → bicarbonato ferroso. Responsable del "agua rojiza" en fuentes con hierro disuelto.'},
+
+  // ── Ácidos hídricos: pseudohalógeno adicional ──
+  {formula:'HN₃',    group:'ac-hid',level:'hard',   trad:['ácido hidrazoico'],      stock:[], sist:['azida de hidrógeno'], hint:'H + N₃⁻ (azida). Pseudohalógeno; ácido hídrico poco común pero real, muy tóxico e inestable.'},
+
+  // ── Hidruros: metal alcalino adicional ──
+  {formula:'CsH',    group:'hidru',level:'easy',    trad:['hidruro de cesio'],      stock:[], sist:['hidruro de cesio'], hint:'Cs⁺ (grupo 1A, valencia fija +1) + H⁻. Igual patrón que el hidruro de rubidio.'},
+
 ];
 
-// Total: ~450 compounds
+// Total: 403 compuestos únicos (sin duplicados, sin formas meta-/orto-/piro-/hidratadas)
 // Grupo reaccion: sintesis(10) descomposicion(8) sus-simple(8) sus-doble(8) combustion(7) neutralizacion(7)

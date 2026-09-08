@@ -25,6 +25,7 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Expandido de ~210 a **301 compuestos** distribuidos en 8 grupos funcionales.
 - Cada compuesto incluye: `formula`, `trad[]`, `stock[]`, `sist[]`, `group`.
 - **35 anhídridos** ahora tienen dos nombres tradicionales: `['anhídrido X', 'óxido X']` para reflejar la nomenclatura colombiana donde los anhídridos se clasifican como *óxidos ácidos*.
+- **Limpieza (2026-09-08)**: se detectaron y eliminaron **62 compuestos duplicados** (mismo `formula`+`group` repetido dos veces, ej. `HBr` en ácidos hídricos aparecía dos veces) que inflaban el conteo aparente del banco sin aportar variedad real — el estudiante veía "más preguntas" pero eran el mismo hecho memorizable repetido. También se eliminaron las **formas meta-/piro-** (`ácido metabórico`, `ácido metafosfórico`, `ácido pirofosfórico`) que no se enseñan en este curso. Se reforzó **Sales ácidas** (de 3 a 10 compuestos "fácil", de 12 a 23 en total) y se agregaron 2 compuestos reales adicionales a Ácidos hídricos e Hidruros. Total final: **403 compuestos únicos**, sin duplicados ni formas orto-/meta-/piro-/hidratadas en ningún grupo.
 
 ### 2. Teoría (`teoria.html`)
 - Rediseño completo con navegación de **7 tarjetas** (cards-grid).
@@ -59,6 +60,7 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Al terminar, envía automáticamente los resultados a Google Sheets vía **Google Apps Script** (`fetch` con `no-cors`).
 - **Datos enviados**: fecha/hora, código, nombre, curso, grupo funcional, correctas, puntaje, total, intentos, porcentaje, calificación /5, nivel.
 - **Estadísticas al ingresar el código**: justo después de validar el código, `juego.html` consulta `ionom-analytics.gs` (`GET ?accion=stats&nombre=...&curso=...`) y muestra sesiones jugadas, preguntas respondidas, % de acierto y nota de juego actual del estudiante (misma lógica que ChromaNom). Incluye enlace "Cambiar de estudiante" para que otro alumno use el mismo equipo sin recargar.
+- **Tarjeta histórico vs. periodo (2026-09-08)**: la caja de estadísticas ahora muestra dos tarjetas separadas para que el estudiante entienda de dónde sale cada cifra — **🏅 Histórico total** (todas las partidas jugadas alguna vez, es lo que cuenta para el reto especial de 1.000 preguntas/80% de acierto) y **📅 Periodo actual** (con las fechas exactas del periodo académico vigente, es lo único que cuenta para la Nota de juego). El backend expone ambos conjuntos de cifras por separado (`numSesiones`/`totalPreguntas`/`pctGlobal` históricos vs. `numSesionesPeriodo`/`totalPreguntasPeriodo`/`pctGlobalPeriodo` del periodo) más el rango `periodo.inicio`/`periodo.fin`, así el frontend nunca hardcodea las fechas.
 
 ### 5. Apps Script (`ionom-analytics.gs`)
 - Script de Google Apps Script listo para desplegar como aplicación web.

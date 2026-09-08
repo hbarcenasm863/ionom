@@ -36,9 +36,20 @@
  *
  * ENDPOINT GET ?accion=stats&nombre=...&curso=... — usado por juego.html
  * (loadStudentStats) justo después de validar el código del alumno, para
- * mostrarle sus métricas acumuladas (sesiones jugadas, preguntas respondidas,
- * % de acierto, nota de juego). Responde JSON:
- * { ok:true, existe:true|false, numSesiones, totalPreguntas, pctGlobal, notaJuego }
+ * mostrarle sus métricas acumuladas. Responde JSON:
+ * {
+ *   ok:true, existe:true|false,
+ *   numSesiones, totalPreguntas, pctGlobal,       // HISTÓRICO (todas las partidas
+ *                                                  // jugadas alguna vez) — esto es
+ *                                                  // lo que cuenta para el reto de
+ *                                                  // las 1000 preguntas / 80%.
+ *   numSesionesPeriodo, totalPreguntasPeriodo,
+ *   pctGlobalPeriodo, notaJuego,                   // PERIODO ACADÉMICO vigente
+ *                                                  // (FECHA_INICIO_PERIODO..FECHA_FIN_PERIODO)
+ *                                                  // — esto es lo que cuenta para la Nota.
+ *   periodo: { inicio, fin, sesionesEsperadas }     // para que el frontend muestre las
+ *                                                  // fechas exactas sin duplicarlas a mano.
+ * }
  * "nombre" y "curso" son los mismos STUDENT_NAME/STUDENT_COURSE que el
  * frontend ya resolvió desde su listado de códigos — el backend no conoce el
  * código del alumno, solo Nombre/Curso (lo que upsertRegistro guarda).
@@ -57,7 +68,7 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v2.1 — 2026-09-07';
+const BUILD_TAG = 'IonNom Analytics v2.2 — 2026-09-08';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
@@ -154,8 +165,14 @@ function responderEstadisticasEstudiante(e) {
     const normKey = normalizarNombreClave(nombre);
     const clave = normKey + '|' + (curso || '(Sin curso)');
     const grupo = grupos[clave];
+    const periodo = { inicio: FECHA_INICIO_PERIODO, fin: FECHA_FIN_PERIODO, sesionesEsperadas: SESIONES_ESPERADAS };
     if (!grupo) {
-      return salidaJSON({ ok: true, existe: false, numSesiones: 0, totalPreguntas: 0, pctGlobal: 0, notaJuego: 0 });
+      return salidaJSON({
+        ok: true, existe: false,
+        numSesiones: 0, totalPreguntas: 0, pctGlobal: 0, notaJuego: 0,
+        numSesionesPeriodo: 0, totalPreguntasPeriodo: 0, pctGlobalPeriodo: 0,
+        periodo: periodo
+      });
     }
 
     const st = calcularEstadisticasEstudiante(grupo);
@@ -164,7 +181,11 @@ function responderEstadisticasEstudiante(e) {
       numSesiones: st.numSesiones,
       totalPreguntas: st.totalPreguntas,
       pctGlobal: st.pctGlobal,
-      notaJuego: st.notaJuego
+      notaJuego: st.notaJuego,
+      numSesionesPeriodo: st.numSesionesPeriodo,
+      totalPreguntasPeriodo: st.totalPreguntasPeriodo,
+      pctGlobalPeriodo: st.pctGlobalPeriodo,
+      periodo: periodo
     });
   } catch (err) {
     registrarError('responderEstadisticasEstudiante', err);
@@ -729,6 +750,13 @@ function calcularEstadisticasEstudiante(grupo) {
   });
   const notaJuego = calcularNotaJuego(sesionesPeriodo);
 
+  // Cifras del periodo (distintas de las históricas de arriba) — para que el
+  // estudiante vea de dónde sale exactamente su Nota de juego, separado del
+  // total histórico que cuenta para el reto de las 1000 preguntas.
+  const totalPreguntasPeriodo = sesionesPeriodo.reduce(function (a, s) { return a + s.total; }, 0);
+  const totalCorrectasPeriodo = sesionesPeriodo.reduce(function (a, s) { return a + s.correctas; }, 0);
+  const pctGlobalPeriodo = totalPreguntasPeriodo > 0 ? Math.round((totalCorrectasPeriodo / totalPreguntasPeriodo) * 100) : 0;
+
   const pctPorTema = {};
   TEMAS_PRINCIPALES.forEach(function (tema) {
     let correctasTema = 0, erroresTema = 0;
@@ -751,7 +779,10 @@ function calcularEstadisticasEstudiante(grupo) {
     pctGlobal: pctGlobal,
     notaJuego: notaJuego,
     pctPorTema: pctPorTema,
-    ultimaSesion: ultimaSesion
+    ultimaSesion: ultimaSesion,
+    numSesionesPeriodo: sesionesPeriodo.length,
+    totalPreguntasPeriodo: totalPreguntasPeriodo,
+    pctGlobalPeriodo: pctGlobalPeriodo
   };
 }
 
