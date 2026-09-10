@@ -72,13 +72,18 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v3.0 — 2026-09-08';
+const BUILD_TAG = 'IonNom Analytics v3.1 — 2026-09-10 — nota ponderada por preguntas';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
 const FECHA_INICIO_PERIODO = '2026-08-10'; // yyyy-MM-dd
 const FECHA_FIN_PERIODO    = '2026-10-30'; // yyyy-MM-dd
 const SESIONES_ESPERADAS   = 22;           // ≈ 2 veces por semana durante el periodo
+// Tamaño estándar de una sesión (ver buildQuestionQueue(pool,20) en
+// juego.html, usado por TODOS los modos de juego) — se usa para rellenar
+// con preguntas fallidas las sesiones que le falten a un estudiante para
+// llegar a SESIONES_ESPERADAS (ver calcularNotaJuego).
+const PREGUNTAS_POR_SESION = 20;
 
 // Grupos funcionales/temas del juego — deben coincidir EXACTAMENTE con los
 // valores de GROUP_LABELS en juego.html (es lo que el frontend manda como
@@ -821,7 +826,6 @@ function calcularEstadisticasEstudiante(grupo) {
   const sesionesPeriodo = sesiones.filter(function (s) {
     return s.fecha >= FECHA_INICIO_PERIODO && s.fecha <= FECHA_FIN_PERIODO;
   });
-  const notaJuego = calcularNotaJuego(sesionesPeriodo);
 
   // Cifras del periodo (distintas de las históricas de arriba) — para que el
   // estudiante vea de dónde sale exactamente su Nota de juego, separado del
@@ -829,6 +833,10 @@ function calcularEstadisticasEstudiante(grupo) {
   const totalPreguntasPeriodo = sesionesPeriodo.reduce(function (a, s) { return a + s.total; }, 0);
   const totalCorrectasPeriodo = sesionesPeriodo.reduce(function (a, s) { return a + s.correctas; }, 0);
   const pctGlobalPeriodo = totalPreguntasPeriodo > 0 ? Math.round((totalCorrectasPeriodo / totalPreguntasPeriodo) * 100) : 0;
+
+  // La Nota pondera por PREGUNTAS respondidas, no por sesiones (ver
+  // calcularNotaJuego) — misma fórmula que Chromanom Analytics.
+  const notaJuego = calcularNotaJuego(totalCorrectasPeriodo, totalPreguntasPeriodo, sesionesPeriodo.length);
 
   const pctPorTema = {};
   TEMAS_PRINCIPALES.forEach(function (tema) {
@@ -859,18 +867,38 @@ function calcularEstadisticasEstudiante(grupo) {
   };
 }
 
-// Regla 5 — Nota de juego (0 a 5) por periodo académico:
-// - cada sesión aporta nota_sesion = %Acierto / 20  →  100% = 5.0
-// - si jugó SESIONES_ESPERADAS o menos: nota = suma(notas) / SESIONES_ESPERADAS
-//   (lo que falte por jugar cuenta como 0, sin restar nada aparte)
-// - si jugó más: nota = suma(notas) / número real de sesiones jugadas
-//   (promedio normal de todas, sin descartar ninguna)
-function calcularNotaJuego(sesionesPeriodo) {
-  if (!sesionesPeriodo.length) return 0;
-  const sumaNotas = sesionesPeriodo.reduce(function (a, s) { return a + (s.pct / 20); }, 0);
-  const n = sesionesPeriodo.length;
-  const divisor = n <= SESIONES_ESPERADAS ? SESIONES_ESPERADAS : n;
-  return Math.round((sumaNotas / divisor) * 10) / 10;
+// Regla 5 — Nota de juego (0-5) dentro del periodo académico. Misma fórmula
+// que Chromanom Analytics (calcularNotaJuego_): se usa el % de acierto REAL
+// del periodo (total de preguntas correctas / total de preguntas
+// respondidas, sin importar en cuántas sesiones se repartieron) — una
+// práctica corta de 3 preguntas al 100% no pesa igual que una sesión
+// completa de 20 preguntas al 100%, porque ambas entran a la misma bolsa de
+// correctas/preguntas en vez de promediarse por sesión (la fórmula anterior,
+// que promediaba %-por-sesión, sí las trataba igual).
+//
+// Hay un MÍNIMO de SESIONES_ESPERADAS sesiones, pero NO un máximo:
+// - Si el estudiante NO ha llegado a esas sesiones, las que le faltan se
+//   cuentan como si las hubiera jugado y fallado TODAS (0 aciertos de
+//   PREGUNTAS_POR_SESION preguntas cada una) — así jugar menos de lo
+//   esperado sigue penalizando la nota, aunque el % de lo que sí jugó sea
+//   perfecto.
+// - Una vez alcanzado ese mínimo, no hay techo de SESIONES: si el
+//   estudiante sigue jugando y su % de acierto real mejora, la nota sigue
+//   subiendo sin límite de sesiones — no se congela por haber llegado a las
+//   sesiones esperadas mientras todavía quede periodo por delante.
+// Ojo: "sin techo de sesiones" no es lo mismo que "sin techo en la nota" —
+// la nota SÍ tiene un límite fijo, el máximo de la escala (5.0).
+// Matemáticamente correctasPeriodo nunca debería superar a
+// preguntasAjustadas (son aciertos dentro de lo respondido), así que
+// pctAcierto no debería pasar de 1 — pero se deja el Math.min(5, ...) como
+// cinturón de seguridad explícito, no como algo que se espere que dispare
+// en uso normal.
+function calcularNotaJuego(correctasPeriodo, preguntasPeriodo, sesionesJugadas) {
+  const sesionesFaltantes = Math.max(0, SESIONES_ESPERADAS - sesionesJugadas);
+  const preguntasAjustadas = preguntasPeriodo + sesionesFaltantes * PREGUNTAS_POR_SESION;
+  if (!preguntasAjustadas) return 0;
+  const pctAcierto = correctasPeriodo / preguntasAjustadas;
+  return Math.min(5, Math.round(pctAcierto * 5 * 10) / 10);
 }
 
 // ── Color de fila según % (Regla 9) ─────────────────────────────────────────
