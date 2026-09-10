@@ -95,6 +95,14 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Nota: este archivo vive en el repositorio, pero el Apps Script en producción es una copia separada — cualquier cambio requiere volver a implementarlo manualmente en script.google.com (Implementar → Gestionar implementaciones → Nueva versión) para que tenga efecto.
 - (El archivo `appscript/Registro.gs` que se mencionaba aquí antes era una plantilla vieja con un esquema de hoja distinto y nunca fue la que está en producción; se eliminó del repositorio para evitar desplegar el script equivocado.)
 
+### 6. Tipos de Reacción y Balanceo (`reacciones.html`, `balanceo.html`)
+
+#### Auditoría de contenido y currículo (2026-09-10)
+- **Referencias curriculares explícitas eliminadas**: ambas páginas mostraban "DBA 3 — Grados 10-11" en el subtítulo del encabezado y "· DBA 3" en el pie de página (2 apariciones por archivo, 4 en total). Se quitó la cita al estándar oficial conservando el resto del texto ("Grados 10-11", "Química inorgánica para Colombia").
+- **Error de nomenclatura corregido** (`reacciones.html`): la tabla resumen de tipos de reacción listaba "Yodo de plata AgI" como ejemplo de sustitución doble — "yodo" es el elemento (I₂), no el anión que forma la sal; el nombre correcto de AgI es "yoduro de plata". Corregido.
+- Se verificaron todas las ecuaciones balanceadas de ambas páginas (18 en total entre ejemplos, tabla resumen, quiz de `reacciones.html` y ejercicios interactivos de `balanceo.html`, incluida la redox KMnO₄ + HCl): todas correctas.
+- Ambas páginas ya implementan bien los principios de Mayer (auto-narración de bienvenida etiquetada "Mayer P8", botones TTS por sección, ejemplos resueltos paso a paso con tabla de verificación de átomos) y Enseñanza para la Comprensión (quiz final con retroalimentación explicativa, ejercicio interactivo de balanceo con pistas y verificación por múltiplos válidos, no solo por el juego de coeficientes mínimo). No se encontraron otras referencias a MEN/DBA/Estándares Básicos; las menciones de "pruebas Saber" se conservaron por ser el nombre de un examen real (no una cita del currículo oficial).
+
 ---
 
 ## Estado actual de despliegue
