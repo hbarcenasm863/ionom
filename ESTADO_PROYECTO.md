@@ -52,6 +52,16 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 #### Tabla periódica: configuración electrónica completa (2026-09-10)
 - Antes las preguntas de "Tabla periódica y configuración electrónica" mostraban notación **abreviada** (ej. `[Ar] 4s²4p¹` para Ga). Ahora `elFullConfig()` construye la configuración **completa** desde 1s para los 103 elementos, reutilizando el campo `valence` existente (que ya trae correctamente las excepciones reales: Cr, Cu, Nb, Mo, Pd, Ag, La, Ce, Gd, Pt, Au) más los núcleos de gas noble completos y los bloques internos ya llenos que ese campo omitía (3d¹⁰/4d¹⁰/4f¹⁴ en elementos posteriores a un bloque d o f ya completo — ej. Ga, In, Tl, y los metales de transición del periodo 6 desde Hf). Verificado por script que el conteo de electrones de la cadena generada coincide exactamente con el número atómico para los 103 elementos.
 
+#### Tabla periódica: auditoría y 4 tipos de pregunta nuevos (2026-09-10)
+- **Bug corregido — `elValenceCount`**: para lantánidos/actínidos el campo `group` de este banco es una renumeración interna 3-17 (para poder listarlos en orden), no su grupo químico real. Sin chequear el `type` primero, 10 elementos (Ho, Er, Tm, Yb, Lu, Es, Fm, Md, No, Lr) cuya renumeración caía en 13-17 se colaban por la rama de bloque p y mostraban 3-7 electrones de valencia en vez de 2 (inconsistente con el resto de la serie, donde ya se usaba 2). Verificado con script para los 103 elementos.
+- **Nombre engañoso corregido**: `elSamegroupNames` en realidad filtraba por *periodo*, no por grupo — renombrada a `elSameperiodNames` (sin cambio de comportamiento).
+- **4 tipos de pregunta nuevos** (`EL_TYPES`, ahora 10 en total):
+  - `el-metal`: Metal / No metal / Metaloide, a partir de la categoría ya asignada a cada elemento.
+  - `el-block`: bloque s/p/d/f — lantánidos/actínidos son bloque f pese a su `group` renumerado, y el helio es bloque s pese a estar agrupado con los gases nobles.
+  - `el-valence`: electrones de valencia preguntados directamente (sin mostrar la configuración electrónica, a diferencia de `el-config2val` que ya existía).
+  - `el-property`: compara dos elementos del mismo periodo o del mismo grupo (electronegatividad real, o radio atómico por posición en la tabla) y pregunta cuál tiene el valor mayor — lantánidos/actínidos excluidos del emparejamiento por la misma razón del bug de `elValenceCount`.
+- Verificado con scripts que corren `elValenceCount`/`elBlock`/`elMetalCategory` sobre los 103 elementos y `pickElPropertyPair` en 2000 pruebas por propiedad, sin errores ni valores inválidos.
+
 #### Mejoras de interfaz
 - **Botón "← Menú"** en la barra superior del juego con confirmación al salir a mitad de sesión.
 - **Retroalimentación colombiana**: al responder un anhídrido, se muestra una nota explicando que en Colombia se llama también *óxido ácido*, con ambos nombres aceptados como correctos.
