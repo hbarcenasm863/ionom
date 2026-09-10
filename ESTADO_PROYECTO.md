@@ -1,7 +1,7 @@
 # IonNom — Estado del Proyecto
 
 **Colegio Rufino José Cuervo I.E.D. · Bogotá, Colombia**
-**Última actualización:** 2026-06-12
+**Última actualización:** 2026-09-10
 
 ---
 
@@ -31,6 +31,11 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Rediseño completo con navegación de **7 tarjetas** (cards-grid).
 - Sección nueva: **Reactividad** (series de actividad de metales y no metales).
 - Navegación con teclado (←/→/Escape).
+
+#### Auditoría de contenido y currículo (2026-09-10)
+- **Referencias curriculares explícitas eliminadas**: la sección "Reactividad" citaba textualmente "DBA 3 del MEN Colombia" en la tarjeta del menú, en los chips del panel resumen, en el texto leído por voz (TTS) y en el glosario de pre-entrenamiento (4 apariciones). Se reformularon conservando el contenido pedagógico (cadenas óxido→base→sal / anhídrido→ácido→sal, ejemplos con CaO/SO₃) pero sin nombrar el estándar curricular oficial.
+- **Error tipográfico corregido**: "óxido de dícobre" (tabla comparativa Stock/Tradicional/Sistemática, Cu₂O) llevaba una tilde incorrecta — el nombre sistemático correcto es "óxido de dicobre" (la sílaba tónica cae naturalmente en "co", como en "dinitrógeno").
+- Revisión completa de `juego.html`: no se encontraron referencias explícitas a MEN/DBA/Estándares Básicos de Competencias (la única mención de "Colombia" es una nota de uso regional del término "óxido ácido" para anhídridos, que no cita ningún estándar oficial y se conserva).
 
 ### 3. Funciones (`funciones.html`)
 - Reemplazo del sistema de pestañas por **navegación de 8 tarjetas**.

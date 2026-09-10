@@ -415,7 +415,7 @@ html{font-size:var(--base-fs)}
     <div class="card card-ox" onclick="goToSection(6)">
       <span class="card-icon">🔥</span>
       <div class="card-title">Reactividad</div>
-      <div class="card-desc">De la nomenclatura a las ecuaciones: DBA 3 del MEN Colombia</div>
+      <div class="card-desc">De la nomenclatura a las ecuaciones: predice cómo reacciona cada compuesto</div>
       <span class="card-badge">Avanzado</span>
     </div>
     <div class="card card-an" onclick="goToSection(7)">
@@ -564,8 +564,8 @@ const SEC_DASH = [
    chips:['Mn: manganoso/mangánico/permangánico','Cr: cromoso/crómico → anhídrido crómico','Hg(I)→Hg₂²⁺ (ion mercurioso)','Hidruro metálico vs HX vs H₂O'],
    intro:'¡Atención! Aquí vienen los casos que más confunden en los exámenes. El manganeso tiene hasta cinco valencias, el cromo actúa a veces como no metal, y el mercurioso es el único catión diatómico del bachillerato. Prepárate para entender por qué estos metales rompen las reglas comunes, y cómo nombrarlos sin confundirte.'},
   {color:'#0f766e', summary:'La nomenclatura conecta con las ecuaciones: óxido → base → sal (metal) / anhídrido → ácido → sal (no metal).',
-   chips:['Metal → Óxido → Base → Sal','No metal → Anhídrido → Ácido → Sal','DBA 3 MEN Colombia','pH y neutralización'],
-   intro:'¿Para qué sirve saber el nombre de un compuesto? Para predecir cómo reacciona. En Colombia, el DBA 3 del MEN pide exactamente eso: entender que el CaO (cal viva) reacciona con agua para dar Ca(OH)₂, o que el SO₃ (que causa lluvia ácida) reacciona con agua para dar H₂SO₄. La nomenclatura es el mapa de la reactividad.'},
+   chips:['Metal → Óxido → Base → Sal','No metal → Anhídrido → Ácido → Sal','Predicción de reactividad','pH y neutralización'],
+   intro:'¿Para qué sirve saber el nombre de un compuesto? Para predecir cómo reacciona. Entender que el CaO (cal viva) reacciona con agua para dar Ca(OH)₂, o que el SO₃ (que causa lluvia ácida) reacciona con agua para dar H₂SO₄, es clave en cualquier curso de química de secundaria. La nomenclatura es el mapa de la reactividad.'},
   {color:'#0369a1', summary:'Sales ácidas: el ácido poliprótico no cedió todos sus H⁺. El anión conserva H ionizable.',
    chips:['HCO₃⁻ = bicarbonato / hidrogenocarbonato','HSO₄⁻ = bisulfato / hidrogenosulfato','H₂PO₄⁻ = dihidrogenofosfato','HPO₄²⁻ = hidrogenofosfato'],
    intro:'¿Conoces el bicarbonato que usamos en la cocina colombiana? Ese NaHCO₃ es una sal ácida: el ácido carbónico solo cedió uno de sus dos hidrógenos. Cuando un ácido poliprótico no cede todos sus H⁺ al neutralizarse, el anión que queda todavía tiene hidrógeno ionizable y se llama sal ácida.'},
@@ -1318,7 +1318,7 @@ CONTENIDO[4] = `
       <div class="comp-col-lbl">Sistemática / IUPAC</div>
       <div class="comp-item">dicloruro de hierro</div>
       <div class="comp-item">tricloruro de hierro</div>
-      <div class="comp-item">óxido de dícobre</div>
+      <div class="comp-item">óxido de dicobre</div>
       <div class="comp-item">óxido de cobre</div>
       <div class="comp-item">trióxido de azufre</div>
     </div>
@@ -1667,7 +1667,7 @@ const PRETRAIN = [
   // 5 — Excepciones
   [{term:'Valencia variable', def:'el metal puede tener 2 o más EO (ej: Fe: +2 y +3, Mn: +2,+3,+4,+6,+7)'},{term:'Catión diatómico', def:'ion formado por dos átomos del mismo metal unidos: Hg₂²⁺'},{term:'Hidruro metálico', def:'metal + H donde H tiene EO = −1 (sólido iónico)'},{term:'Ácido hídrico', def:'no metal + H en solución acuosa: HCl(aq) = ácido clorhídrico'}],
   // 6 — Reactividad
-  [{term:'Óxido básico', def:'metal + O → reacciona con agua para dar una base (pH > 7)'},{term:'Anhídrido (óxido ácido)', def:'no metal + O → reacciona con agua para dar un ácido (pH < 7)'},{term:'Neutralización', def:'ácido + base → sal + agua (pH ≈ 7)'},{term:'DBA 3 MEN', def:'estándar curricular colombiano: comprender cadenas de reactividad inorgánica'}],
+  [{term:'Óxido básico', def:'metal + O → reacciona con agua para dar una base (pH > 7)'},{term:'Anhídrido (óxido ácido)', def:'no metal + O → reacciona con agua para dar un ácido (pH < 7)'},{term:'Neutralización', def:'ácido + base → sal + agua (pH ≈ 7)'},{term:'Cadena de reactividad', def:'secuencia metal/no metal → óxido → base/ácido → sal, que conecta la nomenclatura con las ecuaciones químicas'}],
   // 7 — Sales ácidas
   [{term:'Ácido poliprótico', def:'ácido con más de un H ionizable: H₂SO₄, H₃PO₄, H₂CO₃'},{term:'Sal ácida', def:'sal formada por neutralización parcial de un ácido poliprótico'},{term:'Prefijo bi-', def:'indica que queda 1 H del ácido diprótico: bicarbonato = HCO₃⁻'},{term:'hidrogeno-', def:'prefijo IUPAC para indicar H retenido en el anión: hidrogenocarbonato'}],
 ];
