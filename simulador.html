@@ -1341,21 +1341,32 @@ function makeQ1type1(rx) {
   };
 }
 
+// Estado de oxidación del primer reactivo EN CADA REACCIÓN, indexado por
+// la pareja de reactivos (no por símbolo solo): un mismo elemento tiene EO
+// distinto según el producto — ej. Fe es +3 en Fe₂O₃ pero +2 en FeS y FeCl₂,
+// y S es +4 en SO₂ pero −2 en H₂S. Un mapa por símbolo reutilizaba el EO de
+// la primera reacción encontrada y marcaba como "correctas" respuestas
+// químicamente falsas en las demás (S+H₂→H₂S pedía +4 en vez de −2; Fe+S→FeS
+// y Fe+HCl→FeCl₂ pedían +3 en vez de +2).
+var EO_REACTION_MAP = {
+  'Na+O2':{eo:'+1',name:'sodio'}, 'Ca+O2':{eo:'+2',name:'calcio'}, 'Fe+O2':{eo:'+3',name:'hierro'},
+  'Cu+O2':{eo:'+2',name:'cobre'}, 'Mg+O2':{eo:'+2',name:'magnesio'}, 'Al+O2':{eo:'+3',name:'aluminio'},
+  'S+O2':{eo:'+4',name:'azufre'}, 'C+O2':{eo:'+4',name:'carbono'}, 'P+O2':{eo:'+5',name:'fósforo'},
+  'CaO+H2O':{eo:'+2',name:'calcio en CaO'}, 'Fe2O3+H2O':{eo:'+3',name:'hierro en Fe₂O₃'},
+  'SO2+H2O':{eo:'+4',name:'azufre en SO₂'}, 'SO3+H2O':{eo:'+6',name:'azufre en SO₃'},
+  'P2O5+H2O':{eo:'+5',name:'fósforo en P₂O₅'}, 'CO2+H2O':{eo:'+4',name:'carbono en CO₂'},
+  'Na+H2':{eo:'+1',name:'sodio'}, 'Ca+H2':{eo:'+2',name:'calcio'}, 'S+H2':{eo:'-2',name:'azufre'},
+  'Na+Cl2':{eo:'+1',name:'sodio'}, 'Fe+S':{eo:'+2',name:'hierro'}, 'Ca+Cl2':{eo:'+2',name:'calcio'},
+  'Al+Cl2':{eo:'+3',name:'aluminio'}, 'Fe+HCl(g)':{eo:'+2',name:'hierro'}, 'Mg+HCl(g)':{eo:'+2',name:'magnesio'},
+  'Na+H2O':{eo:'+1',name:'sodio'}, 'Ca+H2O':{eo:'+2',name:'calcio'}
+};
+
 function makeQ1type2(rx) {
-  // Oxidation state of the first reactant element in the product
-  var eoMap = {
-    'Na':'+1','Ca':'+2','Fe':'+3','Cu':'+2','Mg':'+2','Al':'+3',
-    'S':'+4','C':'+4','N':'+2','P':'+5',
-    'CaO':'+2','Fe2O3':'+3','SO2':'+4','SO3':'+6','P2O5':'+5','CO2':'+4'
-  };
-  var elem = rx.r[0];
-  var eo = eoMap[elem];
-  if (!eo) { return makeQ1type1(rx); } // fallback
+  var entry = EO_REACTION_MAP[rx.r[0]+'+'+rx.r[1]];
+  if (!entry) { return makeQ1type1(rx); } // fallback
+  var eo = entry.eo, elemName = entry.name;
   var allEO = ['+1','+2','+3','+4','+5','+6','-1','-2'];
   var opts = makeOpts4(allEO, eo);
-  var elemName = {'Na':'sodio','Ca':'calcio','Fe':'hierro','Cu':'cobre','Mg':'magnesio','Al':'aluminio',
-    'S':'azufre','C':'carbono','N':'nitrógeno','P':'fósforo',
-    'CaO':'calcio en CaO','Fe2O3':'hierro en Fe₂O₃','SO2':'azufre en SO₂','SO3':'azufre en SO₃','P2O5':'fósforo en P₂O₅','CO2':'carbono en CO₂'}[elem] || elem;
   return {
     q: '¿Cuál es el estado de oxidación del <strong>' + elemName + '</strong> en <strong>' + rx.product + '</strong>?',
     opts: opts,
