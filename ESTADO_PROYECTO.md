@@ -38,11 +38,17 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - Revisión completa de `juego.html`: no se encontraron referencias explícitas a MEN/DBA/Estándares Básicos de Competencias (la única mención de "Colombia" es una nota de uso regional del término "óxido ácido" para anhídridos, que no cita ningún estándar oficial y se conserva).
 
 ### 3. Funciones (`funciones.html`)
-- Reemplazo del sistema de pestañas por **navegación de 8 tarjetas**.
+- Reemplazo del sistema de pestañas por **navegación de 9 tarjetas** (las 8 funciones binarias/ternarias clásicas + Sales Ácidas).
 - Pantalla 1: menú de tarjetas coloreadas por tipo de compuesto.
 - Pantalla 2: panel de contenido con migas de pan, barra de progreso y ejercicios interactivos.
 - **Distinción colombiana**: tabla de reglas diferencia explícitamente entre *óxidos básicos* (metal + O) y *óxidos ácidos / anhídridos* (no metal + O), con nota contextual resaltada.
 - Guarda la última sección visitada en `localStorage`.
+
+#### Auditoría de contenido y currículo (2026-09-10)
+- **Error de conteo corregido**: la página decía "Las 8 funciones de la química inorgánica" en el encabezado y el mensaje de finalización de Sales Oxigenadas anunciaba "¡Has completado las 8 funciones inorgánicas!" — pero el menú, el JS (`var TOTAL = 9`) y las 9 tarjetas ya incluían Sales Ácidas como función 09 desde hacía tiempo. El mensaje prematuro fue reemplazado por uno que dirige al estudiante a la sección que realmente falta, y el aviso de "todas completadas" se movió al final real de la secuencia (Sales Ácidas).
+- **Error tipográfico corregido**: "ácido percórico" (ejemplo de nomenclatura de oxoácidos en el modal Mayer de cadena de reactividad) → "ácido perclórico" (HClO₄), le faltaba la "l".
+- **Referencia curricular explícita suavizada**: el encabezado "Salvedad para el currículo colombiano" (sección Anhídridos) nombraba el currículo directamente; se renombró a "Nota sobre el uso en Colombia", conservando la explicación de que "anhídrido" y "óxido ácido" son equivalentes.
+- Revisión completa del resto del archivo (las 9 secciones, sus ejercicios paso a paso, el mapa de reactividad interactivo y el modal Mayer de 8 cadenas con voz): contenido químico correcto, coherente con `teoria.html`, y sin otras referencias explícitas a MEN/DBA/Estándares Básicos (las numerosas menciones de "Colombia" son ejemplos de aplicación real — Zipaquirá, Cerro Matoso, floricultura de la Sabana, etc. — no citas de currículo oficial).
 
 ### 4. Juego (`juego.html`)
 
