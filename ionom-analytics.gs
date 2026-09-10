@@ -51,12 +51,19 @@
  *                                                  // fechas exactas sin duplicarlas a mano.
  * }
  * "nombre" y "curso" son los mismos STUDENT_NAME/STUDENT_COURSE que el
- * frontend ya resolvió desde su listado de códigos — el backend no conoce el
- * código del alumno, solo Nombre/Curso (lo que upsertRegistro guarda).
+ * frontend resuelve a partir de la respuesta de ?accion=validarCodigo (ver
+ * abajo) antes de llamar aquí.
  * Lee de la hoja "Estadísticas" ya calculada (disparador automático cada 30
  * min, o recalcularAhora()) — NO recalcula nada al vuelo desde "Registro",
  * misma arquitectura que Chromanom Analytics. El dato puede tener hasta ~30
  * min de rezago frente a la última partida jugada.
+ *
+ * ENDPOINT GET ?accion=validarCodigo&codigo=100401 — usado por juego.html
+ * (validateCode) al entrar en Modo Estudiante. Reemplaza el listado STUDENTS
+ * que antes vivía hardcodeado (con nombres reales de menores) en el propio
+ * HTML público. Lee la hoja "Estudiantes" (Código | Nombre | Curso), que el
+ * docente edita directamente en Sheets. Responde JSON:
+ * { ok:true, existe:true|false, nombre, curso }
  */
 
 // ── Configuración general ───────────────────────────────────────────────────
@@ -72,7 +79,7 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v3.1 — 2026-09-10 — nota ponderada por preguntas';
+const BUILD_TAG = 'IonNom Analytics v3.2 — 2026-09-10 — validación de código vía hoja Estudiantes';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
@@ -152,6 +159,7 @@ const CURSO_HEADERS = [
 function doGet(e) {
   const accion = String((e && e.parameter && e.parameter.accion) || '').trim();
   if (accion === 'stats') return responderEstadisticasEstudiante(e);
+  if (accion === 'validarCodigo') return responderValidarCodigo(e);
 
   // Texto plano simple: sirve para confirmar en el navegador, sin ambigüedad,
   // qué implementación (deployment) está realmente activa en producción.
@@ -239,6 +247,74 @@ function responderEstadisticasEstudiante(e) {
     }
   }
   registrarError('responderEstadisticasEstudiante', ultimoError);
+  return salidaJSON({ ok: false, error: String((ultimoError && ultimoError.message) || ultimoError) });
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// HOJA "Estudiantes" — listado de códigos válidos (Código → Nombre, Curso)
+// ══════════════════════════════════════════════════════════════════════════
+// Antes este listado vivía como un objeto STUDENTS hardcodeado en texto
+// plano dentro de juego.html — visible para cualquiera que abriera "ver
+// código fuente" en el repositorio público de GitHub Pages, incluyendo el
+// nombre completo de cada estudiante (protección de datos de menores). Se
+// migró aquí: el docente edita esta hoja directamente en Sheets (agregar,
+// corregir o quitar un estudiante ya NO requiere tocar ni redesplegar
+// juego.html), y el frontend valida el código contra responderValidarCodigo()
+// en vez de mirar un listado local.
+const ESTUDIANTES_HEADERS = ['Código', 'Nombre', 'Curso'];
+
+function obtenerHojaEstudiantes_(ss) {
+  let sh = ss.getSheetByName('Estudiantes');
+  if (!sh) {
+    sh = ss.insertSheet('Estudiantes');
+    sh.getRange(1, 1, 1, ESTUDIANTES_HEADERS.length).setValues([ESTUDIANTES_HEADERS])
+      .setBackground('#343a40').setFontColor('#ffffff').setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1, 90);
+    sh.setColumnWidth(2, 320);
+    sh.setColumnWidth(3, 90);
+  }
+  return sh;
+}
+
+// ── Validar código de estudiante (GET ?accion=validarCodigo&codigo=100401) ──
+// Llamado por juego.html (validateCode) al entrar en Modo Estudiante, en vez
+// de mirar el listado STUDENTS que antes vivía hardcodeado en el HTML. Solo
+// lee la hoja "Estudiantes" — no hay recálculo ni escritura, así que no
+// compite por el LockService que usan doPost/recalcularTodasLasEstadisticas.
+function responderValidarCodigo(e) {
+  const codigo = String((e && e.parameter && e.parameter.codigo) || '').trim();
+  if (!codigo) return salidaJSON({ ok: false, error: 'falta código' });
+
+  const INTENTOS = 3;
+  let ultimoError;
+  for (let intento = 0; intento < INTENTOS; intento++) {
+    try {
+      const ss = obtenerSpreadsheet();
+      const sh = obtenerHojaEstudiantes_(ss);
+      if (sh.getLastRow() < 2) return salidaJSON({ ok: true, existe: false });
+
+      const datos = sh.getRange(2, 1, sh.getLastRow() - 1, ESTUDIANTES_HEADERS.length).getValues();
+      for (let i = 0; i < datos.length; i++) {
+        if (String(datos[i][0]).trim() === codigo) {
+          return salidaJSON({
+            ok: true, existe: true,
+            nombre: String(datos[i][1] || ''),
+            curso: String(datos[i][2] || '')
+          });
+        }
+      }
+      return salidaJSON({ ok: true, existe: false });
+    } catch (err) {
+      ultimoError = err;
+      if (intento < INTENTOS - 1) {
+        const base = 400 * Math.pow(1.8, intento);
+        const jitter = Math.random() * 300;
+        Utilities.sleep(Math.min(base + jitter, 1500));
+      }
+    }
+  }
+  registrarError('responderValidarCodigo', ultimoError);
   return salidaJSON({ ok: false, error: String((ultimoError && ultimoError.message) || ultimoError) });
 }
 
@@ -1199,6 +1275,7 @@ function diagnosticoCursos() {
 // el spreadsheet listo antes de la primera partida real.
 function inicializarHojas() {
   const ss = obtenerSpreadsheet();
+  obtenerHojaEstudiantes_(ss);
   obtenerHojaRegistro(ss);
   recalcularTodasLasEstadisticas();
   Logger.log('Hojas de IonNom listas: ' + ss.getUrl());
@@ -1221,7 +1298,7 @@ function reordenarHojas() {
     .filter(function (n) { return n.indexOf('Curso ') === 0; })
     .sort();
 
-  const ordenDeseado = ['Registro', 'Estadísticas', 'Eficacia por tema']
+  const ordenDeseado = ['Estudiantes', 'Registro', 'Estadísticas', 'Eficacia por tema']
     .concat(hojasCurso)
     .concat(['Errores']);
 
