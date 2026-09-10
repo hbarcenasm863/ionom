@@ -49,6 +49,9 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 #### Tipos de pregunta disponibles (10)
 `mc` · `write-any` · `write-stock` · `write-sist` · `ox-state` · `drag` · `invert` · `balance`
 
+#### Tabla periódica: configuración electrónica completa (2026-09-10)
+- Antes las preguntas de "Tabla periódica y configuración electrónica" mostraban notación **abreviada** (ej. `[Ar] 4s²4p¹` para Ga). Ahora `elFullConfig()` construye la configuración **completa** desde 1s para los 103 elementos, reutilizando el campo `valence` existente (que ya trae correctamente las excepciones reales: Cr, Cu, Nb, Mo, Pd, Ag, La, Ce, Gd, Pt, Au) más los núcleos de gas noble completos y los bloques internos ya llenos que ese campo omitía (3d¹⁰/4d¹⁰/4f¹⁴ en elementos posteriores a un bloque d o f ya completo — ej. Ga, In, Tl, y los metales de transición del periodo 6 desde Hf). Verificado por script que el conteo de electrones de la cadena generada coincide exactamente con el número atómico para los 103 elementos.
+
 #### Mejoras de interfaz
 - **Botón "← Menú"** en la barra superior del juego con confirmación al salir a mitad de sesión.
 - **Retroalimentación colombiana**: al responder un anhídrido, se muestra una nota explicando que en Colombia se llama también *óxido ácido*, con ambos nombres aceptados como correctos.

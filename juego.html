@@ -1542,7 +1542,44 @@ const REACT_CHAINS=[
 ];
 
 // ── Element-question helpers ──
-const NOBLE_BY_PERIOD={1:'',2:'[He] ',3:'[Ne] ',4:'[Ar] ',5:'[Kr] ',6:'[Xe] ',7:'[Rn] '};
+// Configuración completa del gas noble que cierra cada periodo anterior —
+// se antepone a el.valence (que ya trae correctamente todo lo que va MÁS
+// ALLÁ de ese gas noble, incluidas las excepciones reales de Cr, Cu, Nb,
+// Mo, Pd, Ag, La, Ce, Gd, Pt, Au) para armar la configuración electrónica
+// COMPLETA de cualquier elemento, sin usar notación abreviada tipo [Ne].
+const CORE_FULL={
+  1:'',
+  2:'1s²',
+  3:'1s²2s²2p⁶',
+  4:'1s²2s²2p⁶3s²3p⁶',
+  5:'1s²2s²2p⁶3s²3p⁶3d¹⁰4s²4p⁶',
+  6:'1s²2s²2p⁶3s²3p⁶3d¹⁰4s²4p⁶4d¹⁰5s²5p⁶',
+  7:'1s²2s²2p⁶3s²3p⁶3d¹⁰4s²4p⁶4d¹⁰5s²5p⁶4f¹⁴5d¹⁰6s²6p⁶'
+};
+// En los elementos del bloque p que vienen DESPUÉS de un bloque d (o del
+// bloque f, en el periodo 6) ya completo, el.valence solo guarda el nivel
+// de valencia real (ns/np) — correcto para contar electrones de valencia,
+// pero para la configuración COMPLETA hace falta reinsertar ese bloque
+// interno ya lleno (3d¹⁰, 4d¹⁰, o 4f¹⁴5d¹⁰) entre el gas noble anterior y
+// esa capa de valencia. Ver Ga/Kr (falta 3d¹⁰), In/Xe (falta 4d¹⁰),
+// Tl/Rn (falta 4f¹⁴5d¹⁰).
+const DBLOCK_INSERT={4:'3d¹⁰',5:'4d¹⁰',6:'4f¹⁴5d¹⁰'};
+function elFullConfig(z){
+  const el=ELEMENTS[z];
+  let core=CORE_FULL[el.period]||'';
+  // El campo "group" de este banco reutiliza 3-17 también para numerar
+  // lantánidos/actínidos en secuencia (ver ELEMENTS), así que sin excluir
+  // esos dos tipos un lantánido/actínido con group 13-17 dispararía esta
+  // inserción por error — se filtra explícitamente por tipo, no solo por group.
+  const esBloqueP=el.group>=13&&el.group<=18&&el.type!=='lanthanide'&&el.type!=='actinide';
+  if(esBloqueP&&DBLOCK_INSERT[el.period]) core+=DBLOCK_INSERT[el.period];
+  // Los metales de transición del periodo 6 que vienen DESPUÉS de la serie
+  // de lantánidos completa (Hf en adelante: group 4-12, La con group 3 es
+  // 'lanthanide' y queda excluido) tampoco traen el 4f¹⁴ ya lleno en su
+  // valence (ej. Hf: '5d²6s²', falta el 4f¹⁴ entre Xe y 5d).
+  if(el.type==='transition'&&el.period===6) core+='4f¹⁴';
+  return core+el.valence;
+}
 const _EL_VALENCE={
   21:2,22:2,23:2,24:1,25:2,26:2,27:2,28:2,29:1,30:2, // Sc-Zn (Cr,Cu exception)
   39:2,40:2,41:1,42:1,43:2,44:2,45:2,46:0,47:1,48:2, // Y-Cd (Nb,Mo,Pd,Ag exception)
@@ -1553,10 +1590,6 @@ function elValenceCount(z){
   if(g>=1&&g<=2) return g;
   if(g>=13&&g<=18) return g-10;
   return _EL_VALENCE[z]||2; // transition metals
-}
-function elAbbrevConfig(z){
-  const el=ELEMENTS[z];
-  return (NOBLE_BY_PERIOD[el.period]||'')+el.valence;
 }
 function supify(str){
   const map={'⁰':0,'¹':1,'²':2,'³':3,'⁴':4,'⁵':5,'⁶':6,'⁷':7,'⁸':8,'⁹':9};
@@ -1993,7 +2026,7 @@ function renderElConfig(q){
     if(!el){console.error('renderElConfig: ELEMENTS['+q.z+'] undefined');renderMC_fallback(q);return;}
     const fEl=document.getElementById('q-formula');
     const prompt=document.getElementById('q-prompt');
-    fEl.innerHTML=`<span class="el-config-box">${supify(elAbbrevConfig(q.z))}</span>`;
+    fEl.innerHTML=`<span class="el-config-box">${supify(elFullConfig(q.z))}</span>`;
     let correct, options;
     if(q.qtype==='el-config2val'){
       prompt.textContent='¿Cuántos electrones de valencia tiene este elemento?';
@@ -2064,7 +2097,7 @@ function showElFeedback(type,msg,q){
   let html=`<strong>${msg}</strong>`;
   if(q&&q.isElement){
     const el=ELEMENTS[q.z];
-    html+=`<div class="fb-alts">${el.sym} · ${el.name} · #${q.z} · ${TYPE_LABELS[el.type]} · Config: ${supify(elAbbrevConfig(q.z))} · ${elValenceCount(q.z)} e⁻ de valencia</div>`;
+    html+=`<div class="fb-alts">${el.sym} · ${el.name} · #${q.z} · ${TYPE_LABELS[el.type]} · Config: ${supify(elFullConfig(q.z))} · ${elValenceCount(q.z)} e⁻ de valencia</div>`;
   }
   const fb=document.getElementById('feedback');
   fb.className=`feedback ${type} show`;
