@@ -992,8 +992,16 @@ showEl = function(z) {
   const el = ELEMENTS[z];
   const oxText = el.ox.length ? 'sus estados de oxidación son ' + el.ox.join(', ') + '.' : '';
   const enText = el.en != null ? 'Electronegatividad de Pauling: ' + el.en.toFixed(2) + '.' : '';
+  // Lantánidos/actínidos (excepto La/Ac) no tienen grupo IUPAC estándar — su
+  // campo .group es una renumeración interna 3-17 solo para alinearlos en la
+  // fila-f del layout. Decirlo en voz alta sería un dato falso (ej. "Cerio,
+  // grupo 4" cuando el grupo 4 real es Ti/Zr/Hf/Rf).
+  const isFBlockNoGroupTTS = (el.type==='lanthanide'||el.type==='actinide') && el.sym!=='La' && el.sym!=='Ac';
+  const pgText = isFBlockNoGroupTTS
+    ? `Período ${el.period}, ${el.type==='lanthanide'?'lantánido':'actínido'}.`
+    : `Período ${el.period}, grupo ${el.group}.`;
   _pendingSpeakText = `${el.name}. Símbolo: ${el.sym}. Número atómico: ${z}. Masa atómica: ${el.mass} u. ` +
-    `${classOf(el.type)}. Período ${el.period}, grupo ${el.group}. ` +
+    `${classOf(el.type)}. ${pgText} ` +
     oxText + ' ' + enText;
   const btn = document.getElementById('dp-tts-btn');
   if (btn) { btn.disabled = false; btn.textContent = '🔊 Escuchar información'; }
