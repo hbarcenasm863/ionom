@@ -1121,7 +1121,12 @@ async function validateCode(){
   }
   STUDENT_CODE = code;
   STUDENT_NAME = data.nombre;
-  STUDENT_COURSE = data.curso || parseCourse(code);
+  // Curso SIEMPRE se calcula localmente desde el código, nunca desde la hoja
+  // "Estudiantes" — el histórico en Registro/Estadísticas se guardó siempre
+  // con este mismo formato (ej. "11°01"), y una columna Curso mal tecleada o
+  // con el símbolo ° perdido al pegar el CSV (visto en producción) rompería
+  // la búsqueda de estadísticas sin que el estudiante note por qué.
+  STUDENT_COURSE = parseCourse(code);
   CODE_VERIFIED = true;
   document.getElementById('login-panel').style.display = 'none';
   const wi = document.getElementById('welcome-inline');
