@@ -3226,8 +3226,11 @@ function _post(payload){
     return;
   }
   fetch(APPS_SCRIPT_URL, {
-    method:'POST', mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
+    // Content-Type 'text/plain' evita el preflight OPTIONS (que Apps Script
+    // no responde) sin sacrificar la lectura de la respuesta como hacía
+    // mode:'no-cors' — doPost() igual lee el body crudo vía e.postData.contents.
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
     body: JSON.stringify(payload),
     keepalive: true
   }).catch(()=>{});
@@ -3258,6 +3261,12 @@ document.addEventListener('visibilitychange', ()=>{
 });
 
 // ── Send final results to Apps Script ──
+// mode:'no-cors' hacía que fetch() SIEMPRE "tuviera éxito" aunque el
+// servidor respondiera {ok:false} tras agotar sus propios reintentos (lock
+// congestionado) — el estudiante veía "✅ registrados" con la partida
+// realmente perdida. Ahora se lee la respuesta real y, si el backend
+// reportó fallo, se reintenta un par de veces antes de mostrar el aviso
+// honesto de "sin conexión".
 function sendResults(grade, level, pct){
   if(GAME_MODE !== 'student' || !CODE_VERIFIED) return;
   _sessionSent = true; // bloquea abandono posterior (visibilitychange tras terminar)
@@ -3266,24 +3275,33 @@ function sendResults(grade, level, pct){
   ss.innerHTML='⏳ Enviando resultados al registro del docente…';
   const nota = Math.round(pct / 100 * 5 * 10) / 10;
   const payload = _buildPayload('fin', {calificacion: nota, nivel: level, porcentaje: pct});
-  fetch(APPS_SCRIPT_URL, {
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload),
-    keepalive: true
-  }).then(()=>{
-    ss.className='send-status ok show';
-    ss.innerHTML='✅ <strong>Resultados registrados.</strong> Tu docente recibirá tu puntaje automáticamente.';
-  }).catch(()=>{
-    const nota = Math.round(pct / 100 * 5 * 10) / 10;
-    ss.className='send-status err show';
-    ss.innerHTML=
-      '📵 <strong>Sin conexión al servidor.</strong> Toma una captura de pantalla y muéstrasela a tu docente.<br>'+
-      '<span style="display:inline-block;margin-top:8px;padding:8px 14px;background:rgba(0,0,0,.08);border-radius:8px;font-family:var(--mono);font-size:.9rem">'+
-      STUDENT_NAME+' &nbsp;|&nbsp; '+ST.group.toUpperCase()+' &nbsp;|&nbsp; '+ST.correct+'/'+ST.questions.length+' correctas &nbsp;|&nbsp; '+pct+'% &nbsp;|&nbsp; Nota: '+nota+
-      '</span>';
-  });
+
+  const INTENTOS_CLIENTE = 3;
+  function intentar(intento){
+    fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).then(function(r){ return r.json(); }).then(function(data){
+      if(!data || data.ok !== true) throw new Error((data && data.error) || 'respuesta no-ok');
+      ss.className='send-status ok show';
+      ss.innerHTML='✅ <strong>Resultados registrados.</strong> Tu docente recibirá tu puntaje automáticamente.';
+    }).catch(function(){
+      if(intento < INTENTOS_CLIENTE - 1){
+        ss.innerHTML='⏳ El servidor está ocupado, reintentando…';
+        setTimeout(function(){ intentar(intento + 1); }, 2000 * (intento + 1));
+        return;
+      }
+      ss.className='send-status err show';
+      ss.innerHTML=
+        '📵 <strong>Sin conexión al servidor.</strong> Toma una captura de pantalla y muéstrasela a tu docente.<br>'+
+        '<span style="display:inline-block;margin-top:8px;padding:8px 14px;background:rgba(0,0,0,.08);border-radius:8px;font-family:var(--mono);font-size:.9rem">'+
+        STUDENT_NAME+' &nbsp;|&nbsp; '+ST.group.toUpperCase()+' &nbsp;|&nbsp; '+ST.correct+'/'+ST.questions.length+' correctas &nbsp;|&nbsp; '+pct+'% &nbsp;|&nbsp; Nota: '+nota+
+        '</span>';
+    });
+  }
+  intentar(0);
 }
 
 function confirmExit(){
