@@ -1045,6 +1045,13 @@ html{font-size:var(--base-fs)}
 </div>
 
 <script>
+// ── Todo el estado y la lógica del juego vive dentro de este IIFE, no en el
+// ámbito global: antes `ST` (con las preguntas y respuestas de la sesión en
+// curso) era escribible/legible con solo escribir "ST" en la consola del
+// navegador (F12). Los únicos nombres expuestos a `window` son los que los
+// atributos onclick="..." del HTML necesitan para invocarse desde fuera de
+// este cierre — ver las asignaciones window.* al final del script.
+(function(){
 // ── Apps Script endpoint (deploy as web app, replace URL) ──
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHa4A97pssgxoOuBk6dR9PlphplxUoK_LGTDRaxtmnoHyJkC6u3yjknCnnjxWtMJVB/exec';
 
@@ -3641,6 +3648,41 @@ function scoreErr(){ ST.totalAttempts++; updateStats(); }
   document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
   var themeBtnNav=document.getElementById('theme-btn');
   if(themeBtnNav) themeBtnNav.addEventListener('click',toggleTheme);
+})();
+
+// ── Exportes al ámbito global ──
+// Solo estos nombres, porque los onclick="..." del HTML (estáticos y los que
+// se arman con innerHTML durante el juego) se ejecutan en el scope global,
+// fuera del IIFE de arriba. Todo lo demás (ST, APPS_SCRIPT_URL, las
+// funciones de validación de respuestas, etc.) queda inaccesible desde la
+// consola del navegador.
+window.openHowToPlay = openHowToPlay;
+window.closeHowToPlay = closeHowToPlay;
+window.setMode = setMode;
+window.validateCode = validateCode;
+window.cambiarEstudiante = cambiarEstudiante;
+window.setDiff = setDiff;
+window.pickGroup = pickGroup;
+window.closePrizeModal = closePrizeModal;
+window.confirmExit = confirmExit;
+window.submitWrite = submitWrite;
+window.showHint = showHint;
+window.checkOxAssign = checkOxAssign;
+window.checkReactChainWrite = checkReactChainWrite;
+window.openPTModal = openPTModal;
+window.closePTModal = closePTModal;
+window.resetGame = resetGame;
+window.checkMC = checkMC;
+window.scheduleNext = scheduleNext;
+window.checkOx = checkOx;
+window.clickSlot = clickSlot;
+window.clickChip = clickChip;
+window.checkBalance = checkBalance;
+window.checkInvert = checkInvert;
+window.checkClassifyRx = checkClassifyRx;
+window.checkBalanceEq = checkBalanceEq;
+window.showBalanceAnswer = showBalanceAnswer;
+window.checkMolCalc = checkMolCalc;
 })();
 </script>
 

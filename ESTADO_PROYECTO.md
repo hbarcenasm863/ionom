@@ -77,6 +77,11 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - **Botón "← Menú"** en la barra superior del juego con confirmación al salir a mitad de sesión.
 - **Retroalimentación colombiana**: al responder un anhídrido, se muestra una nota explicando que en Colombia se llama también *óxido ácido*, con ambos nombres aceptados como correctos.
 
+#### Anti-copia: estado del juego ya no vive en el scope global (2026-09-11)
+- Antes, todo el estado de la partida (`ST`, con las 20 preguntas de la sesión y sus respuestas correctas) era una variable de nivel superior del script — cualquier estudiante podía abrir la consola del navegador (F12) y escribir `ST.questions` para ver de una sola vez todas las respuestas correctas de su sesión, sin necesidad de leer código.
+- Se envolvió todo el script principal del juego en un IIFE (`(function(){...})();`), igual que ya se hacía con la mini-calculadora y el ajuste de tamaño de letra. `ST` y el resto de variables internas dejaron de ser accesibles por nombre desde la consola. Los `onclick="..."` del HTML (estáticos y los generados dinámicamente con `innerHTML` durante el juego) siguen funcionando porque las ~27 funciones que esos atributos invocan se exponen explícitamente como `window.nombreFuncion = nombreFuncion` al final del IIFE — el resto de funciones internas y el estado del juego quedan privados.
+- **Qué NO cubre esto** (limitaciones aceptadas conscientemente, no son bugs): el banco de compuestos (`banco.js`, compartido con `generador.html` y `simulador.html`) sigue siendo una variable global `BANCO` legible desde la consola en cualquiera de esos archivos — ocultarla requeriría tocar un archivo compartido por 3 páginas, fuera de alcance de este cambio. Tampoco existe forma de impedir capturas de pantalla (limitación de cualquier página web, no solo de esta). La única forma de eliminar el copiado por completo sería validar cada respuesta en el backend (como el código de estudiante), lo cual es una reescritura mayor no implementada aún.
+
 #### Modo Estudiante
 - **Dos modos de juego**:
   - *Modo Libre*: sin métricas, sin identificación.
