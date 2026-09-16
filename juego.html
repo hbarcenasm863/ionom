@@ -969,6 +969,17 @@ html{font-size:var(--base-fs)}
   </div>
 </div>
 
+<!-- ═══════════════ FRENO DE SALIDA ACCIDENTAL (botón/gesto "atrás") ═══════════════ -->
+<div id="exit-guard-overlay" class="pt-modal-overlay">
+  <div class="pt-modal-box" style="max-width:320px;text-align:center">
+    <div style="font-size:2.2rem;margin-bottom:6px">⚠️</div>
+    <div style="font-family:var(--serif);font-size:1.05rem;font-weight:700;font-style:italic;color:var(--an);margin-bottom:8px">¿Salir de la partida?</div>
+    <p style="font-size:.85rem;color:var(--tx2);line-height:1.6;margin-bottom:18px">Si sales ahora perderás el progreso de esta partida. ¿Fue sin querer?</p>
+    <button class="btn-submit" style="width:100%" onclick="closeExitGuardModal()">↩️ Seguir jugando</button>
+    <button onclick="confirmExitGuardModal()" style="width:100%;margin-top:8px;padding:10px;background:none;border:1.5px solid var(--brd);border-radius:var(--rs);font-family:var(--sans);font-size:.85rem;cursor:pointer;color:var(--dim)">Salir de todas formas</button>
+  </div>
+</div>
+
 <!-- ═══════════════ PERIODIC TABLE MODAL ═══════════════ -->
 <div id="pt-modal-overlay" class="pt-modal-overlay" onclick="if(event.target===this)closePTModal()">
   <div class="pt-modal-box">
@@ -1450,6 +1461,11 @@ function buildDrag(q, pool){
 
 // ── State ──
 let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[],answered:false};
+// true mientras hay una partida en curso (desde la primera pregunta hasta
+// resultados/menú) — usado para frenar la salida accidental de la página
+// (recarga, cerrar pestaña, botón/gesto "atrás") en modo-libre y estudiante
+// por igual, ya que ambos pierden el progreso de la partida sin este aviso.
+let _gameActive=false;
 const TYPE_POOL_BASE=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance'];
 const TYPE_POOL_EL=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el','el-metal','el-block','el-valence','el-property'];
 // TYPE_POOL kept for legacy references
@@ -1862,6 +1878,7 @@ function startGame(group){
 
 function loadQuestion(){
   if(ST.idx>=ST.questions.length){endGame();return;}
+  if(ST.idx===0) armExitGuard();
   const q=ST.questions[ST.idx];
   ST.qtype=q.qtype; ST.attempts=0;
   const pct=(ST.idx/ST.questions.length)*100;
@@ -3041,6 +3058,7 @@ function scheduleNext(ms){
 // ── End ──
 function endGame(){
   stopTimer();
+  _gameActive=false;
   const pct=Math.round((ST.score/40)*100);
   const grade=((ST.score/40)*5).toFixed(2);
   let medal='🔰',level='Principiante';
@@ -3282,10 +3300,17 @@ function sendProgress(razon, extra){
 function _startProgressTracking(){ /* desactivado */ }
 function _stopProgressTracking(){}
 
-// Cierre / recarga → abandono (solo si el juego está en curso)
-window.addEventListener('beforeunload', ()=>{
+// Cierre / recarga → abandono (solo si el juego está en curso), y freno
+// nativo del navegador para que recargar o cerrar la pestaña a mitad de
+// partida no sea un descuido de un solo clic — ver armExitGuard() más abajo
+// para el equivalente en el botón/gesto "atrás" del celular.
+window.addEventListener('beforeunload', (e)=>{
   if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx > 0){
     _post(_buildPayload('abandono'));
+  }
+  if(_gameActive){
+    e.preventDefault();
+    e.returnValue = '';
   }
 });
 // Segundo plano (móvil) → abandono; si el usuario regresa y termina, _sessionSent
@@ -3295,6 +3320,34 @@ document.addEventListener('visibilitychange', ()=>{
     _post(_buildPayload('abandono'));
   }
 });
+
+// ── Freno de salida accidental (recarga/cerrar ya lo cubre beforeunload de
+// arriba; esto cubre el botón/gesto "atrás" del celular, que no siempre
+// dispara beforeunload de forma confiable) ──
+// armExitGuard() agrega una entrada extra al historial al empezar la
+// partida (ver loadQuestion()); si el estudiante presiona "atrás" mientras
+// _gameActive es true, se intercepta, se vuelve a armar la trampa (para que
+// la URL no cambie todavía) y se muestra un modal propio en vez de dejar
+// que el navegador salga en silencio y pierda el progreso.
+function armExitGuard(){
+  _gameActive=true;
+  window.history.pushState({ionomGuard:true}, '', location.href);
+}
+window.addEventListener('popstate', ()=>{
+  if(_gameActive){
+    window.history.pushState({ionomGuard:true}, '', location.href);
+    const m=document.getElementById('exit-guard-overlay');
+    if(m) m.classList.add('open');
+  }
+});
+function closeExitGuardModal(){
+  const m=document.getElementById('exit-guard-overlay');
+  if(m) m.classList.remove('open');
+}
+function confirmExitGuardModal(){
+  closeExitGuardModal();
+  _doExit();
+}
 
 // ── Send final results to Apps Script ──
 // mode:'no-cors' hacía que fetch() SIEMPRE "tuviera éxito" aunque el
@@ -3341,20 +3394,27 @@ function sendResults(grade, level, pct){
 }
 
 function confirmExit(){
-  if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')){
-    // Salir por el botón del menú es una navegación DENTRO de la SPA — no
-    // dispara beforeunload ni visibilitychange, así que sin este envío la
-    // sesión parcial jugada se perdía por completo (nunca llegaba a
-    // "Registro"), a diferencia de cerrar la pestaña o cambiar de app.
-    if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx>0){
-      _postConReintento(_buildPayload('abandono'));
-    }
-    resetGame();
+  if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')) _doExit();
+}
+
+// Cuerpo real de la salida, separado de confirmExit() para que el modal de
+// "atrás accidental" (ver confirmExitGuardModal()) no muestre un segundo
+// confirm() nativo encima del suyo propio — ahí la confirmación ya la dio
+// el estudiante al tocar "Salir de todas formas".
+function _doExit(){
+  // Salir por el botón del menú es una navegación DENTRO de la SPA — no
+  // dispara beforeunload ni visibilitychange, así que sin este envío la
+  // sesión parcial jugada se perdía por completo (nunca llegaba a
+  // "Registro"), a diferencia de cerrar la pestaña o cambiar de app.
+  if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx>0){
+    _postConReintento(_buildPayload('abandono'));
   }
+  resetGame();
 }
 
 function resetGame(){
   stopTimer();
+  _gameActive=false;
   _stopProgressTracking();
   ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[],answered:false};
   // Keep student logged in for another round; just hide send-status
@@ -3694,6 +3754,8 @@ window.setDiff = setDiff;
 window.pickGroup = pickGroup;
 window.closePrizeModal = closePrizeModal;
 window.confirmExit = confirmExit;
+window.closeExitGuardModal = closeExitGuardModal;
+window.confirmExitGuardModal = confirmExitGuardModal;
 window.submitWrite = submitWrite;
 window.showHint = showHint;
 window.checkOxAssign = checkOxAssign;
