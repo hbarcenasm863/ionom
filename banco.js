@@ -1595,14 +1595,6 @@ const BANCO = [
     hint: 'CO₃²⁻ = carbonato. Ca²⁺ → calcio. CaCO₃ es la piedra caliza/calcita.'
   },
   {
-    formula: 'NaHCO₃',
-    group: 'sal-ox', level: 'easy',
-    trad: ['bicarbonato de sodio'],
-    stock: [],
-    sist: ['bicarbonato de sodio'],
-    hint: 'HCO₃⁻ = bicarbonato (trad.) / hidrogenocarbonato (IUPAC). Na⁺ → sodio.'
-  },
-  {
     formula: 'K₃PO₄',
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de potasio'],
@@ -3068,6 +3060,109 @@ const BANCO = [
 
   // ── Hidruros: metal alcalino adicional ──
   {formula:'CsH',    group:'hidru',level:'easy',    trad:['hidruro de cesio'],      stock:[], sist:['hidruro de cesio'], hint:'Cs⁺ (grupo 1A, valencia fija +1) + H⁻. Igual patrón que el hidruro de rubidio.'},
+
+  // ── Ampliación del banco (10°): un elemento más (Cd, Be) donde aún faltaba,
+  // y muchas más sales/bases con cationes y aniones ya usados en el banco, para
+  // dar más variedad sin salir del marco de nomenclatura de 10° (valencias fijas
+  // y las variables de 2 estados que ya se enseñan). Óxidos básicos, hidruros,
+  // ácidos hídricos y ácidos oxácidos casi no crecen a propósito: con los
+  // elementos que realmente se enseñan en 10°, esas familias ya estaban casi
+  // completas (cada metal/no metal común ya tenía su(s) compuesto(s)) — sumar
+  // más ahí exigiría meterse con elementos poco comunes o forzar una dificultad
+  // mayor, y eso iría en contra de que los compuestos nuevos sean simples.
+
+  // ── Óxidos básicos: un metal fijo más ──
+  {formula:'CdO', group:'ox-bas',level:'easy', trad:['óxido de cadmio'], stock:[], sist:['óxido de cadmio'], hint:'Cd²⁺ (valencia fija +2, igual que Zn²⁺) + O²⁻ → CdO.'},
+
+  // ── Hidruros: el alcalinotérreo que faltaba ──
+  {formula:'BeH₂', group:'hidru',level:'easy', trad:['hidruro de berilio'], stock:[], sist:['hidruro de berilio'], hint:'Be²⁺ (grupo 2A, valencia fija +2) + 2H⁻ → BeH₂. Mismo patrón que el hidruro de magnesio.'},
+
+  // ── Bases: el alcalinotérreo que faltaba ──
+  {formula:'Be(OH)₂', group:'base',level:'easy', trad:['hidróxido de berilio'], stock:[], sist:['hidróxido de berilio'], hint:'Be²⁺ (valencia fija +2) + 2OH⁻ → Be(OH)₂. Mismo patrón que el hidróxido de magnesio.'},
+
+  // ── Ácidos oxácidos: los 2 miembros que faltaban en familias ya vistas ──
+  {formula:'H₃PO₂', group:'ac-ox',level:'medium', trad:['ácido hipofosforoso'], stock:[], sist:['ácido hipofosforoso'], hint:'H₃ + PO₂³⁻ (formal). P con EO=+1 → hipo-oso → hipofosforoso. Mismo patrón hipo-/-oso/-ico que el ácido sulfúrico/sulfuroso/hiposulfuroso.'},
+  {formula:'H₂MnO₄', group:'ac-ox',level:'hard', trad:['ácido mangánico'], stock:[], sist:['ácido mangánico'], hint:'H₂ + MnO₄²⁻ (manganato). Mn con EO=+6 → -ico → mangánico (EO+7 → per-ico → permangánico, ya visto).'},
+
+  // ── Sales binarias: completar la parrilla alcalinos/alcalinotérreos × halógeno/azufre ──
+  {formula:'LiCl', group:'sal-bin',level:'easy', trad:['cloruro de litio'], stock:[], sist:['cloruro de litio'], hint:'Cl⁻ → cloruro. Li⁺ (valencia fija +1) → litio. Mismo patrón que el cloruro de sodio.'},
+  {formula:'LiBr', group:'sal-bin',level:'easy', trad:['bromuro de litio'], stock:[], sist:['bromuro de litio'], hint:'Br⁻ → bromuro. Li⁺ → litio.'},
+  {formula:'LiI', group:'sal-bin',level:'easy', trad:['yoduro de litio'], stock:[], sist:['yoduro de litio'], hint:'I⁻ → yoduro. Li⁺ → litio.'},
+  {formula:'RbF', group:'sal-bin',level:'easy', trad:['fluoruro de rubidio'], stock:[], sist:['fluoruro de rubidio'], hint:'F⁻ → fluoruro. Rb⁺ (grupo 1A) → rubidio.'},
+  {formula:'RbCl', group:'sal-bin',level:'easy', trad:['cloruro de rubidio'], stock:[], sist:['cloruro de rubidio'], hint:'Cl⁻ → cloruro. Rb⁺ → rubidio.'},
+  {formula:'RbBr', group:'sal-bin',level:'easy', trad:['bromuro de rubidio'], stock:[], sist:['bromuro de rubidio'], hint:'Br⁻ → bromuro. Rb⁺ → rubidio.'},
+  {formula:'RbI', group:'sal-bin',level:'easy', trad:['yoduro de rubidio'], stock:[], sist:['yoduro de rubidio'], hint:'I⁻ → yoduro. Rb⁺ → rubidio.'},
+  {formula:'CsF', group:'sal-bin',level:'easy', trad:['fluoruro de cesio'], stock:[], sist:['fluoruro de cesio'], hint:'F⁻ → fluoruro. Cs⁺ (grupo 1A) → cesio.'},
+  {formula:'CsCl', group:'sal-bin',level:'easy', trad:['cloruro de cesio'], stock:[], sist:['cloruro de cesio'], hint:'Cl⁻ → cloruro. Cs⁺ → cesio.'},
+  {formula:'CsBr', group:'sal-bin',level:'easy', trad:['bromuro de cesio'], stock:[], sist:['bromuro de cesio'], hint:'Br⁻ → bromuro. Cs⁺ → cesio.'},
+  {formula:'CsI', group:'sal-bin',level:'easy', trad:['yoduro de cesio'], stock:[], sist:['yoduro de cesio'], hint:'I⁻ → yoduro. Cs⁺ → cesio.'},
+  {formula:'MgF₂', group:'sal-bin',level:'easy', trad:['fluoruro de magnesio'], stock:[], sist:['difluoruro de magnesio'], hint:'F⁻ → fluoruro. Mg²⁺ + 2F⁻ → MgF₂.'},
+  {formula:'MgI₂', group:'sal-bin',level:'easy', trad:['yoduro de magnesio'], stock:[], sist:['diyoduro de magnesio'], hint:'I⁻ → yoduro. Mg²⁺ + 2I⁻ → MgI₂.'},
+  {formula:'CaBr₂', group:'sal-bin',level:'easy', trad:['bromuro de calcio'], stock:[], sist:['dibromuro de calcio'], hint:'Br⁻ → bromuro. Ca²⁺ + 2Br⁻ → CaBr₂.'},
+  {formula:'SrF₂', group:'sal-bin',level:'easy', trad:['fluoruro de estroncio'], stock:[], sist:['difluoruro de estroncio'], hint:'F⁻ → fluoruro. Sr²⁺ + 2F⁻ → SrF₂.'},
+  {formula:'SrCl₂', group:'sal-bin',level:'easy', trad:['cloruro de estroncio'], stock:[], sist:['dicloruro de estroncio'], hint:'Cl⁻ → cloruro. Sr²⁺ + 2Cl⁻ → SrCl₂.'},
+  {formula:'SrBr₂', group:'sal-bin',level:'easy', trad:['bromuro de estroncio'], stock:[], sist:['dibromuro de estroncio'], hint:'Br⁻ → bromuro. Sr²⁺ + 2Br⁻ → SrBr₂.'},
+  {formula:'SrI₂', group:'sal-bin',level:'easy', trad:['yoduro de estroncio'], stock:[], sist:['diyoduro de estroncio'], hint:'I⁻ → yoduro. Sr²⁺ + 2I⁻ → SrI₂.'},
+  {formula:'BaF₂', group:'sal-bin',level:'easy', trad:['fluoruro de bario'], stock:[], sist:['difluoruro de bario'], hint:'F⁻ → fluoruro. Ba²⁺ + 2F⁻ → BaF₂.'},
+  {formula:'BaBr₂', group:'sal-bin',level:'easy', trad:['bromuro de bario'], stock:[], sist:['dibromuro de bario'], hint:'Br⁻ → bromuro. Ba²⁺ + 2Br⁻ → BaBr₂.'},
+  {formula:'BeF₂', group:'sal-bin',level:'easy', trad:['fluoruro de berilio'], stock:[], sist:['difluoruro de berilio'], hint:'F⁻ → fluoruro. Be²⁺ (valencia fija +2) + 2F⁻ → BeF₂.'},
+  {formula:'BeCl₂', group:'sal-bin',level:'easy', trad:['cloruro de berilio'], stock:[], sist:['dicloruro de berilio'], hint:'Cl⁻ → cloruro. Be²⁺ + 2Cl⁻ → BeCl₂.'},
+  {formula:'BeBr₂', group:'sal-bin',level:'easy', trad:['bromuro de berilio'], stock:[], sist:['dibromuro de berilio'], hint:'Br⁻ → bromuro. Be²⁺ + 2Br⁻ → BeBr₂.'},
+  {formula:'BeI₂', group:'sal-bin',level:'easy', trad:['yoduro de berilio'], stock:[], sist:['diyoduro de berilio'], hint:'I⁻ → yoduro. Be²⁺ + 2I⁻ → BeI₂.'},
+  {formula:'AlI₃', group:'sal-bin',level:'easy', trad:['yoduro de aluminio'], stock:[], sist:['triyoduro de aluminio'], hint:'I⁻ → yoduro. Al³⁺ + 3I⁻ → AlI₃.'},
+  {formula:'ZnF₂', group:'sal-bin',level:'easy', trad:['fluoruro de zinc'], stock:[], sist:['difluoruro de zinc'], hint:'F⁻ → fluoruro. Zn²⁺ (valencia fija +2) + 2F⁻ → ZnF₂.'},
+  {formula:'ZnBr₂', group:'sal-bin',level:'easy', trad:['bromuro de zinc'], stock:[], sist:['dibromuro de zinc'], hint:'Br⁻ → bromuro. Zn²⁺ + 2Br⁻ → ZnBr₂.'},
+  {formula:'ZnI₂', group:'sal-bin',level:'easy', trad:['yoduro de zinc'], stock:[], sist:['diyoduro de zinc'], hint:'I⁻ → yoduro. Zn²⁺ + 2I⁻ → ZnI₂.'},
+  {formula:'AgF', group:'sal-bin',level:'easy', trad:['fluoruro de plata'], stock:[], sist:['fluoruro de plata'], hint:'F⁻ → fluoruro. Ag⁺ (valencia fija +1) → plata.'},
+  {formula:'Li₂S', group:'sal-bin',level:'easy', trad:['sulfuro de litio'], stock:[], sist:['sulfuro de dilitio'], hint:'S²⁻ → sulfuro. Dos Li⁺ por un S²⁻.'},
+  {formula:'MgS', group:'sal-bin',level:'easy', trad:['sulfuro de magnesio'], stock:[], sist:['sulfuro de magnesio'], hint:'S²⁻ → sulfuro. Mg²⁺ → magnesio.'},
+  {formula:'SrS', group:'sal-bin',level:'easy', trad:['sulfuro de estroncio'], stock:[], sist:['sulfuro de estroncio'], hint:'S²⁻ → sulfuro. Sr²⁺ → estroncio.'},
+  {formula:'Rb₂S', group:'sal-bin',level:'easy', trad:['sulfuro de rubidio'], stock:[], sist:['sulfuro de dirubidio'], hint:'S²⁻ → sulfuro. Dos Rb⁺ por un S²⁻.'},
+  {formula:'Cs₂S', group:'sal-bin',level:'easy', trad:['sulfuro de cesio'], stock:[], sist:['sulfuro de dicesio'], hint:'S²⁻ → sulfuro. Dos Cs⁺ por un S²⁻.'},
+  {formula:'CdCl₂', group:'sal-bin',level:'easy', trad:['cloruro de cadmio'], stock:[], sist:['dicloruro de cadmio'], hint:'Cl⁻ → cloruro. Cd²⁺ (valencia fija +2) + 2Cl⁻ → CdCl₂.'},
+
+  // ── Sales oxigenadas: más cationes de valencia fija con los oxoaniones ya vistos ──
+  {formula:'Li₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de litio'], stock:[], sist:['sulfato de litio'], hint:'SO₄²⁻ = sulfato. Dos Li⁺ por un SO₄²⁻.'},
+  {formula:'LiNO₃', group:'sal-ox',level:'easy', trad:['nitrato de litio'], stock:[], sist:['nitrato de litio'], hint:'NO₃⁻ = nitrato. Li⁺ → litio.'},
+  {formula:'Li₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de litio'], stock:[], sist:['carbonato de litio'], hint:'CO₃²⁻ = carbonato. Dos Li⁺ por un CO₃²⁻. Usado en medicamentos para el trastorno bipolar.'},
+  {formula:'Li₃PO₄', group:'sal-ox',level:'easy', trad:['fosfato de litio'], stock:[], sist:['fosfato de litio'], hint:'PO₄³⁻ = fosfato. Tres Li⁺ por un PO₄³⁻.'},
+  {formula:'K₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de potasio'], stock:[], sist:['carbonato de potasio'], hint:'CO₃²⁻ = carbonato. Dos K⁺ por un CO₃²⁻. Usado en la fabricación de jabón y vidrio.'},
+  {formula:'K₂SO₃', group:'sal-ox',level:'easy', trad:['sulfito de potasio'], stock:[], sist:['sulfito de potasio'], hint:'SO₃²⁻ = sulfito. Dos K⁺ por un SO₃²⁻. Sulfito ≠ sulfato — cuidado con el sufijo.'},
+  {formula:'LiClO', group:'sal-ox',level:'easy', trad:['hipoclorito de litio'], stock:[], sist:['hipoclorito de litio'], hint:'ClO⁻ = hipoclorito (Cl con EO=+1). Li⁺ → litio. Usado como blanqueador y desinfectante.'},
+  {formula:'Rb₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de rubidio'], stock:[], sist:['carbonato de rubidio'], hint:'CO₃²⁻ = carbonato. Dos Rb⁺ por un CO₃²⁻.'},
+  {formula:'Rb₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de rubidio'], stock:[], sist:['sulfato de rubidio'], hint:'SO₄²⁻ = sulfato. Dos Rb⁺ por un SO₄²⁻.'},
+  {formula:'RbNO₃', group:'sal-ox',level:'easy', trad:['nitrato de rubidio'], stock:[], sist:['nitrato de rubidio'], hint:'NO₃⁻ = nitrato. Rb⁺ → rubidio.'},
+  {formula:'Cs₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de cesio'], stock:[], sist:['sulfato de cesio'], hint:'SO₄²⁻ = sulfato. Dos Cs⁺ por un SO₄²⁻.'},
+  {formula:'CsNO₃', group:'sal-ox',level:'easy', trad:['nitrato de cesio'], stock:[], sist:['nitrato de cesio'], hint:'NO₃⁻ = nitrato. Cs⁺ → cesio.'},
+  {formula:'Mg₃(PO₄)₂', group:'sal-ox',level:'easy', trad:['fosfato de magnesio'], stock:[], sist:['fosfato de magnesio'], hint:'PO₄³⁻ = fosfato. 3Mg²⁺ + 2PO₄³⁻ → Mg₃(PO₄)₂.'},
+  {formula:'MgSO₃', group:'sal-ox',level:'easy', trad:['sulfito de magnesio'], stock:[], sist:['sulfito de magnesio'], hint:'SO₃²⁻ = sulfito. Mg²⁺ → magnesio.'},
+  {formula:'CaSO₄', group:'sal-ox',level:'easy', trad:['sulfato de calcio'], stock:[], sist:['sulfato de calcio'], hint:'SO₄²⁻ = sulfato. Ca²⁺ → calcio. El yeso es CaSO₄ hidratado.'},
+  {formula:'Ca(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de calcio'], stock:[], sist:['nitrato de calcio'], hint:'NO₃⁻ = nitrato. Ca²⁺ + 2NO₃⁻ → Ca(NO₃)₂. Usado como fertilizante.'},
+  {formula:'SrSO₄', group:'sal-ox',level:'easy', trad:['sulfato de estroncio'], stock:[], sist:['sulfato de estroncio'], hint:'SO₄²⁻ = sulfato. Sr²⁺ → estroncio. Mineral celestina.'},
+  {formula:'Sr(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de estroncio'], stock:[], sist:['nitrato de estroncio'], hint:'NO₃⁻ = nitrato. Sr²⁺ + 2NO₃⁻ → Sr(NO₃)₂. Da el color rojo en fuegos artificiales.'},
+  {formula:'BaCO₃', group:'sal-ox',level:'easy', trad:['carbonato de bario'], stock:[], sist:['carbonato de bario'], hint:'CO₃²⁻ = carbonato. Ba²⁺ → bario.'},
+  {formula:'Al(NO₃)₃', group:'sal-ox',level:'easy', trad:['nitrato de aluminio'], stock:[], sist:['nitrato de aluminio'], hint:'NO₃⁻ = nitrato. Al³⁺ + 3NO₃⁻ → Al(NO₃)₃.'},
+  {formula:'Zn(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de zinc'], stock:[], sist:['nitrato de zinc'], hint:'NO₃⁻ = nitrato. Zn²⁺ + 2NO₃⁻ → Zn(NO₃)₂.'},
+  {formula:'ZnCO₃', group:'sal-ox',level:'easy', trad:['carbonato de zinc'], stock:[], sist:['carbonato de zinc'], hint:'CO₃²⁻ = carbonato. Zn²⁺ → zinc.'},
+  {formula:'Ag₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de plata'], stock:[], sist:['carbonato de plata'], hint:'CO₃²⁻ = carbonato. Dos Ag⁺ por un CO₃²⁻. Sal poco soluble, clásica al estudiar reglas de solubilidad.'},
+  {formula:'Ag₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de plata'], stock:[], sist:['sulfato de plata'], hint:'SO₄²⁻ = sulfato. Dos Ag⁺ por un SO₄²⁻.'},
+  {formula:'CdSO₄', group:'sal-ox',level:'easy', trad:['sulfato de cadmio'], stock:[], sist:['sulfato de cadmio'], hint:'SO₄²⁻ = sulfato. Cd²⁺ (valencia fija +2) → cadmio.'},
+  {formula:'SrCO₃', group:'sal-ox',level:'easy', trad:['carbonato de estroncio'], stock:[], sist:['carbonato de estroncio'], hint:'CO₃²⁻ = carbonato. Sr²⁺ → estroncio. Usado en pantallas antiguas de tubo de rayos catódicos.'},
+
+  // ── Sales ácidas: más cationes de valencia fija con los aniones ácidos ya vistos ──
+  {formula:'RbHS', group:'sal-ac',level:'easy', trad:['bisulfuro de rubidio'], stock:['hidrogenosulfuro de rubidio'], sist:[], hint:'Rb⁺ + HS⁻ (S²⁻ del H₂S retuvo 1 H⁺). Mismo patrón que el bisulfuro de sodio o potasio.'},
+  {formula:'CsHS', group:'sal-ac',level:'easy', trad:['bisulfuro de cesio'], stock:['hidrogenosulfuro de cesio'], sist:[], hint:'Cs⁺ + HS⁻. Mismo patrón que el bisulfuro de rubidio.'},
+  {formula:'RbHSO₄', group:'sal-ac',level:'medium', trad:['bisulfato de rubidio'], stock:['hidrogenosulfato de rubidio'], sist:[], hint:'Rb⁺ + HSO₄⁻ (SO₄²⁻ retuvo 1 H⁺). Mismo patrón que el bisulfato de potasio.'},
+  {formula:'CsHSO₄', group:'sal-ac',level:'medium', trad:['bisulfato de cesio'], stock:['hidrogenosulfato de cesio'], sist:[], hint:'Cs⁺ + HSO₄⁻. Mismo patrón que el bisulfato de rubidio.'},
+  {formula:'KHSO₃', group:'sal-ac',level:'medium', trad:['bisulfito de potasio'], stock:['hidrogenosulfito de potasio'], sist:[], hint:'K⁺ + HSO₃⁻ (SO₃²⁻ retuvo 1 H⁺). Mismo patrón que el bisulfito de sodio.'},
+  {formula:'Mg(HSO₃)₂', group:'sal-ac',level:'hard', trad:['bisulfito de magnesio'], stock:['hidrogenosulfito de magnesio'], sist:[], hint:'Mg²⁺ + 2 HSO₃⁻. Catión divalente, mismo patrón que el bisulfito de calcio.'},
+  {formula:'K₂HPO₄', group:'sal-ac',level:'hard', trad:['fosfato monoácido de potasio'], stock:['hidrogenofosfato de potasio'], sist:[], hint:'2 K⁺ + HPO₄²⁻ (PO₄³⁻ retuvo 1 H⁺, queda carga −2). Mismo patrón que el fosfato monoácido de sodio.'},
+  {formula:'CaHPO₄', group:'sal-ac',level:'hard', trad:['fosfato monoácido de calcio'], stock:['hidrogenofosfato de calcio'], sist:[], hint:'Ca²⁺ + HPO₄²⁻ (cargas +2 y −2 se compensan 1 a 1). Usado como suplemento de calcio y en fertilizantes.'},
+  {formula:'NH₄HS', group:'sal-ac',level:'medium', trad:['bisulfuro de amonio'], stock:['hidrogenosulfuro de amonio'], sist:[], hint:'NH₄⁺ + HS⁻. El amonio actúa como catión de carga fija +1, igual que en el bicarbonato o bisulfato de amonio.'},
+  {formula:'Li₂HPO₄', group:'sal-ac',level:'hard', trad:['fosfato monoácido de litio'], stock:['hidrogenofosfato de litio'], sist:[], hint:'2 Li⁺ + HPO₄²⁻. Mismo patrón que el fosfato monoácido de potasio.'},
+  {formula:'Ba(HSO₄)₂', group:'sal-ac',level:'hard', trad:['bisulfato de bario'], stock:['hidrogenosulfato de bario'], sist:[], hint:'Ba²⁺ + 2 HSO₄⁻. Catión divalente, mismo patrón que el bicarbonato de bario.'},
+  {formula:'Sr(HSO₄)₂', group:'sal-ac',level:'hard', trad:['bisulfato de estroncio'], stock:['hidrogenosulfato de estroncio'], sist:[], hint:'Sr²⁺ + 2 HSO₄⁻. Mismo patrón que el bisulfato de bario.'},
+  {formula:'RbHSO₃', group:'sal-ac',level:'medium', trad:['bisulfito de rubidio'], stock:['hidrogenosulfito de rubidio'], sist:[], hint:'Rb⁺ + HSO₃⁻. Mismo patrón que el bisulfito de potasio.'},
 
 ];
 
