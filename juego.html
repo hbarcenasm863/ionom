@@ -3243,6 +3243,35 @@ function _post(payload){
   }).catch(()=>{});
 }
 
+// confirmExit() sale por navegación DENTRO de la SPA (resetGame() solo
+// cambia de pantalla, la página sigue viva) — a diferencia de
+// beforeunload/visibilitychange, aquí sí hay tiempo de verificar el "ok"
+// real del backend y reintentar en silencio. sendBeacon (lo que usa _post()
+// para 'abandono') nunca deja leer la respuesta, así que un {ok:false} por
+// saturación del Sheet (curso completo saliendo a la vez) se daba por
+// enviado sin haberse guardado. Mismo patrón que sendResults(), pero sin
+// aviso al estudiante — el abandono siempre fue silencioso por diseño.
+function _postConReintento(payload){
+  if(GAME_MODE !== 'student' || !CODE_VERIFIED || _sessionSent) return;
+  _sessionSent = true;
+  const INTENTOS = 3;
+  function intentar(n){
+    fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).then(function(r){ return r.json(); }).then(function(data){
+      if((!data || data.ok !== true) && n < INTENTOS - 1){
+        setTimeout(function(){ intentar(n + 1); }, 1500 * (n + 1));
+      }
+    }).catch(function(){
+      if(n < INTENTOS - 1) setTimeout(function(){ intentar(n + 1); }, 1500 * (n + 1));
+    });
+  }
+  intentar(0);
+}
+
 // sendProgress: alias para compatibilidad con llamadas existentes
 // 'inicio' y 'progreso' no generan fila — solo 'abandono' y 'fin'
 function sendProgress(razon, extra){
@@ -3318,7 +3347,7 @@ function confirmExit(){
     // sesión parcial jugada se perdía por completo (nunca llegaba a
     // "Registro"), a diferencia de cerrar la pestaña o cambiar de app.
     if(GAME_MODE==='student' && CODE_VERIFIED && ST.idx>0){
-      _post(_buildPayload('abandono'));
+      _postConReintento(_buildPayload('abandono'));
     }
     resetGame();
   }
