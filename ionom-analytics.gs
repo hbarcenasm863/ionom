@@ -1256,6 +1256,74 @@ function limpiarRegistroDuplicados_() {
   recalcularTodasLasEstadisticas();
 }
 
+// Corrige retroactivamente el Total/% Acierto de las filas 'abandono' ya
+// guardadas en "Registro" desde ANTES del fix de upsertRegistro() (guardaba
+// Total como el tamaño COMPLETO de la sesión, 20, sin importar cuántas
+// preguntas alcanzó a ver el estudiante antes de salir — ver commit que
+// agregó ese fix). "Respondidas" nunca se guardó como columna propia en
+// Registro, así que aquí se aproxima sumando Correctas + el total de
+// "Errores por tema" de esa misma fila (los aciertos/errores reales que sí
+// quedaron registrados). Es una aproximación, no el valor exacto: si el
+// estudiante falló la MISMA fórmula más de una vez antes de abandonar,
+// juego.html solo cuenta ese error una vez en "Errores por tema" (dedup por
+// fórmula — ver ST.errors en juego.html), así que el total aproximado puede
+// quedar levemente por debajo del real. Aun así es muchísimo más justo que
+// el 20 fijo que había antes (ver ejemplo en el commit del fix: 1/20=5%
+// pasaba a acercarse a su verdadero 1/1=100%).
+//
+// Las filas 'fin' no se tocan — una sesión terminada sí respondió las 20.
+// Es idempotente: si se corre más de una vez, o sobre filas que ya llegaron
+// corregidas desde el fix en vivo, el total recalculado coincide con el que
+// ya había y no se modifica nada (ver "if (nuevoTotal === totalActual)").
+//
+// Al final recalcula Estadísticas/Eficacia por tema/Curso X para que "Nota
+// de juego" (que ya filtra por el periodo académico vigente — Regla 5, ver
+// calcularEstadisticasEstudiante) refleje los Registro corregidos.
+function corregirTotalAbandonosHistorico() {
+  conLockDeScript_(function () { corregirTotalAbandonosHistorico_(); });
+}
+
+function corregirTotalAbandonosHistorico_() {
+  const ss = obtenerSpreadsheet();
+  const sh = obtenerHojaRegistro(ss); // migra el esquema viejo si hace falta antes de tocar filas
+  if (!sh || sh.getLastRow() < 2) {
+    Logger.log('Registro vacío, nada que corregir.');
+    return;
+  }
+
+  const numFilas = sh.getLastRow() - 1;
+  const datos = sh.getRange(2, 1, numFilas, REG_HEADERS.length).getValues();
+  let corregidas = 0;
+
+  datos.forEach(function (r, i) {
+    const trigger = String(r[COL.TRIGGER - 1] || '').trim();
+    if (trigger !== 'abandono') return;
+
+    const correctas = Number(r[COL.CORRECTAS - 1]) || 0;
+    const totalActual = Number(r[COL.TOTAL - 1]) || 0;
+    const erroresTema = parseJSONSeguro(r[COL.ERR_TEMA - 1]);
+    const erroresSuma = Object.keys(erroresTema).reduce(function (acc, k) {
+      return acc + (Number(erroresTema[k]) || 0);
+    }, 0);
+    const respondidasAprox = correctas + erroresSuma;
+
+    // Nunca subir el Total por encima de lo que ya había (inventaría
+    // preguntas que no existieron) ni bajarlo por debajo de Correctas.
+    const nuevoTotal = Math.max(correctas, Math.min(respondidasAprox, totalActual || respondidasAprox));
+    if (nuevoTotal === totalActual || nuevoTotal <= 0) return;
+
+    const nuevoPct = Math.round((correctas / nuevoTotal) * 100);
+    const fila = i + 2;
+    sh.getRange(fila, COL.TOTAL).setValue(nuevoTotal);
+    sh.getRange(fila, COL.PCT).setValue(nuevoPct);
+    sh.getRange(fila, 1, 1, REG_HEADERS.length).setBackground(colorPorPorcentaje(nuevoPct));
+    corregidas++;
+  });
+
+  Logger.log('Filas "abandono" corregidas: ' + corregidas + ' de ' + numFilas + ' filas totales en Registro.');
+  recalcularTodasLasEstadisticas();
+}
+
 // Lista, SIN normalizar, todos los valores distintos que existen en la
 // columna "Curso" de Registro y cuántas filas tiene cada uno (con su tipo de
 // dato JS), para detectar cursos con nombres inconsistentes (espacios de
