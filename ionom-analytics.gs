@@ -413,7 +413,19 @@ function upsertRegistro(ss, d) {
   const sh = obtenerHojaRegistro(ss);
 
   const sesionCod = String(d.sesion || d.codigoSesion || d.sessionId || '').trim();
-  const total = Number(d.total || d.total_preguntas || 0) || 0;
+  const trigger = String(d.trigger || d.razon || d.evento || '').trim();
+  // juego.html manda "total"/"total_preguntas" como el tamaño COMPLETO de la
+  // sesión (20), sin importar si el estudiante la abandonó a medio camino —
+  // "respondidas" es lo que sí refleja cuántas preguntas llegó a ver antes de
+  // salir. Si se usa el tamaño completo como denominador de una sesión
+  // abandonada, un estudiante que acierta la única pregunta que alcanzó a
+  // responder (1 de 1) queda registrado con 1/20 = 5% en vez de 1/1 = 100%,
+  // hundiendo su % de acierto y su Nota de juego por preguntas que nunca
+  // llegó a ver. Para 'abandono' se usa "respondidas" como Total; para 'fin'
+  // no cambia nada (una sesión terminada siempre respondió las 20).
+  const totalCompleto = Number(d.total || d.total_preguntas || 0) || 0;
+  const respondidasCrudas = Number(d.respondidas || 0) || 0;
+  const total = trigger === 'abandono' ? Math.min(respondidasCrudas, totalCompleto || respondidasCrudas) : totalCompleto;
   const correctasCrudas = Number(d.correctas || 0) || 0;
   const correctas = total > 0 ? Math.min(correctasCrudas, total) : correctasCrudas;
   const pct = total > 0 ? Math.round((correctas / total) * 100) : Math.round(Number(d.porcentaje || 0) || 0);
@@ -422,7 +434,6 @@ function upsertRegistro(ss, d) {
   const aciertosTema = (d.aciertos_por_tema || d.aciertos_tema || d.aciertosTema || {});
   const fallados = d.moleculas_falladas || d.fallados || d.compuestos_fallados || [];
   const falladosTxt = Array.isArray(fallados) ? fallados.join(', ') : String(fallados || '');
-  const trigger = String(d.trigger || d.razon || d.evento || '').trim();
   // El "Nivel" de esta hoja es el TEMA/grupo funcional jugado, que el frontend
   // manda en "grupo" (p. ej. "Óxidos y Anhídridos"). El campo "nivel" que
   // manda juego.html es en realidad el rango de desempeño (Experto/Avanzado/
