@@ -150,7 +150,7 @@ const EFI_HEADERS = ['Tema', 'Correctas', 'Errores', 'Total intentos', '% Aciert
 const CURSO_HEADERS = [
   'Nombre', 'Sesiones', 'Preguntas respondidas', '% Acierto',
   'Nota juego (0-5)', 'Última sesión'
-];
+].concat(EST_HEADERS_PERIODO);
 
 // ══════════════════════════════════════════════════════════════════════════
 // PUNTOS DE ENTRADA HTTP
@@ -1104,7 +1104,13 @@ function calcularHojasPorCurso() {
     const filas = porCurso[curso].map(function (g) {
       const st = calcularEstadisticasEstudiante(g);
       const ultima = st.ultimaSesion ? (st.ultimaSesion.fecha + ' ' + st.ultimaSesion.hora) : '';
-      return [g.nombreDisplay, st.numSesiones, st.totalPreguntas, st.pctGlobal, st.notaJuego, ultima];
+      // Sesiones/Preguntas/% Acierto de arriba son HISTÓRICOS (cuentan para el
+      // reto de 1.000 preguntas); estas 3 últimas son del PERIODO académico
+      // vigente (Regla 5) -- las que de verdad hay que mirar para saber si un
+      // estudiante cumplió el umbral de un premio ligado al periodo, sin
+      // depender de que la docente abra la app para ver "Periodo actual".
+      return [g.nombreDisplay, st.numSesiones, st.totalPreguntas, st.pctGlobal, st.notaJuego, ultima,
+        st.numSesionesPeriodo, st.totalPreguntasPeriodo, st.pctGlobalPeriodo];
     });
     filas.sort(function (a, b) { return String(a[0]).localeCompare(String(b[0])); });
 
