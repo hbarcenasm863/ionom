@@ -119,6 +119,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .drawer-links a .dl-name{flex:1}
 
 /* Group checkboxes */
+.group-checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:4px}
 .group-check{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.8);font-size:.83rem;border:1.5px solid rgba(255,255,255,.12);transition:background .15s,border-color .15s}
 .group-check:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
 .group-check input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;cursor:pointer}
@@ -197,6 +198,27 @@ td.cell-blank{border-bottom:2px solid var(--dimmer);background:var(--bg2)}
 /* Footer inside #s-form uses white text; outside uses --tx */
 footer{text-align:center;padding:18px 0;border-top:1px solid var(--brd);font-size:.72rem;color:var(--dimmer);margin-top:8px}
 footer a{color:var(--dim);text-decoration:none;font-weight:600}
+
+/* ── RESPONSIVE: pantallas angostas (móvil) ──
+   El formulario y sus 13 checkboxes deben leerse completos en una columna,
+   con áreas táctiles de al menos ~44px de alto. No afecta escritorio. */
+@media(max-width:600px){
+  #s-form{padding:24px 12px}
+  .form-container{padding:22px 18px}
+  .form-title{font-size:1.5rem;margin-bottom:18px}
+
+  .group-checks-grid{grid-template-columns:1fr;gap:6px}
+  .group-check{padding:12px 12px;gap:12px;font-size:.9rem;min-height:44px}
+  .group-check input[type=checkbox]{width:22px;height:22px}
+
+  .chk-avanzados-wrap{padding:12px 14px;gap:12px}
+  .chk-avanzados-wrap input[type=checkbox]{width:22px;height:22px}
+
+  .preview-header{align-items:flex-start}
+  .btn-pdf,.btn-back{padding:12px 16px;font-size:.86rem}
+  .exercise-card{padding:16px}
+  #student-header{padding:16px}
+}
 
 @media print{
   body{background:#fff !important;color:#000 !important}
@@ -278,7 +300,7 @@ html{font-size:var(--base-fs)}
 
     <div class="form-group">
       <label class="form-label">Grupos funcionales <span style="font-size:.65rem;opacity:.6">(selecciona uno o varios)</span></label>
-      <div id="group-checks" style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:4px">
+      <div id="group-checks" class="group-checks-grid">
         <label class="group-check"><input type="checkbox" value="all" id="chk-all" onchange="toggleAll(this)"> <span>Todos los grupos</span></label>
         <label class="group-check"><input type="checkbox" value="ox-bas"> <span>Óxidos básicos</span></label>
         <label class="group-check"><input type="checkbox" value="anhid"> <span>Anhídridos</span></label>

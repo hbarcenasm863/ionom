@@ -429,16 +429,20 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .detail-panel.open{transform:translateY(0)}
 }
 
-/* SMALL SCREEN TABLE — vuelve a tamaño fijo con scroll horizontal (no cabe fluida) */
+/* SMALL SCREEN TABLE — celdas de tamaño táctil real (≥44px) con scroll horizontal.
+   El nombre completo se oculta en la celda (queda en title/aria-label y en el panel
+   de detalle al tocar), priorizando un símbolo grande y legible. */
 @media(max-width:600px){
   .pt-grid,.pt-f-block{
-    grid-template-columns:repeat(18,36px);
+    grid-template-columns:repeat(18,44px);
+    gap:4px;
     width:max-content;
     max-width:none;
   }
-  .el-z{font-size:.4rem}
-  .el-sym{font-size:.85rem}
-  .el-name{font-size:.28rem}
+  .el-tile{justify-content:center;gap:2px;padding:3px 2px}
+  .el-z{font-size:.65rem;text-align:center}
+  .el-sym{font-size:1.3rem;margin-top:0}
+  .el-name{display:none}
 }
 
 /* ── Tamaño de letra adaptable ── */
