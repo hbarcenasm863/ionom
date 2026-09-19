@@ -583,6 +583,22 @@
     margin-top:4px;
   }
 
+  /* ── ACENTO CARTA DE ACCIÓN (primer turno) ─────────────────────────────── */
+  .card.action-hint{
+    animation:pulse-action-hint 1.4s ease-in-out infinite;
+    box-shadow:0 0 0 2px var(--gold),0 0 10px rgba(212,175,55,0.55);
+  }
+  @keyframes pulse-action-hint{
+    0%,100%{box-shadow:0 0 0 2px var(--gold),0 0 8px rgba(212,175,55,0.45);}
+    50%{box-shadow:0 0 0 2px var(--gold-light),0 0 18px rgba(212,175,55,0.9);}
+  }
+  .action-hint-badge{
+    position:absolute;top:2px;right:2px;
+    font-size:0.7rem;line-height:1;
+    filter:drop-shadow(0 0 3px rgba(212,175,55,0.9));
+    animation:pulse-sigil 1.4s ease-in-out infinite;
+  }
+
   /* ── BARRA DE FASES ─────────────────────────────────────────────────────────── */
   #phaseBar{
     display:flex;
@@ -992,7 +1008,7 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0 8px;">
-    <button class="btn btn-primary" onclick="showScreen('setup')">⚔️ &nbsp;Jugar ahora</button>
+    <button class="btn btn-primary" onclick="handlePlayNow()">⚔️ &nbsp;Jugar ahora</button>
     <button class="btn btn-secondary" onclick="showScreen('teoria')">📚 &nbsp;Teoría</button>
     <button class="btn btn-secondary" onclick="showScreen('rules')">📖 &nbsp;Reglas</button>
   </div>
@@ -1264,7 +1280,7 @@ html{font-size:var(--base-fs)}
     </div>
 
     <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;padding-bottom:8px;">
-      <button class="btn btn-primary" onclick="showScreen('setup')">⚔️ Jugar ahora</button>
+      <button class="btn btn-primary" onclick="handlePlayNow()">⚔️ Jugar ahora</button>
       <button class="btn btn-secondary" onclick="showScreen('start')">← Volver</button>
     </div>
   </div>
@@ -1441,6 +1457,7 @@ html{font-size:var(--base-fs)}
       <span id="modeBadge" style="font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:10px; vertical-align:middle; margin-left:8px; background:rgba(139,90,60,0.2); color:var(--primary);">🧪 Básico</span>
     </div>
     <div class="turn-badge" id="turnBadge">Turno: —</div>
+    <button class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="reopenTutorial()" title="Repasar el tutorial rápido">❔ Ayuda</button>
     <button class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="confirmExit()">Salir</button>
   </div>
 
@@ -1513,7 +1530,7 @@ html{font-size:var(--base-fs)}
   <div style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 16px;" id="winnerSub"></div>
   <div class="score-table" id="scoreTable"></div>
   <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px;">
-    <button class="btn btn-primary" onclick="showScreen('setup')">Jugar de nuevo</button>
+    <button class="btn btn-primary" onclick="handlePlayNow()">Jugar de nuevo</button>
     <button class="btn btn-secondary" onclick="showScreen('start')">Inicio</button>
   </div>
 </div>
@@ -1554,7 +1571,7 @@ html{font-size:var(--base-fs)}
 <!-- TOAST IA -->
 <div id="aiToast">
   <div class="toast-icon" id="aiToastIcon">🤖</div>
-  <div class="toast-title">Turno de la IA</div>
+  <div class="toast-title" id="aiToastTitle">Turno de la IA</div>
   <div class="toast-msg" id="aiToastMsg">Pensando…</div>
   <div class="toast-sub" id="aiToastSub"></div>
 </div>
@@ -1985,9 +2002,11 @@ let G = {};
 
 let _toastTimer = null;
 
-function showAIToast(icon, msg, sub='', duration=2200){
+function showAIToast(icon, msg, sub='', duration=2200, title='Turno de la IA'){
   const toast = document.getElementById('aiToast');
   document.getElementById('aiToastIcon').textContent = icon;
+  const titleEl = document.getElementById('aiToastTitle');
+  if(titleEl) titleEl.textContent = title;
   document.getElementById('aiToastMsg').textContent = msg;
   document.getElementById('aiToastSub').textContent = sub;
   toast.classList.add('visible');
@@ -1999,6 +2018,14 @@ function showAIToast(icon, msg, sub='', duration=2200){
 function hideAIToast(){
   clearTimeout(_toastTimer);
   document.getElementById('aiToast').classList.remove('visible');
+}
+
+// Toast de jugada inválida — reutiliza el mismo componente visual del toast de IA
+// para dar feedback inmediato cuando tryPlay()/resolvePlay() rechazan una jugada,
+// en vez de depender solo del log de texto (.game-log) al pie de la pantalla.
+function showRejectToast(msg){
+  const clean = String(msg).replace(/<[^>]*>/g,'');
+  showAIToast('⚠️', clean, '', 2400, 'Jugada inválida');
 }
 
 // Fases: 'select' | 'play' | 'nom' | 'next' | 'ai'
@@ -2036,6 +2063,100 @@ function setPhase(phase){
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// TUTORIAL RÁPIDO (primer ingreso) — no reemplaza las Reglas completas,
+// solo cubre lo mínimo para jugar el primer turno.
+// ═════════════════════════════════════════════════════════════════════
+const TUTORIAL_SEEN_KEY='nomenclash_seen_tutorial';
+const TUTORIAL_STEPS=[
+  {icon:'🎯',title:'El objetivo',
+   text:'Sé el primero en quedarte sin cartas, formando compuestos químicos neutros y nombrándolos correctamente.'},
+  {icon:'⚗️',title:'Formar un compuesto',
+   text:'Cada turno hay una carta CATIÓN como base. Juega cartas ANIÓN cuya carga sume cero con el catión — eso combina las cargas y forma un compuesto.'},
+  {icon:'📝',title:'Nombra para ganar la ronda',
+   text:'Escribe el nombre correcto del compuesto (Tradicional, Stock o Sistemática). Si aciertas, descartas esas cartas; si fallas, robas 2 del mazo.'},
+  {icon:'🃏',title:'Cartas de acción',
+   text:'Algunas cartas no son aniones: tienen efectos especiales (invertir el turno, saltar turno, espiar, cambiar la base, etc.). La primera vez que te salga una en la mano te la señalaremos con un brillo ✨.'}
+];
+let _tutorialStep=0;
+let _tutorialOnDone=null;
+
+function hasSeenTutorial(){
+  try{ return localStorage.getItem(TUTORIAL_SEEN_KEY)==='1'; }
+  catch(e){ return false; }
+}
+function markTutorialSeen(){
+  try{ localStorage.setItem(TUTORIAL_SEEN_KEY,'1'); }catch(e){ /* almacenamiento no disponible: no bloquea el juego */ }
+}
+
+// Punto de entrada de los botones "Jugar ahora" / "Jugar de nuevo":
+// la primera vez muestra el tutorial corto antes de ir a la pantalla de configuración.
+function handlePlayNow(){
+  if(!hasSeenTutorial()){
+    showTutorial(()=>showScreen('setup'));
+  } else {
+    showScreen('setup');
+  }
+}
+
+// Reapertura manual (botón de ayuda dentro de la partida) — no navega de pantalla.
+function reopenTutorial(){
+  showTutorial(null);
+}
+
+function showTutorial(onDone){
+  _tutorialStep=0;
+  _tutorialOnDone=(typeof onDone==='function')?onDone:null;
+  renderTutorialStep();
+}
+
+function renderTutorialStep(){
+  const prev=document.getElementById('tutorialModal');
+  if(prev) prev.remove();
+  const step=TUTORIAL_STEPS[_tutorialStep];
+  const isLast=_tutorialStep===TUTORIAL_STEPS.length-1;
+  const dots=TUTORIAL_STEPS.map((s,i)=>
+    `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;margin:0 3px;
+      background:${i===_tutorialStep?'var(--gold)':'rgba(212,175,55,0.25)'};"></span>`).join('');
+  const modal=document.createElement('div');
+  modal.id='tutorialModal';
+  modal.className='modal-overlay active';
+  modal.innerHTML=`
+    <div class="modal" style="max-width:380px; text-align:center;">
+      <div style="font-size:2.2rem; margin-bottom:6px;">${step.icon}</div>
+      <h3 style="color:var(--gold-light);">${step.title}</h3>
+      <p style="margin-bottom:14px;">${step.text}</p>
+      <div style="margin-bottom:16px;">${dots}</div>
+      <div style="display:flex; gap:8px;">
+        ${_tutorialStep>0?'<button class="btn btn-secondary" style="flex:1;" onclick="tutorialPrev()">← Atrás</button>':''}
+        <button class="btn btn-primary" style="flex:2;" onclick="tutorialNext()">${isLast?'¡Entendido, a jugar!':'Siguiente →'}</button>
+      </div>
+      ${!isLast?'<button class="btn btn-secondary" style="margin-top:10px; width:100%; opacity:0.85;" onclick="tutorialSkip()">Saltar</button>':''}
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function tutorialNext(){
+  if(_tutorialStep<TUTORIAL_STEPS.length-1){
+    _tutorialStep++;
+    renderTutorialStep();
+  } else {
+    tutorialClose();
+  }
+}
+function tutorialPrev(){
+  if(_tutorialStep>0){ _tutorialStep--; renderTutorialStep(); }
+}
+function tutorialSkip(){ tutorialClose(); }
+function tutorialClose(){
+  const m=document.getElementById('tutorialModal');
+  if(m) m.remove();
+  markTutorialSeen();
+  const cb=_tutorialOnDone;
+  _tutorialOnDone=null;
+  if(cb) cb();
 }
 
 function buildPlayerConfig(){
@@ -2293,6 +2414,7 @@ function startGame(){
     oxidationOverride: null,
     difficulty,
     log:[],
+    firstHumanTurn: true,   // resalta la primera carta de acción que vea un humano, hasta que interactúe
   };
   showScreen('game');
   renderGame();
@@ -2419,8 +2541,16 @@ function makeCardEl(card, idx, clickable){
   const d=document.createElement('div');
   d.className='card '+card.color;
   if(G.selectedCards&&G.selectedCards.includes(idx)) d.classList.add('selected');
+  // Primera vez que un humano ve una carta de acción en su mano: resaltarla
+  // con un indicador visual + tooltip, sin obligar a leer el reglamento completo.
+  const isActionHint = clickable && G.firstHumanTurn && card.kind==='action';
+  if(isActionHint){
+    d.classList.add('action-hint');
+    d.title='✨ Carta de ACCIÓN: tiene un efecto especial distinto a los aniones normales. Selecciónala y pulsa "Jugar compuesto" para usarla.';
+  }
   d.innerHTML=`
     <span class="card-type-badge">${card.kind.toUpperCase()}</span>
+    ${isActionHint?'<span class="action-hint-badge">✨</span>':''}
     <span class="card-charge">${chargeStr(card.charge)}</span>
     <span class="card-symbol">${card.display||card.symbol}</span>
     <div class="card-line"></div>
@@ -2455,8 +2585,9 @@ function toggleCard(idx){
 
 function tryPlay(){
   if(currentPlayer().type!=='human') return;
+  G.firstHumanTurn=false; // ya interactuó — apaga el resalte de "primera carta de acción"
   if(!G.selectedCards||G.selectedCards.length===0){
-    addLog('Selecciona al menos una carta.','bad');return;
+    addLog('Selecciona al menos una carta.','bad');showRejectToast('Selecciona al menos una carta.');return;
   }
   setPhase('play');
   const cp=currentPlayer();
@@ -2467,6 +2598,7 @@ function tryPlay(){
     const hasAction=cards.some(c=>c.kind==='action'&&c.effect!=='wildcard');
     if(hasAction){
       addLog('⚠️ Tras un Cambio de Reactivo debes jugar aniones — no puedes jugar otra carta de acción.','bad');
+      showRejectToast('Tras un Cambio de Reactivo debes jugar aniones.');
       G.selectedCards=[];
       renderGame();
       return;
@@ -2485,6 +2617,7 @@ function tryPlay(){
     const otherAnions=cards.filter(c=>c.effect!=='wildcard');
     if(otherAnions.length===0){
       addLog('⚠️ Enlace Covalente debe combinarse con al menos un anión real — no puede jugarse solo.','bad');
+      showRejectToast('Enlace Covalente debe combinarse con un anión real.');
       return;
     }
     // Hay anión real — comodín toma su carga automáticamente
@@ -2498,6 +2631,7 @@ function tryPlay(){
   if(hasWildCat){
     if(cards.length>1){
       addLog('⚠️ Enlace Iónico debe jugarse solo.','bad');
+      showRejectToast('Enlace Iónico debe jugarse solo.');
       return;
     }
     showWildcardCatInfo();
@@ -2512,7 +2646,9 @@ function tryPlay(){
 
   const hasNonAnion=cards.some(c=>c.kind==='cation'||(c.kind==='action'&&c.effect!=='wildcard'&&c.effect!=='wildcard_cat'));
   if(hasNonAnion){
-    addLog('Solo puedes jugar aniones (o comodines).','bad');return;
+    addLog('Solo puedes jugar aniones (o comodines).','bad');
+    showRejectToast('Solo puedes jugar aniones (o comodines).');
+    return;
   }
   resolvePlay(cards);
 }
@@ -2548,12 +2684,14 @@ function executeDiscardForCation(){
   const cp=currentPlayer();
   if(G.discardCationUsedThisTurn){
     addLog('🔀 Ya cambiaste la base este turno — solo una vez por turno.','bad');
+    showRejectToast('Ya cambiaste la base este turno.');
     G.selectedCards=[];
     renderGame();
     return;
   }
   if(G.cationDeck.length===0){
     addLog('🔀 No hay cationes en el mazo para cambiar la base.','bad');
+    showRejectToast('No hay cationes en el mazo para cambiar la base.');
     G.selectedCards=[];
     renderGame();
     return;
@@ -2576,11 +2714,14 @@ function executeDiscardForCation(){
 function resolvePlay(anionCards){
   const base=G.base;
   if(base.kind!=='cation'){
-    addLog('La base no es un catión.','bad');return;
+    addLog('La base no es un catión.','bad');
+    showRejectToast('La base no es un catión.');
+    return;
   }
   const comp=neutralCompound(base, anionCards);
   if(!comp){
     addLog(`Esas cartas no forman compuesto neutro con ${base.name}.`,'bad');
+    showRejectToast(`Esas cartas no forman compuesto neutro con ${base.name}.`);
     flashEl('handCards','bad');return;
   }
   G.pendingPlay={anionCards, comp, oxidationSnapshot: G.oxidationOverride};
@@ -2625,6 +2766,7 @@ function checkNom(){
   const input=document.getElementById('nomInput').value.trim();
   if(!input){
     addLog('⚠️ Escribe un nombre antes de confirmar.','bad');
+    showRejectToast('Escribe un nombre antes de confirmar.');
     return;
   }
   const comp=G.pendingPlay.comp;
@@ -3303,8 +3445,10 @@ function mostrarInfoBase(){
 
 function drawCard(){
   if(currentPlayer().type!=='human') return;
+  G.firstHumanTurn=false; // ya interactuó — apaga el resalte de "primera carta de acción"
   if(G.gameDeck.length===0){
     addLog('El mazo está vacío.','bad');
+    showRejectToast('El mazo está vacío.');
     G.mustPlayAnion=false;
     if(!checkWin()) advanceTurn();
     return;
@@ -3315,6 +3459,7 @@ function drawCard(){
   // cartas de más si la mano está llena, así que dejarlo pasar aquí es seguro.
   if(currentPlayer().hand.length>=MAX_HAND && !G.mustPlayAnion){
     addLog(`Mano llena (máx ${MAX_HAND} cartas). Juega primero.`,'bad');
+    showRejectToast(`Mano llena (máx ${MAX_HAND} cartas). Juega primero.`);
     return;
   }
   drawCards(G.currentPlayer,1);
