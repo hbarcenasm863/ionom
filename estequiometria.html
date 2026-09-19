@@ -130,6 +130,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .comp-col.good .comp-lbl{color:var(--ok-t)}
 .comp-content{font-family:var(--mono);font-size:.82rem;line-height:1.7;color:var(--tx)}
 
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
 /* QUIZ */
 .quiz-sect{border-top:3px solid var(--ok)!important}
 .mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.55}
@@ -140,6 +145,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
 .mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px;line-height:1.55}
 .mq-next{margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+.mq-hint-btn{margin-bottom:10px;padding:6px 14px;background:var(--surf);color:var(--tx2);border:1.5px solid var(--brd);border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer}
+.mq-hint-btn:hover{border-color:var(--cat);color:var(--cat-t)}
+.mq-hint{font-size:.78rem;color:var(--cat-t);font-style:italic;margin-bottom:10px;display:none}
+.mq-hint.show{display:block}
 
 /* TABLE */
 .tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
@@ -524,6 +533,8 @@ html{font-size:var(--base-fs)}
   <div class="sect quiz-sect">
     <h2>✅ Practica — Estequiometría <button class="tts-btn" onclick="speakText(this)" data-text="Estos cinco problemas cubren los tipos de pregunta que más aparecen en los exámenes. Si te equivocas en alguno, lee la cadena de factores en la explicación — ahí verás exactamente dónde falló tu razonamiento. Con cuatro o más correctas ya tienes la base sólida para seguir al reactivo limitante y la estequiometría avanzada.">🔊 Escuchar</button></h2>
     <p style="font-size:.83rem;color:var(--tx2);margin-bottom:16px">Elige la respuesta correcta. Se muestra la cadena de factores completa para que puedas revisar el procedimiento.</p>
+    <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
+    <div class="progress-label" id="quiz-progress-text">0 de 5 respondidas</div>
     <div id="quiz-area"></div>
   </div>
 
@@ -595,51 +606,72 @@ const QUIZ=[
     q:'Ecuación: N₂ + 3 H₂ → 2 NH₃\nSi tienes 14 g de N₂ (MM=28.014), ¿cuántos gramos de NH₃ (MM=17.031) se producen?',
     opts:['17.03 g','34.06 g','8.52 g','51.09 g'], ans:0,
     exp:'14 g N₂ × (1 mol/28.014 g) × (2 mol NH₃/1 mol N₂) × (17.031 g/1 mol) = 0.4998 × 2 × 17.031 = 17.03 g. ¡Cuidado! 14 g de N₂ es solo 0.5 mol; multiplica por 2 para NH₃ = 1 mol × 17.031 = 17.03 g.',
-    cadena:'14 g N₂ × (1 mol/28.014 g) × (2 mol NH₃/1 mol N₂) × (17.031 g/mol) = 17.03 g NH₃'
+    cadena:'14 g N₂ × (1 mol/28.014 g) × (2 mol NH₃/1 mol N₂) × (17.031 g/mol) = 17.03 g NH₃',
+    hint:'Primero convierte los 14 g de N₂ a moles con su masa molar (28.014 g/mol) — fíjate en que da un número menor que 1.'
   },
   {
     q:'Ecuación: CH₄ + 2 O₂ → CO₂ + 2 H₂O\nSi quemas 16 g de CH₄ (MM=16.043), ¿cuántos gramos de H₂O (MM=18.015) se producen?',
     opts:['18.02 g','35.93 g','72.06 g','9.01 g'], ans:1,
     exp:'16 g CH₄ × (1 mol/16.043 g) × (2 mol H₂O/1 mol CH₄) × (18.015 g/mol) = 0.9973 × 2 × 18.015 ≈ 35.93 g. La razón es 1 mol CH₄ produce 2 mol H₂O.',
-    cadena:'16 g CH₄ × (1/16.043) × (2 mol H₂O/1 mol CH₄) × 18.015 g = 35.93 g H₂O'
+    cadena:'16 g CH₄ × (1/16.043) × (2 mol H₂O/1 mol CH₄) × 18.015 g = 35.93 g H₂O',
+    hint:'Mira el coeficiente de H₂O frente al de CH₄ en la ecuación balanceada: por cada mol de CH₄ se producen 2 mol de H₂O.'
   },
   {
     q:'Ecuación: 2 HCl + Ca(OH)₂ → CaCl₂ + 2 H₂O\nMM: HCl=36.461 g/mol · CaCl₂=110.983 g/mol\n¿Cuántos g de CaCl₂ se producen a partir de 72.92 g de HCl?',
     opts:['55.49 g','110.98 g','37.0 g','221.97 g'], ans:1,
     exp:'72.92 g HCl × (1 mol/36.461 g) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 2.000 mol HCl → 1.000 mol CaCl₂ → 110.98 g.',
-    cadena:'72.92 g HCl × (1 mol/36.461) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 110.98 g CaCl₂'
+    cadena:'72.92 g HCl × (1 mol/36.461) × (1 mol CaCl₂/2 mol HCl) × 110.983 g = 110.98 g CaCl₂',
+    hint:'72.92 g de HCl da un número redondo de moles al dividir por 36.461 g/mol — calcula ese valor primero.'
   },
   {
     q:'¿Cuál es el reactivo limitante si tienes 4 g de H₂ y 40 g de O₂ para la reacción 2 H₂ + O₂ → 2 H₂O?\nMM: H₂=2.016, O₂=32.00',
     opts:['H₂','O₂','Ambos se agotan igual','Ninguno; sobran los dos'], ans:0,
     exp:'mol H₂ = 4/2.016 = 1.98 mol. Para 1.98 mol H₂ se necesitan 0.99 mol O₂. mol O₂ disponibles = 40/32 = 1.25 mol. Como hay más O₂ del necesario, H₂ es el limitante.',
-    cadena:'mol H₂=1.98 · mol O₂ necesarios=0.99 · mol O₂ disponibles=1.25 → sobra O₂, H₂ limita'
+    cadena:'mol H₂=1.98 · mol O₂ necesarios=0.99 · mol O₂ disponibles=1.25 → sobra O₂, H₂ limita',
+    hint:'Convierte ambos reactivos a moles primero, y compara cuántos moles de O₂ necesita el H₂ disponible contra los moles de O₂ que realmente hay.'
   },
   {
     q:'Ecuación: 2 Al + 3 Cl₂ → 2 AlCl₃\nMM: Al=26.982, AlCl₃=133.341\nSi reaccionan 27.0 g de Al, ¿cuántos g de AlCl₃ se obtienen?',
     opts:['133.3 g','266.7 g','44.4 g','88.9 g'], ans:0,
     exp:'27 g Al × (1 mol/26.982 g) × (2 mol AlCl₃/2 mol Al) × (133.341 g/mol) = 1.0007 × 1 × 133.341 = 133.4 g ≈ 133.3 g.',
-    cadena:'27 g Al × (1/26.982) × (2 mol AlCl₃/2 mol Al) × 133.341 g = 133.4 g AlCl₃'
+    cadena:'27 g Al × (1/26.982) × (2 mol AlCl₃/2 mol Al) × 133.341 g = 133.4 g AlCl₃',
+    hint:'Fíjate en la razón molar Al:AlCl₃ en la ecuación balanceada — es 1:1, así que los moles de Al y de AlCl₃ son iguales.'
   },
 ];
 
 let qi=0,score=0;
 const shuf=[...QUIZ].sort(()=>Math.random()-.5);
 
+function updateQuizProgress(){
+  const done=Math.min(qi,shuf.length);
+  document.getElementById('quiz-progress-fill').style.width=(done/shuf.length*100).toFixed(0)+'%';
+  document.getElementById('quiz-progress-text').textContent=done+' de '+shuf.length+' respondidas';
+}
+
 function renderQ(){
   if(qi>=shuf.length){
+    updateQuizProgress();
     document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong> Aciertos: '+score+' / '+shuf.length+'. '+(score>=4?'¡Excelente manejo de factores!':score>=3?'Buen avance. Repasa las cadenas de los que fallaste.':'Vuelve a estudiar el mapa de la ruta y los ejemplos.')+'</div><button onclick="qi=0;score=0;shuf.sort(()=>Math.random()-.5);renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
     return;
   }
+  updateQuizProgress();
   const q=shuf[qi];
   const indexed=q.opts.map((o,i)=>({o,correct:i===q.ans})).sort(()=>Math.random()-.5);
   const correctLabel=indexed.find(x=>x.correct).o;
   document.getElementById('quiz-area').innerHTML=
     '<p class="mq-q">Pregunta '+(qi+1)+' de '+shuf.length+'</p>'
     +'<p style="font-family:var(--mono);font-size:.83rem;background:var(--surf2);border-radius:var(--rs);padding:10px 14px;margin-bottom:12px;white-space:pre-wrap;line-height:1.6">'+q.q+'</p>'
-    +'<div class="mq-opts">'+indexed.map(x=>'<button class="mq-btn" onclick="checkQ(this,'+JSON.stringify(x.o)+','+JSON.stringify(correctLabel)+')">'+x.o+'</button>').join('')+'</div>'
-    +'<div class="mq-fb" id="mq-fb"></div>'
+    +'<div class="mq-opts">'+indexed.map(x=>"<button class=\"mq-btn\" onclick='checkQ(this,"+JSON.stringify(x.o)+","+JSON.stringify(correctLabel)+")'>"+x.o+'</button>').join('')+'</div>'
+    +(q.hint?'<button class="mq-hint-btn" id="mq-hint-btn" onclick="showQHint()">💡 Pista</button><div class="mq-hint" id="mq-hint"></div>':'')
+    +'<div class="mq-fb" id="mq-fb" aria-live="polite"></div>'
     +'<button class="mq-next" id="mq-next" onclick="qi++;renderQ()">Siguiente →</button>';
+}
+
+function showQHint(){
+  const hintEl=document.getElementById('mq-hint');
+  hintEl.textContent='💡 '+shuf[qi].hint;
+  hintEl.classList.add('show');
+  document.getElementById('mq-hint-btn').style.display='none';
 }
 
 function checkQ(btn,chosen,correct){
@@ -651,6 +683,8 @@ function checkQ(btn,chosen,correct){
   const q=shuf[qi];
   document.getElementById('mq-fb').innerHTML=(ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ Respuesta: <strong>'+correct+'</strong></span> ')+'<br>'+q.exp+'<br><div class="chain-wrap" style="margin-top:8px"><span style="font-family:var(--mono);font-size:.78rem;color:var(--an-t)">'+q.cadena+'</span></div>';
   document.getElementById('mq-next').style.display='inline-block';
+  document.getElementById('quiz-progress-fill').style.width=((qi+1)/shuf.length*100).toFixed(0)+'%';
+  document.getElementById('quiz-progress-text').textContent=(qi+1)+' de '+shuf.length+' respondidas';
 }
 
 renderQ();

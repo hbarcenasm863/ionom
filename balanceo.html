@@ -86,6 +86,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .sect strong{color:var(--tx)}
 .sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
 
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:10px}
+
 .info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
 .warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
 .ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
@@ -314,6 +319,8 @@ html{font-size:var(--base-fs)}
   <div class="sect" style="border-top:3px solid var(--ok)!important">
     <h2>✅ Práctica interactiva <button class="tts-btn" onclick="speakText(this)" data-text="Ahora viene la parte donde realmente aprende el cerebro: practicando. Ingresa los coeficientes y verifica. Si te atascas, pide una pista — pero intenta al menos dos veces antes. La última ecuación de la lista es la más compleja; si la logras resolver, ya estás listo para el nivel de grado once.">🔊 Escuchar</button></h2>
     <p style="font-size:.84rem;color:var(--tx2)">Ingresa los coeficientes para balancear. El coeficiente 1 también hay que escribirlo aquí.</p>
+    <div class="progress-bar"><div class="progress-fill" id="bal-progress-fill"></div></div>
+    <div class="progress-label" id="bal-progress-text">0 de 8 ecuaciones resueltas</div>
     <div id="bal-container"></div>
   </div>
 
@@ -383,6 +390,13 @@ const EJERCICIOS=[
 ];
 
 let ei=0, attempts=0;
+let solvedSet=new Set();
+
+function updateBalProgress(){
+  const pct=(solvedSet.size/EJERCICIOS.length*100).toFixed(0);
+  document.getElementById('bal-progress-fill').style.width=pct+'%';
+  document.getElementById('bal-progress-text').textContent=solvedSet.size+' de '+EJERCICIOS.length+' ecuaciones resueltas';
+}
 
 function renderEj(){
   const e=EJERCICIOS[ei];
@@ -395,9 +409,10 @@ function renderEj(){
     +'<div><button class="bal-btn" onclick="checkBal()">Verificar</button>'
     +'<button class="bal-btn secondary" onclick="showHint()">Pista</button>'
     +'<button class="bal-btn secondary" onclick="showAns()">Ver respuesta</button></div>'
-    +'<div class="bal-fb" id="bal-fb"></div>'
+    +'<div class="bal-fb" id="bal-fb" aria-live="polite"></div>'
     +'</div>';
   attempts=0;
+  updateBalProgress();
 }
 
 // Parser de fórmulas químicas (subíndices unicode ₀-₉, paréntesis con
@@ -454,6 +469,8 @@ function checkBal(){
   const esMinimo=gcdArr(entered)===1;
 
   if(balanceado && esMinimo){
+    solvedSet.add(ei);
+    updateBalProgress();
     document.getElementById('bal-fb').innerHTML='<div class="ok-box">✓ ¡Correcto! Coeficientes: ['+entered.join(', ')+']<br>'+(ei+1<EJERCICIOS.length?'<button onclick="ei++;renderEj()" style="margin-top:8px;padding:7px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Siguiente ejercicio →</button>':'<span>¡Terminaste todos los ejercicios! 🎉</span>')+'</div>';
   } else if(balanceado){
     document.getElementById('bal-fb').innerHTML='<span style="color:var(--warn-t)">✓ Está balanceado, pero no es la expresión mínima — divide todos los coeficientes entre '+gcdArr(entered)+' e intenta de nuevo.</span>';

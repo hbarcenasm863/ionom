@@ -138,6 +138,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .ws-body{font-size:.83rem;color:var(--tx2);line-height:1.6}
 .ws-body strong{color:var(--tx)}
 
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
 /* QUIZ */
 .quiz-sect{border-top:3px solid var(--ok)!important}
 .mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.55;white-space:pre-wrap}
@@ -532,6 +537,8 @@ html{font-size:var(--base-fs)}
   <div class="tab-panel" id="tab-quiz">
     <div class="sect quiz-sect" style="margin-top:0">
       <h2>✅ Practica — Balanceo avanzado <button class="tts-btn" onclick="speakText(this)" data-text="Estas ocho preguntas combinan los dos métodos avanzados. Antes de responder, identifica si la pregunta pide algebraico o redox — esa decisión ya vale la mitad del ejercicio. Si fallas alguna, la explicación tiene el razonamiento completo para que puedas ver dónde estuvo el error.">🔊 Escuchar</button></h2>
+      <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
+      <div class="progress-label" id="quiz-progress-text">0 de 8 respondidas</div>
       <div id="quiz-area"></div>
     </div>
   </div>
@@ -629,18 +636,26 @@ const QUIZ=[
 let qi=0,score=0;
 const shuf=[...QUIZ].sort(()=>Math.random()-.5);
 
+function updateQuizProgress(){
+  const pct=(Math.min(qi,shuf.length)/shuf.length*100).toFixed(0);
+  document.getElementById('quiz-progress-fill').style.width=pct+'%';
+  document.getElementById('quiz-progress-text').textContent=Math.min(qi,shuf.length)+' de '+shuf.length+' respondidas';
+}
+
 function renderQ(){
   if(qi>=shuf.length){
+    updateQuizProgress();
     document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong> Aciertos: '+score+' / '+shuf.length+'. '+(score>=6?'¡Dominio excelente!':score>=4?'Buen avance. Repasa los que fallaste.':'Vuelve a leer los ejemplos paso a paso.')+'</div><button onclick="qi=0;score=0;shuf.sort(()=>Math.random()-.5);renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
     return;
   }
+  updateQuizProgress();
   const q=shuf[qi];
   const indexed=q.opts.map((o,i)=>({o,correct:i===q.ans})).sort(()=>Math.random()-.5);
   const correctLabel=indexed.find(x=>x.correct).o;
   document.getElementById('quiz-area').innerHTML=
     '<p class="mq-q">Pregunta '+(qi+1)+' de '+shuf.length+':\n'+q.q+'</p>'
-    +'<div class="mq-opts">'+indexed.map(x=>'<button class="mq-btn" onclick="checkQ(this,'+JSON.stringify(x.o)+','+JSON.stringify(correctLabel)+')">'+x.o+'</button>').join('')+'</div>'
-    +'<div class="mq-fb" id="mq-fb"></div>'
+    +'<div class="mq-opts">'+indexed.map(x=>"<button class=\"mq-btn\" onclick='checkQ(this,"+JSON.stringify(x.o)+","+JSON.stringify(correctLabel)+")'>"+x.o+'</button>').join('')+'</div>'
+    +'<div class="mq-fb" id="mq-fb" aria-live="polite"></div>'
     +'<button class="mq-next" id="mq-next" onclick="qi++;renderQ()">Siguiente →</button>';
 }
 
@@ -652,6 +667,8 @@ function checkQ(btn,chosen,correct){
   if(ok)score++;
   document.getElementById('mq-fb').innerHTML=(ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ Correcta: <strong>'+correct+'</strong></span> ')+'— '+shuf[qi].exp;
   document.getElementById('mq-next').style.display='inline-block';
+  document.getElementById('quiz-progress-fill').style.width=((qi+1)/shuf.length*100).toFixed(0)+'%';
+  document.getElementById('quiz-progress-text').textContent=(qi+1)+' de '+shuf.length+' respondidas';
 }
 
 renderQ();

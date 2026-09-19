@@ -111,6 +111,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .tbl tr:hover td{background:var(--surf2)}
 .tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
 
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
 /* QUIZ */
 .quiz-sect{border-top:3px solid var(--ok)!important}
 .mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
@@ -310,6 +315,8 @@ html{font-size:var(--base-fs)}
   <!-- ── QUIZ ── -->
   <div class="sect quiz-sect">
     <h2>✅ Practica — Mol y masa molar <button class="tts-btn" onclick="speakText(this)" data-text="Llegaste a la parte más importante: la práctica. Estos ejercicios cubren exactamente lo que preguntan en los exámenes de grado once. Si te equivocas, no te saltes la explicación — ahí está el razonamiento que necesitas. Con seis o más bien ya tienes la base para pasar a estequiometría.">🔊 Escuchar</button></h2>
+    <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
+    <div class="progress-label" id="quiz-progress-text">0 de 8 respondidas</div>
     <div id="quiz-area"></div>
   </div>
 
@@ -381,11 +388,19 @@ const MOLES_QUIZ=[
 let qi=0, score=0;
 const shuffled=[...MOLES_QUIZ].sort(()=>Math.random()-.5);
 
+function updateQuizProgress(){
+  const done=Math.min(qi,shuffled.length);
+  document.getElementById('quiz-progress-fill').style.width=(done/shuffled.length*100).toFixed(0)+'%';
+  document.getElementById('quiz-progress-text').textContent=done+' de '+shuffled.length+' respondidas';
+}
+
 function renderQ(){
   if(qi>=shuffled.length){
+    updateQuizProgress();
     document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong><br>Aciertos: '+score+' / '+shuffled.length+'. '+(score>=6?'¡Dominio excelente!':'Repasa las cadenas de factores y vuelve a intentarlo.')+'</div><button onclick="qi=0;score=0;shuffled.sort(()=>Math.random()-.5);renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
     return;
   }
+  updateQuizProgress();
   const q=shuffled[qi];
   // Shuffle options maintaining answer tracking
   const indexed=q.opts.map((o,i)=>({o,correct:i===q.ans}));
@@ -393,8 +408,8 @@ function renderQ(){
   const correctLabel=shuffOpts.find(x=>x.correct).o;
   document.getElementById('quiz-area').innerHTML=
     '<p class="mq-q">Pregunta '+(qi+1)+' de '+shuffled.length+'<br>'+q.q+'</p>'
-    +'<div class="mq-opts">'+shuffOpts.map(x=>'<button class="mq-btn" onclick="checkQ(this,'+JSON.stringify(x.o)+','+JSON.stringify(correctLabel)+')">'+x.o+'</button>').join('')+'</div>'
-    +'<div class="mq-fb" id="mq-fb"></div>'
+    +'<div class="mq-opts">'+shuffOpts.map(x=>"<button class=\"mq-btn\" onclick='checkQ(this,"+JSON.stringify(x.o)+","+JSON.stringify(correctLabel)+")'>"+x.o+'</button>').join('')+'</div>'
+    +'<div class="mq-fb" id="mq-fb" aria-live="polite"></div>'
     +'<button class="mq-next" id="mq-next" onclick="qi++;renderQ()">Siguiente →</button>';
 }
 
@@ -406,6 +421,8 @@ function checkQ(btn,chosen,correct){
   if(ok) score++;
   document.getElementById('mq-fb').innerHTML=(ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ Correcta: <strong>'+correct+'</strong></span> ')+'— '+shuffled[qi].exp;
   document.getElementById('mq-next').style.display='inline-block';
+  document.getElementById('quiz-progress-fill').style.width=((qi+1)/shuffled.length*100).toFixed(0)+'%';
+  document.getElementById('quiz-progress-text').textContent=(qi+1)+' de '+shuffled.length+' respondidas';
 }
 
 renderQ();
