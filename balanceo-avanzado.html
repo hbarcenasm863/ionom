@@ -7,43 +7,18 @@
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
 <link rel="apple-touch-icon" href="assets/iononpwa.png">
 <title>IonNom — Balanceo Algebraico y Redox</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
 <style>
 :root{
-  --cat:#d97706;--cat-b:#fef3c7;--cat-t:#92400e;
-  --an:#0369a1;--an-b:#e0f2fe;--an-t:#082f49;
-  --oh:#7c3aed;--oh-b:#ede9fe;--oh-t:#4c1d95;
-  --ox:#0f766e;--ox-b:#ccfbf1;--ox-t:#134e4a;
-  --bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;
-  --brd:#d0e6f5;--brd2:#b8d4eb;
-  --tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;
-  --nav:#0d4a73;--nav-t:#ffffff;
-  --ok:#16a34a;--ok-b:#dcfce7;--ok-t:#14532d;
-  --err:#dc2626;--err-b:#fee2e2;--err-t:#7f1d1d;
-  --warn:#d97706;--warn-b:#fef3c7;--warn-t:#92400e;
-  --sans:'Trebuchet MS','Segoe UI',Arial,sans-serif;
-  --mono:'Courier New',Courier,monospace;
-  --serif:Georgia,'Times New Roman',serif;
-  --r:16px;--rs:10px;
-  --gold:#fcd34d;
-  --sh:0 2px 12px rgba(13,74,115,.08);
-  --sh2:0 6px 32px rgba(13,74,115,.16);
-  /* Redox colors */
+  /* Redox colors (propio de esta pagina) */
   --ox-red:#b45309;--ox-red-b:#fef3c7;
   --red-col:#0369a1;--red-col-b:#e0f2fe;
 }
-@media(prefers-color-scheme:dark){:root{
-  --bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;
-  --brd:#1e3a52;--brd2:#2a4d6e;
-  --tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;
-  --nav:#091929;--nav-t:#e2eef8;
-  --cat-b:#422006;--cat-t:#fde68a;--an-b:#082f49;--an-t:#7dd3fc;
-  --oh-b:#2e1065;--oh-t:#c4b5fd;--ox-b:#042f2e;--ox-t:#5eead4;
-  --ok-b:#052e16;--ok-t:#86efac;--err-b:#450a0a;--err-t:#fca5a5;
-  --warn-b:#422006;--warn-t:#fde68a;
-  --sh:0 2px 12px rgba(0,0,0,.3);--sh2:0 6px 32px rgba(0,0,0,.5);
-}}
-:root[data-theme="dark"]{--bg:#0d1b2a;--bg2:#0f2233;--surf:#0f2233;--surf2:#162d40;--brd:#1e3a52;--brd2:#2a4d6e;--tx:#e2eef8;--tx2:#bacfe0;--dim:#8fb4cc;--dimmer:#6b94b0;--nav:#091929;--nav-t:#e2eef8;--cat-b:#422006;--cat-t:#fde68a;--an-b:#082f49;--an-t:#7dd3fc;--oh-b:#2e1065;--oh-t:#c4b5fd;--ox-b:#042f2e;--ox-t:#5eead4;--ok-b:#052e16;--ok-t:#86efac;--err-b:#450a0a;--err-t:#fca5a5;--warn-b:#422006;--warn-t:#fde68a;--sh:0 2px 12px rgba(0,0,0,.3);--sh2:0 6px 32px rgba(0,0,0,.5);}
-:root[data-theme="light"]{--bg:#f6fafe;--bg2:#edf4fb;--surf:#ffffff;--surf2:#f0f7ff;--brd:#d0e6f5;--brd2:#b8d4eb;--tx:#0d2d42;--tx2:#2a3f52;--dim:#3a5568;--dimmer:#5a7a96;--nav:#0d4a73;--nav-t:#ffffff;--cat-b:#fef3c7;--cat-t:#92400e;--an-b:#e0f2fe;--an-t:#082f49;--oh-b:#ede9fe;--oh-t:#4c1d95;--ox-b:#ccfbf1;--ox-t:#134e4a;--ok-b:#dcfce7;--ok-t:#14532d;--err-b:#fee2e2;--err-t:#7f1d1d;--warn-b:#fef3c7;--warn-t:#92400e;--sh:0 2px 12px rgba(13,74,115,.08);--sh2:0 6px 32px rgba(13,74,115,.16);}
+
+
+
+
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}

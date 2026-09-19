@@ -1,0 +1,81 @@
+/* ===== DESIGN SYSTEM TOKENS (compartido por index, teoria, tabla, generador,
+   simulador, juego y funciones) =====
+   Fuente unica de los colores/tipografia comunes, para evitar que cada
+   pagina copie y desincronice su propio bloque :root. */
+:root{
+  /* MDEC semantic palette */
+  --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
+  --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
+  --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
+  --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* Surface & text */
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  /* Status */
+  --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d; --okb:#dcfce7;
+  --err:#dc2626; --err-b:#fee2e2; --err-t:#7f1d1d; --errb:#fee2e2;
+  --warn:#d97706; --warn-b:#fef3c7; --warn-t:#92400e; --warnb:#fef3c7;
+  --info:#0369a1; --info-b:#e0f2fe; --info-t:#082f49;
+  /* Typography */
+  --sans:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+  /* Misc */
+  --r:16px; --rs:10px; --rm:6px;
+  --gold:#fcd34d;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+    --brd:#1e3a52; --brd2:#2a4d6e;
+    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+    --nav:#091929; --nav-t:#e2eef8;
+    --cat-b:#422006; --cat-t:#fde68a;
+    --an-b:#082f49; --an-t:#7dd3fc;
+    --oh-b:#2e1065; --oh-t:#c4b5fd;
+    --ox-b:#042f2e; --ox-t:#5eead4;
+    --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
+    --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
+    --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
+    --info-b:#082f49; --info-t:#7dd3fc;
+    --sh:0 2px 12px rgba(0,0,0,.3);
+    --sh2:0 6px 32px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
+  --brd:#1e3a52; --brd2:#2a4d6e;
+  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
+  --nav:#091929; --nav-t:#e2eef8;
+  --cat-b:#422006; --cat-t:#fde68a;
+  --an-b:#082f49; --an-t:#7dd3fc;
+  --oh-b:#2e1065; --oh-t:#c4b5fd;
+  --ox-b:#042f2e; --ox-t:#5eead4;
+  --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
+  --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
+  --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
+  --info-b:#082f49; --info-t:#7dd3fc;
+  --sh:0 2px 12px rgba(0,0,0,.3);
+  --sh2:0 6px 32px rgba(0,0,0,.5);
+}
+:root[data-theme="light"]{
+  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
+  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --nav:#0d4a73; --nav-t:#ffffff;
+  --cat-b:#fef3c7; --cat-t:#92400e;
+  --an-b:#e0f2fe; --an-t:#082f49;
+  --oh-b:#ede9fe; --oh-t:#4c1d95;
+  --ox-b:#ccfbf1; --ox-t:#134e4a;
+  --ok-b:#dcfce7; --ok-t:#14532d; --okb:#dcfce7;
+  --err-b:#fee2e2; --err-t:#7f1d1d; --errb:#fee2e2;
+  --warn-b:#fef3c7; --warn-t:#92400e; --warnb:#fef3c7;
+  --info-b:#e0f2fe; --info-t:#082f49;
+  --gold:#fcd34d;
+  --sh:0 2px 12px rgba(13,74,115,.08);
+  --sh2:0 6px 32px rgba(13,74,115,.16);
+}
