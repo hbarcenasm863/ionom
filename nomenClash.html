@@ -864,7 +864,7 @@
   .fb-why{
     margin-top:8px;
     font-size:.82rem;
-    color:var(--tx2,var(--parch-dark));
+    color:var(--warn-t,var(--parch-dark));
     background:var(--warn-b,rgba(212,165,116,0.1));
     border-left:3px solid var(--warn,#d97706);
     padding:8px 12px;
@@ -2354,18 +2354,26 @@ function neutralCompound(cat, anions){
   if(!processedAnions.every(a=>a.charge===anionCharge)) return null;
   const catCharge=G.oxidationOverride || cat.charge;
   const l=lcm(catCharge, Math.abs(anionCharge));
-  const nCat=Math.round(l/catCharge);
+  let nCat=Math.round(l/catCharge);
   const nAnion=Math.round(l/Math.abs(anionCharge));
   if(anions.length!==nAnion) return null;
+  // Enlace Iónico (comodín+): la carga doblada representa 2 átomos reales del
+  // mismo catión, no 1 átomo con el doble de carga — la formula/nombre debe
+  // reflejar los átomos reales aunque el balance de cargas use la carga doble.
+  const realCatCharge = G._wildcardCatActive ? G._wildcardCatOriginalCharge : catCharge;
+  if(G._wildcardCatActive) nCat = nCat*2;
 
   // Usar siempre el anión REAL para nombre y fórmula — nunca el comodín
   const anionObj = processedAnions.find(a=>a.effect!=='wildcard') || processedAnions[0];
   const prefix=nAnion>1?GREEK[nAnion]:'';
   const anionName=prefix?prefix.toLowerCase()+anionObj.name.toLowerCase():anionObj.name;
   const needsPrefix=nAnion>=3;
-  // Usar getCatName con la carga efectiva — cubre override de Estado de Oxidación Y Enlace Iónico
-  const catNameDisplay=getCatName(cat.symbol, catCharge);
-  const compName=`${anionName} de ${catNameDisplay}`;
+  // Usar getCatName con la carga real (por átomo) — cubre override de Estado
+  // de Oxidación y Enlace Iónico, que ya fue traducido a átomos reales arriba
+  const catNameDisplay=getCatName(cat.symbol, realCatCharge);
+  // Minúscula inicial: el nombre del catión nunca va al inicio de la frase
+  const catNameLower=catNameDisplay.charAt(0).toLowerCase()+catNameDisplay.slice(1);
+  const compName=`${anionName} de ${catNameLower}`;
 
   return {cationCount:nCat, anionCount:nAnion, name:compName, needsPrefix,
     anionName, catName:catNameDisplay, nAnion};
@@ -2437,7 +2445,7 @@ function nextPlayerIndex(skip=false){
 }
 
 function advanceTurn(skip=false, extraTurn=false){
-  G.oxidationOverride=null;
+  G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
   G.discardCationUsedThisTurn=false;
   if(extraTurn){
     addLog(`🌟 ¡Turno Extra para ${currentPlayer().name}!`,'good');
@@ -2971,7 +2979,7 @@ function showFeedbackModal(input, correcto, alternatives, explicacion, formula){
         ${alts}
       </div>
       <div class="fb-why" style="background:var(--warn-b,rgba(212,165,116,0.1)); border-left:3px solid var(--warn,#d97706); border-radius:0 8px 8px 0; padding:10px 12px; margin:12px 0;">
-        <p style="font-size:0.82rem; color:var(--tx2,var(--text-light)); font-family:var(--sans);">
+        <p style="font-size:0.82rem; color:var(--warn-t,var(--text-light)); font-family:var(--sans);">
           💡 <strong>¿Por qué?</strong> ${explicacion}
         </p>
       </div>
@@ -3011,7 +3019,10 @@ function buildFormula(cation, nAnion, anion){
 
   // nCat desde la electroneutralidad — usar override si está activo
   const effectiveCharge = G.oxidationOverride || cation.charge;
-  const nCat = Math.abs(anion.charge) * nAnion / effectiveCharge;
+  let nCat = Math.abs(anion.charge) * nAnion / effectiveCharge;
+  // Enlace Iónico (comodín+): la carga doblada representa 2 atomos reales del
+  // mismo cation (ver neutralCompound) — la formula debe usar el conteo real.
+  if(G._wildcardCatActive) nCat = nCat*2;
 
   // Parte del catión
   let catPart;
@@ -3097,7 +3108,7 @@ function confirmPlay(){
   showCompoundModal(base, anionForFormula, comp, formula, extraTurn);
   G.pendingPlay=null;
   G.selectedCards=[];
-  G.oxidationOverride=null;
+  G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
   G.wildcardCharge=-1; // reset comodín
   G.mustPlayAnion=false; // si había cambio de base pendiente, ya se cumplió
 }
@@ -3774,7 +3785,7 @@ function applyWildcardCatDouble(){
   G.selectedCards=[];
 
   const chargeReal=G.base.charge; // always use the base charge, not oxidationOverride
-  G.oxidationOverride=null;       // clear any prior oxidation so they don't stack
+  G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;       // clear any prior oxidation so they don't stack
   const chargeDoble=chargeReal*2;
 
   // override = carga doble, pero el símbolo del catión sigue siendo el mismo
@@ -4020,7 +4031,7 @@ function aiTurnWithOxidation(newCharge){
         addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreAIOx}</strong>". Roba 2 cartas.`,'bad');
         showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreAIOx}`, 2800);
         G.wildcardCharge=-1;
-        G.oxidationOverride=null;
+        G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
         renderGame();
         advanceTurn();
         return;
@@ -4030,7 +4041,7 @@ function aiTurnWithOxidation(newCharge){
       addLog(`🤖 ${cp.name}: "${nombreAIOx}"${extraTurn?' 🌟':''}`, 'good');
       showAIToast('⚡', `${cp.name} forma compuesto`, nombreAIOx, 2500);
       G.wildcardCharge=-1; // reset
-      G.oxidationOverride=null;
+      G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
       if(checkWin()) return;
       renderGame();
       advanceTurn(false,extraTurn);
@@ -4038,7 +4049,7 @@ function aiTurnWithOxidation(newCharge){
     }
   }
   // No pudo jugar ni con nueva valencia — roba
-  G.oxidationOverride=null;
+  G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
   drawCards(G.currentPlayer,1);
   addLog(`🤖 ${cp.name} robó (no pudo jugar con la nueva valencia).`,'info');
   renderGame();
@@ -4087,7 +4098,7 @@ function aiTurn(){
               addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreIA}</strong>". Roba 2 cartas.`,'bad');
               showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreIA}`, 2800);
               G.wildcardCharge=-1;
-              G.oxidationOverride=null;
+              G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
               renderGame();
               advanceTurn();
             } else {
@@ -4095,7 +4106,7 @@ function aiTurn(){
               addLog(`🤖 ${cp.name}: "${nombreIA}"${extraTurn?' 🌟':''}`, 'good');
               showAIToast('⚗️', `${cp.name} forma compuesto`, nombreIA, 2500);
               G.wildcardCharge=-1; // reset
-              G.oxidationOverride=null;
+              G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
               if(checkWin()) return;
               renderGame();
               advanceTurn(false,extraTurn);
@@ -4138,7 +4149,7 @@ function aiTurn(){
         drawCards(G.currentPlayer,1);
         addLog(`🤖 ${cp.name} robó una carta.`,'info');
         showAIToast('🃏', `${cp.name} roba una carta`, 'Sin jugada posible', 1800);
-        G.oxidationOverride=null;
+        G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
         renderGame();
         advanceTurn();
 
