@@ -484,6 +484,22 @@ footer a:hover{text-decoration:underline}
 .ios-modal-inner ol{font-size:.85rem;line-height:1.8;color:var(--tx2);margin:0 0 20px;padding-left:20px}
 .ios-close-btn{width:100%;padding:12px;background:var(--nav);color:var(--nav-t);border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
 
+/* ===== MODAL DE PRESENTACIÓN (bienvenida) ===== */
+.welcome-modal-inner{background:var(--surf);border-radius:18px;padding:28px;max-width:440px;box-shadow:var(--sh2);font-family:var(--sans);color:var(--tx)}
+.welcome-modal-inner h3{font-family:var(--serif);font-style:italic;font-size:1.35rem;margin-bottom:10px;text-align:center}
+.welcome-modal-inner p{font-size:.88rem;line-height:1.65;color:var(--tx2);margin-bottom:14px}
+.welcome-legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px}
+.welcome-legend span{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.welcome-legend .w-cat{background:var(--cat-b);color:var(--cat-t)}
+.welcome-legend .w-an{background:var(--an-b);color:var(--an-t)}
+.welcome-legend .w-oh{background:var(--oh-b);color:var(--oh-t)}
+.welcome-legend .w-ox{background:var(--ox-b);color:var(--ox-t)}
+.welcome-actions{display:flex;flex-direction:column;gap:8px}
+.welcome-btn{width:100%;padding:12px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;text-align:center;text-decoration:none;display:block;border:none}
+.welcome-btn.primary{background:var(--nav);color:var(--nav-t)}
+.welcome-btn.dl{background:var(--ok);color:#fff}
+.welcome-btn.ghost{background:none;color:var(--dimmer);font-weight:600;font-size:.8rem;padding:6px}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:640px){
   .parts-grid{grid-template-columns:1fr}
@@ -582,6 +598,27 @@ html{font-size:var(--base-fs)}
 
   <div class="hero-actions">
     <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
+    <button class="narr-btn" onclick="openWelcomeModal()">👋 ¿Qué es IonNom?</button>
+  </div>
+</div>
+
+<!-- ===== MODAL DE PRESENTACIÓN ===== -->
+<div id="welcome-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:250;align-items:center;justify-content:center;padding:20px">
+  <div class="welcome-modal-inner">
+    <h3>👋 Bienvenido a Ion<em style="color:var(--gold);font-style:normal">Nom</em></h3>
+    <p>Aprende a nombrar cualquier compuesto inorgánico con un código de 4 colores: identifica el catión y el anión, y construye el nombre en los tres sistemas — Tradicional, Stock y Sistemática.</p>
+    <div class="welcome-legend">
+      <span class="w-cat">① Ámbar · Catión</span>
+      <span class="w-an">② Azul · Anión simple</span>
+      <span class="w-oh">③ Violeta · OH⁻</span>
+      <span class="w-ox">④ Teal · Oxoanión</span>
+    </div>
+    <p style="text-align:center;font-size:.82rem">¿Primera vez? Empieza por <strong>Principios</strong>, practica con <strong>Funciones</strong> y pon a prueba lo aprendido en el <strong>Juego</strong>.</p>
+    <div class="welcome-actions">
+      <a class="welcome-btn primary" href="teoria.html" onclick="markWelcomeSeen()">▶️ Empezar por Principios</a>
+      <a class="welcome-btn dl" href="assets/guia-nomenclatura-inorganica.pdf" download onclick="markWelcomeSeen()">📘 Descargar guía completa (PDF)</a>
+      <button class="welcome-btn ghost" onclick="closeWelcomeModal()">Cerrar y explorar por mi cuenta</button>
+    </div>
   </div>
 </div>
 
@@ -963,6 +1000,18 @@ function speak(text, onEnd) {
   if (onEnd) u.onend = onEnd;
   speechSynthesis.speak(u);
 }
+
+function openWelcomeModal(){ document.getElementById('welcome-modal').style.display = 'flex'; }
+function markWelcomeSeen(){ try{ localStorage.setItem('ionom_seen_welcome', '1'); }catch(e){} }
+function closeWelcomeModal(){
+  document.getElementById('welcome-modal').style.display = 'none';
+  markWelcomeSeen();
+}
+(function(){
+  let seen = false;
+  try{ seen = localStorage.getItem('ionom_seen_welcome') === '1'; }catch(e){}
+  if(!seen) window.addEventListener('DOMContentLoaded', openWelcomeModal);
+})();
 
 let narrating = false;
 function toggleNarration() {
