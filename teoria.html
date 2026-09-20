@@ -101,6 +101,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .tbl td code{font-family:var(--mono);background:rgba(217,119,6,.08);padding:1px 5px;border-radius:3px;color:var(--cat-t)}
 .tbl tr:hover td{background:var(--surf2)}
 .tbl .tag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.68rem;font-weight:700}
+@media(max-width:640px){
+  .tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;max-width:100%}
+  .tbl th,.tbl td{white-space:nowrap}
+}
 .tag-cat{background:var(--cat-b);color:var(--cat-t)}
 .tag-an{background:var(--an-b);color:var(--an-t)}
 .tag-oh{background:var(--oh-b);color:var(--oh-t)}
