@@ -70,6 +70,36 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .note.game{background:var(--warn-b);border-color:var(--warn);color:var(--warn-t)}
 .note.err{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
 
+/* FUNCTION CARDS — regla de formulacion detallada por funcion */
+.func-card{border:2px solid var(--brd);border-radius:var(--r);margin-bottom:14px;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
+.func-hdr{display:flex;align-items:center;gap:10px;background:var(--surf2);padding:10px 16px;border-bottom:2px solid var(--brd);flex-wrap:wrap}
+.func-num{width:26px;height:26px;border-radius:50%;background:var(--cat);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.func-name{font-weight:800;font-size:.92rem}
+.func-formula{margin-left:auto;font-family:var(--mono);font-weight:800;font-size:.95rem;color:var(--an-t);background:var(--an-b);padding:3px 10px;border-radius:6px}
+.func-tbl{width:100%;border-collapse:collapse;font-size:.79rem}
+.func-tbl td{padding:7px 14px;border-bottom:1px solid var(--brd);vertical-align:top}
+.func-tbl td.fn-sys{font-weight:800;color:var(--dimmer);width:95px;white-space:nowrap}
+.func-tbl td.fn-pattern{color:var(--tx2);font-style:italic}
+.func-tbl td.fn-example{font-weight:700;color:var(--tx);white-space:nowrap}
+.func-rule{padding:9px 16px;background:var(--ox-b);color:var(--ox-t);font-size:.79rem}
+.func-rule code{background:rgba(0,0,0,.08);padding:1px 5px;border-radius:4px;font-family:var(--mono);color:inherit}
+
+/* ESQUEMA DE VALENCIAS TIPO TABLA PERIODICA */
+.eo-scheme{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0}
+.eo-fam{border:2px solid var(--brd2);border-radius:var(--rs);padding:10px 12px}
+.eo-fam.cat{background:var(--cat-b)}
+.eo-fam.an{background:var(--an-b)}
+.eo-fam-name{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;opacity:.85}
+.eo-fam.cat .eo-fam-name{color:var(--cat-t)}
+.eo-fam.an .eo-fam-name{color:var(--an-t)}
+.eo-els{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.eo-el{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:6px;font-weight:800;font-size:.82rem;background:rgba(255,255,255,.55)}
+.eo-fam.cat .eo-el{color:var(--cat-t);border:1.5px solid var(--cat)}
+.eo-fam.an .eo-el{color:var(--an-t);border:1.5px solid var(--an)}
+.eo-vals{font-size:.76rem;line-height:1.5}
+.eo-fam.cat .eo-vals{color:var(--cat-t)}
+.eo-fam.an .eo-vals{color:var(--an-t)}
+
 footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
 footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
@@ -159,23 +189,98 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="sect">
-    <h2>Tabla maestra — las 9 funciones inorgánicas</h2>
-    <div class="tbl-wrap">
-    <table class="tbl">
-      <tr><th>Función</th><th>Se forma con</th><th>Ejemplo</th><th>Tradicional</th><th>Stock</th><th>Sistemática</th></tr>
-      <tr><td><strong>1. Óxido básico</strong></td><td>Metal + O²⁻</td><td><code>Fe₂O₃</code></td><td>óxido férrico</td><td>óxido de hierro (III)</td><td>trióxido de dihierro</td></tr>
-      <tr><td><strong>2. Óxido ácido / Anhídrido</strong> 🇨🇴</td><td>No metal + O²⁻</td><td><code>SO₃</code></td><td>anhídrido sulfúrico</td><td>óxido de azufre (VI)</td><td>trióxido de azufre</td></tr>
-      <tr><td><strong>3. Hidruro metálico</strong></td><td>Metal + H⁻</td><td><code>CaH₂</code></td><td>hidruro de calcio</td><td>hidruro de calcio</td><td>dihidruro de calcio</td></tr>
-      <tr><td><strong>4. Ácido hídrico</strong></td><td>H⁺ + no metal (sin O), en agua</td><td><code>HCl(aq)</code></td><td>ácido clorhídrico</td><td colspan="2">cloruro de hidrógeno (si es gas, sin agua)</td></tr>
-      <tr><td><strong>5. Hidróxido / Base</strong></td><td>Metal + OH⁻</td><td><code>Fe(OH)₃</code></td><td>hidróxido férrico</td><td>hidróxido de hierro (III)</td><td>trihidróxido de hierro</td></tr>
-      <tr><td><strong>6. Ácido oxácido</strong></td><td>Óxido ácido + H₂O</td><td><code>H₂SO₄</code></td><td>ácido sulfúrico</td><td>—</td><td>tetraoxosulfato (VI) de hidrógeno</td></tr>
-      <tr><td><strong>7. Sal binaria</strong></td><td>Metal + no metal</td><td><code>Fe₂S₃</code></td><td>sulfuro férrico</td><td>sulfuro de hierro (III)</td><td>trisulfuro de dihierro</td></tr>
-      <tr><td><strong>8. Sal oxigenada</strong></td><td>Metal + oxoanión</td><td><code>Fe₂(SO₄)₃</code></td><td>sulfato férrico</td><td>sulfato de hierro (III)</td><td>tris(tetraoxosulfato) de dihierro</td></tr>
-      <tr><td><strong>9. Sal ácida</strong></td><td>Oxoanión que retuvo 1-2 H⁺</td><td><code>NaHCO₃</code></td><td>bicarbonato de sodio</td><td>hidrogenocarbonato de sodio</td><td>hidrogeno(trioxocarbonato) de sodio</td></tr>
-    </table>
+    <h2>Las 9 funciones inorgánicas — regla de formulación y los 3 nombres</h2>
+    <p>Para cada función: cómo se combinan las valencias para armar la fórmula, y el patrón general (no solo un ejemplo) de cada sistema de nomenclatura.</p>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">1</span><span class="func-name">Óxido básico</span><span class="func-formula">Fe₂O₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">óxido + sufijo del metal (-oso/-ico)</td><td class="fn-example">óxido férrico</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">óxido de + metal (valencia en romano)</td><td class="fn-example">óxido de hierro (III)</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+óxido de prefijo+metal</td><td class="fn-example">trióxido de dihierro</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> metal + oxígeno; se intercambian las valencias (la del uno pasa a ser el subíndice del otro). <code>Fe³⁺ + O²⁻ → Fe₂O₃</code></div>
     </div>
-    <div class="note co">🇨🇴 <strong>Nota Colombia:</strong> lo que el sistema internacional llama "óxido ácido" (no metal + oxígeno) en Colombia también se conoce como <strong>anhídrido</strong>. Ambos nombres son correctos y se usan indistintamente.</div>
-    <div class="note game">🎮 <strong>Nota IonNom:</strong> en el Juego y en NomenClash, los <strong>ácidos oxácidos</strong>, las <strong>sales oxigenadas</strong> y los <strong>ácidos hídricos</strong> se validan únicamente con nomenclatura <strong>Tradicional</strong> (así lo exige el currículo de 10°-11°). Stock y Sistemática son correctos y se enseñan en Teoría, pero no se aceptan como respuesta en esas tres categorías del juego.</div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">2</span><span class="func-name">Óxido ácido (también llamado anhídrido)</span><span class="func-formula">SO₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">anhídrido + sufijo del no metal (-oso/-ico)</td><td class="fn-example">anhídrido sulfúrico</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">óxido de + no metal (valencia en romano)</td><td class="fn-example">óxido de azufre (VI)</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+óxido de prefijo+no metal</td><td class="fn-example">trióxido de azufre</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> no metal + oxígeno; se intercambian las valencias, igual que en el óxido básico. <code>S⁶⁺ + O²⁻ → SO₃</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">3</span><span class="func-name">Hidruro metálico</span><span class="func-formula">CaH₂</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">hidruro + sufijo o "de" + metal (si es valencia fija)</td><td class="fn-example">hidruro de calcio</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">hidruro de + metal (valencia en romano)</td><td class="fn-example">hidruro de calcio</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+hidruro de metal</td><td class="fn-example">dihidruro de calcio</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> metal + tantos hidrógenos (H⁻) como indique la valencia del metal. <code>Ca²⁺ + H⁻ → CaH₂</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">4</span><span class="func-name">Ácido hídrico</span><span class="func-formula">HCl</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Disuelto en agua</td><td class="fn-pattern">ácido + no metal+hídrico</td><td class="fn-example">ácido clorhídrico (HCl(aq))</td></tr>
+        <tr><td class="fn-sys">Puro / gas</td><td class="fn-pattern">no metal+uro de hidrógeno</td><td class="fn-example">cloruro de hidrógeno (HCl(g))</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> tantos hidrógenos (H⁺) como indique la valencia del no metal, sin oxígeno. <code>H⁺ + Cl⁻ → HCl</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">5</span><span class="func-name">Hidróxido (base)</span><span class="func-formula">Fe(OH)₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">hidróxido + sufijo del metal (-oso/-ico)</td><td class="fn-example">hidróxido férrico</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">hidróxido de + metal (valencia en romano)</td><td class="fn-example">hidróxido de hierro (III)</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+hidróxido de metal</td><td class="fn-example">trihidróxido de hierro</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> metal + tantos grupos OH⁻ como indique su valencia. <code>Fe³⁺ + OH⁻ → Fe(OH)₃</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">6</span><span class="func-name">Ácido oxácido</span><span class="func-formula">H₂SO₄</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">ácido + sufijo del no metal (-oso/-ico, con hipo-/per- si tiene 4 valencias)</td><td class="fn-example">ácido sulfúrico</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+oxo+prefijo+no metal+ato (valencia) de hidrógeno</td><td class="fn-example">tetraoxosulfato (VI) de hidrógeno</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> se escribe el óxido ácido correspondiente y se le suma una molécula de agua. <code>SO₃ + H₂O → H₂SO₄</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">7</span><span class="func-name">Sal binaria</span><span class="func-formula">Fe₂S₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">no metal+uro + sufijo del metal (-oso/-ico)</td><td class="fn-example">sulfuro férrico</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">no metal+uro de metal (valencia en romano)</td><td class="fn-example">sulfuro de hierro (III)</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">prefijo+no metal+uro de prefijo+metal</td><td class="fn-example">trisulfuro de dihierro</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> metal + no metal; se intercambian las valencias. <code>Fe³⁺ + S²⁻ → Fe₂S₃</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">8</span><span class="func-name">Sal oxigenada</span><span class="func-formula">Fe₂(SO₄)₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">oxoanión + sufijo del metal (-oso/-ico)</td><td class="fn-example">sulfato férrico</td></tr>
+        <tr><td class="fn-sys">Stock</td><td class="fn-pattern">oxoanión de metal (valencia en romano)</td><td class="fn-example">sulfato de hierro (III)</td></tr>
+        <tr><td class="fn-sys">Sistemática</td><td class="fn-pattern">(bis/tris/tetrakis+)oxoanión de prefijo+metal</td><td class="fn-example">tris(tetraoxosulfato) de dihierro</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> metal + oxoanión; se intercambian las valencias, el metal siempre a la izquierda. <code>Fe³⁺ + SO₄²⁻ → Fe₂(SO₄)₃</code></div>
+    </div>
+
+    <div class="func-card">
+      <div class="func-hdr"><span class="func-num">9</span><span class="func-name">Sal ácida</span><span class="func-formula">NaHCO₃</span></div>
+      <table class="func-tbl">
+        <tr><td class="fn-sys">Tradicional</td><td class="fn-pattern">bi+oxoanión de metal</td><td class="fn-example">bicarbonato de sodio</td></tr>
+        <tr><td class="fn-sys">Stock/Sistemática</td><td class="fn-pattern">hidrógeno(oxoanión) de metal</td><td class="fn-example">hidrogenocarbonato de sodio</td></tr>
+      </table>
+      <div class="func-rule">📐 <strong>Formulación:</strong> el ácido poliprótico no cedió todos sus H⁺ al neutralizarse; el anión conserva 1 o 2 hidrógenos ionizables. <code>Na⁺ + HCO₃⁻ → NaHCO₃</code></div>
+    </div>
+
+    <div class="note co"><strong>Un mismo compuesto, dos nombres tradicionales:</strong> a los óxidos ácidos (función 2) también se les puede llamar <strong>anhídridos</strong>. Ambos nombres son correctos y se usan indistintamente en Tradicional.</div>
+    <div class="note game">🎮 <strong>Nota IonNom:</strong> en el Juego y en NomenClash, los <strong>ácidos oxácidos</strong>, las <strong>sales oxigenadas</strong> y los <strong>ácidos hídricos</strong> se validan únicamente con nomenclatura <strong>Tradicional</strong>. Stock y Sistemática son correctos y se enseñan en Teoría, pero no se aceptan como respuesta en esas tres categorías del juego.</div>
   </div>
 
   <div class="sect">
@@ -214,19 +319,51 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="sect">
-    <h2>Valencias comunes por familia</h2>
-    <div class="tbl-wrap">
-    <table class="tbl">
-      <tr><th>Familia</th><th>Elementos</th><th>Valencia(s)</th></tr>
-      <tr><td>Alcalinos (IA)</td><td>Li, Na, K</td><td><code>+1</code> (fija)</td></tr>
-      <tr><td>Alcalinotérreos (IIA)</td><td>Mg, Ca, Ba</td><td><code>+2</code> (fija)</td></tr>
-      <tr><td>Grupo del Al</td><td>Al</td><td><code>+3</code> (fija)</td></tr>
-      <tr><td>Metales de transición variable</td><td>Fe, Cu, Sn, Pb, Cr, Mn, Hg</td><td>Múltiples — hay que calcular el EO (ver Excepciones)</td></tr>
-      <tr><td>Halógenos</td><td>F, Cl, Br, I</td><td><code>-1</code> como anión simple; <code>+1,+3,+5,+7</code> en oxoácidos/oxoaniones</td></tr>
-      <tr><td>Anfígenos</td><td>O, S, Se, Te</td><td><code>-2</code> como anión simple</td></tr>
-      <tr><td>Nitrogenoideos</td><td>N, P, As</td><td><code>-3</code> como anión; <code>+3,+5</code> en oxoácidos</td></tr>
-    </table>
+    <h2>Esquema de valencias — estados de oxidación más comunes</h2>
+    <p>Agrupados como en la tabla periódica: <span style="color:var(--cat-t);font-weight:700">ámbar = metales (cationes)</span>, <span style="color:var(--an-t);font-weight:700">azul = no metales (aniones)</span>. Los números son los estados de oxidación que más aparecen en 10°-11°.</p>
+    <div class="eo-scheme">
+      <div class="eo-fam cat">
+        <div class="eo-fam-name">Alcalinos (IA)</div>
+        <div class="eo-els"><span class="eo-el">Li</span><span class="eo-el">Na</span><span class="eo-el">K</span></div>
+        <div class="eo-vals"><code>+1</code> — fija</div>
+      </div>
+      <div class="eo-fam cat">
+        <div class="eo-fam-name">Alcalinotérreos (IIA)</div>
+        <div class="eo-els"><span class="eo-el">Mg</span><span class="eo-el">Ca</span><span class="eo-el">Ba</span></div>
+        <div class="eo-vals"><code>+2</code> — fija</div>
+      </div>
+      <div class="eo-fam cat">
+        <div class="eo-fam-name">Otros metales de valencia fija</div>
+        <div class="eo-els"><span class="eo-el">Ag</span><span class="eo-el">Zn</span><span class="eo-el">Al</span></div>
+        <div class="eo-vals">Ag <code>+1</code> · Zn <code>+2</code> · Al <code>+3</code></div>
+      </div>
+      <div class="eo-fam cat">
+        <div class="eo-fam-name">Metales de transición (valencia variable)</div>
+        <div class="eo-els"><span class="eo-el">Fe</span><span class="eo-el">Cu</span><span class="eo-el">Sn</span><span class="eo-el">Pb</span><span class="eo-el">Cr</span><span class="eo-el">Mn</span><span class="eo-el">Hg</span></div>
+        <div class="eo-vals">Fe <code>+2/+3</code> · Cu <code>+1/+2</code> · Sn <code>+2/+4</code> · Pb <code>+2/+4</code><br>Cr <code>+2/+3/+6</code> · Mn <code>+2/+3/+4/+6/+7</code> · Hg <code>+1/+2</code></div>
+      </div>
+      <div class="eo-fam an">
+        <div class="eo-fam-name">Halógenos (VIIA)</div>
+        <div class="eo-els"><span class="eo-el">F</span><span class="eo-el">Cl</span><span class="eo-el">Br</span><span class="eo-el">I</span></div>
+        <div class="eo-vals">F <code>-1</code> (solo) · Cl, Br, I: <code>-1</code> como anión; <code>+1/+3/+5/+7</code> en oxoácidos</div>
+      </div>
+      <div class="eo-fam an">
+        <div class="eo-fam-name">Anfígenos (VIA)</div>
+        <div class="eo-els"><span class="eo-el">O</span><span class="eo-el">S</span><span class="eo-el">Se</span><span class="eo-el">Te</span></div>
+        <div class="eo-vals">O <code>-2</code> (solo) · S, Se, Te: <code>-2</code> como anión; <code>+4/+6</code> en oxoácidos</div>
+      </div>
+      <div class="eo-fam an">
+        <div class="eo-fam-name">Nitrogenoideos (VA)</div>
+        <div class="eo-els"><span class="eo-el">N</span><span class="eo-el">P</span><span class="eo-el">As</span></div>
+        <div class="eo-vals"><code>-3</code> como anión; <code>+3/+5</code> en oxoácidos</div>
+      </div>
+      <div class="eo-fam an">
+        <div class="eo-fam-name">Carbonoideos (IVA)</div>
+        <div class="eo-els"><span class="eo-el">C</span><span class="eo-el">Si</span></div>
+        <div class="eo-vals">C <code>+2/+4/-4</code> · Si <code>+4</code></div>
+      </div>
     </div>
+    <p style="font-size:.78rem;color:var(--dimmer)">Los metales de transición variable no se "adivinan": el estado de oxidación se calcula igualando a cero la suma de cargas del compuesto (ver Excepciones más abajo para Mn, Cr y Hg).</p>
   </div>
 
   <div class="sect">
