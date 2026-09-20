@@ -112,15 +112,64 @@ html{font-size:var(--base-fs)}
 /* ── IMPRESIÓN / PDF ── */
 @media print{
   .site-nav,.nav-drawer,.nav-overlay,.dl-btn,.no-print,footer{display:none!important}
-  body{background:#fff;color:#000}
+  body{background:#fff;color:#000;line-height:1.25}
   .app{padding:0;max-width:100%}
-  .sect{box-shadow:none;border:1px solid #999;break-inside:avoid;page-break-inside:avoid;margin-bottom:10px;padding:12px 14px}
-  .sect h2{font-size:.95rem}
-  .tbl{font-size:.72rem}
-  .tbl th{background:#eee!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .tbl code{background:#f0f0f0!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .page-hdr{padding:0 0 5px;margin-bottom:6px;border-bottom:1px solid #999;gap:4px}
+  .page-hdr h1{font-size:13pt;margin-bottom:2px}
+  .page-hdr p{font-size:7.8pt;max-width:none;color:#333}
+
+  .sect{box-shadow:none;border:1px solid #999;break-inside:avoid;page-break-inside:avoid;margin-bottom:6px;padding:6px 9px;border-radius:4px}
+  .sect h2{font-size:9.5pt;margin-bottom:4px;padding-bottom:3px}
+  .sect h3{font-size:7.3pt;margin:5px 0 3px}
+  .sect p{font-size:8pt;line-height:1.32;margin-bottom:4px;color:#222}
+  .sect p[style]{font-size:7pt!important;color:#444!important}
+
+  .legend{gap:4px;margin-bottom:3px}
+  .leg-chip{font-size:6.8pt;padding:2px 7px;font-weight:700}
+
+  .tbl{font-size:7pt;margin-bottom:5px}
+  .tbl th,.tbl td{padding:2.5px 5px}
+  .tbl th{font-size:6.4pt}
+  .tbl code{font-size:6.8pt;white-space:normal}
+  .tbl th,.tbl code{background:#eee!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   a{color:#000!important;text-decoration:none}
-  @page{margin:1.1cm}
+
+  .note{padding:4px 8px;margin:5px 0;font-size:7.2pt;border-width:3px}
+
+  /* Sección de las 9 funciones: 3 columnas internas para no ocupar una hoja larga */
+  .func-section{column-count:3;column-gap:9px;column-fill:auto}
+  .func-section>p:first-of-type{column-span:all;margin-bottom:4px}
+  .func-section .note{column-span:all}
+  .func-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5px;border-width:1px}
+  .func-hdr{padding:3px 6px;gap:4px}
+  .func-num{width:15px;height:15px;font-size:6.2pt}
+  .func-name{font-size:7.3pt}
+  .func-formula{font-size:7.2pt;padding:1px 5px}
+  .func-tbl{font-size:6.6pt}
+  .func-tbl td{padding:2px 4px;white-space:normal!important}
+  .func-tbl td.fn-sys{width:auto;min-width:38px}
+  .func-rule{padding:3px 6px;font-size:6.6pt}
+
+  /* Secciones finales (raíces, sufijos/prefijos, valencias, excepciones, sales ácidas, 4 pasos):
+     fluyen en 2 columnas para aprovechar el ancho horizontal */
+  .print-flow{column-count:2;column-gap:12px;column-fill:auto}
+  .print-flow>.sect{break-inside:avoid;page-break-inside:avoid;margin-bottom:6px}
+  .print-full{column-span:all}
+
+  /* Esquema de valencias: más columnas por fila al tener ancho horizontal */
+  .eo-scheme{grid-template-columns:repeat(4,1fr);gap:5px;margin:5px 0}
+  .eo-fam{padding:4px 6px;border-width:1px}
+  .eo-fam-name{font-size:6pt;margin-bottom:3px}
+  .eo-els{gap:4px;margin-bottom:3px}
+  .eo-el{width:18px;height:18px;font-size:6.4pt;border-radius:4px;border-width:1px!important}
+  .eo-vals{font-size:6.3pt;line-height:1.25}
+
+  /* Excepciones: 2 columnas internas, un tema por celda */
+  .exc-section{column-count:2;column-gap:14px}
+  .exc-item{break-inside:avoid;page-break-inside:avoid;margin-bottom:3px}
+
+  @page{size:landscape;margin:1cm}
 }
 </style>
 </head>
@@ -188,7 +237,7 @@ html{font-size:var(--base-fs)}
     <p>Tres sistemas nombran el mismo compuesto de forma distinta: <strong>Tradicional</strong> (sufijos -oso/-ico), <strong>Stock</strong> (número romano entre paréntesis) y <strong>Sistemática/IUPAC</strong> (prefijos mono-/di-/tri-…). Los tres son correctos; el examen o el ejercicio te dice cuál usar.</p>
   </div>
 
-  <div class="sect">
+  <div class="sect func-section">
     <h2>Las 9 funciones inorgánicas — regla de formulación y los 3 nombres</h2>
     <p>Para cada función: cómo se combinan las valencias para armar la fórmula, y el patrón general (no solo un ejemplo) de cada sistema de nomenclatura.</p>
 
@@ -283,6 +332,7 @@ html{font-size:var(--base-fs)}
     <div class="note game">🎮 <strong>Nota IonNom:</strong> en el Juego y en NomenClash, los <strong>ácidos oxácidos</strong>, las <strong>sales oxigenadas</strong> y los <strong>ácidos hídricos</strong> se validan únicamente con nomenclatura <strong>Tradicional</strong>. Stock y Sistemática son correctos y se enseñan en Teoría, pero no se aceptan como respuesta en esas tres categorías del juego.</div>
   </div>
 
+  <div class="print-flow">
   <div class="sect">
     <h2>Raíces que cambian de nombre en Tradicional y Sistemática</h2>
     <p>Varios elementos no usan su nombre común para armar el nombre Tradicional o Sistemático: usan una <strong>raíz latina</strong> distinta. Por eso "azufre" se convierte en <em>sulfur-</em> (sulfuro, sulfúrico, sulfato) y no en "azufruro". Estas son las raíces que más aparecen en 10°-11°:</p>
@@ -345,7 +395,7 @@ html{font-size:var(--base-fs)}
     <p>Cuando el oxoanión necesita un prefijo compuesto (2 o más unidades de un anión ya complejo), se usan en su lugar: <code>bis-</code> (2), <code>tris-</code> (3), <code>tetrakis-</code> (4), <code>pentakis-</code> (5) — así se evita la ambigüedad. Ejemplo: <code>Fe₂(SO₄)₃</code> → tris(tetraoxosulfato) de dihierro.</p>
   </div>
 
-  <div class="sect">
+  <div class="sect print-full">
     <h2>Esquema de valencias — estados de oxidación más comunes</h2>
     <p>Agrupados como en la tabla periódica: <span style="color:var(--cat-t);font-weight:700">ámbar = metales (cationes)</span>, <span style="color:var(--an-t);font-weight:700">azul = no metales (aniones)</span>. Los números son los estados de oxidación que más aparecen en 10°-11°.</p>
     <div class="eo-scheme">
@@ -393,18 +443,18 @@ html{font-size:var(--base-fs)}
     <p style="font-size:.78rem;color:var(--dimmer)">Los metales de transición variable no se "adivinan": el estado de oxidación se calcula igualando a cero la suma de cargas del compuesto (ver Excepciones más abajo para Mn, Cr y Hg).</p>
   </div>
 
-  <div class="sect">
+  <div class="sect print-full exc-section">
     <h2>Excepciones que más confunden en clase</h2>
-    <h3>Manganeso — 5 estados de oxidación</h3>
-    <p>Con +2, +3 y +4 la Tradicional solo alcanza para dos (manganoso/mangánico); el +3 <strong>no tiene nombre Tradicional</strong> y exige Stock: óxido de manganeso (III). Con +6 y +7 solo existe como oxoanión: manganato / permanganato de potasio.</p>
-    <h3>Cromo — actúa como no metal en +6</h3>
-    <p>Cr²⁺/Cr³⁺ forman óxidos básicos normales. En +6, el Cr se comporta como no metal: CrO₃ es un <strong>anhídrido</strong> (no un óxido básico) y forma ácido crómico, cromato (CrO₄²⁻) y dicromato (Cr₂O₇²⁻).</p>
-    <h3>Mercurio — el único catión diatómico</h3>
-    <p>El ion mercurioso es <strong>Hg₂²⁺</strong> (dos átomos de Hg unidos, EO +1 cada uno), nunca "Hg⁺" suelto. Hg₂Cl₂ = cloruro mercurioso; HgCl₂ (con Hg²⁺) = cloruro mercúrico.</p>
-    <h3>Ácidos hídricos: el mismo HX tiene dos nombres</h3>
-    <p>En estado puro/gaseoso (sin agua): <em>haluro de hidrógeno</em> (HCl(g) = cloruro de hidrógeno). Disuelto en agua: <em>ácido …hídrico</em> (HCl(aq) = ácido clorhídrico). Ojo con la "h" intercalada: clor<strong>h</strong>ídrico, sulf<strong>h</strong>ídrico, no "cloridrico".</p>
-    <h3>Los tres tipos de "hidruro"</h3>
-    <p><strong>Metálico</strong> (H⁻, metal + H, ej. CaH₂) · <strong>Ácido hídrico</strong> (H⁺ + no metal, ej. HCl) · <strong>Agua</strong> (H₂O, caso único: hidrógeno + OH⁻). No son la misma familia aunque las tres lleven hidrógeno.</p>
+    <div class="exc-item"><h3>Manganeso — 5 estados de oxidación</h3>
+    <p>Con +2, +3 y +4 la Tradicional solo alcanza para dos (manganoso/mangánico); el +3 <strong>no tiene nombre Tradicional</strong> y exige Stock: óxido de manganeso (III). Con +6 y +7 solo existe como oxoanión: manganato / permanganato de potasio.</p></div>
+    <div class="exc-item"><h3>Cromo — actúa como no metal en +6</h3>
+    <p>Cr²⁺/Cr³⁺ forman óxidos básicos normales. En +6, el Cr se comporta como no metal: CrO₃ es un <strong>anhídrido</strong> (no un óxido básico) y forma ácido crómico, cromato (CrO₄²⁻) y dicromato (Cr₂O₇²⁻).</p></div>
+    <div class="exc-item"><h3>Mercurio — el único catión diatómico</h3>
+    <p>El ion mercurioso es <strong>Hg₂²⁺</strong> (dos átomos de Hg unidos, EO +1 cada uno), nunca "Hg⁺" suelto. Hg₂Cl₂ = cloruro mercurioso; HgCl₂ (con Hg²⁺) = cloruro mercúrico.</p></div>
+    <div class="exc-item"><h3>Ácidos hídricos: el mismo HX tiene dos nombres</h3>
+    <p>En estado puro/gaseoso (sin agua): <em>haluro de hidrógeno</em> (HCl(g) = cloruro de hidrógeno). Disuelto en agua: <em>ácido …hídrico</em> (HCl(aq) = ácido clorhídrico). Ojo con la "h" intercalada: clor<strong>h</strong>ídrico, sulf<strong>h</strong>ídrico, no "cloridrico".</p></div>
+    <div class="exc-item"><h3>Los tres tipos de "hidruro"</h3>
+    <p><strong>Metálico</strong> (H⁻, metal + H, ej. CaH₂) · <strong>No metálico gaseoso</strong> (H⁺ + no metal, en fase gas, ej. HCl(g) = cloruro de hidrógeno) · <strong>No metálico acuoso / ácido hídrico</strong> (el mismo gas disuelto en agua, ej. HCl(aq) = ácido clorhídrico). El estado físico cambia el nombre aunque la fórmula sea la misma.</p></div>
   </div>
 
   <div class="sect">
@@ -415,7 +465,7 @@ html{font-size:var(--base-fs)}
       <tr><th>Fórmula</th><th>Tradicional</th><th>Stock / Sistemática</th></tr>
       <tr><td><code>NaHCO₃</code></td><td>bicarbonato de sodio</td><td>hidrogenocarbonato de sodio</td></tr>
       <tr><td><code>NaHSO₄</code></td><td>bisulfato de sodio</td><td>hidrogenosulfato de sodio</td></tr>
-      <tr><td><code>Na₂HPO₄</code></td><td>fosfato ácido de disodio</td><td>hidrogenofosfato de disodio</td></tr>
+      <tr><td><code>Na₂HPO₄</code></td><td>fosfato monoácido de sodio</td><td>hidrogenofosfato de sodio</td></tr>
       <tr><td><code>NaH₂PO₄</code></td><td>fosfato diácido de sodio</td><td>dihidrogenofosfato de sodio</td></tr>
     </table>
     </div>
@@ -425,6 +475,7 @@ html{font-size:var(--base-fs)}
     <h2>Los 4 pasos para nombrar cualquier compuesto</h2>
     <p>① <strong>Identifica el catión</strong> (primer elemento, metal) y si su valencia es fija o variable · ② <strong>Identifica el anión</strong> por su color/tipo (simple, OH⁻ u oxoanión) · ③ <strong>Determina la función</strong> con la tabla maestra de arriba · ④ <strong>Aplica las reglas</strong> del sistema pedido (Tradicional, Stock o Sistemática) sin mezclarlas entre sí.</p>
   </div>
+  </div><!-- /print-flow -->
 
   <footer>
     IonNom — Guía de referencia · Colegio Rufino José Cuervo I.E.D. · Consulta la <a href="teoria.html">Teoría completa</a> o practica en el <a href="juego.html">Juego</a>.
