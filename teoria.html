@@ -83,6 +83,16 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ejemplo{background:var(--surf2);border:1.5px dashed var(--cat);border-radius:var(--rs);padding:16px 18px;margin-bottom:14px;font-family:var(--mono);font-size:.84rem;color:var(--tx);line-height:1.8}
 .ejemplo strong{color:var(--cat-t)}
 .ejemplo .corr{font-family:var(--mono);background:var(--an-b);color:var(--an-t);padding:1px 6px;border-radius:4px;font-weight:700}
+/* Animación paso a paso del cálculo de EO */
+.calc-line{opacity:0}
+.ejemplo-anim.in-view .calc-line{animation:calcLineIn .45s ease forwards}
+.ejemplo-anim.in-view .calc-line:nth-child(1){animation-delay:.05s}
+.ejemplo-anim.in-view .calc-line:nth-child(2){animation-delay:.5s}
+.ejemplo-anim.in-view .calc-line:nth-child(3){animation-delay:.95s}
+.ejemplo-anim.in-view .calc-line:nth-child(4){animation-delay:1.4s}
+.ejemplo-anim.in-view .calc-line:nth-child(5){animation-delay:1.85s}
+@keyframes calcLineIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.calc-line{opacity:1;animation:none!important;transform:none}}
 
 /* TABLE */
 .tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.84rem}
@@ -134,6 +144,16 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .rw-strip{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .rw-item{background:var(--ox-b);border:1px solid var(--ox);border-radius:var(--rs);padding:6px 10px;font-size:.76rem;color:var(--ox-t);word-break:break-word}
 .rw-item strong{display:block;font-family:var(--mono);font-weight:700}
+/* rw-strip "expandable": click en el ejemplo para ver el desglose MDEC completo */
+.rw-strip.expandable .rw-item{cursor:pointer;position:relative;padding-right:22px;transition:background .15s}
+.rw-strip.expandable .rw-item:hover{background:var(--ox);color:#fff}
+.rw-strip.expandable .rw-item:hover strong{color:#fff}
+.rw-strip.expandable .rw-item::after{content:'▾ ver desglose';position:absolute;right:8px;top:7px;font-size:.62rem;opacity:.75;white-space:nowrap}
+.rw-strip.expandable .rw-item.open{flex-basis:100%;cursor:default;background:var(--surf);color:var(--tx);border-color:var(--brd2)}
+.rw-strip.expandable .rw-item.open:hover{background:var(--surf)}
+.rw-strip.expandable .rw-item.open::after{content:'▴ cerrar';top:9px}
+.rw-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--brd2)}
+.rw-item.open .rw-detail{display:block}
 /* COMPARISON */
 .comp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
 .comp-col{border-radius:var(--rs);padding:14px 16px;border:2px solid}
@@ -620,12 +640,63 @@ CONTENIDO[0] = `
     </div>
   </div>
 
-  <div class="rw-strip">
-    <div class="rw-item"><strong>NaCl</strong>cloruro de sodio = sal de mesa</div>
-    <div class="rw-item"><strong>CaO</strong>óxido de calcio = cal viva</div>
-    <div class="rw-item"><strong>Fe₂O₃</strong>óxido de hierro (III) = herrumbre</div>
-    <div class="rw-item"><strong>NaHCO₃</strong>bicarbonato de sodio = levadura química</div>
-    <div class="rw-item"><strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada</div>
+  <div class="rw-strip expandable">
+    <div class="rw-item" role="button" tabindex="0" aria-expanded="false" onclick="toggleRwItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRwItem(this);}">
+      <strong>NaCl</strong>cloruro de sodio = sal de mesa
+      <div class="rw-detail">
+        <div class="mdec-row">
+          <div class="mdec-token"><span class="mdec-w an">cloruro</span><span class="mdec-lbl an">② Azul · Cl⁻</span></div>
+          <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">sodio</span><span class="mdec-lbl cat">① Ámbar · Na⁺, fija</span></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--dim)"><strong>Tradicional = Stock = Sistemática:</strong> cloruro de sodio (Na siempre +1: no necesita sufijo ni número romano).</div>
+      </div>
+    </div>
+    <div class="rw-item" role="button" tabindex="0" aria-expanded="false" onclick="toggleRwItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRwItem(this);}">
+      <strong>CaO</strong>óxido de calcio = cal viva
+      <div class="rw-detail">
+        <div class="mdec-row">
+          <div class="mdec-token"><span class="mdec-w an">óxido</span><span class="mdec-lbl an">② Azul · O²⁻</span></div>
+          <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">calcio</span><span class="mdec-lbl cat">① Ámbar · Ca²⁺, fija</span></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--dim)"><strong>Tradicional = Stock = Sistemática:</strong> óxido de calcio (Ca siempre +2: no necesita sufijo ni número romano).</div>
+      </div>
+    </div>
+    <div class="rw-item" role="button" tabindex="0" aria-expanded="false" onclick="toggleRwItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRwItem(this);}">
+      <strong>Fe₂O₃</strong>óxido de hierro (III) = herrumbre
+      <div class="rw-detail">
+        <div class="mdec-row">
+          <div class="mdec-token"><span class="mdec-w an">óxido</span><span class="mdec-lbl an">② Azul · O²⁻</span></div>
+          <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">hierro</span><span class="mdec-lbl cat">① Ámbar · Fe</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">(III)</span><span class="mdec-lbl cat">EO = +3 · Stock</span></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--dim)"><strong>Tradicional:</strong> óxido <em>férrico</em> &nbsp;·&nbsp; <strong>Stock:</strong> óxido de hierro <em>(III)</em> &nbsp;·&nbsp; <strong>Sistemática:</strong> <em>trióxido</em> de <em>di</em>hierro</div>
+      </div>
+    </div>
+    <div class="rw-item" role="button" tabindex="0" aria-expanded="false" onclick="toggleRwItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRwItem(this);}">
+      <strong>NaHCO₃</strong>bicarbonato de sodio = levadura química
+      <div class="rw-detail">
+        <div class="mdec-row">
+          <div class="mdec-token"><span class="mdec-w ox">bicarbonato</span><span class="mdec-lbl ox">④ Teal · HCO₃⁻ (sal ácida)</span></div>
+          <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">sodio</span><span class="mdec-lbl cat">① Ámbar · Na⁺, fija</span></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--dim)"><strong>Tradicional:</strong> bicarbonato de sodio &nbsp;·&nbsp; <strong>Stock/Sistemática:</strong> hidrogenocarbonato de sodio (el "bi-"/"hidrógeno-" avisa que el CO₃²⁻ retuvo 1 H⁺).</div>
+      </div>
+    </div>
+    <div class="rw-item" role="button" tabindex="0" aria-expanded="false" onclick="toggleRwItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRwItem(this);}">
+      <strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada
+      <div class="rw-detail">
+        <div class="mdec-row">
+          <div class="mdec-token"><span class="mdec-w oh">hidróxido</span><span class="mdec-lbl oh">③ Violeta · OH⁻</span></div>
+          <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
+          <div class="mdec-token"><span class="mdec-w cat">calcio</span><span class="mdec-lbl cat">① Ámbar · Ca²⁺, fija</span></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--dim)"><strong>Tradicional = Stock:</strong> hidróxido de calcio &nbsp;·&nbsp; <strong>Sistemática:</strong> <em>di</em>hidróxido de calcio (2 grupos OH⁻).</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -716,62 +787,38 @@ CONTENIDO[1] = `
 </div>
 
 <div class="sect">
-  <h2>Ejemplos de cálculo</h2>
+  <h2>Ejemplos de cálculo <span style="font-size:.7rem;font-weight:600;color:var(--dimmer)">(mira cómo se resuelven, paso a paso)</span></h2>
 
-  <!-- P1 + P2 visual diagram for EO calculation -->
-  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin:12px 0">
-    <div style="flex:1;min-width:200px">
-      <svg viewBox="0 0 260 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;font-family:Arial,sans-serif">
-        <rect x="2" y="2" width="256" height="86" rx="8" fill="#fff" stroke="#d0e6f5" stroke-width="1.5"/>
-        <!-- Fe₂O₃ -->
-        <text x="20" y="25" font-size="13" font-weight="800" fill="#d97706">Fe₂</text>
-        <text x="50" y="25" font-size="13" font-weight="800" fill="#0369a1">O₃</text>
-        <!-- equation -->
-        <text x="20" y="48" font-size="11" fill="#2a3f52">2(<em>x</em>) + 3(−2) = 0</text>
-        <text x="20" y="64" font-size="11" fill="#2a3f52">2<em>x</em> = +6</text>
-        <!-- answer -->
-        <rect x="20" y="70" width="60" height="16" rx="4" fill="#fef3c7"/>
-        <text x="24" y="82" font-size="11" font-weight="800" fill="#92400e">x = +3 ✓</text>
-        <!-- arrow labels -->
-        <text x="140" y="30" font-size="9" fill="#d97706" font-weight="700">Fe → cede e⁻</text>
-        <text x="140" y="44" font-size="9" fill="#0369a1" font-weight="700">O → toma e⁻</text>
-        <text x="140" y="58" font-size="9" fill="#134e4a" font-weight="700">suma = 0 (neutro)</text>
-        <text x="140" y="72" font-size="9" fill="#92400e" font-weight="700">Fe³⁺ = hierro(III)</text>
-      </svg>
-    </div>
-    <div style="flex:1;min-width:160px">
-  <div class="ejemplo">
-    <strong>Fe₂O₃</strong> — ¿cuál es el EO del hierro?<br>
-    Fe: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-    2(<em>x</em>) + 3(−2) = 0<br>
-    2<em>x</em> − 6 = 0 &nbsp;→&nbsp; <span class="corr">x = +3</span><br>
-    ∴ El Fe tiene EO = +3 → es <span class="mayer-hl">Fe³⁺ (hierro III)</span>
-  </div>
-    </div>
+  <div class="ejemplo ejemplo-anim">
+    <div class="calc-line"><strong>Fe₂O₃</strong> — ¿cuál es el EO del hierro?</div>
+    <div class="calc-line">Fe: <em>x</em> &nbsp;|&nbsp; O: −2</div>
+    <div class="calc-line">2(<em>x</em>) + 3(−2) = 0</div>
+    <div class="calc-line">2<em>x</em> − 6 = 0 &nbsp;→&nbsp; <span class="corr">x = +3</span></div>
+    <div class="calc-line">∴ El Fe tiene EO = +3 → es <span class="mayer-hl">Fe³⁺ (hierro III)</span></div>
   </div>
 
-  <div class="ejemplo">
-    <strong>Cu₂O</strong> — ¿cuál es el EO del cobre?<br>
-    Cu: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-    2(<em>x</em>) + 1(−2) = 0<br>
-    2<em>x</em> = +2 &nbsp;→&nbsp; <span class="corr">x = +1</span><br>
-    ∴ El Cu tiene EO = +1 → es Cu⁺ (cobre I)
+  <div class="ejemplo ejemplo-anim">
+    <div class="calc-line"><strong>Cu₂O</strong> — ¿cuál es el EO del cobre?</div>
+    <div class="calc-line">Cu: <em>x</em> &nbsp;|&nbsp; O: −2</div>
+    <div class="calc-line">2(<em>x</em>) + 1(−2) = 0</div>
+    <div class="calc-line">2<em>x</em> = +2 &nbsp;→&nbsp; <span class="corr">x = +1</span></div>
+    <div class="calc-line">∴ El Cu tiene EO = +1 → es Cu⁺ (cobre I)</div>
   </div>
 
-  <div class="ejemplo">
-    <strong>KMnO₄</strong> — ¿cuál es el EO del manganeso?<br>
-    K: +1 &nbsp;|&nbsp; Mn: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-    +1 + <em>x</em> + 4(−2) = 0<br>
-    <em>x</em> = 8 − 1 &nbsp;→&nbsp; <span class="corr">x = +7</span><br>
-    ∴ El Mn tiene EO = +7 → permanganato
+  <div class="ejemplo ejemplo-anim">
+    <div class="calc-line"><strong>KMnO₄</strong> — ¿cuál es el EO del manganeso?</div>
+    <div class="calc-line">K: +1 &nbsp;|&nbsp; Mn: <em>x</em> &nbsp;|&nbsp; O: −2</div>
+    <div class="calc-line">+1 + <em>x</em> + 4(−2) = 0</div>
+    <div class="calc-line"><em>x</em> = 8 − 1 &nbsp;→&nbsp; <span class="corr">x = +7</span></div>
+    <div class="calc-line">∴ El Mn tiene EO = +7 → permanganato</div>
   </div>
 
-  <div class="ejemplo">
-    <strong>H₂SO₄</strong> — ¿cuál es el EO del azufre?<br>
-    H: +1 &nbsp;|&nbsp; S: <em>x</em> &nbsp;|&nbsp; O: −2<br>
-    2(+1) + <em>x</em> + 4(−2) = 0<br>
-    <em>x</em> = 8 − 2 &nbsp;→&nbsp; <span class="corr">x = +6</span><br>
-    ∴ El S tiene EO = +6 en el ácido sulfúrico
+  <div class="ejemplo ejemplo-anim">
+    <div class="calc-line"><strong>H₂SO₄</strong> — ¿cuál es el EO del azufre?</div>
+    <div class="calc-line">H: +1 &nbsp;|&nbsp; S: <em>x</em> &nbsp;|&nbsp; O: −2</div>
+    <div class="calc-line">2(+1) + <em>x</em> + 4(−2) = 0</div>
+    <div class="calc-line"><em>x</em> = 8 − 2 &nbsp;→&nbsp; <span class="corr">x = +6</span></div>
+    <div class="calc-line">∴ El S tiene EO = +6 en el ácido sulfúrico</div>
   </div>
 </div>
 
@@ -1637,6 +1684,7 @@ function goToSection(idx){
     </div>
   </div>` : '';
   document.getElementById('seccion-content').innerHTML = dashHTML + pretrainHTML + CONTENIDO[idx];
+  initCalcAnimations();
   document.getElementById('seccion-titulo').textContent = SECCIONES[idx].icon + ' ' + SECCIONES[idx].titulo;
   document.getElementById('seccion-numero').textContent = 'Sección ' + (idx+1) + ' de ' + SECCIONES.length;
   document.getElementById('progress-text').textContent = (idx+1) + ' / ' + SECCIONES.length;
@@ -1649,6 +1697,27 @@ function goToSection(idx){
   if(floatBtn) floatBtn.style.display='block';
   window.scrollTo(0,0);
   localStorage.setItem('teoria-seccion', idx);
+}
+
+function toggleRwItem(el){
+  const isOpen = el.classList.contains('open');
+  el.classList.toggle('open', !isOpen);
+  el.setAttribute('aria-expanded', String(!isOpen));
+}
+
+function initCalcAnimations(){
+  const boxes = document.querySelectorAll('.ejemplo-anim');
+  if(!boxes.length) return;
+  if(!('IntersectionObserver' in window)){ boxes.forEach(b=>b.classList.add('in-view')); return; }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.35});
+  boxes.forEach(b=>io.observe(b));
 }
 
 function volverAlMenu(){
