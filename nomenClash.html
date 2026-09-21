@@ -2003,7 +2003,7 @@ let G = {};
 
 let _toastTimer = null;
 
-function showAIToast(icon, msg, sub='', duration=2200, title='Turno de la IA'){
+function showAIToast(icon, msg, sub='', duration=1400, title='Turno de la IA'){
   const toast = document.getElementById('aiToast');
   document.getElementById('aiToastIcon').textContent = icon;
   const titleEl = document.getElementById('aiToastTitle');
@@ -2026,7 +2026,7 @@ function hideAIToast(){
 // en vez de depender solo del log de texto (.game-log) al pie de la pantalla.
 function showRejectToast(msg){
   const clean = String(msg).replace(/<[^>]*>/g,'');
-  showAIToast('⚠️', clean, '', 2400, 'Jugada inválida');
+  showAIToast('⚠️', clean, '', 1500, 'Jugada inválida');
 }
 
 // Fases: 'select' | 'play' | 'nom' | 'next' | 'ai'
@@ -2428,7 +2428,7 @@ function startGame(){
   showScreen('game');
   renderGame();
   addLog('¡Partida iniciada! La base es: '+baseCardDesc(),'info');
-  if(currentPlayer().type==='ai') setTimeout(aiTurn,1200);
+  if(currentPlayer().type==='ai') setTimeout(aiTurn,750);
 }
 
 function currentPlayer(){return G.players[G.currentPlayer];}
@@ -2451,14 +2451,14 @@ function advanceTurn(skip=false, extraTurn=false){
   if(extraTurn){
     addLog(`🌟 ¡Turno Extra para ${currentPlayer().name}!`,'good');
     renderGame();
-    if(currentPlayer().type==='ai') setTimeout(aiTurn,1200);
+    if(currentPlayer().type==='ai') setTimeout(aiTurn,750);
     return;
   }
   G.currentPlayer=nextPlayerIndex(skip||G.skipNext);
   G.skipNext=false;
   renderGame();
   if(!checkWin()&&currentPlayer().type==='ai'){
-    setTimeout(aiTurn,1200);
+    setTimeout(aiTurn,750);
   } else if(!checkWin()){
     hideAIToast(); // ocultar toast cuando regresa el turno al humano
   }
@@ -3849,7 +3849,7 @@ function aiPlayAction(cp, card, handIdx){
       G.direction*=-1;
       drawCards(drawTargetIdx,2);
       addLog(`↺ 🤖 ${cp.name} jugó Hidrólisis. Sentido invertido. ${nextName} roba 2.`,'action');
-      showAIToast('↺', `${cp.name} jugó Hidrólisis`, `Sentido invertido · ${nextName} roba 2`, 2000);
+      showAIToast('↺', `${cp.name} jugó Hidrólisis`, `Sentido invertido · ${nextName} roba 2`, 1300);
       renderGame();
       showAIActionModal(
         `🤖 ${cp.name} jugó Hidrólisis`,
@@ -3862,7 +3862,7 @@ function aiPlayAction(cp, card, handIdx){
 
     case 'skip':
       addLog(`⚠ 🤖 ${cp.name} jugó ¡Ácido! ${nextName} pierde su turno.`,'action');
-      showAIToast('⚠️', `${cp.name} jugó ¡Ácido!`, `${nextName} pierde su turno`, 2000);
+      showAIToast('⚠️', `${cp.name} jugó ¡Ácido!`, `${nextName} pierde su turno`, 1300);
       renderGame();
       showAIActionModal(
         `🤖 ${cp.name} jugó ¡Ácido!`,
@@ -3885,7 +3885,7 @@ function aiPlayAction(cp, card, handIdx){
         const chosen=alts[0];
         G.oxidationOverride=chosen;
         addLog(`⚡ 🤖 ${cp.name} jugó Estado de Oxidación → ${G.base.symbol} actúa como +${chosen}.`,'action');
-        showAIToast('⚡', `${cp.name} cambia valencia`, `${G.base.display} actúa como +${chosen}`, 2000);
+        showAIToast('⚡', `${cp.name} cambia valencia`, `${G.base.display} actúa como +${chosen}`, 1300);
         renderGame();
         showAIActionModal(
           `🤖 ${cp.name} jugó Estado de Oxidación`,
@@ -3902,7 +3902,7 @@ function aiPlayAction(cp, card, handIdx){
       const oldBase = G.base;
       G.base=G.cationDeck.pop();
       addLog(`🔄 🤖 ${cp.name} jugó Cambio de Reactivo. Nueva base: ${G.base.display} ${G.base.name}.`,'action');
-      showAIToast('🔄', `${cp.name} cambia la base`, `Nueva base: ${G.base.display} ${G.base.name}`, 2000);
+      showAIToast('🔄', `${cp.name} cambia la base`, `Nueva base: ${G.base.display} ${G.base.name}`, 1300);
       renderGame();
       // IA debe jugar anión inmediatamente o pierde su propio turno
       const newCatCharge = G.base.charge;
@@ -4020,7 +4020,7 @@ function aiTurnWithOxidation(newCharge){
 
       // Probabilidad de error según dificultad (misma mecánica que aiTurn() —
       // antes se saltaba aquí, haciendo que la IA nunca fallara al usar Estado de Oxidación)
-      const errRates={easy:0, medium:0.15, hard:0.30};
+      const errRates={easy:0.28, medium:0.13, hard:0.05};
       const errRate = errRates[G.difficulty] || 0;
       const iaFalla = Math.random() < errRate;
 
@@ -4030,7 +4030,7 @@ function aiTurnWithOxidation(newCharge){
         G.base=playedBase; // restaurar base original
         drawCards(G.currentPlayer, 2);
         addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreAIOx}</strong>". Roba 2 cartas.`,'bad');
-        showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreAIOx}`, 2800);
+        showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreAIOx}`, 1800);
         G.wildcardCharge=-1;
         G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
         renderGame();
@@ -4040,7 +4040,7 @@ function aiTurnWithOxidation(newCharge){
 
       cp.score = (cp.score || 0) + 1;
       addLog(`🤖 ${cp.name}: "${nombreAIOx}"${extraTurn?' 🌟':''}`, 'good');
-      showAIToast('⚡', `${cp.name} forma compuesto`, nombreAIOx, 2500);
+      showAIToast('⚡', `${cp.name} forma compuesto`, nombreAIOx, 1600);
       G.wildcardCharge=-1; // reset
       G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
       if(checkWin()) return;
@@ -4086,7 +4086,7 @@ function aiTurn(){
             const nombreIA=getNombreTrad(formulaIA)||comp.name;
 
             // Probabilidad de error según dificultad (F10 — IA también puede fallar)
-            const errRates={easy:0, medium:0.15, hard:0.30};
+            const errRates={easy:0.28, medium:0.13, hard:0.05};
             const errRate = errRates[G.difficulty] || 0;
             const iaFalla = Math.random() < errRate;
 
@@ -4097,7 +4097,7 @@ function aiTurn(){
               G.base=base; // restaurar base original
               drawCards(G.currentPlayer, 2);
               addLog(`❌ 🤖 ${cp.name} intentó nombrar el compuesto incorrectamente. Nombre correcto: "<strong>${nombreIA}</strong>". Roba 2 cartas.`,'bad');
-              showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreIA}`, 2800);
+              showAIToast('❌', `${cp.name} cometió un error`, `Correcto: ${nombreIA}`, 1800);
               G.wildcardCharge=-1;
               G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
               renderGame();
@@ -4105,7 +4105,7 @@ function aiTurn(){
             } else {
               cp.score = (cp.score || 0) + 1;
               addLog(`🤖 ${cp.name}: "${nombreIA}"${extraTurn?' 🌟':''}`, 'good');
-              showAIToast('⚗️', `${cp.name} forma compuesto`, nombreIA, 2500);
+              showAIToast('⚗️', `${cp.name} forma compuesto`, nombreIA, 1600);
               G.wildcardCharge=-1; // reset
               G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
               if(checkWin()) return;
@@ -4149,7 +4149,7 @@ function aiTurn(){
         // Siempre roba si no pudo hacer nada
         drawCards(G.currentPlayer,1);
         addLog(`🤖 ${cp.name} robó una carta.`,'info');
-        showAIToast('🃏', `${cp.name} roba una carta`, 'Sin jugada posible', 1800);
+        showAIToast('🃏', `${cp.name} roba una carta`, 'Sin jugada posible', 1150);
         G.oxidationOverride=null;G._wildcardCatActive=false;G._wildcardCatOriginalCharge=null;
         renderGame();
         advanceTurn();
@@ -4157,11 +4157,11 @@ function aiTurn(){
       } else {
         drawCards(G.currentPlayer,1);
         addLog(`🤖 ${cp.name} robó (base no es catión).`,'info');
-        showAIToast('🃏', `${cp.name} roba una carta`, 'Base no es catión', 1800);
+        showAIToast('🃏', `${cp.name} roba una carta`, 'Base no es catión', 1150);
         renderGame();
         advanceTurn();
       }
-    },800);
+    },500);
   }
 }
 
