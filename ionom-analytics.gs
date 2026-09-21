@@ -94,7 +94,11 @@ const PREGUNTAS_POR_SESION = 20;
 
 // Reto especial de premiación (ver juego.html: misma meta que se le muestra
 // al estudiante en su tarjeta de estadísticas — "Reto 1.000 preguntas").
-// HISTÓRICO, no por periodo: cuenta todo lo jugado alguna vez.
+// RETO_META_PREGUNTAS es HISTÓRICO (cuenta todo lo jugado alguna vez), pero
+// RETO_META_PCT se exige del PERIODO ACADÉMICO VIGENTE (ver
+// calcularRetoMilPreguntas) — igual que la Nota de juego, para no penalizar
+// para siempre un acierto histórico bajo de cuando el estudiante apenas
+// empezaba a jugar, meses atrás.
 const RETO_META_PREGUNTAS = 1000;
 const RETO_META_PCT = 80;
 
@@ -160,7 +164,7 @@ const CURSO_HEADERS = [
 
 const RETO_HEADERS = [
   'Puesto', 'Nombre', 'Curso', 'Fecha de logro', 'Hora de logro',
-  'Preguntas respondidas', '% de acierto'
+  'Preguntas respondidas (histórico)', '% de acierto (periodo actual)'
 ];
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -1148,22 +1152,26 @@ function nombreHojaCurso(curso) {
 // ══════════════════════════════════════════════════════════════════════════
 // HOJA "Reto 1000 preguntas" — ranking de premiación
 // ══════════════════════════════════════════════════════════════════════════
-// El reto exige LAS DOS condiciones a la vez, no una u otra: RETO_META_PREGUNTAS
-// preguntas históricas Y RETO_META_PCT% de acierto o más (sumando TODAS sus
-// sesiones, igual que la tarjeta "Reto 1.000 preguntas" que ve en
-// juego.html). Se recorren las sesiones de cada estudiante EN ORDEN
-// CRONOLÓGICO, acumulando preguntas/correctas, hasta la PRIMERA sesión en
-// que AMBAS condiciones se cumplen simultáneamente — esa es la "fecha de
-// logro". No basta con haber cumplido el 80% en algún momento anterior si
-// para entonces no había llegado a las 1000, ni con haber llegado a las
-// 1000 si el acierto acumulado en ese momento todavía no llega al 80% (el
-// acierto acumulado puede subir o bajar con sesiones posteriores, así que
-// se sigue avanzando sesión por sesión hasta que ambas se cumplen a la vez,
-// o se agotan las sesiones sin lograrlo — en ese caso el estudiante
-// simplemente no aparece en esta hoja). El ranking queda ordenado por
-// fecha+hora de logro ascendente: el primero en cumplir ambas condiciones
-// ocupa el puesto 1, que es justo el criterio ("1er lugar = premio") que se
-// anunciaba en el reto especial.
+// El reto exige LAS DOS condiciones a la vez, no una u otra:
+// - RETO_META_PREGUNTAS preguntas HISTÓRICAS (sumando TODAS las sesiones
+//   jugadas alguna vez, igual que la tarjeta "Reto 1.000 preguntas" de
+//   juego.html) — esto NO cambia con el periodo académico.
+// - RETO_META_PCT% de acierto O MÁS, pero calculado SOLO con las sesiones
+//   DENTRO DEL PERIODO ACADÉMICO VIGENTE (FECHA_INICIO_PERIODO..
+//   FECHA_FIN_PERIODO — misma ventana que usa la Nota de juego). Premia el
+//   desempeño reciente y no penaliza para siempre a alguien que arrastre un
+//   acierto histórico bajo de cuando apenas empezaba a jugar, meses atrás.
+// Se recorren las sesiones de cada estudiante EN ORDEN CRONOLÓGICO,
+// acumulando dos contadores en paralelo (histórico completo para las
+// preguntas; solo-periodo para el acierto), hasta la PRIMERA sesión en que
+// AMBAS condiciones se cumplen simultáneamente — esa es la "fecha de
+// logro". El acierto del periodo puede subir o bajar con cada sesión nueva
+// dentro del periodo, así que se sigue avanzando hasta que ambas se
+// cumplen a la vez, o se agotan las sesiones sin lograrlo (en ese caso el
+// estudiante simplemente no aparece en esta hoja). El ranking queda
+// ordenado por fecha+hora de logro ascendente: el primero en cumplir
+// ambas condiciones ocupa el puesto 1, que es justo el criterio
+// ("1er lugar = premio") que se anunciaba en el reto especial.
 function calcularRetoMilPreguntas(ss, filasDedup) {
   const grupos = agruparPorEstudiante(filasDedup);
   const logros = [];
@@ -1176,20 +1184,26 @@ function calcularRetoMilPreguntas(ss, filasDedup) {
       return claveA < claveB ? -1 : (claveA > claveB ? 1 : 0);
     });
 
-    let acumPreguntas = 0, acumCorrectas = 0;
+    let acumPreguntas = 0, acumCorrectas = 0; // histórico completo — para las 1000 preguntas
+    let acumPreguntasPeriodo = 0, acumCorrectasPeriodo = 0; // solo sesiones del periodo vigente — para el 80%
     for (let i = 0; i < sesionesOrdenadas.length; i++) {
       const s = sesionesOrdenadas[i];
       acumPreguntas += s.total;
       acumCorrectas += s.correctas;
-      const pctAcumulado = acumPreguntas > 0 ? Math.round((acumCorrectas / acumPreguntas) * 100) : 0;
-      if (acumPreguntas >= RETO_META_PREGUNTAS && pctAcumulado >= RETO_META_PCT) {
+      const enPeriodo = s.fecha >= FECHA_INICIO_PERIODO && s.fecha <= FECHA_FIN_PERIODO;
+      if (enPeriodo) {
+        acumPreguntasPeriodo += s.total;
+        acumCorrectasPeriodo += s.correctas;
+      }
+      const pctPeriodo = acumPreguntasPeriodo > 0 ? Math.round((acumCorrectasPeriodo / acumPreguntasPeriodo) * 100) : 0;
+      if (acumPreguntas >= RETO_META_PREGUNTAS && pctPeriodo >= RETO_META_PCT) {
         logros.push({
           nombre: g.nombreDisplay,
           curso: g.curso,
           fecha: s.fecha,
           hora: s.hora,
           preguntas: acumPreguntas,
-          pct: pctAcumulado
+          pct: pctPeriodo
         });
         break; // solo la sesión donde cumplió ambas condiciones — no seguir sumando de más
       }
