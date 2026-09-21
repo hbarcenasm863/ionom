@@ -11,3 +11,7 @@ Cuando se necesite probar el flujo de Modo Estudiante en `juego.html` (validaci�
 **Regla:** cada vez que se modifique `banco.js` (o cualquier otro archivo en `ASSETS_TO_CACHE` de `sw.js`: `manifest.json`, `assets/iononpwa.png`, `assets/logo.png`), subir la versión de `CACHE_NAME` en `sw.js` (ej. `ionom-v13` → `ionom-v14`) **en el mismo commit**. Si no se hace, los estudiantes que ya tengan el sitio/PWA instalada seguirán jugando con datos de compuestos desactualizados —incluyendo bugs ya corregidos en el servidor— sin ningún aviso, hasta que alguien lo note por un reporte confuso ("el juego se traba", "el botón Siguiente no hace nada").
 
 Antes de cerrar cualquier tarea que edite `banco.js`, verificar con `git log -1 --format=%ad -- sw.js` vs `git log -1 --format=%ad -- banco.js` que `sw.js` no haya quedado desactualizado.
+
+## ionom-analytics.gs — no se despliega solo
+
+A diferencia de los `.html`/`.js` del sitio (que GitHub Pages sirve directo desde el repo), `ionom-analytics.gs` es el código fuente del backend de Google Apps Script, pero el repo NO está conectado a ese proyecto (no hay `.clasp.json` ni despliegue automático). Editar y subir este archivo a `main` **no cambia nada en producción** hasta que alguien copie el contenido actualizado al editor de Apps Script (script.google.com) y vuelva a implementar la Web App (Implementar → Administrar implementaciones → Editar → Nueva versión). Avisar siempre al usuario de este paso manual cuando se modifique `ionom-analytics.gs`.

@@ -79,7 +79,7 @@ const TZ = 'America/Bogota';
 // Verificación de despliegue (Regla 7): abrir la URL de la Web App en el
 // navegador debe mostrar este texto — así se sabe con certeza qué versión del
 // código está realmente en producción y no una implementación vieja en caché.
-const BUILD_TAG = 'IonNom Analytics v3.2 — 2026-09-10 — validación de código vía hoja Estudiantes';
+const BUILD_TAG = 'IonNom Analytics v3.3 — 2026-09-21 — menos contención en doPost, hoja Reto 1000 preguntas';
 
 // Periodo académico vigente y meta de sesiones (Regla 5 — Nota de juego).
 // Ajustar estas tres constantes al iniciar cada periodo.
@@ -91,6 +91,12 @@ const SESIONES_ESPERADAS   = 22;           // ≈ 2 veces por semana durante el 
 // con preguntas fallidas las sesiones que le falten a un estudiante para
 // llegar a SESIONES_ESPERADAS (ver calcularNotaJuego).
 const PREGUNTAS_POR_SESION = 20;
+
+// Reto especial de premiación (ver juego.html: misma meta que se le muestra
+// al estudiante en su tarjeta de estadísticas — "Reto 1.000 preguntas").
+// HISTÓRICO, no por periodo: cuenta todo lo jugado alguna vez.
+const RETO_META_PREGUNTAS = 1000;
+const RETO_META_PCT = 80;
 
 // Grupos funcionales/temas del juego — deben coincidir EXACTAMENTE con los
 // valores de GROUP_LABELS en juego.html (es lo que el frontend manda como
@@ -151,6 +157,11 @@ const CURSO_HEADERS = [
   'Nombre', 'Sesiones', 'Preguntas respondidas', '% Acierto',
   'Nota juego (0-5)', 'Última sesión'
 ].concat(EST_HEADERS_PERIODO);
+
+const RETO_HEADERS = [
+  'Puesto', 'Nombre', 'Curso', 'Fecha de logro', 'Hora de logro',
+  'Preguntas respondidas', '% de acierto', 'Cumple 80%'
+];
 
 // ══════════════════════════════════════════════════════════════════════════
 // PUNTOS DE ENTRADA HTTP
@@ -331,7 +342,7 @@ function responderValidarCodigo(e) {
 function doPost(e) {
   // El JSON se parsea UNA sola vez, fuera del bucle de reintentos: un
   // payload malformado fallaría siempre igual, así que reintentarlo no
-  // ayudaría — solo desperdiciaría los 6 intentos que sí sirven para el
+  // ayudaría — solo desperdiciaría los intentos que sí sirven para el
   // error transitorio de cuota de Spreadsheets.
   let d;
   try {
@@ -341,7 +352,22 @@ function doPost(e) {
     return salidaJSON({ ok: false, error: 'JSON inválido: ' + String((err && err.message) || err) });
   }
 
-  const INTENTOS = 6;
+  // INTENTOS=4 / waitLock=6s (antes: 6 intentos de 15s cada uno — hasta ~90s
+  // solo esperando el lock, sin contar el backoff entre intentos). El
+  // frontend (_postConReintento/sendResults en juego.html) YA reintenta por
+  // su cuenta 3 veces con su propio backoff si recibe {ok:false} o la
+  // conexión falla, así que el servidor no necesita ser tan persistente:
+  // cuanto más tiempo retiene doPost() un slot de ejecución reintentando
+  // internamente, menos slots quedan libres para las demás solicitudes
+  // concurrentes de la clase — justo lo que puede escalar a "Too many
+  // simultaneous invocations: Spreadsheets". Fallar más rápido y dejar que
+  // el reintento del cliente (con una solicitud NUEVA, no la misma colgada)
+  // se acomode reduce la congestión en vez de alimentarla. Además,
+  // recalcularTodasLasEstadisticas() ahora solo retiene este mismo lock
+  // durante la LECTURA de "Registro" (antes retenía el lock durante todo el
+  // recálculo + reescritura de 4 hojas), así que hay muchas menos
+  // probabilidades de toparse con el lock ocupado en primer lugar.
+  const INTENTOS = 4;
   let ultimoError;
   for (let intento = 0; intento < INTENTOS; intento++) {
     // La búsqueda/escritura de la fila en "Registro" va bajo lock (evita que
@@ -353,13 +379,13 @@ function doPost(e) {
     // esperando cerca del límite de ejecución de Apps Script (6 min).
     const lock = LockService.getScriptLock();
     try {
-      lock.waitLock(15000);
+      lock.waitLock(6000);
     } catch (err) {
       ultimoError = new Error('No se obtuvo el lock (servidor congestionado): ' + err);
       if (intento < INTENTOS - 1) {
-        const base = 1200 * Math.pow(1.7, intento);
-        const jitter = Math.random() * 1000;
-        Utilities.sleep(Math.min(base + jitter, 8000));
+        const base = 1000 * Math.pow(1.7, intento);
+        const jitter = Math.random() * 500;
+        Utilities.sleep(Math.min(base + jitter, 4000));
       }
       continue;
     }
@@ -370,9 +396,9 @@ function doPost(e) {
     } catch (err) {
       ultimoError = err;
       if (intento < INTENTOS - 1) {
-        const base = 1200 * Math.pow(1.7, intento);
-        const jitter = Math.random() * 1000;
-        Utilities.sleep(Math.min(base + jitter, 8000));
+        const base = 1000 * Math.pow(1.7, intento);
+        const jitter = Math.random() * 500;
+        Utilities.sleep(Math.min(base + jitter, 4000));
       }
     } finally {
       lock.releaseLock();
@@ -1024,9 +1050,7 @@ function escribirHojaCompleta(ss, nombreHoja, headers, filas, colorEncabezado, f
 // ══════════════════════════════════════════════════════════════════════════
 // HOJA "Estadísticas" — resumen por estudiante
 // ══════════════════════════════════════════════════════════════════════════
-function calcularEstadisticas() {
-  const ss = obtenerSpreadsheet();
-  const filasDedup = leerRegistroDeduplicado(ss);
+function calcularEstadisticas(ss, filasDedup) {
   const grupos = agruparPorEstudiante(filasDedup);
 
   const headers = EST_HEADERS_BASE
@@ -1052,10 +1076,7 @@ function calcularEstadisticas() {
 // ══════════════════════════════════════════════════════════════════════════
 // HOJA "Eficacia por tema" — agregado de TODOS los estudiantes
 // ══════════════════════════════════════════════════════════════════════════
-function calcularEficaciaPorTema() {
-  const ss = obtenerSpreadsheet();
-  const filasDedup = leerRegistroDeduplicado(ss);
-
+function calcularEficaciaPorTema(ss, filasDedup) {
   const agregados = {};
   TEMAS_PRINCIPALES.forEach(function (t) { agregados[t] = { correctas: 0, errores: 0 }; });
 
@@ -1088,9 +1109,7 @@ function calcularEficaciaPorTema() {
 // ══════════════════════════════════════════════════════════════════════════
 // HOJAS "Curso X" — una por cada valor distinto de Curso en Registro
 // ══════════════════════════════════════════════════════════════════════════
-function calcularHojasPorCurso() {
-  const ss = obtenerSpreadsheet();
-  const filasDedup = leerRegistroDeduplicado(ss);
+function calcularHojasPorCurso(ss, filasDedup) {
   const grupos = agruparPorEstudiante(filasDedup);
 
   const porCurso = {};
@@ -1127,6 +1146,65 @@ function nombreHojaCurso(curso) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
+// HOJA "Reto 1000 preguntas" — ranking de premiación
+// ══════════════════════════════════════════════════════════════════════════
+// Para cada estudiante que ya alcanzó RETO_META_PREGUNTAS preguntas
+// históricas (sumando TODAS sus sesiones, igual que la tarjeta "Reto 1.000
+// preguntas" que ve en juego.html), se recorren sus sesiones EN ORDEN
+// CRONOLÓGICO y se acumulan preguntas/correctas hasta el momento exacto en
+// que el acumulado cruza la meta — esa sesión es la "fecha de logro" y el %
+// de acierto en ese momento es el que importa para saber si cumplió también
+// el umbral de RETO_META_PCT (el reto exige ambas cosas, no solo llegar a
+// las 1000). El ranking queda ordenado por fecha+hora de logro ascendente:
+// el primero en cruzar la meta ocupa el puesto 1, que es justo el criterio
+// ("1er lugar = premio") que se anunciaba en el reto especial.
+function calcularRetoMilPreguntas(ss, filasDedup) {
+  const grupos = agruparPorEstudiante(filasDedup);
+  const logros = [];
+
+  Object.keys(grupos).forEach(function (clave) {
+    const g = grupos[clave];
+    const sesionesOrdenadas = g.sesiones.slice().sort(function (a, b) {
+      const claveA = (a.fecha || '') + ' ' + (a.hora || '');
+      const claveB = (b.fecha || '') + ' ' + (b.hora || '');
+      return claveA < claveB ? -1 : (claveA > claveB ? 1 : 0);
+    });
+
+    let acumPreguntas = 0, acumCorrectas = 0;
+    for (let i = 0; i < sesionesOrdenadas.length; i++) {
+      const s = sesionesOrdenadas[i];
+      acumPreguntas += s.total;
+      acumCorrectas += s.correctas;
+      if (acumPreguntas >= RETO_META_PREGUNTAS) {
+        const pctEnLogro = acumPreguntas > 0 ? Math.round((acumCorrectas / acumPreguntas) * 100) : 0;
+        logros.push({
+          nombre: g.nombreDisplay,
+          curso: g.curso,
+          fecha: s.fecha,
+          hora: s.hora,
+          preguntas: acumPreguntas,
+          pct: pctEnLogro,
+          cumple: pctEnLogro >= RETO_META_PCT
+        });
+        break; // solo la sesión donde cruzó la meta — no seguir sumando de más
+      }
+    }
+  });
+
+  logros.sort(function (a, b) {
+    const claveA = (a.fecha || '') + ' ' + (a.hora || '');
+    const claveB = (b.fecha || '') + ' ' + (b.hora || '');
+    return claveA < claveB ? -1 : (claveA > claveB ? 1 : 0);
+  });
+
+  const filas = logros.map(function (l, idx) {
+    return [idx + 1, l.nombre, l.curso, l.fecha, l.hora, l.preguntas, l.pct, l.cumple ? 'Sí' : 'No'];
+  });
+
+  escribirHojaCompleta(ss, 'Reto 1000 preguntas', RETO_HEADERS, filas, '#8b5a3c', function (fila) { return fila[6]; });
+}
+
+// ══════════════════════════════════════════════════════════════════════════
 // HOJA "Errores" — log interno del propio script
 // ══════════════════════════════════════════════════════════════════════════
 function registrarError(funcion, err) {
@@ -1151,10 +1229,38 @@ function registrarError(funcion, err) {
 // RECÁLCULO — cada hoja de estadísticas en su propio try/catch (Regla 10),
 // para que un fallo calculando una no impida calcular las demás.
 // ══════════════════════════════════════════════════════════════════════════
+// Antes, esta función completa (lectura de "Registro" + las 3 reescrituras
+// pesadas de hojas de estadísticas) corría entera bajo el mismo LockService
+// que usa doPost() para guardar partidas — y cada una de las 3 hojas volvía
+// a leer "Registro" por su cuenta (3 lecturas de la misma hoja). Con un
+// "Registro" grande, sumar el tiempo de leer 3 veces + reescribir 4 hojas
+// completas (clearContents/clearFormats/setValues/setBackgrounds, que no
+// son operaciones rápidas) bajo el mismo candado que compite con TODOS los
+// estudiantes guardando resultados en vivo es exactamente el tipo de cosa
+// que agota el candado y dispara "No se obtuvo el lock (servidor
+// congestionado)" en doPost — sobre todo si el disparador automático de
+// cada 30 min cae en horario de clase.
+//
+// Ahora: "Registro" se lee UNA sola vez, bajo el candado, lo más rápido
+// posible; el candado se libera inmediatamente después; y las 4 hojas se
+// calculan/escriben con esos mismos datos en memoria, SIN candado — ya no
+// compiten con doPost por nada mientras escriben. El candado solo protege
+// la lectura (para no leer "Registro" a la mitad de un upsertRegistro()).
 function recalcularTodasLasEstadisticas() {
-  try { calcularEstadisticas(); } catch (err) { registrarError('calcularEstadisticas', err); }
-  try { calcularEficaciaPorTema(); } catch (err) { registrarError('calcularEficaciaPorTema', err); }
-  try { calcularHojasPorCurso(); } catch (err) { registrarError('calcularHojasPorCurso', err); }
+  let ss, filasDedup;
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    ss = obtenerSpreadsheet();
+    filasDedup = leerRegistroDeduplicado(ss);
+  } finally {
+    lock.releaseLock();
+  }
+
+  try { calcularEstadisticas(ss, filasDedup); } catch (err) { registrarError('calcularEstadisticas', err); }
+  try { calcularEficaciaPorTema(ss, filasDedup); } catch (err) { registrarError('calcularEficaciaPorTema', err); }
+  try { calcularHojasPorCurso(ss, filasDedup); } catch (err) { registrarError('calcularHojasPorCurso', err); }
+  try { calcularRetoMilPreguntas(ss, filasDedup); } catch (err) { registrarError('calcularRetoMilPreguntas', err); }
 }
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -1162,26 +1268,11 @@ function recalcularTodasLasEstadisticas() {
 // editor de Apps Script (▶ Ejecutar), no se llaman desde doPost/doGet.
 // ══════════════════════════════════════════════════════════════════════════
 
-// Igual que en doPost: estas funciones también reescriben por completo las
-// hojas de estadísticas, así que toman el mismo lock antes de tocar nada —
-// si un estudiante termina una partida (doPost) justo mientras el docente
-// corre esto manualmente, uno espera al otro en vez de pisarse.
-function conLockDeScript_(fn) {
-  const lock = LockService.getScriptLock();
-  lock.waitLock(30000);
-  try {
-    fn();
-  } finally {
-    lock.releaseLock();
-  }
-}
-
-// Fuerza el recálculo completo de Estadísticas / Eficacia por tema / Curso X
-// a partir de lo que ya hay en "Registro", sin esperar una nueva partida.
+// Fuerza el recálculo completo de Estadísticas / Eficacia por tema / Curso X /
+// Reto 1000 preguntas a partir de lo que ya hay en "Registro", sin esperar
+// una nueva partida.
 function recalcularAhora() {
-  conLockDeScript_(function () {
-    recalcularTodasLasEstadisticas();
-  });
+  recalcularTodasLasEstadisticas();
   Logger.log('Recálculo completo ejecutado. Revisa la hoja "Errores" si algo falló.');
 }
 
@@ -1194,9 +1285,7 @@ function recalcularAhora() {
 const NOMBRE_FUNCION_AUTO = 'actualizarEstadisticasAutomatico';
 
 function actualizarEstadisticasAutomatico() {
-  conLockDeScript_(function () {
-    recalcularTodasLasEstadisticas();
-  });
+  recalcularTodasLasEstadisticas();
 }
 
 // ── Ejecutar UNA SOLA VEZ desde el editor (▶, eligiendo esta función) para
@@ -1217,6 +1306,21 @@ function instalarActualizacionAutomatica() {
 
   Logger.log('Disparador automático instalado: Estadísticas se recalculará sola cada 30 minutos.');
   return 'Disparador automático instalado: Estadísticas se recalculará sola cada 30 minutos.';
+}
+
+// Estas dos funciones de mantenimiento SÍ modifican "Registro" directamente
+// (a diferencia de recalcularAhora(), que solo reescribe las hojas de
+// estadísticas), así que toman el mismo candado que usa doPost antes de
+// tocar nada — si un estudiante termina una partida justo mientras el
+// docente corre esto manualmente, uno espera al otro en vez de pisarse.
+function conLockDeScript_(fn) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    fn();
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 // A diferencia de recalcularAhora(), ESTA función SÍ modifica "Registro":
