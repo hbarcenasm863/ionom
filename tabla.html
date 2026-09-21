@@ -63,10 +63,12 @@
   --el-act:#374151;      /* gris pizarra — actínidos */
   --el-act-b:#f3f4f6;    --el-act-t:#111827;
 
-  /* ═══ Paleta "metales / no metales / metaloides" ═══ */
-  --mn-metal:#2563eb;     --mn-metal-b:#dbeafe;     --mn-metal-t:#1e3a8a;
-  --mn-nonmetal:#ca8a04;  --mn-nonmetal-b:#fef9c3;  --mn-nonmetal-t:#713f12;
-  --mn-metalloid:#059669; --mn-metalloid-b:#d1fae5; --mn-metalloid-t:#064e3b;
+  /* ═══ Paleta "metales / no metales / metaloides" ═══
+     Realineada con MDEC: Metal→ambar (catión), No metal→azul (anión),
+     Metaloide→violeta (tono neutro reusado, sin relación con OH⁻ aquí) */
+  --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
+  --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
+  --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
 
   /* ═══ Paleta "bloques s/p/d/f" ═══ */
   --blk-s:#e11d48; --blk-s-b:#ffe4e6; --blk-s-t:#881337;
@@ -102,9 +104,9 @@
     --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
     --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
     --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
-    --mn-metal:#60a5fa;     --mn-metal-b:#1e3a8a;     --mn-metal-t:#bfdbfe;
-    --mn-nonmetal:#facc15;  --mn-nonmetal-b:#422006;  --mn-nonmetal-t:#fef08a;
-    --mn-metalloid:#34d399; --mn-metalloid-b:#022c22; --mn-metalloid-t:#a7f3d0;
+    --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
+    --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
+    --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
     --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
     --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
     --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
@@ -137,9 +139,9 @@
   --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
   --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
   --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
-  --mn-metal:#60a5fa;     --mn-metal-b:#1e3a8a;     --mn-metal-t:#bfdbfe;
-  --mn-nonmetal:#facc15;  --mn-nonmetal-b:#422006;  --mn-nonmetal-t:#fef08a;
-  --mn-metalloid:#34d399; --mn-metalloid-b:#022c22; --mn-metalloid-t:#a7f3d0;
+  --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
+  --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
+  --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
   --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
   --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
   --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
@@ -168,9 +170,9 @@
   --el-gas:#6366f1;     --el-gas-b:#e0e7ff; --el-gas-t:#312e81;
   --el-lan:#92400e;     --el-lan-b:#fef3c7; --el-lan-t:#451a03;
   --el-act:#374151;     --el-act-b:#f3f4f6; --el-act-t:#111827;
-  --mn-metal:#2563eb;     --mn-metal-b:#dbeafe;     --mn-metal-t:#1e3a8a;
-  --mn-nonmetal:#ca8a04;  --mn-nonmetal-b:#fef9c3;  --mn-nonmetal-t:#713f12;
-  --mn-metalloid:#059669; --mn-metalloid-b:#d1fae5; --mn-metalloid-t:#064e3b;
+  --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
+  --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
+  --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
   --blk-s:#e11d48; --blk-s-b:#ffe4e6; --blk-s-t:#881337;
   --blk-p:#d97706; --blk-p-b:#fef3c7; --blk-p-t:#78350f;
   --blk-d:#2563eb; --blk-d-b:#dbeafe; --blk-d-t:#1e3a8a;
@@ -290,7 +292,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .el-tile.lanthanide{background:var(--el-lan-b);border-color:var(--el-lan);color:var(--el-lan-t)}
 .el-tile.actinide  {background:var(--el-act-b);border-color:var(--el-act);color:var(--el-act-t)}
 
-/* ═══ PALETA "METALES / NO METALES / METALOIDES" (modo alterno) ═══ */
+/* ═══ PALETA "METALES / NO METALES / METALOIDES" (modo por defecto)
+   Reusa la paleta MDEC: metal→ambar (--cat), no metal→azul (--an), metaloide→violeta (--oh) ═══ */
 .el-tile.mn-metal    {background:var(--mn-metal-b);border-color:var(--mn-metal);color:var(--mn-metal-t)}
 .el-tile.mn-nonmetal {background:var(--mn-nonmetal-b);border-color:var(--mn-nonmetal);color:var(--mn-nonmetal-t)}
 .el-tile.mn-metalloid{background:var(--mn-metalloid-b);border-color:var(--mn-metalloid);color:var(--mn-metalloid-t)}
@@ -515,16 +518,17 @@ html{font-size:var(--base-fs)}
 
   <!-- ── Aviso de paleta independiente ── -->
   <div class="paleta-aviso" role="note">
-    <strong>Nota sobre los colores:</strong> los colores de esta tabla son una <em>paleta geológica independiente</em> del sistema MDEC (donde amber = catión, azul = anión, etc.). Aquí <strong>púrpura = metales de transición</strong>, <strong>teal = halógenos</strong>. La leyenda debajo explica cada categoría.
+    <strong>Nota sobre los colores:</strong> en la vista <strong>⚙️ Metales / No metales</strong> reusamos los mismos colores de nomenclatura: <strong>ambar = metal</strong> (forma cationes), <strong>azul = no metal</strong> (forma aniones simples) y <strong>violeta = metaloide</strong> (color neutro, no significa OH⁻ aquí). Las vistas <strong>🧪 Familias</strong> y <strong>🔲 Bloques s·p·d·f</strong> usan en cambio una <em>paleta geológica independiente</em> del sistema MDEC — <strong>no</strong> tienen relación con los colores de nomenclatura (ej. aquí púrpura = transición, teal = halógenos). La leyenda debajo explica cada categoría según la vista activa.
   </div>
 
   <!-- ── Selector de modo de color ── -->
   <div class="color-mode-bar" role="group" aria-label="Modo de coloreado de la tabla">
     <span class="color-mode-label">Ver por:</span>
-    <button type="button" class="color-mode-btn active" data-mode="family" onclick="setColorMode('family')">🧪 Familias</button>
-    <button type="button" class="color-mode-btn" data-mode="metal" onclick="setColorMode('metal')">⚙️ Metales / No metales</button>
+    <button type="button" class="color-mode-btn" data-mode="family" onclick="setColorMode('family')">🧪 Familias</button>
+    <button type="button" class="color-mode-btn active" data-mode="metal" onclick="setColorMode('metal')">⚙️ Metales / No metales</button>
     <button type="button" class="color-mode-btn" data-mode="block" onclick="setColorMode('block')">🔲 Bloques s·p·d·f</button>
   </div>
+  <p style="font-size:.7rem;color:var(--dimmer);margin:-8px 0 16px;max-width:780px">🧪 Familias y 🔲 Bloques s·p·d·f: clasifican elementos con colores propios (no tienen relación con los colores ambar/azul/violeta/teal de nomenclatura).</p>
 
   <div class="tabla-scroll">
     <!-- MAIN TABLE -->
@@ -537,18 +541,11 @@ html{font-size:var(--base-fs)}
 
   <!-- ── LEYENDA ── -->
   <div class="legend" aria-label="Leyenda de categorías de elementos">
-    <div class="legend-title" id="legend-title">Categorías de elementos</div>
+    <div class="legend-title" id="legend-title">Metales, no metales y metaloides</div>
     <div id="legend-items" style="display:contents">
-      <div class="legend-item"><div class="legend-dot ld-alkali"></div>Metal alcalino</div>
-      <div class="legend-item"><div class="legend-dot ld-alkaline"></div>Alcalinotérreo</div>
-      <div class="legend-item"><div class="legend-dot ld-transition"></div>Metal de transición</div>
-      <div class="legend-item"><div class="legend-dot ld-post"></div>Metal post-transición</div>
-      <div class="legend-item"><div class="legend-dot ld-metalloid"></div>Metaloide</div>
-      <div class="legend-item"><div class="legend-dot ld-nonmetal"></div>No metal</div>
-      <div class="legend-item"><div class="legend-dot ld-halogen"></div>Halógeno</div>
-      <div class="legend-item"><div class="legend-dot ld-noble"></div>Gas noble</div>
-      <div class="legend-item"><div class="legend-dot ld-lanthanide"></div>Lantánido</div>
-      <div class="legend-item"><div class="legend-dot ld-actinide"></div>Actínido</div>
+      <div class="legend-item"><div class="legend-dot ld-mn-metal"></div>Metal</div>
+      <div class="legend-item"><div class="legend-dot ld-mn-nonmetal"></div>No metal</div>
+      <div class="legend-item"><div class="legend-dot ld-mn-metalloid"></div>Metaloide</div>
     </div>
   </div>
 </div>
@@ -562,7 +559,7 @@ html{font-size:var(--base-fs)}
       <div style="font-size:1.2rem;font-weight:800;color:var(--an-t);font-family:Georgia,serif;font-style:italic">¿Cómo usar la tabla?</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
-      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> esta tabla usa una paleta geológica propia, diferente al sistema MDEC de las otras páginas. La leyenda debajo de la tabla explica cada color.</div>
+      <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> por defecto, ambar = metal, azul = no metal y violeta = metaloide (los mismos colores de nomenclatura). También puedes ver la tabla por familias o por bloques s·p·d·f: esos dos modos usan una paleta propia, distinta al sistema MDEC. La leyenda debajo de la tabla explica cada color.</div>
       <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)"><strong style="color:var(--cat-t)">👆 Toca o haz clic:</strong> selecciona cualquier elemento para ver su número atómico, masa, estados de oxidación (en chips amber/azul), electronegatividad y contexto colombiano.</div>
       <div style="padding:10px 12px;background:var(--ox-b);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">🔊 Narración de voz:</strong> al abrir un elemento, escucharás su información en voz para reforzar el aprendizaje visual y auditivo.</div>
     </div>
@@ -821,7 +818,8 @@ const LEGEND_TITLE = {
   block: 'Bloques s, p, d y f'
 };
 
-let currentColorMode = 'family';
+// Default: Metales/No metales/Metaloides (realineado con MDEC: ambar/azul/violeta)
+let currentColorMode = 'metal';
 
 function setColorMode(mode){
   if(!LEGEND_HTML[mode]) return;
@@ -851,7 +849,7 @@ function classOf(type){
 function makeTile(z){
   const el = ELEMENTS[z];
   const div = document.createElement('div');
-  div.className = `el-tile ${el.type}`;
+  div.className = `el-tile ${modeClassFor(el, currentColorMode)}`;
   div.dataset.z = z;
   div.setAttribute('onclick',`showEl(${z})`);
   // Accesibilidad: title con nombre completo
