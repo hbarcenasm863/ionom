@@ -46,6 +46,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
 .page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
 .page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
 
 /* SECTION */
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
@@ -202,6 +206,8 @@ html{font-size:var(--base-fs)}
     <h1>🔗 Estequiometría</h1>
     <p>Calcula cuánto reacciona y cuánto se produce usando <strong>solo factores de conversión</strong> — nunca regla de tres. Grados 10-11</p>
   </div>
+
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
 
   <!-- ── PRE-ENTRENAMIENTO — Mayer P9 Pre-training ── -->
   <div class="sect" style="border-left:4px solid var(--gold)">
@@ -521,7 +527,7 @@ html{font-size:var(--base-fs)}
   </div>
 
   <!-- ── QUIZ — Mayer P11 Personalization ── -->
-  <div class="sect quiz-sect">
+  <div class="sect quiz-sect" id="practica">
     <h2>✅ Practica — Estequiometría <button class="tts-btn" onclick="speakText(this)" data-text="Estos cinco problemas cubren los tipos de pregunta que más aparecen en los exámenes. Si te equivocas en alguno, lee la cadena de factores en la explicación — ahí verás exactamente dónde falló tu razonamiento. Con cuatro o más correctas ya tienes la base sólida para seguir al reactivo limitante y la estequiometría avanzada.">🔊 Escuchar</button></h2>
     <p style="font-size:.83rem;color:var(--tx2);margin-bottom:16px">Elige la respuesta correcta. Se muestra la cadena de factores completa para que puedas revisar el procedimiento.</p>
     <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
@@ -535,6 +541,7 @@ html{font-size:var(--base-fs)}
   </footer>
 </div>
 
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
 <button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
 <button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 <script>

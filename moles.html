@@ -48,6 +48,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
 .page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
 .page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
 
 .sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
 .sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
@@ -158,6 +162,8 @@ html{font-size:var(--base-fs)}
     <h1>⚛️ Mol, Masa Molar y Estequiometría</h1>
     <p>Conecta la cantidad de sustancia con la masa en gramos usando factores de conversión. Grados 10-11</p>
   </div>
+
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
 
   <!-- ── EL MOL ── -->
   <div class="sect">
@@ -286,7 +292,7 @@ html{font-size:var(--base-fs)}
   </div>
 
   <!-- ── QUIZ ── -->
-  <div class="sect quiz-sect">
+  <div class="sect quiz-sect" id="practica">
     <h2>✅ Practica — Mol y masa molar <button class="tts-btn" onclick="speakText(this)" data-text="Llegaste a la parte más importante: la práctica. Estos ejercicios cubren exactamente lo que preguntan en los exámenes de grado once. Si te equivocas, no te saltes la explicación — ahí está el razonamiento que necesitas. Con seis o más bien ya tienes la base para pasar a estequiometría.">🔊 Escuchar</button></h2>
     <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
     <div class="progress-label" id="quiz-progress-text">0 de 8 respondidas</div>
@@ -299,6 +305,7 @@ html{font-size:var(--base-fs)}
   </footer>
 </div>
 
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
 <button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
 <button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
 <script>
