@@ -160,7 +160,7 @@ const CURSO_HEADERS = [
 
 const RETO_HEADERS = [
   'Puesto', 'Nombre', 'Curso', 'Fecha de logro', 'Hora de logro',
-  'Preguntas respondidas', '% de acierto', 'Cumple 80%'
+  'Preguntas respondidas', '% de acierto'
 ];
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -1148,16 +1148,22 @@ function nombreHojaCurso(curso) {
 // ══════════════════════════════════════════════════════════════════════════
 // HOJA "Reto 1000 preguntas" — ranking de premiación
 // ══════════════════════════════════════════════════════════════════════════
-// Para cada estudiante que ya alcanzó RETO_META_PREGUNTAS preguntas
-// históricas (sumando TODAS sus sesiones, igual que la tarjeta "Reto 1.000
-// preguntas" que ve en juego.html), se recorren sus sesiones EN ORDEN
-// CRONOLÓGICO y se acumulan preguntas/correctas hasta el momento exacto en
-// que el acumulado cruza la meta — esa sesión es la "fecha de logro" y el %
-// de acierto en ese momento es el que importa para saber si cumplió también
-// el umbral de RETO_META_PCT (el reto exige ambas cosas, no solo llegar a
-// las 1000). El ranking queda ordenado por fecha+hora de logro ascendente:
-// el primero en cruzar la meta ocupa el puesto 1, que es justo el criterio
-// ("1er lugar = premio") que se anunciaba en el reto especial.
+// El reto exige LAS DOS condiciones a la vez, no una u otra: RETO_META_PREGUNTAS
+// preguntas históricas Y RETO_META_PCT% de acierto o más (sumando TODAS sus
+// sesiones, igual que la tarjeta "Reto 1.000 preguntas" que ve en
+// juego.html). Se recorren las sesiones de cada estudiante EN ORDEN
+// CRONOLÓGICO, acumulando preguntas/correctas, hasta la PRIMERA sesión en
+// que AMBAS condiciones se cumplen simultáneamente — esa es la "fecha de
+// logro". No basta con haber cumplido el 80% en algún momento anterior si
+// para entonces no había llegado a las 1000, ni con haber llegado a las
+// 1000 si el acierto acumulado en ese momento todavía no llega al 80% (el
+// acierto acumulado puede subir o bajar con sesiones posteriores, así que
+// se sigue avanzando sesión por sesión hasta que ambas se cumplen a la vez,
+// o se agotan las sesiones sin lograrlo — en ese caso el estudiante
+// simplemente no aparece en esta hoja). El ranking queda ordenado por
+// fecha+hora de logro ascendente: el primero en cumplir ambas condiciones
+// ocupa el puesto 1, que es justo el criterio ("1er lugar = premio") que se
+// anunciaba en el reto especial.
 function calcularRetoMilPreguntas(ss, filasDedup) {
   const grupos = agruparPorEstudiante(filasDedup);
   const logros = [];
@@ -1175,18 +1181,17 @@ function calcularRetoMilPreguntas(ss, filasDedup) {
       const s = sesionesOrdenadas[i];
       acumPreguntas += s.total;
       acumCorrectas += s.correctas;
-      if (acumPreguntas >= RETO_META_PREGUNTAS) {
-        const pctEnLogro = acumPreguntas > 0 ? Math.round((acumCorrectas / acumPreguntas) * 100) : 0;
+      const pctAcumulado = acumPreguntas > 0 ? Math.round((acumCorrectas / acumPreguntas) * 100) : 0;
+      if (acumPreguntas >= RETO_META_PREGUNTAS && pctAcumulado >= RETO_META_PCT) {
         logros.push({
           nombre: g.nombreDisplay,
           curso: g.curso,
           fecha: s.fecha,
           hora: s.hora,
           preguntas: acumPreguntas,
-          pct: pctEnLogro,
-          cumple: pctEnLogro >= RETO_META_PCT
+          pct: pctAcumulado
         });
-        break; // solo la sesión donde cruzó la meta — no seguir sumando de más
+        break; // solo la sesión donde cumplió ambas condiciones — no seguir sumando de más
       }
     }
   });
@@ -1198,7 +1203,7 @@ function calcularRetoMilPreguntas(ss, filasDedup) {
   });
 
   const filas = logros.map(function (l, idx) {
-    return [idx + 1, l.nombre, l.curso, l.fecha, l.hora, l.preguntas, l.pct, l.cumple ? 'Sí' : 'No'];
+    return [idx + 1, l.nombre, l.curso, l.fecha, l.hora, l.preguntas, l.pct];
   });
 
   escribirHojaCompleta(ss, 'Reto 1000 preguntas', RETO_HEADERS, filas, '#8b5a3c', function (fila) { return fila[6]; });
