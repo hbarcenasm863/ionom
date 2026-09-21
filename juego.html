@@ -224,8 +224,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .wi-stat-loading{font-size:.76rem;color:rgba(255,255,255,.4);font-style:italic}
 .wi-progress-wrap{margin-top:8px}
 .wi-progress-lbl{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:4px}
-.wi-progress-bar{height:7px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden}
-.wi-progress-fill{height:100%;border-radius:4px;transition:width .4s ease}
 .wi-prompt{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:10px}
 .wi-change-link{
   display:inline-block;margin-top:10px;background:none;border:none;padding:0;
@@ -1090,19 +1088,16 @@ function loadStudentStats(){
     const rangoPeriodo = _fmtFechaCorta(per.inicio, !mismoAnio) + ' – ' + _fmtFechaCorta(per.fin, true);
     // Reto especial: 1.000 preguntas históricas con 80% de acierto. Ambas
     // cifras ya vienen en la respuesta de ?accion=stats (totalPreguntas y
-    // pctGlobal, las mismas que arriba), así que la barra de progreso no
-    // necesita ningún endpoint nuevo.
+    // pctGlobal, las mismas que arriba).
     const RETO_META = 1000;
     const totalHist = Number(d.totalPreguntas) || 0;
     const pctHist = Number(d.pctGlobal) || 0;
-    const retoPct = Math.min(100, Math.round((totalHist / RETO_META) * 100));
     const retoOk = pctHist >= 80;
     const retoHtml =
       '<div class="wi-progress-wrap">' +
         '<div class="wi-progress-lbl">🎯 Reto 1.000 preguntas: ' + Math.min(totalHist, RETO_META) + ' / ' + RETO_META +
           (retoOk ? ' · ✓ ya cumples el 80% de acierto' : ' · acierto actual ' + pctHist + '% (meta 80%)') +
         '</div>' +
-        '<div class="wi-progress-bar"><div class="wi-progress-fill" style="width:' + retoPct + '%;background:' + (retoOk ? 'var(--ok)' : 'var(--gold)') + '"></div></div>' +
       '</div>';
     box.innerHTML =
       '<div class="wi-stat-card">' +
