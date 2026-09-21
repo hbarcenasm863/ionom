@@ -790,6 +790,7 @@ html{font-size:var(--base-fs)}
         <div><div style="font-size:.82rem;font-weight:700;margin-bottom:2px">Modo Estudiante</div><div style="font-size:.74rem;color:rgba(255,255,255,.65)">Ingresa tu código para que tu profesor reciba tus resultados automáticamente.</div></div>
       </div>
     </div>
+    <button onclick="speakHowToPlay()" style="width:100%;padding:11px;margin-bottom:8px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);border-radius:100px;color:#fff;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s">🔊 Escuchar</button>
     <button onclick="closeHowToPlay()" style="width:100%;padding:13px;background:rgba(217,119,6,.8);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s">¡Entendido, a jugar! 🚀</button>
   </div>
 </div>
@@ -3477,14 +3478,21 @@ function reintentarEnvioManual(){
   });
 }
 
+// confirmExit() reutiliza el mismo modal propio ("exit-guard-overlay") que
+// el gesto "atrás" (ver armExitGuard()/popstate más abajo), en vez del
+// confirm() nativo del navegador que se usaba antes — misma acción (salir
+// de la partida), misma experiencia visual sin importar cómo el estudiante
+// decida salir.
 function confirmExit(){
-  if(ST.idx===0||confirm('¿Salir de la sesión actual y volver al menú?')) _doExit();
+  if(ST.idx===0){ _doExit(); return; }
+  const m=document.getElementById('exit-guard-overlay');
+  if(m) m.classList.add('open'); else _doExit();
 }
 
-// Cuerpo real de la salida, separado de confirmExit() para que el modal de
-// "atrás accidental" (ver confirmExitGuardModal()) no muestre un segundo
-// confirm() nativo encima del suyo propio — ahí la confirmación ya la dio
-// el estudiante al tocar "Salir de todas formas".
+// Cuerpo real de la salida, separado de la pregunta de confirmación
+// (confirmExit()/confirmExitGuardModal()) para que ambos caminos —botón del
+// menú o gesto "atrás"— terminen en la misma lógica de guardado/salida sin
+// duplicar código.
 function _doExit(){
   // Salir por el botón del menú es una navegación DENTRO de la SPA — no
   // dispara beforeunload ni visibilitychange, así que sin este envío la
@@ -3523,13 +3531,23 @@ function speak(text, onEnd) {
   speechSynthesis.speak(u);
 }
 
-function openHowToPlay() {
-  const ov = document.getElementById('howtoplay-overlay');
-  ov.style.display = 'flex';
-  speak('¡Hola! En Ion Nom responderás diez preguntas de nomenclatura inorgánica. ' +
+const HOWTOPLAY_TEXT = '¡Hola! En Ion Nom responderás diez preguntas de nomenclatura inorgánica. ' +
     'Primero elige un grupo funcional, luego responde cada pregunta antes de que se acaben los sesenta segundos. ' +
     'Hay preguntas de opción múltiple, escritura libre y más. ' +
-    'Al terminar recibirás tu medalla y retroalimentación. ¡Buena suerte!');
+    'Al terminar recibirás tu medalla y retroalimentación. ¡Buena suerte!';
+
+function openHowToPlay() {
+  // La narración de voz NO se dispara sola: en un salón silencioso, un
+  // audio inesperado sin gesto previo del usuario puede avergonzar al
+  // estudiante. El modal se sigue mostrando automáticamente, pero el TTS
+  // solo se activa si el estudiante pulsa el botón "🔊 Escuchar" (ver
+  // speakHowToPlay()).
+  const ov = document.getElementById('howtoplay-overlay');
+  ov.style.display = 'flex';
+}
+
+function speakHowToPlay() {
+  speak(HOWTOPLAY_TEXT);
 }
 
 function closeHowToPlay() {
@@ -3831,6 +3849,7 @@ function scoreErr(){ ST.totalAttempts++; updateStats(); }
 // consola del navegador.
 window.openHowToPlay = openHowToPlay;
 window.closeHowToPlay = closeHowToPlay;
+window.speakHowToPlay = speakHowToPlay;
 window.setMode = setMode;
 window.validateCode = validateCode;
 window.cambiarEstudiante = cambiarEstudiante;
