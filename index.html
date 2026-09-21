@@ -622,96 +622,26 @@ html{font-size:var(--base-fs)}
   </div>
 </div>
 
-<!-- ===== CONSEJO ===== -->
-<div class="tip-card" id="tip-inicio">
-  <div class="tip-icon">💡</div>
-  <div class="tip-body">
-    <div class="tip-label">Ruta recomendada para empezar</div>
-    <div class="tip-text">¿Primera vez en IonNom? Comienza por <strong>Principios</strong>, luego practica con <strong>Funciones</strong> y pon a prueba lo que aprendiste en el <strong>Juego</strong>. Paso a paso llegarás más lejos. ¿Prefieres tenerlo todo en una hoja? <a href="guia.html" style="color:inherit;text-decoration:underline">Descarga la guía completa en PDF</a>.</div>
-  </div>
-  <button class="tip-close" onclick="document.getElementById('tip-inicio').style.display='none'" aria-label="Cerrar consejo">✕</button>
-</div>
-
-<!-- ===== PRETRAIN: 4 GRUPOS MDEC ===== -->
+<!-- ===== PRETRAIN: 4 GRUPOS MDEC (referencia rápida y compacta; el detalle ya está en el modal de bienvenida) ===== -->
 <div class="pretrain-box" role="note">
-  <h4>Antes de empezar — los 4 grupos que verás en toda la app</h4>
   <div class="pretrain-chips">
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--cat)"></span>
-      <strong style="color:var(--cat-t)">① Ámbar · Catión</strong>
-      <span style="color:var(--dim);font-weight:400">— metal / ion positivo</span>
+      <strong style="color:var(--cat-t)">① Ámbar</strong>
     </span>
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--an)"></span>
-      <strong style="color:var(--an-t)">② Azul · Anión simple</strong>
-      <span style="color:var(--dim);font-weight:400">— no metal / ion negativo</span>
+      <strong style="color:var(--an-t)">② Azul</strong>
     </span>
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--oh)"></span>
-      <strong style="color:var(--oh-t)">③ Violeta · OH⁻</strong>
-      <span style="color:var(--dim);font-weight:400">— grupo hidroxilo</span>
+      <strong style="color:var(--oh-t)">③ Violeta</strong>
     </span>
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--ox)"></span>
-      <strong style="color:var(--ox-t)">④ Teal · Oxoanión</strong>
-      <span style="color:var(--dim);font-weight:400">— anión oxigenado</span>
+      <strong style="color:var(--ox-t)">④ Teal</strong>
     </span>
-  </div>
-</div>
-
-<!-- ===== REAL-WORLD ===== -->
-<div class="rw-section">
-  <div class="section-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
-  <div class="rw-row">
-    <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
-    <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
-    <div class="rw-card"><div class="rw-formula">Fe₂O₃</div><div class="rw-name">Óxido de hierro (III)</div><div class="rw-use">Herrumbre · óxido del hierro</div></div>
-    <div class="rw-card"><div class="rw-formula">NaHCO₃</div><div class="rw-name">Bicarbonato de sodio</div><div class="rw-use">Levante en repostería · antiácido</div></div>
-    <div class="rw-card"><div class="rw-formula">Ca(OH)₂</div><div class="rw-name">Hidróxido de calcio</div><div class="rw-use">Cal apagada · lechada de cal</div></div>
-    <div class="rw-card"><div class="rw-formula">KMnO₄</div><div class="rw-name">Permanganato de potasio</div><div class="rw-use">Desinfectante · tratamiento de agua</div></div>
-  </div>
-</div>
-
-<!-- ===== 4-PART GRID ===== -->
-<div class="parts-grid">
-  <div class="part-card cat" data-sym="⊕">
-    <div class="part-num">① Ámbar — Catión</div>
-    <div class="part-title">Metal / Ion positivo</div>
-    <div class="part-examples">Na⁺  Ca²⁺  Fe³⁺  Cu²⁺</div>
-    <div class="part-desc">Átomo de metal que pierde electrones. Va primero en la fórmula y en el nombre. Puede tener valencia fija o variable.</div>
-  </div>
-  <div class="part-card an" data-sym="⊖">
-    <div class="part-num">② Azul — Anión simple</div>
-    <div class="part-title">No metal / Ion negativo</div>
-    <div class="part-examples">Cl⁻  S²⁻  O²⁻  Br⁻</div>
-    <div class="part-desc">No metal que gana electrones. En el nombre termina en <em>-uro</em> o <em>-ido</em>. Forma óxidos básicos, sales binarias y anhídridos.</div>
-  </div>
-  <div class="part-card oh" data-sym="OH">
-    <div class="part-num">③ Violeta — Grupo OH⁻</div>
-    <div class="part-title">Hidroxilo</div>
-    <div class="part-examples">OH⁻  →  hidróxido</div>
-    <div class="part-desc">Grupo poliatómico que forma bases e hidróxidos. Compuestos ternarios: metal + OH⁻.</div>
-  </div>
-  <div class="part-card ox" data-sym="O₄">
-    <div class="part-num">④ Teal — Oxoanión</div>
-    <div class="part-title">Anión oxigenado</div>
-    <div class="part-examples">SO₄²⁻  NO₃⁻  CrO₄²⁻</div>
-    <div class="part-desc">Anión que contiene oxígeno. Forma sales oxigenadas y ácidos oxácidos. Cada oxoanión tiene nombre propio.</div>
-  </div>
-</div>
-
-<!-- ===== DEMO CARD ===== -->
-<div class="demo-card">
-  <div class="section-lbl">Ejemplo — Lectura de un nombre con el sistema de colores</div>
-  <div class="demo-row">
-    <div class="dt"><span class="dw ox">sulfato</span><span class="dl ox">④ Oxoanión SO₄²⁻</span></div>
-    <div class="dt"><span class="dw neu">de</span><span class="dl neu">enlace</span></div>
-    <div class="dt"><span class="dw cat">hierro</span><span class="dl cat">① Catión Fe</span></div>
-    <div class="dt"><span class="dw cat">(III)</span><span class="dl cat">Valencia +3 · Stock</span></div>
-  </div>
-  <div class="demo-note">
-    <strong>Fe₂(SO₄)₃</strong> · Catión <span style="color:var(--cat-t);font-weight:700">Fe³⁺</span> + Oxoanión <span style="color:var(--ox-t);font-weight:700">SO₄²⁻</span>
-    → <em>sulfato férrico</em> (Tradicional) · <em>sulfato de hierro (III)</em> (Stock) · <em>trisulfato de dihierro</em> (IUPAC)
+    <button type="button" class="pt-chip" onclick="openWelcomeModal()" style="cursor:pointer;font:inherit;border-style:dashed">Ver ruta recomendada →</button>
   </div>
 </div>
 
@@ -953,6 +883,63 @@ html{font-size:var(--base-fs)}
   </a>
 
 </div>
+
+<!-- ===== REAL-WORLD ===== -->
+<div class="rw-section">
+  <div class="section-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
+  <div class="rw-row">
+    <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
+    <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
+    <div class="rw-card"><div class="rw-formula">Fe₂O₃</div><div class="rw-name">Óxido de hierro (III)</div><div class="rw-use">Herrumbre · óxido del hierro</div></div>
+    <div class="rw-card"><div class="rw-formula">NaHCO₃</div><div class="rw-name">Bicarbonato de sodio</div><div class="rw-use">Levante en repostería · antiácido</div></div>
+    <div class="rw-card"><div class="rw-formula">Ca(OH)₂</div><div class="rw-name">Hidróxido de calcio</div><div class="rw-use">Cal apagada · lechada de cal</div></div>
+    <div class="rw-card"><div class="rw-formula">KMnO₄</div><div class="rw-name">Permanganato de potasio</div><div class="rw-use">Desinfectante · tratamiento de agua</div></div>
+  </div>
+</div>
+
+<!-- ===== 4-PART GRID ===== -->
+<div class="parts-grid">
+  <div class="part-card cat" data-sym="⊕">
+    <div class="part-num">① Ámbar — Catión</div>
+    <div class="part-title">Metal / Ion positivo</div>
+    <div class="part-examples">Na⁺  Ca²⁺  Fe³⁺  Cu²⁺</div>
+    <div class="part-desc">Átomo de metal que pierde electrones. Va primero en la fórmula y en el nombre. Puede tener valencia fija o variable.</div>
+  </div>
+  <div class="part-card an" data-sym="⊖">
+    <div class="part-num">② Azul — Anión simple</div>
+    <div class="part-title">No metal / Ion negativo</div>
+    <div class="part-examples">Cl⁻  S²⁻  O²⁻  Br⁻</div>
+    <div class="part-desc">No metal que gana electrones. En el nombre termina en <em>-uro</em> o <em>-ido</em>. Forma óxidos básicos, sales binarias y anhídridos.</div>
+  </div>
+  <div class="part-card oh" data-sym="OH">
+    <div class="part-num">③ Violeta — Grupo OH⁻</div>
+    <div class="part-title">Hidroxilo</div>
+    <div class="part-examples">OH⁻  →  hidróxido</div>
+    <div class="part-desc">Grupo poliatómico que forma bases e hidróxidos. Compuestos ternarios: metal + OH⁻.</div>
+  </div>
+  <div class="part-card ox" data-sym="O₄">
+    <div class="part-num">④ Teal — Oxoanión</div>
+    <div class="part-title">Anión oxigenado</div>
+    <div class="part-examples">SO₄²⁻  NO₃⁻  CrO₄²⁻</div>
+    <div class="part-desc">Anión que contiene oxígeno. Forma sales oxigenadas y ácidos oxácidos. Cada oxoanión tiene nombre propio.</div>
+  </div>
+</div>
+
+<!-- ===== DEMO CARD ===== -->
+<div class="demo-card">
+  <div class="section-lbl">Ejemplo — Lectura de un nombre con el sistema de colores</div>
+  <div class="demo-row">
+    <div class="dt"><span class="dw ox">sulfato</span><span class="dl ox">④ Oxoanión SO₄²⁻</span></div>
+    <div class="dt"><span class="dw neu">de</span><span class="dl neu">enlace</span></div>
+    <div class="dt"><span class="dw cat">hierro</span><span class="dl cat">① Catión Fe</span></div>
+    <div class="dt"><span class="dw cat">(III)</span><span class="dl cat">Valencia +3 · Stock</span></div>
+  </div>
+  <div class="demo-note">
+    <strong>Fe₂(SO₄)₃</strong> · Catión <span style="color:var(--cat-t);font-weight:700">Fe³⁺</span> + Oxoanión <span style="color:var(--ox-t);font-weight:700">SO₄²⁻</span>
+    → <em>sulfato férrico</em> (Tradicional) · <em>sulfato de hierro (III)</em> (Stock) · <em>trisulfato de dihierro</em> (IUPAC)
+  </div>
+</div>
+
 </div>
 
 <!-- ===== iOS MODAL ===== -->
