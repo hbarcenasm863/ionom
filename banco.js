@@ -651,15 +651,15 @@ const BANCO = [
     group: 'ac-hid', level: 'easy',
     trad: ['ácido fluorhídrico'],
     stock: [],
-    sist: ['ácido fluorhídrico'],
-    hint: 'H + F⁻. Ácido sin oxígeno: ácido + raíz del no metal + -hídrico. F→fluor→fluorhídrico.'
+    sist: ['fluoruro de hidrógeno'],
+    hint: 'H + F⁻. Ácido sin oxígeno: ácido + raíz del no metal + -hídrico. F→fluor→fluorhídrico. IUPAC (gas/puro): fluoruro de hidrógeno.'
   },
   {
     formula: 'HCl',
     group: 'ac-hid', level: 'easy',
     trad: ['ácido clorhídrico'],
     stock: [],
-    sist: ['ácido clorhídrico'],
+    sist: ['cloruro de hidrógeno'],
     hint: 'H + Cl⁻. Cl→clor→clor-hídrico. IUPAC: nombre del anión + "de hidrógeno".'
   },
   {
@@ -667,7 +667,7 @@ const BANCO = [
     group: 'ac-hid', level: 'easy',
     trad: ['ácido bromhídrico'],
     stock: [],
-    sist: ['ácido bromhídrico'],
+    sist: ['bromuro de hidrógeno'],
     hint: 'H + Br⁻. Br→brom→brom-hídrico. IUPAC: bromuro de hidrógeno.'
   },
   {
@@ -675,7 +675,7 @@ const BANCO = [
     group: 'ac-hid', level: 'easy',
     trad: ['ácido yodhídrico'],
     stock: [],
-    sist: ['ácido yodhídrico'],
+    sist: ['yoduro de hidrógeno'],
     hint: 'H + I⁻. I→yod→yod-hídrico. IUPAC: yoduro de hidrógeno.'
   },
   {
@@ -683,7 +683,7 @@ const BANCO = [
     group: 'ac-hid', level: 'easy',
     trad: ['ácido sulfhídrico'],
     stock: [],
-    sist: ['ácido sulfhídrico'],
+    sist: ['sulfuro de hidrógeno'],
     hint: 'H₂ + S²⁻. S→sulf→sulf-hídrico (con h intercalada). IUPAC: sulfuro de hidrógeno.'
   },
   {
@@ -691,7 +691,7 @@ const BANCO = [
     group: 'ac-hid', level: 'medium',
     trad: ['ácido selenhídrico'],
     stock: [],
-    sist: ['ácido selenhídrico'],
+    sist: ['seleniuro de hidrógeno'],
     hint: 'H₂ + Se²⁻. Se→selen→selen-hídrico. IUPAC: seleniuro de hidrógeno.'
   },
   {
@@ -699,7 +699,7 @@ const BANCO = [
     group: 'ac-hid', level: 'medium',
     trad: ['ácido cianhídrico'],
     stock: [],
-    sist: ['ácido cianhídrico'],
+    sist: ['cianuro de hidrógeno'],
     hint: 'H + CN⁻ (cianuro). Ácido hídrico del cianuro. IUPAC: cianuro de hidrógeno.'
   },
   {
@@ -707,7 +707,7 @@ const BANCO = [
     group: 'ac-hid', level: 'hard',
     trad: ['ácido telurhídrico'],
     stock: [],
-    sist: ['ácido telurhídrico'],
+    sist: ['telururo de hidrógeno'],
     hint: 'H₂ + Te²⁻. Te→telur→telur-hídrico. IUPAC: telururo de hidrógeno.'
   },
 
@@ -3056,7 +3056,7 @@ const BANCO = [
   {formula:'Fe(HCO₃)₂',group:'sal-ac',level:'hard',  trad:['bicarbonato ferroso'],   stock:['hidrogenocarbonato de hierro (II)'],sist:[], hint:'Fe²⁺ (EO menor) + 2 HCO₃⁻ → bicarbonato ferroso. Responsable del "agua rojiza" en fuentes con hierro disuelto.'},
 
   // ── Ácidos hídricos: pseudohalógeno adicional ──
-  {formula:'HN₃',    group:'ac-hid',level:'hard',   trad:['ácido hidrazoico'],      stock: [], sist: ['ácido hidrazoico'], hint:'H + N₃⁻ (azida). Pseudohalógeno; ácido hídrico poco común pero real, muy tóxico e inestable.'},
+  {formula:'HN₃',    group:'ac-hid',level:'hard',   trad:['ácido hidrazoico'],      stock: [], sist: ['azida de hidrógeno'], hint:'H + N₃⁻ (azida). Pseudohalógeno; ácido hídrico poco común pero real, muy tóxico e inestable. IUPAC: azida de hidrógeno.'},
 
   // ── Hidruros: metal alcalino adicional ──
   {formula:'CsH',    group:'hidru',level:'easy',    trad:['hidruro de cesio'],      stock:[], sist:['hidruro de cesio'], hint:'Cs⁺ (grupo 1A, valencia fija +1) + H⁻. Igual patrón que el hidruro de rubidio.'},

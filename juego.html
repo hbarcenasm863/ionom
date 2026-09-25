@@ -2873,8 +2873,12 @@ function isCorrect(input,q,mode){
     const sistNames=(q.sist||[]).filter(Boolean);
     return sistNames.some(v=>norm(v)===ni);
   }
-  // ac-ox, sal-ox and ac-hid: curriculum requires only traditional nomenclature
-  if(q.group==='sal-ox'||q.group==='ac-ox'||q.group==='ac-hid') return (q.trad||[]).some(v=>norm(v)===ni);
+  // ac-ox, sal-ox: curriculum requires only traditional nomenclature
+  if(q.group==='sal-ox'||q.group==='ac-ox') return (q.trad||[]).some(v=>norm(v)===ni);
+  // ac-hid: acepta "ácido ___hídrico" (trad, en solución) Y "___uro de
+  // hidrógeno" (sist, gas/puro) — el propio mensaje de retroalimentación
+  // del juego enseña ambas formas como válidas para ácidos hídricos.
+  if(q.group==='ac-hid') return [...(q.trad||[]),...(q.sist||[])].some(v=>norm(v)===ni);
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
   if(allNames.some(v=>norm(v)===ni)) return true;
   if(q.group==='anhid'){
@@ -2905,7 +2909,7 @@ function showFeedback(type,msg,q,noAlts=false){
       const tradStr=q.trad.join(' / ');
       alts.push(`Tradicional: <em>${tradStr}</em>`);
     }
-    const tradOnly = q.group==='sal-ox'||q.group==='ac-ox'||q.group==='ac-hid';
+    const tradOnly = q.group==='sal-ox'||q.group==='ac-ox';
     if(!tradOnly){
       if(q.stock&&q.stock[0]) alts.push(`Stock: <em>${q.stock[0]}</em>`);
       if(q.sist&&q.sist[0]) alts.push(`Sistemática: <em>${q.sist[0]}</em>`);
