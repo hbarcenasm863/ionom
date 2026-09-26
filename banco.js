@@ -248,18 +248,18 @@ const BANCO = [
   {
     formula: 'V₂O₅',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido vanádico'],
+    trad: ['óxido pervanádico'],
     stock: ['óxido de vanadio (V)'],
     sist: ['pentaóxido de divanadio'],
-    hint: 'V con EO=+5 (mayor). En nomenclatura clásica → -ico → vanádico. 2(+5)+5(−2)=0.'
+    hint: 'V con EO=+5 (máximo de la serie hipo-oso/-oso/-ico/per-ico) → prefijo per- → pervanádico. 2(+5)+5(−2)=0.'
   },
   {
     formula: 'Bi₂O₃',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido bismutoso'],
+    trad: ['óxido de bismuto'],
     stock: ['óxido de bismuto (III)'],
     sist: ['trióxido de dibismuto'],
-    hint: 'Bi³⁺ es el EO menor del bismuto → -oso → bismutoso. 2(+3)+3(−2)=0.'
+    hint: 'Bi³⁺ (valencia fija, +3) + O²⁻. Al no tener más de un EO común no lleva sufijo -oso/-ico. 2(+3)+3(−2)=0.'
   },
   {
     formula: 'HgO',
@@ -288,10 +288,10 @@ const BANCO = [
   {
     formula: 'VO',
     group: 'ox-bas', level: 'hard',
-    trad: ['óxido vanadioso'],
+    trad: ['óxido hipovanadioso'],
     stock: ['óxido de vanadio (II)'],
     sist: ['óxido de vanadio'],
-    hint: 'V²⁺ es el EO menor del vanadio → -oso → vanadioso. V tiene EO +2,+3,+4,+5.'
+    hint: 'V tiene 4 EO: +2,+3,+4,+5 → serie hipo-oso/-oso/-ico/per-ico. V²⁺ es el mínimo → hipovanadioso.'
   },
   {
     formula: 'V₂O₃',
@@ -299,7 +299,7 @@ const BANCO = [
     trad: ['óxido vanadioso'],
     stock: ['óxido de vanadio (III)'],
     sist: ['trióxido de divanadio'],
-    hint: 'V³⁺ EO intermedio del vanadio. Stock siempre preciso. 2(+3)+3(−2)=0.'
+    hint: 'V³⁺, segundo EO de la serie hipo-oso/-oso/-ico/per-ico → vanadioso (sin prefijo). Stock siempre preciso. 2(+3)+3(−2)=0.'
   },
 
   // ─────────────────────────────────────────────
@@ -1939,14 +1939,6 @@ const BANCO = [
     hint: 'S en EO +2 (mínimo positivo) → hiposulfuroso. S + O → SO.'
   },
   {
-    formula: 'SeO',
-    group: 'anhid', level: 'medium',
-    trad: ['anhídrido hiposelenioso'],
-    stock: ['óxido de selenio (II)'],
-    sist: ['monóxido de selenio'],
-    hint: 'Se en EO +2 → hiposelenioso. Se + O → SeO.'
-  },
-  {
     formula: 'TeO₃',
     group: 'anhid', level: 'hard',
     trad: ['anhídrido telúrico'],
@@ -1967,18 +1959,18 @@ const BANCO = [
   {
     formula: 'CsOH',
     group: 'base', level: 'easy',
-    trad: ['hidróxido césico'],
+    trad: ['hidróxido de cesio'],
     stock: ['hidróxido de cesio'],
     sist: ['monohidróxido de cesio'],
-    hint: 'Cs⁺ (valencia fija) + OH⁻ → CsOH; base fuerte del grupo 1.'
+    hint: 'Cs⁺ (valencia fija) + OH⁻ → CsOH; base fuerte del grupo 1. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'Cd(OH)₂',
     group: 'base', level: 'easy',
-    trad: ['hidróxido cádmico'],
+    trad: ['hidróxido de cadmio'],
     stock: ['hidróxido de cadmio'],
     sist: ['dihidróxido de cadmio'],
-    hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂.'
+    hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'HgOH',
@@ -2018,34 +2010,34 @@ const BANCO = [
   {
     formula: 'LiF',
     group: 'sal-bin', level: 'easy',
-    trad: ['fluoruro lítico'],
+    trad: ['fluoruro de litio'],
     stock: ['fluoruro de litio'],
     sist: ['monofluoruro de litio'],
-    hint: 'Li⁺ (valencia fija) + F⁻ → LiF; sal binaria de flúor y litio.'
+    hint: 'Li⁺ (valencia fija) + F⁻ → LiF; sal binaria de flúor y litio. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'BaI₂',
     group: 'sal-bin', level: 'easy',
-    trad: ['yoduro bárico'],
+    trad: ['yoduro de bario'],
     stock: ['yoduro de bario'],
     sist: ['diyoduro de bario'],
-    hint: 'Ba²⁺ (valencia fija) + 2I⁻ → BaI₂.'
+    hint: 'Ba²⁺ (valencia fija) + 2I⁻ → BaI₂. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'AlF₃',
     group: 'sal-bin', level: 'easy',
-    trad: ['fluoruro alumínico'],
+    trad: ['fluoruro de aluminio'],
     stock: ['fluoruro de aluminio'],
     sist: ['trifluoruro de aluminio'],
-    hint: 'Al³⁺ (valencia fija) + 3F⁻ → AlF₃.'
+    hint: 'Al³⁺ (valencia fija) + 3F⁻ → AlF₃. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'ZnS',
     group: 'sal-bin', level: 'easy',
-    trad: ['sulfuro zíncico'],
+    trad: ['sulfuro de zinc'],
     stock: ['sulfuro de zinc'],
     sist: ['monosulfuro de zinc'],
-    hint: 'Zn²⁺ (valencia fija) + S²⁻ → ZnS.'
+    hint: 'Zn²⁺ (valencia fija) + S²⁻ → ZnS. Valencia única → sin sufijo -oso/-ico.'
   },
   {
     formula: 'Hg₂I₂',
@@ -2456,9 +2448,9 @@ const BANCO = [
   {
     id: 'rx-043',
     group: 'reaccion', level: 'medium',
-    ecuacion: 'C₄H₁₀ + 13/2 O₂ → 4CO₂ + 5H₂O',
+    ecuacion: '2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O',
     tipo_rx: 'combustion',
-    hint: 'Butano (C₄H₁₀) + O₂ → CO₂ + H₂O. También se escribe: 2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O.',
+    hint: 'Butano (C₄H₁₀) + O₂ → CO₂ + H₂O, con coeficientes enteros mínimos (evita la fracción 13/2).',
     col: 'El butano se usa como gas combustible en encendedores y camping en Colombia.'
   },
 
