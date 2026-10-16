@@ -1,7 +1,7 @@
 # Rediseño visual de Ionom — Resumen de cambios
 
 Fecha: 2026-10-16
-Commits: `f867312`, `9ac98d7`, `1989e75` (rama `main`)
+Commits: `f867312`, `9ac98d7`, `1989e75`, `1d64500` (rama `main`)
 
 ## Contexto
 
@@ -118,6 +118,31 @@ El sistema de variables CSS (lo que realmente se renderiza) ya está 100%
 actualizado en las 14 páginas — lo pendiente es solo texto/hex sueltos en
 rincones menos centrales, no un problema funcional.
 
+## Botón de actualización del PWA (fuera del alcance visual, pero relacionado)
+
+Se encontró y corrigió un bug real mientras se trabajaba en la sesión:
+`sw.js` activaba cualquier versión nueva de forma automática
+(`self.skipWaiting()` apenas terminaba de cachear) y `index.html` forzaba un
+`location.reload()` sin avisar en cuanto eso pasaba — en cualquier pestaña
+abierta, incluida una partida en curso en juego.html. Esto contradecía
+directamente el freno de salida (`_gameActive`) agregado en una sesión
+anterior para proteger el progreso de una partida.
+
+- `sw.js`: el worker nuevo ahora se queda "esperando" hasta recibir un
+  mensaje `{type:'SKIP_WAITING'}`, que solo se envía cuando el usuario toca
+  el botón. `CACHE_NAME` subido a `ionom-v17` (regla obligatoria del
+  CLAUDE.md al tocar `sw.js`).
+- `index.html`: banner fijo "🔄 Nueva versión disponible" con botón
+  "Actualizar" — se muestra al detectar una actualización real (no la
+  primera instalación), y el `location.reload()` solo ocurre después de que
+  el usuario confirma.
+- Verificado con Playwright sobre un servidor HTTP real sirviendo el repo
+  bajo `/ionom/` (los service workers no funcionan sobre `file://`):
+  registro de v17, simulación de una versión nueva, recarga de página →
+  el banner aparece, **no** hay ningún reload automático, existe un worker
+  "esperando", y al hacer clic en "Actualizar" sí se dispara la recarga
+  real.
+
 ## Verificación realizada
 
 - Sintaxis JS de los `<script>` de los archivos tocados: válida (`node
@@ -131,7 +156,9 @@ rincones menos centrales, no un problema funcional.
 - **Partida completa del modo juego** (20 preguntas, grupo "Tabla
   periódica", modo libre) jugada de principio a fin con Playwright: llega a
   la pantalla de resultados sin errores de JavaScript. El modo juego no se
-  rompió.
+  rompió — repetido después de cada cambio, incluido el del service worker.
+- Ciclo completo de actualización del PWA probado contra un servidor HTTP
+  real (ver sección anterior).
 
 ## Fases pendientes del rediseño completo
 
@@ -151,3 +178,5 @@ rincones menos centrales, no un problema funcional.
 6. Terminar de limpiar las menciones de color de texto restantes
    (funciones.html, nomenClash.html, guia.html, juego.html) y los hex
    sueltos no basados en variable.
+7. Fondo tipo marca de agua con estructuras de Lewis de moléculas
+   inorgánicas (pedido explícitamente, pendiente de implementar).
