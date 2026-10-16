@@ -483,3 +483,64 @@ sw.js: `CACHE_NAME` v21→v22; se agregaron `assets/toc.js`,
   balanceo-avanzado) confirmados: aparecen, listan las secciones
   correctas, y un clic sí hace scroll a la sección.
 - Partida completa en modo libre: sin regresiones.
+
+## Fase 6 — Correcciones post-auditoría (marca de agua y NomenClash)
+
+### Marca de agua: 3 estructuras con errores reales de conectividad
+
+`assets/ionom-fondo.svg` tenía errores de valencia, no solo de estilo:
+H2SO4 con un H pegado directo al S (sin oxígeno de por medio, además de
+un quinto enlace de más en el azufre), HNO3 con el nitrógeno mostrando
+dos enlaces dobles (viola su valencia), y CaCO3 dibujado como un hexágono
+que se leía como anillo aromático en vez del ion plano trigonal que es.
+Las 3 estructuras se corrigieron con conectividad verificada a mano
+(coordenadas generadas por trigonometría para enlaces simétricos), y
+CaCO3 ahora usa el mismo patrón de texto "CO₃ 2−" que ya usaba Ca(OH)₂.
+
+### NomenClash — tema claro: botones y dorso de cartas ilegibles
+
+`.btn-secondary` (Robar, Ver carta, Teoría, Reglas, Ayuda, Salir...) y
+`.card.facedown` (mazos boca abajo) tenían un degradado oscuro fijo, sin
+variable de tema. Como el color del texto sí cambia entre temas
+(`--parch-dark`), en el tema claro (pergamino) quedaba texto oscuro sobre
+fondo oscuro, casi invisible. Se agregaron overrides
+`:root[data-theme="light"]` para ambos selectores (y para el ícono del
+dorso de la carta), siguiendo el mismo patrón ya usado para
+`.card.cation/.anion/.action`. El tema oscuro "Alquimia Oscura" (el
+default) queda intacto — se verificó por separado simulando
+`color_scheme='dark'` del sistema operativo.
+
+### NomenClash — la IA explotaba "Cambio de Reactivo" para vaciar la mano
+
+Al jugar la carta "Cambio de Reactivo" (`changecation`) sin poder seguir
+con un anión compatible, el jugador pierde su turno. El camino del
+jugador humano (`drawCard()`) ya compensaba esto robando 1 carta antes de
+ceder el turno, dejando la mano sin cambio neto (se descarta la carta
+jugada, se roba 1 de vuelta) — pero el camino de la IA (`aiPlayAction()`,
+caso `'changecation'`) no robaba nada: cada intento fallido le costaba a
+la IA solo la carta jugada, sin reponerla. Esto le permitía a la IA jugar
+la carta repetidamente solo para deshacerse de cartas y acercarse a
+ganar por mano vacía, sin el freno que el jugador humano ya tenía.
+Se agregó el mismo `drawCards(..., 1)` al camino de la IA, y se
+actualizó el texto de la carta (ficha de ayuda, descripción corta) y de
+la pantalla de Reglas para reflejar la penalización de robar 1 carta.
+
+No se tocó `sw.js`: `nomenClash.html` (como todas las páginas HTML del
+sitio) se sirve network-first, así que estos cambios llegan actualizados
+sin necesidad de subir `CACHE_NAME`.
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px.
+- Marca de agua: capturas de cerca y en mosaico repetido confirmando
+  conectividad correcta y sin solapamientos nuevos.
+- NomenClash tema claro: partida completa (pantalla de inicio → reglas →
+  tablero en juego) con botones y dorsos de carta legibles; tema oscuro
+  por defecto confirmado sin cambios vía simulación de preferencia del
+  sistema operativo.
+- Exploit de "Cambio de Reactivo": simulado directamente llamando a
+  `aiPlayAction()` con una IA sin aniones jugables — confirmado que ahora
+  pierde la carta jugada Y roba 1 de penalización (mazo de robo bajó en 1,
+  mano terminó igual que antes de jugar la carta en vez de una carta
+  menos), con el mensaje de registro actualizado.

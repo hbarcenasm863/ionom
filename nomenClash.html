@@ -893,6 +893,26 @@
   :root[data-theme="light"] .card-symbol{ color:var(--tx,#0d2d42); text-shadow:none; }
   :root[data-theme="light"] .card-name{ color:var(--tx2,#2a3f52); }
   :root[data-theme="light"] .card-charge{ color:var(--cat-t,#92400e); background:rgba(217,119,6,0.12); border-color:rgba(217,119,6,0.3); }
+  /* El dorso de las cartas (mazos boca abajo) y los botones secundarios
+     (Robar, Ver carta, Teoría, Reglas, Ayuda, Salir...) tenían fondo oscuro
+     fijo sin variable de tema -- en el tema claro (pergamino) el texto
+     también pasa a oscuro (--parch-dark), así que quedaba texto oscuro
+     sobre fondo oscuro, casi invisible. */
+  :root[data-theme="light"] .card.facedown{
+    background:linear-gradient(135deg,#fff8ee,#f0e6d2,#fff8ee);
+    border-color:var(--gold-dark,#8B6914);
+  }
+  :root[data-theme="light"] .card.facedown::after{ opacity:.55; filter:none; }
+  :root[data-theme="light"] .btn-secondary{
+    background:linear-gradient(135deg,#fff8ee,#f0e6d2,#fff8ee);
+    color:var(--parch-dark,#4a3520);
+    border-color:var(--gold-dark,#8B6914);
+  }
+  :root[data-theme="light"] .btn-secondary:hover{
+    background:linear-gradient(135deg,#f0e6d2,#e5d8b8);
+    color:var(--text-dark,#2d1f0e);
+    border-color:var(--gold,#D4AF37);
+  }
   :root[data-theme="light"] .player-hand{ background:var(--surf2,#f0f7ff); border-color:var(--brd,#d0e6f5); }
   :root[data-theme="light"] .game-header{ background:var(--surf,#fff); border-color:var(--brd,#d0e6f5); }
   :root[data-theme="light"] .enemy-panel{ background:var(--surf,#fff); border-color:var(--brd,#d0e6f5); }
@@ -1397,7 +1417,7 @@ html{font-size:var(--base-fs)}
 
     <div class="card-action-box">
       <strong>🔄 Cambio de Reactivo — Reactivo &nbsp;<span style="background:var(--primary);color:white;border-radius:4px;padding:1px 6px;font-size:0.75rem;">×4</span></strong>
-      <p>Toma un catión nuevo del mazo → nueva base. <strong>Debes jugar un anión inmediatamente</strong> (en el mismo turno). Si no puedes, <strong>pierdes tu propio turno</strong>.</p>
+      <p>Toma un catión nuevo del mazo → nueva base. <strong>Debes jugar un anión inmediatamente</strong> (en el mismo turno). Si no puedes, <strong>pierdes tu propio turno y robas 1 carta de penalización</strong>.</p>
     </div>
 
     <div class="card-action-box">
@@ -2011,7 +2031,7 @@ const ACTIONS = [
   {symbol:'👁',charge:0,name:'Espionaje',        display:'Espía',   color:'action',
    effect:'espionage',   desc:'Ve mano oponente − roba 1 anión.',          copias:2},
   {symbol:'🔄',charge:0,name:'Cambio de Reactivo',display:'Reactivo',color:'action',
-   effect:'changecation',desc:'Nuevo catión = nueva base. Debes jugar anión o pierdes tu turno.', copias:4},
+   effect:'changecation',desc:'Nuevo catión = nueva base. Debes jugar anión o pierdes tu turno y robas 1.', copias:4},
 ];
 
 const GREEK = ['','','Di','Tri','Tetra','Penta','Hexa','Hepta','Octa','Nona','Deca'];
@@ -3327,7 +3347,7 @@ const CARD_INFO = {
     nombre: 'Cambio de Reactivo',
     icono: '🔄',
     tipo: 'Carta de Acción',
-    efecto: 'Toma un nuevo catión del mazo como base. <strong>Debes jugar un anión inmediatamente</strong> en el mismo turno. Si no puedes, <strong>pierdes tu propio turno</strong>.',
+    efecto: 'Toma un nuevo catión del mazo como base. <strong>Debes jugar un anión inmediatamente</strong> en el mismo turno. Si no puedes, <strong>pierdes tu propio turno y robas 1 carta de penalización</strong>.',
     uso: 'Juégala solo cuando tienes aniones compatibles con la nueva base. Cambiar sin poder jugar anión = perder el turno.',
     ejemplo: 'Base Al³⁺ (difícil) → Cambio de Reactivo → nueva base Na⁺ → fácil de neutralizar.',
     notas: '4 copias en el mazo. Doble efecto: nueva base + castigo al siguiente.',
@@ -3502,7 +3522,7 @@ function drawCard(){
   }
   drawCards(G.currentPlayer,1);
   if(G.mustPlayAnion){
-    addLog(`${currentPlayer().name} no pudo jugar anión tras el Cambio de Reactivo — pierde el turno.`,'bad');
+    addLog(`${currentPlayer().name} no pudo jugar anión tras el Cambio de Reactivo — pierde el turno y roba 1 carta.`,'bad');
     G.mustPlayAnion=false;
   } else {
     addLog(`${currentPlayer().name} robó una carta.`,'info');
@@ -3958,12 +3978,17 @@ function aiPlayAction(cp, card, handIdx){
           return;
         }
       }
-      // No pudo jugar anión — pierde su propio turno (sin saltar al rival)
-      addLog(`🔄 🤖 ${cp.name} no pudo jugar anión tras Cambio de Reactivo — pierde su turno.`,'bad');
+      // No pudo jugar anión — pierde su propio turno Y roba 1 carta de penalización
+      // (antes solo perdía el turno, sin costo en mano: la IA podía jugar
+      // Cambio de Reactivo repetidamente solo para deshacerse de cartas y
+      // acercarse a ganar por mano vacía, sin el freno que el jugador humano
+      // ya tenía en drawCard() de la línea ~3523).
+      drawCards(G.currentPlayer,1);
+      addLog(`🔄 🤖 ${cp.name} no pudo jugar anión tras Cambio de Reactivo — pierde su turno y roba 1 carta.`,'bad');
       showAIActionModal(
         `🤖 ${cp.name} jugó Cambio de Reactivo`,
         '🔄',
-        `Nueva base: <strong>${G.base.display} ${G.base.name}</strong>.<br>La IA no pudo jugar un anión — pierde su propio turno.`,
+        `Nueva base: <strong>${G.base.display} ${G.base.name}</strong>.<br>La IA no pudo jugar un anión — pierde su propio turno y roba 1 carta de penalización.`,
         'advanceTurn', []
       );
       break;
