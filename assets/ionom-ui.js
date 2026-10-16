@@ -13,23 +13,48 @@
    En el juego la barra se oculta durante una partida para no tapar las
    respuestas (mismo patrón .screen.active / s-portada que ya usa juego.html). */
 (function(){
+  // Íconos propios en SVG en vez de emoji nativo del sistema operativo: un
+  // emoji se ve distinto en Android/iOS/Windows (a veces rompe la alineación
+  // o el tamaño), mientras que estos se ven exactamente igual en cualquier
+  // dispositivo y heredan el color del texto (currentColor) -- incluido el
+  // cambio de color cuando el enlace está activo (.on). Se aplica aquí (la
+  // barra inferior y la hoja "Más", generadas por este único archivo) por
+  // ser el punto de mayor impacto: se ve en las 14 páginas sin tener que
+  // tocar el marcado de cada una.
+  var SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+  var ICO={
+    inicio:SVG+'<path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg>',
+    principios:SVG+'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>',
+    funciones:SVG+'<path d="M9 3h6"/><path d="M10 3v6.5L4.7 18a1.8 1.8 0 0 0 1.5 2.8h11.6a1.8 1.8 0 0 0 1.5-2.8L14 9.5V3"/><path d="M7.5 15h9"/></svg>',
+    juego:SVG+'<rect x="2" y="7" width="20" height="10" rx="5"/><path d="M6.5 10v3M5 11.5h3"/><circle cx="16" cy="10.3" r="1"/><circle cx="18" cy="13" r="1"/></svg>',
+    tabla:SVG+'<path d="M4 3v17a1 1 0 0 0 1 1h16"/><rect x="7.5" y="13" width="3" height="5"/><rect x="12.5" y="9" width="3" height="9"/><rect x="17.5" y="5" width="3" height="13"/></svg>',
+    guia:SVG+'<path d="M14 2.5H6.5a1.5 1.5 0 0 0-1.5 1.5v16a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 2.5V8h5.5"/><path d="M12 11.5v6m0 0-2.3-2.3M12 17.5l2.3-2.3"/></svg>',
+    reaccion:SVG+'<path d="M9 2h6"/><path d="M10 2v7l-5.2 9a1.8 1.8 0 0 0 1.6 2.7h11.2a1.8 1.8 0 0 0 1.6-2.7L14 9V2"/><circle cx="12.2" cy="16.2" r="1"/><circle cx="9.8" cy="19" r=".7"/></svg>',
+    balanceo:SVG+'<path d="M12 2.5v19"/><path d="M5 7h14"/><path d="M8.3 7 12 4"/><path d="M15.7 7 12 4"/><path d="M5 7 2.3 13a2.7 2.7 0 0 0 5.4 0z"/><path d="M19 7l-2.7 6a2.7 2.7 0 0 0 5.4 0z"/></svg>',
+    mol:SVG+'<circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></svg>',
+    estequiometria:SVG+'<rect x="4.5" y="2" width="15" height="20" rx="2"/><path d="M8 6.5h8"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01" stroke-width="2.6"/></svg>',
+    balanceoAvanzado:SVG+'<path d="M13 2 4.5 13.5H10L9 22l9.5-12H13l1-8Z"/></svg>',
+    generador:SVG+'<circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
+    nomenclash:SVG+'<path d="M5 3 13 11"/><path d="M5 3H3v2l9 9"/><path d="M12 14l6 6"/><path d="M15 17l3-3"/><path d="M19 3 11 11"/><path d="M19 3h2v2l-9 9"/><path d="M9 14 3 20"/></svg>',
+    simulador:SVG+'<path d="M9 2.5h3"/><path d="M10.5 2.5V8l-4 7.5a2 2 0 0 0 1.8 3h5.4a2 2 0 0 0 1.8-3l-4-7.5"/><path d="M4 21.5h11"/><circle cx="18" cy="18" r="3.2"/><path d="M19.8 19.8l1.7 1.7"/></svg>'
+  };
   var ITEMS=[
-    {href:'index.html',ico:'🏠',txt:'Inicio'},
-    {href:'teoria.html',ico:'📖',txt:'Principios'},
-    {href:'funciones.html',ico:'🧪',txt:'Funciones'},
-    {href:'juego.html',ico:'🎮',txt:'Juego'},
-    {href:'tabla.html',ico:'📊',txt:'Tabla'}
+    {href:'index.html',ico:ICO.inicio,txt:'Inicio'},
+    {href:'teoria.html',ico:ICO.principios,txt:'Principios'},
+    {href:'funciones.html',ico:ICO.funciones,txt:'Funciones'},
+    {href:'juego.html',ico:ICO.juego,txt:'Juego'},
+    {href:'tabla.html',ico:ICO.tabla,txt:'Tabla'}
   ];
   var MAS=[
-    {href:'guia.html',ico:'📘',txt:'Guía descargable'},
-    {href:'reacciones.html',ico:'⚗️',txt:'Tipos de Reacción'},
-    {href:'balanceo.html',ico:'⚖️',txt:'Balanceo'},
-    {href:'moles.html',ico:'⚛️',txt:'Mol y Masa Molar'},
-    {href:'estequiometria.html',ico:'🧮',txt:'Estequiometría'},
-    {href:'balanceo-avanzado.html',ico:'⚡',txt:'Balanceo Avanzado'},
-    {href:'generador.html',ico:'⚙️',txt:'Generador'},
-    {href:'nomenClash.html',ico:'⚔️',txt:'NomenClash'},
-    {href:'simulador.html',ico:'🔬',txt:'Simulador'}
+    {href:'guia.html',ico:ICO.guia,txt:'Guía descargable'},
+    {href:'reacciones.html',ico:ICO.reaccion,txt:'Tipos de Reacción'},
+    {href:'balanceo.html',ico:ICO.balanceo,txt:'Balanceo'},
+    {href:'moles.html',ico:ICO.mol,txt:'Mol y Masa Molar'},
+    {href:'estequiometria.html',ico:ICO.estequiometria,txt:'Estequiometría'},
+    {href:'balanceo-avanzado.html',ico:ICO.balanceoAvanzado,txt:'Balanceo Avanzado'},
+    {href:'generador.html',ico:ICO.generador,txt:'Generador'},
+    {href:'nomenClash.html',ico:ICO.nomenclash,txt:'NomenClash'},
+    {href:'simulador.html',ico:ICO.simulador,txt:'Simulador'}
   ];
   var page=(location.pathname.split('/').pop()||'index.html').toLowerCase();
 
@@ -69,6 +94,8 @@
           'color:var(--tx2,#2a3f52);text-decoration:none;font-family:var(--sans,sans-serif);'+
           'font-size:10.5px;font-weight:600;line-height:1.1}'+
         '#bnav .bi{font-size:19px;line-height:1}'+
+        '#bnav .bi svg{width:21px;height:21px;display:block;margin:0 auto}'+
+        '#bnav-sheet a svg{width:21px;height:21px;flex-shrink:0}'+
         '#bnav .bt{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'+
         '#bnav .on{background:var(--an-b,#e0f2fe);color:var(--an-t,#0d4a73);font-weight:800}'+
         '#bnav a:focus-visible,#bnav button:focus-visible{outline:3px solid var(--nav,#0d4a73);outline-offset:-3px}'+

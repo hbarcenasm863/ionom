@@ -70,24 +70,30 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* REACTION CARDS */
 .rx-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
 @media(max-width:560px){.rx-grid{grid-template-columns:1fr}}
+/* Colores propios por tipo de reacción — NO reutilizan var(--err) (ya
+   significa "respuesta incorrecta" en todo el sitio, ej. balanceo.html) ni
+   los 4 colores de rol iónico catión/anión/hidróxido/oxoanión (esos solo
+   deben significar ese rol, nunca decorar un tipo de reacción que no lo
+   tiene). Son 6 tonos independientes, cada uno con su variante clara/oscura
+   de fondo y texto para mantener contraste en ambos temas. */
 .rx-card{border-radius:var(--rs);padding:18px 16px;border:2px solid;position:relative}
 .rx-card.sintesis{border-color:var(--ok);background:var(--ok-b)}
-.rx-card.descomp{border-color:var(--err);background:var(--err-b)}
-.rx-card.sus-simple{border-color:var(--cat);background:var(--cat-b)}
-.rx-card.sus-doble{border-color:var(--oh);background:var(--oh-b)}
+.rx-card.descomp{border-color:#9333ea;background:#f5f0ff}
+.rx-card.sus-simple{border-color:#0891b2;background:#ecfeff}
+.rx-card.sus-doble{border-color:#4f46e5;background:#eef2ff}
 .rx-card.combustion{border-color:#f97316;background:#fff7ed}
-.rx-card.neutral{border-color:var(--an);background:var(--an-b)}
+.rx-card.neutral{border-color:#64748b;background:#f8fafc}
 @media(prefers-color-scheme:dark){
   .rx-card.combustion{background:#431407}
 }
 :root[data-theme="dark"] .rx-card.combustion{background:#431407}
 .rx-badge{display:inline-block;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:2px 8px;border-radius:100px;margin-bottom:8px}
 .rx-card.sintesis .rx-badge{background:var(--ok);color:#fff}
-.rx-card.descomp .rx-badge{background:var(--err);color:#fff}
-.rx-card.sus-simple .rx-badge{background:var(--cat);color:#fff}
-.rx-card.sus-doble .rx-badge{background:var(--oh);color:#fff}
+.rx-card.descomp .rx-badge{background:#9333ea;color:#fff}
+.rx-card.sus-simple .rx-badge{background:#0891b2;color:#fff}
+.rx-card.sus-doble .rx-badge{background:#4f46e5;color:#fff}
 .rx-card.combustion .rx-badge{background:#f97316;color:#fff}
-.rx-card.neutral .rx-badge{background:var(--an);color:#fff}
+.rx-card.neutral .rx-badge{background:#64748b;color:#fff}
 .rx-name{font-weight:800;font-size:.9rem;margin-bottom:6px;color:var(--tx)}
 .rx-eq{font-family:var(--mono);font-size:.82rem;color:var(--tx2);margin-bottom:8px;line-height:1.5}
 .rx-desc{font-size:.78rem;color:var(--tx2);line-height:1.55}
@@ -303,14 +309,14 @@ html{font-size:var(--base-fs)}
 </div>
 
 <a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
-<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
-<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<button id="tts-float-btn" onclick="speakPage()" title="Leer la página en voz alta" aria-label="Leer la página en voz alta" style="position:fixed;bottom:74px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:#0d4a73;border:none;border-radius:50%;color:#fff;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊</button>
+<button id="tts-stop-btn" onclick="stopTTS()" title="Detener la lectura" aria-label="Detener la lectura" style="display:none;position:fixed;bottom:130px;right:18px;z-index:50;width:46px;height:46px;align-items:center;justify-content:center;background:#dc2626;border:none;border-radius:50%;color:#fff;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹</button>
 <script>
 let _ttsUtt=null;
 function speak(text){
   if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  document.getElementById('tts-stop-btn').style.display='block';
+  document.getElementById('tts-stop-btn').style.display='flex';
   _ttsUtt=new SpeechSynthesisUtterance(text);
   _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
   _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
@@ -451,6 +457,7 @@ renderQ();
   window.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
+<script src="assets/toc.js"></script>
 <script src="assets/ionom-ui.js"></script>
 </body>
 </html>

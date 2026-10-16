@@ -314,14 +314,14 @@ html{font-size:var(--base-fs)}
 </div>
 
 <a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
-<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
-<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<button id="tts-float-btn" onclick="speakPage()" title="Leer la página en voz alta" aria-label="Leer la página en voz alta" style="position:fixed;bottom:74px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:#0d4a73;border:none;border-radius:50%;color:#fff;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊</button>
+<button id="tts-stop-btn" onclick="stopTTS()" title="Detener la lectura" aria-label="Detener la lectura" style="display:none;position:fixed;bottom:130px;right:18px;z-index:50;width:46px;height:46px;align-items:center;justify-content:center;background:#dc2626;border:none;border-radius:50%;color:#fff;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹</button>
 <script>
 let _ttsUtt=null;
 function speak(text){
   if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  document.getElementById('tts-stop-btn').style.display='block';
+  document.getElementById('tts-stop-btn').style.display='flex';
   _ttsUtt=new SpeechSynthesisUtterance(text);
   _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
   _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
@@ -513,6 +513,7 @@ renderEj();
   window.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
+<script src="assets/toc.js"></script>
 <script src="assets/ionom-ui.js"></script>
 </body>
 </html>

@@ -329,9 +329,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .dp-chip.pos{background:var(--cat-b);color:var(--cat-t);border:1px solid var(--cat)}
 .dp-chip.neg{background:var(--an-b);color:var(--an-t);border:1px solid var(--an)}
 .dp-chip.zero{background:var(--surf2);color:var(--dim);border:1.5px solid var(--brd)}
-/* ── Calculadora científica ── */
-.calc-fab{position:fixed;bottom:22px;right:22px;z-index:250;background:var(--ok);color:#fff;border:none;border-radius:50px;padding:10px 18px;font-size:.88rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;gap:7px;transition:transform .15s,background .15s}
-.calc-fab:hover{transform:scale(1.06);background:#15803d}
+/* ── Calculadora científica (botón en el encabezado, ver más abajo) ── */
 .calc-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:400;align-items:center;justify-content:center}
 .calc-modal-bg.open{display:flex}
 .calc-modal{background:var(--surf);border:2px solid var(--brd);border-radius:18px;padding:20px 20px 16px;width:min(340px,94vw);box-shadow:0 8px 40px rgba(0,0,0,.3);position:relative}
@@ -350,7 +348,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ck.eq{background:var(--ok);color:#fff;grid-column:span 1}
 .ck.ac{background:var(--err-b);color:var(--err-t)}
 .ck.wide{grid-column:span 2}
-@media print{.calc-fab,.calc-modal-bg{display:none!important}}
+@media print{.calc-modal-bg{display:none!important}}
 .dp-valence{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--el-trans-t);background:var(--el-trans-b);padding:3px 10px;border-radius:6px;border:1.5px solid var(--el-trans)}
 .dp-section{margin-top:14px;padding-top:12px;border-top:1.5px solid var(--brd)}
 .dp-section-title{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dimmer);margin-bottom:7px}
@@ -444,7 +442,10 @@ html{font-size:var(--base-fs)}
 <div class="page">
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:4px">
     <h1 class="page-title" style="margin-bottom:0">⚗️ Tabla Periódica</h1>
-    <button onclick="openTablaIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:var(--an-b);border:2px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='var(--an)';this.style.color='#fff'" onmouseout="this.style.background='var(--an-b)';this.style.color='var(--an-t)'">🔊 ¿Cómo usar la tabla?</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="openTablaIntro()" style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:var(--an-b);border:2px solid var(--an);color:var(--an-t);border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='var(--an)';this.style.color='#fff'" onmouseout="this.style.background='var(--an-b)';this.style.color='var(--an-t)'">🔊 ¿Cómo usar la tabla?</button>
+      <button onclick="document.getElementById('calc-bg').classList.add('open')" style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:var(--ok-b);border:2px solid var(--ok);color:var(--ok-t);border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='var(--ok)';this.style.color='#fff'" onmouseout="this.style.background='var(--ok-b)';this.style.color='var(--ok-t)'">🧮 Calculadora</button>
+    </div>
   </div>
   <p class="page-subtitle">118 elementos — toca cualquier elemento para escuchar su información en voz</p>
 
@@ -1031,8 +1032,6 @@ if (!localStorage.getItem('ionom_tabla_visited')) {
   document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
 })();
 </script>
-<!-- ── Calculadora científica flotante ── -->
-<button class="calc-fab" onclick="document.getElementById('calc-bg').classList.add('open')" title="Calculadora">🧮 Calculadora</button>
 <div class="calc-modal-bg" id="calc-bg" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="calc-modal" role="dialog" aria-label="Calculadora científica">
     <h3>Calculadora</h3>

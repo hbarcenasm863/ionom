@@ -396,3 +396,90 @@ significan algo concreto y no deben reutilizarse fuera de ese significado").
   esquema invertido propio de nomenClash.html.
 - Partida completa en modo libre repetida tras estos cambios: sin
   regresiones.
+
+## Fase 5 — Auditoría de diseño visual y plan de acción
+
+Fecha: 2026-10-16
+Commits: ver al final de esta sección (rama `main`)
+
+Se hizo una auditoría completa de las 14 páginas desde didáctica, diseño de
+multimedia educativo (principios de Mayer) y diseño gráfico, documentada en
+un documento aparte (con capturas de evidencia) y resumida en una tabla de
+8 hallazgos priorizados. Se implementaron los 8 puntos del plan de acción,
+más un bug adicional reportado aparte (ícono del PWA instalado).
+
+### Ícono del PWA no se veía al instalar (mostraba una "I" genérica)
+
+`manifest.json` declaraba el mismo archivo (`assets/iononpwa.png`) como
+ícono de **192×192 Y 512×512** a la vez — pero el archivo real medía
+1254×1254 px, sin coincidir con ninguno de los dos tamaños declarados.
+Varios instaladores de PWA (notablemente el de Windows/Edge) son estrictos
+con esto y, al no poder validar el tamaño, caían a un ícono genérico (la
+inicial del nombre de la app). Se generaron `assets/icon-192.png` y
+`assets/icon-512.png` con el tamaño real exacto que declaran, el manifest
+ahora apunta a cada uno por separado, y se quitó `maskable` del `purpose`
+(el logo ya trae su propio fondo redondeado — aplicarle además la máscara
+del sistema operativo lo recortaría dos veces).
+
+### Hallazgos del plan de acción — implementados
+
+1. **Banner de actualización tapaba contenido** (index.html): pasó de una
+   barra ancha centrada abajo a un toast compacto (320px) en la esquina
+   inferior derecha, con el botón "Actualizar" y el cierre apilados
+   verticalmente para ocupar menos espacio horizontal.
+2. **Botón de calculadora tapaba la tabla periódica** (tabla.html): dejó de
+   ser un botón flotante fijo — ahora es un botón normal junto a "¿Cómo
+   usar la tabla?" en el encabezado, así que nunca puede quedar encima de
+   una celda.
+3. **Barra de audio flotante se superponía a tarjetas** (reacciones,
+   balanceo, balanceo-avanzado): los 2 botones (🔊 Leer / ⏹ Detener) pasan
+   de píldoras anchas con texto a botones redondos de ícono solo (46×46px,
+   el mismo tamaño que el botón "🏠" que ya existía ahí), reduciendo bastante
+   el área que puede tapar.
+4. **generador.html con el diseño oscuro de una fase anterior**: migrado al
+   mismo sistema de tarjetas claras que ya tienen las demás 13 páginas
+   (formulario, selects, checkboxes, el modal "¿Cómo funciona?") — mismo
+   patrón ya aplicado en juego.html en la Fase 4.
+5. **Rojo usado tanto para "Descomposición" como para "incorrecto"**
+   (reacciones.html): las 4 tarjetas de tipo de reacción que reutilizaban
+   colores con otro significado (`--err` para Descomposición, y los 3
+   colores de rol iónico catión/anión/hidróxido para sustitución simple/
+   doble/neutralización) ahora tienen 4 colores propios e independientes
+   (violeta, cian, índigo, gris pizarra) que no chocan con ningún otro
+   significado ya establecido en el sitio.
+6. **Páginas muy largas sin navegación interna**: nuevo
+   `assets/toc.js`, compartido por reacciones/balanceo/moles/
+   estequiometria/balanceo-avanzado.html — arma automáticamente, a partir
+   de los `<h2>` que la página ya tiene, un botón flotante "Índice" (abajo
+   a la izquierda, para no chocar con los controles que ya viven abajo a
+   la derecha) con un panel para saltar directo a cualquier sección. No
+   requirió tocar el contenido de cada página.
+7. **Íconos de emoji nativo, inconsistentes entre dispositivos**: los 14
+   íconos de la barra inferior móvil y la hoja "Más" (compartidos por las
+   14 páginas desde `assets/ionom-ui.js`) pasaron de emoji a SVG propio en
+   línea, con `currentColor` para heredar el color del texto (incluido el
+   color de "activo"). Alcance explícito: solo la navegación compartida,
+   el punto de mayor impacto por página tocada — no se tocaron los emoji
+   decorativos del contenido de cada página individual, que exigirían
+   editar las 14 páginas una por una para un beneficio menor.
+8. **logo.png e iononpwa.png pesaban ~900 KB cada uno**: junto con la
+   corrección del ícono del PWA (arriba), se recomprimieron al tamaño real
+   de uso — `iononpwa.png` de 897 KB a 209 KB, `logo.png` de 890 KB a
+   198 KB (~78% menos en ambos), sin pérdida visible a los tamaños en que
+   se muestran.
+
+sw.js: `CACHE_NAME` v21→v22; se agregaron `assets/toc.js`,
+`assets/icon-192.png` e `assets/icon-512.png` a `ASSETS_TO_CACHE`.
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px, repetido después de cada cambio.
+- `manifest.json` y los 2 archivos de ícono nuevos confirmados servibles
+  con el tamaño real declarado.
+- Botón de calculadora de tabla.html confirmado funcional en su nueva
+  posición.
+- Los 5 índices flotantes (reacciones/balanceo/moles/estequiometria/
+  balanceo-avanzado) confirmados: aparecen, listan las secciones
+  correctas, y un clic sí hace scroll a la sección.
+- Partida completa en modo libre: sin regresiones.
