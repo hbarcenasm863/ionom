@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v17';
+const CACHE_NAME = 'ionom-v18';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -17,7 +17,11 @@ const ASSETS_TO_CACHE = [
   '/ionom/banco.js',
   '/ionom/manifest.json',
   '/ionom/assets/iononpwa.png',
-  '/ionom/assets/logo.png'
+  '/ionom/assets/logo.png',
+  '/ionom/assets/shared-tokens.css',
+  '/ionom/assets/ionom.css',
+  '/ionom/assets/ionom-ui.js',
+  '/ionom/assets/ionom-fondo.svg'
 ];
 
 self.addEventListener('install', (event) => {

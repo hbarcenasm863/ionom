@@ -1,0 +1,128 @@
+/* ════════════════════════════════════════════════════════════════════════
+   IonNom — sistema de diseño compartido
+   Se carga en TODAS las páginas, DESPUÉS del <style> propio de cada una
+   (justo antes de </head>), para que lo compartido gane donde haya
+   conflicto — mismo patrón que chromanom.css en el proyecto hermano.
+
+   Reglas del sistema (ver REDISENO.md):
+   - El código de colores pedagógico (catión/anión/hidróxido/oxoanión,
+     paleta Wong) es sagrado: solo se usa para lo que significa, nunca
+     como color de botón o decoración porque sí.
+   - --nav (#0d4a73, azul noche) sigue siendo el único color de acción:
+     botones, pestaña activa, enlaces, foco — ya establecido en todo el
+     sitio, distinto de los 4 colores pedagógicos.
+   - No se inventan datos: el panel "Tu avance" de la portada solo
+     aparece si hay progreso real guardado.
+   - Tema claro por defecto, igual que ya era.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tipografía: Fraunces (títulos), Outfit (texto), JetBrains Mono
+   (fórmulas) — mismas 3 familias que chromanom.css, cargadas vía Google
+   Fonts en cada página (ver el <link> junto a este). Los stacks ya
+   existentes (Georgia/Trebuchet/Courier) quedan como respaldo automático
+   si la fuente no carga (sin conexión, proxy que la bloquea, etc.) — el
+   sitio nunca depende de que esto funcione para verse bien. ── */
+:root{
+  --serif:'Fraunces',Georgia,"Times New Roman",serif;
+  --sans:'Outfit',"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  --mono:'JetBrains Mono',"Courier New",Courier,monospace;
+  --r-pill:999px;
+}
+
+html{-webkit-text-size-adjust:100%}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+:focus-visible{outline:3px solid var(--nav);outline-offset:2px}
+::selection{background:var(--an-b);color:var(--tx)}
+
+/* ── Menú superior: blanco semitransparente con desenfoque, igual que
+   ChromaNom — antes era un bloque sólido azul noche en las 14 páginas.
+   Se sobreescribe con !important para ganarle al <style> propio de cada
+   página sin tener que tocar su marcado. ── */
+.site-nav{
+  background:rgba(255,255,255,.92)!important;
+  -webkit-backdrop-filter:saturate(180%) blur(12px);backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--brd);
+  box-shadow:none!important;
+  height:60px!important;padding:0 20px!important;
+  font-family:var(--sans);
+}
+.site-nav .nav-brand{color:var(--nav)!important}
+.site-nav .nav-brand em{color:var(--gold)!important}
+.theme-btn,.ham-btn,.font-btn{color:var(--nav)!important;border-color:var(--brd)!important}
+.theme-btn:hover,.ham-btn:hover,.font-btn:hover{background:var(--an-b)!important}
+.font-ctrl{background:var(--surf2)!important}
+
+/* El menú lateral (drawer) sigue igual — sirve de respaldo en PC (enlaces
+   a los 13 módulos) y es la navegación completa en celular dentro de la
+   hoja "Más" (ver ionom-ui.js). Solo se retoca el color del enlace activo
+   para que combine con el nuevo azul de acción. */
+.nav-drawer .drawer-links a.active{background:var(--an-b)!important;color:var(--an-t)!important}
+
+/* ── Pie de página: caja azul noche con texto blanco, igual que
+   ChromaNom (antes era solo texto con una línea arriba). ── */
+footer{
+  background:var(--nav)!important;color:rgba(255,255,255,.88)!important;
+  border-top:none!important;font-family:var(--sans);
+  padding:22px 18px!important;
+}
+footer a{color:#fff!important}
+
+/* ── Botones compartidos (.ion-btn) — para marcado NUEVO; no reemplaza
+   los botones ya existentes de cada página, que siguen funcionando igual. ── */
+.ion-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:11px 22px;border-radius:var(--rs);font-family:var(--sans);font-weight:700;font-size:.92rem;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:background .15s,color .15s,border-color .15s,transform .15s,box-shadow .15s;line-height:1.2}
+.ion-btn:active{transform:translateY(1px)}
+.ion-btn--primary{background:var(--nav);color:#fff}
+.ion-btn--primary:hover{background:#092f4a;box-shadow:var(--sh2)}
+.ion-btn--secondary{background:var(--surf);color:var(--nav);border-color:var(--brd)}
+.ion-btn--secondary:hover{border-color:var(--nav);background:var(--an-b)}
+.ion-btn--ghost{background:transparent;color:var(--nav);padding-left:6px;padding-right:6px}
+.ion-btn--ghost:hover{text-decoration:underline}
+
+/* ── Tarjetas y encabezado de página compartidos ── */
+.ion-card{background:var(--surf);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh)}
+.ion-page-head{max-width:1100px;margin:0 auto;padding:28px 20px 8px;font-family:var(--sans)}
+.ion-page-head.in{max-width:none;padding:28px 0 18px;margin:0 0 18px;border-bottom:1px solid var(--brd)}
+@media(max-width:640px){.ion-page-head.in{padding:18px 0 14px}}
+.ion-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--nav)}
+.ion-page-head h1{font-family:var(--serif);font-weight:800;font-size:clamp(1.7rem,4.2vw,2.5rem);line-height:1.12;letter-spacing:-.02em;color:var(--tx);margin:6px 0 8px}
+.ion-page-head p{font-size:1rem;color:var(--tx2);line-height:1.6;max-width:68ch;margin:0}
+
+/* Chips del código de colores (catión/anión/hidróxido/oxoanión) con texto
+   oscuro que cumple contraste WCAG AA — mismas 4 variantes que ya existen
+   en varios archivos, formalizadas aquí para reutilizar en marcado nuevo. */
+.ion-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:var(--r-pill);font-size:.74rem;font-weight:700;border:1.5px solid;line-height:1.3;font-family:var(--sans)}
+.ion-chip.cat{color:var(--cat-t);border-color:var(--cat);background:var(--cat-b)}
+.ion-chip.an{color:var(--an-t);border-color:var(--an);background:var(--an-b)}
+.ion-chip.oh{color:var(--oh-t);border-color:var(--oh);background:var(--oh-b)}
+.ion-chip.ox{color:var(--ox-t);border-color:var(--ox);background:var(--ox-b)}
+
+/* ── Logo con flotación suave (la docente lo extrañó cuando se quitó en
+   ChromaNom) — respeta "reducir movimiento" (ver shared-tokens.css). ── */
+.ion-logo-float{animation:ion-float 4s ease-in-out infinite}
+@keyframes ion-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── Tabla ancha: aviso de deslizar (lo inserta ionom-ui.js) ── */
+.scroll-hint{font-size:.7rem;font-weight:600;color:var(--tx2);padding:4px 10px;text-align:right;font-family:var(--sans)}
+
+/* ── Marca de agua de compuestos inorgánicos (colores Wong) en todo el
+   fondo. La inserta ionom-ui.js como #ion-mol-bg. Queda fija detrás de
+   todo el contenido (z-index:-1) y no recibe clics. Las estructuras son
+   reales (óxidos ácidos, ácidos oxácidos/hídricos, sales, bases) — ver
+   assets/ionom-fondo.svg: un solo mosaico de dos columnas intercaladas,
+   comprobado por script para que ninguna estructura quede a menos de 18px
+   de otra, tampoco al repetirse. No superponer capas: dos copias encimadas
+   harían que las estructuras se crucen y parezcan enlaces que no existen. ── */
+#ion-mol-bg{
+  position:fixed;inset:0;
+  background:url(ionom-fondo.svg) left 10px top 40px/600px auto repeat;
+  opacity:.28;z-index:-1;pointer-events:none;
+}
+@media(max-width:640px){
+  #ion-mol-bg{opacity:.15;background-size:460px auto;background-position:left 0 top 30px}
+}
+@media print{#ion-mol-bg{display:none!important}}
+
+/* ── Impresión: nada de la interfaz del sitio en el papel ── */
+@media print{
+  .site-nav,footer,#bnav,#bnav-sheet,#bnav-backdrop,#ion-mol-bg,.scroll-hint,.update-banner{display:none!important}
+}

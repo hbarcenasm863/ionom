@@ -160,23 +160,157 @@ anterior para proteger el progreso de una partida.
 - Ciclo completo de actualización del PWA probado contra un servidor HTTP
   real (ver sección anterior).
 
+## Fase 4 — Paridad visual con ChromaNom (sistema de diseño compartido)
+
+Fecha: 2026-10-16
+Commits: (ver al final de esta sección, rama `claude/game-submit-bug-h5vvbl`)
+
+ChromaNom (proyecto hermano, nomenclatura **orgánica**) ya tenía desplegado
+un rediseño visual completo. Se pidió explícitamente llevar esa misma
+dirección de arte y esas mismas piezas de infraestructura a Ionom, adaptadas
+al contenido **inorgánico** real del sitio — no una copia literal, porque
+ChromaNom está construido alrededor de estructuras esqueléticas orgánicas
+(cadenas de carbono) que no existen en la química de Ionom.
+
+Se inspeccionó `chromanom.css`, `fondo-moleculas.svg` y `site-ui.js` del
+proyecto hermano (clon de solo lectura, no forma parte de este repo) y se
+construyó el equivalente para Ionom:
+
+### Archivos nuevos
+
+- **`assets/ionom.css`** — capa de componentes del sistema de diseño. Se
+  carga en las 14 páginas, siempre **después** del `<style>` propio de cada
+  una, así que gana con `!important` donde haya conflicto sin tener que
+  tocar el marcado de cada página:
+  - Menú superior (`.site-nav`) rediseñado de barra azul noche sólida a
+    vidrio esmerilado blanco (`rgba(255,255,255,.92)` + `backdrop-filter`),
+    con los botones de tema/menú/tamaño de letra recoloreados para mantener
+    contraste sobre el nuevo fondo claro.
+  - Pie de página (`footer`) convertido de texto con línea superior a caja
+    sólida azul noche con texto blanco.
+  - Tipografía Google Fonts: Fraunces (títulos), Outfit (texto), JetBrains
+    Mono (fórmulas) — mismas 3 familias que ChromaNom, cargadas vía
+    `<link>` en cada página, con los stacks de sistema ya existentes
+    (Georgia/Trebuchet MS/Courier New) como respaldo automático si la fuente
+    no carga (sin conexión, proxy que la bloquea, etc.).
+  - Clases de componente nuevas para marcado futuro: `.ion-btn`
+    (primary/secondary/ghost), `.ion-card`, `.ion-page-head`, `.ion-chip`
+    (una variante por rol iónico, reutilizando los tokens Wong ya definidos
+    en `shared-tokens.css`), `.ion-logo-float` (animación de flotación
+    suave, respeta `prefers-reduced-motion`).
+  - Marca de agua de fondo (`#ion-mol-bg`) — ver siguiente punto.
+  - Reglas de impresión: oculta nav/footer/barra inferior/marca de agua en
+    el papel.
+
+- **`assets/ionom-fondo.svg`** — la marca de agua pedida explícitamente al
+  inicio de esta tarea ("fondo tipo marca de agua de varias moléculas
+  inorgánicas en su forma de estructura de Lewis"). A diferencia de
+  ChromaNom (un solo tipo de estructura: esqueletal orgánica), Ionom enseña
+  una mezcla de especies covalentes y iónicas, así que el mosaico usa **dos
+  convenciones visuales coherentes** dentro de la misma paleta Wong:
+  - Estructura de líneas/enlaces reales para especies covalentes: **CO₂**,
+    **SO₃** (anhídridos/óxidos ácidos), **H₂SO₄**, **HNO₃** (ácidos
+    oxácidos), **HCl** (ácido hídrico).
+  - Dos círculos de color unidos por línea punteada para compuestos
+    iónicos: **NaCl** (sal binaria), **CaCO₃** (sal oxigenada), **Ca(OH)₂**
+    (base) — con la carga del ion como superíndice.
+  - Un solo mosaico de 720×1320 con 8 estructuras en dos columnas
+    intercaladas (mismo patrón que ChromaNom: una sola capa, nunca dos
+    copias superpuestas — eso haría que las estructuras se crucen y
+    parezcan enlaces que no existen).
+  - Separación mínima de 18px verificada **por script** entre cada par de
+    estructuras, incluso al repetirse el mosaico (9 combinaciones de
+    desplazamiento de tile comprobadas) — cero violaciones.
+  - Colores Wong tomados como valores hexadecimales literales dentro del
+    SVG (un SVG externo referenciado por `url()` en CSS no puede leer las
+    variables CSS del documento que lo usa).
+  - Insertada vía JS como `<div id="ion-mol-bg">` fijo detrás de todo el
+    contenido (`z-index:-1`, sin recibir clics), opacidad `.28` en
+    escritorio y `.15` en móvil (mosaico más pequeño) para no competir con
+    el texto.
+
+- **`assets/ionom-ui.js`** — JS compartido, equivalente de `site-ui.js`:
+  - Inserta la marca de agua (`fondo()`).
+  - Construye una barra de navegación inferior **solo en móvil** (`#bnav`)
+    con los 5 accesos más usados (Inicio/Principios/Funciones/Juego/Tabla),
+    más una hoja "Más" (`#bnav-sheet`) con los 9 módulos restantes y los
+    controles de tamaño de letra — sin duplicar HTML: se autoconstruye en
+    cada página. El menú hamburguesa de escritorio queda intacto (13
+    módulos no caben cómodamente en una barra inline como la de ChromaNom,
+    que solo tiene 7).
+  - En `juego.html`: oculta la barra inferior automáticamente mientras hay
+    una partida activa (`MutationObserver` sobre `.screen.active`, oculta
+    si el id no es `s-portada`) — mismo mecanismo que ya usa ChromaNom, y
+    coincide exactamente con la convención de IDs que Ionom ya tenía, cero
+    adaptación necesaria.
+  - Aviso de "desliza para ver más" en tablas anchas (`avisosTablas()`).
+
+### Propagación a las 14 páginas
+
+Cada página recibió los mismos 3 cambios (fuentes Google + `ionom.css` antes
+de `</head>`, `ionom-ui.js` antes de `</body>`): index, teoria, funciones,
+juego, tabla, generador, nomenClash, simulador, reacciones, balanceo, moles,
+estequiometria, balanceo-avanzado, guia. nomenClash.html no enlaza
+`shared-tokens.css` (mantiene su copia local de tokens por su tema visual
+propio "Alquimia Oscura" — ver Fase 1), así que ahí los 3 includes se
+insertaron directamente antes de `</head>`/`</body>` sin depender de esa
+línea como ancla.
+
+En index.html además: logo del hero con `class="ion-logo-float"` (animación
+de flotación ya definida en `ionom.css`, solo faltaba aplicarla). Se
+verificó que la numeración de los 12 módulos (①→⑫) ya era continua, sin el
+hueco que ChromaNom tuvo que corregir — no hizo falta ningún cambio ahí.
+
+### Service worker
+
+`sw.js`: se agregaron `assets/shared-tokens.css`, `assets/ionom.css`,
+`assets/ionom-ui.js` y `assets/ionom-fondo.svg` a `ASSETS_TO_CACHE`, y
+`CACHE_NAME` subió de `ionom-v17` a `ionom-v18` (regla obligatoria del
+CLAUDE.md: cualquier archivo cacheado que cambie exige subir la versión en
+el mismo commit).
+
+### Verificación realizada
+
+- Las 14 páginas cargadas con Playwright en 1280px y 390px: cero errores de
+  consola, `ionom.css` enlazado y `#ion-mol-bg` presente con la opacidad
+  esperada en las 14, cero desbordamiento horizontal nuevo introducido por
+  este cambio (el único desbordamiento móvil detectado, en balanceo.html,
+  ya existía **antes** de este rediseño — confirmado comparando contra el
+  commit previo — y queda fuera de alcance de esta tarea).
+- Menú superior confirmado con `background-color` resuelto a
+  `rgba(255,255,255,.92)` (gana sobre el `<style>` propio de cada página).
+- Barra inferior (`#bnav`) visible en móvil, hoja "Más" se abre al tocar el
+  botón, y el control de tamaño de letra de la hoja sí dispara
+  `fontInc()`/`fontDec()` (las mismas funciones globales que cada página ya
+  tenía, reutilizadas sin cambios).
+- **Partida real en modo estudiante** con el código de prueba `110106`
+  (regla del CLAUDE.md) contra un servidor HTTP real: panel de bienvenida
+  renderiza sin errores con la llamada a Apps Script bloqueada
+  intencionalmente (simula sin conexión).
+- **Partida completa en modo libre**: al iniciar el juego la pantalla pasa
+  a `s-game` y la barra inferior se oculta automáticamente
+  (`display:none`), confirmando que el freno de "no interrumpir una
+  partida" sigue intacto con la nueva navegación móvil.
+
 ## Fases pendientes del rediseño completo
 
-1. Propagar los 13 colores únicos (`--grp-*`) a las tarjetas reales de
+1. Portada (index.html): contenido dinámico pendiente del brief original —
+   CTA que cambie de texto según si hay progreso guardado, estadísticas
+   calculadas en vez de fijas, panel "Tu avance" (requiere antes decidir con
+   la docente qué dato de progreso mostrar, ya que el modelo de Ionom es
+   mayormente del lado del servidor vía Google Sheets, no `localStorage`
+   como en ChromaNom).
+2. Propagar los 13 colores únicos (`--grp-*`) a las tarjetas reales de
    teoria.html y funciones.html (hoy siguen usando el esquema de 4 colores
    MDEC reutilizados entre temas no relacionados — el token ya existe, falta
    aplicarlo en el marcado).
-2. Rediseño visual más profundo de la portada (hero, ruta de aprendizaje) —
-   el contenido y la estructura ya son sólidos; lo que falta es pulido de
-   dirección de arte según el brief original.
 3. Pulir la UI del juego (estados de respuesta, retroalimentación) con el
-   mismo sistema.
-4. Revisión responsive + accesibilidad completa en los archivos que se
-   toquen.
-5. Optimizar el logo/ícono (`assets/logo.png` e `iononpwa.png` pesan ~900 KB
+   mismo sistema de componentes `.ion-*`.
+4. Optimizar el logo/ícono (`assets/logo.png` e `iononpwa.png` pesan ~900 KB
    cada uno, mostrados a ≤140px).
-6. Terminar de limpiar las menciones de color de texto restantes
+5. Terminar de limpiar las menciones de color de texto restantes
    (funciones.html, nomenClash.html, guia.html, juego.html) y los hex
    sueltos no basados en variable.
-7. Fondo tipo marca de agua con estructuras de Lewis de moléculas
-   inorgánicas (pedido explícitamente, pendiente de implementar).
+6. Corregir el desbordamiento horizontal móvil preexistente en
+   balanceo.html (no introducido por esta tarea, detectado durante su
+   verificación).
