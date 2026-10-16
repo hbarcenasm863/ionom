@@ -300,17 +300,99 @@ el mismo commit).
    la docente qué dato de progreso mostrar, ya que el modelo de Ionom es
    mayormente del lado del servidor vía Google Sheets, no `localStorage`
    como en ChromaNom).
-2. Propagar los 13 colores únicos (`--grp-*`) a las tarjetas reales de
-   teoria.html y funciones.html (hoy siguen usando el esquema de 4 colores
-   MDEC reutilizados entre temas no relacionados — el token ya existe, falta
-   aplicarlo en el marcado).
-3. Pulir la UI del juego (estados de respuesta, retroalimentación) con el
+2. Pulir la UI del juego (estados de respuesta, retroalimentación) con el
    mismo sistema de componentes `.ion-*`.
-4. Optimizar el logo/ícono (`assets/logo.png` e `iononpwa.png` pesan ~900 KB
+3. Optimizar el logo/ícono (`assets/logo.png` e `iononpwa.png` pesan ~900 KB
    cada uno, mostrados a ≤140px).
-5. Terminar de limpiar las menciones de color de texto restantes
-   (funciones.html, nomenClash.html, guia.html, juego.html) y los hex
-   sueltos no basados en variable.
-6. Corregir el desbordamiento horizontal móvil preexistente en
-   balanceo.html (no introducido por esta tarea, detectado durante su
-   verificación).
+4. Terminar de limpiar las menciones de color de texto restantes
+   (nomenClash.html, guia.html, juego.html) y los hex sueltos no basados en
+   variable.
+
+## Fase 4 (continuación) — Colores `--grp-*` reales + corrección del tema oscuro
+
+Fecha: 2026-10-16
+Commits: `7672411`, `2ed2e38` (rama `main`)
+
+### Desbordamiento horizontal preexistente en balanceo.html
+
+El único hallazgo de la verificación anterior: el menú lateral
+(`#nav-drawer`, fuera de pantalla a la derecha vía `right:-280px`) seguía
+contribuyendo al `scrollWidth` del documento en móvil pese a estar oculto
+visualmente. Causa: `<html>` no tenía `overflow-x:hidden` (solo `<body>` lo
+tenía en otras páginas como juego.html/generador.html, pero el ancho que
+realmente determina el scroll horizontal del documento es el de `<html>`,
+no el de `<body>`). Confirmado preexistente (33px de desbordamiento antes
+de la Fase 4, no causado por ella). Corregido agregando `overflow-x:hidden`
+también a `<html>` en balanceo.html; verificado que el menú lateral sigue
+abriendo y cerrando con normalidad en escritorio y que en móvil su
+reemplazo (la barra inferior) sigue funcionando.
+
+### Colores `--grp-*` aplicados al marcado real
+
+Los 13 colores únicos por grupo funcional (`--grp-*`) llevaban desde la
+Fase 2 definidos en `shared-tokens.css` pero sin usarse en ningún HTML —
+confirmado por búsqueda: cero referencias `var(--grp-` fuera de su propia
+declaración. Mientras tanto, `teoria.html` y `funciones.html` seguían
+reutilizando los 4 colores de ROL iónico (catión/anión/hidróxido/oxoanión)
+como decoración cíclica entre tarjetas de temas no relacionados — la
+violación exacta que señaló la auditoría de la Fase 1 ("esos 4 colores
+significan algo concreto y no deben reutilizarse fuera de ese significado").
+
+- **funciones.html**: las 9 tarjetas de función (grid principal + la
+  insignia "Función NN" dentro de cada sección) ahora usan el `--grp-*` que
+  les corresponde de verdad: Óxidos Básicos y Anhídridos comparten
+  `--grp-ox` (igual que el selector `ox-anh` de juego.html los trata como
+  un solo grupo), y Hidruros/Ácidos Hídricos/Bases/Ácidos Oxácidos/Sales
+  Binarias/Sales Oxigenadas/Sales Ácidas tienen cada una la suya
+  (`--grp-hid/-ahid/-base/-aox/-sbin/-sox/-sac`).
+- **teoria.html**: de las 8 tarjetas del menú principal, 2 corresponden de
+  verdad a un grupo funcional concreto (Reactividad → `--grp-reac`, Sales
+  Ácidas → `--grp-sac`) y usan su color propio; las otras 6 son secciones
+  transversales que no tratan de un solo grupo (Conceptos Base, Estados de
+  Oxidación, Tipos de Compuestos, Nomenclatura Sistemática, Stock y
+  Tradicional, Excepciones) y pasan a un color neutro único (`--grp-all`,
+  el token ya pensado para "aplica a todos los grupos") en vez de robarle
+  significado a uno de los 4 colores de rol.
+- El "Mapa de Reactividad" de funciones.html (METAL/NO METAL en
+  catión/anión) no se tocó — ese sí es un uso legítimo de los 4 colores de
+  rol, porque ahí SÍ describen el rol iónico real de cada casilla.
+
+### 2 bugs reales encontrados al verificar en tema oscuro
+
+1. **Menú superior ilegible en tema oscuro**: el fondo frosted blanco fijo
+   de la Fase 4 no respondía al tema oscuro — quedaba una franja blanca
+   encima de una página por lo demás oscura, con texto pensado para fondo
+   claro casi invisible. `assets/ionom.css` ahora define fondo y color de
+   texto del menú también para tema oscuro, con los mismos 3 disparadores
+   que ya usa `shared-tokens.css` (`prefers-color-scheme:dark`,
+   `[data-theme="dark"]`, `[data-theme="light"]` para el caso "SO prefiere
+   oscuro pero el usuario eligió claro a mano").
+   `nomenClash.html` necesitó una corrección aparte en su propio `<style>`
+   (con la misma especificidad de selector para ganarle a la regla
+   compartida) porque mantiene su propio esquema de tema "Alquimia
+   Oscura": ahí `data-theme="dark"` es su estado visual **por defecto**, no
+   un tema oscuro añadido, así que `var(--tx)` (pensado para el resto del
+   sitio) no aplica — se usa `var(--text-dark)`, que es el token que
+   `nomenClash.html` ya tenía correctamente adaptado a sus 2 estados.
+2. **Botón de tema (🌙/☀️) sin conectar** en `teoria.html` y
+   `funciones.html`: `toggleTheme()` estaba definida pero nunca se agregaba
+   como manejador de clic del botón — el mismo tipo de bug que la auditoría
+   de la Fase 1 ya había corregido en `generador`/`index`/`simulador`/
+   `tabla`/`nomenClash`, pero que a estas 2 páginas no les había tocado.
+   Se verificó que `reacciones.html`/`balanceo.html`/`moles.html`/
+   `guia.html` (que no tienen una función llamada `toggleTheme`) sí
+   funcionan correctamente con su propio patrón de código distinto — no
+   necesitaron cambio.
+
+### Verificación realizada
+
+- Las 14 páginas en 1280px/390px tras cada cambio: cero errores de consola,
+  cero desbordamiento horizontal.
+- Colores `--grp-*` de las tarjetas de teoria.html/funciones.html
+  verificados con el color computado real en tema claro y oscuro.
+- Contraste del menú en tema oscuro verificado alternando el tema con clic
+  real en index.html, juego.html, nomenClash.html, teoria.html y
+  funciones.html — fondo y texto correctos en los 5 casos, incluido el
+  esquema invertido propio de nomenClash.html.
+- Partida completa en modo libre repetida tras estos cambios: sin
+  regresiones.
