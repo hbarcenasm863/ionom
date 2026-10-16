@@ -33,6 +33,25 @@
   ];
   var page=(location.pathname.split('/').pop()||'index.html').toLowerCase();
 
+  // La docente pidió quitar el tema oscuro del sitio: solo tema claro,
+  // sin importar la preferencia del sistema operativo del celular (eso
+  // causaba que el sitio se viera oscuro de entrada para cualquier
+  // estudiante con el modo oscuro activado en su teléfono, sin que nadie
+  // lo hubiera pedido). Se fuerza aquí, después de que cada página ya
+  // corrió su propio script de tema (este archivo se carga al final del
+  // <body>), así que pisa cualquier 'dark' que esa página haya elegido por
+  // preferencia del sistema o por un valor viejo guardado en localStorage.
+  // NomenClash.html queda fuera a propósito: su "oscuro" es la identidad
+  // visual del minijuego ("Alquimia Oscura"), no una preferencia de tema
+  // general -- forzarlo a su variante "clara" (pergamino) cambiaría la
+  // apariencia del juego, no solo el tema.
+  function forzarTemaClaro(){
+    document.documentElement.setAttribute('data-theme','light');
+    try{ localStorage.setItem('ionom-theme','light'); }catch(e){}
+    var tb=document.getElementById('theme-btn');
+    if(tb) tb.style.display='none';
+  }
+
   function css(){
     var s=document.createElement('style');
     s.textContent=
@@ -99,8 +118,8 @@
       '<div class="tz"><button type="button" data-fs="dec" aria-label="Reducir texto">A−</button>'+
       '<span id="bnav-fs-label"></span>'+
       '<button type="button" data-fs="inc" aria-label="Aumentar texto">A+</button></div>'+
-      '<h3 style="margin-top:14px">Tema</h3>'+
-      '<div class="tema"><button type="button" id="bnav-theme-btn"></button></div>'+
+      (page==='nomenclash.html'?('<h3 style="margin-top:14px">Tema</h3>'+
+      '<div class="tema"><button type="button" id="bnav-theme-btn"></button></div>'):'')+
       '<button type="button" class="cerrar">Cerrar</button>';
     document.body.appendChild(back); document.body.appendChild(sheet);
     document.body.classList.add('has-bnav');
@@ -130,7 +149,8 @@
         syncLabels();
       });
     });
-    document.getElementById('bnav-theme-btn').addEventListener('click',function(){
+    var btnTema=document.getElementById('bnav-theme-btn');
+    if(btnTema) btnTema.addEventListener('click',function(){
       var tb=document.getElementById('theme-btn');
       if(tb) tb.click();
       syncLabels();
@@ -178,6 +198,7 @@
   }
 
   function start(){
+    if(page!=='nomenclash.html') forzarTemaClaro();
     fondo();
     build();
     programarAvisos();
