@@ -500,6 +500,34 @@ footer a:hover{text-decoration:underline}
 .welcome-btn.dl{background:var(--ok);color:#fff}
 .welcome-btn.ghost{background:none;color:var(--dimmer);font-weight:600;font-size:.8rem;padding:6px}
 
+/* ===== BANNER DE ACTUALIZACIÓN DEL PWA ===== */
+/* La nueva versión del service worker queda "esperando" (ver sw.js) hasta
+   que el usuario toque "Actualizar" aquí -- antes se recargaba la página
+   sola apenas Apps Script detectaba una versión nueva, incluso en medio de
+   una partida del juego. */
+.update-banner{
+  position:fixed;left:50%;bottom:16px;
+  transform:translateX(-50%) translateY(140%);
+  max-width:92vw;width:400px;
+  background:var(--nav);color:var(--nav-t);
+  border-radius:var(--rs);
+  padding:12px 10px 12px 16px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:var(--sh2);
+  z-index:600;
+  transition:transform .3s ease;
+}
+.update-banner.show{transform:translateX(-50%) translateY(0)}
+.update-banner-text{flex:1;font-size:.8rem;line-height:1.4;color:rgba(255,255,255,.85)}
+.update-banner-text strong{display:block;font-size:.85rem;margin-bottom:2px;color:#fff}
+.update-banner-btn{background:var(--gold);color:#3a2405;border:none;border-radius:100px;padding:8px 16px;font-weight:800;font-size:.8rem;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.update-banner-close{background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:1.05rem;padding:4px 6px;flex-shrink:0;line-height:1}
+.update-banner-close:hover{color:#fff}
+@media(max-width:480px){
+  .update-banner{flex-wrap:wrap}
+  .update-banner-text{width:100%}
+}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:640px){
   .parts-grid{grid-template-columns:1fr}
@@ -957,6 +985,13 @@ html{font-size:var(--base-fs)}
   </div>
 </div>
 
+<!-- ===== BANNER DE ACTUALIZACIÓN DEL PWA ===== -->
+<div class="update-banner" id="update-banner" role="status" aria-live="polite">
+  <div class="update-banner-text"><strong>🔄 Nueva versión disponible</strong>Hay cambios nuevos en IonNom (ejercicios, correcciones). No se pierde nada de lo que tengas abierto.</div>
+  <button class="update-banner-btn" id="update-banner-btn">Actualizar</button>
+  <button class="update-banner-close" id="update-banner-close" aria-label="Cerrar aviso de actualización">✕</button>
+</div>
+
 <footer>
   <p><a href="https://hbarcenasm863.github.io/ionom/">IONOM</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/">HARVEY BARCENAS MORALES</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
 </footer>
@@ -1025,15 +1060,43 @@ function toggleNarration() {
   });
 }
 
-// Register Service Worker with auto-update on new version
+// Register Service Worker — actualización controlada por el usuario.
+// sw.js ya NO activa la versión nueva sola (self.skipWaiting() quedó
+// condicionado al mensaje SKIP_WAITING de abajo): el worker nuevo se queda
+// "esperando" hasta que el usuario toque "Actualizar" en el banner, en vez
+// de recargar la página sin avisar -- eso podía pasar en medio de una
+// partida del juego y perder el progreso visible en pantalla.
 if ('serviceWorker' in navigator) {
+  let waitingWorker = null;
+  const banner = document.getElementById('update-banner');
+  const btnUpdate = document.getElementById('update-banner-btn');
+  const btnClose = document.getElementById('update-banner-close');
+
+  function showUpdateBanner(worker) {
+    waitingWorker = worker;
+    if (banner) banner.classList.add('show');
+  }
+
+  if (btnUpdate) btnUpdate.addEventListener('click', () => {
+    if (waitingWorker) waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+    if (banner) banner.classList.remove('show');
+  });
+  if (btnClose) btnClose.addEventListener('click', () => {
+    if (banner) banner.classList.remove('show');
+  });
+
   navigator.serviceWorker.register('/ionom/sw.js', {scope: '/ionom/'}).then(reg => {
-    reg.update(); // check for newer SW on every page load
+    reg.update(); // revisa si hay una versión más nueva en el servidor
+    // Puede que ya haya un worker "esperando" de una visita anterior (el
+    // usuario cerró la pestaña sin tocar "Actualizar" la última vez).
+    if (reg.waiting && navigator.serviceWorker.controller) showUpdateBanner(reg.waiting);
     reg.addEventListener('updatefound', () => {
       const sw = reg.installing;
       sw.addEventListener('statechange', () => {
-        if (sw.state === 'activated' && navigator.serviceWorker.controller) {
-          location.reload();
+        // 'installed' + ya había un controller = es una ACTUALIZACIÓN (no
+        // la primera instalación del PWA) -- ahí sí mostramos el aviso.
+        if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+          showUpdateBanner(sw);
         }
       });
     });

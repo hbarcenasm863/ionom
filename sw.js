@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v16';
+const CACHE_NAME = 'ionom-v17';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -24,8 +24,22 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(ASSETS_TO_CACHE))
-      .then(() => self.skipWaiting())
+    // Antes llamaba self.skipWaiting() aquí mismo, apenas terminaba de
+    // cachear: la nueva versión tomaba control de TODAS las pestañas
+    // abiertas al instante (sin esperar a que el usuario lo pidiera), lo
+    // que disparaba un location.reload() forzado en index.html incluso con
+    // un estudiante a mitad de una partida en juego.html -- justo lo que el
+    // freno de salida (ver _gameActive en juego.html) existe para evitar.
+    // Ahora el worker nuevo se queda "esperando" (registration.waiting)
+    // hasta que el cliente mande el mensaje SKIP_WAITING de abajo, que solo
+    // se envía cuando el usuario toca el botón "Actualizar" del banner.
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {
