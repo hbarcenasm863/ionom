@@ -49,11 +49,14 @@
     --glow-gold:  0 0 20px rgba(212,175,55,0.4);
     --glow-ember: 0 0 20px rgba(192,74,26,0.5);
 
-    /* ── MDEC shared tokens ──────────────────────────────────────────────── */
-    --cat:#d97706; --cat-b:#fef3c7; --cat-t:#92400e;
-    --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
-    --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
-    --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+    /* ── Tokens cromáticos compartidos — paleta Wong/Okabe-Ito exacta, igual
+       que assets/shared-tokens.css (no enlazada aquí porque esta página usa
+       su propio tema "Alquimia Oscura" y solo necesita estos 4 roles para
+       las cartas catión/anión/acción del juego) ───────────────────────── */
+    --cat:#E69F00; --cat-b:#fcf2db; --cat-t:#8a5f00;
+    --an:#0072B2;  --an-b:#dbebf4;  --an-t:#00659e;
+    --oh:#CC79A7;  --oh-b:#f8ecf3;  --oh-t:#8d5373;
+    --ox:#009E73;  --ox-b:#dbf1eb;  --ox-t:#007253;
     --mdec-bg:#f6fafe; --mdec-bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
     --brd:#d0e6f5; --brd2:#b8d4eb;
     --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
@@ -72,10 +75,10 @@
   /* Dark mode via media query */
   @media(prefers-color-scheme:dark){
     :root{
-      --cat-b:#422006; --cat-t:#fde68a;
-      --an-b:#082f49; --an-t:#7dd3fc;
-      --oh-b:#2e1065; --oh-t:#c4b5fd;
-      --ox-b:#042f2e; --ox-t:#5eead4;
+      --cat-b:#2e2000; --cat-t:#e7a40d;
+      --an-b:#001724; --an-t:#338ec1;
+      --oh-b:#291821; --oh-t:#cf80ab;
+      --ox-b:#002017; --ox-t:#0da37a;
       --ok-b:#052e16; --ok-t:#86efac;
       --err-b:#450a0a; --err-t:#fca5a5;
       --warn-b:#422006; --warn-t:#fde68a;
@@ -84,10 +87,10 @@
   }
   /* Light theme override */
   :root[data-theme="light"]{
-    --cat-b:#fef3c7; --cat-t:#92400e;
-    --an-b:#e0f2fe; --an-t:#082f49;
-    --oh-b:#ede9fe; --oh-t:#4c1d95;
-    --ox-b:#ccfbf1; --ox-t:#134e4a;
+    --cat-b:#fcf2db; --cat-t:#8a5f00;
+    --an-b:#dbebf4; --an-t:#00659e;
+    --oh-b:#f8ecf3; --oh-t:#8d5373;
+    --ox-b:#dbf1eb; --ox-t:#007253;
     --ok-b:#dcfce7; --ok-t:#14532d;
     --err-b:#fee2e2; --err-t:#7f1d1d;
     --warn-b:#fef3c7; --warn-t:#92400e;
@@ -110,10 +113,10 @@
   }
   /* Dark theme forced */
   :root[data-theme="dark"]{
-    --cat-b:#422006; --cat-t:#fde68a;
-    --an-b:#082f49; --an-t:#7dd3fc;
-    --oh-b:#2e1065; --oh-t:#c4b5fd;
-    --ox-b:#042f2e; --ox-t:#5eead4;
+    --cat-b:#2e2000; --cat-t:#e7a40d;
+    --an-b:#001724; --an-t:#338ec1;
+    --oh-b:#291821; --oh-t:#cf80ab;
+    --ox-b:#002017; --ox-t:#0da37a;
     --ok-b:#052e16; --ok-t:#86efac;
     --err-b:#450a0a; --err-t:#fca5a5;
     --warn-b:#422006; --warn-t:#fde68a;
