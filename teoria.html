@@ -501,7 +501,7 @@ function speakText(btn){
 const SEC_DASH = [
   {color:'#d97706', summary:'Cada ion tiene un color. Los 4 colores MDEC te dicen qué tipo de compuesto es y cómo nombrarlo.',
    chips:['🔴 Catión (metal)','🔵 Anión simple','🟣 OH⁻ Hidróxido','🟢 Oxoanión'],
-   intro:'¿Alguna vez te has preguntado cómo saber de qué tipo es un compuesto con solo verlo? Con el sistema de colores MDEC, cada ion tiene su propio color: ámbar para el metal, azul para el anión simple, violeta para el OH⁻ y teal para el oxoanión. Cuando domines estos cuatro colores, vas a leer cualquier fórmula inorgánica como si fuera un mapa.'},
+   intro:'¿Alguna vez te has preguntado cómo saber de qué tipo es un compuesto con solo verlo? Con el sistema de colores MDEC, cada ion tiene su propio color: ámbar para el metal, azul para el anión simple, rosado para el OH⁻ y verde para el oxoanión. Cuando domines estos cuatro colores, vas a leer cualquier fórmula inorgánica como si fuera un mapa.'},
   {color:'#0369a1', summary:'EO = carga que tendría el átomo si los electrones fueran completamente del ion más electronegativo.',
    chips:['O siempre −2','H: +1 en ácidos, −1 en hidruros','Suma de EO = 0','Metales de transición: variable'],
    intro:'¿Sabías que cada átomo lleva un "contador" de electrones ganados o perdidos? Eso es el estado de oxidación, y es la clave para nombrar cualquier compuesto inorgánico. Recuerda la regla de oro: en una molécula neutra, la suma de todos los EO siempre da cero. Con esa sola regla puedes calcular el EO de cualquier elemento desconocido.'},
@@ -588,7 +588,7 @@ CONTENIDO[0] = `
   <div class="color-box oh">
     <div class="color-dot"></div>
     <div>
-      <strong><span class="mayer-step-num">③</span> Violeta — <span class="mayer-hl">Grupo OH⁻</span></strong>
+      <strong><span class="mayer-step-num">③</span> Rosado — <span class="mayer-hl">Grupo OH⁻</span></strong>
       <span>El grupo hidroxilo es un anión poliatómico especial. Siempre se llama <em>hidróxido</em>. Forma bases. Ejemplos: NaOH → hidróxido de sodio, Ca(OH)₂ → hidróxido de calcio</span>
     </div>
   </div>
@@ -596,7 +596,7 @@ CONTENIDO[0] = `
   <div class="color-box ox">
     <div class="color-dot"></div>
     <div>
-      <strong><span class="mayer-step-num">④</span> Teal — <span class="mayer-hl">Oxoanión</span></strong>
+      <strong><span class="mayer-step-num">④</span> Verde — <span class="mayer-hl">Oxoanión</span></strong>
       <span>Anión que contiene oxígeno. Tiene nombre propio que hay que memorizar. Forma sales oxigenadas. Ejemplos: SO₄²⁻ (sulfato), NO₃⁻ (nitrato), PO₄³⁻ (fosfato)</span>
     </div>
   </div>
@@ -614,13 +614,13 @@ CONTENIDO[0] = `
     </div>
     <div class="mdec-step">
       <div class="mdec-num an">②</div>
-      <div class="mdec-body"><strong style="color:var(--an-t)">Identifica el anión [Azul / Violeta / Teal]</strong>
-      <p>Segundo componente. El color indica el tipo: Azul = anión simple (-uro), Violeta = OH⁻ (hidróxido), Teal = oxoanión (sulfato, nitrato…).</p></div>
+      <div class="mdec-body"><strong style="color:var(--an-t)">Identifica el anión [Azul / Rosado / Verde]</strong>
+      <p>Segundo componente. El color indica el tipo: Azul = anión simple (-uro), Rosado = OH⁻ (hidróxido), Verde = oxoanión (sulfato, nitrato…).</p></div>
     </div>
     <div class="mdec-step">
       <div class="mdec-num neu">③</div>
       <div class="mdec-body"><strong>Determina el tipo de compuesto</strong>
-      <p>Metal + O²⁻ (Azul) → óxido. Metal + Cl⁻/S²⁻ (Azul) → sal binaria. Metal + OH⁻ (Violeta) → hidróxido/base. Metal + oxoanión (Teal) → sal oxigenada.</p></div>
+      <p>Metal + O²⁻ (Azul) → óxido. Metal + Cl⁻/S²⁻ (Azul) → sal binaria. Metal + OH⁻ (Rosado) → hidróxido/base. Metal + oxoanión (Verde) → sal oxigenada.</p></div>
     </div>
     <div class="mdec-step">
       <div class="mdec-num ox">④</div>
@@ -632,7 +632,7 @@ CONTENIDO[0] = `
   <p style="font-size:.82rem;color:var(--dimmer)"><strong>Ejemplo MDEC con Fe₂(SO₄)₃:</strong></p>
   <div class="mdec-demo">
     <div class="mdec-row">
-      <div class="mdec-token"><span class="mdec-w ox">sulfato</span><span class="mdec-lbl ox">④ Teal · SO₄²⁻</span></div>
+      <div class="mdec-token"><span class="mdec-w ox">sulfato</span><span class="mdec-lbl ox">④ Verde · SO₄²⁻</span></div>
       <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
       <div class="mdec-token"><span class="mdec-w cat">hierro</span><span class="mdec-lbl cat">① Ámbar · Fe</span></div>
       <div class="mdec-token"><span class="mdec-w cat">(III)</span><span class="mdec-lbl cat">EO = +3 · Stock</span></div>
@@ -683,7 +683,7 @@ CONTENIDO[0] = `
       <strong>NaHCO₃</strong>bicarbonato de sodio = levadura química
       <div class="rw-detail">
         <div class="mdec-row">
-          <div class="mdec-token"><span class="mdec-w ox">bicarbonato</span><span class="mdec-lbl ox">④ Teal · HCO₃⁻ (sal ácida)</span></div>
+          <div class="mdec-token"><span class="mdec-w ox">bicarbonato</span><span class="mdec-lbl ox">④ Verde · HCO₃⁻ (sal ácida)</span></div>
           <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
           <div class="mdec-token"><span class="mdec-w cat">sodio</span><span class="mdec-lbl cat">① Ámbar · Na⁺, fija</span></div>
         </div>
@@ -694,7 +694,7 @@ CONTENIDO[0] = `
       <strong>Ca(OH)₂</strong>hidróxido de calcio = cal apagada
       <div class="rw-detail">
         <div class="mdec-row">
-          <div class="mdec-token"><span class="mdec-w oh">hidróxido</span><span class="mdec-lbl oh">③ Violeta · OH⁻</span></div>
+          <div class="mdec-token"><span class="mdec-w oh">hidróxido</span><span class="mdec-lbl oh">③ Rosado · OH⁻</span></div>
           <div class="mdec-token"><span class="mdec-w neu">de</span><span class="mdec-lbl neu">enlace</span></div>
           <div class="mdec-token"><span class="mdec-w cat">calcio</span><span class="mdec-lbl cat">① Ámbar · Ca²⁺, fija</span></div>
         </div>
@@ -743,8 +743,8 @@ CONTENIDO[0] = `
     <div class="mq-opts">
       <button class="mq-btn" data-correct="true" onclick="checkMQ2(0,0,this)">🔴 Ámbar</button>
       <button class="mq-btn" data-correct="false" data-why="Azul representa al anión simple (no metal que gana electrones). El catión (metal) es siempre ámbar." onclick="checkMQ2(0,0,this)">🔵 Azul</button>
-      <button class="mq-btn" data-correct="false" data-why="Violeta es el color del grupo OH⁻ (hidróxido). El metal/catión siempre va en ámbar." onclick="checkMQ2(0,0,this)">🟣 Violeta</button>
-      <button class="mq-btn" data-correct="false" data-why="Teal representa al oxoanión (SO₄²⁻, NO₃⁻…). El catión metálico siempre es ámbar." onclick="checkMQ2(0,0,this)">🟢 Teal</button>
+      <button class="mq-btn" data-correct="false" data-why="Rosado es el color del grupo OH⁻ (hidróxido). El metal/catión siempre va en ámbar." onclick="checkMQ2(0,0,this)">🟣 Rosado</button>
+      <button class="mq-btn" data-correct="false" data-why="Verde representa al oxoanión (SO₄²⁻, NO₃⁻…). El catión metálico siempre es ámbar." onclick="checkMQ2(0,0,this)">🟢 Verde</button>
     </div>
     <div class="mq-fb" id="mq-fb-0-0"></div>
   </div>
@@ -1366,7 +1366,7 @@ CONTENIDO[5] = `
     <tr><td><code>+2</code></td><td>CrO</td><td>óxido cromoso</td><td>óxido de cromo (II)</td><td>Poco común</td></tr>
     <tr><td><code>+3</code></td><td>Cr₂O₃</td><td>óxido crómico</td><td>óxido de cromo (III)</td><td>Estado más estable y frecuente</td></tr>
     <tr><td><code>+6</code></td><td>CrO₃</td><td>anhídrido crómico</td><td>óxido de cromo (VI)</td><td>No metal: forma ácido crómico</td></tr>
-    <tr><td><code>+6</code></td><td>CrO₄²⁻</td><td colspan="2">cromato (oxoanión)</td><td>Teal en el modelo 2+matiz</td></tr>
+    <tr><td><code>+6</code></td><td>CrO₄²⁻</td><td colspan="2">cromato (oxoanión)</td><td>Verde en el modelo 2+matiz</td></tr>
     <tr><td><code>+6</code></td><td>Cr₂O₇²⁻</td><td colspan="2">dicromato (oxoanión)</td><td>2 Cr por unidad del ion</td></tr>
   </table>
 
@@ -1485,7 +1485,7 @@ CONTENIDO[6] = `
       <div class="mdec-token"><span class="mdec-w neu">+</span><span class="mdec-lbl neu"></span></div>
       <div class="mdec-token"><span class="mdec-w neu">H₂O</span><span class="mdec-lbl neu">neutro</span></div>
       <div class="mdec-token"><span class="mdec-w neu">→</span><span class="mdec-lbl neu"></span></div>
-      <div class="mdec-token"><span class="mdec-w oh">2 NaOH</span><span class="mdec-lbl oh">Violeta · base</span></div>
+      <div class="mdec-token"><span class="mdec-w oh">2 NaOH</span><span class="mdec-lbl oh">Rosado · base</span></div>
     </div>
     <div style="font-size:.78rem;color:var(--dim)">Na₂O + H₂O → 2 NaOH &nbsp;·&nbsp; pH &gt; 7 (básico)</div>
   </div>

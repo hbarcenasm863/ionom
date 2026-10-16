@@ -610,8 +610,8 @@ html{font-size:var(--base-fs)}
     <div class="welcome-legend">
       <span class="w-cat">① Ámbar · Catión</span>
       <span class="w-an">② Azul · Anión simple</span>
-      <span class="w-oh">③ Violeta · OH⁻</span>
-      <span class="w-ox">④ Teal · Oxoanión</span>
+      <span class="w-oh">③ Rosado · OH⁻</span>
+      <span class="w-ox">④ Verde · Oxoanión</span>
     </div>
     <p style="text-align:center;font-size:.82rem">¿Primera vez? Empieza por <strong>Principios</strong>, practica con <strong>Funciones</strong> y pon a prueba lo aprendido en el <strong>Juego</strong>.</p>
     <div class="welcome-actions">
@@ -635,11 +635,11 @@ html{font-size:var(--base-fs)}
     </span>
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--oh)"></span>
-      <strong style="color:var(--oh-t)">③ Violeta</strong>
+      <strong style="color:var(--oh-t)">③ Rosado</strong>
     </span>
     <span class="pt-chip">
       <span class="chip-dot" style="background:var(--ox)"></span>
-      <strong style="color:var(--ox-t)">④ Teal</strong>
+      <strong style="color:var(--ox-t)">④ Verde</strong>
     </span>
     <button type="button" class="pt-chip" onclick="openWelcomeModal()" style="cursor:pointer;font:inherit;border-style:dashed">Ver ruta recomendada →</button>
   </div>
@@ -912,13 +912,13 @@ html{font-size:var(--base-fs)}
     <div class="part-desc">No metal que gana electrones. En el nombre termina en <em>-uro</em> o <em>-ido</em>. Forma óxidos básicos, sales binarias y anhídridos.</div>
   </div>
   <div class="part-card oh" data-sym="OH">
-    <div class="part-num">③ Violeta — Grupo OH⁻</div>
+    <div class="part-num">③ Rosado — Grupo OH⁻</div>
     <div class="part-title">Hidroxilo</div>
     <div class="part-examples">OH⁻  →  hidróxido</div>
     <div class="part-desc">Grupo poliatómico que forma bases e hidróxidos. Compuestos ternarios: metal + OH⁻.</div>
   </div>
   <div class="part-card ox" data-sym="O₄">
-    <div class="part-num">④ Teal — Oxoanión</div>
+    <div class="part-num">④ Verde — Oxoanión</div>
     <div class="part-title">Anión oxigenado</div>
     <div class="part-examples">SO₄²⁻  NO₃⁻  CrO₄²⁻</div>
     <div class="part-desc">Anión que contiene oxígeno. Forma sales oxigenadas y ácidos oxácidos. Cada oxoanión tiene nombre propio.</div>
@@ -1015,7 +1015,7 @@ function toggleNarration() {
   btn.classList.add('playing');
   const texto = '¡Hola! Bienvenido a IonNom, tu herramienta para aprender nomenclatura inorgánica. ' +
     'Aquí encontrarás cuatro colores clave: ámbar para los cationes o metales, azul para los aniones simples, ' +
-    'violeta para el grupo hidroxilo, y teal para los oxoaniones. ' +
+    'rosado para el grupo hidroxilo, y verde para los oxoaniones. ' +
     'Te recomendamos empezar por Principios, luego practicar con Funciones, y después jugar para poner a prueba lo que aprendiste. ' +
     '¡Mucho éxito en tu aprendizaje!';
   speak(texto, () => {
