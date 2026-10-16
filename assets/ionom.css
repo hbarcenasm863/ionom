@@ -52,6 +52,27 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .theme-btn:hover,.ham-btn:hover,.font-btn:hover{background:var(--an-b)!important}
 .font-ctrl{background:var(--surf2)!important}
 
+/* Tema oscuro: el fondo frosted claro de arriba deja el texto/íconos
+   (pensados para fondo claro, color:var(--nav) que en oscuro es casi
+   negro) ilegibles sobre el resto de la página oscura. El menú pasa a
+   frosted oscuro y el texto a var(--tx) (claro en tema oscuro), mismo
+   patrón de 3 selectores que ya usa shared-tokens.css para los 3 disparadores
+   de tema (preferencia del sistema + los dos estados manuales). */
+@media(prefers-color-scheme:dark){
+  .site-nav{background:rgba(9,25,41,.88)!important}
+  .site-nav .nav-brand,.theme-btn,.ham-btn,.font-btn{color:var(--tx)!important}
+}
+:root[data-theme="dark"] .site-nav{background:rgba(9,25,41,.88)!important}
+:root[data-theme="dark"] .site-nav .nav-brand,
+:root[data-theme="dark"] .theme-btn,
+:root[data-theme="dark"] .ham-btn,
+:root[data-theme="dark"] .font-btn{color:var(--tx)!important}
+:root[data-theme="light"] .site-nav{background:rgba(255,255,255,.92)!important}
+:root[data-theme="light"] .site-nav .nav-brand,
+:root[data-theme="light"] .theme-btn,
+:root[data-theme="light"] .ham-btn,
+:root[data-theme="light"] .font-btn{color:var(--nav)!important}
+
 /* El menú lateral (drawer) sigue igual — sirve de respaldo en PC (enlaces
    a los 13 módulos) y es la navegación completa en celular dentro de la
    hoja "Más" (ver ionom-ui.js). Solo se retoca el color del enlace activo

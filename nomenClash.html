@@ -966,6 +966,25 @@ html{font-size:var(--base-fs)}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/ionom.css">
+<style>
+/* NomenClash mantiene su propio tema "Alquimia Oscura" (ver bloque de
+   tokens arriba, separado de assets/shared-tokens.css) donde data-theme=
+   "dark" es en realidad su estado visual POR DEFECTO, no un tema oscuro
+   añadido — así que var(--tx) de ionom.css (pensado para el esquema
+   claro/oscuro del resto del sitio) no sirve aquí: en su estado "dark" cae
+   al valor claro de --tx y el texto del menú queda casi invisible sobre el
+   fondo oscuro. --text-dark ya es el texto correcto de esta página en
+   ambos estados (--parchment claro en Alquimia Oscura, marrón oscuro en su
+   variante "light" de pergamino), así que se usa aquí en su lugar. */
+:root[data-theme="dark"] .site-nav .nav-brand,
+:root[data-theme="dark"] .theme-btn,
+:root[data-theme="dark"] .ham-btn,
+:root[data-theme="dark"] .font-btn,
+:root[data-theme="light"] .site-nav .nav-brand,
+:root[data-theme="light"] .theme-btn,
+:root[data-theme="light"] .ham-btn,
+:root[data-theme="light"] .font-btn{color:var(--text-dark)!important}
+</style>
 </head>
 <body>
 <nav class="site-nav">

@@ -189,10 +189,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:32px 0}
 .card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:28px 20px;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:180px;justify-content:center}
 .card:hover{transform:translateY(-8px);box-shadow:var(--sh2)}
-.card.card-cat{border-color:var(--cat);background:linear-gradient(135deg,var(--cat-b),var(--surf))}
-.card.card-an{border-color:var(--an);background:linear-gradient(135deg,var(--an-b),var(--surf))}
-.card.card-oh{border-color:var(--oh);background:linear-gradient(135deg,var(--oh-b),var(--surf))}
-.card.card-ox{border-color:var(--ox);background:linear-gradient(135deg,var(--ox-b),var(--surf))}
+/* Secciones generales (no específicas de un grupo funcional): color
+   neutro --grp-all, no los 4 colores de rol iónico (catión/anión/
+   hidróxido/oxoanión) — esos significan algo concreto y no deben
+   reutilizarse como decoración en temas que no tratan de ese rol. Las 2
+   secciones que sí corresponden a un grupo funcional concreto (Reactividad,
+   Sales Ácidas) usan su propio color --grp-* en vez del genérico. */
+.card.grp-all{border-color:var(--grp-all);background:linear-gradient(135deg,var(--grp-all-b),var(--surf))}
+.card.grp-reac{border-color:var(--grp-reac);background:linear-gradient(135deg,var(--grp-reac-b),var(--surf))}
+.card.grp-sac{border-color:var(--grp-sac);background:linear-gradient(135deg,var(--grp-sac-b),var(--surf))}
 .card-icon{font-size:2.8rem}
 .card-title{font-family:var(--serif);font-size:1.05rem;font-weight:800;color:var(--tx)}
 .card-desc{font-size:.78rem;color:var(--tx2);line-height:1.5}
@@ -334,49 +339,49 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="cards-grid">
-    <div class="card card-cat" onclick="goToSection(0)">
+    <div class="card grp-all" onclick="goToSection(0)">
       <span class="card-icon">📚</span>
       <div class="card-title">Conceptos Base</div>
       <div class="card-desc">Iones, sistema de colores MDEC y lectura cromática paso a paso</div>
       <span class="card-badge">Fundamental</span>
     </div>
-    <div class="card card-an" onclick="goToSection(1)">
+    <div class="card grp-all" onclick="goToSection(1)">
       <span class="card-icon">🧮</span>
       <div class="card-title">Estados de Oxidación</div>
       <div class="card-desc">Reglas de asignación, cálculo EO y patrón de oxoaniones</div>
       <span class="card-badge">Intermedio</span>
     </div>
-    <div class="card card-ox" onclick="goToSection(2)">
+    <div class="card grp-all" onclick="goToSection(2)">
       <span class="card-icon">🔬</span>
       <div class="card-title">Tipos de Compuestos</div>
       <div class="card-desc">Binarios, ternarios, definición correcta de anhídridos</div>
       <span class="card-badge">Fundamental</span>
     </div>
-    <div class="card card-an" onclick="goToSection(3)">
+    <div class="card grp-all" onclick="goToSection(3)">
       <span class="card-icon">⚗️</span>
       <div class="card-title">Nomenclatura Sistemática</div>
       <div class="card-desc">Prefijos numéricos: di-, tri-, tetra-… (nomenclatura IUPAC)</div>
       <span class="card-badge">Sistemática</span>
     </div>
-    <div class="card card-cat" onclick="goToSection(4)">
+    <div class="card grp-all" onclick="goToSection(4)">
       <span class="card-icon">💎</span>
       <div class="card-title">Stock y Tradicional</div>
       <div class="card-desc">Números romanos y sufijos -oso/-ico para valencia variable</div>
       <span class="card-badge">Variable</span>
     </div>
-    <div class="card card-oh" onclick="goToSection(5)">
+    <div class="card grp-all" onclick="goToSection(5)">
       <span class="card-icon">⚠️</span>
       <div class="card-title">Excepciones</div>
       <div class="card-desc">Manganeso, cromo, mercurio y los tres tipos de hidruros</div>
       <span class="card-badge">Avanzado</span>
     </div>
-    <div class="card card-ox" onclick="goToSection(6)">
+    <div class="card grp-reac" onclick="goToSection(6)">
       <span class="card-icon">🔥</span>
       <div class="card-title">Reactividad</div>
       <div class="card-desc">De la nomenclatura a las ecuaciones: predice cómo reacciona cada compuesto</div>
       <span class="card-badge">Avanzado</span>
     </div>
-    <div class="card card-an" onclick="goToSection(7)">
+    <div class="card grp-sac" onclick="goToSection(7)">
       <span class="card-icon">🧂</span>
       <div class="card-title">Sales Ácidas</div>
       <div class="card-desc">Prefijos bi- (tradicional) e hidrogeno-/dihidrogeno- (Stock)</div>
@@ -448,6 +453,7 @@ function toggleTheme(){
   document.addEventListener('DOMContentLoaded',function(){
     var btn=document.getElementById('theme-btn');
     if(btn)btn.textContent=s==='dark'?'☀️':'🌙';
+    if(btn)btn.addEventListener('click',toggleTheme);
   });
 })();
 

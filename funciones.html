@@ -71,18 +71,30 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:8px}
 .card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 18px 18px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;text-align:left;font-family:var(--sans)}
 .card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
-.card.card-cat{border-top:4px solid var(--cat)}.card.card-cat:hover{border-color:var(--cat)}
-.card.card-an{border-top:4px solid var(--an)}.card.card-an:hover{border-color:var(--an)}
-.card.card-oh{border-top:4px solid var(--oh)}.card.card-oh:hover{border-color:var(--oh)}
-.card.card-ox{border-top:4px solid var(--ox)}.card.card-ox:hover{border-color:var(--ox)}
+/* Cada función inorgánica tiene su propio color único (--grp-*, ver
+   shared-tokens.css) — no los 4 colores de rol iónico (catión/anión/
+   hidróxido/oxoanión), que significan algo específico y no deben
+   reutilizarse como decoración entre funciones que no comparten ese rol. */
+.card.grp-ox{border-top:4px solid var(--grp-ox)}.card.grp-ox:hover{border-color:var(--grp-ox)}
+.card.grp-hid{border-top:4px solid var(--grp-hid)}.card.grp-hid:hover{border-color:var(--grp-hid)}
+.card.grp-ahid{border-top:4px solid var(--grp-ahid)}.card.grp-ahid:hover{border-color:var(--grp-ahid)}
+.card.grp-base{border-top:4px solid var(--grp-base)}.card.grp-base:hover{border-color:var(--grp-base)}
+.card.grp-aox{border-top:4px solid var(--grp-aox)}.card.grp-aox:hover{border-color:var(--grp-aox)}
+.card.grp-sbin{border-top:4px solid var(--grp-sbin)}.card.grp-sbin:hover{border-color:var(--grp-sbin)}
+.card.grp-sox{border-top:4px solid var(--grp-sox)}.card.grp-sox:hover{border-color:var(--grp-sox)}
+.card.grp-sac{border-top:4px solid var(--grp-sac)}.card.grp-sac:hover{border-color:var(--grp-sac)}
 .card-icon{font-size:1.6rem;margin-bottom:8px}
 .card-num{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;opacity:.55}
 .card-title{font-size:.95rem;font-weight:800;color:var(--tx);margin-bottom:4px}
 .card-pattern{font-family:var(--mono);font-size:.75rem;color:var(--dimmer)}
-.card.card-cat .card-num{color:var(--cat-t)}
-.card.card-an .card-num{color:var(--an-t)}
-.card.card-oh .card-num{color:var(--oh-t)}
-.card.card-ox .card-num{color:var(--ox-t)}
+.card.grp-ox .card-num{color:var(--grp-ox-t)}
+.card.grp-hid .card-num{color:var(--grp-hid-t)}
+.card.grp-ahid .card-num{color:var(--grp-ahid-t)}
+.card.grp-base .card-num{color:var(--grp-base-t)}
+.card.grp-aox .card-num{color:var(--grp-aox-t)}
+.card.grp-sbin .card-num{color:var(--grp-sbin-t)}
+.card.grp-sox .card-num{color:var(--grp-sox-t)}
+.card.grp-sac .card-num{color:var(--grp-sac-t)}
 
 /* BREADCRUMB */
 .breadcrumb-bar{display:flex;align-items:center;gap:8px;padding:10px 0 18px;font-size:.8rem;color:var(--dimmer)}
@@ -126,15 +138,23 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* Function badge */
 .func-badge{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--rs);margin-bottom:16px;border:2px solid}
-.func-badge.cat{background:var(--cat-b);border-color:var(--cat)}
-.func-badge.an{background:var(--an-b);border-color:var(--an)}
-.func-badge.oh{background:var(--oh-b);border-color:var(--oh)}
-.func-badge.ox{background:var(--ox-b);border-color:var(--ox)}
+.func-badge.grp-ox{background:var(--grp-ox-b);border-color:var(--grp-ox)}
+.func-badge.grp-hid{background:var(--grp-hid-b);border-color:var(--grp-hid)}
+.func-badge.grp-ahid{background:var(--grp-ahid-b);border-color:var(--grp-ahid)}
+.func-badge.grp-base{background:var(--grp-base-b);border-color:var(--grp-base)}
+.func-badge.grp-aox{background:var(--grp-aox-b);border-color:var(--grp-aox)}
+.func-badge.grp-sbin{background:var(--grp-sbin-b);border-color:var(--grp-sbin)}
+.func-badge.grp-sox{background:var(--grp-sox-b);border-color:var(--grp-sox)}
+.func-badge.grp-sac{background:var(--grp-sac-b);border-color:var(--grp-sac)}
 .func-num{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1;flex-shrink:0}
-.func-badge.cat .func-num,.func-badge.cat .func-badge-title{color:var(--cat-t)}
-.func-badge.an .func-num,.func-badge.an .func-badge-title{color:var(--an-t)}
-.func-badge.oh .func-num,.func-badge.oh .func-badge-title{color:var(--oh-t)}
-.func-badge.ox .func-num,.func-badge.ox .func-badge-title{color:var(--ox-t)}
+.func-badge.grp-ox .func-num,.func-badge.grp-ox .func-badge-title{color:var(--grp-ox-t)}
+.func-badge.grp-hid .func-num,.func-badge.grp-hid .func-badge-title{color:var(--grp-hid-t)}
+.func-badge.grp-ahid .func-num,.func-badge.grp-ahid .func-badge-title{color:var(--grp-ahid-t)}
+.func-badge.grp-base .func-num,.func-badge.grp-base .func-badge-title{color:var(--grp-base-t)}
+.func-badge.grp-aox .func-num,.func-badge.grp-aox .func-badge-title{color:var(--grp-aox-t)}
+.func-badge.grp-sbin .func-num,.func-badge.grp-sbin .func-badge-title{color:var(--grp-sbin-t)}
+.func-badge.grp-sox .func-num,.func-badge.grp-sox .func-badge-title{color:var(--grp-sox-t)}
+.func-badge.grp-sac .func-num,.func-badge.grp-sac .func-badge-title{color:var(--grp-sac-t)}
 .func-badge-title{font-size:.95rem;font-weight:800}
 .func-pattern{font-family:var(--mono);font-size:.82rem;opacity:.75}
 
@@ -431,55 +451,55 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="cards-grid">
-    <button class="card card-cat" onclick="goToSection(0)">
+    <button class="card grp-ox" onclick="goToSection(0)">
       <div class="card-icon">🔴</div>
       <div class="card-num">Función 01</div>
       <div class="card-title">Óxidos Básicos</div>
       <div class="card-pattern">Metal + O</div>
     </button>
-    <button class="card card-an" onclick="goToSection(1)">
+    <button class="card grp-ox" onclick="goToSection(1)">
       <div class="card-icon">🔵</div>
       <div class="card-num">Función 02</div>
       <div class="card-title">Anhídridos</div>
       <div class="card-pattern">No metal + O</div>
     </button>
-    <button class="card card-cat" onclick="goToSection(2)">
+    <button class="card grp-hid" onclick="goToSection(2)">
       <div class="card-icon">⚗️</div>
       <div class="card-num">Función 03</div>
       <div class="card-title">Hidruros</div>
       <div class="card-pattern">Metal + H⁻</div>
     </button>
-    <button class="card card-an" onclick="goToSection(3)">
+    <button class="card grp-ahid" onclick="goToSection(3)">
       <div class="card-icon">💧</div>
       <div class="card-num">Función 04</div>
       <div class="card-title">Ácidos Hídricos</div>
       <div class="card-pattern">H + no metal (aq)</div>
     </button>
-    <button class="card card-oh" onclick="goToSection(4)">
+    <button class="card grp-base" onclick="goToSection(4)">
       <div class="card-icon">🟣</div>
       <div class="card-num">Función 05</div>
       <div class="card-title">Bases · Hidróxidos</div>
       <div class="card-pattern">Metal + OH⁻</div>
     </button>
-    <button class="card card-ox" onclick="goToSection(5)">
+    <button class="card grp-aox" onclick="goToSection(5)">
       <div class="card-icon">🌊</div>
       <div class="card-num">Función 06</div>
       <div class="card-title">Ácidos Oxácidos</div>
       <div class="card-pattern">H + no metal + O</div>
     </button>
-    <button class="card card-an" onclick="goToSection(6)">
+    <button class="card grp-sbin" onclick="goToSection(6)">
       <div class="card-icon">🔷</div>
       <div class="card-num">Función 07</div>
       <div class="card-title">Sales Binarias</div>
       <div class="card-pattern">Metal + no metal</div>
     </button>
-    <button class="card card-ox" onclick="goToSection(7)">
+    <button class="card grp-sox" onclick="goToSection(7)">
       <div class="card-icon">🟠</div>
       <div class="card-num">Función 08</div>
       <div class="card-title">Sales Oxigenadas</div>
       <div class="card-pattern">Metal + oxoanión</div>
     </button>
-    <button class="card card-ox" onclick="goToSection(8)">
+    <button class="card grp-sac" onclick="goToSection(8)">
       <div class="card-icon">🧪</div>
       <div class="card-num">Función 09</div>
       <div class="card-title">Sales Ácidas</div>
@@ -549,7 +569,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(0)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge cat">
+      <div class="func-badge grp-ox">
         <div class="func-num">01</div>
         <div>
           <div class="func-badge-title">Óxidos Básicos</div>
@@ -683,7 +703,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(1)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge an">
+      <div class="func-badge grp-ox">
         <div class="func-num">02</div>
         <div>
           <div class="func-badge-title">Anhídridos</div>
@@ -825,7 +845,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(2)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge cat">
+      <div class="func-badge grp-hid">
         <div class="func-num">03</div>
         <div>
           <div class="func-badge-title">Hidruros Metálicos</div>
@@ -953,7 +973,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(3)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge an">
+      <div class="func-badge grp-ahid">
         <div class="func-num">04</div>
         <div>
           <div class="func-badge-title">Ácidos Hídricos</div>
@@ -1092,7 +1112,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(4)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge oh">
+      <div class="func-badge grp-base">
         <div class="func-num">05</div>
         <div>
           <div class="func-badge-title">Bases · Hidróxidos</div>
@@ -1219,7 +1239,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(5)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge ox">
+      <div class="func-badge grp-aox">
         <div class="func-num">06</div>
         <div>
           <div class="func-badge-title">Ácidos Oxácidos</div>
@@ -1354,7 +1374,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(6)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge cat">
+      <div class="func-badge grp-sbin">
         <div class="func-num">07</div>
         <div>
           <div class="func-badge-title">Sales Binarias</div>
@@ -1487,7 +1507,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="sect">
       <button onclick="openMayer(7)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--dp);border:1.5px solid var(--dp-brd);border-radius:10px;color:var(--dp-tx);font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;text-align:left;transition:border-color .15s">🎓 Aprende la cadena de reactividad — paso a paso con voz</button>
-      <div class="func-badge ox">
+      <div class="func-badge grp-sox">
         <div class="func-num">08</div>
         <div>
           <div class="func-badge-title">Sales Oxigenadas</div>
@@ -1631,7 +1651,7 @@ html{font-size:var(--base-fs)}
       </div>
     </div>
     <div class="sect">
-      <div class="func-badge ox">
+      <div class="func-badge grp-sac">
         <div class="func-num">09</div>
         <div>
           <div class="func-badge-title">Sales Ácidas</div>
@@ -2441,6 +2461,7 @@ function toggleTheme(){
   document.documentElement.setAttribute('data-theme', s);
   var btn = document.getElementById('theme-btn');
   if(btn) btn.textContent = s === 'dark' ? '☀️' : '🌙';
+  if(btn) btn.addEventListener('click', toggleTheme);
 })();
 
 /* ══════════ TTS speakText ══════════ */
