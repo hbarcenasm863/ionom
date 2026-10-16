@@ -8,6 +8,23 @@
   --an:#0369a1;  --an-b:#e0f2fe;  --an-t:#082f49;
   --oh:#7c3aed;  --oh-b:#ede9fe;  --oh-t:#4c1d95;
   --ox:#0f766e;  --ox-b:#ccfbf1;  --ox-t:#134e4a;
+  /* Identidad por grupo/tema (selector de juego.html, tarjetas de módulo en
+     index/teoria/funciones) — un color único por cada uno de los 13 temas,
+     en vez del esquema de 4 colores MDEC reutilizados entre grupos distintos. */
+  --grp-all:#0ea5e9; --grp-all-b:#ddf2fc; --grp-all-t:#176294; /* Todos los grupos */
+  --grp-ox:#d97706; --grp-ox-b:#faecdc; --grp-ox-t:#9e4908; /* Óxidos y Anhídridos */
+  --grp-hid:#38bdf8; --grp-hid-b:#e3f6fe; --grp-hid-t:#035c8e; /* Hidruros */
+  --grp-ahid:#10b981; --grp-ahid-b:#def5ed; --grp-ahid-t:#05543e; /* Ácidos hídricos */
+  --grp-base:#a78bfa; --grp-base-b:#f3effe; --grp-base-t:#6023bf; /* Bases */
+  --grp-aox:#f97316; --grp-aox-b:#feebde; --grp-aox-t:#ab390b; /* Ácidos oxácidos */
+  --grp-sbin:#3b82f6; --grp-sbin-b:#e4eefe; --grp-sbin-t:#1a3379; /* Sales binarias */
+  --grp-sox:#f59e0b; --grp-sox-b:#fef1dd; --grp-sox-t:#80380c; /* Sales oxigenadas */
+  --grp-sac:#06b6d4; --grp-sac-b:#dcf5f9; --grp-sac-t:#134557; /* Sales ácidas */
+  --grp-rx:#22c55e; --grp-rx-b:#e0f7e8; --grp-rx-t:#124928; /* Tipos de reacción */
+  --grp-bal:#7dd3fc; --grp-bal-b:#edf9ff; --grp-bal-t:#0b4161; /* Balanceo de ecuaciones */
+  --grp-mol:#c084fc; --grp-mol-b:#f6eeff; --grp-mol-t:#431a83; /* Mol y masa molar */
+  --grp-elem:#2dd4bf; --grp-elem-b:#e2f9f6; --grp-elem-t:#0d6861; /* Tabla periódica */
+  --grp-reac:#f472b6; --grp-reac-b:#fdebf5; --grp-reac-t:#73153b; /* Cadena de reactividad */
   /* Surface & text */
   --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
   --brd:#d0e6f5; --brd2:#b8d4eb;
@@ -27,6 +44,14 @@
   --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
+  /* Escala de z-index (Regla de auditoría: los modales de cada página usaban
+     valores sueltos e inconsistentes — 100, 200, 250, 400, 500, 600, 1100,
+     1200... — algunos por debajo del menú lateral (301), así que un modal
+     podía quedar oculto detrás del menú si ambos se llegaban a abrir a la
+     vez. Nuevo código y migraciones futuras deben usar esta escala en vez de
+     números sueltos; no se reescriben todavía los z-index ya existentes de
+     cada archivo para no arriesgar romper un stacking que hoy funciona). */
+  --z-nav:301; --z-modal:400; --z-modal-top:500; --z-toast:600;
 }
 @media(prefers-color-scheme:dark){
   :root{
@@ -38,6 +63,20 @@
     --an-b:#082f49; --an-t:#7dd3fc;
     --oh-b:#2e1065; --oh-t:#c4b5fd;
     --ox-b:#042f2e; --ox-t:#5eead4;
+    --grp-all-b:#071f2f; --grp-all-t:#4abcee;
+    --grp-ox-b:#321703; --grp-ox-t:#e29944;
+    --grp-hid-b:#011d2d; --grp-hid-t:#6acefa;
+    --grp-ahid-b:#021b14; --grp-ahid-t:#4ccaa0;
+    --grp-base-b:#1f0b3d; --grp-base-t:#bda8fb;
+    --grp-aox-b:#361203; --grp-aox-t:#fa9650;
+    --grp-sbin-b:#081027; --grp-sbin-t:#6ca1f8;
+    --grp-sox-b:#291204; --grp-sox-t:#f8b648;
+    --grp-sac-b:#06161c; --grp-sac-t:#44c8df;
+    --grp-rx-b:#06170d; --grp-rx-t:#59d486;
+    --grp-bal-b:#03151f; --grp-bal-t:#9edefd;
+    --grp-mol-b:#15082a; --grp-mol-t:#d0a3fd;
+    --grp-elem-b:#04211f; --grp-elem-t:#62dfcf;
+    --grp-reac-b:#250713; --grp-reac-t:#f795c8;
     --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
     --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
     --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
@@ -55,6 +94,20 @@
   --an-b:#082f49; --an-t:#7dd3fc;
   --oh-b:#2e1065; --oh-t:#c4b5fd;
   --ox-b:#042f2e; --ox-t:#5eead4;
+  --grp-all-b:#071f2f; --grp-all-t:#4abcee;
+  --grp-ox-b:#321703; --grp-ox-t:#e29944;
+  --grp-hid-b:#011d2d; --grp-hid-t:#6acefa;
+  --grp-ahid-b:#021b14; --grp-ahid-t:#4ccaa0;
+  --grp-base-b:#1f0b3d; --grp-base-t:#bda8fb;
+  --grp-aox-b:#361203; --grp-aox-t:#fa9650;
+  --grp-sbin-b:#081027; --grp-sbin-t:#6ca1f8;
+  --grp-sox-b:#291204; --grp-sox-t:#f8b648;
+  --grp-sac-b:#06161c; --grp-sac-t:#44c8df;
+  --grp-rx-b:#06170d; --grp-rx-t:#59d486;
+  --grp-bal-b:#03151f; --grp-bal-t:#9edefd;
+  --grp-mol-b:#15082a; --grp-mol-t:#d0a3fd;
+  --grp-elem-b:#04211f; --grp-elem-t:#62dfcf;
+  --grp-reac-b:#250713; --grp-reac-t:#f795c8;
   --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
   --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
   --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
@@ -71,6 +124,20 @@
   --an-b:#e0f2fe; --an-t:#082f49;
   --oh-b:#ede9fe; --oh-t:#4c1d95;
   --ox-b:#ccfbf1; --ox-t:#134e4a;
+  --grp-all-b:#ddf2fc; --grp-all-t:#176294;
+  --grp-ox-b:#faecdc; --grp-ox-t:#9e4908;
+  --grp-hid-b:#e3f6fe; --grp-hid-t:#035c8e;
+  --grp-ahid-b:#def5ed; --grp-ahid-t:#05543e;
+  --grp-base-b:#f3effe; --grp-base-t:#6023bf;
+  --grp-aox-b:#feebde; --grp-aox-t:#ab390b;
+  --grp-sbin-b:#e4eefe; --grp-sbin-t:#1a3379;
+  --grp-sox-b:#fef1dd; --grp-sox-t:#80380c;
+  --grp-sac-b:#dcf5f9; --grp-sac-t:#134557;
+  --grp-rx-b:#e0f7e8; --grp-rx-t:#124928;
+  --grp-bal-b:#edf9ff; --grp-bal-t:#0b4161;
+  --grp-mol-b:#f6eeff; --grp-mol-t:#431a83;
+  --grp-elem-b:#e2f9f6; --grp-elem-t:#0d6861;
+  --grp-reac-b:#fdebf5; --grp-reac-t:#73153b;
   --ok-b:#dcfce7; --ok-t:#14532d; --okb:#dcfce7;
   --err-b:#fee2e2; --err-t:#7f1d1d; --errb:#fee2e2;
   --warn-b:#fef3c7; --warn-t:#92400e; --warnb:#fef3c7;
@@ -78,4 +145,18 @@
   --gold:#fcd34d;
   --sh:0 2px 12px rgba(13,74,115,.08);
   --sh2:0 6px 32px rgba(13,74,115,.16);
+}
+
+/* Respeta la preferencia del sistema de reducir el movimiento — antes solo
+   2 de 14 páginas la honraban. No apaga TODA transición (algunas, como el
+   cambio de tema claro/oscuro, siguen necesitando una transición mínima
+   para no parpadear de golpe), pero sí recorta animaciones/transiciones
+   decorativas y repetitivas (pulsos, carruseles, hover) a casi nada. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
