@@ -995,7 +995,24 @@ html{font-size:var(--base-fs)}
    al valor claro de --tx y el texto del menú queda casi invisible sobre el
    fondo oscuro. --text-dark ya es el texto correcto de esta página en
    ambos estados (--parchment claro en Alquimia Oscura, marrón oscuro en su
-   variante "light" de pergamino), así que se usa aquí en su lugar. */
+   variante "light" de pergamino), así que se usa aquí en su lugar.
+   El FONDO de .site-nav también necesita su propio override aquí: ionom.css
+   (compartido por las 14 páginas) fija .site-nav en blanco esmerilado fijo
+   desde que se eliminó el tema oscuro del resto del sitio (ver REDISENO.md
+   Fase 7) -- correcto para esas 13 páginas, pero aquí el texto de arriba
+   sigue siendo claro (--parchment) en el estado "dark" por defecto, así
+   que sin oscurecer también el fondo queda texto claro sobre fondo claro,
+   casi invisible para cualquier estudiante que abra el juego con el
+   celular en modo oscuro (el caso más común, ya que ese es el estado por
+   defecto sin preferencia guardada). En tema "light" no hace falta: el
+   fondo ya queda blanco y --text-dark ya es oscuro ahí. */
+:root[data-theme="dark"] .site-nav{background:rgba(26,21,16,.92)!important}
+/* ionom.css ahora fija .nav-brand em en un ámbar oscuro pensado para
+   fondo blanco (ver assets/ionom.css) -- aquí, en el estado "dark" por
+   defecto, el fondo del menú ya es oscuro (línea de arriba), así que
+   conviene volver al dorado propio y más claro de "Alquimia Oscura"
+   para mejor contraste y para no perder la identidad visual del juego. */
+:root[data-theme="dark"] .site-nav .nav-brand em{color:var(--gold-light)!important}
 :root[data-theme="dark"] .site-nav .nav-brand,
 :root[data-theme="dark"] .theme-btn,
 :root[data-theme="dark"] .ham-btn,
@@ -1004,6 +1021,14 @@ html{font-size:var(--base-fs)}
 :root[data-theme="light"] .theme-btn,
 :root[data-theme="light"] .ham-btn,
 :root[data-theme="light"] .font-btn{color:var(--text-dark)!important}
+
+/* Eslogan de la portada ("Forma compuestos · Nombra correctamente · Gana"):
+   --gold-dark (#8B6914) fijo quedaba justo en el límite de contraste AA
+   en ambos temas (4.22:1 claro / 3.88:1 oscuro) porque el fondo cambia de
+   pergamino claro a negro casi puro entre temas y el color de texto no se
+   adaptaba. Un tono por tema. */
+:root[data-theme="light"] .portada-slogan{color:#6b4f0f}
+:root[data-theme="dark"] .portada-slogan{color:var(--gold-light)}
 </style>
 </head>
 <body>
@@ -1060,8 +1085,8 @@ html{font-size:var(--base-fs)}
     <button class="btn btn-secondary" onclick="showScreen('rules')">📖 &nbsp;Reglas</button>
   </div>
 
-  <div style="font-family:var(--serif);font-style:italic;font-size:0.78rem;
-              color:var(--gold-dark);margin-top:16px;letter-spacing:1px;text-align:center;">
+  <div class="portada-slogan" style="font-family:var(--serif);font-style:italic;font-size:0.78rem;
+              margin-top:16px;letter-spacing:1px;text-align:center;">
     Forma compuestos · Nombra correctamente · Gana
   </div>
 </div>
@@ -1754,124 +1779,124 @@ const ANIONS = [
 // ═════════════════════════════════════════════════════════════════
 const NOMENCLATURE = {
   // ÓXIDOS
-  'Na2O': ['óxido de sodio','óxido sódico','monóxido de disodio'],
-  'CaO': ['óxido de calcio','óxido cálcico','monóxido de calcio'],
-  'MgO': ['óxido de magnesio','óxido magnésico','monóxido de magnesio'],
-  'K2O': ['óxido de potasio','óxido potásico','monóxido de dipotasio'],
-  'Li2O': ['óxido de litio','óxido lítico','monóxido de dilitio'],
-  'SrO': ['óxido de estroncio','óxido estronciano','monóxido de estroncio'],
-  'BaO': ['óxido de bario','óxido bárico','monóxido de bario'],
-  'ZnO': ['óxido de zinc','óxido zíncico','monóxido de zinc'],
+  'Na2O': ['óxido de sodio','óxido de sodio','monóxido de disodio','óxido sódico'],
+  'CaO': ['óxido de calcio','óxido de calcio','monóxido de calcio','óxido cálcico'],
+  'MgO': ['óxido de magnesio','óxido de magnesio','monóxido de magnesio','óxido magnésico'],
+  'K2O': ['óxido de potasio','óxido de potasio','monóxido de dipotasio','óxido potásico'],
+  'Li2O': ['óxido de litio','óxido de litio','monóxido de dilitio','óxido lítico'],
+  'SrO': ['óxido de estroncio','óxido de estroncio','monóxido de estroncio','óxido estronciano'],
+  'BaO': ['óxido de bario','óxido de bario','monóxido de bario','óxido bárico'],
+  'ZnO': ['óxido de zinc','óxido de zinc','monóxido de zinc','óxido zíncico'],
   'CuO': ['óxido cúprico','óxido de cobre(ii)','monóxido de cobre'],
   'Cu2O': ['óxido cuproso','óxido de cobre(i)','monóxido de dicobre'],
   'Fe2O3': ['óxido férrico','óxido de hierro(iii)','trióxido de dihierro'],
   'FeO': ['óxido ferroso','óxido de hierro(ii)','monóxido de hierro'],
-  'Al2O3': ['óxido alumínico','óxido de aluminio','trióxido de dialuminio'],
-  'Ag2O': ['óxido argéntico','óxido de plata','monóxido de diplata'],
+  'Al2O3': ['óxido de aluminio','óxido de aluminio','trióxido de dialuminio','óxido alumínico'],
+  'Ag2O': ['óxido de plata','óxido de plata','monóxido de diplata','óxido argéntico'],
   'CoO': ['óxido cobaltoso','óxido de cobalto(ii)','monóxido de cobalto'],
   'NiO': ['óxido niqueloso','óxido de níquel(ii)','monóxido de níquel'],
   
   // HIDRÓXIDOS
-  'NaOH': ['hidróxido de sodio','hidróxido sódico','monohidróxido de sodio'],
-  'Ca(OH)2': ['hidróxido de calcio','hidróxido cálcico','dihidróxido de calcio'],
-  'Mg(OH)2': ['hidróxido de magnesio','hidróxido magnésico','dihidróxido de magnesio'],
-  'KOH': ['hidróxido de potasio','hidróxido potásico','monohidróxido de potasio'],
-  'LiOH': ['hidróxido de litio','hidróxido lítico','monohidróxido de litio'],
-  'Sr(OH)2': ['hidróxido de estroncio','hidróxido estronciano','dihidróxido de estroncio'],
-  'Ba(OH)2': ['hidróxido de bario','hidróxido bárico','dihidróxido de bario'],
-  'Zn(OH)2': ['hidróxido de zinc','hidróxido zíncico','dihidróxido de zinc'],
+  'NaOH': ['hidróxido de sodio','hidróxido de sodio','monohidróxido de sodio','hidróxido sódico'],
+  'Ca(OH)2': ['hidróxido de calcio','hidróxido de calcio','dihidróxido de calcio','hidróxido cálcico'],
+  'Mg(OH)2': ['hidróxido de magnesio','hidróxido de magnesio','dihidróxido de magnesio','hidróxido magnésico'],
+  'KOH': ['hidróxido de potasio','hidróxido de potasio','monohidróxido de potasio','hidróxido potásico'],
+  'LiOH': ['hidróxido de litio','hidróxido de litio','monohidróxido de litio','hidróxido lítico'],
+  'Sr(OH)2': ['hidróxido de estroncio','hidróxido de estroncio','dihidróxido de estroncio','hidróxido estronciano'],
+  'Ba(OH)2': ['hidróxido de bario','hidróxido de bario','dihidróxido de bario','hidróxido bárico'],
+  'Zn(OH)2': ['hidróxido de zinc','hidróxido de zinc','dihidróxido de zinc','hidróxido zíncico'],
   'Cu(OH)2': ['hidróxido cúprico','hidróxido de cobre(ii)','dihidróxido de cobre'],
   'CuOH': ['hidróxido cuproso','hidróxido de cobre(i)','monohidróxido de cobre'],
   'Fe(OH)3': ['hidróxido férrico','hidróxido de hierro(iii)','trihidróxido de hierro'],
   'Fe(OH)2': ['hidróxido ferroso','hidróxido de hierro(ii)','dihidróxido de hierro'],
-  'Al(OH)3': ['hidróxido alumínico','hidróxido de aluminio','trihidróxido de aluminio'],
-  'AgOH': ['hidróxido argéntico','hidróxido de plata','monohidróxido de plata'],
+  'Al(OH)3': ['hidróxido de aluminio','hidróxido de aluminio','trihidróxido de aluminio','hidróxido alumínico'],
+  'AgOH': ['hidróxido de plata','hidróxido de plata','monohidróxido de plata','hidróxido argéntico'],
   'Co(OH)2': ['hidróxido cobaltoso','hidróxido de cobalto(ii)','dihidróxido de cobalto'],
   'Ni(OH)2': ['hidróxido niqueloso','hidróxido de níquel(ii)','dihidróxido de níquel'],
   
   // HALOGENUROS
-  'NaCl': ['cloruro de sodio','cloruro sódico','cloruro de sodio'],
-  'CaCl2': ['cloruro de calcio','cloruro cálcico','dicloruro de calcio'],
-  'KCl': ['cloruro de potasio','cloruro potásico','monocloruro de potasio'],
-  'LiCl': ['cloruro de litio','cloruro lítico','monocloruro de litio'],
-  'MgCl2': ['cloruro de magnesio','cloruro magnésico','dicloruro de magnesio'],
-  'NaBr': ['bromuro de sodio','bromuro sódico','monobromuro de sodio'],
-  'CaBr2': ['bromuro de calcio','bromuro cálcico','dibromuro de calcio'],
+  'NaCl': ['cloruro de sodio','cloruro de sodio','cloruro de sodio','cloruro sódico'],
+  'CaCl2': ['cloruro de calcio','cloruro de calcio','dicloruro de calcio','cloruro cálcico'],
+  'KCl': ['cloruro de potasio','cloruro de potasio','monocloruro de potasio','cloruro potásico'],
+  'LiCl': ['cloruro de litio','cloruro de litio','monocloruro de litio','cloruro lítico'],
+  'MgCl2': ['cloruro de magnesio','cloruro de magnesio','dicloruro de magnesio','cloruro magnésico'],
+  'NaBr': ['bromuro de sodio','bromuro de sodio','monobromuro de sodio','bromuro sódico'],
+  'CaBr2': ['bromuro de calcio','bromuro de calcio','dibromuro de calcio','bromuro cálcico'],
   'FeCl3': ['cloruro férrico','cloruro de hierro(iii)','tricloruro de hierro'],
   'FeCl2': ['cloruro ferroso','cloruro de hierro(ii)','dicloruro de hierro'],
   'CuCl2': ['cloruro cúprico','cloruro de cobre(ii)','dicloruro de cobre'],
   'CuCl': ['cloruro cuproso','cloruro de cobre(i)','monocloruro de cobre'],
   
   // SULFUROS
-  'Na2S': ['sulfuro de sodio','sulfuro sódico','monosulfuro de disodio'],
-  'CaS': ['sulfuro de calcio','sulfuro cálcico','monosulfuro de calcio'],
+  'Na2S': ['sulfuro de sodio','sulfuro de sodio','monosulfuro de disodio','sulfuro sódico'],
+  'CaS': ['sulfuro de calcio','sulfuro de calcio','monosulfuro de calcio','sulfuro cálcico'],
   'FeS': ['sulfuro ferroso','sulfuro de hierro(ii)','monosulfuro de hierro'],
   'Fe2S3': ['sulfuro férrico','sulfuro de hierro(iii)','trisulfuro de dihierro'],
   'CuS': ['sulfuro cúprico','sulfuro de cobre(ii)','monosulfuro de cobre'],
   'Cu2S': ['sulfuro cuproso','sulfuro de cobre(i)','monosulfuro de dicobre'],
   
   // NITRATOS
-  'NaNO3':    ['nitrato de sodio',    'nitrato sódico',    'trioxonitrato de sodio'],
-  'Ca(NO3)2': ['nitrato de calcio',   'nitrato cálcico',   'bis(trioxonitrato) de calcio'],
-  'KNO3':     ['nitrato de potasio',  'nitrato potásico',  'trioxonitrato de potasio'],
-  'LiNO3':    ['nitrato de litio',    'nitrato lítico',    'trioxonitrato de litio'],
-  'Mg(NO3)2': ['nitrato de magnesio', 'nitrato magnésico', 'bis(trioxonitrato) de magnesio'],
+  'NaNO3': ['nitrato de sodio','nitrato de sodio','trioxonitrato de sodio','nitrato sódico'],
+  'Ca(NO3)2': ['nitrato de calcio','nitrato de calcio','bis(trioxonitrato) de calcio','nitrato cálcico'],
+  'KNO3': ['nitrato de potasio','nitrato de potasio','trioxonitrato de potasio','nitrato potásico'],
+  'LiNO3': ['nitrato de litio','nitrato de litio','trioxonitrato de litio','nitrato lítico'],
+  'Mg(NO3)2': ['nitrato de magnesio','nitrato de magnesio','bis(trioxonitrato) de magnesio','nitrato magnésico'],
   'Fe(NO3)3': ['nitrato férrico',     'nitrato de hierro(iii)', 'tris(trioxonitrato) de hierro'],
   'Fe(NO3)2': ['nitrato ferroso',     'nitrato de hierro(ii)',  'bis(trioxonitrato) de hierro'],
-  'Al(NO3)3': ['nitrato de aluminio', 'nitrato alumínico',  'tris(trioxonitrato) de aluminio'],
-  'AgNO3':    ['nitrato argéntico',   'nitrato de plata',   'trioxonitrato de plata'],
+  'Al(NO3)3': ['nitrato de aluminio','nitrato de aluminio','tris(trioxonitrato) de aluminio','nitrato alumínico'],
+  'AgNO3': ['nitrato de plata','nitrato de plata','trioxonitrato de plata','nitrato argéntico'],
   
   // CARBONATOS
-  'Na2CO3': ['carbonato de sodio','carbonato sódico','trioxocarbonato de disodio'],
-  'CaCO3': ['carbonato de calcio','carbonato cálcico','trioxocarbonato de calcio'],
-  'K2CO3': ['carbonato de potasio','carbonato potásico','trioxocarbonato de dipotasio'],
-  'MgCO3': ['carbonato de magnesio','carbonato magnésico','trioxocarbonato de magnesio'],
+  'Na2CO3': ['carbonato de sodio','carbonato de sodio','trioxocarbonato de disodio','carbonato sódico'],
+  'CaCO3': ['carbonato de calcio','carbonato de calcio','trioxocarbonato de calcio','carbonato cálcico'],
+  'K2CO3': ['carbonato de potasio','carbonato de potasio','trioxocarbonato de dipotasio','carbonato potásico'],
+  'MgCO3': ['carbonato de magnesio','carbonato de magnesio','trioxocarbonato de magnesio','carbonato magnésico'],
   'FeCO3': ['carbonato ferroso','carbonato de hierro(ii)','trioxocarbonato de hierro'],
   'CuCO3': ['carbonato cúprico','carbonato de cobre(ii)','trioxocarbonato de cobre'],
   
   // SULFATOS
-  'Na2SO4': ['sulfato de sodio','sulfato sódico','tetraoxosulfato de sodio'],
-  'CaSO4': ['sulfato de calcio','sulfato cálcico','tetraoxosulfato de calcio'],
-  'K2SO4': ['sulfato de potasio','sulfato potásico','tetraoxosulfato de dipotasio'],
-  'MgSO4': ['sulfato de magnesio','sulfato magnésico','tetraoxosulfato de magnesio'],
+  'Na2SO4': ['sulfato de sodio','sulfato de sodio','tetraoxosulfato de sodio','sulfato sódico'],
+  'CaSO4': ['sulfato de calcio','sulfato de calcio','tetraoxosulfato de calcio','sulfato cálcico'],
+  'K2SO4': ['sulfato de potasio','sulfato de potasio','tetraoxosulfato de dipotasio','sulfato potásico'],
+  'MgSO4': ['sulfato de magnesio','sulfato de magnesio','tetraoxosulfato de magnesio','sulfato magnésico'],
   'FeSO4': ['sulfato ferroso','sulfato de hierro(ii)','tetraoxosulfato de hierro(ii)'],
   'Fe2(SO4)3': ['sulfato férrico','sulfato de hierro(iii)','tris(tetraoxosulfato) de dihierro'],
   'CuSO4': ['sulfato cúprico','sulfato de cobre(ii)','tetraoxosulfato de cobre(ii)'],
-  'Al2(SO4)3': ['sulfato de aluminio','sulfato alumínico','tris(tetraoxosulfato) de dialuminio'],
-  'ZnSO4': ['sulfato de zinc','sulfato zíncico','tetraoxosulfato de zinc'],
+  'Al2(SO4)3': ['sulfato de aluminio','sulfato de aluminio','tris(tetraoxosulfato) de dialuminio','sulfato alumínico'],
+  'ZnSO4': ['sulfato de zinc','sulfato de zinc','tetraoxosulfato de zinc','sulfato zíncico'],
   
   // NITRITOS (menores)
-  'NaNO2':    ['nitrito de sodio',     'nitrito sódico',     'dioxonitrato de sodio'],
-  'KNO2':     ['nitrito de potasio',   'nitrito potásico',   'dioxonitrato de potasio'],
-  'LiNO2':    ['nitrito de litio',     'nitrito lítico',     'dioxonitrato de litio'],
-  'Ca(NO2)2': ['nitrito de calcio',    'nitrito cálcico',    'bis(dioxonitrato) de calcio'],
-  'Mg(NO2)2': ['nitrito de magnesio',  'nitrito magnésico',  'bis(dioxonitrato) de magnesio'],
-  'Ba(NO2)2': ['nitrito de bario',     'nitrito bárico',     'bis(dioxonitrato) de bario'],
+  'NaNO2': ['nitrito de sodio','nitrito de sodio','dioxonitrato de sodio','nitrito sódico'],
+  'KNO2': ['nitrito de potasio','nitrito de potasio','dioxonitrato de potasio','nitrito potásico'],
+  'LiNO2': ['nitrito de litio','nitrito de litio','dioxonitrato de litio','nitrito lítico'],
+  'Ca(NO2)2': ['nitrito de calcio','nitrito de calcio','bis(dioxonitrato) de calcio','nitrito cálcico'],
+  'Mg(NO2)2': ['nitrito de magnesio','nitrito de magnesio','bis(dioxonitrato) de magnesio','nitrito magnésico'],
+  'Ba(NO2)2': ['nitrito de bario','nitrito de bario','bis(dioxonitrato) de bario','nitrito bárico'],
   'Fe(NO2)2': ['nitrito ferroso',      'nitrito de hierro(ii)',  'bis(dioxonitrato) de hierro'],
   'Fe(NO2)3': ['nitrito férrico',      'nitrito de hierro(iii)', 'tris(dioxonitrato) de hierro'],
-  'Al(NO2)3': ['nitrito de aluminio',  'nitrito alumínico',  'tris(dioxonitrato) de aluminio'],
-  'AgNO2':    ['nitrito argéntico',    'nitrito de plata',   'dioxonitrato de plata'],
+  'Al(NO2)3': ['nitrito de aluminio','nitrito de aluminio','tris(dioxonitrato) de aluminio','nitrito alumínico'],
+  'AgNO2': ['nitrito de plata','nitrito de plata','dioxonitrato de plata','nitrito argéntico'],
 
   // FOSFATOS (con PO4 3-)
-  'Na3PO4': ['fosfato de sodio','fosfato trisódico','tetraoxofosfato de sodio'],
-  'Ca3(PO4)2': ['fosfato de calcio','fosfato tricálcico','tetraoxofosfato de calcio'],
-  'K3PO4': ['fosfato de potasio','fosfato tripotásico','tetraoxofosfato de potasio'],
-  'AlPO4': ['fosfato de aluminio','fosfato alumínico','tetraoxofosfato de aluminio'],
+  'Na3PO4': ['fosfato de sodio','fosfato de sodio','tetraoxofosfato de sodio','fosfato trisódico'],
+  'Ca3(PO4)2': ['fosfato de calcio','fosfato de calcio','tetraoxofosfato de calcio','fosfato tricálcico'],
+  'K3PO4': ['fosfato de potasio','fosfato de potasio','tetraoxofosfato de potasio','fosfato tripotásico'],
+  'AlPO4': ['fosfato de aluminio','fosfato de aluminio','tetraoxofosfato de aluminio','fosfato alumínico'],
   'FePO4': ['fosfato férrico','fosfato de hierro(iii)','tetraoxofosfato de hierro'],
-  'Li3PO4': ['fosfato de litio','fosfato trilítico','tetraoxofosfato de litio'],
-  'Mg3(PO4)2': ['fosfato de magnesio','fosfato magnésico','tetraoxofosfato de magnesio'],
+  'Li3PO4': ['fosfato de litio','fosfato de litio','tetraoxofosfato de litio','fosfato trilítico'],
+  'Mg3(PO4)2': ['fosfato de magnesio','fosfato de magnesio','tetraoxofosfato de magnesio','fosfato magnésico'],
 
   // ── AMONIO (NH4+) ───────────────────────────────────────────────────────────
   // Nota: el amonio NO forma óxidos. Con O2- forma agua → caso especial
-  'NH4OH':      ['hidróxido de amonio','hidróxido amónico','monohidróxido de amonio'],
-  'NH4Cl':      ['cloruro de amonio','cloruro amónico','monocloruro de amonio'],
-  'NH4Br':      ['bromuro de amonio','bromuro amónico','monobromuro de amonio'],
-  'NH4NO3':     ['nitrato de amonio','nitrato amónico','trioxonitrato de amonio'],
+  'NH4OH': ['hidróxido de amonio','hidróxido de amonio','monohidróxido de amonio','hidróxido amónico'],
+  'NH4Cl': ['cloruro de amonio','cloruro de amonio','monocloruro de amonio','cloruro amónico'],
+  'NH4Br': ['bromuro de amonio','bromuro de amonio','monobromuro de amonio','bromuro amónico'],
+  'NH4NO3': ['nitrato de amonio','nitrato de amonio','trioxonitrato de amonio','nitrato amónico'],
   'NH4HSO4':    ['bisulfato de amonio','hidrogenosulfato de amonio','hidrogenosulfato de amonio'],
-  '(NH4)2S':    ['sulfuro de amonio','sulfuro amónico','monosulfuro de diamonio'],
-  '(NH4)2CO3':  ['carbonato de amonio','carbonato amónico','trioxocarbonato de diamonio'],
-  '(NH4)2SO4':  ['sulfato de amonio','sulfato amónico','tetraoxosulfato de diamonio'],
-  '(NH4)3PO4':  ['fosfato de amonio','fosfato amónico','tetraoxofosfato de triamonio'],
+  '(NH4)2S': ['sulfuro de amonio','sulfuro de amonio','monosulfuro de diamonio','sulfuro amónico'],
+  '(NH4)2CO3': ['carbonato de amonio','carbonato de amonio','trioxocarbonato de diamonio','carbonato amónico'],
+  '(NH4)2SO4': ['sulfato de amonio','sulfato de amonio','tetraoxosulfato de diamonio','sulfato amónico'],
+  '(NH4)3PO4': ['fosfato de amonio','fosfato de amonio','tetraoxofosfato de triamonio','fosfato amónico'],
 
   // ── ESTAÑO (Sn2+ y Sn4+) ───────────────────────────────────────────────────
   // Óxidos
@@ -1934,30 +1959,30 @@ const NOMENCLATURE = {
   'H2CO3': ['ácido carbónico','ácido trioxocarbónico(iv)','trioxocarbonato de dihidrógeno'],
   'HNO2': ['ácido nitroso','ácido dioxonítrico(iii)','dioxonitrato de hidrógeno'],
   // ── PLATA ──────────────────────────────────────────────────────────────────
-  'AgCl': ['cloruro argéntico','cloruro de plata','monocloruro de plata'],
-  'AgBr': ['bromuro argéntico','bromuro de plata','monobromuro de plata'],
-  'Ag2CO3': ['carbonato argéntico','carbonato de plata','trioxocarbonato de diplata'],
-  'Ag2S': ['sulfuro argéntico','sulfuro de plata','monosulfuro de diplata'],
-  'Ag2SO4': ['sulfato argéntico','sulfato de plata','tetraoxosulfato de diplata'],
-  'Ag3PO4': ['fosfato argéntico','fosfato de plata','tetraoxofosfato de triplata'],
-  'AgHSO4': ['bisulfato argéntico','bisulfato de plata','hidrogenosulfato de plata'],
+  'AgCl': ['cloruro de plata','cloruro de plata','monocloruro de plata','cloruro argéntico'],
+  'AgBr': ['bromuro de plata','bromuro de plata','monobromuro de plata','bromuro argéntico'],
+  'Ag2CO3': ['carbonato de plata','carbonato de plata','trioxocarbonato de diplata','carbonato argéntico'],
+  'Ag2S': ['sulfuro de plata','sulfuro de plata','monosulfuro de diplata','sulfuro argéntico'],
+  'Ag2SO4': ['sulfato de plata','sulfato de plata','tetraoxosulfato de diplata','sulfato argéntico'],
+  'Ag3PO4': ['fosfato de plata','fosfato de plata','tetraoxofosfato de triplata','fosfato argéntico'],
+  'AgHSO4': ['bisulfato de plata','bisulfato de plata','hidrogenosulfato de plata','bisulfato argéntico'],
   // ── ALUMINIO ───────────────────────────────────────────────────────────────
-  'AlCl3': ['cloruro de aluminio','cloruro alumínico','tricloruro de aluminio'],
-  'AlBr3': ['bromuro de aluminio','bromuro alumínico','tribromuro de aluminio'],
-  'Al2S3': ['sulfuro de aluminio','sulfuro alumínico','trisulfuro de dialuminio'],
-  'Al2(CO3)3': ['carbonato de aluminio','carbonato alumínico','tris(trioxocarbonato) de dialuminio'], // ⚠ inestable: se hidroliza en agua → no existe como sólido aislable
-  'Al(HSO4)3': ['bisulfato de aluminio','bisulfato alumínico','tris(hidrogenosulfato) de aluminio'],
+  'AlCl3': ['cloruro de aluminio','cloruro de aluminio','tricloruro de aluminio','cloruro alumínico'],
+  'AlBr3': ['bromuro de aluminio','bromuro de aluminio','tribromuro de aluminio','bromuro alumínico'],
+  'Al2S3': ['sulfuro de aluminio','sulfuro de aluminio','trisulfuro de dialuminio','sulfuro alumínico'],
+  'Al2(CO3)3': ['carbonato de aluminio','carbonato de aluminio','tris(trioxocarbonato) de dialuminio','carbonato alumínico'], // ⚠ inestable: se hidroliza en agua → no existe como sólido aislable
+  'Al(HSO4)3': ['bisulfato de aluminio','bisulfato de aluminio','tris(hidrogenosulfato) de aluminio','bisulfato alumínico'],
   // ── BARIO ──────────────────────────────────────────────────────────────────
-  'BaCl2': ['cloruro de bario','cloruro bárico','dicloruro de bario'],
-  'BaBr2': ['bromuro de bario','bromuro bárico','dibromuro de bario'],
-  'Ba(NO3)2': ['nitrato de bario','nitrato bárico','bis(trioxonitrato) de bario'],
-  'BaCO3': ['carbonato de bario','carbonato bárico','trioxocarbonato de bario'],
-  'BaS': ['sulfuro de bario','sulfuro bárico','monosulfuro de bario'],
-  'BaSO4': ['sulfato de bario','sulfato bárico','tetraoxosulfato de bario'],
-  'Ba3(PO4)2': ['fosfato de bario','fosfato bárico','bis(tetraoxofosfato) de tribario'],
-  'Ba(HSO4)2': ['bisulfato de bario','bisulfato bárico','bis(hidrogenosulfato) de bario'],
+  'BaCl2': ['cloruro de bario','cloruro de bario','dicloruro de bario','cloruro bárico'],
+  'BaBr2': ['bromuro de bario','bromuro de bario','dibromuro de bario','bromuro bárico'],
+  'Ba(NO3)2': ['nitrato de bario','nitrato de bario','bis(trioxonitrato) de bario','nitrato bárico'],
+  'BaCO3': ['carbonato de bario','carbonato de bario','trioxocarbonato de bario','carbonato bárico'],
+  'BaS': ['sulfuro de bario','sulfuro de bario','monosulfuro de bario','sulfuro bárico'],
+  'BaSO4': ['sulfato de bario','sulfato de bario','tetraoxosulfato de bario','sulfato bárico'],
+  'Ba3(PO4)2': ['fosfato de bario','fosfato de bario','bis(tetraoxofosfato) de tribario','fosfato bárico'],
+  'Ba(HSO4)2': ['bisulfato de bario','bisulfato de bario','bis(hidrogenosulfato) de bario','bisulfato bárico'],
   // ── CALCIO ─────────────────────────────────────────────────────────────────
-  'Ca(HSO4)2': ['bisulfato de calcio','bisulfato cálcico','bis(hidrogenosulfato) de calcio'],
+  'Ca(HSO4)2': ['bisulfato de calcio','bisulfato de calcio','bis(hidrogenosulfato) de calcio','bisulfato cálcico'],
   // ── COBRE ──────────────────────────────────────────────────────────────────
   'CuBr': ['bromuro cuproso','bromuro de cobre(i)','monobromuro de cobre'],
   'Cu2CO3': ['carbonato cuproso','carbonato de cobre(i)','trioxocarbonato de dicobre'], // ⚠ inestable: el estable real es el carbonato básico Cu₂(OH)₂CO₃
@@ -1977,21 +2002,21 @@ const NOMENCLATURE = {
   'Fe2(CO3)3': ['carbonato férrico','carbonato de hierro(iii)','tris(trioxocarbonato) de dihierro'], // ⚠ inestable: se hidroliza fácilmente en agua
   'Fe(HSO4)3': ['bisulfato férrico','bisulfato de hierro(iii)','tris(hidrogenosulfato) de hierro'],
   // ── POTASIO ────────────────────────────────────────────────────────────────
-  'KBr': ['bromuro de potasio','bromuro potásico','monobromuro de potasio'],
-  'K2S': ['sulfuro de potasio','sulfuro potásico','monosulfuro de dipotasio'],
-  'KHSO4': ['bisulfato de potasio','bisulfato potásico','hidrogenosulfato de potasio'],
+  'KBr': ['bromuro de potasio','bromuro de potasio','monobromuro de potasio','bromuro potásico'],
+  'K2S': ['sulfuro de potasio','sulfuro de potasio','monosulfuro de dipotasio','sulfuro potásico'],
+  'KHSO4': ['bisulfato de potasio','bisulfato de potasio','hidrogenosulfato de potasio','bisulfato potásico'],
   // ── LITIO ──────────────────────────────────────────────────────────────────
-  'LiBr': ['bromuro de litio','bromuro lítico','monobromuro de litio'],
-  'Li2CO3': ['carbonato de litio','carbonato lítico','trioxocarbonato de dilitio'],
-  'Li2S': ['sulfuro de litio','sulfuro lítico','monosulfuro de dilitio'],
-  'Li2SO4': ['sulfato de litio','sulfato lítico','tetraoxosulfato de dilitio'],
-  'LiHSO4': ['bisulfato de litio','bisulfato lítico','hidrogenosulfato de litio'],
+  'LiBr': ['bromuro de litio','bromuro de litio','monobromuro de litio','bromuro lítico'],
+  'Li2CO3': ['carbonato de litio','carbonato de litio','trioxocarbonato de dilitio','carbonato lítico'],
+  'Li2S': ['sulfuro de litio','sulfuro de litio','monosulfuro de dilitio','sulfuro lítico'],
+  'Li2SO4': ['sulfato de litio','sulfato de litio','tetraoxosulfato de dilitio','sulfato lítico'],
+  'LiHSO4': ['bisulfato de litio','bisulfato de litio','hidrogenosulfato de litio','bisulfato lítico'],
   // ── MAGNESIO ───────────────────────────────────────────────────────────────
-  'MgBr2': ['bromuro de magnesio','bromuro magnésico','dibromuro de magnesio'],
-  'MgS': ['sulfuro de magnesio','sulfuro magnésico','monosulfuro de magnesio'],
-  'Mg(HSO4)2': ['bisulfato de magnesio','bisulfato magnésico','bis(hidrogenosulfato) de magnesio'],
+  'MgBr2': ['bromuro de magnesio','bromuro de magnesio','dibromuro de magnesio','bromuro magnésico'],
+  'MgS': ['sulfuro de magnesio','sulfuro de magnesio','monosulfuro de magnesio','sulfuro magnésico'],
+  'Mg(HSO4)2': ['bisulfato de magnesio','bisulfato de magnesio','bis(hidrogenosulfato) de magnesio','bisulfato magnésico'],
   // ── SODIO ──────────────────────────────────────────────────────────────────
-  'NaHSO4': ['bisulfato de sodio','bisulfato sódico','hidrogenosulfato de sodio'],
+  'NaHSO4': ['bisulfato de sodio','bisulfato de sodio','hidrogenosulfato de sodio','bisulfato sódico'],
   // ── PLOMO ──────────────────────────────────────────────────────────────────
   'Pb(HSO4)2': ['bisulfato plumboso','bisulfato de plomo(ii)','bis(hidrogenosulfato) de plomo'],
   'Pb(CO3)2': ['carbonato plúmbico','carbonato de plomo(iv)','bis(trioxocarbonato) de plomo'],
@@ -2004,13 +2029,13 @@ const NOMENCLATURE = {
   'Sn3(PO4)4': ['fosfato estánnico','fosfato de estaño(iv)','tetrakis(tetraoxofosfato) de triestaño'],
   'Sn(HSO4)4': ['bisulfato estánnico','bisulfato de estaño(iv)','tetrakis(hidrogenosulfato) de estaño'],
   // ── ZINC ───────────────────────────────────────────────────────────────────
-  'ZnCl2': ['cloruro de zinc','cloruro zíncico','dicloruro de zinc'],
-  'ZnBr2': ['bromuro de zinc','bromuro zíncico','dibromuro de zinc'],
-  'Zn(NO3)2': ['nitrato de zinc','nitrato zíncico','bis(trioxonitrato) de zinc'],
-  'ZnCO3': ['carbonato de zinc','carbonato zíncico','trioxocarbonato de zinc'],
-  'ZnS': ['sulfuro de zinc','sulfuro zíncico','monosulfuro de zinc'],
-  'Zn3(PO4)2': ['fosfato de zinc','fosfato zíncico','bis(tetraoxofosfato) de trizinc'],
-  'Zn(HSO4)2': ['bisulfato de zinc','bisulfato zíncico','bis(hidrogenosulfato) de zinc'],
+  'ZnCl2': ['cloruro de zinc','cloruro de zinc','dicloruro de zinc','cloruro zíncico'],
+  'ZnBr2': ['bromuro de zinc','bromuro de zinc','dibromuro de zinc','bromuro zíncico'],
+  'Zn(NO3)2': ['nitrato de zinc','nitrato de zinc','bis(trioxonitrato) de zinc','nitrato zíncico'],
+  'ZnCO3': ['carbonato de zinc','carbonato de zinc','trioxocarbonato de zinc','carbonato zíncico'],
+  'ZnS': ['sulfuro de zinc','sulfuro de zinc','monosulfuro de zinc','sulfuro zíncico'],
+  'Zn3(PO4)2': ['fosfato de zinc','fosfato de zinc','bis(tetraoxofosfato) de trizinc','fosfato zíncico'],
+  'Zn(HSO4)2': ['bisulfato de zinc','bisulfato de zinc','bis(hidrogenosulfato) de zinc','bisulfato zíncico'],
 
   // ── ÁCIDOS ADICIONALES ─────────────────────────────────────────────────────
   'H3PO4': ['ácido fosfórico','ácido tetraoxofosfórico(v)','tetraoxofosfato de trihidrógeno'],
@@ -3187,7 +3212,7 @@ function showCompoundModal(cation, anion, comp, formula, extraTurn){
   // Nombre principal: usar Tradicional del diccionario, no comp.name interno
   const alts = NOMENCLATURE[formula] || [];
   const nombrePrincipal = alts.length > 0 ? alts[0] : comp.name;
-  const labels = ['🏛️ Tradicional','📋 Stock','🔢 Sistemática'];
+  const labels = ['🏛️ Tradicional','📋 Stock','🔢 Sistemática','💬 Forma común'];
   const nomenclaturasHTML = alts.length > 0
     ? `<div style="background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.2);
                    border-radius:8px;padding:10px;margin-bottom:12px;text-align:left;">

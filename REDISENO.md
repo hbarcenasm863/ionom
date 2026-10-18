@@ -741,3 +741,110 @@ sw.js: `CACHE_NAME` v25→v26 (`ionom-fondo.svg` sigue en
   la conectividad de cada uno sigue siendo la correcta.
 - Captura del mosaico completo en `teoria.html` a la opacidad real:
   sin cruces entre compuestos, sin overlap con las tarjetas ni el texto.
+
+## Fase 9 — Auditoría con 3 agentes (UX, didáctica, química) y correcciones
+
+Se lanzaron 3 agentes auditores en paralelo, cada uno sin ver el trabajo
+de los otros: uno de diseño UX/UI, uno de didáctica (lenguaje y
+secuencia pedagógica para 13-18 años en Colombia) y uno de corrección
+química. Cada hallazgo se verificó a mano antes de corregirlo (grep/lectura
+directa del código, no solo el resumen del agente). Se implementaron
+todos los hallazgos reales.
+
+### Crítico
+
+**nomenClash.html — regresión real de la Fase 7**: al borrar el bloque
+"tema oscuro" de `assets/ionom.css` (correcto para las otras 13 páginas),
+también se borró sin querer el override que oscurecía `.site-nav` cuando
+NomenClash está en su "Alquimia Oscura" por defecto — el texto de la
+marca, ya preparado para verse claro sobre fondo oscuro, quedó huérfano
+contra un fondo ahora blanco fijo. Se restauró un override equivalente,
+pero **localizado solo en `nomenClash.html`** (no en `ionom.css`, para no
+reintroducir tema oscuro en las 13 páginas que correctamente ya no lo
+tienen). De paso, el dorado de "Nom" en el logo también se restauró a su
+variante clara propia (`--gold-light`) específicamente en ese estado,
+ya que el ámbar oscuro nuevo (ver abajo) está pensado para fondo blanco.
+
+### Importante
+
+1. **Logo "Nom" ilegible en las 14 páginas** (contraste 1.44:1, remanente
+   de cuando el menú era azul noche): `.site-nav .nav-brand em` pasa de
+   `var(--gold)` a un ámbar oscuro propio (`#92720a`, ~5.25:1) en
+   `assets/ionom.css`.
+2. **Chips de ejemplo en index.html** (`.part-examples`, "Na⁺ Ca²⁺..."):
+   usaban el color base del rol pedagógico (`--cat`, `--oh`, `--ox`)
+   sobre su propio fondo claro (`--cat-b`, etc.) en vez de la variante
+   `-t` ya pensada para texto legible — el mismo patrón que ya usaban
+   correctamente `.part-num` y `.part-title` en el mismo componente.
+3. **Etiquetas del Mapa de Reactividad** (funciones.html): `--dp-dim`
+   y `--dp-dim2` (3.17:1) se oscurecieron a `#4f6d88`/`#5d7488`
+   (~5.2-5.8:1).
+4. **`--dimmer` sistémico**: el token se aclaró en la Fase 7 (de
+   `#5a7a96` a sí mismo, sin cambio) pero los fondos que lo rodean
+   (`--surf2`/`--bg2`) sí se aclararon, dejándolo a 4.0-4.2:1 en varios
+   lugares (simulador.html, index.html). Un solo cambio en
+   `shared-tokens.css` (`#5a7a96`→`#4f6d88`, ~5.8:1) corrige todas las
+   repeticiones a la vez.
+5. **Botones `.tts-btn` por debajo del mínimo táctil** (22px de alto en
+   móvil) en reacciones/balanceo/moles/estequiometria/balanceo-avanzado.html
+   (y funciones.html, con el mismo patrón aunque no estaba en la lista
+   del auditor): `min-height:44px` + `display:inline-flex` en los 6.
+6. **nomenClash.html confundía la nomenclatura Stock con la forma
+   adjetival española** ("óxido sódico" ≠ Stock real, que para metales
+   de valencia fija es idéntica a la tradicional: "óxido de sodio").
+   Afectaba 108 de las ~205 entradas del diccionario `NOMENCLATURE`
+   (todo catión de valencia fija: Na, K, Li, Ca, Mg, Sr, Ba, Zn, Al, Ag,
+   NH₄⁺). Se generó y verificó la corrección con un script (clasifica
+   cada entrada por sufijo adjetival vs. prefijo multiplicador IUPAC,
+   con casos especiales para "bisulfato"/"hidrogenosulfato" y para
+   Al₂O₃/Al(OH)₃, que tenían el orden alternativo/sulfato invertido
+   respecto al resto): cada entrada pasa de 3 a 4 posiciones
+   `[tradicional, stock, sistemática, forma_común]`, donde ahora
+   tradicional y stock son el mismo texto (correcto) y la forma
+   adjetival se acepta igual pero ya no se etiqueta como "Stock". Se
+   verificó con `detectSistema()` directamente en el navegador que
+   "óxido de sodio" → "Nomenclatura Tradicional" y "óxido sódico" →
+   "Correcta" (ya no "Nomenclatura Stock"). También se agregó una 4ª
+   etiqueta ("💬 Forma común") al modal de resultado de cada partida,
+   que antes habría mostrado esa 4ª alternativa sin ninguna etiqueta.
+7. **moles.html**: la masa molar de H₂SO₄ en un ejemplo resuelto decía
+   98.079 g/mol; la suma correcta de sus propios 3 términos (y el valor
+   en `banco.js`) es 98.072 g/mol.
+8. **teoria.html nombraba el sistema de 4 colores de 2 formas**: "MDEC"
+   (en el resto del sitio) y "2+matiz" (4 veces dentro del contenido de
+   la Sección 1) sin aclarar que son lo mismo — unificado a "MDEC".
+
+### Menor
+
+Insignias numeradas con texto blanco sobre color saturado (`.func-num`
+de guia.html, `.step-n.alg`/`.ws-n.alg` de balanceo-avanzado.html,
+`.dl-btn` de guia.html): se cambiaron a las variantes `-t` (más oscuras)
+de sus respectivos tokens. Eslogan de NomenClash ("Forma compuestos ·
+Nombra correctamente · Gana"): usaba `--gold-dark` fijo en ambos temas
+(4.22:1 claro / 3.88:1 oscuro, justo en el límite); ahora es
+`.portada-slogan` con un tono por tema (`#6b4f0f` en claro, `--gold-light`
+en oscuro).
+
+sw.js: `CACHE_NAME` v26→v27 (`assets/ionom.css` y `assets/shared-tokens.css`
+están en `ASSETS_TO_CACHE`, cache-first).
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px (`test_all_pages.py`, 28/28 OK), tras los 12 archivos
+  tocados.
+- `node -e "new Function(...)"` sobre cada bloque `<script>` de
+  `nomenClash.html` para confirmar que el diccionario reescrito (108
+  entradas, de 3 a 4 posiciones cada una) no rompió la sintaxis — y que
+  el número de claves del diccionario (205) y su orden no cambiaron.
+- `nomenClash.html` en tema oscuro (simulado con `color_scheme:'dark'`,
+  sin preferencia guardada, el estado real de cualquier visitante nuevo
+  con el celular en modo oscuro) y en tema claro: menú y eslogan
+  legibles en ambos, capturas de pantalla confirmadas.
+- `detectSistema()` invocado directamente en el navegador para "óxido de
+  sodio" y "óxido sódico" contra `NOMENCLATURE['Na2O']`: etiquetas
+  correctas confirmadas.
+- Captura de cerca del logo (contraste), de los chips de ejemplo de
+  index.html, y del Mapa de Reactividad de funciones.html: texto legible
+  en los 3 casos.
+- Altura real de `.tts-btn` medida en el DOM (390px): 44px.

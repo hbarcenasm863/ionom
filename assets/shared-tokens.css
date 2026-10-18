@@ -40,7 +40,7 @@
   /* Surface & text */
   --bg:#ffffff; --bg2:#f2f3f5; --surf:#ffffff; --surf2:#f6f6f8;
   --brd:#e3e3e8; --brd2:#cfcfd8;
-  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
+  --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#4f6d88;
   --nav:#0d4a73; --nav-t:#ffffff;
   /* Status */
   --ok:#16a34a; --ok-b:#dcfce7; --ok-t:#14532d; --okb:#dcfce7;
@@ -74,7 +74,7 @@
 :root[data-theme="light"]{
   --bg:#ffffff; --bg2:#f2f3f5; --surf:#ffffff; --surf2:#f6f6f8;
   --brd:#e3e3e8; --brd2:#cfcfd8;
-  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
+  --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#4f6d88;
   --nav:#0d4a73; --nav-t:#ffffff;
   --cat-b:#fcf2db; --cat-t:#8a5f00;
   --an-b:#dbebf4; --an-t:#00659e;
