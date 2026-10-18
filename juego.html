@@ -64,16 +64,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   margin:0 auto;padding:20px 0 80px;
 }
 
-/* ── HERO (banda navy con esquinas redondeadas, igual que la portada
-   principal index.html — no toda la pantalla, solo esta tarjeta) ── */
+/* ── HERO (blanco puro, igual que la portada principal index.html —
+   no toda la pantalla, solo esta tarjeta) ── */
 .p-hero{
   text-align:center;padding:40px 24px 32px;position:relative;
-  background:linear-gradient(135deg,var(--nav),#071f33);
-  border-radius:var(--r);margin:0 16px 20px;overflow:hidden;
-}
-.p-hero::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,transparent 60%);
 }
 .p-hero-orb{
   width:84px;height:84px;border-radius:24px;
@@ -92,12 +86,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 }
 .p-title{
   font-family:var(--serif);font-size:2.6rem;font-weight:900;font-style:italic;
-  color:#fff;letter-spacing:-.04em;line-height:1;margin-bottom:6px;
+  color:var(--tx);letter-spacing:-.04em;line-height:1;margin-bottom:6px;
   position:relative;z-index:1;
 }
-.p-title em{color:var(--gold);font-style:normal}
+.p-title em{color:var(--nav);font-style:normal}
 .p-subtitle{
-  font-size:.82rem;color:rgba(255,255,255,.65);letter-spacing:.18em;
+  font-size:.82rem;color:var(--dimmer);letter-spacing:.18em;
   text-transform:uppercase;margin-bottom:20px;font-weight:600;
   position:relative;z-index:1;
 }
@@ -106,20 +100,20 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .p-stat{
   display:flex;align-items:center;gap:6px;
   padding:6px 14px;border-radius:100px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.18);
-  color:rgba(255,255,255,.88);font-size:.75rem;font-weight:700;
+  background:var(--surf2);
+  border:1px solid var(--brd);
+  color:var(--tx2);font-size:.75rem;font-weight:700;
 }
 .p-stat span{font-size:.9rem}
 /* botón ¿Cómo jugar? */
 .p-howto{
   display:inline-flex;align-items:center;gap:7px;
-  padding:10px 20px;background:rgba(255,255,255,.1);
-  border:1.5px solid rgba(255,255,255,.22);border-radius:100px;
-  color:#fff;font-size:.8rem;font-weight:700;
+  padding:10px 20px;background:var(--surf);
+  border:1.5px solid var(--brd);border-radius:100px;
+  color:var(--nav);font-size:.8rem;font-weight:700;
   cursor:pointer;transition:all .2s;position:relative;z-index:1;
 }
-.p-howto:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
+.p-howto:hover{background:var(--an-b);border-color:var(--nav)}
 
 /* ── CUERPO (tarjeta clara, igual que el resto del sitio) ── */
 .p-body{

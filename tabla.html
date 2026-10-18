@@ -59,48 +59,9 @@
   --blk-f:#7c3aed; --blk-f-b:#ede9fe; --blk-f-t:#4c1d95;
 }
 
-/* ── Dark mode (media query) ── */
-@media(prefers-color-scheme:dark){
-  :root{
-    --el-alc:#f87171;     --el-alc-b:#450a0a;  --el-alc-t:#fca5a5;
-    --el-alct:#fb923c;    --el-alct-b:#431407; --el-alct-t:#fed7aa;
-    --el-trans:#a78bfa;   --el-trans-b:#2e1065;--el-trans-t:#ddd6fe;
-    --el-posttrans:#22d3ee;--el-posttrans-b:#083344;--el-posttrans-t:#a5f3fc;
-    --el-metal:#4ade80;   --el-metal-b:#052e16;--el-metal-t:#bbf7d0;
-    --el-nomet:#f472b6;   --el-nomet-b:#500724;--el-nomet-t:#fbcfe8;
-    --el-hal:#2dd4bf;     --el-hal-b:#042f2e; --el-hal-t:#99f6e4;
-    --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
-    --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
-    --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
-    --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
-    --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
-    --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
-    --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
-    --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
-    --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
-    --blk-f:#a78bfa; --blk-f-b:#2e1065; --blk-f-t:#ddd6fe;
-  }
-}
-/* ── Data-theme overrides (toggle JS) ── */
-:root[data-theme="dark"]{
-  --el-alc:#f87171;     --el-alc-b:#450a0a;  --el-alc-t:#fca5a5;
-  --el-alct:#fb923c;    --el-alct-b:#431407; --el-alct-t:#fed7aa;
-  --el-trans:#a78bfa;   --el-trans-b:#2e1065;--el-trans-t:#ddd6fe;
-  --el-posttrans:#22d3ee;--el-posttrans-b:#083344;--el-posttrans-t:#a5f3fc;
-  --el-metal:#4ade80;   --el-metal-b:#052e16;--el-metal-t:#bbf7d0;
-  --el-nomet:#f472b6;   --el-nomet-b:#500724;--el-nomet-t:#fbcfe8;
-  --el-hal:#2dd4bf;     --el-hal-b:#042f2e; --el-hal-t:#99f6e4;
-  --el-gas:#818cf8;     --el-gas-b:#1e1b4b; --el-gas-t:#c7d2fe;
-  --el-lan:#fbbf24;     --el-lan-b:#451a03; --el-lan-t:#fef3c7;
-  --el-act:#9ca3af;     --el-act-b:#1f2937; --el-act-t:#f3f4f6;
-  --mn-metal:var(--cat);     --mn-metal-b:var(--cat-b);     --mn-metal-t:var(--cat-t);
-  --mn-nonmetal:var(--an);   --mn-nonmetal-b:var(--an-b);   --mn-nonmetal-t:var(--an-t);
-  --mn-metalloid:var(--oh);  --mn-metalloid-b:var(--oh-b);  --mn-metalloid-t:var(--oh-t);
-  --blk-s:#fb7185; --blk-s-b:#4c0519; --blk-s-t:#fecdd3;
-  --blk-p:#fbbf24; --blk-p-b:#451a03; --blk-p-t:#fde68a;
-  --blk-d:#60a5fa; --blk-d-b:#1e3a8a; --blk-d-t:#bfdbfe;
-  --blk-f:#a78bfa; --blk-f-b:#2e1065; --blk-f-t:#ddd6fe;
-}
+/* ── Sin tema oscuro: tabla.html es solo tema claro. Este bloque
+   redunda con :root de arriba a propósito, el atributo lo sigue fijando
+   ionom-ui.js (ver shared-tokens.css). ── */
 :root[data-theme="light"]{
   --el-alc:#dc2626;     --el-alc-b:#fee2e2;  --el-alc-t:#7f1d1d;
   --el-alct:#ea580c;    --el-alct-b:#ffedd5; --el-alct-t:#7c2d12;

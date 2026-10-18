@@ -38,8 +38,8 @@
   --grp-elem:#2dd4bf; --grp-elem-b:#e2f9f6; --grp-elem-t:#0d6861; /* Tabla periódica */
   --grp-reac:#f472b6; --grp-reac-b:#fdebf5; --grp-reac-t:#73153b; /* Cadena de reactividad */
   /* Surface & text */
-  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
-  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --bg:#ffffff; --bg2:#f2f3f5; --surf:#ffffff; --surf2:#f6f6f8;
+  --brd:#e3e3e8; --brd2:#cfcfd8;
   --tx:#0d2d42;  --tx2:#2a3f52;  --dim:#3a5568;  --dimmer:#5a7a96;
   --nav:#0d4a73; --nav-t:#ffffff;
   /* Status */
@@ -54,8 +54,8 @@
   /* Misc */
   --r:16px; --rs:10px; --rm:6px;
   --gold:#fcd34d;
-  --sh:0 2px 12px rgba(13,74,115,.08);
-  --sh2:0 6px 32px rgba(13,74,115,.16);
+  --sh:0 2px 12px rgba(15,23,42,.06);
+  --sh2:0 6px 32px rgba(15,23,42,.12);
   /* Escala de z-index (Regla de auditoría: los modales de cada página usaban
      valores sueltos e inconsistentes — 100, 200, 250, 400, 500, 600, 1100,
      1200... — algunos por debajo del menú lateral (301), así que un modal
@@ -65,71 +65,15 @@
      cada archivo para no arriesgar romper un stacking que hoy funciona). */
   --z-nav:301; --z-modal:400; --z-modal-top:500; --z-toast:600;
 }
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
-    --brd:#1e3a52; --brd2:#2a4d6e;
-    --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
-    --nav:#091929; --nav-t:#e2eef8;
-    --cat-b:#2e2000; --cat-t:#e7a40d;
-    --an-b:#001724; --an-t:#338ec1;
-    --oh-b:#291821; --oh-t:#cf80ab;
-    --ox-b:#002017; --ox-t:#0da37a;
-    --grp-all-b:#071f2f; --grp-all-t:#4abcee;
-    --grp-ox-b:#321703; --grp-ox-t:#e29944;
-    --grp-hid-b:#011d2d; --grp-hid-t:#6acefa;
-    --grp-ahid-b:#021b14; --grp-ahid-t:#4ccaa0;
-    --grp-base-b:#1f0b3d; --grp-base-t:#bda8fb;
-    --grp-aox-b:#361203; --grp-aox-t:#fa9650;
-    --grp-sbin-b:#081027; --grp-sbin-t:#6ca1f8;
-    --grp-sox-b:#291204; --grp-sox-t:#f8b648;
-    --grp-sac-b:#06161c; --grp-sac-t:#44c8df;
-    --grp-rx-b:#06170d; --grp-rx-t:#59d486;
-    --grp-bal-b:#03151f; --grp-bal-t:#9edefd;
-    --grp-mol-b:#15082a; --grp-mol-t:#d0a3fd;
-    --grp-elem-b:#04211f; --grp-elem-t:#62dfcf;
-    --grp-reac-b:#250713; --grp-reac-t:#f795c8;
-    --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
-    --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
-    --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
-    --info-b:#082f49; --info-t:#7dd3fc;
-    --sh:0 2px 12px rgba(0,0,0,.3);
-    --sh2:0 6px 32px rgba(0,0,0,.5);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0d1b2a; --bg2:#0f2233; --surf:#0f2233; --surf2:#162d40;
-  --brd:#1e3a52; --brd2:#2a4d6e;
-  --tx:#e2eef8; --tx2:#bacfe0; --dim:#8fb4cc; --dimmer:#6b94b0;
-  --nav:#091929; --nav-t:#e2eef8;
-  --cat-b:#2e2000; --cat-t:#e7a40d;
-  --an-b:#001724; --an-t:#338ec1;
-  --oh-b:#291821; --oh-t:#cf80ab;
-  --ox-b:#002017; --ox-t:#0da37a;
-  --grp-all-b:#071f2f; --grp-all-t:#4abcee;
-  --grp-ox-b:#321703; --grp-ox-t:#e29944;
-  --grp-hid-b:#011d2d; --grp-hid-t:#6acefa;
-  --grp-ahid-b:#021b14; --grp-ahid-t:#4ccaa0;
-  --grp-base-b:#1f0b3d; --grp-base-t:#bda8fb;
-  --grp-aox-b:#361203; --grp-aox-t:#fa9650;
-  --grp-sbin-b:#081027; --grp-sbin-t:#6ca1f8;
-  --grp-sox-b:#291204; --grp-sox-t:#f8b648;
-  --grp-sac-b:#06161c; --grp-sac-t:#44c8df;
-  --grp-rx-b:#06170d; --grp-rx-t:#59d486;
-  --grp-bal-b:#03151f; --grp-bal-t:#9edefd;
-  --grp-mol-b:#15082a; --grp-mol-t:#d0a3fd;
-  --grp-elem-b:#04211f; --grp-elem-t:#62dfcf;
-  --grp-reac-b:#250713; --grp-reac-t:#f795c8;
-  --ok-b:#052e16; --ok-t:#86efac; --okb:#052e16;
-  --err-b:#450a0a; --err-t:#fca5a5; --errb:#450a0a;
-  --warn-b:#422006; --warn-t:#fde68a; --warnb:#422006;
-  --info-b:#082f49; --info-t:#7dd3fc;
-  --sh:0 2px 12px rgba(0,0,0,.3);
-  --sh2:0 6px 32px rgba(0,0,0,.5);
-}
+/* Sin tema oscuro: IonNom es solo tema claro (ver nota arriba). El
+   atributo data-theme="light" lo sigue fijando ionom-ui.js en todas las
+   páginas salvo nomenClash.html (que mantiene su propio sistema de temas
+   "Alquimia Oscura", independiente de este archivo) — este bloque redunda
+   con :root de arriba a propósito, para no tener que tocar los selectores
+   :root[data-theme="light"] ya usados en ionom.css y en algunas páginas. */
 :root[data-theme="light"]{
-  --bg:#f6fafe; --bg2:#edf4fb; --surf:#ffffff; --surf2:#f0f7ff;
-  --brd:#d0e6f5; --brd2:#b8d4eb;
+  --bg:#ffffff; --bg2:#f2f3f5; --surf:#ffffff; --surf2:#f6f6f8;
+  --brd:#e3e3e8; --brd2:#cfcfd8;
   --tx:#0d2d42; --tx2:#2a3f52; --dim:#3a5568; --dimmer:#5a7a96;
   --nav:#0d4a73; --nav-t:#ffffff;
   --cat-b:#fcf2db; --cat-t:#8a5f00;
@@ -155,8 +99,8 @@
   --warn-b:#fef3c7; --warn-t:#92400e; --warnb:#fef3c7;
   --info-b:#e0f2fe; --info-t:#082f49;
   --gold:#fcd34d;
-  --sh:0 2px 12px rgba(13,74,115,.08);
-  --sh2:0 6px 32px rgba(13,74,115,.16);
+  --sh:0 2px 12px rgba(15,23,42,.06);
+  --sh2:0 6px 32px rgba(15,23,42,.12);
 }
 
 /* Respeta la preferencia del sistema de reducir el movimiento — antes solo

@@ -71,26 +71,16 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
 
 /* ===== HERO ===== */
 .hero{
-  background:var(--nav);
-  border-radius:var(--r);
-  padding:36px 36px 28px;
+  padding:36px 0 28px;
   margin:28px 0 24px;
   position:relative;
-  overflow:hidden;
-}
-.hero::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);
-  pointer-events:none;
 }
 .hero-eyebrow{
   font-size:.62rem;
   font-weight:800;
   text-transform:uppercase;
   letter-spacing:.16em;
-  color:rgba(255,255,255,.5);
+  color:var(--nav);
   margin-bottom:10px;
 }
 .hero h1{
@@ -99,15 +89,15 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   font-weight:700;
   font-style:italic;
   letter-spacing:-.03em;
-  color:#fff;
+  color:var(--tx);
   line-height:1.2;
   text-wrap:balance;
   margin-bottom:10px;
 }
-.hero h1 em{color:var(--gold);font-style:normal}
+.hero h1 em{color:var(--nav);font-style:normal}
 .hero-sub{
   font-size:.92rem;
-  color:rgba(255,255,255,.72);
+  color:var(--tx2);
   max-width:58ch;
   line-height:1.7;
   margin-bottom:22px;
@@ -119,8 +109,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   flex-wrap:wrap;
   align-items:flex-end;
   gap:8px;
-  background:rgba(0,0,0,.2);
-  border:1px solid rgba(255,255,255,.1);
+  background:var(--surf2);
+  border:1px solid var(--brd);
   border-radius:var(--rs);
   padding:14px 18px;
   margin-bottom:20px;
@@ -147,17 +137,17 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
 .hd-pill.an{color:var(--an-t);background:var(--an-b);border-color:var(--an)}
 .hd-pill.oh{color:var(--oh-t);background:var(--oh-b);border-color:var(--oh)}
 .hd-pill.ox{color:var(--ox-t);background:var(--ox-b);border-color:var(--ox)}
-.hd-sep{color:rgba(255,255,255,.4);font-size:1rem;align-self:center}
+.hd-sep{color:var(--dimmer);font-size:1rem;align-self:center}
 .hd-result{
   font-family:var(--mono);
   font-size:.85rem;
-  color:rgba(255,255,255,.9);
-  border-left:1px solid rgba(255,255,255,.15);
+  color:var(--tx2);
+  border-left:1px solid var(--brd);
   padding-left:12px;
   margin-left:4px;
   line-height:1.55;
 }
-.hd-result strong{color:var(--gold)}
+.hd-result strong{color:var(--nav)}
 
 /* Hero actions */
 .hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -166,16 +156,16 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   align-items:center;
   gap:6px;
   padding:7px 16px;
-  background:rgba(255,255,255,.1);
-  border:1.5px solid rgba(255,255,255,.3);
-  color:rgba(255,255,255,.9);
+  background:var(--surf);
+  border:1.5px solid var(--brd);
+  color:var(--nav);
   border-radius:100px;
   font-size:.8rem;
   font-weight:700;
   cursor:pointer;
   transition:all .2s;
 }
-.narr-btn:hover,.narr-btn.playing{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+.narr-btn:hover,.narr-btn.playing{background:var(--an-b);border-color:var(--nav)}
 
 /* ===== TIP / CONSEJO ===== */
 .tip-card{
@@ -385,8 +375,6 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
 .rs.r1{border-color:var(--an);background:var(--an-b);color:var(--an-t)}
 .rs.r2{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
 .rs.r3{border-color:#8B6914;background:#fdf6e3;color:#5a3e06}
-.rs.r3-dark,
-:root[data-theme="dark"] .rs.r3{background:rgba(139,105,20,.12);color:#fde68a}
 .ruta-arrow{color:var(--dimmer);font-size:1.1rem;flex-shrink:0}
 .rs-n{font-family:var(--serif);font-size:1.5rem;font-weight:700;flex-shrink:0;line-height:1}
 .rs-title{font-size:.88rem;font-weight:800;margin-bottom:2px}
@@ -614,12 +602,12 @@ html{font-size:var(--base-fs)}
   <div class="hero-demo" role="img" aria-label="Ejemplo: sulfato de hierro III = catión Fe más oxoanión SO4">
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
       <span class="hd-pill cat">Fe³⁺</span>
-      <span class="hd-label" style="color:rgba(255,255,255,.45)">① Catión</span>
+      <span class="hd-label" style="color:var(--dimmer)">① Catión</span>
     </div>
     <span class="hd-sep">+</span>
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
       <span class="hd-pill ox">SO₄²⁻</span>
-      <span class="hd-label" style="color:rgba(255,255,255,.45)">④ Oxoanión</span>
+      <span class="hd-label" style="color:var(--dimmer)">④ Oxoanión</span>
     </div>
     <span class="hd-sep">=</span>
     <div class="hd-result">

@@ -544,3 +544,116 @@ sin necesidad de subir `CACHE_NAME`.
   pierde la carta jugada Y roba 1 de penalización (mazo de robo bajó en 1,
   mano terminó igual que antes de jugar la carta en vez de una carta
   menos), con el mensaje de registro actualizado.
+
+## Fase 7 — Blanco puro, sin bordes/cuadros azules, sin tema oscuro
+
+Pedido explícito de la docente: quitar los bordes y "cuadros" con tinte
+azul del sitio y dejar blanco puro (dirección ChromaNom), y eliminar el
+tema oscuro del código — todo esto **excepto en NomenClash**, que
+conserva su propia identidad visual "Alquimia Oscura" (ver Fase 1: ya
+tiene su propio sistema de tokens independiente de `shared-tokens.css`,
+así que no se tocó ningún archivo de NomenClash en esta fase).
+
+### Tokens compartidos (`assets/shared-tokens.css`)
+
+Los tokens de superficie dejan de tener tinte azul:
+`--bg`/`--surf` pasan de `#f6fafe`/blanco-con-tinte a blanco puro
+(`#ffffff`); `--bg2`/`--surf2` pasan de azules pálidos
+(`#edf4fb`/`#f0f7ff`) a gris neutro casi blanco (`#f2f3f5`/`#f6f6f8`);
+`--brd`/`--brd2` pasan de bordes azules (`#d0e6f5`/`#b8d4eb`) a gris
+neutro (`#e3e3e8`/`#cfcfd8`); las sombras (`--sh`/`--sh2`) pasan de
+tinte azul (`rgba(13,74,115,...)`) a neutro slate (`rgba(15,23,42,...)`).
+La separación entre página/tarjeta/campo ahora la dan solo el borde gris
+y la sombra, nunca un color de fondo — igual que ChromaNom. Los 4 colores
+pedagógicos (catión/anión/hidróxido/oxoanión) y los 13 colores de
+identidad por grupo/tema (`--grp-*`) NO se tocan: siguen siendo el único
+lugar donde el sitio usa color con significado, y varios de ellos ya son
+azules (anión, varios `--grp-*`) — eso es correcto, no son "cuadros
+azules" decorativos sino el código cromático pedagógico del sitio.
+
+### Tema oscuro eliminado del código (no solo forzado a claro en runtime)
+
+Una fase anterior de esta sesión ya forzaba `data-theme="light"` por JS
+en todas las páginas salvo NomenClash (`forzarTemaClaro()` en
+`ionom-ui.js`, que además ya ocultaba el botón 🌙 con
+`display:none`), pero los VALORES de tema oscuro seguían completos en el
+CSS, inalcanzables pero presentes: el bloque
+`@media(prefers-color-scheme:dark)` y `:root[data-theme="dark"]` de
+`shared-tokens.css`, el equivalente en `assets/ionom.css`, y bloques
+locales de `tabla.html`, `funciones.html`, `reacciones.html` y
+`simulador.html`. Se eliminaron todos — ya no existe ningún valor de
+tema oscuro en el código del sitio (fuera de NomenClash). El pequeño
+selector huérfano `.rs.r3-dark` de `index.html` (sin ninguna clase que lo
+aplicara) también se eliminó.
+
+### Cuadros/paneles azul noche convertidos a blanco
+
+Más allá de los tokens, 3 componentes tenían un fondo azul noche sólido
+(`var(--nav)` o un degradado con ese color) hardcodeado, independiente
+del tema — no eran "modo oscuro", eran paneles que siempre fueron
+oscuros a propósito:
+
+1. **Hero de `index.html`** (la portada: logo, título, subtítulo, demo
+   de fórmula en vivo, botones) — era una tarjeta `background:var(--nav)`
+   de borde a borde con texto blanco. Ahora es texto directo sobre el
+   fondo blanco de la página (sin caja ni borde), título en `--tx`,
+   subtítulo en `--tx2`, la mini-demo de fórmula con fondo `--surf2` y
+   borde `--brd` en vez del recuadro translúcido blanco-sobre-negro, y
+   los 2 botones ("Escuchar introducción" / "¿Qué es IonNom?") pasan de
+   píldoras translúcidas blancas a píldoras blancas con borde gris.
+2. **Hero de `juego.html`** (misma tarjeta, documentada en el propio
+   código como "igual que la portada principal index.html") — mismo
+   tratamiento: sin caja ni degradado, título/subtítulo/badges de stats/
+   botón "¿Cómo jugar?" pasan a la paleta clara. El cuerpo de la portada
+   (`.p-body`, con el selector de modo y el login de estudiante) ya
+   estaba en blanco desde la Fase 4 — solo faltaba el hero de arriba.
+3. **Mapa de Reactividad de `funciones.html`** (la captura que señaló la
+   docente: "Mapa de Reactividad — Química Inorgánica") y todo su
+   subsistema asociado (el modal que abre cada nodo, el botón/modal
+   "Aprende la cadena de reactividad — paso a paso con voz" de Mayer, y
+   el diagrama de cadena molecular `.mc-node`) compartían un mismo juego
+   de variables `--dp*` ("dark panel") definidas en azul noche — se
+   redefinieron esas ~9 variables a blanco/gris neutro una sola vez y
+   los 4 componentes cambiaron de tema automáticamente. Los 10 pares de
+   color de los nodos del mapa (METAL, NO METAL, Óxido Básico,
+   Anhídrido, Base, Ácido Oxácido, Sal Oxigenada, Hidruro Metálico,
+   Ácido Hídrico, Sal Binaria) y las insignias/etiquetas del modal se
+   invirtieron a mano (fondo pastel claro + mismo borde saturado + el
+   antiguo fondo oscuro reutilizado como color de texto), conservando
+   las 10 identidades de color pero legibles sobre blanco.
+
+No se tocó, a propósito, la barra superior de navegación (vidrio
+esmerilado blanco desde la Fase 4, el fondo navy detrás ya nunca se ve),
+el pie de página, el menú lateral (drawer) ni la barra de un compuesto
+en juego (`.game-hdr`) — esos sí son usos deliberados de `--nav` como
+"color de acción" de marca (documentado en `ionom.css`), no cajas de
+contenido, y coinciden con el tratamiento que ChromaNom también le da a
+su propia barra/pie de página.
+
+sw.js: `CACHE_NAME` v23→v24 — `assets/shared-tokens.css` y
+`assets/ionom.css` están en `ASSETS_TO_CACHE` (cache-first), así que sin
+este cambio de versión un estudiante con el sitio ya instalado seguiría
+viendo los tonos azules viejos indefinidamente. Las páginas HTML
+modificadas (index, juego, funciones, teoria, tabla, reacciones,
+simulador) no necesitan el bump por sí mismas — se sirven network-first
+— pero los 2 CSS compartidos sí lo requieren.
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px (`test_all_pages.py`, 28/28 OK).
+- Capturas de pantalla antes/después de `index.html` (hero), `juego.html`
+  (hero de la portada) y `funciones.html` (Mapa de Reactividad completo
+  y su tarjeta) confirmando contraste legible y ausencia del fondo azul
+  noche.
+- `teoria.html` (la caja "¿Para qué existe la nomenclatura inorgánica?",
+  mismo patrón de caja azul noche, encontrada durante la verificación
+  visual y corregida igual que las 3 anteriores) confirmada en blanco
+  con los 3 niveles legibles.
+- Confirmado por `git status` que `nomenClash.html` no aparece en los
+  archivos modificados de esta fase.
+- Confirmado que `simulador.html` y el resto de cajas con tinte azul que
+  siguen en pantalla (p. ej. "Cómo usar el simulador", las pastillas de
+  nomenclatura con color por rol) son el código cromático pedagógico
+  (`--an-b`, `--cat-b`, etc.), no cuadros decorativos — se dejaron
+  intactos a propósito.
