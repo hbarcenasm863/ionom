@@ -697,3 +697,47 @@ sw.js: `CACHE_NAME` v24→v25 (`ionom-fondo.svg` está en
 - Captura del mosaico completo en `teoria.html` (sin modal encima) a la
   opacidad real (.28 escritorio) y en `index.html` a 390px (.15 móvil):
   sin cruces entre instrumentos, sin romper el layout de las tarjetas.
+
+### Fase 8 (continuación) — de instrumental a moléculas ball-and-stick
+
+La docente pidió una segunda opinión sobre el fondo comparándolo con una
+imagen de referencia (foto de stock de moléculas 3D muy brillantes).
+Como experto en marketing digital, la recomendación fue no copiar ese
+estilo (imagen genérica de stock, pesada, y rompe la consistencia
+"blanco puro y línea fina" recién lograda en la Fase 7) pero sí subir el
+nivel de acabado del fondo propio. Se le presentaron 3 direcciones
+(moléculas ball-and-stick con sombreado plano, pulir el instrumental
+existente, o combinar ambos) y eligió moléculas ball-and-stick.
+
+Se reemplazó `assets/ionom-fondo.svg` otra vez: ya no son instrumentos
+de laboratorio, son los mismos 8 compuestos inorgánicos reales de la
+Fase 4 (CO₂, H₂SO₄, NaCl, Ca(OH)₂, SO₃, HNO₃, HCl, CaCO₃, con la misma
+conectividad química ya verificada entonces), dibujados como esferas
+con degradado radial suave (`<radialGradient>`, no el estilo 3D glossy
+de la imagen de referencia) unidas por varillas grises finas — "premium"
+por el acabado del sombreado, no por imitar una foto de stock. Colores:
+la misma paleta Wong/Okabe-Ito de siempre (ámbar/azul/rosado/verde),
+sin significado de rol iónico aquí (es decorativo, igual que ya se
+documentó para el fondo de instrumental).
+
+Generado y verificado con dos scripts en el mismo patrón que las fases
+anteriores: `gen_ballstick.py` calcula la caja delimitadora real de cada
+compuesto (centro + radio de cada átomo, con rotación) y confirma
+separación mínima de 18px entre cualquier par, incluidas las copias
+vecinas del mosaico al repetirse — el resultado real fue ~180px de
+margen; `build_svg.py` genera el XML final a partir de las mismas
+coordenadas ya verificadas, para que no haya desfase entre lo que se
+comprobó y lo que se dibuja.
+
+sw.js: `CACHE_NAME` v25→v26 (`ionom-fondo.svg` sigue en
+`ASSETS_TO_CACHE`, cache-first).
+
+#### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px (`test_all_pages.py`, 28/28 OK).
+- Captura de cerca de cada uno de los 8 compuestos por separado
+  confirmando que el degradado se ve suave (no plano, no glossy) y que
+  la conectividad de cada uno sigue siendo la correcta.
+- Captura del mosaico completo en `teoria.html` a la opacidad real:
+  sin cruces entre compuestos, sin overlap con las tarjetas ni el texto.

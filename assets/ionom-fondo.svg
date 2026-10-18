@@ -1,125 +1,111 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1320" viewBox="0 0 720 1320">
-<!-- Marca de agua de IonNom: instrumentos de laboratorio (matraz Erlenmeyer,
-     gradilla de tubos de ensayo, vaso de precipitados, balón de destilación,
-     probeta, mechero Bunsen, gotero, burbujas) en el mismo estilo de línea
-     que el resto del sitio, coloreados con la paleta Wong/Okabe-Ito ya usada
-     en toda la plataforma (sin significado pedagógico aquí: es solo la
-     paleta decorativa, los 4 colores con significado de rol iónico siguen
-     siendo exclusivos de las fichas de catión/anión/hidróxido/oxoanión en
-     el resto del sitio). Dos columnas intercaladas de 4 dibujos cada una;
-     separación mínima verificada por script (gen_lab_watermark.py) de
-     18px entre cualquier par de cajas delimitadoras, incluidas las copias
-     vecinas del mosaico al repetirse: el espacio real resultó muchísimo
-     mayor (180px o más) porque los instrumentos son más compactos que las
-     estructuras moleculares que reemplazan. -->
-<g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-  <!-- 1. Matraz Erlenmeyer con burbujas -->
-  <g class="lab" transform="translate(120 90) rotate(-6)" stroke="#E69F00">
-    <line x1="-11" y1="-50" x2="11" y2="-50"/>
-    <line x1="-8" y1="-50" x2="-8" y2="-18"/>
-    <line x1="8" y1="-50" x2="8" y2="-18"/>
-    <line x1="-8" y1="-18" x2="-32" y2="42"/>
-    <line x1="8" y1="-18" x2="32" y2="42"/>
-    <line x1="-32" y1="42" x2="32" y2="42"/>
-    <line x1="-20" y1="20" x2="20" y2="20"/>
-    <circle cx="-8" cy="5" r="3"/>
-    <circle cx="6" cy="-2" r="2.5"/>
-    <circle cx="0" cy="12" r="2"/>
+<!-- Marca de agua de IonNom: compuestos inorgánicos reales en estilo
+     ball-and-stick plano "premium": esferas con degradado radial suave
+     (no 3D glossy de foto de stock) en la paleta pedagógica Wong/Okabe-Ito
+     ya usada en toda la plataforma: ámbar = catión, azul = anión simple,
+     rosado = hidróxido, verde = especie covalente/oxoanión; enlaces como
+     varillas grises finas detrás de las esferas. Son los mismos 8
+     compuestos y la misma conectividad química verificada de la versión
+     anterior en Lewis (CO2, H2SO4, NaCl, Ca(OH)2, SO3, HNO3, HCl, CaCO3),
+     solo con otra técnica de dibujo. Separación mínima entre compuestos
+     (incluidas las copias vecinas del mosaico al repetirse) verificada
+     por script (gen_ballstick.py): sin violaciones, margen real de
+     ~180px sobre el umbral de 18px. -->
+<defs>
+  <radialGradient id="g-cat" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ffdf9e"/><stop offset="100%" stop-color="#E69F00"/></radialGradient>
+  <radialGradient id="g-an" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#8fd1f0"/><stop offset="100%" stop-color="#0072B2"/></radialGradient>
+  <radialGradient id="g-oh" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#f2cde4"/><stop offset="100%" stop-color="#CC79A7"/></radialGradient>
+  <radialGradient id="g-ox" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7fe0c4"/><stop offset="100%" stop-color="#009E73"/></radialGradient>
+</defs>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- CO2 -->
+  <g class="mol" transform="translate(120 100) rotate(-6)">
+    <line x1="-38" y1="0" x2="0" y2="0" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="38" y2="0" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="-38" cy="0" r="11" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="0" cy="0" r="9" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="38" cy="0" r="11" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 2. Gradilla con 3 tubos de ensayo -->
-  <g class="lab" transform="translate(120 460) rotate(4)" stroke="#009E73">
-    <line x1="-29" y1="-35" x2="-29" y2="28"/>
-    <line x1="-19" y1="-35" x2="-19" y2="28"/>
-    <path d="M -29 28 Q -24 34 -19 28"/>
-    <line x1="-29" y1="10" x2="-19" y2="10"/>
-    <line x1="-5" y1="-35" x2="-5" y2="28"/>
-    <line x1="5" y1="-35" x2="5" y2="28"/>
-    <path d="M -5 28 Q 0 34 5 28"/>
-    <line x1="-5" y1="0" x2="5" y2="0"/>
-    <line x1="19" y1="-35" x2="19" y2="28"/>
-    <line x1="29" y1="-35" x2="29" y2="28"/>
-    <path d="M 19 28 Q 24 34 29 28"/>
-    <line x1="19" y1="-5" x2="29" y2="-5"/>
-    <line x1="-36" y1="32" x2="36" y2="32"/>
-    <line x1="-30" y1="32" x2="-30" y2="37"/>
-    <line x1="30" y1="32" x2="30" y2="37"/>
+
+  <!-- H2SO4 -->
+  <g class="mol" transform="translate(120 470) rotate(4)">
+    <line x1="0" y1="0" x2="-21" y2="-27" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="21" y2="-27" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-33" y2="20" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="33" y2="20" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="-33" y1="20" x2="-50" y2="38" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="33" y1="20" x2="50" y2="38" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="9" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-21" cy="-27" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="21" cy="-27" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-33" cy="20" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="33" cy="20" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-50" cy="38" r="6" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="50" cy="38" r="6" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 3. Vaso de precipitados con agitador -->
-  <g class="lab" transform="translate(110 790) rotate(-5)" stroke="#0072B2">
-    <line x1="-26" y1="-10" x2="22" y2="-10"/>
-    <line x1="22" y1="-10" x2="28" y2="-18"/>
-    <line x1="-26" y1="-10" x2="-26" y2="32"/>
-    <line x1="-26" y1="32" x2="26" y2="32"/>
-    <line x1="26" y1="32" x2="26" y2="-10"/>
-    <line x1="-26" y1="0" x2="-18" y2="0"/>
-    <line x1="-26" y1="10" x2="-18" y2="10"/>
-    <line x1="-26" y1="20" x2="-18" y2="20"/>
-    <line x1="-14" y1="-40" x2="4" y2="25"/>
-    <circle cx="-14" cy="-40" r="3"/>
+
+  <!-- NaCl -->
+  <g class="mol" transform="translate(110 800) rotate(-5)">
+    <line x1="-20" y1="0" x2="20" y2="0" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="-20" cy="0" r="11" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="20" cy="0" r="13" fill="url(#g-an)" stroke="#0072B2" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 4. Balón de fondo redondo con soporte -->
-  <g class="lab" transform="translate(130 1110) rotate(6)" stroke="#CC79A7">
-    <line x1="-9" y1="-45" x2="9" y2="-45"/>
-    <line x1="-6" y1="-45" x2="-6" y2="-14"/>
-    <line x1="6" y1="-45" x2="6" y2="-14"/>
-    <circle cx="0" cy="14" r="28"/>
-    <line x1="-20" y1="38" x2="-14" y2="50"/>
-    <line x1="20" y1="38" x2="14" y2="50"/>
-    <line x1="-18" y1="50" x2="18" y2="50"/>
+
+  <!-- Ca(OH)2 -->
+  <g class="mol" transform="translate(115 1120) rotate(6)">
+    <line x1="0" y1="0" x2="35" y2="-15" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="35" y2="15" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="35" y1="-15" x2="55" y2="-25" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="35" y1="15" x2="55" y2="25" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="13" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="35" cy="-15" r="8" fill="url(#g-oh)" stroke="#CC79A7" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="55" cy="-25" r="5" fill="url(#g-oh)" stroke="#CC79A7" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="35" cy="15" r="8" fill="url(#g-oh)" stroke="#CC79A7" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="55" cy="25" r="5" fill="url(#g-oh)" stroke="#CC79A7" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 5. Probeta graduada -->
-  <g class="lab" transform="translate(570 230) rotate(5)" stroke="#009E73">
-    <line x1="-12" y1="-45" x2="-15" y2="-48"/>
-    <line x1="12" y1="-45" x2="15" y2="-48"/>
-    <line x1="-12" y1="-45" x2="-12" y2="40"/>
-    <line x1="12" y1="-45" x2="12" y2="40"/>
-    <line x1="-12" y1="40" x2="-16" y2="44"/>
-    <line x1="12" y1="40" x2="16" y2="44"/>
-    <line x1="-16" y1="44" x2="16" y2="44"/>
-    <line x1="-12" y1="-30" x2="-7" y2="-30"/>
-    <line x1="-12" y1="-15" x2="-7" y2="-15"/>
-    <line x1="-12" y1="0" x2="-7" y2="0"/>
-    <line x1="-12" y1="15" x2="-7" y2="15"/>
-    <line x1="-12" y1="30" x2="-7" y2="30"/>
-    <line x1="-12" y1="22" x2="12" y2="22"/>
+
+  <!-- SO3 -->
+  <g class="mol" transform="translate(575 240) rotate(5)">
+    <line x1="0" y1="0" x2="0" y2="-32" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="28" y2="16" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-28" y2="16" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="9" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="0" cy="-32" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="28" cy="16" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-28" cy="16" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 6. Mechero Bunsen con llama -->
-  <g class="lab" transform="translate(560 560) rotate(-4)" stroke="#E69F00">
-    <line x1="-18" y1="30" x2="18" y2="30"/>
-    <line x1="-18" y1="30" x2="-9" y2="21"/>
-    <line x1="18" y1="30" x2="9" y2="21"/>
-    <line x1="-9" y1="21" x2="9" y2="21"/>
-    <line x1="-7" y1="21" x2="-7" y2="-14"/>
-    <line x1="7" y1="21" x2="7" y2="-14"/>
-    <line x1="-7" y1="8" x2="7" y2="8"/>
-    <line x1="-7" y1="-14" x2="7" y2="-14"/>
-    <path d="M 0 -14 Q -6 -25 -3 -39 Q 0 -45 3 -39 Q 6 -25 0 -14 Z"/>
+
+  <!-- HNO3 -->
+  <g class="mol" transform="translate(555 570) rotate(-4)">
+    <line x1="0" y1="0" x2="0" y2="-30" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="28" y2="14" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-28" y2="14" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="-28" y1="14" x2="-48" y2="30" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="9" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="0" cy="-30" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="28" cy="14" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-28" cy="14" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="-48" cy="30" r="6" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 7. Gotero con gota -->
-  <g class="lab" transform="translate(600 900) rotate(3)" stroke="#0072B2">
-    <circle cx="0" cy="-36" r="11"/>
-    <line x1="0" y1="-25" x2="0" y2="-20"/>
-    <line x1="-4" y1="-20" x2="-4" y2="22"/>
-    <line x1="4" y1="-20" x2="4" y2="22"/>
-    <line x1="-4" y1="22" x2="0" y2="33"/>
-    <line x1="4" y1="22" x2="0" y2="33"/>
-    <circle cx="0" cy="47" r="3.5"/>
+
+  <!-- HCl -->
+  <g class="mol" transform="translate(605 900) rotate(3)">
+    <line x1="-22" y1="0" x2="18" y2="0" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="-22" cy="0" r="6" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="18" cy="0" r="13" fill="url(#g-an)" stroke="#0072B2" stroke-width="1" stroke-opacity="0.35"/>
   </g>
-  <!-- 8. Matraz pequeño con burbujas ascendentes -->
-  <g class="lab" transform="translate(590 1210) rotate(-5)" stroke="#CC79A7">
-    <line x1="-9" y1="-8" x2="9" y2="-8"/>
-    <line x1="-6" y1="-8" x2="-6" y2="8"/>
-    <line x1="6" y1="-8" x2="6" y2="8"/>
-    <line x1="-6" y1="8" x2="-24" y2="50"/>
-    <line x1="6" y1="8" x2="24" y2="50"/>
-    <line x1="-24" y1="50" x2="24" y2="50"/>
-    <line x1="-16" y1="35" x2="16" y2="35"/>
-    <circle cx="0" cy="-15" r="3"/>
-    <circle cx="-6" cy="-26" r="4"/>
-    <circle cx="8" cy="-34" r="3"/>
-    <circle cx="-3" cy="-44" r="5"/>
-    <circle cx="5" cy="-54" r="3"/>
-    <circle cx="-8" cy="-60" r="2.5"/>
+
+  <!-- CaCO3 -->
+  <g class="mol" transform="translate(560 1220) rotate(-5)">
+    <line x1="-45" y1="0" x2="0" y2="14" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="25" y1="0" x2="25" y2="-28" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="25" y1="0" x2="50" y2="14" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="25" y1="0" x2="0" y2="14" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="-45" cy="0" r="12" fill="url(#g-cat)" stroke="#E69F00" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="25" cy="0" r="8" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="25" cy="-28" r="7" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="50" cy="14" r="7" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
+    <circle cx="0" cy="14" r="7" fill="url(#g-ox)" stroke="#009E73" stroke-width="1" stroke-opacity="0.35"/>
   </g>
 </g>
 </svg>
