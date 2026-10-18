@@ -657,3 +657,43 @@ simulador) no necesitan el bump por sí mismas — se sirven network-first
   nomenclatura con color por rol) son el código cromático pedagógico
   (`--an-b`, `--cat-b`, etc.), no cuadros decorativos — se dejaron
   intactos a propósito.
+
+## Fase 8 — Marca de agua: de moléculas a instrumentos de laboratorio
+
+Pedido explícito de la docente: cambiar el fondo de marca de agua de
+estructuras moleculares a dibujos de instrumentos de laboratorio.
+Rediseñado `assets/ionom-fondo.svg` por completo (mismo lienzo 720×1320,
+mismas 2 columnas intercaladas de 4 dibujos, misma paleta Wong/Okabe-Ito
+que ya usaba el sitio) con 8 instrumentos en línea: matraz Erlenmeyer con
+burbujas, gradilla de 3 tubos de ensayo, vaso de precipitados con
+agitador, balón de fondo redondo sobre soporte, probeta graduada,
+mechero Bunsen con llama, gotero con gota, y un matraz pequeño con
+burbujas ascendentes (petición explícita de incluir burbujas).
+
+Separación verificada por script (`gen_lab_watermark.py`, caja
+delimitadora por instrumento + las copias vecinas del mosaico al
+repetirse): el mínimo real resultó de ~188px, muy por encima del umbral
+de 18px usado en la marca de agua anterior — los instrumentos son más
+compactos que las estructuras moleculares que reemplazan, así que no fue
+difícil evitar cualquier cruce.
+
+Dos ajustes de legibilidad tras la primera verificación visual (captura
+de cerca de cada instrumento por separado): el vaso de precipitados era
+demasiado angosto y el agitador se confundía con el pico — se ensanchó
+el cuerpo y se separó el ángulo del agitador; el mechero Bunsen se leía
+como una vela (llama flotando sobre un tallo delgado) — se le dio un
+cuerpo/base visible (el "barril" del mechero) con la llama apoyada
+directamente encima.
+
+sw.js: `CACHE_NAME` v24→v25 (`ionom-fondo.svg` está en
+`ASSETS_TO_CACHE`, cache-first).
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px (`test_all_pages.py`, 28/28 OK).
+- Captura de cada uno de los 8 instrumentos por separado (recorte directo
+  del SVG) confirmando que cada uno se reconoce como lo que pretende ser.
+- Captura del mosaico completo en `teoria.html` (sin modal encima) a la
+  opacidad real (.28 escritorio) y en `index.html` a 390px (.15 móvil):
+  sin cruces entre instrumentos, sin romper el layout de las tarjetas.

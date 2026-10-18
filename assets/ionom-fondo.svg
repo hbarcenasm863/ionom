@@ -1,106 +1,125 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1320" viewBox="0 0 720 1320">
-<!-- Marca de agua de IonNom: compuestos inorgánicos reales (óxidos ácidos,
-     ácidos oxácidos/hídricos, sales, bases) coloreados con el código
-     pedagógico Wong/Okabe-Ito: ámbar = catión (o H⁺ actuando como catión en
-     un ácido), azul = anión simple, rosado = hidróxido OH⁻, verde =
-     oxoanión. Dos columnas intercaladas de 4 compuestos cada una; cada
-     estructura tiene su propio espacio verificado por script (gen_watermark.py,
-     >=18px de separación entre cualquier par, incluidas las copias vecinas
-     del mosaico al repetirse) para que ninguna se cruce con otra ni parezca
-     un enlace que no existe. -->
-<g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" font-family="Outfit, Arial, sans-serif" font-weight="700" font-size="24">
-  <g class="mol" transform="translate(120 90) rotate(-6)">
-  <text x="-26" y="27" fill="#009E73" stroke="none">O</text>
-  <line x1="12" y1="20" x2="52" y2="20" stroke="#009E73"/>
-  <line x1="12" y1="12" x2="52" y2="12" stroke="#009E73"/>
-  <line x1="52" y1="20" x2="92" y2="20" stroke="#009E73"/>
-  <line x1="52" y1="12" x2="92" y2="12" stroke="#009E73"/>
-  <text x="102" y="27" fill="#009E73" stroke="none">O</text>
-  <text x="44" y="21" fill="#009E73" stroke="none" font-size="22">C</text>
+<!-- Marca de agua de IonNom: instrumentos de laboratorio (matraz Erlenmeyer,
+     gradilla de tubos de ensayo, vaso de precipitados, balón de destilación,
+     probeta, mechero Bunsen, gotero, burbujas) en el mismo estilo de línea
+     que el resto del sitio, coloreados con la paleta Wong/Okabe-Ito ya usada
+     en toda la plataforma (sin significado pedagógico aquí: es solo la
+     paleta decorativa, los 4 colores con significado de rol iónico siguen
+     siendo exclusivos de las fichas de catión/anión/hidróxido/oxoanión en
+     el resto del sitio). Dos columnas intercaladas de 4 dibujos cada una;
+     separación mínima verificada por script (gen_lab_watermark.py) de
+     18px entre cualquier par de cajas delimitadoras, incluidas las copias
+     vecinas del mosaico al repetirse: el espacio real resultó muchísimo
+     mayor (180px o más) porque los instrumentos son más compactos que las
+     estructuras moleculares que reemplazan. -->
+<g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 1. Matraz Erlenmeyer con burbujas -->
+  <g class="lab" transform="translate(120 90) rotate(-6)" stroke="#E69F00">
+    <line x1="-11" y1="-50" x2="11" y2="-50"/>
+    <line x1="-8" y1="-50" x2="-8" y2="-18"/>
+    <line x1="8" y1="-50" x2="8" y2="-18"/>
+    <line x1="-8" y1="-18" x2="-32" y2="42"/>
+    <line x1="8" y1="-18" x2="32" y2="42"/>
+    <line x1="-32" y1="42" x2="32" y2="42"/>
+    <line x1="-20" y1="20" x2="20" y2="20"/>
+    <circle cx="-8" cy="5" r="3"/>
+    <circle cx="6" cy="-2" r="2.5"/>
+    <circle cx="0" cy="12" r="2"/>
   </g>
-  <!-- H2SO4 corregido: S con 2 enlaces dobles a O y 2 enlaces simples a
-       grupos -OH (antes un H quedaba pegado directo al S, sin oxígeno de
-       por medio, y sobraba un quinto enlace). -->
-  <g class="mol" transform="translate(207 458) rotate(4)">
-  <text x="-9" y="9" fill="#009E73" stroke="none" font-size="22">S</text>
-  <line x1="-6.4" y1="-12" x2="-21.2" y2="-26.9" stroke="#009E73"/>
-  <line x1="-12" y1="-6.4" x2="-26.9" y2="-21.2" stroke="#009E73"/>
-  <text x="-44" y="-36" fill="#009E73" stroke="none">O</text>
-  <line x1="12" y1="-6.4" x2="26.9" y2="-21.2" stroke="#009E73"/>
-  <line x1="6.4" y1="-12" x2="21.2" y2="-26.9" stroke="#009E73"/>
-  <text x="32" y="-36" fill="#009E73" stroke="none">O</text>
-  <line x1="-9.2" y1="9.2" x2="-21.2" y2="21.2" stroke="#009E73"/>
-  <text x="-49" y="33" fill="#009E73" stroke="none">O</text>
-  <line x1="-36" y1="31" x2="-50" y2="38" stroke="#E69F00"/>
-  <text x="-68" y="52" fill="#E69F00" stroke="none">H</text>
-  <line x1="9.2" y1="9.2" x2="21.2" y2="21.2" stroke="#009E73"/>
-  <text x="31" y="33" fill="#009E73" stroke="none">O</text>
-  <line x1="36" y1="31" x2="50" y2="38" stroke="#E69F00"/>
-  <text x="54" y="52" fill="#E69F00" stroke="none">H</text>
+  <!-- 2. Gradilla con 3 tubos de ensayo -->
+  <g class="lab" transform="translate(120 460) rotate(4)" stroke="#009E73">
+    <line x1="-29" y1="-35" x2="-29" y2="28"/>
+    <line x1="-19" y1="-35" x2="-19" y2="28"/>
+    <path d="M -29 28 Q -24 34 -19 28"/>
+    <line x1="-29" y1="10" x2="-19" y2="10"/>
+    <line x1="-5" y1="-35" x2="-5" y2="28"/>
+    <line x1="5" y1="-35" x2="5" y2="28"/>
+    <path d="M -5 28 Q 0 34 5 28"/>
+    <line x1="-5" y1="0" x2="5" y2="0"/>
+    <line x1="19" y1="-35" x2="19" y2="28"/>
+    <line x1="29" y1="-35" x2="29" y2="28"/>
+    <path d="M 19 28 Q 24 34 29 28"/>
+    <line x1="19" y1="-5" x2="29" y2="-5"/>
+    <line x1="-36" y1="32" x2="36" y2="32"/>
+    <line x1="-30" y1="32" x2="-30" y2="37"/>
+    <line x1="30" y1="32" x2="30" y2="37"/>
   </g>
-  <g class="mol" transform="translate(110 760) rotate(-5)">
-  <circle cx="0" cy="0" r="22" fill="none" stroke="#E69F00"/>
-  <text x="-14" y="7" fill="#E69F00" stroke="none" font-size="20">Na</text>
-  <text x="18" y="-16" fill="#E69F00" stroke="none" font-size="14">+</text>
-  <line x1="24" y1="0" x2="56" y2="0" stroke="#E69F00" stroke-dasharray="2 6"/>
-  <circle cx="80" cy="0" r="24" fill="none" stroke="#0072B2"/>
-  <text x="68" y="7" fill="#0072B2" stroke="none" font-size="18">Cl</text>
-  <text x="100" y="-18" fill="#0072B2" stroke="none" font-size="14">−</text>
+  <!-- 3. Vaso de precipitados con agitador -->
+  <g class="lab" transform="translate(110 790) rotate(-5)" stroke="#0072B2">
+    <line x1="-26" y1="-10" x2="22" y2="-10"/>
+    <line x1="22" y1="-10" x2="28" y2="-18"/>
+    <line x1="-26" y1="-10" x2="-26" y2="32"/>
+    <line x1="-26" y1="32" x2="26" y2="32"/>
+    <line x1="26" y1="32" x2="26" y2="-10"/>
+    <line x1="-26" y1="0" x2="-18" y2="0"/>
+    <line x1="-26" y1="10" x2="-18" y2="10"/>
+    <line x1="-26" y1="20" x2="-18" y2="20"/>
+    <line x1="-14" y1="-40" x2="4" y2="25"/>
+    <circle cx="-14" cy="-40" r="3"/>
   </g>
-  <g class="mol" transform="translate(140 1080) rotate(6)">
-  <circle cx="0" cy="0" r="24" fill="none" stroke="#E69F00"/>
-  <text x="-15" y="7" fill="#E69F00" stroke="none" font-size="18">Ca</text>
-  <text x="18" y="-18" fill="#E69F00" stroke="none" font-size="14">2+</text>
-  <line x1="26" y1="-8" x2="54" y2="-8" stroke="#CC79A7" stroke-dasharray="2 6"/>
-  <text x="58" y="-2" fill="#CC79A7" stroke="none" font-size="18">OH</text>
-  <text x="90" y="-18" fill="#CC79A7" stroke="none" font-size="14">−</text>
-  <line x1="26" y1="8" x2="54" y2="8" stroke="#CC79A7" stroke-dasharray="2 6"/>
-  <text x="58" y="30" fill="#CC79A7" stroke="none" font-size="18">OH</text>
-  <text x="90" y="16" fill="#CC79A7" stroke="none" font-size="14">−</text>
+  <!-- 4. Balón de fondo redondo con soporte -->
+  <g class="lab" transform="translate(130 1110) rotate(6)" stroke="#CC79A7">
+    <line x1="-9" y1="-45" x2="9" y2="-45"/>
+    <line x1="-6" y1="-45" x2="-6" y2="-14"/>
+    <line x1="6" y1="-45" x2="6" y2="-14"/>
+    <circle cx="0" cy="14" r="28"/>
+    <line x1="-20" y1="38" x2="-14" y2="50"/>
+    <line x1="20" y1="38" x2="14" y2="50"/>
+    <line x1="-18" y1="50" x2="18" y2="50"/>
   </g>
-  <g class="mol" transform="translate(560 230) rotate(5)">
-  <text x="34" y="27" fill="#009E73" stroke="none" font-size="22">S</text>
-  <line x1="44" y1="18" x2="44" y2="-24" stroke="#009E73"/>
-  <line x1="36" y1="18" x2="36" y2="-24" stroke="#009E73"/>
-  <text x="28" y="-30" fill="#009E73" stroke="none">O</text>
-  <line x1="30" y1="26" x2="-2" y2="48" stroke="#009E73"/>
-  <line x1="34" y1="33" x2="2" y2="55" stroke="#009E73"/>
-  <text x="-22" y="64" fill="#009E73" stroke="none">O</text>
-  <line x1="58" y1="26" x2="90" y2="48" stroke="#009E73"/>
-  <line x1="54" y1="33" x2="86" y2="55" stroke="#009E73"/>
-  <text x="92" y="64" fill="#009E73" stroke="none">O</text>
+  <!-- 5. Probeta graduada -->
+  <g class="lab" transform="translate(570 230) rotate(5)" stroke="#009E73">
+    <line x1="-12" y1="-45" x2="-15" y2="-48"/>
+    <line x1="12" y1="-45" x2="15" y2="-48"/>
+    <line x1="-12" y1="-45" x2="-12" y2="40"/>
+    <line x1="12" y1="-45" x2="12" y2="40"/>
+    <line x1="-12" y1="40" x2="-16" y2="44"/>
+    <line x1="12" y1="40" x2="16" y2="44"/>
+    <line x1="-16" y1="44" x2="16" y2="44"/>
+    <line x1="-12" y1="-30" x2="-7" y2="-30"/>
+    <line x1="-12" y1="-15" x2="-7" y2="-15"/>
+    <line x1="-12" y1="0" x2="-7" y2="0"/>
+    <line x1="-12" y1="15" x2="-7" y2="15"/>
+    <line x1="-12" y1="30" x2="-7" y2="30"/>
+    <line x1="-12" y1="22" x2="12" y2="22"/>
   </g>
-  <!-- HNO3 corregido: N con 1 enlace doble (=O) y 2 simples (-O⁻, -OH) —
-       antes mostraba dos enlaces dobles al N, un enlace de más para el
-       nitrógeno. -->
-  <g class="mol" transform="translate(596 554) rotate(-4)">
-  <text x="-9" y="8" fill="#009E73" stroke="none" font-size="22">N</text>
-  <line x1="4" y1="-13" x2="4" y2="-34" stroke="#009E73"/>
-  <line x1="-4" y1="-13" x2="-4" y2="-34" stroke="#009E73"/>
-  <text x="-7" y="-48" fill="#009E73" stroke="none">O</text>
-  <line x1="11.3" y1="6.5" x2="26" y2="15" stroke="#009E73"/>
-  <text x="33" y="27" fill="#009E73" stroke="none">O</text>
-  <text x="53" y="13" fill="#009E73" stroke="none" font-size="14">−</text>
-  <line x1="-11.3" y1="6.5" x2="-26" y2="15" stroke="#009E73"/>
-  <text x="-59" y="27" fill="#009E73" stroke="none">O</text>
-  <line x1="-43" y1="20" x2="-59" y2="23" stroke="#E69F00"/>
-  <text x="-79" y="31" fill="#E69F00" stroke="none">H</text>
+  <!-- 6. Mechero Bunsen con llama -->
+  <g class="lab" transform="translate(560 560) rotate(-4)" stroke="#E69F00">
+    <line x1="-18" y1="30" x2="18" y2="30"/>
+    <line x1="-18" y1="30" x2="-9" y2="21"/>
+    <line x1="18" y1="30" x2="9" y2="21"/>
+    <line x1="-9" y1="21" x2="9" y2="21"/>
+    <line x1="-7" y1="21" x2="-7" y2="-14"/>
+    <line x1="7" y1="21" x2="7" y2="-14"/>
+    <line x1="-7" y1="8" x2="7" y2="8"/>
+    <line x1="-7" y1="-14" x2="7" y2="-14"/>
+    <path d="M 0 -14 Q -6 -25 -3 -39 Q 0 -45 3 -39 Q 6 -25 0 -14 Z"/>
   </g>
-  <g class="mol" transform="translate(520 900) rotate(3)">
-  <circle cx="0" cy="0" r="24" fill="none" stroke="#E69F00"/>
-  <text x="-15" y="7" fill="#E69F00" stroke="none" font-size="18">Ca</text>
-  <text x="18" y="-18" fill="#E69F00" stroke="none" font-size="14">2+</text>
-  <!-- CO3 como texto (no un hexágono — un polígono de 6 lados se lee como
-       anillo aromático, que el carbonato no es: es un ion plano trigonal). -->
-  <line x1="26" y1="0" x2="58" y2="0" stroke="#009E73" stroke-dasharray="2 6"/>
-  <text x="62" y="7" fill="#009E73" stroke="none" font-size="18">CO</text>
-  <text x="97" y="12" fill="#009E73" stroke="none" font-size="12">3</text>
-  <text x="108" y="-6" fill="#009E73" stroke="none" font-size="14">2−</text>
+  <!-- 7. Gotero con gota -->
+  <g class="lab" transform="translate(600 900) rotate(3)" stroke="#0072B2">
+    <circle cx="0" cy="-36" r="11"/>
+    <line x1="0" y1="-25" x2="0" y2="-20"/>
+    <line x1="-4" y1="-20" x2="-4" y2="22"/>
+    <line x1="4" y1="-20" x2="4" y2="22"/>
+    <line x1="-4" y1="22" x2="0" y2="33"/>
+    <line x1="4" y1="22" x2="0" y2="33"/>
+    <circle cx="0" cy="47" r="3.5"/>
   </g>
-  <g class="mol" transform="translate(600 1200) rotate(-8)">
-  <text x="0" y="0" fill="#0072B2" stroke="none">H</text>
-  <line x1="16" y1="-6" x2="50" y2="-6" stroke="#0072B2"/>
-  <text x="54" y="0" fill="#0072B2" stroke="none">Cl</text>
+  <!-- 8. Matraz pequeño con burbujas ascendentes -->
+  <g class="lab" transform="translate(590 1210) rotate(-5)" stroke="#CC79A7">
+    <line x1="-9" y1="-8" x2="9" y2="-8"/>
+    <line x1="-6" y1="-8" x2="-6" y2="8"/>
+    <line x1="6" y1="-8" x2="6" y2="8"/>
+    <line x1="-6" y1="8" x2="-24" y2="50"/>
+    <line x1="6" y1="8" x2="24" y2="50"/>
+    <line x1="-24" y1="50" x2="24" y2="50"/>
+    <line x1="-16" y1="35" x2="16" y2="35"/>
+    <circle cx="0" cy="-15" r="3"/>
+    <circle cx="-6" cy="-26" r="4"/>
+    <circle cx="8" cy="-34" r="3"/>
+    <circle cx="-3" cy="-44" r="5"/>
+    <circle cx="5" cy="-54" r="3"/>
+    <circle cx="-8" cy="-60" r="2.5"/>
   </g>
 </g>
 </svg>
