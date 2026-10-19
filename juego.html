@@ -3270,13 +3270,28 @@ document.addEventListener('visibilitychange', ()=>{
 // _gameActive es true, se intercepta, se vuelve a armar la trampa (para que
 // la URL no cambie todavía) y se muestra un modal propio en vez de dejar
 // que el navegador salga en silencio y pierda el progreso.
+// _safePushState(): en iOS Safari, volver a llamar pushState() de forma
+// síncrona dentro del propio handler de "popstate" puede lanzar
+// "TypeError: can only call pushState on instances of History" (bug ya
+// reportado de WebKit, más frecuente justo después de restaurar la página
+// desde el caché de retroceso/avance). Encapsular la llamada en try/catch
+// evita que ese error quede sin capturar y rompa el resto del juego; si
+// falla, la trampa simplemente no se vuelve a armar esa vez (el estudiante
+// podría salir con ese "atrás" puntual, pero el juego sigue funcionando).
+function _safePushState(){
+  try{ window.history.pushState({ionomGuard:true}, '', location.href); }
+  catch(e){ /* iOS Safari: ver comentario arriba */ }
+}
 function armExitGuard(){
   _gameActive=true;
-  window.history.pushState({ionomGuard:true}, '', location.href);
+  _safePushState();
 }
 window.addEventListener('popstate', ()=>{
   if(_gameActive){
-    window.history.pushState({ionomGuard:true}, '', location.href);
+    // setTimeout(...,0): da un tick para que Safari/iOS termine de procesar
+    // la propia navegación "atrás" antes de volver a empujar un estado —
+    // mitigación conocida para el mismo bug de WebKit mencionado arriba.
+    setTimeout(_safePushState, 0);
     const m=document.getElementById('exit-guard-overlay');
     if(m) m.classList.add('open');
   }

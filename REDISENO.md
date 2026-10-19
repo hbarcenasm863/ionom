@@ -848,3 +848,49 @@ están en `ASSETS_TO_CACHE`, cache-first).
   index.html, y del Mapa de Reactividad de funciones.html: texto legible
   en los 3 casos.
 - Altura real de `.tts-btn` medida en el DOM (390px): 44px.
+
+## Fase 10 — iOS: "can only call history.pushState on instances of History"
+
+Reporte de la docente: error en modo juego en iOS. `juego.html` tiene un
+freno de salida accidental (`armExitGuard()`/`popstate`, ver Fase previa
+al rediseño) que, al presionar "atrás" durante una partida activa, vuelve
+a llamar `window.history.pushState(...)` de forma síncrona dentro del
+propio handler de `popstate` para "rearmar la trampa" antes de mostrar un
+modal de confirmación. Llamar `pushState` síncronamente dentro de
+`popstate` es un patrón con un bug documentado de WebKit/Safari en iOS:
+puede lanzar `TypeError: can only call pushState on instances of History`,
+más frecuente justo después de que la página se restaura desde el caché
+de retroceso/avance (bfcache) — un patrón que solo se manifiesta en
+Safari/iOS, no en Chromium ni Firefox, lo que explica por qué nunca se
+había visto en las pruebas de este proyecto (todas con Chromium).
+
+Arreglo (`juego.html`, `armExitGuard()`/listener de `popstate`):
+1. Se extrajo un helper `_safePushState()` que envuelve la llamada en
+   try/catch -- si WebKit la rechaza, la trampa simplemente no se vuelve
+   a armar esa vez (el estudiante podría salir con ese "atrás" puntual)
+   en vez de lanzar un error sin capturar que corte el resto del juego.
+2. Dentro del handler de `popstate`, la llamada se difiere un tick con
+   `setTimeout(_safePushState, 0)` -- mitigación documentada para el
+   mismo bug, dándole a Safari tiempo de terminar de procesar su propia
+   navegación "atrás" antes de recibir el siguiente `pushState`.
+
+No se puede reproducir el bug real de WebKit en este entorno (sin
+Safari/iOS disponible para probar), así que la verificación se limitó a
+confirmar que el flujo normal (armar la trampa al iniciar partida, mostrar
+el modal al presionar "atrás", incluso repetido rápido varias veces) sigue
+funcionando igual en Chromium tras el cambio, y que el try/catch no
+esconde ningún otro error real.
+
+sw.js: `CACHE_NAME` v27→v28 (`juego.html` está en `ASSETS_TO_CACHE`; se
+sirve network-first de todas formas, pero se mantiene la disciplina de
+subir versión en cualquier commit que toque contenido cacheable).
+
+### Verificación realizada
+
+- Las 14 páginas sin errores de consola ni desbordamiento horizontal en
+  1280px/390px (`test_all_pages.py`, 28/28 OK).
+- `node -e "new Function(...)"` sobre cada bloque `<script>` de
+  `juego.html` para confirmar que el cambio no rompió la sintaxis.
+- Partida en modo libre + botón "atrás" del navegador (incluido 3 veces
+  seguidas y rápido) en Playwright/Chromium: el modal de confirmación de
+  salida sigue apareciendo correctamente, sin errores de consola.
