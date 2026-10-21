@@ -1187,3 +1187,62 @@ el escenario exacto reportado (temas por defecto + Estequiometría marcada
 a mano, sin tocar nada más) — "D Estequiometría" se auto-marca y genera
 ejercicios reales de estequiometría; regresión de generación (16/21/36
 hojas) sin cambios respecto a antes de este fix.
+
+## Fase 11 (continuación 5) — Causa real de las páginas "solo cuadrícula"
+
+La docente insistió en que seguía viendo páginas casi en blanco con solo
+una cuadrícula de Notas gigante (p. ej. Balanceo + Mol y masa molar +
+Estequiometría a la vez, "página 7 de 33"). El commit anterior (`contarDisponiblesTema`)
+corrigió un contador, pero no era la causa de esto — el bug real estaba
+en el motor de paginación y nunca se había reproducido porque las
+pruebas anteriores solo revisaban `scrollHeight`/`clientHeight` del DOM,
+no la estructura real de cada hoja.
+
+**Causa encontrada con Playwright** (comparando qué entra a `#medidor`
+oculto vs. qué termina en `#vista` visible): `generar()` clona cada hoja
+ya paginada de `#medidor` a `#vista`, y una "red de seguridad" final
+corrige cualquier desborde residual causado por diferencias sutiles de
+renderizado entre ambos contenedores (fuentes que terminan de asentarse
+al volverse visibles) moviendo el **último elemento** de la hoja a una
+página nueva. El problema: cuando ese último elemento es la cuadrícula
+de Notas que `llenarHoja()` ya había agregado para llenar el espacio
+sobrante (no contenido real), sacarla entera a su propia página produce
+exactamente el bug reportado — una hoja casi vacía con una cuadrícula
+gigante y cero ejercicios.
+
+**Corregido** en `assets/docente-app.js`:
+- La red de seguridad final (en `generar()`) ahora detecta si el elemento
+  que desborda es una `.notas-finales` y, en ese caso, la encoge (o la
+  quita si ni así alcanza) en vez de mandarla a una hoja nueva — la
+  cuadrícula no es contenido real, no necesita su propia página.
+- La misma red de seguridad *interna* de `paginar()` (antes de clonar)
+  tenía el mismo defecto en otra forma: si una hoja perdía su único hijo
+  al moverlo, quedaba con 0 hijos y `llenarHoja()` la interpretaba como
+  "toda la hoja está libre", llenándola entera de Notas. Ahora, si una
+  hoja queda así, se elimina en vez de dejarla (salvo que sea la portada
+  del documento).
+- `llenarHoja()`, en su rama para hojas sin ejercicios (solo lectura),
+  usaba un criterio de desborde (`alturaContenido()`, basado en
+  `getBoundingClientRect`) distinto al que usa el resto del motor
+  (`cuerpo.scrollHeight`) — unificado.
+- `bloqueSesionInfo()` armaba un solo bloque HTML gigante por tema
+  (título + toda la lectura + esquema + ejemplo resuelto); ahora cada
+  párrafo/esquema/ejemplo es su propio bloque (el título va pegado solo
+  al primero, para no quedar huérfano), igual que ya recomendaba la nota
+  de ChromaNom — un tema con lectura larga ya no fuerza un bloque más
+  alto que una hoja completa.
+- `generar()` espera dos frames (`requestAnimationFrame` doble) después
+  de `document.fonts.ready` y antes de medir/paginar, no solo antes de la
+  red de seguridad final — `fonts.ready` puede resolverse un instante
+  antes de que el navegador repinte con la fuente real ya aplicada.
+
+Verificado con Playwright, inspeccionando la estructura real de cada hoja
+(no solo si desborda): Balanceo+Mol y masa molar+Estequiometría → 19
+hojas, 0 desbordes, 0 páginas "solo Notas" (antes: 22 hojas, 3 de ellas
+"solo Notas", confirmado también visualmente con capturas de pantalla
+página por página); mismo resultado (0/0) con los temas por defecto, con
+2 versiones, y con los 15 temas a la vez (32 hojas). PDF real exportado
+con `page.pdf()`: 19/19 páginas con contenido, 0 en blanco. Regresión
+completa de las páginas existentes sin errores de consola.
+
+`sw.js`: `CACHE_NAME` v33→v34 (`docente-app.js` cambió).
