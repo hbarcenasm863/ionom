@@ -166,6 +166,12 @@ function contarDisponiblesTema(id){
   let nEj = 0;
   if(id==='elemento') nEj = B.ELEMENTS ? Object.keys(B.ELEMENTS).length : 0;
   else if(id==='reactividad') nEj = (B.REACT_CHAINS||[]).length;
+  // 'estequiometria' no es un group real de BANCO (no existe tal valor) --
+  // sus ejercicios reutilizan las ecuaciones ya balanceadas del group
+  // 'balanceo' (ver tarjetaEstequiometria). Sin este caso especial,
+  // poolPorGrupo(['estequiometria']) siempre da 0 y el contador de la
+  // Sección 2 mostraba "0 ejercicios" aunque sí hubiera 50 disponibles.
+  else if(id==='estequiometria') nEj = poolPorGrupo(['balanceo']).length;
   else nEj = poolPorGrupo([id]).length;
   const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
   const nSaber = saber.filter(q=>q.tema===id).length;
