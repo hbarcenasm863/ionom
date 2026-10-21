@@ -356,60 +356,68 @@ function doPost(e) {
     return salidaJSON({ ok: false, error: 'JSON inválido: ' + String((err && err.message) || err) });
   }
 
-  // INTENTOS=4 / waitLock=6s (antes: 6 intentos de 15s cada uno — hasta ~90s
-  // solo esperando el lock, sin contar el backoff entre intentos). El
-  // frontend (_postConReintento/sendResults en juego.html) YA reintenta por
-  // su cuenta 3 veces con su propio backoff si recibe {ok:false} o la
-  // conexión falla, así que el servidor no necesita ser tan persistente:
-  // cuanto más tiempo retiene doPost() un slot de ejecución reintentando
-  // internamente, menos slots quedan libres para las demás solicitudes
-  // concurrentes de la clase — justo lo que puede escalar a "Too many
-  // simultaneous invocations: Spreadsheets". Fallar más rápido y dejar que
-  // el reintento del cliente (con una solicitud NUEVA, no la misma colgada)
-  // se acomode reduce la congestión en vez de alimentarla. Además,
-  // recalcularTodasLasEstadisticas() ahora solo retiene este mismo lock
-  // durante la LECTURA de "Registro" (antes retenía el lock durante todo el
-  // recálculo + reescritura de 4 hojas), así que hay muchas menos
-  // probabilidades de toparse con el lock ocupado en primer lugar.
-  const INTENTOS = 4;
+  // Intentos bajo lock (upsert: busca la fila de la sesión y la actualiza)
+  // y, si el lock no se consigue, PLAN B sin lock (appendRow) en vez de
+  // devolver {ok:false}.
+  //
+  // Por qué: la hoja "Errores" mostraba ráfagas de "No se obtuvo el lock
+  // (servidor congestionado)" concentradas en los minutos :18–:22 y :48–:52
+  // de cada hora — justo cuando corre el disparador automático de 30 min
+  // (actualizarEstadisticasAutomatico). Aunque el recálculo ya solo retiene
+  // el lock durante la lectura, mientras reescribe las hojas de
+  // estadísticas TODAS las operaciones sobre el mismo spreadsheet se
+  // vuelven lentas, así que cada doPost retiene el lock más tiempo del
+  // normal y los demás estudiantes de la clase, en fila detrás, agotan su
+  // espera. Con el plan B la partida se guarda igual: appendRow es atómico
+  // en Sheets (dos appendRow concurrentes nunca se pisan), y si por eso la
+  // misma sesión queda en dos filas (p. ej. 'abandono' + 'fin'),
+  // leerRegistroDeduplicado() ya se queda con la más completa al calcular
+  // estadísticas, y limpiarRegistroDuplicados() las borra físicamente si se
+  // quiere ordenar "Registro". Una fila duplicada es inofensiva; una
+  // partida perdida, no.
+  const INTENTOS = 3;
   let ultimoError;
   for (let intento = 0; intento < INTENTOS; intento++) {
-    // La búsqueda/escritura de la fila en "Registro" va bajo lock (evita que
-    // dos envíos concurrentes calculen la misma fila destino y se pisen),
-    // pero el lock se toma y suelta EN CADA INTENTO, no una sola vez afuera:
-    // así, si updateStats() (disparador de 30 min o recalcularAhora) tiene
-    // el lock ocupado en ese instante, este intento falla rápido y el
-    // siguiente (con jitter) tiene otra oportunidad, en vez de quedarse
-    // esperando cerca del límite de ejecución de Apps Script (6 min).
+    // El lock se toma y suelta EN CADA INTENTO, no una sola vez afuera, para
+    // no quedarse esperando cerca del límite de ejecución de Apps Script.
     const lock = LockService.getScriptLock();
-    try {
-      lock.waitLock(6000);
-    } catch (err) {
-      ultimoError = new Error('No se obtuvo el lock (servidor congestionado): ' + err);
-      if (intento < INTENTOS - 1) {
-        const base = 1000 * Math.pow(1.7, intento);
-        const jitter = Math.random() * 500;
-        Utilities.sleep(Math.min(base + jitter, 4000));
-      }
+    if (!lock.tryLock(5000)) {
+      ultimoError = new Error('No se obtuvo el lock (servidor congestionado)');
+      if (intento < INTENTOS - 1) esperarConJitter_(intento);
       continue;
     }
     try {
       const ss = obtenerSpreadsheet();
       upsertRegistro(ss, d);
+      // flush() ANTES de soltar el lock (patrón recomendado por Google): si
+      // no, las escrituras pendientes se aplican después de liberarlo y el
+      // siguiente doPost podría no ver esta fila y duplicarla.
+      SpreadsheetApp.flush();
       return salidaJSON({ ok: true });
     } catch (err) {
       ultimoError = err;
-      if (intento < INTENTOS - 1) {
-        const base = 1000 * Math.pow(1.7, intento);
-        const jitter = Math.random() * 500;
-        Utilities.sleep(Math.min(base + jitter, 4000));
-      }
+      if (intento < INTENTOS - 1) esperarConJitter_(intento);
     } finally {
       lock.releaseLock();
     }
   }
-  registrarError('doPost', ultimoError);
-  return salidaJSON({ ok: false, error: String((ultimoError && ultimoError.message) || ultimoError) });
+
+  // Plan B: guardar sin lock como fila nueva.
+  try {
+    agregarRegistroSinLock_(obtenerSpreadsheet(), d);
+    Logger.log('doPost: guardado por plan B sin lock (' + ultimoError + ')');
+    return salidaJSON({ ok: true });
+  } catch (err) {
+    registrarError('doPost', 'Falló con lock (' + String((ultimoError && ultimoError.message) || ultimoError) +
+      ') y también sin lock: ' + String((err && err.message) || err));
+    return salidaJSON({ ok: false, error: String((err && err.message) || err) });
+  }
+}
+
+function esperarConJitter_(intento) {
+  const base = 1000 * Math.pow(1.7, intento);
+  const jitter = Math.random() * 500;
+  Utilities.sleep(Math.min(base + jitter, 4000));
 }
 
 function salidaJSON(obj) {
@@ -441,7 +449,45 @@ function obtenerSpreadsheet() {
 // fila en lugar de añadir una nueva.
 function upsertRegistro(ss, d) {
   const sh = obtenerHojaRegistro(ss);
+  const sesionCod = String(d.sesion || d.codigoSesion || d.sessionId || '').trim();
 
+  // Buscar la fila de esta sesión, si ya existe.
+  let filaExistente = -1;
+  let timestampOriginal = null;
+  if (sesionCod && sh.getLastRow() > 1) {
+    const datos = sh.getRange(2, 1, sh.getLastRow() - 1, REG_HEADERS.length).getValues();
+    for (let i = 0; i < datos.length; i++) {
+      if (String(datos[i][COL.SESION - 1]).trim() === sesionCod) {
+        filaExistente = i + 2;
+        timestampOriginal = datos[i][COL.TIMESTAMP - 1];
+        break;
+      }
+    }
+  }
+
+  // El Timestamp se fija con la hora del servidor al recibir el primer evento
+  // de la sesión (no con el reloj del navegador del estudiante, que puede
+  // estar desincronizado, ni parseando el string que manda el cliente, cuyo
+  // formato sin zona horaria se presta a interpretarse mal). Al actualizar,
+  // se conserva ese Timestamp original — nunca se pisa (Regla 1).
+  const timestamp = (filaExistente !== -1 && timestampOriginal instanceof Date) ? timestampOriginal : new Date();
+  const fila = construirFilaRegistro_(d, timestamp);
+  const pct = fila[COL.PCT - 1];
+
+  let filaIdx;
+  if (filaExistente !== -1) {
+    sh.getRange(filaExistente, 1, 1, fila.length).setValues([fila]);
+    filaIdx = filaExistente;
+  } else {
+    sh.appendRow(fila);
+    filaIdx = sh.getLastRow();
+  }
+  sh.getRange(filaIdx, 1, 1, fila.length).setBackground(colorPorPorcentaje(pct));
+}
+
+// Arma la fila de "Registro" a partir del payload de juego.html. Compartida
+// por upsertRegistro() (con lock) y agregarRegistroSinLock_() (plan B).
+function construirFilaRegistro_(d, timestamp) {
   const sesionCod = String(d.sesion || d.codigoSesion || d.sessionId || '').trim();
   const trigger = String(d.trigger || d.razon || d.evento || '').trim();
   // juego.html manda "total"/"total_preguntas" como el tamaño COMPLETO de la
@@ -470,26 +516,6 @@ function upsertRegistro(ss, d) {
   // Principiante...), no un tema — por eso "grupo" tiene prioridad aquí.
   const tema = String(d.grupo || d.nivel || '').trim();
 
-  // Buscar la fila de esta sesión, si ya existe.
-  let filaExistente = -1;
-  let timestampOriginal = null;
-  if (sesionCod && sh.getLastRow() > 1) {
-    const datos = sh.getRange(2, 1, sh.getLastRow() - 1, REG_HEADERS.length).getValues();
-    for (let i = 0; i < datos.length; i++) {
-      if (String(datos[i][COL.SESION - 1]).trim() === sesionCod) {
-        filaExistente = i + 2;
-        timestampOriginal = datos[i][COL.TIMESTAMP - 1];
-        break;
-      }
-    }
-  }
-
-  // El Timestamp se fija con la hora del servidor al recibir el primer evento
-  // de la sesión (no con el reloj del navegador del estudiante, que puede
-  // estar desincronizado, ni parseando el string que manda el cliente, cuyo
-  // formato sin zona horaria se presta a interpretarse mal). Al actualizar,
-  // se conserva ese Timestamp original — nunca se pisa (Regla 1).
-  const timestamp = (filaExistente !== -1 && timestampOriginal instanceof Date) ? timestampOriginal : new Date();
   const fecha = Utilities.formatDate(timestamp, TZ, 'yyyy-MM-dd');
   const hora = Utilities.formatDate(timestamp, TZ, 'HH:mm:ss');
 
@@ -507,16 +533,25 @@ function upsertRegistro(ss, d) {
     falladosTxt,
     trigger
   ];
+  return fila;
+}
 
-  let filaIdx;
-  if (filaExistente !== -1) {
-    sh.getRange(filaExistente, 1, 1, fila.length).setValues([fila]);
-    filaIdx = filaExistente;
-  } else {
-    sh.appendRow(fila);
-    filaIdx = sh.getLastRow();
+// Plan B de doPost() cuando no se consigue el lock: siempre fila nueva, sin
+// buscar la fila existente de la sesión (eso es lo único que necesita el
+// lock). appendRow es atómico, así que es seguro aunque otros escriban a la
+// vez; un posible duplicado de la misma sesión lo resuelve
+// leerRegistroDeduplicado() al calcular estadísticas.
+function agregarRegistroSinLock_(ss, d) {
+  const sh = obtenerHojaRegistro(ss);
+  const fila = construirFilaRegistro_(d, new Date());
+  sh.appendRow(fila);
+  // El color es cosmético: si otra fila se agregó justo después, se omite
+  // en vez de arriesgarse a pintar la fila equivocada.
+  const ultima = sh.getLastRow();
+  const sesionUltima = String(sh.getRange(ultima, COL.SESION).getValue()).trim();
+  if (sesionUltima === fila[COL.SESION - 1]) {
+    sh.getRange(ultima, 1, 1, fila.length).setBackground(colorPorPorcentaje(fila[COL.PCT - 1]));
   }
-  sh.getRange(filaIdx, 1, 1, fila.length).setBackground(colorPorPorcentaje(pct));
 }
 
 function obtenerHojaRegistro(ss) {
