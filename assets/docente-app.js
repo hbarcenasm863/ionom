@@ -618,12 +618,20 @@ function bloqueSesionInfo(F){
   F.temas.forEach(function(tid){
     const t = temasData.find(x=>x.id===tid);
     if(!t || !t.info) return;
-    let html = '<div class="sect-info"><h3>'+t.titulo+'</h3>';
-    (t.info.lectura||[]).forEach(p => html += '<p>'+p+'</p>');
+    // Antes se armaba un solo bloque gigante por tema (título + TODA la
+    // lectura + esquema + ejemplo) -- un tema con lectura larga no cabía
+    // entero en ninguna hoja y el paginador lo sacaba íntegro a una hoja
+    // nueva, dejando la anterior vacía (solo rellenada con la cuadrícula
+    // de Notas). Ahora cada párrafo/esquema/ejemplo es su PROPIO bloque
+    // (solo el título va pegado al primero, para no dejarlo huérfano al
+    // final de una hoja), igual que recomienda la nota de ChromaNom.
+    const piezas = [];
+    (t.info.lectura||[]).forEach(p => piezas.push('<p>'+p+'</p>'));
     if(t.info.esquema){
-      html += '<div class="esquema"><strong>'+t.info.esquema.raiz+'</strong><ul>';
-      (t.info.esquema.ramas||[]).forEach(r=>{ html += '<li><strong>'+r.t+':</strong> '+(r.items||[]).join(', ')+'</li>'; });
-      html += '</ul></div>';
+      let esq = '<div class="esquema"><strong>'+t.info.esquema.raiz+'</strong><ul>';
+      (t.info.esquema.ramas||[]).forEach(r=>{ esq += '<li><strong>'+r.t+':</strong> '+(r.items||[]).join(', ')+'</li>'; });
+      esq += '</ul></div>';
+      piezas.push(esq);
     }
     if(t.ejemplo){
       // Cada parte usa el mismo código de 4 colores MDEC del juego (cat/an/oh/ox)
@@ -632,10 +640,13 @@ function bloqueSesionInfo(F){
         const rol = p[1];
         return '<div style="margin-top:4px"><span style="font-family:var(--mono);font-weight:700;color:var(--'+rol+'-t);background:var(--'+rol+'-b);padding:2px 8px;border-radius:6px;margin-right:6px">'+esc(p[0])+'</span>'+esc(p[2])+'</div>';
       }).join('');
-      html += '<div class="ejemplo-resuelto"><strong>Ejemplo resuelto:</strong> <span style="font-family:var(--mono);font-weight:700">'+esc(t.ejemplo.f)+'</span>'+chips+'</div>';
+      piezas.push('<div class="ejemplo-resuelto"><strong>Ejemplo resuelto:</strong> <span style="font-family:var(--mono);font-weight:700">'+esc(t.ejemplo.f)+'</span>'+chips+'</div>');
     }
-    html += '</div>';
-    out.push({html:html, esMultiple:false});
+    if(!piezas.length) piezas.push('');
+    piezas.forEach(function(pieza, i){
+      const html = '<div class="sect-info">'+(i===0?'<h3>'+t.titulo+'</h3>':'')+pieza+'</div>';
+      out.push({html:html, esMultiple:false});
+    });
   });
   return out;
 }
@@ -744,10 +755,23 @@ function paginar(doc){
       hojas.splice(idx+1, 0, continuacion);
       intentos++;
     }
+    // Si "hojas[idx]" tenía un solo hijo y ERA el que desbordaba, al
+    // sacarlo queda con 0 hijos -- alturaContenido() devuelve 0 para una
+    // hoja vacía, así que llenarHoja() (más abajo) la interpreta como
+    // "toda la hoja está libre" y la llena entera con una cuadrícula de
+    // Notas gigante: la página casi en blanco reportada. Se elimina en
+    // vez de dejarla así, salvo que sea la portada del documento (con el
+    // encabezado institucional completo, que se perdería con ella).
+    if(!hojas[idx].querySelector('.hoja-cuerpo').children.length && !hojas[idx].querySelector('.hoja-enc-completo')){
+      hojas[idx].remove();
+      hojas.splice(idx, 1);
+      idx--;
+    }
   }
 
   hojas.forEach(function(h, i){
     llenarHoja(h);
+    h.dataset.etiqueta = doc.etiqueta || '';
     const pie = h.querySelector('.hoja-pagina');
     if(pie) pie.textContent = (doc.etiqueta?doc.etiqueta+' — ':'')+'página '+(i+1)+' de '+hojas.length;
   });
@@ -790,7 +814,13 @@ function llenarHoja(hoja){
     nota.className = 'notas-finales';
     nota.innerHTML = '<div class="ex-num">Notas</div><div class="cuad" style="height:'+(CUADRO*2)+'px"></div>';
     cuerpo.appendChild(nota);
-    if(alturaContenido(cuerpo) > cuerpo.clientHeight + 1){
+    // Mismo criterio de desborde que usa el resto del código
+    // (cuerpo.scrollHeight, no alturaContenido): un desajuste aquí dejaba
+    // crecer esta cuadrícula más de lo que después confirmaban como válido
+    // paginar() y la red de seguridad, que SÍ miden con scrollHeight --
+    // esas desalojaban la cuadrícula entera a una hoja nueva casi vacía en
+    // cuanto detectaban el desborde que este chequeo no había visto venir.
+    if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
       cuerpo.removeChild(nota);
       return;
     }
@@ -800,7 +830,7 @@ function llenarHoja(hoja){
       const alturaActual = parseFloat(cuad.style.height)||0;
       if(alturaActual >= CUADRO*26) break;
       cuad.style.height = (alturaActual + CUADRO) + 'px';
-      if(alturaContenido(cuerpo) > cuerpo.clientHeight + 1){
+      if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
         cuad.style.height = alturaActual + 'px';
         break;
       }
@@ -966,14 +996,27 @@ async function generar(){
     if(document.fonts && document.fonts.ready){
       await document.fonts.ready.catch(()=>{});
     }
+    // document.fonts.ready puede resolverse un instante ANTES de que el
+    // navegador repinte con la fuente real aplicada (ej. el título pasa de
+    // una línea a dos con Fraunces) -- si se mide/pagina justo ahí, el alto
+    // disponible de cada hoja se encoge DESPUÉS de haber medido, y
+    // llenarHoja() estira la cuadrícula de Notas de más sobre un alto que
+    // ya no es el real (la red de seguridad de más abajo termina sacando
+    // esa cuadrícula entera a una hoja nueva casi vacía). Se espera a que
+    // el navegador complete dos repintados antes de medir nada.
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     const F = leerForm();
     if(!F.temas.length){ alert('Selecciona al menos un tema.'); return; }
     const vista = document.getElementById('vista');
     vista.innerHTML = '';
     const documentos = construirTodas(F);
-    documentos.forEach(function(doc){
+    documentos.forEach(function(doc, gi){
       const hojas = paginar(doc);
-      hojas.forEach(h => vista.appendChild(h.cloneNode(true)));
+      hojas.forEach(h => {
+        const clone = h.cloneNode(true);
+        clone.dataset.pgGroup = gi;
+        vista.appendChild(clone);
+      });
     });
     document.getElementById('s-form').classList.remove('active');
     document.getElementById('s-preview').classList.add('active');
@@ -996,19 +1039,67 @@ async function generar(){
         const cuerpo = actual.querySelector('.hoja-cuerpo');
         if(cuerpo.scrollHeight <= cuerpo.clientHeight + 1 || !cuerpo.lastElementChild) break;
         const sobrante = cuerpo.lastElementChild;
+        // El último elemento suele ser la cuadrícula de Notas que
+        // llenarHoja() ya agregó en #medidor para llenar el espacio
+        // sobrante -- si ESO es lo que desborda acá (por el mismo
+        // desajuste de fuentes entre #medidor y #vista), hay que encogerla
+        // o quitarla, no mandarla sola a una hoja nueva: eso es justo la
+        // página casi en blanco con cuadrícula gigante reportada, porque
+        // no es contenido real que necesite su propio espacio.
+        if(sobrante.className.includes('notas-finales')){
+          const cuad = sobrante.querySelector('.cuad');
+          let encogido = false;
+          while(cuad && cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+            const alturaActual = parseFloat(cuad.style.height)||0;
+            if(alturaActual <= 0) break;
+            cuad.style.height = Math.max(0, alturaActual - CUADRO) + 'px';
+            encogido = true;
+          }
+          if(cuerpo.scrollHeight > cuerpo.clientHeight + 1) cuerpo.removeChild(sobrante);
+          if(encogido || cuerpo.scrollHeight <= cuerpo.clientHeight + 1) break;
+          continue;
+        }
         cuerpo.removeChild(sobrante);
         const continuacion = crearHoja({F:F}, false);
+        continuacion.dataset.pgGroup = hoja.dataset.pgGroup;
+        continuacion.dataset.etiqueta = hoja.dataset.etiqueta || '';
         actual.parentNode.insertBefore(continuacion, actual.nextSibling);
         continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
         actual = continuacion;
         intentos++;
         seMovioAlgo = true;
       }
-      // Si se movió contenido fuera de "hoja" (la original), le queda
-      // espacio libre de verdad que llenarHoja() -- ya corrida en #medidor
-      // antes de clonar -- no pudo prever. Se vuelve a correr aquí, sobre
-      // el DOM real, para no dejar esa hoja a medio llenar.
-      if(seMovioAlgo) llenarHoja(hoja);
+      if(!seMovioAlgo) return;
+      const cuerpoOriginal = hoja.querySelector('.hoja-cuerpo');
+      // Si TODO el contenido de "hoja" se movió a hoja(s) de continuación,
+      // no queda nada real en ella -- rellenarla con llenarHoja() produce
+      // justo el bug reportado: una página casi vacía con una cuadrícula
+      // de Notas gigante y ningún ejercicio. Se elimina en vez de
+      // rellenarla, salvo que sea la portada del documento (lleva el
+      // encabezado institucional completo, que se perdería con ella).
+      if(cuerpoOriginal.children.length === 0 && !hoja.querySelector('.hoja-enc-completo')){
+        hoja.remove();
+      } else {
+        // Le queda espacio libre de verdad que llenarHoja() -- ya corrida
+        // en #medidor antes de clonar -- no pudo prever. Se vuelve a
+        // correr aquí, sobre el DOM real, para no dejar esa hoja a medio
+        // llenar.
+        llenarHoja(hoja);
+      }
+    });
+    // Renumerar "página X de Y" por documento: mover o eliminar hojas en
+    // el paso anterior puede haber cambiado cuántas tiene cada uno.
+    const grupos = {};
+    Array.from(vista.querySelectorAll('.hoja')).forEach(function(h){
+      const g = h.dataset.pgGroup || '';
+      (grupos[g] = grupos[g] || []).push(h);
+    });
+    Object.values(grupos).forEach(function(hs){
+      hs.forEach(function(h, i){
+        const pie = h.querySelector('.hoja-pagina');
+        const etq = h.dataset.etiqueta;
+        if(pie) pie.textContent = (etq?etq+' — ':'')+'página '+(i+1)+' de '+hs.length;
+      });
     });
   } finally {
     if(btn) btn.disabled = false;
