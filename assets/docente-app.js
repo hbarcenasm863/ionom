@@ -769,8 +769,14 @@ function paginar(doc){
     }
   }
 
+  // El relleno (cuadrícula elástica / Notas) NO se hace aquí -- se hace al
+  // final de generar(), sobre #vista y DESPUÉS de "subir" todo el
+  // contenido que quepa de la hoja siguiente (ver compactarDocumento()).
+  // Si se rellenara aquí, cada hoja de #medidor ya saldría "llena" antes
+  // de que exista la oportunidad de hacer fluir el contenido entre hojas,
+  // y el resultado sería justo lo que no se quiere: una cuadrícula
+  // gigante en vez de que la siguiente pregunta continúe.
   hojas.forEach(function(h, i){
-    llenarHoja(h);
     h.dataset.etiqueta = doc.etiqueta || '';
     const pie = h.querySelector('.hoja-pagina');
     if(pie) pie.textContent = (doc.etiqueta?doc.etiqueta+' — ':'')+'página '+(i+1)+' de '+hojas.length;
@@ -1055,79 +1061,64 @@ async function generar(){
         const cuerpo = actual.querySelector('.hoja-cuerpo');
         if(cuerpo.scrollHeight <= cuerpo.clientHeight + 1 || !cuerpo.lastElementChild) break;
         const sobrante = cuerpo.lastElementChild;
-        // El último elemento suele ser la cuadrícula de Notas que
-        // llenarHoja() ya agregó en #medidor para llenar el espacio
-        // sobrante -- si ESO es lo que desborda acá (por el mismo
-        // desajuste de fuentes entre #medidor y #vista), hay que encogerla
-        // o quitarla, no mandarla sola a una hoja nueva: eso es justo la
-        // página casi en blanco con cuadrícula gigante reportada, porque
-        // no es contenido real que necesite su propio espacio.
-        if(sobrante.className.includes('notas-finales')){
-          const cuad = sobrante.querySelector('.cuad');
-          let encogido = false;
-          while(cuad && cuerpo.scrollHeight > cuerpo.clientHeight + 1){
-            const alturaActual = parseFloat(cuad.style.height)||0;
-            if(alturaActual <= 0) break;
-            cuad.style.height = Math.max(0, alturaActual - CUADRO) + 'px';
-            encogido = true;
-          }
-          if(cuerpo.scrollHeight > cuerpo.clientHeight + 1) cuerpo.removeChild(sobrante);
-          if(encogido || cuerpo.scrollHeight <= cuerpo.clientHeight + 1) break;
-          continue;
-        }
         cuerpo.removeChild(sobrante);
         const continuacion = crearHoja({F:F}, false);
         continuacion.dataset.pgGroup = hoja.dataset.pgGroup;
         continuacion.dataset.etiqueta = hoja.dataset.etiqueta || '';
         actual.parentNode.insertBefore(continuacion, actual.nextSibling);
         continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
-        // "continuacion" no la visita el forEach de más abajo (se creó
-        // después de tomar la lista de hojas de #vista) -- sin esto se
-        // quedaba con el sobrante a su tamaño original y el resto de la
-        // hoja en blanco: el bug real detrás de un ejercicio pequeño con
-        // un hueco enorme debajo, en vez de la cuadrícula de Notas o el
-        // propio ejercicio creciendo para llenar el espacio.
-        llenarHoja(continuacion);
         actual = continuacion;
         intentos++;
         seMovioAlgo = true;
       }
-      if(!seMovioAlgo){
-        // Aunque esta hoja no desbordó, el espacio libre que se midió en
-        // #medidor (oculto) para rellenarla puede haber quedado corto del
-        // real una vez la hoja se vuelve visible en #vista (mismo
-        // desajuste de fuentes) -- eso deja una cuadrícula pequeña con un
-        // hueco grande debajo que nunca se corregía, porque solo se volvía
-        // a llenar la hoja cuando SÍ desbordaba. Se vuelve a correr aquí,
-        // sobre las medidas reales, para completar cualquier relleno que
-        // haya quedado corto.
-        llenarHoja(hoja);
-        return;
-      }
-      const cuerpoOriginal = hoja.querySelector('.hoja-cuerpo');
+      if(!seMovioAlgo) return;
       // Si TODO el contenido de "hoja" se movió a hoja(s) de continuación,
-      // no queda nada real en ella -- rellenarla con llenarHoja() produce
-      // justo el bug reportado: una página casi vacía con una cuadrícula
-      // de Notas gigante y ningún ejercicio. Se elimina en vez de
-      // rellenarla, salvo que sea la portada del documento (lleva el
-      // encabezado institucional completo, que se perdería con ella).
+      // no queda nada real en ella. Se elimina en vez de dejarla vacía,
+      // salvo que sea la portada del documento (lleva el encabezado
+      // institucional completo, que se perdería con ella).
+      const cuerpoOriginal = hoja.querySelector('.hoja-cuerpo');
       if(cuerpoOriginal.children.length === 0 && !hoja.querySelector('.hoja-enc-completo')){
         hoja.remove();
-      } else {
-        // Le queda espacio libre de verdad que llenarHoja() -- ya corrida
-        // en #medidor antes de clonar -- no pudo prever. Se vuelve a
-        // correr aquí, sobre el DOM real, para no dejar esa hoja a medio
-        // llenar.
-        llenarHoja(hoja);
       }
     });
-    // Renumerar "página X de Y" por documento: mover o eliminar hojas en
-    // el paso anterior puede haber cambiado cuántas tiene cada uno.
+    // Agrupar por documento (cada paginar() es un grupo independiente).
     const grupos = {};
     Array.from(vista.querySelectorAll('.hoja')).forEach(function(h){
       const g = h.dataset.pgGroup || '';
       (grupos[g] = grupos[g] || []).push(h);
     });
+    // Compactar: "subir" el contenido de cada hoja a la anterior mientras
+    // quepa, para que el documento fluya seguido (la siguiente pregunta o
+    // ejercicio continúa en el espacio libre) en vez de dejarlo en blanco
+    // a la espera de que una cuadrícula lo rellene. Ninguna hoja se
+    // rellena con Notas/cuadrícula todavía en este punto -- eso es el
+    // último recurso, después de que ya no quede nada más que subir (ver
+    // más abajo).
+    Object.values(grupos).forEach(function(hs){
+      for(let idx=0; idx<hs.length-1; idx++){
+        const cuerpo = hs[idx].querySelector('.hoja-cuerpo');
+        while(idx+1 < hs.length){
+          const cSig = hs[idx+1].querySelector('.hoja-cuerpo');
+          const candidato = cSig.firstElementChild;
+          if(!candidato) break;
+          cuerpo.appendChild(candidato);
+          if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+            cSig.insertBefore(candidato, cSig.firstElementChild);
+            break;
+          }
+          if(!cSig.children.length){
+            hs[idx+1].remove();
+            hs.splice(idx+1, 1);
+          }
+        }
+      }
+    });
+    // Último recurso: la(s) hoja(s) donde ya no quedó nada más que subir
+    // (normalmente solo la última de cada documento) se rellena con la
+    // cuadrícula elástica / bloque de Notas.
+    Object.values(grupos).forEach(function(hs){ hs.forEach(llenarHoja); });
+    // Renumerar "página X de Y" por documento: compactar puede haber
+    // cambiado cuántas hojas tiene cada uno.
     Object.values(grupos).forEach(function(hs){
       hs.forEach(function(h, i){
         const pie = h.querySelector('.hoja-pagina');
