@@ -413,7 +413,7 @@ function crearHoja(doc, esPrimera){
   hoja.innerHTML =
     '<div class="hoja-enc'+(esPrimera?' hoja-enc-completo':'')+'">'
       + (esPrimera
-        ? '<div class="hoja-enc-top"><div><strong>'+esc(doc.F.colegio||'')+'</strong><br>'+esc(doc.F.docente||'')+' · '+esc(doc.F.curso||'')+' · '+esc(doc.F.fecha||'')+'</div><div class="hoja-enc-logo">IonNom</div></div>'
+        ? '<div class="hoja-enc-top"><div><strong>'+esc(doc.F.colegio||'')+'</strong><br>'+esc(doc.F.docente||'')+' · '+esc(doc.F.curso||'')+' · '+esc(doc.F.fecha||'')+'</div><img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom"></div>'
         : '<div class="hoja-enc-corto">'+esc(doc.F.curso||'')+' — '+esc(doc.F.fecha||'')+'</div>')
     + '</div>'
     + '<div class="hoja-cuerpo"></div>'
