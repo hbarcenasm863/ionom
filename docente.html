@@ -281,13 +281,16 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
   <!-- Medidor oculto: tamaño real (816×1056), visibility:hidden (NO display:none,
        que dejaría clientHeight/scrollHeight en 0 e impediría medir el desborde). -->
-  <!-- Sin visibility:hidden a propósito: con eso puesto, algunos navegadores
-       difieren el "shaping" real de las fuentes web hasta que el contenido
-       se pinta de verdad, así que lo medido aquí (oculto) podía salir unos
-       px más bajo que el mismo contenido ya clonado y visible en #vista,
-       causando desbordes residuales pequeños. position:fixed + left fuera
-       de pantalla ya lo mantiene invisible para el usuario sin ese efecto. -->
-  <div id="medidor" style="position:fixed;left:-9999px;top:0"></div>
+  <!-- A propósito NO se usa "left:-9999px" (fuera de pantalla): varios
+       navegadores no pintan de verdad el contenido posicionado fuera del
+       viewport (optimización de render), así que subíndices/superíndices
+       químicos (₂, ₃, ⁻) de un subconjunto Unicode distinto de la fuente
+       web podían no cargar hasta que la hoja se clonaba a #vista (ya
+       visible) -- eso hacía crecer el texto unos px DESPUÉS de medir y
+       paginar, dejando desbordes residuales pequeños. Con opacity casi 0
+       pero dentro del viewport, el navegador sí pinta (y carga los
+       subconjuntos de fuente) de verdad al medir. -->
+  <div id="medidor" style="position:fixed;left:0;top:0;opacity:.0001;pointer-events:none;z-index:-1"></div>
 
   <footer class="no-print">
     IonNom — Generador para Docentes · lee en vivo los bancos de <a href="generador.html">Generador</a> y <a href="juego.html">Juego</a>, sin copiarlos.
