@@ -1159,3 +1159,31 @@ periódica"/"solo Cadena de reactividad" (sin tipo D mapeado, confirma que
 "Sesión 3" desaparece en vez de imprimir una hoja casi vacía); auto-marcado
 de "D Estequiometría" al marcar el tema confirmado con Playwright;
 `node -e "new Function(...)"` sobre `docente.html` y `docente-app.js`.
+
+## Fase 11 (continuación 4) — Banner de actualización + caché de docente-app.js/docente-datos.js
+
+La docente reportó seguir viendo el mismo problema (hojas en blanco, 0
+ejercicios de estequiometría) **después** de que la fase anterior ya
+estaba fusionada en `main` y verificada localmente. Causa: `docente.html`
+era la única página del sitio sin el banner "Actualizar" que
+`index.html`/`nomenClash.html` ya tienen, y además `assets/docente-app.js`/
+`assets/docente-datos.js` se servían **cache-first** desde `sw.js` — un
+navegador con el service worker ya instalado podía seguir sirviendo una
+versión vieja de esos dos archivos indefinidamente, con o sin banner.
+
+- `docente.html`: se porta el mismo registro de service worker + banner
+  "🔄 Nueva versión disponible / Actualizar" que ya tenían `index.html`/
+  `nomenClash.html`.
+- `sw.js`: `docente-app.js`/`docente-datos.js` pasan de cache-first a
+  **network-first con fallback a caché** (igual que el HTML) — a
+  diferencia de `banco.js` (compartido con `juego.html`/`generador.html`/
+  `simulador.html`, donde cache-first importa para que los estudiantes
+  jueguen sin conexión), estos dos solo los usa la docente, así que
+  siempre preferir la versión más nueva cuando hay internet es más
+  importante que ahorrar una petición de red. `CACHE_NAME` v32→v33.
+
+Verificado: banner presente en el DOM sin errores de consola; reconfirmado
+el escenario exacto reportado (temas por defecto + Estequiometría marcada
+a mano, sin tocar nada más) — "D Estequiometría" se auto-marca y genera
+ejercicios reales de estequiometría; regresión de generación (16/21/36
+hojas) sin cambios respecto a antes de este fix.
