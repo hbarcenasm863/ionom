@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="assets/shared-tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
+:root{--book:'STIX Two Text',Georgia,'Times New Roman',serif}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.55}
@@ -85,24 +86,30 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #vista{display:flex;flex-direction:column;align-items:center;gap:20px;overflow-x:auto;padding:4px}
 
 /* ── Hoja tamaño carta (816×1056px a 96dpi) ── */
-.hoja{width:816px;min-width:816px;height:1056px;background:#fff;color:#000;box-shadow:0 2px 14px rgba(0,0,0,.18);padding:50px 56px;box-sizing:border-box;display:flex;flex-direction:column;font-family:var(--sans);flex-shrink:0}
-.hoja-enc{border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:12px;font-size:.74rem;flex-shrink:0}
+.hoja{width:816px;min-width:816px;height:1056px;background:#fff;color:#000;box-shadow:0 2px 14px rgba(0,0,0,.18);padding:50px 56px;box-sizing:border-box;display:flex;flex-direction:column;font-family:var(--book);font-size:1rem;line-height:1.5;flex-shrink:0}
+.hoja-enc{border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:12px;font-size:.74rem;flex-shrink:0;font-family:var(--sans)}
 .hoja-enc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .hoja-enc-logo{height:34px;width:auto;object-fit:contain;flex-shrink:0}
 .hoja-enc-corto{color:#555}
+.hoja-subtitulo{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#555;margin-bottom:2px}
+.hoja-titulo-doc{font-family:var(--serif);font-weight:700;font-size:1.1rem;color:var(--tx);margin-bottom:6px;line-height:1.25}
+.hoja-datos-row{display:flex;flex-wrap:wrap;gap:4px 22px;font-size:.74rem;color:#444;margin-bottom:2px}
+.hoja-datos-row b{color:#000;font-weight:700}
+.hoja-nombre-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font-size:.78rem;margin-top:8px}
+.hoja-nombre-row .hr-linea{min-width:220px}
 .hoja-cuerpo{flex:1;overflow:hidden}
 .hoja-pie{border-top:1px solid #ccc;padding-top:6px;margin-top:8px;font-size:.66rem;color:#777;text-align:center;flex-shrink:0}
 
 .sec-tit{font-family:var(--serif);font-style:italic;font-size:1.05rem;font-weight:700;color:var(--nav);margin:14px 0 10px;padding-bottom:5px;border-bottom:1.5px solid var(--brd)}
-.sect-previos,.sect-info{margin-bottom:12px;font-size:.84rem}
-.sect-previos h3,.sect-info h3{font-size:.86rem;font-weight:800;margin-bottom:5px;color:var(--tx)}
-.sect-previos p,.sect-info p{margin-bottom:6px;line-height:1.45}
-.curioso{background:var(--cat-b);border-left:3px solid var(--cat);padding:6px 10px;border-radius:0 6px 6px 0}
-.contexto{background:var(--an-b);border-left:3px solid var(--an);padding:6px 10px;border-radius:0 6px 6px 0}
+.sect-previos,.sect-info{margin-bottom:14px;font-size:1rem}
+.sect-previos h3,.sect-info h3{font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--tx);font-family:var(--serif);font-style:italic}
+.sect-previos p,.sect-info p{margin-bottom:8px;line-height:1.55}
+.curioso{background:var(--cat-b);border-left:3px solid var(--cat);padding:7px 11px;border-radius:0 6px 6px 0}
+.contexto{background:var(--an-b);border-left:3px solid var(--an);padding:7px 11px;border-radius:0 6px 6px 0}
 .activacion{font-style:italic;color:#444}
-.esquema{background:#f6f6f8;border:1px solid #ddd;border-radius:8px;padding:8px 12px;margin:6px 0;font-size:.8rem}
+.esquema{background:#f6f6f8;border:1px solid #ddd;border-radius:8px;padding:9px 13px;margin:7px 0;font-size:.92rem}
 .esquema ul{margin:4px 0 0 18px}
-.ejemplo-resuelto{background:var(--ox-b);border-left:3px solid var(--ox);padding:6px 10px;border-radius:0 6px 6px 0;font-size:.82rem}
+.ejemplo-resuelto{background:var(--ox-b);border-left:3px solid var(--ox);padding:7px 11px;border-radius:0 6px 6px 0;font-size:.94rem}
 
 /* ── Hoja de respuestas (círculos A-D) ── */
 .hr-meta{font-size:.86rem;margin-bottom:8px}
@@ -122,22 +129,22 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* ── Tarjetas de ejercicio (mismo estilo visual que generador.html, para
    que el HTML reutilizado de ese iframe se vea consistente aquí) ── */
-.exercise-card{background:#fff;border:1.5px solid #ccc;border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:.84rem}
-.ex-num{font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:6px}
-.ex-prompt{font-size:.84rem;color:#333;margin-bottom:10px}
-.ex-blank{border-bottom:2px solid #999;height:20px;margin-top:6px}
+.exercise-card{background:#fff;border:1.5px solid #ccc;border-radius:10px;padding:15px 17px;margin-bottom:13px;font-size:.96rem}
+.ex-num{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:6px;font-family:var(--sans)}
+.ex-prompt{font-size:.96rem;color:#333;margin-bottom:11px}
+.ex-blank{border-bottom:2px solid #999;height:22px;margin-top:7px}
 .ex-type-1 .ex-formula{font-size:1.4rem;font-weight:700;color:#92400e;background:#fef3c7;display:inline-block;padding:4px 12px;border-radius:6px;margin-bottom:10px;font-family:var(--mono)}
-.ex-type-2 .ex-name{font-size:.95rem;font-weight:700;color:#082f49;background:#e0f2fe;display:inline-block;padding:4px 10px;border-radius:6px;margin-bottom:10px;font-style:italic}
+.ex-type-2 .ex-name{font-size:1.02rem;font-weight:700;color:#082f49;background:#e0f2fe;display:inline-block;padding:4px 10px;border-radius:6px;margin-bottom:10px;font-style:italic}
 .ex-type-3{padding:0}
 .table-wrapper{overflow-x:auto}
-.exercise-card table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:.78rem}
-.exercise-card th,.exercise-card td{padding:6px;text-align:left;border:1px solid #ccc}
-.exercise-card th{background:#f0f0f0}
+.exercise-card table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:.9rem}
+.exercise-card th,.exercise-card td{padding:7px;text-align:left;border:1px solid #ccc}
+.exercise-card th{background:#f0f0f0;font-family:var(--sans);font-size:.82rem}
 .exercise-card td.cell-blank{border-bottom:2px solid #999;background:#f6f6f6}
 
 /* ── Preguntas Saber 11 — doble columna ── */
 .cols2{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
-.sq{border:1px solid #ccc;border-radius:8px;padding:10px 12px;font-size:.78rem}
+.sq{border:1px solid #ccc;border-radius:8px;padding:11px 13px;font-size:.9rem}
 .sq-ctx{color:#555;font-style:italic;margin-bottom:5px}
 .sq-q{margin-bottom:6px}
 .sq-opt{padding:2px 0}

@@ -419,7 +419,7 @@ function construirVersion(F, numVersion, totalVersiones){
   }
   let numSaberReal = 0;
   if(incluyeEval){
-    bloques.push({html:'<h2 class="sec-tit nueva-hoja">Evaluación'+(totalVersiones>1?' — Versión '+numVersion+' de '+totalVersiones:'')+'</h2>', esTitulo:true, nuevaHoja:true});
+    bloques.push({html:'<h2 class="sec-tit">Evaluación</h2>', esTitulo:true});
     const saberBloques = armarBloquesSaber(F, rngSaber);
     numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
@@ -525,7 +525,7 @@ function bloqueSesionPrevios(F, rngFn){
 
 function bloqueSesionInfo(F){
   const temasData = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.TEMAS) || [];
-  const out = [{html:'<h2 class="sec-tit nueva-hoja">Sesión 2 · Información</h2>', esTitulo:true, nuevaHoja:true}];
+  const out = [{html:'<h2 class="sec-tit">Sesión 2 · Información</h2>', esTitulo:true}];
   F.temas.forEach(function(tid){
     const t = temasData.find(x=>x.id===tid);
     if(!t || !t.info) return;
@@ -555,14 +555,41 @@ function bloqueSesionInfo(F){
 const HOJA_CSS_W = 816, HOJA_CSS_H = 1056;
 const CUADRO = 18.9;
 
+// Título del documento (ej. "Taller de ejercicios: Óxidos básicos · Anhídridos
+// — Versión 2 de 3"), igual idea que ChromaNom: identifica de un vistazo qué
+// hoja es y cuál versión, sin tener que ir a buscar el pie de página.
+const TITULO_TIPODOC = {
+  completa:'Guía completa', guia:'Guía completa', taller:'Taller de ejercicios',
+  evaluacion:'Evaluación', 'hoja-respuestas':'Hoja de respuestas', rubrica:'Rúbrica de evaluación'
+};
+function tituloDocumento(doc){
+  let titulo = TITULO_TIPODOC[doc.clase] || 'Documento';
+  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica'){
+    const temasData = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.TEMAS) || [];
+    const nombres = (doc.F.temas||[]).map(id=>{ const t=temasData.find(x=>x.id===id); return t?t.titulo:id; }).join(' · ');
+    if(nombres) titulo += ': '+nombres;
+  }
+  if(doc.etiqueta) titulo += ' — '+doc.etiqueta;
+  return titulo;
+}
+
 function crearHoja(doc, esPrimera){
   const hoja = document.createElement('div');
   hoja.className = 'hoja';
   hoja.innerHTML =
     '<div class="hoja-enc'+(esPrimera?' hoja-enc-completo':'')+'">'
       + (esPrimera
-        ? '<div class="hoja-enc-top"><div><strong>'+esc(doc.F.colegio||'')+'</strong><br>'+[doc.F.docente,doc.F.area,doc.F.curso,doc.F.periodo,doc.F.fecha].filter(Boolean).map(esc).join(' · ')+'</div><img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom"></div>'
-        : '<div class="hoja-enc-corto">'+esc(doc.F.curso||'')+' — '+esc(doc.F.fecha||'')+'</div>')
+        ? '<div class="hoja-enc-top">'
+          + '<div>'
+            + '<div class="hoja-subtitulo">Química inorgánica'+(doc.F.curso?' · '+esc(doc.F.curso):'')+'</div>'
+            + '<div class="hoja-titulo-doc">'+esc(tituloDocumento(doc))+'</div>'
+            + '<div class="hoja-datos-row">'+[['Institución',doc.F.colegio],['Docente',doc.F.docente],['Área',doc.F.area]].filter(p=>p[1]).map(p=>'<span>'+p[0]+' <b>'+esc(p[1])+'</b></span>').join('')+'</div>'
+            + '<div class="hoja-datos-row">'+[['Grado/curso',doc.F.curso],['Periodo',doc.F.periodo],['Fecha',doc.F.fecha]].filter(p=>p[1]).map(p=>'<span>'+p[0]+' <b>'+esc(p[1])+'</b></span>').join('')+'</div>'
+          + '</div>'
+          + '<img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom">'
+          + '</div>'
+          + '<div class="hoja-nombre-row">Nombre del estudiante <span class="hr-linea"></span> Curso <span class="hr-linea" style="min-width:110px"></span></div>'
+        : '<div class="hoja-enc-corto">'+esc(tituloDocumento(doc))+' · '+esc(doc.F.colegio||'')+'</div>')
     + '</div>'
     + '<div class="hoja-cuerpo"></div>'
     + '<div class="hoja-pie"><span class="hoja-pagina"></span></div>';
@@ -641,10 +668,29 @@ function paginar(doc){
 // Reparte el espacio libre al final de la hoja entre sus cuadrículas de
 // respuesta (.cuad), en incrementos de CUADRO, hasta un tope razonable.
 // Si la hoja no tiene ninguna cuadrícula, agrega un bloque de notas.
+// scrollHeight NUNCA puede ser menor que clientHeight (es max(contenido,
+// caja) por definición del DOM) -- en .hoja-cuerpo (flex:1, estirado al
+// alto disponible de la hoja) eso significa que scrollHeight==clientHeight
+// siempre que el contenido NO desborde, sin importar cuánto espacio libre
+// quede de verdad debajo del último elemento. Para saber cuánto espacio
+// libre hay realmente (y poder rellenarlo) hay que medir el borde inferior
+// real del último elemento, no scrollHeight.
+function alturaContenido(cuerpo){
+  // offsetTop es relativo al ancestro posicionado más cercano, que NO
+  // necesariamente es cuerpo (puede ser #vista o más arriba) -- con varias
+  // hojas apiladas, eso acumula el offset de las hojas anteriores. Medir
+  // con getBoundingClientRect() da la posición real en pantalla de cada
+  // elemento, así que la resta sí es relativa a cuerpo sin importar su
+  // ancestro posicionado.
+  const ultimo = cuerpo.lastElementChild;
+  if(!ultimo) return 0;
+  return ultimo.getBoundingClientRect().bottom - cuerpo.getBoundingClientRect().top;
+}
+
 function llenarHoja(hoja){
   const cuerpo = hoja.querySelector('.hoja-cuerpo');
   const cuadros = Array.from(cuerpo.querySelectorAll('.cuad'));
-  const libre = cuerpo.clientHeight - cuerpo.scrollHeight;
+  const libre = cuerpo.clientHeight - alturaContenido(cuerpo);
   if(libre < CUADRO){ return; }
   if(!cuadros.length){
     // El bloque de notas trae su propio rótulo ("Notas") además del cuadro,
@@ -655,17 +701,17 @@ function llenarHoja(hoja){
     nota.className = 'notas-finales';
     nota.innerHTML = '<div class="ex-num">Notas</div><div class="cuad" style="height:'+(CUADRO*2)+'px"></div>';
     cuerpo.appendChild(nota);
-    if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+    if(alturaContenido(cuerpo) > cuerpo.clientHeight + 1){
       cuerpo.removeChild(nota);
       return;
     }
     const cuad = nota.querySelector('.cuad');
-    let restante = Math.min(Math.floor((cuerpo.clientHeight - cuerpo.scrollHeight)/CUADRO), 24);
+    let restante = Math.min(Math.floor((cuerpo.clientHeight - alturaContenido(cuerpo))/CUADRO), 24);
     while(restante > 0){
       const alturaActual = parseFloat(cuad.style.height)||0;
       if(alturaActual >= CUADRO*26) break;
       cuad.style.height = (alturaActual + CUADRO) + 'px';
-      if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+      if(alturaContenido(cuerpo) > cuerpo.clientHeight + 1){
         cuad.style.height = alturaActual + 'px';
         break;
       }
@@ -680,6 +726,16 @@ function llenarHoja(hoja){
     const alturaActual = parseFloat(c.style.height)||0;
     if(alturaActual < CUADRO*26){
       c.style.height = (alturaActual + CUADRO) + 'px';
+      // Verificación en vivo (igual que el bloque de Notas): estirar un
+      // .cuad desplaza todo lo que viene después de él, así que el
+      // presupuesto inicial ("libre") puede quedarse corto por
+      // redondeos -- si el estiramiento desborda la hoja, se revierte
+      // ese último incremento y se detiene, en vez de confiar a ciegas
+      // en la aritmética de arriba.
+      if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+        c.style.height = alturaActual + 'px';
+        break;
+      }
       restante--;
     }
     i++;
@@ -804,7 +860,12 @@ async function generar(){
         document.fonts.load('800 16px Outfit'),
         document.fonts.load('700 16px Fraunces'),
         document.fonts.load('400 16px "JetBrains Mono"'),
-        document.fonts.load('700 16px "JetBrains Mono"')
+        document.fonts.load('700 16px "JetBrains Mono"'),
+        document.fonts.load('400 16px "STIX Two Text"'),
+        document.fonts.load('500 16px "STIX Two Text"'),
+        document.fonts.load('600 16px "STIX Two Text"'),
+        document.fonts.load('700 16px "STIX Two Text"'),
+        document.fonts.load('italic 400 16px "STIX Two Text"')
       ].map(p=>p.catch(()=>{})));
     }
     if(document.fonts && document.fonts.ready){
@@ -835,7 +896,7 @@ async function generar(){
     // que usa paginar() con sus propios bloques, pero sobre el DOM real.
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     Array.from(vista.querySelectorAll('.hoja')).forEach(function(hoja){
-      let actual = hoja, intentos = 0;
+      let actual = hoja, intentos = 0, seMovioAlgo = false;
       while(intentos < 50){
         const cuerpo = actual.querySelector('.hoja-cuerpo');
         if(cuerpo.scrollHeight <= cuerpo.clientHeight + 1 || !cuerpo.lastElementChild) break;
@@ -846,7 +907,13 @@ async function generar(){
         continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
         actual = continuacion;
         intentos++;
+        seMovioAlgo = true;
       }
+      // Si se movió contenido fuera de "hoja" (la original), le queda
+      // espacio libre de verdad que llenarHoja() -- ya corrida en #medidor
+      // antes de clonar -- no pudo prever. Se vuelve a correr aquí, sobre
+      // el DOM real, para no dejar esa hoja a medio llenar.
+      if(seMovioAlgo) llenarHoja(hoja);
     });
   } finally {
     if(btn) btn.disabled = false;

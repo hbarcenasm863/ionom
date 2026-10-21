@@ -119,7 +119,7 @@ TEMAS: [
   },
   info: {
     lectura: [
-      'Un <strong>óxido ácido</strong> (llamado tradicionalmente "anhídrido" en Colombia) se forma cuando un <strong>no metal</strong> reacciona con <strong>oxígeno (O₂)</strong>. Es el mismo tipo de intercambio de cargas que en los óxidos básicos, pero aquí el elemento que acompaña al oxígeno es un no metal.',
+      'Un <strong>óxido ácido</strong> (en otros países se usa el nombre tradicional "anhídrido"; en Colombia se dice "óxido ácido") se forma cuando un <strong>no metal</strong> reacciona con <strong>oxígeno (O₂)</strong>. Es el mismo tipo de intercambio de cargas que en los óxidos básicos, pero aquí el elemento que acompaña al oxígeno es un no metal.',
       'El <strong>estado de oxidación (EO) del no metal varía</strong> igual que en los metales de valencia variable: a mayor EO, sufijo <strong>-ico</strong>; a menor EO, sufijo <strong>-oso</strong>. Por ejemplo, el azufre con EO +6 da "sulfúrico" (SO₃) y con EO +4 da "sulfuroso" (SO₂). Cuando el no metal tiene más de dos valencias posibles (como el cloro), se usan además los prefijos <strong>hipo-</strong> (la valencia más baja de todas) y <strong>per-</strong> (la más alta de todas).',
       'Los tres sistemas nombran igual que en óxidos básicos: <strong>Tradicional</strong> usa "anhídrido" + sufijo/prefijo según el EO; <strong>Stock</strong> usa "óxido de" + no metal + número de oxidación en romano (poco usado en la práctica para no metales, por eso en IonNom se prioriza Tradicional y Sistemática para este grupo); <strong>Sistemática</strong> usa prefijos griegos (mono-, di-, tri-, tetra-, penta-) para contar los átomos de cada elemento, sin excepción.'
     ],
@@ -136,7 +136,7 @@ TEMAS: [
   ejemplo: {
     f: 'N₂O₅',
     partes: [
-      ['N₂','cat','2 átomos de nitrógeno con estado de oxidación +5 (el mayor de los posibles para el N) — por eso el sufijo es -ico'],
+      ['N₂','an','2 átomos de nitrógeno con estado de oxidación +5 (el mayor de los posibles para el N) — por eso el sufijo es -ico'],
       ['O₅','an','5 átomos de oxígeno, cada uno con carga -2 (2×5=10, que equilibra 2×5=10 del nitrógeno)']
     ]
   }
@@ -876,7 +876,7 @@ SABER: [
 {tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula I₂O, donde el yodo tiene el EO más bajo posible (+1)?', o:['óxido de yodo (I)','óxido de yodo (III)','anhídrido hipoyodoso (I)','monóxido de yodo']},
 {tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula I₂O₃?', o:['óxido de yodo (III)','óxido de yodo (I)','anhídrido yodoso (III)','trióxido de yodo']},
 {tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula I₂O₇, donde el yodo alcanza su EO máximo (+7)?', o:['óxido de yodo (VII)','óxido de yodo (V)','anhídrido peryódico (VII)','heptóxido de yodo']},
-{tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula SO, donde el azufre tiene un estado de oxidación muy bajo (+2)?', o:['óxido de azufre (II)','óxido de azufre (IV)','anhídrido hiposulfuroso (II)','monóxido de azufre (II)']},
+{tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula Br₂O, donde el bromo tiene el EO más bajo posible (+1)?', o:['óxido de bromo (I)','óxido de bromo (III)','anhídrido hipobromoso (I)','monóxido de bromo (I)']},
 {tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula TeO₃, donde el telurio tiene su estado de oxidación mayor (+6)?', o:['óxido de telurio (VI)','óxido de telurio (IV)','anhídrido telúrico (VI)','trióxido de telurio (VI)']},
 {tema:'anhid', c:'ind', k:'CTS', ctx:'El bórax (borato de sodio) es un mineral usado en la industria cerámica de Ráquira (Boyacá) y en la fabricación de vidrio en Colombia; se obtiene a partir de compuestos de boro.', q:'¿Cuál es el nombre Stock correcto del anhídrido con fórmula B₂O₃, el óxido de boro usado en estos procesos?', o:['óxido de boro (III)','óxido de boro (V)','anhídrido bórico (III)','trióxido de boro (III)']},
 {tema:'anhid', c:'exp', k:'Q', ctx:'', q:'¿Cuál es el nombre Sistemático (IUPAC) correcto del anhídrido con fórmula SO₃?', o:['trióxido de azufre','dióxido de azufre','anhídrido sulfúrico','óxido de azufre (VI)']},
