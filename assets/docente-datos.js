@@ -614,6 +614,52 @@ TEMAS: [
       ['CaSO₄','ox','paso 3: hidróxido de calcio + ácido sulfúrico (H₂SO₄) → sulfato de calcio (sal oxigenada) + agua']
     ]
   }
+},
+{
+  id: 'estequiometria',
+  titulo: 'Estequiometría',
+  gen: [], jue: '', rxn: [],
+  previos: {
+    curiosos: [
+      'La palabra "estequiometría" viene del griego "stoikheion" (elemento) y "metron" (medida) — literalmente "medir los elementos". Fue acuñada en 1792 por el químico alemán Jeremias Richter.',
+      'La NASA usa estequiometría para calcular exactamente cuánto oxígeno líquido y combustible debe cargar un cohete: un gramo de más o de menos en la proporción puede significar que sobre o falte propelente en órbita.'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'En las plantas de fertilizantes colombianas (como las que abastecen los cultivos de la Sabana de Bogotá), los ingenieros calculan con estequiometría cuánto amoníaco (NH₃) se necesita para producir una tonelada de un fertilizante nitrogenado específico.'},
+      {amb:'Local', t:'En los laboratorios de los colegios técnicos colombianos, antes de preparar una disolución o hacer una titulación, siempre se calcula primero cuántos gramos exactos de reactivo se necesitan usando la ecuación balanceada.'}
+    ],
+    cotidianos: [
+      'Cuando duplicas una receta de cocina, duplicas TODOS los ingredientes en la misma proporción. La estequiometría es exactamente esa misma idea, pero en vez de tazas de harina y huevos, se usan moles y gramos de reactivos.'
+    ],
+    activacion: [
+      'Ya sabes balancear una ecuación química y ya sabes calcular la masa molar de un compuesto. ¿Qué crees que pasaría si combinas las dos cosas: usar los coeficientes de una ecuación balanceada para predecir cuántos gramos de un producto se obtienen a partir de una cantidad conocida de un reactivo?'
+    ]
+  },
+  info: {
+    lectura: [
+      'La <strong>estequiometría</strong> usa los coeficientes de una ecuación química <strong>ya balanceada</strong> para calcular cuántos gramos (o moles) de un producto se obtienen a partir de una cantidad conocida de un reactivo, o cuánto reactivo se necesita para obtener cierta cantidad de producto.',
+      'El método más confiable es el de <strong>factor-unitario (cadena de conversión)</strong>, con 3 pasos en orden fijo: ① convertir los <strong>gramos del dato</strong> a <strong>moles del dato</strong> (dividiendo entre su masa molar); ② convertir los <strong>moles del dato</strong> a <strong>moles de lo pedido</strong> usando la <strong>razón molar</strong> de la ecuación balanceada (coeficiente de lo pedido ÷ coeficiente del dato); ③ convertir los <strong>moles de lo pedido</strong> a <strong>gramos de lo pedido</strong> (multiplicando por su masa molar).',
+      'El error más común es saltarse el paso 1 y trabajar directamente con los gramos del dato como si fueran moles, o usar la razón molar al revés (coeficiente del dato ÷ coeficiente de lo pedido en vez de al contrario). Por eso conviene escribir siempre los 3 pasos, nunca calcular de memoria.',
+      'Cuando se dan las cantidades de <strong>dos</strong> reactivos a la vez, hay que identificar cuál es el <strong>reactivo limitante</strong> (el que se agota primero y determina cuánto producto se forma de verdad) calculando los moles disponibles de cada uno y comparándolos con la razón molar que exige la ecuación.'
+    ],
+    esquema: {
+      raiz: 'Estequiometría = ecuación balanceada + factor-unitario',
+      ramas: [
+        {t:'Paso 1', items:['gramos del dato ÷ masa molar del dato', '→ moles del dato']},
+        {t:'Paso 2', items:['moles del dato × (coeficiente de lo pedido / coeficiente del dato)', '→ moles de lo pedido']},
+        {t:'Paso 3', items:['moles de lo pedido × masa molar de lo pedido', '→ gramos de lo pedido']},
+        {t:'Reactivo limitante', items:['comparar moles disponibles de cada reactivo contra la razón molar de la ecuación', 'el que se agota primero limita cuánto producto se forma']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: '2 Al + 3 Cl₂ → 2 AlCl₃  (27.0 g de Al → ? g de AlCl₃)',
+    partes: [
+      ['27.0 g Al ÷ 26.982 g/mol','cat','paso 1: gramos del dato (Al) a moles del dato = 1.000 mol Al'],
+      ['× (2 mol AlCl₃ / 2 mol Al)','ox','paso 2: razón molar de la ecuación balanceada = 1.000 mol AlCl₃'],
+      ['× 133.341 g/mol','an','paso 3: moles de lo pedido a gramos de lo pedido = 133.3 g AlCl₃']
+    ]
+  }
 }
 ],
 
@@ -1632,7 +1678,45 @@ SABER: [
 {tema:'reactividad', c:'mdec', k:'Q', ctx:'', q:'En el nitrato de aluminio (Al(NO₃)₃), ¿qué tipo de ion es el NO₃⁻ dentro del código de 4 colores?', o:['Oxoanión (verde)','Anión simple (azul)','Catión (ámbar)','Hidróxido (rosado)']},
 {tema:'reactividad', c:'mdec', k:'Q', ctx:'', q:'En el óxido de bario (BaO), ¿qué color MDEC corresponde al Ba²⁺?', o:['Catión (ámbar)','Anión simple (azul)','Hidróxido (rosado)','Oxoanión (verde)']},
 {tema:'reactividad', c:'mdec', k:'Q', ctx:'', q:'En el fosfato de magnesio (Mg₃(PO₄)₂), ¿qué tipo de ion es el PO₄³⁻?', o:['Oxoanión (verde)','Anión simple (azul)','Catión (ámbar)','Hidróxido (rosado)']}
-
+,
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para la ecuación balanceada N₂ + 3H₂ → 2NH₃, si tienes 14 g de N₂ (MM=28.014 g/mol), ¿cuántos gramos de NH₃ (MM=17.031 g/mol) se producen?', o:['17.03 g','34.06 g','8.52 g','51.09 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para la ecuación CH₄ + 2O₂ → CO₂ + 2H₂O, si se queman 16 g de CH₄ (MM=16.043), ¿cuántos gramos de H₂O (MM=18.015) se producen?', o:['35.93 g','18.02 g','72.06 g','9.01 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para la ecuación 2HCl + Ca(OH)₂ → CaCl₂ + 2H₂O, a partir de 72.92 g de HCl (MM=36.461), ¿cuántos gramos de CaCl₂ (MM=110.983) se producen?', o:['110.98 g','55.49 g','37.0 g','221.97 g']},
+{tema:'estequiometria', c:'lim', k:'Q', ctx:'', q:'Para la reacción 2H₂ + O₂ → 2H₂O, ¿cuál es el reactivo limitante si tienes 4 g de H₂ (MM=2.016) y 40 g de O₂ (MM=32.00)?', o:['H₂','O₂','Ambos se agotan igual','Ninguno; sobran los dos']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para la ecuación 2Al + 3Cl₂ → 2AlCl₃, si reaccionan 27.0 g de Al (MM=26.982), ¿cuántos gramos de AlCl₃ (MM=133.341) se obtienen?', o:['133.3 g','266.7 g','44.4 g','88.9 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 2Mg + O₂ → 2MgO, a partir de 12.15 g de Mg (MM=24.305), ¿cuántos gramos de MgO (MM=40.304) se producen?', o:['20.15 g','12.15 g','40.30 g','10.08 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para Zn + 2HCl → ZnCl₂ + H₂, a partir de 13.08 g de Zn (MM=65.38), ¿cuántos gramos de ZnCl₂ (MM=136.28) se producen?', o:['27.26 g','13.63 g','54.52 g','6.81 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 4Al + 3O₂ → 2Al₂O₃, a partir de 54.0 g de Al (MM=26.982), ¿cuántos gramos de Al₂O₃ (MM=101.961) se producen?', o:['102.03 g','204.1 g','51.0 g','68.0 g']},
+{tema:'estequiometria', c:'calc', k:'CTS', ctx:'En una planta de galvanizado se hace reaccionar hierro con sulfato de cobre para depositar cobre metálico, como en la reacción Fe + CuSO₄ → FeSO₄ + Cu.', q:'A partir de 31.92 g de CuSO₄ (MM=159.602), ¿cuántos gramos de Cu (MM=63.546) se obtienen?', o:['12.71 g','25.42 g','6.35 g','31.92 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O, a partir de 49.04 g de H₂SO₄ (MM=98.072), ¿cuántos gramos de Na₂SO₄ (MM=142.036) se producen?', o:['71.02 g','142.04 g','35.51 g','49.04 g']},
+{tema:'estequiometria', c:'calc', k:'CTS', ctx:'El propano (C₃H₈) se usa en cilindros de gas en zonas rurales colombianas sin acceso a gas natural por tubería.', q:'Para C₃H₈ + 5O₂ → 3CO₂ + 4H₂O, a partir de 22.05 g de C₃H₈ (MM=44.097), ¿cuántos gramos de CO₂ (MM=44.009) se producen?', o:['66.02 g','44.01 g','22.05 g','132.03 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂, a partir de 50.04 g de CaCO₃ (MM=100.086), ¿cuántos gramos de HCl (MM=36.458) se necesitan?', o:['36.46 g','18.23 g','72.92 g','50.04 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 2Na + 2H₂O → 2NaOH + H₂, a partir de 23.0 g de Na (MM=22.990), ¿cuántos gramos de H₂ (MM=2.016) se producen?', o:['1.01 g','2.02 g','0.50 g','4.03 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para Fe₂O₃ + 3CO → 2Fe + 3CO₂, a partir de 79.85 g de Fe₂O₃ (MM=159.687), ¿cuántos gramos de Fe (MM=55.845) se producen?', o:['55.85 g','111.69 g','27.92 g','79.85 g']},
+{tema:'estequiometria', c:'calc', k:'CTS', ctx:'En joyería artesanal, el cobre metálico puede desplazar a la plata de una disolución de nitrato de plata, como en Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag.', q:'A partir de 31.77 g de Cu (MM=63.546), ¿cuántos gramos de Ag (MM=107.868) se obtienen?', o:['107.86 g','53.93 g','215.74 g','31.77 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 4P + 5O₂ → 2P₂O₅, a partir de 12.39 g de P (MM=30.974), ¿cuántos gramos de P₂O₅ (MM=141.943) se producen?', o:['28.39 g','56.78 g','14.19 g','12.39 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂, a partir de 53.96 g de Al (MM=26.982), ¿cuántos gramos de H₂ (MM=2.016) se producen?', o:['6.05 g','4.03 g','12.10 g','2.02 g']},
+{tema:'estequiometria', c:'calc', k:'CTS', ctx:'La roca fosfórica colombiana se trata con ácido sulfúrico para producir ácido fosfórico, usado en fertilizantes: Ca₃(PO₄)₂ + 3H₂SO₄ → 3CaSO₄ + 2H₃PO₄.', q:'A partir de 155.09 g de Ca₃(PO₄)₂ (MM=310.174), ¿cuántos gramos de H₃PO₄ (MM=97.994) se producen?', o:['98.0 g','196.0 g','49.0 g','155.09 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 4NH₃ + 5O₂ → 4NO + 6H₂O, a partir de 34.06 g de NH₃ (MM=17.031), ¿cuántos gramos de NO (MM=30.006) se producen?', o:['60.01 g','30.01 g','120.02 g','34.06 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para CaO + H₂O → Ca(OH)₂, a partir de 28.04 g de CaO (MM=56.077), ¿cuántos gramos de Ca(OH)₂ (MM=74.092) se producen?', o:['37.05 g','28.04 g','74.09 g','18.52 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para HCl + NaOH → NaCl + H₂O, a partir de 36.46 g de HCl (MM=36.458), ¿cuántos gramos de NaCl (MM=58.44) se producen?', o:['58.44 g','36.46 g','29.22 g','116.88 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para N₂ + 3H₂ → 2NH₃, a partir de 6.05 g de H₂ (MM=2.016), ¿cuántos gramos de NH₃ (MM=17.031) se producen?', o:['34.07 g','17.03 g','68.14 g','6.05 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para 4Fe + 3O₂ → 2Fe₂O₃, a partir de 22.34 g de Fe (MM=55.845), ¿cuántos gramos de Fe₂O₃ (MM=159.687) se producen?', o:['31.94 g','63.87 g','22.34 g','15.97 g']},
+{tema:'estequiometria', c:'calc', k:'Q', ctx:'', q:'Para H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O, si se necesitan neutralizar 20.0 g de NaOH (MM=39.997), ¿cuántos gramos de H₂SO₄ (MM=98.072) se requieren?', o:['24.52 g','49.04 g','20.0 g','12.26 g']},
+{tema:'estequiometria', c:'pasos', k:'Q', ctx:'', q:'En el método de factor-unitario para resolver un problema de estequiometría, ¿cuál es el PRIMER paso, antes de usar la razón molar de la ecuación?', o:['Convertir los gramos del dato a moles del dato (÷ masa molar del dato)','Convertir los moles de lo pedido a gramos de lo pedido','Multiplicar directamente los gramos del dato por la masa molar de lo pedido','Balancear de nuevo la ecuación química']},
+{tema:'estequiometria', c:'pasos', k:'Q', ctx:'', q:'¿Cuál es el error más común al calcular la razón molar entre dos especies de una ecuación balanceada?', o:['Usarla al revés (coeficiente del dato ÷ coeficiente de lo pedido, en vez de lo pedido ÷ dato)','Olvidar que los coeficientes deben ser números enteros','Confundir el coeficiente con el subíndice de la fórmula','Usar coeficientes de una ecuación sin balancear']},
+{tema:'estequiometria', c:'pasos', k:'Q', ctx:'', q:'¿Por qué es obligatorio pasar primero los gramos del dato a MOLES, y no trabajar directamente con los gramos?', o:['Porque la razón molar de la ecuación balanceada relaciona moles, no gramos, de cada especie','Porque los gramos no se pueden convertir a otras unidades','Porque la masa molar solo sirve para sólidos','Porque los coeficientes de la ecuación están en gramos']},
+{tema:'estequiometria', c:'lim', k:'Q', ctx:'', q:'Al identificar el reactivo limitante en una reacción con dos reactivos dados en gramos, ¿qué se debe comparar?', o:['Los moles disponibles de cada reactivo contra la razón molar que exige la ecuación balanceada','Los gramos disponibles de cada reactivo directamente, sin convertir a moles','Solo las masas molares de los dos reactivos','El color de cada reactivo en el laboratorio']},
+{tema:'estequiometria', c:'lim', k:'Q', ctx:'', q:'¿Qué consecuencia tiene identificar mal el reactivo limitante en un cálculo de estequiometría?', o:['Se calcula una cantidad de producto mayor a la que realmente se puede formar','El resultado sigue siendo correcto porque el otro reactivo no afecta el cálculo','La ecuación química queda sin balancear','Cambia el estado de oxidación de los productos']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Qué información necesitas ANTES de poder resolver cualquier problema de estequiometría entre dos especies de una reacción?', o:['La ecuación química ya balanceada (con sus coeficientes correctos)','Solo las masas molares de las especies, sin la ecuación','El estado físico (sólido, líquido, gas) de cada especie','El nombre comercial del compuesto']},
+{tema:'estequiometria', c:'conc', k:'CTS', ctx:'Un ingeniero de una planta de fertilizantes en Colombia necesita calcular cuánto amoníaco (NH₃) comprar para producir una tonelada de un fertilizante nitrogenado.', q:'¿Qué dato adicional, además del precio del amoníaco, necesita el ingeniero para hacer este cálculo con estequiometría?', o:['La ecuación balanceada de la reacción entre el amoníaco y los demás reactivos del proceso','Solo el color del amoníaco líquido','La fecha de fabricación del fertilizante','El nombre del proveedor del amoníaco']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'Si una ecuación balanceada es 2Al + 3Cl₂ → 2AlCl₃, ¿cuál es la razón molar correcta para convertir de moles de Cl₂ a moles de AlCl₃?', o:['2 mol AlCl₃ / 3 mol Cl₂','3 mol AlCl₃ / 2 mol Cl₂','1 mol AlCl₃ / 1 mol Cl₂','2 mol Cl₂ / 3 mol AlCl₃']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Qué unidad usan los coeficientes de una ecuación química balanceada para relacionar las cantidades de reactivos y productos?', o:['Moles','Gramos','Litros','Átomos individuales']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'Si duplicas la cantidad de gramos de un reactivo en un problema de estequiometría (y el otro reactivo sigue en exceso), ¿qué pasa con los gramos de producto obtenidos?', o:['También se duplican','Se reducen a la mitad','Quedan exactamente igual','Se triplican']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Por qué NO se puede calcular estequiometría con una ecuación química que todavía no está balanceada?', o:['Porque los coeficientes sin balancear no reflejan la proporción real de átomos que reaccionan','Porque las fórmulas cambiarían de un lado a otro de la ecuación','Porque las masas molares solo existen para ecuaciones balanceadas','Porque una ecuación sin balancear no tiene reactivos ni productos']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'En el problema "a partir de 16 g de CH₄ (MM=16.043), ¿cuántos gramos de H₂O se producen?", ¿cuántos moles de CH₄ hay, aproximadamente, antes de aplicar la razón molar?', o:['≈0.997 mol','≈16 mol','≈1.6 mol','≈0.5 mol']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Qué parte de la ecuación química NUNCA cambia al resolver un problema de estequiometría, sin importar los gramos que se den?', o:['Los coeficientes de la ecuación ya balanceada','La masa molar de cada especie','La cantidad de gramos del dato','El resultado final en gramos']},
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Cuál de estas secuencias de conversión es la correcta para ir de "gramos del reactivo A" a "gramos del producto B"?', o:['gramos A → moles A → moles B → gramos B','gramos A → gramos B directamente','moles A → gramos A → gramos B','gramos A → moles B → gramos A → gramos B']}
 ],
 
 ABIERTAS: [
@@ -1684,6 +1768,10 @@ ABIERTAS: [
 {tema:'reactividad', t:'rx', q:'Completa el eslabón faltante de la siguiente cadena de reactividad del magnesio: Mg → MgO → ____ → MgSO₄.'},
 {tema:'reactividad', t:'nom', q:'Nombra los 3 compuestos de la cadena de reactividad del aluminio (valencia +3): el óxido, el hidróxido y la sal que resulta de reaccionar con HCl.'},
 {tema:'reactividad', t:'mdec', q:'En la sal final de la cadena de reactividad del bario con ácido sulfúrico (BaSO₄), identifica el catión y el anión, y el color MDEC que le corresponde a cada uno.'}
+,
+{tema:'estequiometria', t:'rx', q:'Para la ecuación balanceada 2Mg + O₂ → 2MgO, calcula cuántos gramos de MgO se producen a partir de 12.15 g de Mg (MM Mg=24.305, MM MgO=40.304). Muestra los 3 pasos de la cadena de conversión (gramos→moles del dato, moles del dato→moles de lo pedido, moles de lo pedido→gramos de lo pedido).'},
+{tema:'estequiometria', t:'nom', q:'Para la ecuación balanceada Zn + 2HCl → ZnCl₂ + H₂, calcula cuántos gramos de H₂ se producen a partir de 13.08 g de Zn (MM Zn=65.38, MM H₂=2.016), y nombra el producto sólido (ZnCl₂) en nomenclatura Tradicional y Stock.'},
+{tema:'estequiometria', t:'mdec', q:'Para la ecuación balanceada 4Al + 3O₂ → 2Al₂O₃, calcula cuántos gramos de Al₂O₃ se producen a partir de 54.0 g de Al (MM Al=26.982, MM Al₂O₃=101.961), y separa el producto Al₂O₃ en sus partes según el código de 4 colores de IonNom (catión y anión) indicando la carga de cada uno.'}
 ]
 
 };

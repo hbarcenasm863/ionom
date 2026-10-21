@@ -1058,3 +1058,34 @@ institucional), con:
   evaluación) y "Solo evaluación" con ambas presentes.
 - `node -e "new Function(...)"` sobre `docente.html` y
   `assets/docente-app.js`.
+
+## Fase 11 (continuación 2) — Banco ampliado + 15° tema (Estequiometría)
+
+A pedido de la docente: ampliar `banco.js` en los grupos que se quedaban
+cortos en las tablas de `docente.html`, y agregar "Estequiometría" como
+tema nuevo (lee el banco de `estequiometria.html`, que no estaba cubierto).
+
+- **`banco.js`**: 480 → 560 entradas. Anhídridos +4, hidruros +4, ácidos
+  oxácidos +9, sales ácidas +6, reacciones +21 (cubriendo bien los 5
+  tipos), balanceo +20 (coeficientes verificados átomo por átomo con un
+  script), mol-masa +16 (masas molares verificadas con las masas atómicas
+  reales). Se descartaron a propósito 2 sales de oxalato y 4 compuestos
+  orgánicos (glucosa, sacarosa, ácido acético, etanol) que un lote
+  propuso para mol-masa/sal-ac: el oxalato contiene enlace C-C (es
+  orgánico) y el sitio es explícitamente de química *inorgánica* — se
+  mantiene esa frontera donde no es estructuralmente necesaria (a
+  diferencia de "reacción", donde el tipo "combustión" sí exige un
+  hidrocarburo por definición, ya precedente en el banco).
+- **Tema "Estequiometría"** (15°, `assets/docente-datos.js`): lectura +
+  esquema + ejemplo (factor-unitario con el método de 3 pasos + reactivo
+  limitante), 38 preguntas Saber 11 y 3 abiertas, basadas en las 5
+  preguntas reales de `estequiometria.html` (`QUIZ`) más ecuaciones
+  balanceadas reales de `banco.js`. Aritmética verificada con `node`.
+- Checkbox nueva en la sección 2 (Tema(s)) del formulario de `docente.html`.
+- `sw.js`: `CACHE_NAME` v30→v31 (`banco.js` y `docente-datos.js` cambiaron).
+
+Verificado: regresión completa de las 14 páginas existentes (28/28,
+incluye `juego.html`/`generador.html`/`simulador.html`, que también leen
+`banco.js`); generación con los 15 temas a la vez, todos los tipos de
+ejercicio, 40 Saber, 15 abiertas, 2 versiones -> 106 hojas, cero
+desbordes, cero errores.
