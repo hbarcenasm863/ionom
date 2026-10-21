@@ -158,6 +158,61 @@ function poolPorGrupo(grupos){
   return (B.BANCO||[]).filter(c => set.has(c.group));
 }
 
+// Cuántos ejercicios/preguntas hay disponibles de verdad para un tema dado,
+// para mostrarlo en vivo junto a su casilla (igual idea que ChromaNom:
+// "153 ejercicios · 20 preguntas tipo Saber"). 'elemento'/'reactividad' no
+// viven en BANCO, se cuentan aparte desde ELEMENTS/REACT_CHAINS.
+function contarDisponiblesTema(id){
+  let nEj = 0;
+  if(id==='elemento') nEj = B.ELEMENTS ? Object.keys(B.ELEMENTS).length : 0;
+  else if(id==='reactividad') nEj = (B.REACT_CHAINS||[]).length;
+  else nEj = poolPorGrupo([id]).length;
+  const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
+  const nSaber = saber.filter(q=>q.tema===id).length;
+  return {nEj, nSaber};
+}
+
+// Cuántos ejercicios de cada TIPO (A/B/C/estado-ox/reacción/balanceo/
+// mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
+// este momento -- se recalcula cada vez que cambia la selección de temas,
+// igual que los "(N disponibles)" de ChromaNom.
+function contarDisponiblesTipo(temasMarcados){
+  const gruposCompuestos = temasMarcados.filter(t => !['reaccion','balanceo','mol-masa','elemento','reactividad'].includes(t));
+  const nCompuestos = poolPorGrupo(gruposCompuestos).length;
+  return {
+    'a-nombrar': nCompuestos, 'b-formula': nCompuestos, 'c-tabla': nCompuestos, 'ox-estado': nCompuestos,
+    'x-errores': nCompuestos,
+    'd-reaccion': temasMarcados.includes('reaccion') ? poolPorGrupo(['reaccion']).length : 0,
+    'd-balanceo': temasMarcados.includes('balanceo') ? poolPorGrupo(['balanceo']).length : 0,
+    'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0
+  };
+}
+
+// Reparte un total de ejercicios en ronda entre los tipos marcados (uno de
+// cada tipo por vuelta, en el orden en que aparecen en el formulario), sin
+// pasarse de lo "disponible" de cada tipo -- así el docente marca QUÉ tipos
+// quiere (clic, no un número por tipo) y un solo total decide cuántos salen
+// en conjunto, igual que ChromaNom.
+function distribuirEjercicios(tiposActivos, disponibles, total){
+  const asignado = {};
+  tiposActivos.forEach(t => asignado[t] = 0);
+  let restante = Math.max(0, total|0);
+  let i = 0, vueltasSinAsignar = 0;
+  while(restante > 0 && tiposActivos.length){
+    const tipo = tiposActivos[i % tiposActivos.length];
+    if(asignado[tipo] < (disponibles[tipo]||0)){
+      asignado[tipo]++;
+      restante--;
+      vueltasSinAsignar = 0;
+    } else {
+      vueltasSinAsignar++;
+      if(vueltasSinAsignar >= tiposActivos.length) break; // ningún tipo marcado tiene más capacidad
+    }
+    i++;
+  }
+  return asignado;
+}
+
 const TIPO_ROTULO = {
   'a-nombrar':'Nombrar (fórmula → nombre)',
   'b-formula':'De nombre a fórmula',
@@ -232,8 +287,11 @@ function armarBloquesPractica(F, rngFn, usados){
   const temas = F.temas;
   const sistema = F.sistema || 'all';
 
-  Object.keys(F.tiposEjercicio).forEach(function(tipo){
-    const cantidad = F.tiposEjercicio[tipo];
+  const disponibles = contarDisponiblesTipo(temas);
+  const asignado = distribuirEjercicios(F.tiposEjercicioActivos||[], disponibles, F.numEjercicios||0);
+
+  Object.keys(asignado).forEach(function(tipo){
+    const cantidad = asignado[tipo];
     if(!cantidad) return;
 
     if(tipo==='a-nombrar' || tipo==='b-formula' || tipo==='c-tabla' || tipo==='ox-estado'){
@@ -359,9 +417,11 @@ function construirVersion(F, numVersion, totalVersiones){
     bloques.push({html:'<h2 class="sec-tit">Sesión 3 · Trabajo práctico</h2>', esTitulo:true});
     bloques.push.apply(bloques, armarBloquesPractica(F, rngEj, usados));
   }
+  let numSaberReal = 0;
   if(incluyeEval){
     bloques.push({html:'<h2 class="sec-tit nueva-hoja">Evaluación'+(totalVersiones>1?' — Versión '+numVersion+' de '+totalVersiones:'')+'</h2>', esTitulo:true, nuevaHoja:true});
     const saberBloques = armarBloquesSaber(F, rngSaber);
+    numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
     const abiertasBloques = armarBloquesAbiertas(F, rngAbiertas);
     if(abiertasBloques.length) bloques.push.apply(bloques, abiertasBloques);
@@ -370,7 +430,75 @@ function construirVersion(F, numVersion, totalVersiones){
   return {
     clase: F.tipoDoc,
     etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
-    bloques: bloques
+    bloques: bloques,
+    numSaberReal: numSaberReal
+  };
+}
+
+/* ───────────── 6b. Hoja de respuestas (burbujas) y rúbrica ───────────── */
+// Hoja de respuestas tipo "ICFES": una fila por pregunta Saber 11, con 4
+// círculos A-D para que el estudiante rellene a mano -- separada de las
+// preguntas (que no llevan marcada la opción correcta en ningún lado, ver
+// principio "sin clave de respuestas impresa").
+function construirHojaRespuestas(F, numVersion, totalVersiones, numPreguntas){
+  let filas = '';
+  for(let i=1;i<=numPreguntas;i++){
+    filas += '<div class="hr-row"><span class="hr-num">'+i+'.</span>'
+      + ['A','B','C','D'].map(l=>'<span class="hr-bub">'+l+'</span>').join('')
+      + '</div>';
+  }
+  const html = '<div class="hoja-resp">'
+    + '<h2 class="sec-tit">Hoja de respuestas'+(totalVersiones>1?' — Versión '+numVersion+' de '+totalVersiones:'')+'</h2>'
+    + '<div class="hr-meta">Nombre: <span class="hr-linea"></span> Fecha: <span class="hr-linea" style="max-width:140px"></span></div>'
+    + '<p class="hr-instr">Rellena por completo el círculo de tu respuesta para cada pregunta.</p>'
+    + '<div class="hr-grid">'+filas+'</div>'
+    + '</div>';
+  return {
+    clase: 'hoja-respuestas',
+    etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
+    bloques: [{html:html, esMultiple:false}]
+  };
+}
+
+// Rúbrica de evaluación: anexo fijo y genérico (no depende del tema ni de la
+// versión) para calificar las preguntas abiertas, con la escala de
+// desempeño del MEN (Superior/Alto/Básico/Bajo) ya usada en los colegios
+// colombianos -- se arma una sola vez por generación, no una por versión.
+function construirRubrica(F){
+  const CRITERIOS = [
+    ['Fórmula o ecuación química',
+      'Escribe la fórmula o ecuación completamente correcta, con las cargas bien cruzadas y, si aplica, balanceada con los coeficientes mínimos.',
+      'Escribe la fórmula o ecuación correcta con un error menor (ej. olvida simplificar subíndices) que no afecta la identidad del compuesto.',
+      'Escribe una fórmula o ecuación con errores que afectan la carga o el balance, pero muestra que entendió el procedimiento general.',
+      'No logra construir una fórmula o ecuación coherente con la información dada.'],
+    ['Nomenclatura',
+      'Nombra el compuesto correctamente en el o los sistemas pedidos, sin errores de sufijo, prefijo o número de oxidación.',
+      'Nombra el compuesto correctamente en al menos un sistema, con un error menor en otro (ej. sufijo -oso/-ico invertido).',
+      'Identifica el tipo de compuesto pero comete errores de nomenclatura en todos los sistemas pedidos.',
+      'No logra nombrar el compuesto en ningún sistema.'],
+    ['Identificación de iones (código de 4 colores)',
+      'Separa correctamente catión, anión, hidróxido u oxoanión (según corresponda) e indica la carga correcta de cada uno.',
+      'Separa correctamente las partes del compuesto, con un error menor en una carga.',
+      'Identifica alguna de las partes del compuesto, pero confunde el tipo de ion o su carga.',
+      'No logra separar el compuesto en sus partes.'],
+    ['Procedimiento y justificación',
+      'Explica con claridad el razonamiento químico detrás de su respuesta, paso a paso.',
+      'Explica el razonamiento general, aunque con algún paso poco claro.',
+      'Da una respuesta sin explicar el razonamiento, o con una justificación incompleta.',
+      'No presenta ningún razonamiento o justificación.']
+  ];
+  let filas = CRITERIOS.map(function(c){
+    return '<tr><td class="rub-crit">'+esc(c[0])+'</td><td>'+esc(c[1])+'</td><td>'+esc(c[2])+'</td><td>'+esc(c[3])+'</td><td>'+esc(c[4])+'</td></tr>';
+  }).join('');
+  const html = '<div class="rubrica">'
+    + '<h2 class="sec-tit">Rúbrica de evaluación (preguntas abiertas)</h2>'
+    + '<p class="rub-nota">Escala de desempeño según el Ministerio de Educación Nacional. Úsala como referencia para calificar las preguntas abiertas de cualquiera de las versiones generadas.</p>'
+    + '<div class="table-wrapper"><table class="rub-tabla"><thead><tr><th>Criterio</th><th>Superior</th><th>Alto</th><th>Básico</th><th>Bajo</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
+    + '</div>';
+  return {
+    clase: 'rubrica',
+    etiqueta: '',
+    bloques: [{html:html, esMultiple:false}]
   };
 }
 
@@ -433,7 +561,7 @@ function crearHoja(doc, esPrimera){
   hoja.innerHTML =
     '<div class="hoja-enc'+(esPrimera?' hoja-enc-completo':'')+'">'
       + (esPrimera
-        ? '<div class="hoja-enc-top"><div><strong>'+esc(doc.F.colegio||'')+'</strong><br>'+esc(doc.F.docente||'')+' · '+esc(doc.F.curso||'')+' · '+esc(doc.F.fecha||'')+'</div><img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom"></div>'
+        ? '<div class="hoja-enc-top"><div><strong>'+esc(doc.F.colegio||'')+'</strong><br>'+[doc.F.docente,doc.F.area,doc.F.curso,doc.F.periodo,doc.F.fecha].filter(Boolean).map(esc).join(' · ')+'</div><img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom"></div>'
         : '<div class="hoja-enc-corto">'+esc(doc.F.curso||'')+' — '+esc(doc.F.fecha||'')+'</div>')
     + '</div>'
     + '<div class="hoja-cuerpo"></div>'
@@ -563,14 +691,33 @@ function llenarHoja(hoja){
 function construirTodas(F){
   const docs = [];
   const N = F.versiones || 1;
+  // La hoja de respuestas (burbujas) va una por versión de evaluación,
+  // justo después de esa versión -- igual principio que las sesiones:
+  // la guía sale una vez, la evaluación (y su hoja de respuestas) N veces.
+  function agregarVersionEval(Fversion, i, total){
+    const doc = construirVersion(Fversion, i, total);
+    docs.push(doc);
+    if(F.incluirHojaResp && doc.numSaberReal>0){
+      docs.push(construirHojaRespuestas(F, i, total, doc.numSaberReal));
+    }
+  }
   if(F.tipoDoc==='completa'){
     // la guía (sesiones 1-3) sale una sola vez; la evaluación sale N veces.
     // tipoDoc:'guia' activa lectura+práctica sin evaluación en construirVersion.
     const guia = construirVersion(Object.assign({}, F, {tipoDoc:'guia'}), 1, 1);
     docs.push(guia);
-    for(let i=1;i<=N;i++) docs.push(construirVersion(Object.assign({}, F, {tipoDoc:'evaluacion'}), i, N));
+    for(let i=1;i<=N;i++) agregarVersionEval(Object.assign({}, F, {tipoDoc:'evaluacion'}), i, N);
+  } else if(F.tipoDoc==='evaluacion'){
+    for(let i=1;i<=N;i++) agregarVersionEval(F, i, N);
   } else {
     for(let i=1;i<=N;i++) docs.push(construirVersion(F, i, N));
+  }
+  // La rúbrica es un anexo genérico fijo: una sola copia al final de toda la
+  // generación (no una por versión), solo si hubo evaluación con preguntas
+  // abiertas que calificar con ella.
+  const huboEvaluacion = F.tipoDoc==='completa' || F.tipoDoc==='evaluacion';
+  if(F.incluirRubricas && huboEvaluacion && F.abiertasCant>0){
+    docs.push(construirRubrica(F));
   }
   docs.forEach(d => d.F = F);
   return docs;
@@ -578,11 +725,7 @@ function construirTodas(F){
 
 function leerForm(){
   const temas = Array.from(document.querySelectorAll('.chk-tema:checked')).map(c=>c.value);
-  const tiposEjercicio = {};
-  document.querySelectorAll('.inp-tipo-ej').forEach(inp=>{
-    const n = parseInt(inp.value,10);
-    if(n>0) tiposEjercicio[inp.dataset.tipo] = n;
-  });
+  const tiposEjercicioActivos = Array.from(document.querySelectorAll('.chk-tipo-ej:checked')).map(c=>c.dataset.tipo);
   return {
     colegio: document.getElementById('f-colegio').value,
     docente: document.getElementById('f-docente').value,
@@ -592,10 +735,15 @@ function leerForm(){
     tipoDoc: document.querySelector('input[name="tipoDoc"]:checked').value,
     temas: temas,
     sistema: document.getElementById('f-sistema').value,
-    tiposEjercicio: tiposEjercicio,
+    tiposEjercicioActivos: tiposEjercicioActivos,
+    numEjercicios: parseInt(document.getElementById('f-num-ejercicios').value,10)||0,
     saberCant: parseInt(document.getElementById('f-saber').value,10)||0,
     abiertasCant: parseInt(document.getElementById('f-abiertas').value,10)||0,
-    versiones: parseInt(document.getElementById('f-versiones').value,10)||1
+    incluirHojaResp: !!document.getElementById('f-hoja-resp').checked,
+    incluirRubricas: !!document.getElementById('f-rubricas').checked,
+    versiones: parseInt(document.getElementById('f-versiones').value,10)||1,
+    area: document.getElementById('f-area').value,
+    periodo: document.getElementById('f-periodo').value
   };
 }
 
@@ -609,6 +757,34 @@ function mostrarEstadoBancos(){
     (B.estado.banco==='ok' ? '✅ Banco: '+nb+' compuestos/reacciones' : '⚠️ Banco no disponible') + ' · ' +
     (B.estado.juego==='ok' ? '✅ Tabla periódica: '+ne+' elementos, '+nr+' cadenas' : '⚠️ juego.html no disponible') + ' · ' +
     (B.estado.generador==='ok' ? '✅ Generador conectado' : '⚠️ generador.html no disponible');
+  actualizarDisponibilidad();
+}
+
+// Actualiza, en vivo, los conteos junto a cada casilla de tema ("41
+// ejercicios · 4 preguntas tipo Saber") y junto a cada tipo de ejercicio
+// ("N disponibles"), según los temas marcados en este momento -- se llama
+// al cargar los bancos y cada vez que cambia una casilla de tema.
+function actualizarDisponibilidad(){
+  const okBancos = B.estado.banco==='ok' && B.estado.juego==='ok';
+  document.querySelectorAll('.tema-chk').forEach(function(label){
+    const inp = label.querySelector('.chk-tema');
+    const disp = label.querySelector('.tema-disp');
+    if(!inp || !disp) return;
+    if(!okBancos){ disp.textContent=''; return; }
+    const c = contarDisponiblesTema(inp.value);
+    disp.textContent = c.nEj+' ejercicios · '+c.nSaber+' preguntas tipo Saber';
+  });
+  const temasMarcados = Array.from(document.querySelectorAll('.chk-tema:checked')).map(c=>c.value);
+  const disponiblesTipo = okBancos ? contarDisponiblesTipo(temasMarcados) : {};
+  document.querySelectorAll('.ej-row').forEach(function(row){
+    const inp = row.querySelector('.chk-tipo-ej');
+    const disp = row.querySelector('.ej-disp');
+    if(!inp || !disp) return;
+    const n = disponiblesTipo[inp.dataset.tipo]||0;
+    disp.textContent = '('+n+' disponibles)';
+    inp.disabled = n===0;
+    if(n===0) inp.checked = false;
+  });
 }
 
 async function generar(){
@@ -685,7 +861,7 @@ function volverForm(){
 function imprimir(){ window.print(); }
 
 window.DOCENTE = {
-  B, rng, barajar, elegirN, initBancos, mostrarEstadoBancos,
+  B, rng, barajar, elegirN, initBancos, mostrarEstadoBancos, actualizarDisponibilidad,
   generar, volverForm, imprimir, TIPO_ROTULO
 };
 

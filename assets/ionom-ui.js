@@ -34,7 +34,6 @@
     mol:SVG+'<circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></svg>',
     estequiometria:SVG+'<rect x="4.5" y="2" width="15" height="20" rx="2"/><path d="M8 6.5h8"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01" stroke-width="2.6"/></svg>',
     balanceoAvanzado:SVG+'<path d="M13 2 4.5 13.5H10L9 22l9.5-12H13l1-8Z"/></svg>',
-    generador:SVG+'<circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
     nomenclash:SVG+'<path d="M5 3 13 11"/><path d="M5 3H3v2l9 9"/><path d="M12 14l6 6"/><path d="M15 17l3-3"/><path d="M19 3 11 11"/><path d="M19 3h2v2l-9 9"/><path d="M9 14 3 20"/></svg>',
     simulador:SVG+'<path d="M9 2.5h3"/><path d="M10.5 2.5V8l-4 7.5a2 2 0 0 0 1.8 3h5.4a2 2 0 0 0 1.8-3l-4-7.5"/><path d="M4 21.5h11"/><circle cx="18" cy="18" r="3.2"/><path d="M19.8 19.8l1.7 1.7"/></svg>',
     docente:SVG+'<path d="M14 2.5H6.5a1.5 1.5 0 0 0-1.5 1.5v16a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 2.5V8h5.5"/><path d="M8.5 12.5h7M8.5 16h7M8.5 19h4"/></svg>'
@@ -53,7 +52,6 @@
     {href:'moles.html',ico:ICO.mol,txt:'Mol y Masa Molar'},
     {href:'estequiometria.html',ico:ICO.estequiometria,txt:'Estequiometría'},
     {href:'balanceo-avanzado.html',ico:ICO.balanceoAvanzado,txt:'Balanceo Avanzado'},
-    {href:'generador.html',ico:ICO.generador,txt:'Generador'},
     {href:'nomenClash.html',ico:ICO.nomenclash,txt:'NomenClash'},
     {href:'simulador.html',ico:ICO.simulador,txt:'Simulador'},
     {href:'docente.html',ico:ICO.docente,txt:'Generador Docente'}

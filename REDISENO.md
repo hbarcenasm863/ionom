@@ -994,3 +994,67 @@ oxidación) -- nunca inventado.
   `elegirN`), y una guía completa con 2 versiones de evaluación (22 hojas)
   -- en los 3 casos, cero errores de consola y cero hojas con
   `scrollHeight > clientHeight` (desbordamiento).
+
+## Fase 11 (continuación) — Menú de docente.html al estilo ChromaNom + anexos
+
+La docente pidió dos ajustes tras ver `docente.html` funcionando: ocultar
+"Generador" de la navegación (el generador de ejercicios de uso general
+quedó cubierto por el nuevo generador docente), y rehacer el formulario de
+`docente.html` siguiendo el orden/densidad de información del formulario
+real de ChromaNom, adaptado a los datos de IonNom.
+
+### Navegación
+
+- Se quitó el enlace a `generador.html` del menú lateral de las 15 páginas
+  y de la hoja "Más" del menú inferior móvil (`assets/ionom-ui.js`).
+  `generador.html` sigue existiendo tal cual -- `docente.html` lo sigue
+  usando por detrás (iframe oculto) para las funciones de armado de HTML
+  de nomenclatura -- solo dejó de ser navegable desde el menú.
+- La tarjeta de portada (`index.html`) que apuntaba a "Generador de
+  Ejercicios" ahora apunta a `docente.html` ("Generador Docente"), mismo
+  lugar (⑤ Para docentes) y color, descripción actualizada.
+
+### Formulario de docente.html
+
+Reorganizado en 6 secciones numeradas (1·Documento, 2·Tema(s),
+3·Trabajo práctico, 4·Evaluación, 5·Versiones, 6·Encabezado
+institucional), con:
+
+- **Conteos en vivo por tema** ("41 ejercicios · 4 preguntas tipo Saber")
+  junto a cada casilla de tema, y **"(N disponibles)" por tipo de
+  ejercicio**, recalculados en cada cambio de selección de temas
+  (`contarDisponiblesTema`/`contarDisponiblesTipo` nuevos en
+  `docente-app.js`).
+- **Sección 3 rehecha dos veces** dentro de esta misma fase: primero como
+  números por tipo (puerto directo del formulario anterior), y luego --a
+  pedido explícito de la docente-- como **casillas clicables** por tipo de
+  ejercicio (igual que ChromaNom) más un único campo "Número de
+  ejercicios" que se reparte en ronda entre los tipos marcados
+  (`distribuirEjercicios()` nuevo), respetando cuánto hay disponible de
+  cada uno antes de pasarse al siguiente. Las casillas sin ejercicios
+  disponibles para los temas marcados se deshabilitan y desmarcan solas.
+- **Hoja de respuestas (círculos A-D)**: nueva, una por versión de
+  evaluación, con cuadrícula de filas numeradas + 4 círculos A/B/C/D para
+  rellenar a mano (`construirHojaRespuestas()`), coherente con el
+  principio de "sin clave de respuestas impresa".
+- **Rúbrica de evaluación**: nueva, un anexo fijo y genérico (no depende
+  del tema ni de la versión, se agrega una sola vez por generación) con 4
+  criterios (fórmula/ecuación, nomenclatura, identificación de iones con
+  el código de 4 colores, procedimiento y justificación) × 4 niveles de
+  desempeño (Superior/Alto/Básico/Bajo, escala del Ministerio de
+  Educación Nacional) (`construirRubrica()`).
+- Encabezado institucional ampliado con Área y Periodo (ya existían
+  Institución/Docente/Curso/Fecha; se mantiene el campo "Código de
+  variante" para la semilla, reubicado a la sección 5 con su explicación).
+
+### Verificación
+
+- Regresión completa de las 14 páginas existentes (28/28 sin errores).
+- Playwright: conteos en vivo correctos al marcar/desmarcar temas,
+  casillas de tipo de ejercicio que se deshabilitan solas en 0
+  disponibles, generación con los 14 temas + todos los tipos + 40
+  ejercicios + 2 versiones (33 hojas, cero desbordes, cero errores),
+  "Solo taller" sin hoja de respuestas/rúbrica (correcto, no hay
+  evaluación) y "Solo evaluación" con ambas presentes.
+- `node -e "new Function(...)"` sobre `docente.html` y
+  `assets/docente-app.js`.
