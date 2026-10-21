@@ -797,7 +797,15 @@ function alturaContenido(cuerpo){
   // ancestro posicionado.
   const ultimo = cuerpo.lastElementChild;
   if(!ultimo) return 0;
-  return ultimo.getBoundingClientRect().bottom - cuerpo.getBoundingClientRect().top;
+  // getBoundingClientRect() da el borde de la caja, pero NO el margen --
+  // los bloques (.exercise-card, .sect-info, .sect-previos) se separan con
+  // margin-bottom, no con padding interno, así que ese margen "se escapa"
+  // de la medición: "libre" salía más grande de lo real por esos px, y
+  // llenarHoja() terminaba agregando más cuadrícula de la que de verdad
+  // cabía (la causa real detrás de los desbordes que las redes de
+  // seguridad tenían que corregir después).
+  const mb = parseFloat(getComputedStyle(ultimo).marginBottom) || 0;
+  return ultimo.getBoundingClientRect().bottom - cuerpo.getBoundingClientRect().top + mb;
 }
 
 function llenarHoja(hoja){
