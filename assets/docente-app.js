@@ -176,15 +176,23 @@ function contarDisponiblesTema(id){
 // mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
 // este momento -- se recalcula cada vez que cambia la selección de temas,
 // igual que los "(N disponibles)" de ChromaNom.
+const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria'];
+// Mapa tema→tipo de ejercicio "D" que le corresponde. Se usa para
+// auto-marcar el tipo de ejercicio apenas se marca su tema (ver
+// actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
+// "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
+// Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
+const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria'};
 function contarDisponiblesTipo(temasMarcados){
-  const gruposCompuestos = temasMarcados.filter(t => !['reaccion','balanceo','mol-masa','elemento','reactividad'].includes(t));
+  const gruposCompuestos = temasMarcados.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
   return {
     'a-nombrar': nCompuestos, 'b-formula': nCompuestos, 'c-tabla': nCompuestos, 'ox-estado': nCompuestos,
     'x-errores': nCompuestos,
     'd-reaccion': temasMarcados.includes('reaccion') ? poolPorGrupo(['reaccion']).length : 0,
     'd-balanceo': temasMarcados.includes('balanceo') ? poolPorGrupo(['balanceo']).length : 0,
-    'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0
+    'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0,
+    'd-estequiometria': temasMarcados.includes('estequiometria') ? poolPorGrupo(['balanceo']).length : 0
   };
 }
 
@@ -270,6 +278,72 @@ function tarjetaMolMasa(m, numero){
     +'<div class="cuad" style="height:75.6px"></div>'
     +'</div>';
 }
+// Masa molar de una fórmula real (soporta paréntesis, ej. Fe₂(SO₄)₃),
+// calculada con las masas atómicas reales de ELEMENTS (juego.html) -- no
+// depende de que esa fórmula exacta tenga ya una entrada en el grupo
+// mol-masa de banco.js, así que sirve para CUALQUIER especie que aparezca
+// en una ecuación de balanceo real.
+function masaMolarDe(formula){
+  if(!masaMolarDe._porSimbolo){
+    const m = {};
+    Object.values(B.ELEMENTS||{}).forEach(e=>{ m[e.sym]=e.mass; });
+    masaMolarDe._porSimbolo = m;
+  }
+  const porSimbolo = masaMolarDe._porSimbolo;
+  const SUB = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  const f = String(formula).replace(/[₀-₉]/g, d=>SUB[d]||'');
+  function procesar(str){
+    let i=0, suma=0;
+    while(i<str.length){
+      if(str[i]==='('){
+        let depth=1, j=i+1;
+        while(j<str.length && depth>0){ if(str[j]==='(')depth++; else if(str[j]===')')depth--; j++; }
+        const dentro = str.slice(i+1, j-1);
+        let k=j, num='';
+        while(k<str.length && /[0-9]/.test(str[k])){ num+=str[k]; k++; }
+        suma += procesar(dentro) * (num?parseInt(num,10):1);
+        i=k;
+      } else if(/[A-Z]/.test(str[i])){
+        let sym = str[i]; i++;
+        while(i<str.length && /[a-z]/.test(str[i])){ sym+=str[i]; i++; }
+        let num='';
+        while(i<str.length && /[0-9]/.test(str[i])){ num+=str[i]; i++; }
+        suma += (porSimbolo[sym]||0) * (num?parseInt(num,10):1);
+      } else { i++; }
+    }
+    return suma;
+  }
+  return Math.round(procesar(f)*1000)/1000;
+}
+
+// Reconstruye la ecuación CON coeficientes (banco.js solo guarda
+// ecuacion_sin_coef + coeficientes/especies por separado).
+function construirEcuacionBalanceada(bal){
+  const nIzq = bal.ecuacion_sin_coef.split('→')[0].split('+').length;
+  const fmt = idx => (bal.coeficientes[idx]>1 ? bal.coeficientes[idx] : '') + bal.especies[idx];
+  const izq = bal.especies.slice(0, nIzq).map((_,i)=>fmt(i)).join(' + ');
+  const der = bal.especies.slice(nIzq).map((_,i)=>fmt(i+nIzq)).join(' + ');
+  return izq+' → '+der;
+}
+
+// Tarjeta de estequiometría: toma una ecuación YA balanceada real de
+// banco.js (grupo 'balanceo') y arma un problema de factor-unitario real
+// (gramos del primer reactivo -> gramos del último producto), con masas
+// molares calculadas de verdad -- no son valores inventados.
+function tarjetaEstequiometria(bal, rngFn, numero){
+  const datoIdx = 0, pedidoIdx = bal.especies.length - 1;
+  const dato = bal.especies[datoIdx], pedido = bal.especies[pedidoIdx];
+  const mmDato = masaMolarDe(dato), mmPedido = masaMolarDe(pedido);
+  const factor = 1 + Math.floor(rngFn()*3);
+  const gramosDato = Math.round(mmDato*factor*100)/100;
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--cat-t);background:var(--cat-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+construirEcuacionBalanceada(bal)+'</div>'
+    +'<p style="font-size:.9rem;margin:8px 0">A partir de <strong>'+gramosDato+' g</strong> de <strong style="font-family:var(--mono)">'+dato+'</strong> (MM='+mmDato+' g/mol), ¿cuántos gramos de <strong style="font-family:var(--mono)">'+pedido+'</strong> (MM='+mmPedido+' g/mol) se producen?</p>'
+    +'<div class="cuad" style="height:75.6px"></div>'
+    +'</div>';
+}
+
 function tarjetaError(e, numero){
   return '<div class="exercise-card" style="border-left:4px solid var(--err)">'
     +'<div class="ex-num">Ejercicio '+numero+'</div>'
@@ -295,7 +369,7 @@ function armarBloquesPractica(F, rngFn, usados){
     if(!cantidad) return;
 
     if(tipo==='a-nombrar' || tipo==='b-formula' || tipo==='c-tabla' || tipo==='ox-estado'){
-      const gruposCompuestos = temas.filter(t => !['reaccion','balanceo','mol-masa','elemento','reactividad'].includes(t));
+      const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
       let pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula));
       const elegidos = elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn);
       elegidos.forEach(c => usados.add(c.formula));
@@ -334,8 +408,14 @@ function armarBloquesPractica(F, rngFn, usados){
         usados.add(m.formula);
         bloques.push({html:tarjetaMolMasa(m, numero++), esMultiple:false});
       });
+    } else if(tipo==='d-estequiometria'){
+      let pool = poolPorGrupo(['balanceo']).filter(c => !usados.has(c.id));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.id).forEach(b=>{
+        usados.add(b.id);
+        bloques.push({html:tarjetaEstequiometria(b, rngFn, numero++), esMultiple:false});
+      });
     } else if(tipo==='x-errores'){
-      const gruposCompuestos = temas.filter(t => !['reaccion','balanceo','mol-masa','elemento','reactividad'].includes(t));
+      const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
       let pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula));
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn).forEach(c=>{
         usados.add(c.formula);
@@ -414,8 +494,11 @@ function construirVersion(F, numVersion, totalVersiones){
     bloques.push.apply(bloques, bloqueSesionInfo(F));
   }
   if(incluyeGuia){
-    bloques.push({html:'<h2 class="sec-tit">Sesión 3 · Trabajo práctico</h2>', esTitulo:true});
-    bloques.push.apply(bloques, armarBloquesPractica(F, rngEj, usados));
+    const practicaBloques = armarBloquesPractica(F, rngEj, usados);
+    if(practicaBloques.length){
+      bloques.push({html:'<h2 class="sec-tit">Sesión 3 · Trabajo práctico</h2>', esTitulo:true});
+      bloques.push.apply(bloques, practicaBloques);
+    }
   }
   let numSaberReal = 0;
   if(incluyeEval){
@@ -832,6 +915,12 @@ function actualizarDisponibilidad(){
   });
   const temasMarcados = Array.from(document.querySelectorAll('.chk-tema:checked')).map(c=>c.value);
   const disponiblesTipo = okBancos ? contarDisponiblesTipo(temasMarcados) : {};
+  temasMarcados.forEach(function(tema){
+    const tipo = TEMA_A_TIPO_D[tema];
+    if(!tipo) return;
+    const chk = document.querySelector('.chk-tipo-ej[data-tipo="'+tipo+'"]');
+    if(chk && !chk.checked && (disponiblesTipo[tipo]||0) > 0) chk.checked = true;
+  });
   document.querySelectorAll('.ej-row').forEach(function(row){
     const inp = row.querySelector('.chk-tipo-ej');
     const disp = row.querySelector('.ej-disp');

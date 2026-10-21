@@ -1089,3 +1089,73 @@ incluye `juego.html`/`generador.html`/`simulador.html`, que también leen
 `banco.js`); generación con los 15 temas a la vez, todos los tipos de
 ejercicio, 40 Saber, 15 abiertas, 2 versiones -> 106 hojas, cero
 desbordes, cero errores.
+
+## Fase 11 (continuación 3) — Corrige hojas en blanco al imprimir/exportar PDF y "0 ejercicios" en Estequiometría
+
+La docente compartió un PDF real exportado desde "Imprimir / Guardar PDF"
+(no capturado nunca por las pruebas en pantalla anteriores, que solo medían
+`scrollHeight`/`clientHeight` sin pasar por el pipeline de impresión real) y
+una captura donde "Estequiometría" mostraba "0 ejercicios" en Sesión 3.
+
+**Hojas en blanco al imprimir — causa real, encontrada con `page.pdf()` +
+`emulate_media('print')` de Playwright, reproducida fuera de pantalla:**
+`#vista` conserva su `padding:4px` de pantalla en `@media print` (nunca se
+ponía en 0), y `.hoja` usaba `height:1056px`/`11in` exacto. Esos 4px
+desplazan la primera hoja a `y:4`; como excede por unos píxeles el borde de
+la página 1 y `.hoja` tiene `break-inside:avoid`, Chromium empuja **toda**
+la hoja a la página 2 en vez de partirla, dejando la página 1 (y, por el
+mismo desfase acumulado, la última) completamente en blanco. Con un
+documento real de 14 hojas lógicas, esto producía 16 páginas físicas en el
+PDF. Corregido siguiendo `MAQUETACION_DOCENTE_1.md` (notas de ChromaNom):
+`#vista{padding:0}` en impresión, `html,body{margin:0;padding:0}` (el
+margen por defecto del navegador tampoco estaba en 0), `.hoja{height:1055px}`
+(1 px menos que la hoja física, no 1056 — evita que el redondeo del
+navegador sume esa página extra) con `overflow:hidden` como red de
+seguridad adicional, y `print-color-adjust:exact` en `.hoja *` (para que la
+cuadrícula de Notas y los colores de las tarjetas no dependan de que el
+docente marque "Gráficos de fondo" en el diálogo de impresión). Se agregó
+también un aviso visible junto al botón "Imprimir / Guardar PDF" indicando
+tamaño Carta, orientación Vertical, márgenes "Ninguno"/"Predeterminados" y
+escala 100% — la rotación de contenido que mostraba el PDF de la docente no
+se pudo reproducir con Playwright (que por defecto renderiza en vertical),
+así que el origen más probable es la configuración del diálogo de
+impresión del navegador, no el CSS del sitio.
+
+Verificado con `page.pdf()` real (no solo el DOM en pantalla): documento de
+1 tema → 14 páginas físicas = 14 hojas lógicas, cero en blanco; documento
+de 6 temas (incl. estequiometría y cadena de reactividad) → 27 páginas,
+cero en blanco, cero desbordes.
+
+**Estequiometría con 0 ejercicios:** marcar el tema "Estequiometría" (o
+"Balanceo de ecuaciones"/"Mol y masa molar"/"Tipos de reacción") no marcaba
+automáticamente su casilla de tipo de ejercicio "D" correspondiente en
+Sesión 3 — y "Estequiometría" además no tenía NINGÚN tipo de ejercicio
+mapeado, por lo que esos ejercicios no podían generarse nunca. Se agregó:
+
+- `tarjetaEstequiometria()` en `assets/docente-app.js`: ejercicio real de
+  estequiometría (dato en gramos → gramos pedidos) reutilizando ecuaciones
+  ya balanceadas y verificadas del grupo `balanceo` de `banco.js`, con masa
+  molar calculada con un parser de fórmulas propio (`masaMolarDe`, soporta
+  subíndices Unicode y paréntesis) contra las masas atómicas reales de
+  `juego.html` (`ELEMENTS`) — sin inventar química.
+- Casilla "D Estequiometría" en la sección 3 del formulario (`docente.html`).
+- Auto-sincronización (`TEMA_A_TIPO_D`, `actualizarDisponibilidad()`): al
+  marcar un tema con tipo "D" correspondiente, se marca solo su casilla si
+  tiene ejercicios disponibles — evita que vuelva a pasar para cualquiera
+  de los 4 temas afectados.
+- Red de seguridad estructural: el título "Sesión 3 · Trabajo práctico"
+  ahora solo se imprime si `armarBloquesPractica` devolvió al menos un
+  bloque, para cualquier combinación de temas/tipos que termine en 0
+  ejercicios (no solo el caso ya corregido de Estequiometría).
+- `TEMAS_SIN_COMPUESTOS`: se consolidaron en una sola constante 3 copias
+  del mismo arreglo inline que ya existían repetidas en el archivo.
+
+`sw.js`: `CACHE_NAME` v31→v32 (`docente.html` y `assets/docente-app.js`
+cambiaron).
+
+Verificado: regresión completa de páginas existentes sin errores de
+consola; generación con 1 tema, 6 temas y el caso "solo Tabla
+periódica"/"solo Cadena de reactividad" (sin tipo D mapeado, confirma que
+"Sesión 3" desaparece en vez de imprimir una hoja casi vacía); auto-marcado
+de "D Estequiometría" al marcar el tema confirmado con Playwright;
+`node -e "new Function(...)"` sobre `docente.html` y `docente-app.js`.
