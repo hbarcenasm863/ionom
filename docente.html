@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Generador para Docentes</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.55}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── Nav (igual patrón que el resto del sitio) ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300}
+.nav-overlay.open{display:block}
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:28px 0 20px;border-bottom:2px solid var(--brd);margin-bottom:24px}
+.page-hdr h1{font-family:var(--serif);font-size:1.6rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.86rem;color:var(--tx2);max-width:68ch}
+
+.screen{display:none}
+.screen.active{display:block}
+
+/* ── Formulario ── */
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 24px;margin-bottom:18px;box-shadow:var(--sh)}
+.sect h2{font-size:1rem;font-weight:800;color:var(--tx);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--brd)}
+.field-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px}
+.field{flex:1;min-width:160px}
+.field label{display:block;font-size:.72rem;font-weight:700;color:var(--dimmer);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.field input[type=text],.field input[type=date],.field select{width:100%;padding:9px 11px;border:1.5px solid var(--brd);border-radius:var(--rs);font-family:var(--sans);font-size:.88rem;background:var(--surf);color:var(--tx)}
+.temas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.tema-chk{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1.5px solid var(--brd);border-radius:var(--rs);font-size:.85rem;cursor:pointer;background:var(--surf2)}
+.tema-chk input{width:16px;height:16px;flex-shrink:0}
+.tipo-doc-row{display:flex;gap:14px;flex-wrap:wrap}
+.tipo-doc-row label{display:flex;align-items:center;gap:6px;font-size:.88rem;font-weight:600;cursor:pointer}
+.ej-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.ej-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border:1.5px solid var(--brd);border-radius:var(--rs);background:var(--surf2);font-size:.84rem}
+.ej-row input[type=number]{width:54px;padding:6px;border:1.5px solid var(--brd);border-radius:6px;text-align:center;font-family:var(--mono);font-size:.84rem}
+#estado-bancos{font-size:.76rem;color:var(--dimmer);margin-top:6px}
+.btn-generar{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--nav);color:#fff;border:none;border-radius:var(--rs);font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:var(--sh)}
+.btn-generar:hover{filter:brightness(1.08)}
+.btn-generar:disabled{opacity:.6;cursor:wait}
+.btn-sec{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:var(--surf);color:var(--nav);border:1.5px solid var(--brd);border-radius:var(--rs);font-weight:700;font-size:.85rem;cursor:pointer}
+
+/* ── Vista previa ── */
+.vista-actions{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+#vista{display:flex;flex-direction:column;align-items:center;gap:20px;overflow-x:auto;padding:4px}
+
+/* ── Hoja tamaño carta (816×1056px a 96dpi) ── */
+.hoja{width:816px;min-width:816px;height:1056px;background:#fff;color:#000;box-shadow:0 2px 14px rgba(0,0,0,.18);padding:50px 56px;box-sizing:border-box;display:flex;flex-direction:column;font-family:var(--sans);flex-shrink:0}
+.hoja-enc{border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:12px;font-size:.74rem;flex-shrink:0}
+.hoja-enc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.hoja-enc-logo{font-family:var(--serif);font-style:italic;font-weight:700;font-size:.95rem;color:var(--nav)}
+.hoja-enc-corto{color:#555}
+.hoja-cuerpo{flex:1;overflow:hidden}
+.hoja-pie{border-top:1px solid #ccc;padding-top:6px;margin-top:8px;font-size:.66rem;color:#777;text-align:center;flex-shrink:0}
+
+.sec-tit{font-family:var(--serif);font-style:italic;font-size:1.05rem;font-weight:700;color:var(--nav);margin:14px 0 10px;padding-bottom:5px;border-bottom:1.5px solid var(--brd)}
+.sect-previos,.sect-info{margin-bottom:12px;font-size:.84rem}
+.sect-previos h3,.sect-info h3{font-size:.86rem;font-weight:800;margin-bottom:5px;color:var(--tx)}
+.sect-previos p,.sect-info p{margin-bottom:6px;line-height:1.45}
+.curioso{background:var(--cat-b);border-left:3px solid var(--cat);padding:6px 10px;border-radius:0 6px 6px 0}
+.contexto{background:var(--an-b);border-left:3px solid var(--an);padding:6px 10px;border-radius:0 6px 6px 0}
+.activacion{font-style:italic;color:#444}
+.esquema{background:#f6f6f8;border:1px solid #ddd;border-radius:8px;padding:8px 12px;margin:6px 0;font-size:.8rem}
+.esquema ul{margin:4px 0 0 18px}
+.ejemplo-resuelto{background:var(--ox-b);border-left:3px solid var(--ox);padding:6px 10px;border-radius:0 6px 6px 0;font-size:.82rem}
+
+/* ── Tarjetas de ejercicio (mismo estilo visual que generador.html, para
+   que el HTML reutilizado de ese iframe se vea consistente aquí) ── */
+.exercise-card{background:#fff;border:1.5px solid #ccc;border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:.84rem}
+.ex-num{font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:6px}
+.ex-prompt{font-size:.84rem;color:#333;margin-bottom:10px}
+.ex-blank{border-bottom:2px solid #999;height:20px;margin-top:6px}
+.ex-type-1 .ex-formula{font-size:1.4rem;font-weight:700;color:#92400e;background:#fef3c7;display:inline-block;padding:4px 12px;border-radius:6px;margin-bottom:10px;font-family:var(--mono)}
+.ex-type-2 .ex-name{font-size:.95rem;font-weight:700;color:#082f49;background:#e0f2fe;display:inline-block;padding:4px 10px;border-radius:6px;margin-bottom:10px;font-style:italic}
+.ex-type-3{padding:0}
+.table-wrapper{overflow-x:auto}
+.exercise-card table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:.78rem}
+.exercise-card th,.exercise-card td{padding:6px;text-align:left;border:1px solid #ccc}
+.exercise-card th{background:#f0f0f0}
+.exercise-card td.cell-blank{border-bottom:2px solid #999;background:#f6f6f6}
+
+/* ── Preguntas Saber 11 — doble columna ── */
+.cols2{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.sq{border:1px solid #ccc;border-radius:8px;padding:10px 12px;font-size:.78rem}
+.sq-ctx{color:#555;font-style:italic;margin-bottom:5px}
+.sq-q{margin-bottom:6px}
+.sq-opt{padding:2px 0}
+
+/* ── Cuadrícula de respuesta (CUADRO ≈ 18.9px = 5mm) ── */
+.cuad{background-image:repeating-linear-gradient(#e5e5e5 0 1px,transparent 1px 18.9px),repeating-linear-gradient(90deg,#e5e5e5 0 1px,transparent 1px 18.9px);border:1px solid #ccc;border-radius:4px;margin-top:6px}
+.notas-finales{margin-top:10px}
+
+/* ── Impresión: tamaño carta real, una hoja por página ── */
+@media print{
+  .site-nav,.nav-drawer,.nav-overlay,.page-hdr,.no-print,footer,.screen#s-form{display:none!important}
+  body{background:#fff}
+  .app{padding:0;max-width:none}
+  #vista{overflow:visible;gap:0}
+  .hoja{box-shadow:none;break-after:page;page-break-after:always;zoom:1;margin:0}
+  .hoja:last-child{break-after:auto;page-break-after:auto}
+  @page{size:letter;margin:0}
+}
+@media(max-width:860px){
+  .hoja{transform-origin:top center}
+}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="generador.html"><span class="dl-icon">⚙️</span><span class="dl-name">Generador</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html" class="active"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr no-print">
+    <h1>🗂️ Generador para Docentes</h1>
+    <p>Arma guías, talleres y evaluaciones imprimibles en tamaño carta a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
+  </div>
+
+  <!-- ══════════════ FORMULARIO ══════════════ -->
+  <div id="s-form" class="screen active">
+
+    <div class="sect">
+      <h2>Encabezado</h2>
+      <div class="field-row">
+        <div class="field"><label for="f-colegio">Colegio</label><input type="text" id="f-colegio" value="Colegio Rufino José Cuervo I.E.D."></div>
+        <div class="field"><label for="f-docente">Docente</label><input type="text" id="f-docente" placeholder="Nombre del docente"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="f-curso">Curso</label><input type="text" id="f-curso" placeholder="ej. 10°-01"></div>
+        <div class="field"><label for="f-fecha">Fecha</label><input type="date" id="f-fecha"></div>
+        <div class="field"><label for="f-variante">Variante (cambia la semilla)</label><input type="text" id="f-variante" value="v1"></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Temas</h2>
+      <div class="temas-grid" id="temas-grid">
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="ox-bas" checked> Óxidos básicos</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="anhid" checked> Anhídridos (óxidos ácidos)</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="hidru"> Hidruros metálicos</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="ac-hid"> Ácidos hídricos</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="base"> Bases / Hidróxidos</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="ac-ox"> Ácidos oxácidos</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="sal-bin"> Sales binarias</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="sal-ox"> Sales oxigenadas</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="sal-ac"> Sales ácidas</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="reaccion"> Tipos de reacción</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="balanceo"> Balanceo de ecuaciones</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="mol-masa"> Mol y masa molar</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="elemento"> Tabla periódica</label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="reactividad"> Cadena de reactividad</label>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Tipo de documento</h2>
+      <div class="tipo-doc-row">
+        <label><input type="radio" name="tipoDoc" value="completa" checked> Guía completa (lectura + práctica + evaluación)</label>
+        <label><input type="radio" name="tipoDoc" value="taller"> Solo taller (práctica)</label>
+        <label><input type="radio" name="tipoDoc" value="evaluacion"> Solo evaluación</label>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Ejercicios de práctica</h2>
+      <div class="field-row">
+        <div class="field" style="max-width:220px">
+          <label for="f-sistema">Sistema de nomenclatura</label>
+          <select id="f-sistema">
+            <option value="all">Los 3 (mezclado)</option>
+            <option value="trad">Tradicional</option>
+            <option value="stock">Stock</option>
+            <option value="sist">Sistemática</option>
+          </select>
+        </div>
+      </div>
+      <div class="ej-grid">
+        <div class="ej-row">A Nombrar (fórmula→nombre) <input type="number" class="inp-tipo-ej" data-tipo="a-nombrar" min="0" value="4"></div>
+        <div class="ej-row">B De nombre a fórmula <input type="number" class="inp-tipo-ej" data-tipo="b-formula" min="0" value="4"></div>
+        <div class="ej-row">C Completar tabla <input type="number" class="inp-tipo-ej" data-tipo="c-tabla" min="0" value="4"></div>
+        <div class="ej-row">Estado de oxidación <input type="number" class="inp-tipo-ej" data-tipo="ox-estado" min="0" value="2"></div>
+        <div class="ej-row">D Tipos de reacción <input type="number" class="inp-tipo-ej" data-tipo="d-reaccion" min="0" value="0"></div>
+        <div class="ej-row">D Balanceo <input type="number" class="inp-tipo-ej" data-tipo="d-balanceo" min="0" value="0"></div>
+        <div class="ej-row">D Mol y masa molar <input type="number" class="inp-tipo-ej" data-tipo="d-molmasa" min="0" value="0"></div>
+        <div class="ej-row">X Cazar errores <input type="number" class="inp-tipo-ej" data-tipo="x-errores" min="0" value="2"></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Evaluación</h2>
+      <div class="field-row">
+        <div class="field"><label for="f-saber">Preguntas tipo Saber 11</label><input type="text" inputmode="numeric" id="f-saber" value="6"></div>
+        <div class="field"><label for="f-abiertas">Preguntas abiertas</label><input type="text" inputmode="numeric" id="f-abiertas" value="3"></div>
+        <div class="field"><label for="f-versiones">Número de versiones</label><input type="text" inputmode="numeric" id="f-versiones" value="1"></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div id="estado-bancos">Cargando bancos…</div>
+      <button class="btn-generar" id="btn-generar" onclick="DOCENTE.generar()" style="margin-top:14px">⚙️ Generar documento</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ VISTA PREVIA ══════════════ -->
+  <div id="s-preview" class="screen">
+    <div class="vista-actions no-print">
+      <button class="btn-sec" onclick="DOCENTE.volverForm()">← Volver al formulario</button>
+      <button class="btn-generar" onclick="DOCENTE.imprimir()">🖨️ Imprimir / Guardar PDF</button>
+    </div>
+    <div id="vista"></div>
+  </div>
+
+  <!-- Medidor oculto: tamaño real (816×1056), visibility:hidden (NO display:none,
+       que dejaría clientHeight/scrollHeight en 0 e impediría medir el desborde). -->
+  <div id="medidor" style="position:fixed;left:-9999px;top:0;visibility:hidden"></div>
+
+  <footer class="no-print">
+    IonNom — Generador para Docentes · lee en vivo los bancos de <a href="generador.html">Generador</a> y <a href="juego.html">Juego</a>, sin copiarlos.
+  </footer>
+</div>
+
+<script src="banco.js"></script>
+<script src="assets/docente-datos.js"></script>
+<script src="assets/docente-app.js"></script>
+<script>
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+  var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');
+});
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

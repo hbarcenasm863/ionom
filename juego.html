@@ -3816,6 +3816,15 @@ window.checkClassifyRx = checkClassifyRx;
 window.checkBalanceEq = checkBalanceEq;
 window.showBalanceAnswer = showBalanceAnswer;
 window.checkMolCalc = checkMolCalc;
+// Exposición de solo lectura para que docente.html (iframe oculto) pueda
+// leer estos datos/funciones sin duplicarlos. No cambia ningún comportamiento
+// existente del juego.
+window.ELEMENTS = ELEMENTS;
+window.REACT_CHAINS = REACT_CHAINS;
+window.GROUP_LABELS = GROUP_LABELS;
+window.STUDY_TIPS = STUDY_TIPS;
+window.getOxidationStates = getOxidationStates;
+window.parseFormula = parseFormula;
 })();
 </script>
 
