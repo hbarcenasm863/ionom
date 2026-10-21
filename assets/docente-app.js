@@ -63,6 +63,7 @@ function barajar(arr, rngFn){
 // con nuestra semilla en vez de Math.random().
 function elegirN(src, n, rngFn, clave){
   clave = clave || (x => x.formula || x.id || x.ecuacion || JSON.stringify(x));
+  if(!src.length) return []; // sin fuente no hay nada que elegir (ej. temas sin compuestos en BANCO)
   if(src.length >= n) return barajar(src, rngFn).slice(0, n);
   const out = []; let bolsa = [];
   while(out.length < n){
@@ -245,7 +246,18 @@ function armarBloquesPractica(F, rngFn, usados){
       else if(elegidos.length && B.gen.generateNameToFormula && tipo==='b-formula') html = B.gen.generateNameToFormula(elegidos, sistema);
       else if(elegidos.length && B.gen.generateTableComplete && tipo==='c-tabla') html = B.gen.generateTableComplete(elegidos, sistema);
       else if(elegidos.length && B.gen.generateOxidationState && tipo==='ox-estado') html = B.gen.generateOxidationState(elegidos);
-      if(html) bloques.push({html:html, esMultiple:true});
+      // generateFormulaToName/generateNameToFormula/generateTableComplete devuelven
+      // VARIOS <div class="exercise-card"> hermanos concatenados en un solo string
+      // (sin contenedor envolvente) -- si se empuja como un solo bloque, paginar()
+      // solo conserva wrap.firstElementChild y descarta en silencio el resto. Por
+      // eso se separa aquí en un bloque por tarjeta, para que cada una pagine bien.
+      if(html){
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        Array.from(tmp.children).forEach(function(card){
+          bloques.push({html: card.outerHTML, esMultiple:false});
+        });
+      }
     } else if(tipo==='d-reaccion'){
       let pool = poolPorGrupo(['reaccion']).filter(c => !usados.has(c.id));
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.id).forEach(r=>{
@@ -469,7 +481,27 @@ function paginar(doc){
     }
   });
 
-  const hojas = Array.from(medidor.querySelectorAll('.hoja'));
+  // Red de seguridad: el paginado por bloque de arriba puede dejar un
+  // desborde residual de pocos px (ej. por una variante de fuente que
+  // termina de cargar justo después de medir). Antes de estirar las
+  // cuadrículas, se corrige cualquier hoja que aún desborde moviendo su(s)
+  // último(s) elemento(s) a una hoja de continuación recién creada.
+  let hojas = Array.from(medidor.querySelectorAll('.hoja'));
+  for(let idx=0; idx<hojas.length; idx++){
+    let intentos = 0;
+    while(intentos < 50){
+      const cuerpo = hojas[idx].querySelector('.hoja-cuerpo');
+      if(cuerpo.scrollHeight <= cuerpo.clientHeight + 1 || !cuerpo.lastElementChild) break;
+      const sobrante = cuerpo.lastElementChild;
+      cuerpo.removeChild(sobrante);
+      const continuacion = crearHoja(doc, false);
+      medidor.insertBefore(continuacion, hojas[idx].nextSibling);
+      continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
+      hojas.splice(idx+1, 0, continuacion);
+      intentos++;
+    }
+  }
+
   hojas.forEach(function(h, i){
     llenarHoja(h);
     const pie = h.querySelector('.hoja-pagina');
@@ -487,10 +519,30 @@ function llenarHoja(hoja){
   const libre = cuerpo.clientHeight - cuerpo.scrollHeight;
   if(libre < CUADRO){ return; }
   if(!cuadros.length){
+    // El bloque de notas trae su propio rótulo ("Notas") además del cuadro,
+    // una altura que "libre" no presupuesta -- por eso se inserta con el
+    // mínimo (2 cuadros) y se mide de verdad, en vez de confiar en el
+    // cálculo estático, igual que hace paginar() con sus bloques normales.
     const nota = document.createElement('div');
     nota.className = 'notas-finales';
-    nota.innerHTML = '<div class="ex-num">Notas</div><div class="cuad" style="height:'+Math.max(CUADRO*2, Math.min(CUADRO*26, Math.floor(libre/CUADRO)*CUADRO))+'px"></div>';
+    nota.innerHTML = '<div class="ex-num">Notas</div><div class="cuad" style="height:'+(CUADRO*2)+'px"></div>';
     cuerpo.appendChild(nota);
+    if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+      cuerpo.removeChild(nota);
+      return;
+    }
+    const cuad = nota.querySelector('.cuad');
+    let restante = Math.min(Math.floor((cuerpo.clientHeight - cuerpo.scrollHeight)/CUADRO), 24);
+    while(restante > 0){
+      const alturaActual = parseFloat(cuad.style.height)||0;
+      if(alturaActual >= CUADRO*26) break;
+      cuad.style.height = (alturaActual + CUADRO) + 'px';
+      if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
+        cuad.style.height = alturaActual + 'px';
+        break;
+      }
+      restante--;
+    }
     return;
   }
   let restante = Math.min(Math.floor(libre/CUADRO), 26*cuadros.length);
@@ -564,14 +616,23 @@ async function generar(){
   if(btn) btn.disabled = true;
   try{
     // Precarga de fuentes ANTES de medir/paginar (si se mide con una fuente
-    // de respaldo y la real llega después, el texto crece y desborda).
+    // de respaldo y la real llega después, el texto crece y desborda). Se
+    // precargan los 4 pesos realmente usados en docente.html (400/600/700/800,
+    // confirmado con grep) y además se espera document.fonts.ready como red
+    // de seguridad para cualquier variante que .load() no haya cubierto.
     if(document.fonts && document.fonts.load){
       await Promise.all([
         document.fonts.load('400 16px Outfit'),
+        document.fonts.load('600 16px Outfit'),
         document.fonts.load('700 16px Outfit'),
+        document.fonts.load('800 16px Outfit'),
         document.fonts.load('700 16px Fraunces'),
-        document.fonts.load('400 16px "JetBrains Mono"')
+        document.fonts.load('400 16px "JetBrains Mono"'),
+        document.fonts.load('700 16px "JetBrains Mono"')
       ].map(p=>p.catch(()=>{})));
+    }
+    if(document.fonts && document.fonts.ready){
+      await document.fonts.ready.catch(()=>{});
     }
     const F = leerForm();
     if(!F.temas.length){ alert('Selecciona al menos un tema.'); return; }

@@ -281,7 +281,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
   <!-- Medidor oculto: tamaño real (816×1056), visibility:hidden (NO display:none,
        que dejaría clientHeight/scrollHeight en 0 e impediría medir el desborde). -->
-  <div id="medidor" style="position:fixed;left:-9999px;top:0;visibility:hidden"></div>
+  <!-- Sin visibility:hidden a propósito: con eso puesto, algunos navegadores
+       difieren el "shaping" real de las fuentes web hasta que el contenido
+       se pinta de verdad, así que lo medido aquí (oculto) podía salir unos
+       px más bajo que el mismo contenido ya clonado y visible en #vista,
+       causando desbordes residuales pequeños. position:fixed + left fuera
+       de pantalla ya lo mantiene invisible para el usuario sin ese efecto. -->
+  <div id="medidor" style="position:fixed;left:-9999px;top:0"></div>
 
   <footer class="no-print">
     IonNom — Generador para Docentes · lee en vivo los bancos de <a href="generador.html">Generador</a> y <a href="juego.html">Juego</a>, sin copiarlos.

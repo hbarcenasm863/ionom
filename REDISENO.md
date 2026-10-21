@@ -894,3 +894,103 @@ subir versión en cualquier commit que toque contenido cacheable).
 - Partida en modo libre + botón "atrás" del navegador (incluido 3 veces
   seguidas y rápido) en Playwright/Chromium: el modal de confirmación de
   salida sigue apareciendo correctamente, sin errores de consola.
+
+## Fase 11 — Generador para Docentes (docente.html)
+
+La docente compartió la documentación de un feature equivalente ya
+construido en ChromaNom (el proyecto hermano de química orgánica):
+`docente.html`, una página que arma guías/talleres/evaluaciones
+imprimibles en tamaño carta a partir de un formulario, leyendo en vivo los
+bancos de ejercicios del propio sitio (sin duplicarlos), con versiones
+reproducibles por semilla (misma semilla + misma versión = mismo
+documento, para poder reimprimir) pero distintas entre sí (para dificultar
+la copia entre estudiantes), sin clave de respuestas impresa.
+
+### Arquitectura
+
+- **`BANCO`** (banco.js) se usa directo con `<script src="banco.js">` en
+  `docente.html` -- a diferencia de ChromaNom, en IonNom el banco principal
+  ya es un archivo compartido independiente, no hace falta iframe.
+- **`ELEMENTS`, `REACT_CHAINS`, `GROUP_LABELS`, `STUDY_TIPS`,
+  `getOxidationStates`, `parseFormula`** sí viven solo dentro del `<script>`
+  de `juego.html`, envuelto en una única IIFE -- no eran accesibles desde
+  afuera ni siquiera vía iframe+`contentWindow.eval`. Se agregó un bloque
+  aditivo `window.ELEMENTS = ELEMENTS; ...` justo antes del cierre de esa
+  IIFE (no cambia ningún comportamiento existente del juego) para
+  exponerlos de solo lectura, y `docente.html` los lee mediante un
+  `<iframe>` oculto a `juego.html`.
+- Las funciones de armado de HTML de `generador.html`
+  (`generateFormulaToName`/`generateNameToFormula`/`generateTableComplete`/
+  `generateOxidationState`) se reutilizan igual vía un segundo iframe
+  oculto, pero recibiendo la selección de compuestos YA hecha por el RNG
+  con semilla propio de `docente.html` (`generador.html` elige con
+  `Math.random()` sin semilla, así que no se le puede pedir que elija él
+  mismo sin romper la reproducibilidad).
+- `reaccion`/`balanceo`/`mol-masa` no tienen armador reutilizable en
+  `generador.html` (el suyo también usa `Math.random()` interno), así que
+  `docente-app.js` arma esas tarjetas directamente, mismo estilo visual.
+- Nuevo en el sitio: RNG con semilla (hash FNV-1a + mulberry32) y un motor
+  de paginación tamaño carta real (`.hoja` 816×1056px @96dpi, medido con
+  las fuentes ya cargadas vía `document.fonts.load` antes de paginar,
+  cuadrícula de respuesta `CUADRO=18.9px` que se reparte en ronda al final
+  de cada hoja para no dejar huecos grandes vacíos).
+
+### Contenido
+
+14 temas completos (`TEMAS`/`SABER`/`ABIERTAS` en
+`assets/docente-datos.js`): los 10 grupos reales de `banco.js` (óxidos
+básicos, anhídridos, hidruros, ácidos hídricos, bases, ácidos oxácidos,
+sales binarias/oxigenadas/ácidas, mol y masa molar) más tipos de reacción
+y balanceo (también de `banco.js`), más tabla periódica y cadena de
+reactividad (de `ELEMENTS`/`REACT_CHAINS` en `juego.html`, sin bancos
+propios). Cada tema trae lectura + esquema + ejemplo resuelto (con el
+mismo código de 4 colores MDEC del juego, ahora también renderizado como
+chip de color en la página impresa, no solo como texto) para Sesión 1-2,
+más preguntas Saber 11 (contexto colombiano real) y preguntas abiertas
+para la evaluación. Contenido verificado contra los datos reales de
+`banco.js`/`ELEMENTS`/`REACT_CHAINS` (fórmulas, masas molares, estados de
+oxidación) -- nunca inventado.
+
+### Bugs encontrados y corregidos durante la verificación
+
+- `elegirN()` entraba en un bucle que rellenaba el resultado con
+  `undefined` cuando la fuente estaba vacía (ej. el docente selecciona
+  solo temas sin compuestos en `BANCO`, como "Tabla periódica", pero deja
+  los contadores por defecto de ejercicios de nomenclatura en >0) --
+  `undefined.formula` tumbaba `generar()` con un error sin capturar. Ahora
+  retorna `[]` de inmediato si la fuente está vacía.
+- `generateFormulaToName`/`generateNameToFormula`/`generateTableComplete`
+  devuelven VARIOS `<div class="exercise-card">` hermanos concatenados en
+  un solo string HTML (sin contenedor envolvente) -- `paginar()` solo
+  conserva `wrap.firstElementChild`, así que el resto se descartaba en
+  silencio. Se separa el HTML en un bloque por tarjeta antes de pasarlo a
+  `paginar()`.
+- El bloque de "Notas" que se agrega cuando una hoja no tiene ninguna
+  cuadrícula de respuesta calculaba su altura con el espacio libre
+  *antes* de insertar su propio rótulo, lo que podía desbordar la hoja por
+  esa diferencia. Ahora se inserta con el mínimo y se mide de verdad
+  contra `scrollHeight`, igual que el resto de bloques.
+
+### Integración al sitio
+
+- `docente.html` enlazado desde las 14 páginas existentes (menú lateral
+  de escritorio) y desde la hoja "Más" del menú inferior móvil
+  (`assets/ionom-ui.js`, arreglo `MAS`).
+- `sw.js`: `/ionom/docente.html`, `/ionom/assets/docente-datos.js` y
+  `/ionom/assets/docente-app.js` agregados a `ASSETS_TO_CACHE`;
+  `CACHE_NAME` v28→v29. Se sirve network-first como cualquier página HTML
+  (no necesita el caso especial de `generador.html`, que sí depende de
+  estar siempre en línea).
+
+### Verificación realizada
+
+- Las 14 páginas existentes sin errores de consola ni desbordamiento
+  horizontal en 1280px/390px (`test_all_pages.py`).
+- `node -e "new Function(...)"` sobre `docente.html` y los 2 archivos
+  `.js` nuevos.
+- Playwright: generación con los 14 temas seleccionados a la vez (19
+  hojas), con solo los 4 temas sin banco de compuestos (`reaccion`,
+  `mol-masa`, `elemento`, `reactividad` -- el caso que disparó el bug de
+  `elegirN`), y una guía completa con 2 versiones de evaluación (22 hojas)
+  -- en los 3 casos, cero errores de consola y cero hojas con
+  `scrollHeight > clientHeight` (desbordamiento).
