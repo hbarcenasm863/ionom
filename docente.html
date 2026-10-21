@@ -155,13 +155,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* ── Impresión: tamaño carta real, una hoja por página ── */
 @media print{
-  .site-nav,.nav-drawer,.nav-overlay,.page-hdr,.no-print,footer,.screen#s-form{display:none!important}
-  body{background:#fff}
+  .site-nav,.nav-drawer,.nav-overlay,.page-hdr,.no-print,footer,.screen#s-form,#medidor{display:none!important}
+  html,body{margin:0!important;padding:0!important;background:#fff}
   .app{padding:0;max-width:none}
-  #vista{overflow:visible;gap:0}
-  .hoja{box-shadow:none;break-after:page;page-break-after:always;zoom:1;margin:0}
+  #vista{overflow:visible;gap:0;padding:0;zoom:1!important;transform:none!important}
+  .hoja{box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid;zoom:1;margin:0;width:816px;height:1055px;overflow:hidden}
   .hoja:last-child{break-after:auto;page-break-after:auto}
-  @page{size:letter;margin:0}
+  .hoja *{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  @page{size:letter portrait;margin:0}
 }
 @media(max-width:860px){
   .hoja{transform-origin:top center}
@@ -270,6 +271,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-reaccion"><span><strong>D</strong> Tipos de reacción<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-balanceo"><span><strong>D</strong> Balanceo<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-molmasa"><span><strong>D</strong> Mol y masa molar<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-estequiometria"><span><strong>D</strong> Estequiometría<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="x-errores" checked><span><strong>X</strong> Cazar errores<br><small class="ej-disp"></small></span></label>
       </div>
       <div class="field-row" style="margin-top:12px">
@@ -329,6 +331,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <button class="btn-sec" onclick="DOCENTE.volverForm()">← Volver al formulario</button>
       <button class="btn-generar" onclick="DOCENTE.imprimir()">🖨️ Imprimir / Guardar PDF</button>
     </div>
+    <p class="no-print" style="font-size:.78rem;color:#777;text-align:center;margin:6px 0 0">En el diálogo de impresión use <b>tamaño Carta</b>, <b>orientación Vertical</b>, márgenes <b>"Ninguno"</b> o <b>"Predeterminados"</b> y escala <b>100%</b>.</p>
     <div id="vista"></div>
   </div>
 
