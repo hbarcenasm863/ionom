@@ -396,7 +396,15 @@ function bloqueSesionInfo(F){
       (t.info.esquema.ramas||[]).forEach(r=>{ html += '<li><strong>'+r.t+':</strong> '+(r.items||[]).join(', ')+'</li>'; });
       html += '</ul></div>';
     }
-    if(t.ejemplo) html += '<div class="ejemplo-resuelto"><strong>Ejemplo resuelto:</strong> <span style="font-family:var(--mono)">'+t.ejemplo.f+'</span> → '+(t.ejemplo.partes||[]).map(p=>p[2]).join('; ')+'</div>';
+    if(t.ejemplo){
+      // Cada parte usa el mismo código de 4 colores MDEC del juego (cat/an/oh/ox)
+      // -- se renderiza como chip de color + explicación, no solo texto plano.
+      const chips = (t.ejemplo.partes||[]).map(function(p){
+        const rol = p[1];
+        return '<div style="margin-top:4px"><span style="font-family:var(--mono);font-weight:700;color:var(--'+rol+'-t);background:var(--'+rol+'-b);padding:2px 8px;border-radius:6px;margin-right:6px">'+esc(p[0])+'</span>'+esc(p[2])+'</div>';
+      }).join('');
+      html += '<div class="ejemplo-resuelto"><strong>Ejemplo resuelto:</strong> <span style="font-family:var(--mono);font-weight:700">'+esc(t.ejemplo.f)+'</span>'+chips+'</div>';
+    }
     html += '</div>';
     out.push({html:html, esMultiple:false});
   });
