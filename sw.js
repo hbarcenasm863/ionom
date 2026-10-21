@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v32';
+const CACHE_NAME = 'ionom-v33';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -76,6 +76,29 @@ self.addEventListener('fetch', (event) => {
       fetch(event.request).catch(() =>
         new Response('Generador disponible solo en línea', { status: 503 })
       )
+    );
+    return;
+  }
+
+  // docente-app.js/docente-datos.js: network-first, igual que el HTML.
+  // Son los dos archivos que cambian cada vez que se corrige un bug o se
+  // agrega contenido a docente.html, y a diferencia de banco.js (que
+  // también leen juego.html/generador.html/simulador.html y sí conviene
+  // mantener cache-first para que los estudiantes jueguen sin conexión)
+  // estos dos solo los usa la herramienta de la docente -- preferir
+  // "siempre la versión más nueva cuando hay internet" es más importante
+  // aquí que ahorrar una petición de red.
+  if (url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
     );
     return;
   }
