@@ -846,12 +846,20 @@ function llenarHoja(hoja){
     }
     return;
   }
-  let restante = Math.min(Math.floor(libre/CUADRO), 26*cuadros.length);
+  // El tope de 26 cuadros por fila evita que una cuadrícula crezca
+  // "absurda" cuando comparte la hoja con otras filas -- pero si hay una
+  // sola cuadrícula (un ejercicio solo en su hoja, típicamente una
+  // continuación), no hay nada más con qué compararla: aplicar el mismo
+  // tope ahí solo deja un hueco en blanco enorme debajo sin ninguna razón
+  // visual (el bug reportado), así que en ese caso se deja crecer hasta
+  // llenar todo el espacio libre real.
+  const topeCuadros = cuadros.length === 1 ? Infinity : 26;
+  let restante = Math.min(Math.floor(libre/CUADRO), topeCuadros*cuadros.length);
   let i = 0;
   while(restante > 0){
     const c = cuadros[i % cuadros.length];
     const alturaActual = parseFloat(c.style.height)||0;
-    if(alturaActual < CUADRO*26){
+    if(alturaActual < CUADRO*topeCuadros){
       c.style.height = (alturaActual + CUADRO) + 'px';
       // Verificación en vivo (igual que el bloque de Notas): estirar un
       // .cuad desplaza todo lo que viene después de él, así que el
@@ -866,7 +874,7 @@ function llenarHoja(hoja){
       restante--;
     }
     i++;
-    if(i > cuadros.length*26) break;
+    if(i > 200) break;
   }
 }
 
@@ -1073,11 +1081,29 @@ async function generar(){
         continuacion.dataset.etiqueta = hoja.dataset.etiqueta || '';
         actual.parentNode.insertBefore(continuacion, actual.nextSibling);
         continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
+        // "continuacion" no la visita el forEach de más abajo (se creó
+        // después de tomar la lista de hojas de #vista) -- sin esto se
+        // quedaba con el sobrante a su tamaño original y el resto de la
+        // hoja en blanco: el bug real detrás de un ejercicio pequeño con
+        // un hueco enorme debajo, en vez de la cuadrícula de Notas o el
+        // propio ejercicio creciendo para llenar el espacio.
+        llenarHoja(continuacion);
         actual = continuacion;
         intentos++;
         seMovioAlgo = true;
       }
-      if(!seMovioAlgo) return;
+      if(!seMovioAlgo){
+        // Aunque esta hoja no desbordó, el espacio libre que se midió en
+        // #medidor (oculto) para rellenarla puede haber quedado corto del
+        // real una vez la hoja se vuelve visible en #vista (mismo
+        // desajuste de fuentes) -- eso deja una cuadrícula pequeña con un
+        // hueco grande debajo que nunca se corregía, porque solo se volvía
+        // a llenar la hoja cuando SÍ desbordaba. Se vuelve a correr aquí,
+        // sobre las medidas reales, para completar cualquier relleno que
+        // haya quedado corto.
+        llenarHoja(hoja);
+        return;
+      }
       const cuerpoOriginal = hoja.querySelector('.hoja-cuerpo');
       // Si TODO el contenido de "hoja" se movió a hoja(s) de continuación,
       // no queda nada real en ella -- rellenarla con llenarHoja() produce
