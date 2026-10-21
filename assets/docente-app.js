@@ -646,6 +646,32 @@ async function generar(){
     document.getElementById('s-form').classList.remove('active');
     document.getElementById('s-preview').classList.add('active');
     window.scrollTo(0,0);
+    // Red de seguridad final: se ha observado que una hoja sin desborde en
+    // #medidor (donde se paginó, oculto) puede terminar con un desborde
+    // residual de pocos px una vez clonada en #vista (donde de verdad se ve
+    // e imprime) -- probablemente por un subconjunto Unicode de la fuente
+    // web (usado por los subíndices/superíndices químicos ₂ ₃ ⁻) que
+    // termina de resolverse justo al volverse visible de verdad. Por eso,
+    // ya con #vista visible (display:block) y tras dejar pasar dos frames
+    // para que el layout/fuentes se asienten del todo, se corrige en el
+    // propio #vista cualquier hoja que aún desborde, moviendo su(s)
+    // último(s) elemento(s) a una hoja de continuación -- igual técnica
+    // que usa paginar() con sus propios bloques, pero sobre el DOM real.
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    Array.from(vista.querySelectorAll('.hoja')).forEach(function(hoja){
+      let actual = hoja, intentos = 0;
+      while(intentos < 50){
+        const cuerpo = actual.querySelector('.hoja-cuerpo');
+        if(cuerpo.scrollHeight <= cuerpo.clientHeight + 1 || !cuerpo.lastElementChild) break;
+        const sobrante = cuerpo.lastElementChild;
+        cuerpo.removeChild(sobrante);
+        const continuacion = crearHoja({F:F}, false);
+        actual.parentNode.insertBefore(continuacion, actual.nextSibling);
+        continuacion.querySelector('.hoja-cuerpo').appendChild(sobrante);
+        actual = continuacion;
+        intentos++;
+      }
+    });
   } finally {
     if(btn) btn.disabled = false;
   }
