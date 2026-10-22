@@ -1723,7 +1723,7 @@ ABIERTAS: [
   {tema:'ox-bas', t:'rx', q:'Un trozo de magnesio metálico se quema en presencia de oxígeno del aire. Escribe la ecuación de formación del óxido correspondiente y nombra el producto en los 3 sistemas.'},
   {tema:'ox-bas', t:'nom', q:'Escribe el nombre Tradicional, Stock y Sistemático del siguiente compuesto.', f:'Cu₂O'},
   {tema:'ox-bas', t:'mdec', q:'Identifica las partes de este compuesto (catión y anión) e indica la carga de cada una.', f:'Al₂O₃', partes:[['Al³⁺','cat'],['O²⁻','an']]},
-  {tema:'balanceo', t:'rx', q:'Balancea por tanteo la siguiente ecuación y explica, paso a paso, el orden en que decidiste ajustar cada coeficiente.'},
+  {tema:'balanceo', t:'rx', q:'Balancea por tanteo la siguiente ecuación y explica, paso a paso, el orden en que decidiste ajustar cada coeficiente.', f:'Al + Cl₂ → AlCl₃'},
   {tema:'balanceo', t:'nom', q:'La ecuación sin balancear Na + Cl₂ → NaCl describe la formación de sal común. Balancéala y nombra el producto en nomenclatura Tradicional y Stock.'},
   {tema:'balanceo', t:'mdec', q:'En la ecuación balanceada 2Mg + O₂ → 2MgO, identifica el catión y el anión del producto.', f:'MgO', partes:[['Mg²⁺','cat'],['O²⁻','an']]},
 {tema:'anhid', t:'rx', q:'El azufre se quema en una fábrica en presencia de oxígeno formando SO₂ (su valencia menor, +4). Escribe la ecuación de formación de este óxido ácido y nombra el producto en los sistemas Tradicional y Sistemática.'},
