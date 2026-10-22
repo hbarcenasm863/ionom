@@ -1722,43 +1722,43 @@ SABER: [
 ABIERTAS: [
   {tema:'ox-bas', t:'rx', q:'Un trozo de magnesio metálico se quema en presencia de oxígeno del aire. Escribe la ecuación de formación del óxido correspondiente y nombra el producto en los 3 sistemas.'},
   {tema:'ox-bas', t:'nom', q:'Escribe el nombre Tradicional, Stock y Sistemático del siguiente compuesto.', f:'Cu₂O'},
-  {tema:'ox-bas', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom (catión y anión) e indica la carga de cada uno.', f:'Al₂O₃'},
+  {tema:'ox-bas', t:'mdec', q:'Identifica las partes de este compuesto (catión y anión) e indica la carga de cada una.', f:'Al₂O₃', partes:[['Al³⁺','cat'],['O²⁻','an']]},
   {tema:'balanceo', t:'rx', q:'Balancea por tanteo la siguiente ecuación y explica, paso a paso, el orden en que decidiste ajustar cada coeficiente.'},
   {tema:'balanceo', t:'nom', q:'La ecuación sin balancear Na + Cl₂ → NaCl describe la formación de sal común. Balancéala y nombra el producto en nomenclatura Tradicional y Stock.'},
-  {tema:'balanceo', t:'mdec', q:'En la ecuación balanceada 2Mg + O₂ → 2MgO, identifica el catión y el anión del producto y el color MDEC que le corresponde a cada uno.'},
+  {tema:'balanceo', t:'mdec', q:'En la ecuación balanceada 2Mg + O₂ → 2MgO, identifica el catión y el anión del producto.', f:'MgO', partes:[['Mg²⁺','cat'],['O²⁻','an']]},
 {tema:'anhid', t:'rx', q:'El azufre se quema en una fábrica en presencia de oxígeno formando SO₂ (su valencia menor, +4). Escribe la ecuación de formación de este óxido ácido y nombra el producto en los sistemas Tradicional y Sistemática.'},
 {tema:'anhid', t:'nom', q:'Escribe el nombre Tradicional y Sistemático del siguiente compuesto.', f:'N₂O₅'},
-{tema:'anhid', t:'mdec', q:'Separa el siguiente compuesto en sus partes (no metal y oxígeno) e indica el estado de oxidación de cada átomo de nitrógeno.', f:'N₂O₃'},
+{tema:'anhid', t:'mdec', q:'Identifica las partes de este compuesto (no metal y oxígeno) e indica el estado de oxidación de cada átomo de nitrógeno.', f:'N₂O₃', partes:[['N₂','an'],['O₃','an']]},
 
 {tema:'hidru', t:'rx', q:'El magnesio metálico reacciona con hidrógeno gaseoso (H₂). Escribe la ecuación de formación del hidruro correspondiente y nombra el producto.'},
 {tema:'hidru', t:'nom', q:'Escribe el nombre Tradicional (igual al Stock) y Sistemático del siguiente compuesto.', f:'BaH₂'},
-{tema:'hidru', t:'mdec', q:'Separa el siguiente compuesto en sus partes (catión y anión) e indica la carga de cada uno, recordando que aquí el hidrógeno NO tiene su carga habitual.', f:'KH'},
+{tema:'hidru', t:'mdec', q:'Identifica las partes de este compuesto (catión y anión) e indica la carga de cada una, recordando que aquí el hidrógeno NO tiene su carga habitual.', f:'KH', partes:[['K⁺','cat'],['H⁻','an']]},
 
 {tema:'ac-hid', t:'rx', q:'El hidrógeno gaseoso reacciona con yodo (I₂) para formar yoduro de hidrógeno (HI), que luego se disuelve en agua. Escribe la ecuación de formación y nombra el producto disuelto en agua.'},
 {tema:'ac-hid', t:'nom', q:'Escribe el nombre del siguiente compuesto disuelto en agua (Tradicional) y en estado puro/gaseoso (Sistemática).', f:'H₂Se'},
-{tema:'ac-hid', t:'mdec', q:'Separa el siguiente compuesto en sus partes (catión y anión) e indica la carga de cada uno.', f:'HF'},
+{tema:'ac-hid', t:'mdec', q:'Identifica las partes de este compuesto (catión y anión) e indica la carga de cada una.', f:'HF', partes:[['H⁺','cat'],['F⁻','an']]},
 
 {tema:'base', t:'rx', q:'El óxido de bario (BaO) reacciona con agua. Escribe la ecuación de esta reacción (óxido básico + agua → hidróxido) y nombra el producto.'},
 {tema:'base', t:'nom', q:'Escribe el nombre Tradicional (igual al Stock) y Sistemático del siguiente compuesto.', f:'Ca(OH)₂'},
-{tema:'base', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom (catión e hidróxido) e indica la carga de cada uno.', f:'RbOH'},
+{tema:'base', t:'mdec', q:'Identifica las partes de este compuesto (catión e hidróxido) e indica la carga de cada una.', f:'RbOH', partes:[['Rb⁺','cat'],['OH⁻','oh']]},
 {tema:'ac-ox', t:'rx', q:'El trióxido de azufre (SO₃) reacciona con agua. Escribe la ecuación de formación del ácido oxácido resultante y nombra el producto.'},
 {tema:'ac-ox', t:'nom', q:'Escribe el nombre Tradicional del siguiente ácido, identificando primero el oxoanión que contiene.', f:'HNO₃'},
-{tema:'ac-ox', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom (catión y oxoanión) e indica la carga de cada una.', f:'H₂CO₃'},
+{tema:'ac-ox', t:'mdec', q:'Identifica las partes de este compuesto (catión y oxoanión) e indica la carga de cada una.', f:'H₂CO₃', partes:[['H₂','cat'],['CO₃²⁻','ox']]},
 {tema:'sal-bin', t:'rx', q:'El calcio metálico reacciona con cloro gaseoso (Cl₂). Escribe la ecuación de formación de la sal binaria resultante y nombra el producto.'},
 {tema:'sal-bin', t:'nom', q:'Escribe el nombre Tradicional del siguiente compuesto.', f:'NaBr'},
-{tema:'sal-bin', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom e indica la carga de cada una.', f:'KF'},
+{tema:'sal-bin', t:'mdec', q:'Identifica las partes de este compuesto e indica la carga de cada una.', f:'KF', partes:[['K⁺','cat'],['F⁻','an']]},
 {tema:'sal-ox', t:'rx', q:'El hidróxido de sodio (NaOH) reacciona con ácido nítrico (HNO₃) en una neutralización. Escribe la ecuación de la reacción y nombra la sal oxigenada que se forma (además del agua).'},
 {tema:'sal-ox', t:'nom', q:'Escribe el nombre Tradicional del siguiente compuesto, identificando primero el oxoanión que contiene.', f:'NaClO'},
-{tema:'sal-ox', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom (catión y oxoanión) e indica la carga de cada una.', f:'Na₂SO₄'},
+{tema:'sal-ox', t:'mdec', q:'Identifica las partes de este compuesto (catión y oxoanión) e indica la carga de cada una.', f:'Na₂SO₄', partes:[['Na⁺','cat'],['SO₄²⁻','ox']]},
 {tema:'sal-ac', t:'rx', q:'El carbonato de potasio (K₂CO₃) reacciona con ácido carbónico en exceso, formando la sal ácida correspondiente. Escribe la fórmula del producto y nómbralo en Tradicional y Stock.'},
 {tema:'sal-ac', t:'nom', q:'Escribe el nombre Tradicional y Stock del siguiente compuesto.', f:'KHSO₄'},
-{tema:'sal-ac', t:'mdec', q:'Separa el siguiente compuesto en sus partes según el código de 4 colores de IonNom e indica la carga de cada una, explicando por qué el oxoanión conserva un hidrógeno.', f:'NH₄HCO₃'},
+{tema:'sal-ac', t:'mdec', q:'Identifica las partes de este compuesto e indica la carga de cada una, explicando por qué el oxoanión conserva un hidrógeno.', f:'NH₄HCO₃', partes:[['NH₄⁺','cat'],['HCO₃⁻','ox']]},
 {tema:'reaccion', t:'rx', q:'Clasifica el tipo de reacción de la siguiente ecuación y justifica tu respuesta según el número de reactivos y productos.', f:'2Na + Cl₂ → 2NaCl'},
 {tema:'reaccion', t:'nom', q:'La siguiente reacción de síntesis produce un hidróxido. Nombra el producto en nomenclatura Tradicional/Stock.', f:'CaO + H₂O → Ca(OH)₂'},
-{tema:'reaccion', t:'mdec', q:'En la reacción 2Fe + 3Cl₂ → 2FeCl₃, identifica qué tipo de compuesto es el producto (FeCl₃) y separa su catión y anión según el código de 4 colores.'},
+{tema:'reaccion', t:'mdec', q:'En la reacción 2Fe + 3Cl₂ → 2FeCl₃, clasifica el producto (FeCl₃) según su tipo de compuesto e identifica su catión y anión.', f:'FeCl₃', partes:[['Fe³⁺','cat'],['Cl⁻','an']]},
 
 {tema:'mol-masa', t:'rx', q:'Calcula paso a paso la masa molar del siguiente compuesto, mostrando la masa atómica de cada elemento presente.', f:'CO₂'},
-{tema:'mol-masa', t:'nom', q:'La masa molar del HCl es 36.458 g/mol. Nombra este compuesto en nomenclatura Tradicional y explica a qué grupo de compuestos pertenece.'},
+{tema:'mol-masa', t:'nom', q:'La masa molar del HCl disuelto en agua es 36.458 g/mol. Nombra este compuesto en nomenclatura Tradicional y explica a qué grupo de compuestos pertenece.'},
 {tema:'mol-masa', t:'mdec', q:'Si tienes 80 gramos de NaOH (masa molar 39.997 g/mol), calcula aproximadamente cuántos moles de NaOH tienes.'},
 
 {tema:'elemento', t:'rx', q:'El litio (Li, grupo 1, valencia +1) reacciona con oxígeno. Predice la fórmula del óxido que se forma y nómbralo.'},
@@ -1767,11 +1767,11 @@ ABIERTAS: [
 
 {tema:'reactividad', t:'rx', q:'Completa el eslabón faltante de la siguiente cadena de reactividad del magnesio: Mg → MgO → ____ → MgSO₄.'},
 {tema:'reactividad', t:'nom', q:'Nombra los 3 compuestos de la cadena de reactividad del aluminio (valencia +3): el óxido, el hidróxido y la sal que resulta de reaccionar con HCl.'},
-{tema:'reactividad', t:'mdec', q:'En la sal final de la cadena de reactividad del bario con ácido sulfúrico (BaSO₄), identifica el catión y el anión, y el color MDEC que le corresponde a cada uno.'}
+{tema:'reactividad', t:'mdec', q:'En la sal final de la cadena de reactividad del bario con ácido sulfúrico, identifica el catión y el anión.', f:'BaSO₄', partes:[['Ba²⁺','cat'],['SO₄²⁻','ox']]}
 ,
 {tema:'estequiometria', t:'rx', q:'Para la ecuación balanceada 2Mg + O₂ → 2MgO, calcula cuántos gramos de MgO se producen a partir de 12.15 g de Mg (MM Mg=24.305, MM MgO=40.304). Muestra los 3 pasos de la cadena de conversión (gramos→moles del dato, moles del dato→moles de lo pedido, moles de lo pedido→gramos de lo pedido).'},
 {tema:'estequiometria', t:'nom', q:'Para la ecuación balanceada Zn + 2HCl → ZnCl₂ + H₂, calcula cuántos gramos de H₂ se producen a partir de 13.08 g de Zn (MM Zn=65.38, MM H₂=2.016), y nombra el producto sólido (ZnCl₂) en nomenclatura Tradicional y Stock.'},
-{tema:'estequiometria', t:'mdec', q:'Para la ecuación balanceada 4Al + 3O₂ → 2Al₂O₃, calcula cuántos gramos de Al₂O₃ se producen a partir de 54.0 g de Al (MM Al=26.982, MM Al₂O₃=101.961), y separa el producto Al₂O₃ en sus partes según el código de 4 colores de IonNom (catión y anión) indicando la carga de cada uno.'}
+{tema:'estequiometria', t:'mdec', q:'Para la ecuación balanceada 4Al + 3O₂ → 2Al₂O₃, calcula cuántos gramos de Al₂O₃ se producen a partir de 54.0 g de Al (MM Al=26.982, MM Al₂O₃=101.961), e identifica las partes del producto Al₂O₃ (catión y anión) indicando la carga de cada uno.', f:'Al₂O₃', partes:[['Al³⁺','cat'],['O²⁻','an']]}
 ]
 
 };
