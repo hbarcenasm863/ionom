@@ -105,6 +105,12 @@ const GRUPO_NOMBRE = {
   'sal-bin':'Sal binaria', 'sal-ox':'Sal oxigenada', 'sal-ac':'Sal ácida'
 };
 const SIS_NOMBRE = {trad:'Tradicional', stock:'Stock', sist:'Sistemática'};
+// Funciones con las que se suele confundir cada una (distractores cercanos)
+const CONFUNDE = {
+  'ox-bas':['anhid','base','hidru'], anhid:['ox-bas','ac-ox','sal-ox'], hidru:['ox-bas','sal-bin','ac-hid'],
+  'ac-hid':['ac-ox','sal-bin','hidru'], base:['ox-bas','sal-ox','sal-ac'], 'ac-ox':['ac-hid','sal-ox','anhid'],
+  'sal-bin':['ac-hid','sal-ox','hidru'], 'sal-ox':['sal-bin','ac-ox','sal-ac'], 'sal-ac':['sal-ox','ac-ox','base']
+};
 
 // Masas atómicas: las de ELEMENTS (juego.html), redondeadas a 1 decimal
 // para que el estudiante pueda calcular a mano y el resultado impreso sea
@@ -154,18 +160,19 @@ function indice(){
   // -- el validador acepta cualquier nombre real del compuesto, no solo
   // el que se pidió, así ningún distractor puede ser "también correcto".
   if(_idx && _idx.n === banco().length) return _idx;
-  const porF = {}, porNombre = {}, gruposF = {}, porElems = {};
+  const porF = {}, porNombre = {}, gruposF = {}, porElems = {}, porFormulaEntradas = {};
   banco().filter(c => GRUPOS_NOM.includes(c.group)).forEach(c => {
     const f = aAscii(c.formula);
     (gruposF[f] = gruposF[f] || new Set()).add(c.group);
     (porElems[claveElems(f)] = porElems[claveElems(f)] || new Set()).add(f);
+    (porFormulaEntradas[f] = porFormulaEntradas[f] || []).push(c);
     const set = porF[f] = porF[f] || new Set();
     ['trad','stock','sist'].forEach(s => nombresDe(c, s).forEach(n => {
       set.add(normNombre(n));
       (porNombre[normNombre(n)] = porNombre[normNombre(n)] || new Set()).add(f);
     }));
   });
-  _idx = {n: banco().length, porF, porNombre, gruposF, porElems};
+  _idx = {n: banco().length, porF, porNombre, gruposF, porElems, porFormulaEntradas};
   return _idx;
 }
 
@@ -260,11 +267,18 @@ function genNom(forma, r, o){
       const mismos = banco().filter(x => x.group === g && aAscii(x.formula) !== f);
       const mismoEl = mismos.filter(x => Object.keys(parseF(x.formula))[0] === Object.keys(parseF(f))[0]);
       // distractores SOLO del mismo sistema: mezclar sistemas regalaba la respuesta
-      mismoEl.concat(shuffle(mismos, r).slice(0, 8)).forEach(x => { const n = nombreSis(x, s); if(n) cands.push(nomL(n)); });
-      for(let i=0;i<3;i++){ const m = mutarNombre(nombre.toLowerCase(), r); if(m) cands.push(nomL(m)); }
+      const cercanos = variantesNombre(nombre).map(nomL);
+      // nombres reales (mismo sistema) de las fórmulas vecinas: SnH₂ para SnH₄
+      variantesFormula(c).forEach(fv => (indice().porFormulaEntradas[fv] || []).forEach(x => { const n = nombreSis(x, s); if(n) cercanos.push(nomL(n)); }));
+      mismoEl.forEach(x => { const n = nombreSis(x, s); if(n) cercanos.push(nomL(n)); });
+      // nivel 2: mismo anión con otro metal («cloruro de …» para un cloruro)
+      const raiz = normNombre(nombre).split(' ')[0];
+      const cercanos2 = shuffle(mismos, r).filter(x => { const n = nombreSis(x, s); return n && normNombre(n).split(' ')[0] === raiz; }).slice(0, 4)
+        .map(x => nomL(nombreSis(x, s)));
+      shuffle(mismos, r).slice(0, 8).forEach(x => { const n = nombreSis(x, s); if(n) cands.push(nomL(n)); });
       return {
         key: 'f2n' + f + s, qh: 'Nombra en el sistema <b>' + SIS_NOMBRE[s] + '</b>:', fo, foc: '',
-        ans: nomL(nombre), cands,
+        ans: nomL(nombre), cands, cercanos, cercanos2,
         more: rr => { const x = pick(banco().filter(y => GRUPOS_NOM.includes(y.group)), rr); const n = nombreSis(x, s); return n ? nomL(n) : null; },
         acepta: lab => lab.k.startsWith('T:') && validos.has(lab.k.slice(2)),
         fs: []
@@ -277,11 +291,15 @@ function genNom(forma, r, o){
     const cands = [];
     const mismos = banco().filter(x => x.group === g && aAscii(x.formula) !== f);
     const mismoEl = mismos.filter(x => Object.keys(parseF(x.formula))[0] === Object.keys(parseF(f))[0]);
-    mismoEl.concat(shuffle(mismos, r).slice(0, 5)).forEach(x => cands.push(fL(x.formula)));
-    for(let i=0;i<4;i++) cands.push(fL(mutarFormula(f, r)));
+    const cercanos = variantesFormula(c).map(fL);
+    mismoEl.forEach(x => cercanos.push(fL(x.formula)));
+    // mismos elementos en otra proporción (FeCl₂ / FeCl₃)
+    [...(idx.porElems[claveElems(f)] || [])].filter(x => x !== f).forEach(x => cercanos.push(fL(x)));
+    shuffle(mismos, r).slice(0, 5).forEach(x => cands.push(fL(x.formula)));
+    for(let i=0;i<3;i++) cands.push(fL(mutarFormula(f, r)));
     return {
       key: 'n2f' + f + s, qh: 'Escribe la fórmula (' + SIS_NOMBRE[s] + '):', fo: esc(nombre), foc: 'nm',
-      ans: fL(c.formula), cands,
+      ans: fL(c.formula), cands, cercanos,
       more: rr => fL(mutarFormula(f, rr)),
       acepta: lab => lab.k.startsWith('F:') && fs.has(lab.k.slice(2)),
       fs: []
@@ -294,7 +312,7 @@ function genNom(forma, r, o){
     const gL = x => L(GRUPO_NOMBRE[x], 'G:' + x);
     return {
       key: 'cls' + f, qh: '¿A qué función química pertenece?', fo, foc: '',
-      ans: gL(g), cands: GRUPOS_NOM.map(gL),
+      ans: gL(g), cands: GRUPOS_NOM.map(gL), cercanos: (CONFUNDE[g] || []).map(gL),
       more: rr => gL(pick(GRUPOS_NOM, rr)),
       acepta: lab => lab.k.startsWith('G:') && gs.has(lab.k.slice(2)),
       fs: []
@@ -357,6 +375,104 @@ function disociar(c){
     an: {sym: ion(an, qAn, '-'), n: nAn},
     eq: esc(c.formula) + ' → ' + (nCat > 1 ? nCat : '') + ion(cat, qCat, '+') + ' + ' + (nAn > 1 ? nAn : '') + ion(an, qAn, '-')
   };
+}
+
+/* ── Distractores cercanos (auditoría docente) ──
+   Una salida falsa solo sirve si el estudiante PUEDE equivocarse con ella:
+   para «Nitrato manganoso», RbNO₃ y Sr(NO₃)₂ se descartan sin pensar
+   (otro metal). Estas funciones arman variantes con el MISMO elemento y el
+   mismo tipo de anión, siguiendo errores típicos: otra valencia, cruce de
+   cargas sin simplificar o sin cruzar, subíndice cambiado y anión vecino
+   de la misma familia (nitrato/nitrito, sulfato/sulfito, clorato/perclorato). */
+const mcd = (a, b) => b ? mcd(b, a % b) : a;
+const poliatomico = x => (x.match(/[A-Z]/g) || []).length > 1;
+const CARGA_VAR = Object.assign({O:2, H:1}, CARGA_ANION);
+function partesIonicas(f){
+  const s = aAscii(f);
+  const m = s.match(/^(?:\((NH4)\)(\d+)|(NH4)|([A-Z][a-z]?)(\d*))(.+)$/);
+  if(!m) return null;
+  const cat = m[1] || m[3] || m[4];
+  const nCat = m[1] ? +m[2] : (m[3] ? 1 : (m[5] ? +m[5] : 1));
+  const resto = m[6]; let an, nAn, mm;
+  if((mm = resto.match(/^\(([^()]+)\)(\d+)$/))){ an = mm[1]; nAn = +mm[2]; }
+  else if((mm = resto.match(/^([A-Z][a-z]?)(\d*)$/))){ an = mm[1]; nAn = mm[2] ? +mm[2] : 1; }
+  else { an = resto; nAn = 1; }
+  const qAn = CARGA_VAR[an]; if(!qAn) return null;
+  const qCat = qAn * nAn / nCat;
+  if(!Number.isInteger(qCat) || qCat < 1 || qCat > 7) return null;
+  return {cat, nCat, an, nAn, qCat, qAn};
+}
+function armarFormula(cat, nc, an, na){
+  const c = nc > 1 ? (cat === 'NH4' ? '(NH4)' + nc : cat + nc) : cat;
+  const a = na > 1 ? (poliatomico(an) ? '(' + an + ')' + na : an + na) : an;
+  return c + a;
+}
+const FAM_ANION = [['NO3','NO2'],['SO4','SO3','HSO4'],['ClO4','ClO3','ClO2','ClO'],['CO3','HCO3'],['PO4','HPO4','H2PO4'],['S','SO3','SO4'],['Cl','ClO','ClO3'],['BrO3','Br'],['IO3','I'],['CrO4','Cr2O7']];
+function variantesFormula(c){
+  const s = aAscii(c.formula), out = new Set();
+  const g = c.group;
+  if(['ox-bas','hidru','base','sal-bin','sal-ox','sal-ac'].includes(g)){
+    const p = partesIonicas(s);
+    if(p){
+      const arm = (q, an, qa) => { const k = mcd(q, qa); return armarFormula(p.cat, qa/k, an, q/k); };
+      [p.qCat - 1, p.qCat + 1, p.qCat + 2].filter(q => q >= 1 && q <= 6).forEach(q => out.add(arm(q, p.an, p.qAn)));
+      if(mcd(p.qCat, p.qAn) > 1) out.add(armarFormula(p.cat, p.qAn, p.an, p.qCat)); // cruce sin simplificar
+      if(p.qCat !== p.qAn) out.add(armarFormula(p.cat, p.qCat, p.an, p.qAn));       // cargas sin cruzar
+      FAM_ANION.forEach(fam => { if(fam.includes(p.an)) fam.filter(x => x !== p.an && CARGA_ANION[x]).forEach(x => out.add(arm(p.qCat, x, CARGA_ANION[x]))); });
+    }
+  }
+  if(g === 'ac-ox' || g === 'ac-hid'){
+    const m = s.match(/^H(\d*)(.+)$/);
+    if(m) FAM_ANION.forEach(fam => { if(fam.includes(m[2])) fam.filter(x => x !== m[2] && CARGA_ANION[x] && !/^H/.test(x)).forEach(x => out.add('H' + (CARGA_ANION[x] > 1 ? CARGA_ANION[x] : '') + x)); });
+  }
+  // subíndices ±1 (si el paréntesis queda sin subíndice, se quita)
+  for(const m of s.matchAll(/([A-Za-z)])(\d+)/g)){
+    const v = +m[2], i0 = m.index + 1;
+    [v - 1, v + 1].forEach(nv => {
+      if(nv < 1) return;
+      let t = s.slice(0, i0) + (nv > 1 ? nv : '') + s.slice(i0 + m[2].length);
+      t = t.replace(/\(([A-Za-z0-9]+)\)(?!\d)/, '$1');
+      out.add(t);
+    });
+  }
+  out.delete(s);
+  return [...out].filter(x => /^[A-Z(]/.test(x) && masaMolar10(x) != null);
+}
+const OXW = ['monóxido','dióxido','trióxido','tetraóxido','pentaóxido','hexaóxido','heptaóxido'];
+// Cada lista: [nombre del compuesto, distractores cercanos…] (el primero es la clave)
+const FAM_NOMBRE = [['nitrato','nitrito'],['nitrito','nitrato'],['sulfato','sulfito','bisulfato'],['sulfito','sulfato','sulfuro'],['perclorato','clorato','clorito','hipoclorito'],['clorato','perclorato','clorito','hipoclorito'],['clorito','clorato','hipoclorito','perclorato'],['hipoclorito','clorito','clorato','cloruro'],['carbonato','bicarbonato'],['bicarbonato','carbonato'],['fosfato','fosfito'],['cloruro','clorato','clorito','hipoclorito'],['sulfuro','sulfito','sulfato'],['bromuro','bromato','hipobromito'],['yoduro','yodato','hipoyodito'],['cromato','dicromato'],['dicromato','cromato'],['permanganato','manganato'],
+  // confusiones clásicas entre funciones con el mismo metal
+  ['hidruro','hidróxido','óxido'],['hidróxido','óxido','hidruro','peróxido'],['óxido','peróxido','hidróxido'],
+  // ácidos: hídrico ↔ oxácidos del mismo no metal
+  ['ácido clorhídrico','ácido clórico','ácido cloroso','ácido hipocloroso'],['ácido perclórico','ácido clórico','ácido cloroso','ácido hipocloroso'],
+  ['ácido clórico','ácido perclórico','ácido cloroso','ácido hipocloroso'],['ácido cloroso','ácido clórico','ácido hipocloroso','ácido perclórico'],['ácido hipocloroso','ácido cloroso','ácido clórico','ácido clorhídrico'],
+  ['ácido sulfhídrico','ácido sulfúrico','ácido sulfuroso'],['ácido sulfúrico','ácido sulfuroso','ácido sulfhídrico'],['ácido sulfuroso','ácido sulfúrico','ácido sulfhídrico'],
+  ['ácido bromhídrico','ácido brómico','ácido bromoso'],['ácido yodhídrico','ácido yódico','ácido yodoso'],['ácido fluorhídrico','ácido clorhídrico','ácido bromhídrico'],
+  ['ácido nítrico','ácido nitroso'],['ácido nitroso','ácido nítrico'],['ácido fosfórico','ácido fosforoso'],['ácido fosforoso','ácido fosfórico'],['ácido carbónico','ácido carbonoso']];
+// pares -oso/-ico del nombre tradicional del metal (bien escritos)
+const ADJ_METAL = [['ferroso','férrico'],['cuproso','cúprico'],['plumboso','plúmbico'],['estannoso','estánnico'],['cobaltoso','cobáltico'],['niqueloso','niquélico'],['mercurioso','mercúrico'],['auroso','áurico'],['cromoso','crómico'],['manganoso','mangánico'],['platinoso','platínico'],['vanadioso','vanádico']];
+function variantesNombre(nombre){
+  // números romanos en mayúscula (el resto en minúscula)
+  const n = nombre.toLowerCase().replace(/\((vii|vi|iv|v|iii|ii|i)\)/, x => x.toUpperCase()), out = new Set();
+  let m = n.match(/\((VII|VI|IV|V|III|II|I)\)/);
+  if(m){ const i = ROM.indexOf(m[1]); [i-1, i+1, i+2, i-2].filter(j => j >= 0 && j < ROM.length).forEach(j => out.add(n.replace(m[0], '(' + ROM[j] + ')'))); }
+  // -ico ↔ -oso, solo si el nombre resultante existe en el banco (sin faltas)
+  if(/(ico|oso)(\s|$)/.test(n)){
+    const alt = n.replace(/(ico|oso)(\s|$)/, (x, s1, t) => (s1 === 'ico' ? 'oso' : 'ico') + t);
+    const sinTilde = x => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const real = Object.keys(indice().porNombre).find(k => sinTilde(k) === sinTilde(normNombre(alt)));
+    if(real) out.add(real);
+  }
+  const w = OXW.find(x => n.startsWith(x));
+  if(w){ const i = OXW.indexOf(w); [i-1, i+1, i+2].filter(j => j >= 0 && j < OXW.length).forEach(j => out.add(n.replace(w, OXW[j]))); }
+  const mp = n.match(/^(tetra|penta|hexa|hepta|mono|tri|di)(?=[a-záéíóú])/);
+  if(mp && !w){ const i = PREF.indexOf(mp[1]); [i-1, i+1, i+2].filter(j => j >= 0 && j < PREF.length).forEach(j => out.add(PREF[j] + n.slice(mp[1].length))); }
+  const md = n.match(/ de (tetra|penta|hexa|mono|tri|di)(?=[a-záéíóú])/);
+  if(md){ const i = PREF.indexOf(md[1]); [i-1, i+1].filter(j => j >= 0).forEach(j => out.add(n.replace(' de ' + md[1], ' de ' + (j === 0 ? '' : PREF[j])))); }
+  FAM_NOMBRE.forEach(fam => { const a = fam[0]; if(n === a || n.startsWith(a + ' ')) fam.slice(1).forEach(b => out.add(b + n.slice(a.length))); });
+  ADJ_METAL.forEach(([o, i]) => { const re = w => new RegExp('(^|\\s)' + w + '(?=\\s|$)'); if(re(o).test(n)) out.add(n.replace(re(o), '$1' + i)); else if(re(i).test(n)) out.add(n.replace(re(i), '$1' + o)); });
+  out.delete(n);
+  return [...out].map(cap);
 }
 
 // Elige n tal que n·M sea exacto con 2 decimales (M ya tiene 1 decimal).
@@ -515,7 +631,12 @@ function pickD(q, k, r){
   // salida correcta).
   const seen = new Set([q.ans.k]), out = [];
   const sirve = c => c && !seen.has(c.k) && !q.acepta(c);
-  for(const c of shuffle(q.cands, r)){ if(sirve(c)){ seen.add(c.k); out.push(c); if(out.length >= k) return out; } }
+  // Primero los distractores «cercanos» a la pregunta (mismo elemento,
+  // mismo anión, número de oxidación o subíndice cambiado, función con la
+  // que se suele confundir); solo si faltan, el resto. Vale también para
+  // las casillas trampa: todas sus salidas siguen siendo plausibles.
+  // niveles: 1) mismo elemento/metal, 2) mismo anión con otro metal, 3) resto
+  for(const c of shuffle(q.cercanos || [], r).concat(shuffle(q.cercanos2 || [], r), shuffle(q.cands, r))){ if(sirve(c)){ seen.add(c.k); out.push(c); if(out.length >= k) return out; } }
   let g = 0;
   while(out.length < k && g++ < 300){ const c = q.more(r); if(sirve(c)){ seen.add(c.k); out.push(c); } }
   return out.length >= k ? out : null;
@@ -702,8 +823,13 @@ function hoja(mz, c, o){
       const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
       const tx = e.k === 'h' ? G.NW/2 + 4 : e.k === 'v' ? G.NH/2 + 4 : Math.min((G.NW/2+4)/Math.abs(dx/len), (G.NH/2+4)/Math.abs(dy/len));
       const x2 = b.x - dx/len*tx, y2 = b.y - dy/len*tx;
+      // El rótulo va en el 42 % del tramo libre contando desde la casilla de
+      // ORIGEN (no en la mitad): así se lee como salida de esa casilla y no
+      // como opción de la casilla a la que llega la flecha.
+      const x1 = a.x + dx/len*tx, y1 = a.y + dy/len*tx;
+      const lx = x1 + (x2 - x1)*0.42, ly = y1 + (y2 - y1)*0.42;
       lines += '<line class="ln' + (on ? ' on' : '') + '" data-e="' + id + '" data-mk="' + mk + '" x1="' + a.x + '" y1="' + a.y + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" marker-end="url(#' + mk + (on && o.key ? '-r' : '') + ')"/>';
-      labels += '<button type="button" class="el ' + e.k + (on ? ' on' : '') + (e.ok ? ' good' : '') + claseLargo(e.lab.h) + '" data-e="' + id + '" data-u="' + nd.u + '" style="left:' + ((a.x+b.x)/2) + 'px;top:' + ((a.y+b.y)/2) + 'px;max-width:' + maxW[e.k] + 'px" tabindex="-1">' + e.lab.h + '</button>';
+      labels += '<button type="button" class="el ' + e.k + (on ? ' on' : '') + (e.ok ? ' good' : '') + claseLargo(e.lab.h) + '" data-e="' + id + '" data-u="' + nd.u + '" style="left:' + lx.toFixed(1) + 'px;top:' + ly.toFixed(1) + 'px;max-width:' + maxW[e.k] + 'px" tabindex="-1">' + e.lab.h + '</button>';
     });
     const p = P(nd.u), q = nd.q, cierra = q.qh.includes('¿') && !q.qh.includes('?') ? '<span class="qm">?</span>' : '';
     nodes += '<div class="node' + (nd.onPath ? ' onp' : '') + '" data-n="' + nd.u + '" style="left:' + p.x + 'px;top:' + p.y + 'px;width:' + G.NW + 'px;height:' + G.NH + 'px">'
@@ -1115,6 +1241,6 @@ function init(){
   }
 }
 
-window.LABERINTO = {render, ajustar, construir, verificar, getCfg, _interno: {intentar, disociar, estadoOx, masaMolar, genNom, balanceada}};
+window.LABERINTO = {render, ajustar, construir, verificar, getCfg, _interno: {intentar, disociar, estadoOx, masaMolar, genNom, balanceada, variantesNombre, variantesFormula}};
 document.addEventListener('DOMContentLoaded', init);
 })();
