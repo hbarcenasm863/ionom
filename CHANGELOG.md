@@ -21,6 +21,13 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Auditoría exacta de distractores (399 compuestos, todos los sistemas)**. Se corrigió:
+  - **Distractores que en realidad eran correctos**: «sulfuro de dihidrógeno» para H₂S (ahora se acepta como sinónimo), «ácido silícico» para H₄SiO₄ (aceptado para ambas fórmulas) y «Óxido ácido» para MnO₂, SnO₂, PbO₂ y otros anfóteros (ahora se acepta).
+  - **Palabras inexistentes**: fuera «fluorato», «hipofluorito», «tricromato», «trihidrogenofosfato», «germanioso» y los ácidos con estados de oxidación imposibles («percarbónico», «tungstoso»…). Los números romanos solo usan valencias que el metal tiene de verdad.
+  - **Fórmulas imposibles**: cada fórmula falsa se valida (carga del catión entera y real, hasta +4; estado del elemento central de los que se enseñan). Ya no salen Na₃SO₄, CsOH₂, (NH₃)₂HPO₄, CO₃ ni H₃S, y nunca se tocan los subíndices de dentro de un oxoanión ni del NH₄.
+  - **Más opciones del mismo elemento**: combinaciones («nitrito mangánico» para «nitrato manganoso»), compuestos del mismo metal en otra función (NaOH ↔ Na₂O ↔ NaH), y entre ácidos y anhídridos del mismo elemento (HCl ↔ HClO, HClO₂, HClO₃, HClO₄). En nombrar sales, óxidos, hidróxidos e hidruros, el 95-100 % de las salidas falsas ya es del mismo compuesto o elemento.
+  - **Estado de oxidación**: los metales ya no reciben valores negativos imposibles (salvo −2, la confusión con el O).
+  - **banco.js**: el nombre sistemático de HgOH era el de Hg₂(OH)₂, y «fluoruro estañoso/estáñico» se escribía distinto que el resto del banco (estannoso/estánnico).
 - **Ácidos con distractores del mismo elemento**: los 51 ácidos del banco reciben como salidas falsas otros ácidos reales del mismo elemento central (H₃AsO₄ → ácido arsenioso) y, para los que no tienen «hermanos» en el banco, variantes con otra terminación o prefijo (ácido tungstoso, pertúngstico; ácido ciánico, cianoso; «fluoruro de dihidrógeno»).
 - **Hasta 40 versiones de laberinto** (antes el tope era 8 y, al pedir 23, se quedaba en 8 sin avisar).
 - **Cada rótulo junto a su casilla de origen**: el rótulo va cerca del inicio de la flecha y no en la mitad, para que no parezca una opción de la casilla a la que llega.

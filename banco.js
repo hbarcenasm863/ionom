@@ -1977,7 +1977,7 @@ const BANCO = [
     group: 'base', level: 'medium',
     trad: ['hidróxido mercurioso'],
     stock: ['hidróxido de mercurio (I)'],
-    sist: ['monohidróxido de dimercurio'],
+    sist: ['monohidróxido de mercurio'],
     hint: 'Hg⁺ (EO menor) → mercurioso. Hg⁺ + OH⁻ → HgOH.'
   },
 
@@ -2066,18 +2066,18 @@ const BANCO = [
   {
     formula: 'SnF₂',
     group: 'sal-bin', level: 'medium',
-    trad: ['fluoruro estañoso'],
+    trad: ['fluoruro estannoso'],
     stock: ['fluoruro de estaño (II)'],
     sist: ['difluoruro de estaño'],
-    hint: 'Sn²⁺ (EO menor) → estañoso. Sn²⁺ + 2F⁻ → SnF₂.'
+    hint: 'Sn²⁺ (EO menor) → estannoso. Sn²⁺ + 2F⁻ → SnF₂.'
   },
   {
     formula: 'SnF₄',
     group: 'sal-bin', level: 'hard',
-    trad: ['fluoruro estáñico'],
+    trad: ['fluoruro estánnico'],
     stock: ['fluoruro de estaño (IV)'],
     sist: ['tetrafluoruro de estaño'],
-    hint: 'Sn⁴⁺ (EO mayor) → estáñico. Sn⁴⁺ + 4F⁻ → SnF₄.'
+    hint: 'Sn⁴⁺ (EO mayor) → estánnico. Sn⁴⁺ + 4F⁻ → SnF₄.'
   },
   {
     formula: 'CoBr₃',
