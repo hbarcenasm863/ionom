@@ -687,7 +687,10 @@ function crearHoja(doc, esPrimera){
   const hoja = document.createElement('div');
   hoja.className = 'hoja';
   hoja.innerHTML =
-    '<div class="hoja-enc'+(esPrimera?' hoja-enc-completo':'')+'">'
+    // Imagen de marca en TODAS las hojas: marca de agua del logo (absoluta,
+    // fuera del flujo: no cambia la paginación) + logo en la esquina.
+    '<img class="hoja-wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">'
+    + '<div class="hoja-enc'+(esPrimera?' hoja-enc-completo':'')+'">'
       + (esPrimera
         ? '<div class="hoja-enc-top">'
           + '<div>'
@@ -696,13 +699,13 @@ function crearHoja(doc, esPrimera){
             + '<div class="hoja-datos-row">'+[['Institución',doc.F.colegio],['Docente',doc.F.docente],['Área',doc.F.area]].filter(p=>p[1]).map(p=>'<span>'+p[0]+' <b>'+esc(p[1])+'</b></span>').join('')+'</div>'
             + '<div class="hoja-datos-row">'+[['Grado/curso',doc.F.curso],['Periodo',doc.F.periodo],['Fecha',doc.F.fecha]].filter(p=>p[1]).map(p=>'<span>'+p[0]+' <b>'+esc(p[1])+'</b></span>').join('')+'</div>'
           + '</div>'
-          + '<img class="hoja-enc-logo" src="assets/logo.png" alt="IonNom">'
+          + '<img class="hoja-enc-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">'
           + '</div>'
           + '<div class="hoja-nombre-row">Nombre del estudiante <span class="hr-linea"></span> Curso <span class="hr-linea" style="min-width:110px"></span></div>'
-        : '<div class="hoja-enc-corto">'+esc(tituloDocumento(doc))+' · '+esc(doc.F.colegio||'')+'</div>')
+        : '<div class="hoja-enc-corto"><span>'+esc(tituloDocumento(doc))+' · '+esc(doc.F.colegio||'')+'</span><img class="hoja-enc-logo-sm" src="assets/logo-ionom-hoja.png" alt="IonNom"></div>')
     + '</div>'
     + '<div class="hoja-cuerpo"></div>'
-    + '<div class="hoja-pie"><span class="hoja-pagina"></span></div>';
+    + '<div class="hoja-pie"><span class="hoja-marca">Ion<b>Nom</b> · Nombra con precisión</span><span class="hoja-pagina"></span></div>';
   return hoja;
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }

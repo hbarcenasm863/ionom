@@ -150,8 +150,17 @@ footer a{color:var(--dim);text-decoration:none;font-weight:600}
   #student-header{padding:16px}
 }
 
+/* ── Imagen de marca IonNom en las hojas generadas ── */
+.gen-logo{height:44px;width:auto;order:9;margin-left:auto;align-self:center;flex-shrink:0}
+.gen-wm{position:fixed;left:50%;top:50%;width:min(60vw,520px);transform:translate(-50%,-50%);opacity:.05;pointer-events:none;z-index:50;display:none}
+#s-preview.active .gen-wm{display:block}
+.gen-pie{margin-top:18px;padding-top:8px;border-top:1px solid var(--brd);text-align:right;font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--nav)}
+.gen-pie b{color:#92720a}
+
 @media print{
   body{background:#fff !important;color:#000 !important}
+  .gen-wm{display:block !important;width:70%;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .gen-logo{height:40px}
   .site-nav,.preview-header,.btn-pdf,.btn-back{display:none !important}
   #student-header{border:1.5px solid #aaa !important;box-shadow:none !important;margin-bottom:16px !important;background:#fff !important}
   details{display:none !important}
@@ -305,6 +314,7 @@ html{font-size:var(--base-fs)}
     </div>
     <div id="student-header" style="background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;box-shadow:var(--sh)">
       <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+        <img class="gen-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
         <div style="flex:2;min-width:180px">
           <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-bottom:6px">Nombre del estudiante</div>
           <div style="border-bottom:2px solid var(--dimmer);height:28px"></div>
@@ -320,7 +330,11 @@ html{font-size:var(--base-fs)}
       </div>
     </div>
     <div id="exercises-container"></div>
+    <div class="gen-pie"><span>Ion<b>Nom</b> · Nombra con precisión</span></div>
   </div>
+  <!-- Marca de agua del logo: position:fixed hace que el navegador la repita
+       en cada página impresa (Chrome/Edge/Firefox) -->
+  <img class="gen-wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">
 </div>
 
 <!-- ═══ GENERADOR TIP MODAL (MAYER) ═══ -->
@@ -753,6 +767,11 @@ function generateExercises(){
   if(!selectedGroups.includes('all')){
     compounds = compounds.filter(c => selectedGroups.includes(c.group));
   }
+  // Estos tipos son de nomenclatura: con «Todos los grupos» entraban también
+  // las reacciones, ecuaciones de balanceo y compuestos de mol-masa de
+  // BANCO (sin `trad`), y pickName() fallaba (c.trad undefined) sin generar
+  // nada. Solo compuestos con nombre.
+  compounds = compounds.filter(c => c.formula && Array.isArray(c.trad) && c.trad.length);
 
   if(compounds.length === 0){
     alert('No hay compuestos disponibles para los grupos seleccionados.');
