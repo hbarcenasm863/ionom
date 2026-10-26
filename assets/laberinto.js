@@ -809,28 +809,43 @@ function render(){
     : 'Hoja del estudiante. Imprímela o proyéctala; con «Jugar» se resuelve en pantalla.';
 }
 
+// Celular o tableta pequeña (pantalla táctil de menos de 820 px en su lado corto)
+const esMovil = () => !!(window.matchMedia && matchMedia('(pointer: coarse)').matches) && Math.min(screen.width, screen.height) < 820;
 function ajustar(){
   if(!curSheet) return;
-  const stage = $('#lab-stage');
+  const stage = $('#lab-stage'), wrap = $('#lab-playwrap'), card = $('#lab-card');
   const fs = esPantallaCompleta();
-  let availW = stage.clientWidth - 4;
-  if(availW <= 0) return; // pestaña oculta: se reajusta al mostrarla
-  // En pantallas angostas (celular/tableta vertical) la hoja entera queda
-  // ilegible para jugar: se muestra arriba una tarjeta con la casilla actual
-  // y sus salidas como botones grandes; la hoja queda debajo como mapa.
-  const card = $('#lab-card');
-  const conTarjeta = vista === 'play' && !!curMz && availW < 760;
+  if(wrap.clientWidth <= 0) return; // pestaña oculta: se reajusta al mostrarla
+  // Tarjeta de juego (casilla actual + salidas como botones grandes):
+  // - en pantallas angostas (celular/tableta vertical) la hoja entera queda
+  //   ilegible para jugar, así que la tarjeta va arriba y la hoja debajo
+  //   como mapa;
+  // - en pantalla completa con el celular en horizontal, la tarjeta va a la
+  //   izquierda y el mapa a la derecha (el alto es muy poco para apilarlos).
+  const apaisado = fs && window.innerWidth > window.innerHeight && window.innerHeight < 600;
+  const conTarjeta = vista === 'play' && !!curMz && (wrap.clientWidth < 760 || apaisado);
   card.hidden = !conTarjeta;
-  $('#lab-playwrap').classList.toggle('con-tarjeta', conTarjeta);
+  wrap.classList.toggle('con-tarjeta', conTarjeta);
+  wrap.classList.toggle('lado', conTarjeta && apaisado);
   if(conTarjeta) pintarTarjeta();
+  avisoGirar();
+  const availW = stage.clientWidth - 4;
+  if(availW <= 0) return;
   let s = Math.min(1, availW / curSheet.W);
   if(fs){
-    const availH = window.innerHeight - $('#lab-play-bar').offsetHeight - (conTarjeta ? card.offsetHeight + 12 : 0) - 24;
+    const availH = window.innerHeight - (stage.getBoundingClientRect().top - wrap.getBoundingClientRect().top) - 16;
     s = Math.max(0.2, Math.min(availW / curSheet.W, availH / curSheet.H));
   }
   const w = curSheet.el.parentNode;
   w.style.width = curSheet.W*s + 'px'; w.style.height = curSheet.H*s + 'px';
   curSheet.el.style.transform = 'scale(' + s + ')';
+}
+// En iPhone (y si el navegador no deja bloquear la orientación) se pide al
+// estudiante que gire el celular; el aviso se quita solo al girarlo.
+function avisoGirar(){
+  const g = $('#lab-girar');
+  const vertical = window.innerHeight > window.innerWidth;
+  g.hidden = !(esPantallaCompleta() && esMovil() && vertical && !g.dataset.cerrado);
 }
 
 /* ----- jugar ----- */
@@ -922,12 +937,23 @@ function entrarPantallaCompleta(){
       if(p && p.catch) p.catch(() => { w.classList.add('pseudo-fs'); document.body.style.overflow = 'hidden'; ajustar(); });
     }catch(e){ w.classList.add('pseudo-fs'); document.body.style.overflow = 'hidden'; }
   } else { w.classList.add('pseudo-fs'); document.body.style.overflow = 'hidden'; } // iPhone: sin API de pantalla completa
+  delete $('#lab-girar').dataset.cerrado;
+  // En celular se gira a horizontal. screen.orientation.lock solo funciona
+  // con la pantalla completa ya activa (Android/Chrome); en iPhone no
+  // existe y queda el aviso «Gira tu celular».
+  if(esMovil()) setTimeout(() => {
+    try{
+      const o = screen.orientation;
+      if(o && o.lock && (document.fullscreenElement || document.webkitFullscreenElement)) o.lock('landscape').catch(() => {}).then(() => setTimeout(ajustar, 120));
+    }catch(e){}
+  }, 250);
   setTimeout(ajustar, 60);
 }
 function salirPantallaCompleta(){
   const w = $('#lab-playwrap');
   if(document.fullscreenElement || document.webkitFullscreenElement){ (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
   w.classList.remove('pseudo-fs', 'fs-on'); document.body.style.overflow = '';
+  try{ if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); }catch(e){}
   setTimeout(ajustar, 60);
 }
 function cambioPantallaCompleta(){
@@ -1064,6 +1090,8 @@ function init(){
   $('#lab-restart').addEventListener('click', reiniciarJuego);
   $('#lab-restart2').addEventListener('click', reiniciarJuego);
   $('#lab-card').addEventListener('click', clicJuego);
+  $('#lab-girar-ok').addEventListener('click', () => { $('#lab-girar').dataset.cerrado = '1'; avisoGirar(); });
+  window.addEventListener('orientationchange', () => setTimeout(ajustar, 150));
   document.addEventListener('fullscreenchange', cambioPantallaCompleta);
   document.addEventListener('webkitfullscreenchange', cambioPantallaCompleta);
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('#lab-playwrap').classList.contains('pseudo-fs')) salirPantallaCompleta(); });

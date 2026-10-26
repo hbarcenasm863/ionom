@@ -224,6 +224,25 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-playwrap.fs-on #lab-play-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 #lab-playwrap.fs-on #lab-status,#lab-playwrap.fs-on .lab-verif{display:none}
 #lab-playwrap.pseudo-fs{position:fixed;inset:0;z-index:var(--z-modal,400)}
+/* Celular en horizontal (pantalla completa): tarjeta a la izquierda, mapa a la derecha */
+#lab-playwrap.lado{padding:6px 10px}
+#lab-playwrap.lado #lab-play-bar{margin-bottom:6px;gap:8px}
+#lab-playwrap.lado #lab-play-bar .pb-logo{height:24px}
+#lab-playwrap.lado #lab-play-msg{display:none}
+#lab-playwrap.lado #lab-play-bar button{min-height:40px;padding:6px 12px}
+#lab-playwrap.lado .lab-cuerpo{display:flex;gap:12px;align-items:flex-start}
+#lab-playwrap.lado #lab-card{flex:0 0 44%;margin:0;max-height:calc(100vh - 64px);max-height:calc(100dvh - 64px);overflow:auto;padding:10px 12px}
+#lab-playwrap.lado #lab-stage{flex:1;min-width:0}
+#lab-playwrap.lado .lc-fo{font-size:1.2rem;margin:2px 0}
+#lab-playwrap.lado .lc-q{font-size:.92rem}
+#lab-playwrap.lado .lc-head{margin-bottom:4px}
+#lab-playwrap.lado .lc-ops{gap:6px;margin-top:6px}
+#lab-playwrap.lado .lab-op{min-height:44px;padding:6px 12px;font-size:.95rem}
+.lab-girar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--nav);color:#fff;border-radius:var(--rs);padding:12px 14px;margin-bottom:10px;font-size:.92rem}
+.lab-girar[hidden]{display:none}
+.lab-girar .lg-ico{font-size:1.6rem}
+.lab-girar span:nth-child(2){flex:1;min-width:180px}
+.lab-girar button{min-height:44px;background:#fff;color:var(--nav);border:none;border-radius:var(--rs);padding:8px 14px;font-weight:700;font-family:var(--sans);cursor:pointer}
 /* Tarjeta de juego (pantallas angostas): casilla actual + salidas grandes */
 .lab-card{background:var(--surf);border:2px solid var(--nav);border-radius:var(--r);padding:14px 16px;margin:0 0 12px;box-shadow:var(--sh)}
 .lab-card[hidden]{display:none}
@@ -656,8 +675,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
       <div id="lab-verif" class="lab-verif"></div>
       <div id="lab-status" aria-live="polite">Cargando bancos…</div>
-      <div id="lab-card" class="lab-card" hidden></div>
-      <div id="lab-stage"></div>
+      <div id="lab-girar" class="lab-girar" hidden role="status">
+        <span class="lg-ico" aria-hidden="true">📱↻</span>
+        <span><strong>Gira tu celular</strong> para jugar en horizontal: la casilla queda a un lado y el laberinto al otro.</span>
+        <button type="button" id="lab-girar-ok">Seguir en vertical</button>
+      </div>
+      <div class="lab-cuerpo">
+        <div id="lab-card" class="lab-card" hidden></div>
+        <div id="lab-stage"></div>
+      </div>
     </div>
     <div id="lab-routebox">
       <b>Verificar ruta del estudiante:</b>
