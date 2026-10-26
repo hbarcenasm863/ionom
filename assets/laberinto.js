@@ -619,7 +619,7 @@ function claseLargo(h){
 function hoja(mz, c, o){
   o = o || {};
   const largo = c.mode === 'nom' || c.mode === 'bal';
-  const G = {NW:210, NH:160, GX: largo ? 118 : 104, GY: largo ? 82 : 70, PX:30, TOP:118, BOT:86};
+  const G = {NW:210, NH:160, GX: largo ? 118 : 104, GY: largo ? 82 : 70, PX:30, TOP:164, BOT:80};
   const {R, C, fin} = mz;
   const W = G.PX*2 + C*G.NW + (C-1)*G.GX, H = G.TOP + R*G.NH + (R-1)*G.GY + G.BOT;
   const P = u => ({x: G.PX + (u % C)*(G.NW + G.GX), y: G.TOP + Math.floor(u/C)*(G.NH + G.GY)});
@@ -668,9 +668,10 @@ function hoja(mz, c, o){
     +   '<div class="stit"><div class="title' + (c.title.length > 26 ? ' sm' : '') + '">' + titulo + '</div><div class="sub">' + SUBT[c.mode] + '</div></div>'
     +   '<div class="sver">' + esc(o.label || '') + '</div>'
     + '</div>'
+    + '<div class="sform"><span>Nombre: <i class="w-nom"></i></span><span>Curso: <i class="w-cur"></i></span><span>Fecha: <i class="w-fec"></i></span></div>'
     + '<svg class="lines" width="' + W + '" height="' + H + '"><defs><marker id="lab-flecha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk"/></marker></defs>' + lines + '</svg>'
     + nodes + labels
-    + '<div class="sfoot" style="top:' + (H - G.BOT + 10) + 'px"><div class="fields">Nombre: <i style="width:260px"></i> Curso: <i style="width:80px"></i> Ruta: <i style="width:230px"></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión</div></div>'
+    + '<div class="sfoot" style="top:' + (H - G.BOT + 10) + 'px"><div class="fields">Ruta seguida: <i style="width:360px"></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión</div></div>'
     + '<div class="sdata" style="top:' + (H - 40) + 'px">' + data + '</div>';
   return {el, W, H};
 }
@@ -852,22 +853,27 @@ function envolver(sh, s){
   w.style.width = sh.W*s + 'px'; w.style.height = sh.H*s + 'px';
   sh.el.style.transform = 'scale(' + s + ')'; w.appendChild(sh.el); return w;
 }
-function imprimir(){
-  if(!listo) return;
+// Área imprimible de una carta horizontal con márgenes de 0,3 in:
+// 10,4 × 7,9 in = 998 × 758 px (a 96 px/in). Se deja un pequeño respiro
+// para que ningún navegador empuje la hoja a una segunda página.
+const PAG_W = 990, PAG_H = 740;
+function prepararImpresion(){
+  if(!listo) return false;
   const c = getCfg(), root = $('#lab-print-root'); root.innerHTML = '';
   const mzs = [];
   for(let i=0; i<c.nver; i++){
     const mz = construir(c, seedOf(c, i));
-    if(mz.error){ $('#lab-status').textContent = '⚠️ ' + mz.error; return; }
+    if(mz.error){ $('#lab-status').textContent = '⚠️ ' + mz.error; root.innerHTML = ''; return false; }
     mzs.push(mz);
     const sh = hoja(mz, c, {label: 'Versión ' + (i+1) + ' de ' + c.nver + ' · ' + seedOf(c, i)});
-    const s = Math.min(1, 980/sh.W, 715/sh.H);
+    // escala para que quepa TODO el laberinto (se agranda si sobra espacio)
+    const s = Math.min(1.25, PAG_W/sh.W, PAG_H/sh.H);
     const pp = document.createElement('div'); pp.className = 'lab-pp'; pp.appendChild(envolver(sh, s)); root.appendChild(pp);
   }
   if($('#lab-withkeys').checked){
     mzs.forEach((mz, i) => {
       const sh = hoja(mz, c, {key:true, label: 'Versión ' + (i+1) + ' · ' + seedOf(c, i)});
-      const s = Math.min(560/sh.W, 620/sh.H);
+      const s = Math.min(560/sh.W, (PAG_H - 40)/sh.H);
       const pp = document.createElement('div'); pp.className = 'lab-pp keypage';
       pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · semilla ' + esc(seedOf(c, i)) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
       const kb = pp.querySelector('.kb'); kb.appendChild(envolver(sh, s));
@@ -875,14 +881,28 @@ function imprimir(){
       root.appendChild(pp);
     });
   }
-  // docente.html imprime sus guías en carta VERTICAL (@page global); el
-  // laberinto va en carta HORIZONTAL, así que se agrega un @page propio
-  // solo mientras dura esta impresión (el último @page declarado gana).
+  // docente.html imprime sus guías en carta VERTICAL (@page global). Las
+  // hojas del laberinto usan además la página con nombre «lab» (ver
+  // docente.html: @page lab{size:letter landscape}) y, como respaldo para
+  // navegadores sin páginas con nombre, un @page horizontal agregado al
+  // final del <head> solo mientras dura esta impresión (el último gana).
   let pg = document.getElementById('lab-page-style');
   if(!pg){ pg = document.createElement('style'); pg.id = 'lab-page-style'; document.head.appendChild(pg); }
-  pg.textContent = '@page{size:letter landscape;margin:.35in}';
+  pg.textContent = '@page{size:letter landscape;margin:.3in}';
   document.body.classList.add('lab-printing');
-  esperarImagenes(root).then(() => setTimeout(() => window.print(), 120));
+  return true;
+}
+function imprimir(){
+  if(!prepararImpresion()) return;
+  esperarImagenes($('#lab-print-root')).then(() => setTimeout(() => window.print(), 120));
+}
+// Ctrl+P / menú del navegador estando en la pestaña Laberintos: se arma la
+// misma impresión (horizontal, todas las versiones) en vez de imprimir la
+// página con los controles.
+function antesDeImprimir(){
+  if(document.body.classList.contains('lab-printing')) return;
+  const tab = document.getElementById('tab-laberintos');
+  if(tab && tab.classList.contains('active')) prepararImpresion();
 }
 function finImpresion(){
   if(!document.body.classList.contains('lab-printing')) return;
@@ -931,6 +951,7 @@ function init(){
   document.addEventListener('webkitfullscreenchange', cambioPantallaCompleta);
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('#lab-playwrap').classList.contains('pseudo-fs')) salirPantallaCompleta(); });
   window.addEventListener('resize', ajustar);
+  window.addEventListener('beforeprint', antesDeImprimir);
   window.addEventListener('afterprint', finImpresion);
   if(window.matchMedia){ const mq = window.matchMedia('print'); const f = e => { if(!e.matches) finImpresion(); }; mq.addEventListener ? mq.addEventListener('change', f) : mq.addListener && mq.addListener(f); }
 

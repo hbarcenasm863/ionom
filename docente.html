@@ -231,6 +231,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .title.sm{font-size:30px}
 .lab-sheet .sub{font-size:17px;color:#2a3f52;margin-top:4px}
 .lab-sheet .sver{width:200px;flex-shrink:0;text-align:right;font-size:13px;color:#4f6d88;font-weight:600}
+.lab-sheet .sform{position:absolute;left:30px;right:30px;top:114px;height:30px;display:flex;align-items:flex-end;gap:26px;font-size:16px;font-weight:600;color:#0d2d42;padding:0 14px 4px;border:1.5px solid #cfcfd8;border-radius:10px;background:#fff;z-index:6}
+.lab-sheet .sform span{display:flex;align-items:flex-end;gap:6px;white-space:nowrap}
+.lab-sheet .sform i{display:inline-block;border-bottom:1.8px solid #0d2d42;height:16px}
+.lab-sheet .sform .w-nom{flex:1}
+.lab-sheet .sform span:first-child{flex:1}
+.lab-sheet .sform .w-cur{width:90px}
+.lab-sheet .sform .w-fec{width:140px}
 .lab-sheet svg.lines{position:absolute;left:0;top:0;z-index:1;overflow:visible}
 .lab-sheet .ln{stroke:#5b7389;stroke-width:3;stroke-linecap:round}
 .lab-sheet .mk{fill:#5b7389}
@@ -277,10 +284,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* impresión del laberinto: carta horizontal (ver imprimir() en laberinto.js) */
 #lab-print-root{display:none}
+@page lab{size:letter landscape;margin:.3in}
 @media print{
   body.lab-printing>*:not(#lab-print-root){display:none!important}
   body.lab-printing #lab-print-root{display:block!important}
-  body.lab-printing .lab-pp{width:10.3in;height:7.6in;position:relative;overflow:hidden;break-after:page;page-break-after:always;display:flex;justify-content:center;align-items:center}
+  /* 990×740 px = PAG_W×PAG_H de laberinto.js, dentro del área imprimible
+     de carta horizontal con márgenes de 0,3 in (998×758 px) */
+  body.lab-printing .lab-pp{page:lab;width:990px;height:740px;position:relative;overflow:hidden;break-after:page;page-break-after:always;break-inside:avoid;display:flex;justify-content:center;align-items:center}
   body.lab-printing .lab-pp:last-child{break-after:auto;page-break-after:auto}
   body.lab-printing .lab-scaled{box-shadow:none;border-radius:0}
   body.lab-printing .lab-pp.keypage{display:block}
