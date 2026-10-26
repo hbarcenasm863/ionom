@@ -1675,7 +1675,14 @@ function speak(text, onEnd) {
 }
 
 function openSimIntro() {
+  // La narración de voz NO se dispara sola: en un salón silencioso, un
+  // audio inesperado sin gesto previo del usuario puede avergonzar al
+  // estudiante. El modal se sigue mostrando automáticamente, pero el TTS
+  // solo se activa si el estudiante pulsa el botón "🔊 Escuchar".
   document.getElementById('sim-intro-overlay').style.display = 'flex';
+}
+
+function speakSimIntro() {
   speak('¡Hola! El simulador de IonNom tiene dos modos. ' +
     'En el Simulador de Reacciones, seleccionas un reactivo A, de color ámbar, y un reactivo B, de color azul, y presionas el botón Reaccionar para ver el producto. ' +
     'El simulador te dirá qué tipo de compuesto se formó y su nombre según los tres sistemas. ' +
@@ -1730,6 +1737,7 @@ if (!localStorage.getItem('ionom_sim_visited')) {
         <strong style="color:var(--oh-t)">Simulador de pH:</strong> experimenta con fenolftaleina y repollo morado. Responde las preguntas de evaluacion al final.
       </div>
     </div>
+    <button onclick="speakSimIntro()" style="width:100%;padding:11px;margin-bottom:8px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:100px;color:var(--tx);font-weight:700;font-size:.85rem;cursor:pointer">🔊 Escuchar</button>
     <button onclick="closeSimIntro()" style="width:100%;padding:12px;background:var(--an);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">Entendido, a experimentar!</button>
   </div>
 </div>
