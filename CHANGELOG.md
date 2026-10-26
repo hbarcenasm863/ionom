@@ -21,6 +21,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Ácidos oxácidos y sales oxigenadas sin nomenclatura sistemática** (decisión del docente: se enseñan solo con la Tradicional, y Stock cuando corresponde). `banco.js` copiaba el nombre tradicional en el campo sistemático de los 42 oxácidos y las 73 oxisales («sulfato cúprico» como «Sistemática»); ese campo quedó vacío. Por eso la tabla del Generador ya muestra «—» en la columna Sistemática, la retroalimentación del Juego ya no dice «Sistemática: sulfato cúprico», y nunca se pide su nombre sistemático en ningún módulo.
 - **Auditoría exacta de distractores (399 compuestos, todos los sistemas)**. Se corrigió:
   - **Distractores que en realidad eran correctos**: «sulfuro de dihidrógeno» para H₂S (ahora se acepta como sinónimo), «ácido silícico» para H₄SiO₄ (aceptado para ambas fórmulas) y «Óxido ácido» para MnO₂, SnO₂, PbO₂ y otros anfóteros (ahora se acepta).
   - **Palabras inexistentes**: fuera «fluorato», «hipofluorito», «tricromato», «trihidrogenofosfato», «germanioso» y los ácidos con estados de oxidación imposibles («percarbónico», «tungstoso»…). Los números romanos solo usan valencias que el metal tiene de verdad.

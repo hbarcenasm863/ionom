@@ -979,7 +979,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido sulfúrico'],
     stock: [],
-    sist: ['ácido sulfúrico'],
+    sist: [],
     hint: 'H₂ + SO₄²⁻ (sulfato). S con EO=+6 → -ico → sulfúrico. Ácido fuerte.'
   },
   {
@@ -987,7 +987,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido sulfuroso'],
     stock: [],
-    sist: ['ácido sulfuroso'],
+    sist: [],
     hint: 'H₂ + SO₃²⁻ (sulfito). S con EO=+4 → -oso → sulfuroso.'
   },
   {
@@ -995,7 +995,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido nítrico'],
     stock: [],
-    sist: ['ácido nítrico'],
+    sist: [],
     hint: 'H + NO₃⁻ (nitrato). N con EO=+5 → -ico → nítrico. Ácido fuerte.'
   },
   {
@@ -1003,7 +1003,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido nitroso'],
     stock: [],
-    sist: ['ácido nitroso'],
+    sist: [],
     hint: 'H + NO₂⁻ (nitrito). N con EO=+3 → -oso → nitroso. Ácido débil.'
   },
   {
@@ -1011,7 +1011,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido fosfórico'],
     stock: [],
-    sist: ['ácido fosfórico'],
+    sist: [],
     hint: 'H₃ + PO₄³⁻ (fosfato). P con EO=+5 → -ico → fosfórico.'
   },
   {
@@ -1019,7 +1019,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido carbónico'],
     stock: [],
-    sist: ['ácido carbónico'],
+    sist: [],
     hint: 'H₂ + CO₃²⁻ (carbonato). C con EO=+4 → -ico → carbónico. Inestable, se disocia.'
   },
   {
@@ -1027,7 +1027,7 @@ const BANCO = [
     group: 'ac-ox', level: 'easy',
     trad: ['ácido bórico'],
     stock: [],
-    sist: ['ácido bórico'],
+    sist: [],
     hint: 'H₃ + BO₃³⁻ (borato). B con EO=+3 → -ico → bórico. Ácido débil.'
   },
 
@@ -1037,7 +1037,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido fosforoso'],
     stock: [],
-    sist: ['ácido fosforoso'],
+    sist: [],
     hint: 'H₃ + PO₃³⁻ (fosfito). P con EO=+3 → -oso → fosforoso.'
   },
   {
@@ -1045,7 +1045,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido perclórico'],
     stock: [],
-    sist: ['ácido perclórico'],
+    sist: [],
     hint: 'H + ClO₄⁻ (perclorato). Cl con EO=+7 (máximo, ≥4 estados) → per-ico → perclórico.'
   },
   {
@@ -1053,7 +1053,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido clórico'],
     stock: [],
-    sist: ['ácido clórico'],
+    sist: [],
     hint: 'H + ClO₃⁻ (clorato). Cl con EO=+5 → -ico → clórico.'
   },
   {
@@ -1061,7 +1061,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido cloroso'],
     stock: [],
-    sist: ['ácido cloroso'],
+    sist: [],
     hint: 'H + ClO₂⁻ (clorito). Cl con EO=+3 → -oso → cloroso.'
   },
   {
@@ -1069,7 +1069,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido hipocloroso'],
     stock: [],
-    sist: ['ácido hipocloroso'],
+    sist: [],
     hint: 'H + ClO⁻ (hipoclorito). Cl con EO=+1 (mínimo) → hipo-oso → hipocloroso.'
   },
   {
@@ -1077,7 +1077,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido silícico'],
     stock: [],
-    sist: ['ácido silícico'],
+    sist: [],
     hint: 'H₂ + SiO₃²⁻ (silicato). Si con EO=+4 → -ico → silícico. Ácido débil insoluble.'
   },
   {
@@ -1085,7 +1085,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido perbrómico'],
     stock: [],
-    sist: ['ácido perbrómico'],
+    sist: [],
     hint: 'H + BrO₄⁻ (perbromato). Br con EO=+7 (máximo) → per-ico → perbrómico.'
   },
   {
@@ -1093,7 +1093,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido brómico'],
     stock: [],
-    sist: ['ácido brómico'],
+    sist: [],
     hint: 'H + BrO₃⁻ (bromato). Br con EO=+5 → -ico → brómico.'
   },
   {
@@ -1101,7 +1101,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido bromoso'],
     stock: [],
-    sist: ['ácido bromoso'],
+    sist: [],
     hint: 'H + BrO₂⁻ (bromito). Br con EO=+3 → -oso → bromoso.'
   },
   {
@@ -1109,7 +1109,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido hipobromoso'],
     stock: [],
-    sist: ['ácido hipobromoso'],
+    sist: [],
     hint: 'H + BrO⁻ (hipobromito). Br con EO=+1 (mínimo) → hipo-oso → hipobromoso.'
   },
 
@@ -1119,7 +1119,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido peryódico'],
     stock: [],
-    sist: ['ácido peryódico'],
+    sist: [],
     hint: 'H + IO₄⁻ (peryodato). I con EO=+7 (máximo) → per-ico → peryódico.'
   },
   {
@@ -1127,7 +1127,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido yódico'],
     stock: [],
-    sist: ['ácido yódico'],
+    sist: [],
     hint: 'H + IO₃⁻ (yodato). I con EO=+5 → -ico → yódico.'
   },
   {
@@ -1135,7 +1135,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido hipoyodoso'],
     stock: [],
-    sist: ['ácido hipoyodoso'],
+    sist: [],
     hint: 'H + IO⁻ (hipoyodito). I con EO=+1 (mínimo) → hipo-oso → hipoyodoso.'
   },
   {
@@ -1143,7 +1143,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido crómico'],
     stock: [],
-    sist: ['ácido crómico'],
+    sist: [],
     hint: 'H₂ + CrO₄²⁻ (cromato). Cr con EO=+6 → -ico → crómico.'
   },
   {
@@ -1151,7 +1151,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido dicrómico'],
     stock: [],
-    sist: ['ácido dicrómico'],
+    sist: [],
     hint: 'H₂ + Cr₂O₇²⁻ (dicromato). Dos átomos de Cr con EO=+6 cada uno.'
   },
   {
@@ -1159,7 +1159,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido permangánico'],
     stock: [],
-    sist: ['ácido permangánico'],
+    sist: [],
     hint: 'H + MnO₄⁻ (permanganato). Mn con EO=+7 → per-ico → permangánico.'
   },
   {
@@ -1167,7 +1167,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido arsénico'],
     stock: [],
-    sist: ['ácido arsénico'],
+    sist: [],
     hint: 'H₃ + AsO₄³⁻ (arseniato). As con EO=+5 → -ico → arsénico.'
   },
   {
@@ -1175,7 +1175,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido arsenioso'],
     stock: [],
-    sist: ['ácido arsenioso'],
+    sist: [],
     hint: 'H₃ + AsO₃³⁻ (arsenito). As con EO=+3 → -oso → arsenioso.'
   },
   {
@@ -1183,7 +1183,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido selénico'],
     stock: [],
-    sist: ['ácido selénico'],
+    sist: [],
     hint: 'H₂ + SeO₄²⁻ (selenato). Se con EO=+6 → -ico → selénico.'
   },
   {
@@ -1191,7 +1191,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido selenioso'],
     stock: [],
-    sist: ['ácido selenioso'],
+    sist: [],
     hint: 'H₂ + SeO₃²⁻ (selenito). Se con EO=+4 → -oso → selenioso.'
   },
   {
@@ -1199,7 +1199,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido telúrico'],
     stock: [],
-    sist: ['ácido telúrico'],
+    sist: [],
     hint: 'H₂ + TeO₄²⁻ (telurato). Te con EO=+6 → -ico → telúrico.'
   },
 
@@ -1543,7 +1543,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['hipoclorito de sodio'],
     stock: [],
-    sist: ['hipoclorito de sodio'],
+    sist: [],
     hint: 'ClO⁻ = hipoclorito (Cl EO=+1). Na⁺ → sodio. Anión + "de" + catión.'
   },
   {
@@ -1551,7 +1551,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['sulfato de sodio'],
     stock: [],
-    sist: ['sulfato de sodio'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Dos Na⁺ compensan la carga. Sulfato de sodio.'
   },
   {
@@ -1559,7 +1559,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['nitrato de sodio'],
     stock: [],
-    sist: ['nitrato de sodio'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Na⁺ → sodio. Nitrato de sodio (salitre).'
   },
   {
@@ -1567,7 +1567,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['nitrato de potasio'],
     stock: [],
-    sist: ['nitrato de potasio'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. K⁺ → potasio. Nitrato de potasio (salitre potásico).'
   },
   {
@@ -1575,7 +1575,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['sulfato de potasio'],
     stock: [],
-    sist: ['sulfato de potasio'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Dos K⁺ compensan la carga. Sulfato de potasio.'
   },
   {
@@ -1583,7 +1583,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['carbonato de sodio'],
     stock: [],
-    sist: ['carbonato de sodio'],
+    sist: [],
     hint: 'CO₃²⁻ = carbonato. Dos Na⁺ por un CO₃²⁻. Sosa (carbonato de sodio).'
   },
   {
@@ -1591,7 +1591,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['carbonato de calcio'],
     stock: [],
-    sist: ['carbonato de calcio'],
+    sist: [],
     hint: 'CO₃²⁻ = carbonato. Ca²⁺ → calcio. CaCO₃ es la piedra caliza/calcita.'
   },
   {
@@ -1599,7 +1599,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de potasio'],
     stock: [],
-    sist: ['fosfato de potasio'],
+    sist: [],
     hint: 'PO₄³⁻ = fosfato. Tres K⁺ por un PO₄³⁻. Fosfato de potasio.'
   },
   {
@@ -1607,7 +1607,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de sodio'],
     stock: [],
-    sist: ['fosfato de sodio'],
+    sist: [],
     hint: 'PO₄³⁻ = fosfato. Tres Na⁺ por un PO₄³⁻. Fosfato trisódico.'
   },
   {
@@ -1615,7 +1615,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['fosfato de calcio'],
     stock: [],
-    sist: ['fosfato de calcio'],
+    sist: [],
     hint: 'PO₄³⁻ = fosfato. 3 Ca²⁺ + 2 PO₄³⁻ → Ca₃(PO₄)₂. Componente de los huesos.'
   },
   {
@@ -1623,7 +1623,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['nitrato de magnesio'],
     stock: [],
-    sist: ['nitrato de magnesio'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Mg²⁺ + 2NO₃⁻ → Mg(NO₃)₂. Nitrato de magnesio.'
   },
   {
@@ -1631,7 +1631,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['sulfato de aluminio'],
     stock: [],
-    sist: ['sulfato de aluminio'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. 2Al³⁺ + 3SO₄²⁻ → Al₂(SO₄)₃. Valencia fija: no usa -oso/-ico.'
   },
   {
@@ -1639,7 +1639,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['sulfato de bario'],
     stock: [],
-    sist: ['sulfato de bario'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Ba²⁺ → bario. Mineral barita, muy insoluble.'
   },
   {
@@ -1647,7 +1647,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['nitrito de sodio'],
     stock: [],
-    sist: ['nitrito de sodio'],
+    sist: [],
     hint: 'NO₂⁻ = nitrito (N EO=+3). Na⁺ → sodio. Nitrito de sodio (conservante).'
   },
   {
@@ -1655,7 +1655,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['clorito de sodio'],
     stock: [],
-    sist: ['clorito de sodio'],
+    sist: [],
     hint: 'ClO₂⁻ = clorito (Cl EO=+3). Na⁺ → sodio. Clorito de sodio.'
   },
   {
@@ -1663,7 +1663,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['clorato de sodio'],
     stock: [],
-    sist: ['clorato de sodio'],
+    sist: [],
     hint: 'ClO₃⁻ = clorato (Cl EO=+5). Na⁺ → sodio. Clorato de sodio.'
   },
   {
@@ -1671,7 +1671,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['perclorato de sodio'],
     stock: [],
-    sist: ['perclorato de sodio'],
+    sist: [],
     hint: 'ClO₄⁻ = perclorato (Cl EO=+7). Na⁺ → sodio. Perclorato de sodio.'
   },
   {
@@ -1679,7 +1679,7 @@ const BANCO = [
     group: 'sal-ox', level: 'easy',
     trad: ['bromato de potasio'],
     stock: [],
-    sist: ['bromato de potasio'],
+    sist: [],
     hint: 'BrO₃⁻ = bromato (Br EO=+5). K⁺ → potasio. Bromato de potasio.'
   },
 
@@ -1689,7 +1689,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['sulfato ferroso'],
     stock: [],
-    sist: ['sulfato ferroso'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Fe²⁺ (EO menor) → ferroso → sulfato ferroso.'
   },
   {
@@ -1697,7 +1697,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['sulfato férrico'],
     stock: [],
-    sist: ['sulfato férrico'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Fe³⁺ (EO mayor) → férrico → sulfato férrico. 2Fe³⁺ + 3SO₄²⁻.'
   },
   {
@@ -1705,7 +1705,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['sulfato cúprico'],
     stock: [],
-    sist: ['sulfato cúprico'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Cu²⁺ (EO mayor) → cúprico → sulfato cúprico. Piedra azul.'
   },
   {
@@ -1713,7 +1713,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['nitrato cúprico'],
     stock: [],
-    sist: ['nitrato cúprico'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Cu²⁺ → cúprico → nitrato cúprico. Cu²⁺ + 2NO₃⁻.'
   },
   {
@@ -1721,7 +1721,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['nitrato niqueloso'],
     stock: [],
-    sist: ['nitrato niqueloso'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Ni²⁺ (EO menor del Ni) → niqueloso → nitrato niqueloso.'
   },
   {
@@ -1729,7 +1729,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['nitrato cobaltoso'],
     stock: [],
-    sist: ['nitrato cobaltoso'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Co²⁺ (EO menor) → cobaltoso → nitrato cobaltoso.'
   },
   {
@@ -1737,7 +1737,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['sulfato de zinc'],
     stock: [],
-    sist: ['sulfato de zinc'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Zn tiene valencia fija +2. Sulfato de zinc (caparrosa blanca).'
   },
   {
@@ -1745,7 +1745,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['nitrato plumboso'],
     stock: [],
-    sist: ['nitrato plumboso'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Pb²⁺ (EO menor) → plumboso → nitrato plumboso.'
   },
   {
@@ -1753,7 +1753,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['nitrato férrico'],
     stock: [],
-    sist: ['nitrato férrico'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Fe³⁺ (EO mayor) → férrico → nitrato férrico.'
   },
   {
@@ -1761,7 +1761,7 @@ const BANCO = [
     group: 'sal-ox', level: 'medium',
     trad: ['sulfato estannoso'],
     stock: [],
-    sist: ['sulfato estannoso'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Sn²⁺ (EO menor) → estannoso → sulfato estannoso.'
   },
 
@@ -1771,7 +1771,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['permanganato de potasio'],
     stock: [],
-    sist: ['permanganato de potasio'],
+    sist: [],
     hint: 'MnO₄⁻ = permanganato (Mn EO=+7, prefijo per-). K⁺ → potasio.'
   },
   {
@@ -1779,7 +1779,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['cromato de potasio'],
     stock: [],
-    sist: ['cromato de potasio'],
+    sist: [],
     hint: 'CrO₄²⁻ = cromato (Cr EO=+6). Dos K⁺ por un CrO₄²⁻. Color amarillo.'
   },
   {
@@ -1787,7 +1787,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['dicromato de potasio'],
     stock: [],
-    sist: ['dicromato de potasio'],
+    sist: [],
     hint: 'Cr₂O₇²⁻ = dicromato (2 átomos de Cr EO=+6 cada uno). Dos K⁺. Color naranja.'
   },
   {
@@ -1795,7 +1795,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['clorato de potasio'],
     stock: [],
-    sist: ['clorato de potasio'],
+    sist: [],
     hint: 'ClO₃⁻ = clorato (Cl EO=+5). K⁺ → potasio. Oxidante fuerte.'
   },
   {
@@ -1803,7 +1803,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['perclorato de potasio'],
     stock: [],
-    sist: ['perclorato de potasio'],
+    sist: [],
     hint: 'ClO₄⁻ = perclorato (Cl EO=+7, máximo). K⁺ → potasio.'
   },
   {
@@ -1811,7 +1811,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['hipoclorito de potasio'],
     stock: [],
-    sist: ['hipoclorito de potasio'],
+    sist: [],
     hint: 'ClO⁻ = hipoclorito (Cl EO=+1, mínimo → hipo-). K⁺ → potasio.'
   },
   {
@@ -1819,7 +1819,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['nitrato manganoso'],
     stock: [],
-    sist: ['nitrato manganoso'],
+    sist: [],
     hint: 'NO₃⁻ = nitrato. Mn²⁺ (EO menor) → manganoso → nitrato manganoso.'
   },
   {
@@ -1827,7 +1827,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['sulfato crómico'],
     stock: [],
-    sist: ['sulfato crómico'],
+    sist: [],
     hint: 'SO₄²⁻ = sulfato. Cr³⁺ → crómico → sulfato crómico. 2Cr³⁺ + 3SO₄²⁻.'
   },
   {
@@ -1835,7 +1835,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['fosfato de aluminio'],
     stock: [],
-    sist: ['fosfato de aluminio'],
+    sist: [],
     hint: 'PO₄³⁻ = fosfato. Al³⁺ → aluminio. Valencia fija. Al³⁺ + PO₄³⁻ → AlPO₄.'
   },
   {
@@ -1843,7 +1843,7 @@ const BANCO = [
     group: 'sal-ox', level: 'hard',
     trad: ['clorato de calcio'],
     stock: [],
-    sist: ['clorato de calcio'],
+    sist: [],
     hint: 'ClO₃⁻ = clorato. Ca²⁺ → calcio. Ca²⁺ + 2ClO₃⁻ → Ca(ClO₃)₂.'
   },
 
@@ -1987,7 +1987,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido yodoso'],
     stock: [],
-    sist: ['ácido yodoso'],
+    sist: [],
     hint: 'I en EO +3 → yodoso (dos oxígenos). H⁺ + IO₂⁻ → HIO₂.'
   },
   {
@@ -1995,7 +1995,7 @@ const BANCO = [
     group: 'ac-ox', level: 'medium',
     trad: ['ácido hiposulfuroso'],
     stock: [],
-    sist: ['ácido hiposulfuroso'],
+    sist: [],
     hint: 'S en EO +2 → hiposulfuroso. 2H⁺ + SO₂²⁻ → H₂SO₂.'
   },
   {
@@ -2003,7 +2003,7 @@ const BANCO = [
     group: 'ac-ox', level: 'hard',
     trad: ['ácido teluroso'],
     stock: [],
-    sist: ['ácido teluroso'],
+    sist: [],
     hint: 'Te en EO +4 → teluroso. 2H⁺ + TeO₃²⁻ → H₂TeO₃.'
   },
   // ── SALES BINARIAS (banco adicional) ──
@@ -3011,15 +3011,15 @@ const BANCO = [
   {formula:'SnS₂',   group:'sal-bin',level:'medium',  trad:['sulfuro estánnico'],  stock:['sulfuro de estaño (IV)'],  sist:['disulfuro de estaño'],        hint:'Sn⁴⁺ + 2 S²⁻. EO mayor → -ico → estánnico.'},
   {formula:'PbS',    group:'sal-bin',level:'medium',  trad:['sulfuro plumboso'],   stock:['sulfuro de plomo (II)'],   sist:['sulfuro de plomo'],           hint:'Pb²⁺ + S²⁻. EO menor → -oso → plumboso.'},
   // ── Sales oxigenadas adicionales ──
-  {formula:'MgCO₃',  group:'sal-ox',level:'easy',   trad:['carbonato de magnesio'],stock:[],                         sist:['carbonato de magnesio'],      hint:'Mg²⁺ + CO₃²⁻. Antácido estomacal.'},
-  {formula:'AgNO₃',  group:'sal-ox',level:'easy',   trad:['nitrato de plata'],    stock: [],     sist: ['nitrato de plata'],           hint:'Ag⁺ + NO₃⁻. Reactivo para detectar haluros.'},
-  {formula:'Ba(NO₃)₂',group:'sal-ox',level:'easy',  trad:['nitrato de bario'],   stock: [],                           sist: ['nitrato de bario'],         hint:'Ba²⁺ + 2 NO₃⁻. Color verde en pirotecnia.'},
-  {formula:'FeSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito ferroso'],    stock: [],   sist: ['sulfito ferroso'],          hint:'Fe²⁺ + SO₃²⁻. Distinguir sulfito (SO₃) de sulfato (SO₄).'},
-  {formula:'NiSO₄',  group:'sal-ox',level:'medium',  trad:['sulfato niqueloso'],  stock: [],   sist: ['sulfato niqueloso'],          hint:'Ni²⁺ + SO₄²⁻ → sulfato niqueloso.',avanzado:true},
-  {formula:'CoPO₄',  group:'sal-ox',level:'hard',    trad:['fosfato cobáltico'],  stock: [], sist: ['fosfato cobáltico'],         hint:'Co³⁺ + PO₄³⁻. EO mayor → -ico → cobáltico.',avanzado:true},
-  {formula:'Na₂SO₃', group:'sal-ox',level:'medium',  trad:['sulfito de sodio'],   stock: [],                          sist: ['sulfito de sodio'],         hint:'Na⁺ + SO₃²⁻. Sulfito ≠ sulfato (SO₄²⁻).'},
-  {formula:'CaSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito de calcio'],  stock:[],                          sist:['sulfito de calcio'],          hint:'Ca²⁺ + SO₃²⁻.'},
-  {formula:'MgSO₄',  group:'sal-ox',level:'easy',    trad:['sulfato de magnesio'],stock:[],                          sist:['sulfato de magnesio'],        hint:'Mg²⁺ + SO₄²⁻. "Sal de Epsom" — purgante y fertilizante.'},
+  {formula:'MgCO₃',  group:'sal-ox',level:'easy',   trad:['carbonato de magnesio'],stock:[],                         sist: [],      hint:'Mg²⁺ + CO₃²⁻. Antácido estomacal.'},
+  {formula:'AgNO₃',  group:'sal-ox',level:'easy',   trad:['nitrato de plata'],    stock: [],     sist: [],           hint:'Ag⁺ + NO₃⁻. Reactivo para detectar haluros.'},
+  {formula:'Ba(NO₃)₂',group:'sal-ox',level:'easy',  trad:['nitrato de bario'],   stock: [],                           sist: [],         hint:'Ba²⁺ + 2 NO₃⁻. Color verde en pirotecnia.'},
+  {formula:'FeSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito ferroso'],    stock: [],   sist: [],          hint:'Fe²⁺ + SO₃²⁻. Distinguir sulfito (SO₃) de sulfato (SO₄).'},
+  {formula:'NiSO₄',  group:'sal-ox',level:'medium',  trad:['sulfato niqueloso'],  stock: [],   sist: [],          hint:'Ni²⁺ + SO₄²⁻ → sulfato niqueloso.',avanzado:true},
+  {formula:'CoPO₄',  group:'sal-ox',level:'hard',    trad:['fosfato cobáltico'],  stock: [], sist: [],         hint:'Co³⁺ + PO₄³⁻. EO mayor → -ico → cobáltico.',avanzado:true},
+  {formula:'Na₂SO₃', group:'sal-ox',level:'medium',  trad:['sulfito de sodio'],   stock: [],                          sist: [],         hint:'Na⁺ + SO₃²⁻. Sulfito ≠ sulfato (SO₄²⁻).'},
+  {formula:'CaSO₃',  group:'sal-ox',level:'medium',  trad:['sulfito de calcio'],  stock:[],                          sist: [],          hint:'Ca²⁺ + SO₃²⁻.'},
+  {formula:'MgSO₄',  group:'sal-ox',level:'easy',    trad:['sulfato de magnesio'],stock:[],                          sist: [],        hint:'Mg²⁺ + SO₄²⁻. "Sal de Epsom" — purgante y fertilizante.'},
 
   // ── sal-ac: sales ácidas — el anión conserva 1 o 2 H⁺ del ácido poliprótico ──
   {formula:'NaHCO₃', group:'sal-ac',level:'easy',   trad:['bicarbonato de sodio'],  stock:['hidrogenocarbonato de sodio'],   sist:[], hint:'Na⁺ + HCO₃⁻ (CO₃²⁻ retuvo 1 H⁺). Trad: bi- + oxoanión. Stock: hidrogeno- + oxoanión. Base del polvo de hornear.'},
@@ -3073,8 +3073,8 @@ const BANCO = [
   {formula:'Be(OH)₂', group:'base',level:'easy', trad:['hidróxido de berilio'], stock:[], sist:['hidróxido de berilio'], hint:'Be²⁺ (valencia fija +2) + 2OH⁻ → Be(OH)₂. Mismo patrón que el hidróxido de magnesio.'},
 
   // ── Ácidos oxácidos: los 2 miembros que faltaban en familias ya vistas ──
-  {formula:'H₃PO₂', group:'ac-ox',level:'medium', trad:['ácido hipofosforoso'], stock:[], sist:['ácido hipofosforoso'], hint:'H₃ + PO₂³⁻ (formal). P con EO=+1 → hipo-oso → hipofosforoso. Mismo patrón hipo-/-oso/-ico que el ácido sulfúrico/sulfuroso/hiposulfuroso.'},
-  {formula:'H₂MnO₄', group:'ac-ox',level:'hard', trad:['ácido mangánico'], stock:[], sist:['ácido mangánico'], hint:'H₂ + MnO₄²⁻ (manganato). Mn con EO=+6 → -ico → mangánico (EO+7 → per-ico → permangánico, ya visto).'},
+  {formula:'H₃PO₂', group:'ac-ox',level:'medium', trad:['ácido hipofosforoso'], stock:[], sist: [], hint:'H₃ + PO₂³⁻ (formal). P con EO=+1 → hipo-oso → hipofosforoso. Mismo patrón hipo-/-oso/-ico que el ácido sulfúrico/sulfuroso/hiposulfuroso.'},
+  {formula:'H₂MnO₄', group:'ac-ox',level:'hard', trad:['ácido mangánico'], stock:[], sist: [], hint:'H₂ + MnO₄²⁻ (manganato). Mn con EO=+6 → -ico → mangánico (EO+7 → per-ico → permangánico, ya visto).'},
 
   // ── Sales binarias: completar la parrilla alcalinos/alcalinotérreos × halógeno/azufre ──
   {formula:'LiCl', group:'sal-bin',level:'easy', trad:['cloruro de litio'], stock:[], sist:['cloruro de litio'], hint:'Cl⁻ → cloruro. Li⁺ (valencia fija +1) → litio. Mismo patrón que el cloruro de sodio.'},
@@ -3114,32 +3114,32 @@ const BANCO = [
   {formula:'CdCl₂', group:'sal-bin',level:'easy', trad:['cloruro de cadmio'], stock:[], sist:['dicloruro de cadmio'], hint:'Cl⁻ → cloruro. Cd²⁺ (valencia fija +2) + 2Cl⁻ → CdCl₂.'},
 
   // ── Sales oxigenadas: más cationes de valencia fija con los oxoaniones ya vistos ──
-  {formula:'Li₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de litio'], stock:[], sist:['sulfato de litio'], hint:'SO₄²⁻ = sulfato. Dos Li⁺ por un SO₄²⁻.'},
-  {formula:'LiNO₃', group:'sal-ox',level:'easy', trad:['nitrato de litio'], stock:[], sist:['nitrato de litio'], hint:'NO₃⁻ = nitrato. Li⁺ → litio.'},
-  {formula:'Li₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de litio'], stock:[], sist:['carbonato de litio'], hint:'CO₃²⁻ = carbonato. Dos Li⁺ por un CO₃²⁻. Usado en medicamentos para el trastorno bipolar.'},
-  {formula:'Li₃PO₄', group:'sal-ox',level:'easy', trad:['fosfato de litio'], stock:[], sist:['fosfato de litio'], hint:'PO₄³⁻ = fosfato. Tres Li⁺ por un PO₄³⁻.'},
-  {formula:'K₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de potasio'], stock:[], sist:['carbonato de potasio'], hint:'CO₃²⁻ = carbonato. Dos K⁺ por un CO₃²⁻. Usado en la fabricación de jabón y vidrio.'},
-  {formula:'K₂SO₃', group:'sal-ox',level:'easy', trad:['sulfito de potasio'], stock:[], sist:['sulfito de potasio'], hint:'SO₃²⁻ = sulfito. Dos K⁺ por un SO₃²⁻. Sulfito ≠ sulfato — cuidado con el sufijo.'},
-  {formula:'LiClO', group:'sal-ox',level:'easy', trad:['hipoclorito de litio'], stock:[], sist:['hipoclorito de litio'], hint:'ClO⁻ = hipoclorito (Cl con EO=+1). Li⁺ → litio. Usado como blanqueador y desinfectante.'},
-  {formula:'Rb₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de rubidio'], stock:[], sist:['carbonato de rubidio'], hint:'CO₃²⁻ = carbonato. Dos Rb⁺ por un CO₃²⁻.'},
-  {formula:'Rb₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de rubidio'], stock:[], sist:['sulfato de rubidio'], hint:'SO₄²⁻ = sulfato. Dos Rb⁺ por un SO₄²⁻.'},
-  {formula:'RbNO₃', group:'sal-ox',level:'easy', trad:['nitrato de rubidio'], stock:[], sist:['nitrato de rubidio'], hint:'NO₃⁻ = nitrato. Rb⁺ → rubidio.'},
-  {formula:'Cs₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de cesio'], stock:[], sist:['sulfato de cesio'], hint:'SO₄²⁻ = sulfato. Dos Cs⁺ por un SO₄²⁻.'},
-  {formula:'CsNO₃', group:'sal-ox',level:'easy', trad:['nitrato de cesio'], stock:[], sist:['nitrato de cesio'], hint:'NO₃⁻ = nitrato. Cs⁺ → cesio.'},
-  {formula:'Mg₃(PO₄)₂', group:'sal-ox',level:'easy', trad:['fosfato de magnesio'], stock:[], sist:['fosfato de magnesio'], hint:'PO₄³⁻ = fosfato. 3Mg²⁺ + 2PO₄³⁻ → Mg₃(PO₄)₂.'},
-  {formula:'MgSO₃', group:'sal-ox',level:'easy', trad:['sulfito de magnesio'], stock:[], sist:['sulfito de magnesio'], hint:'SO₃²⁻ = sulfito. Mg²⁺ → magnesio.'},
-  {formula:'CaSO₄', group:'sal-ox',level:'easy', trad:['sulfato de calcio'], stock:[], sist:['sulfato de calcio'], hint:'SO₄²⁻ = sulfato. Ca²⁺ → calcio. El yeso es CaSO₄ hidratado.'},
-  {formula:'Ca(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de calcio'], stock:[], sist:['nitrato de calcio'], hint:'NO₃⁻ = nitrato. Ca²⁺ + 2NO₃⁻ → Ca(NO₃)₂. Usado como fertilizante.'},
-  {formula:'SrSO₄', group:'sal-ox',level:'easy', trad:['sulfato de estroncio'], stock:[], sist:['sulfato de estroncio'], hint:'SO₄²⁻ = sulfato. Sr²⁺ → estroncio. Mineral celestina.'},
-  {formula:'Sr(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de estroncio'], stock:[], sist:['nitrato de estroncio'], hint:'NO₃⁻ = nitrato. Sr²⁺ + 2NO₃⁻ → Sr(NO₃)₂. Da el color rojo en fuegos artificiales.'},
-  {formula:'BaCO₃', group:'sal-ox',level:'easy', trad:['carbonato de bario'], stock:[], sist:['carbonato de bario'], hint:'CO₃²⁻ = carbonato. Ba²⁺ → bario.'},
-  {formula:'Al(NO₃)₃', group:'sal-ox',level:'easy', trad:['nitrato de aluminio'], stock:[], sist:['nitrato de aluminio'], hint:'NO₃⁻ = nitrato. Al³⁺ + 3NO₃⁻ → Al(NO₃)₃.'},
-  {formula:'Zn(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de zinc'], stock:[], sist:['nitrato de zinc'], hint:'NO₃⁻ = nitrato. Zn²⁺ + 2NO₃⁻ → Zn(NO₃)₂.'},
-  {formula:'ZnCO₃', group:'sal-ox',level:'easy', trad:['carbonato de zinc'], stock:[], sist:['carbonato de zinc'], hint:'CO₃²⁻ = carbonato. Zn²⁺ → zinc.'},
-  {formula:'Ag₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de plata'], stock:[], sist:['carbonato de plata'], hint:'CO₃²⁻ = carbonato. Dos Ag⁺ por un CO₃²⁻. Sal poco soluble, clásica al estudiar reglas de solubilidad.'},
-  {formula:'Ag₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de plata'], stock:[], sist:['sulfato de plata'], hint:'SO₄²⁻ = sulfato. Dos Ag⁺ por un SO₄²⁻.'},
-  {formula:'CdSO₄', group:'sal-ox',level:'easy', trad:['sulfato de cadmio'], stock:[], sist:['sulfato de cadmio'], hint:'SO₄²⁻ = sulfato. Cd²⁺ (valencia fija +2) → cadmio.'},
-  {formula:'SrCO₃', group:'sal-ox',level:'easy', trad:['carbonato de estroncio'], stock:[], sist:['carbonato de estroncio'], hint:'CO₃²⁻ = carbonato. Sr²⁺ → estroncio. Usado en pantallas antiguas de tubo de rayos catódicos.'},
+  {formula:'Li₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de litio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Dos Li⁺ por un SO₄²⁻.'},
+  {formula:'LiNO₃', group:'sal-ox',level:'easy', trad:['nitrato de litio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Li⁺ → litio.'},
+  {formula:'Li₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de litio'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Dos Li⁺ por un CO₃²⁻. Usado en medicamentos para el trastorno bipolar.'},
+  {formula:'Li₃PO₄', group:'sal-ox',level:'easy', trad:['fosfato de litio'], stock:[], sist: [], hint:'PO₄³⁻ = fosfato. Tres Li⁺ por un PO₄³⁻.'},
+  {formula:'K₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de potasio'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Dos K⁺ por un CO₃²⁻. Usado en la fabricación de jabón y vidrio.'},
+  {formula:'K₂SO₃', group:'sal-ox',level:'easy', trad:['sulfito de potasio'], stock:[], sist: [], hint:'SO₃²⁻ = sulfito. Dos K⁺ por un SO₃²⁻. Sulfito ≠ sulfato — cuidado con el sufijo.'},
+  {formula:'LiClO', group:'sal-ox',level:'easy', trad:['hipoclorito de litio'], stock:[], sist: [], hint:'ClO⁻ = hipoclorito (Cl con EO=+1). Li⁺ → litio. Usado como blanqueador y desinfectante.'},
+  {formula:'Rb₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de rubidio'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Dos Rb⁺ por un CO₃²⁻.'},
+  {formula:'Rb₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de rubidio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Dos Rb⁺ por un SO₄²⁻.'},
+  {formula:'RbNO₃', group:'sal-ox',level:'easy', trad:['nitrato de rubidio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Rb⁺ → rubidio.'},
+  {formula:'Cs₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de cesio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Dos Cs⁺ por un SO₄²⁻.'},
+  {formula:'CsNO₃', group:'sal-ox',level:'easy', trad:['nitrato de cesio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Cs⁺ → cesio.'},
+  {formula:'Mg₃(PO₄)₂', group:'sal-ox',level:'easy', trad:['fosfato de magnesio'], stock:[], sist: [], hint:'PO₄³⁻ = fosfato. 3Mg²⁺ + 2PO₄³⁻ → Mg₃(PO₄)₂.'},
+  {formula:'MgSO₃', group:'sal-ox',level:'easy', trad:['sulfito de magnesio'], stock:[], sist: [], hint:'SO₃²⁻ = sulfito. Mg²⁺ → magnesio.'},
+  {formula:'CaSO₄', group:'sal-ox',level:'easy', trad:['sulfato de calcio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Ca²⁺ → calcio. El yeso es CaSO₄ hidratado.'},
+  {formula:'Ca(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de calcio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Ca²⁺ + 2NO₃⁻ → Ca(NO₃)₂. Usado como fertilizante.'},
+  {formula:'SrSO₄', group:'sal-ox',level:'easy', trad:['sulfato de estroncio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Sr²⁺ → estroncio. Mineral celestina.'},
+  {formula:'Sr(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de estroncio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Sr²⁺ + 2NO₃⁻ → Sr(NO₃)₂. Da el color rojo en fuegos artificiales.'},
+  {formula:'BaCO₃', group:'sal-ox',level:'easy', trad:['carbonato de bario'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Ba²⁺ → bario.'},
+  {formula:'Al(NO₃)₃', group:'sal-ox',level:'easy', trad:['nitrato de aluminio'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Al³⁺ + 3NO₃⁻ → Al(NO₃)₃.'},
+  {formula:'Zn(NO₃)₂', group:'sal-ox',level:'easy', trad:['nitrato de zinc'], stock:[], sist: [], hint:'NO₃⁻ = nitrato. Zn²⁺ + 2NO₃⁻ → Zn(NO₃)₂.'},
+  {formula:'ZnCO₃', group:'sal-ox',level:'easy', trad:['carbonato de zinc'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Zn²⁺ → zinc.'},
+  {formula:'Ag₂CO₃', group:'sal-ox',level:'easy', trad:['carbonato de plata'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Dos Ag⁺ por un CO₃²⁻. Sal poco soluble, clásica al estudiar reglas de solubilidad.'},
+  {formula:'Ag₂SO₄', group:'sal-ox',level:'easy', trad:['sulfato de plata'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Dos Ag⁺ por un SO₄²⁻.'},
+  {formula:'CdSO₄', group:'sal-ox',level:'easy', trad:['sulfato de cadmio'], stock:[], sist: [], hint:'SO₄²⁻ = sulfato. Cd²⁺ (valencia fija +2) → cadmio.'},
+  {formula:'SrCO₃', group:'sal-ox',level:'easy', trad:['carbonato de estroncio'], stock:[], sist: [], hint:'CO₃²⁻ = carbonato. Sr²⁺ → estroncio. Usado en pantallas antiguas de tubo de rayos catódicos.'},
 
   // ── Sales ácidas: más cationes de valencia fija con los aniones ácidos ya vistos ──
   {formula:'RbHS', group:'sal-ac',level:'easy', trad:['bisulfuro de rubidio'], stock:['hidrogenosulfuro de rubidio'], sist:[], hint:'Rb⁺ + HS⁻ (S²⁻ del H₂S retuvo 1 H⁺). Mismo patrón que el bisulfuro de sodio o potasio.'},
@@ -3163,15 +3163,15 @@ const BANCO = [
 {formula:'CdH₂',group:'hidru',level:'hard',trad:['hidruro de cadmio'],stock:[],sist:['dihidruro de cadmio'],hint:'Cd tiene valencia fija +2. Cd²⁺ + 2H⁻ → CdH₂. Mismo patrón que el hidruro de zinc.'},
 {formula:'SnH₂',group:'hidru',level:'hard',trad:['hidruro estannoso'],stock:['hidruro de estaño (II)'],sist:['dihidruro de estaño'],hint:'Sn²⁺ (EO menor del Sn) → -oso → estannoso → hidruro estannoso.'},
 {formula:'SnH₄',group:'hidru',level:'hard',trad:['hidruro estánnico'],stock:['hidruro de estaño (IV)'],sist:['tetrahidruro de estaño'],hint:'Sn⁴⁺ (EO mayor del Sn) → -ico → estánnico → hidruro estánnico.'},
-{"formula":"H₃SbO₄","group":"ac-ox","level":"hard","trad":["ácido antimónico"],"stock":[],"sist":["ácido antimónico"],"hint":"H₃ + SbO₄³⁻ (antimoniato). Sb con EO=+5 → -ico → antimónico. Mismo patrón que el ácido arsénico (mismo grupo 15)."},
-{"formula":"H₃SbO₃","group":"ac-ox","level":"hard","trad":["ácido antimonioso"],"stock":[],"sist":["ácido antimonioso"],"hint":"H₃ + SbO₃³⁻ (antimonito). Sb con EO=+3 → -oso → antimonioso."},
-{"formula":"H₂GeO₃","group":"ac-ox","level":"hard","trad":["ácido germánico"],"stock":[],"sist":["ácido germánico"],"hint":"H₂ + GeO₃²⁻ (germanato). Ge con EO=+4 (único común) → -ico → germánico. Mismo patrón que el ácido silícico (mismo grupo 14)."},
-{"formula":"H₄SiO₄","group":"ac-ox","level":"hard","trad":["ácido ortosilícico"],"stock":[],"sist":["ácido ortosilícico"],"hint":"H₄ + SiO₄⁴⁻ (ortosilicato). Forma más hidratada del ácido silícico (H₂SiO₃); Si conserva EO=+4."},
-{"formula":"HVO₃","group":"ac-ox","level":"hard","trad":["ácido vanádico"],"stock":[],"sist":["ácido vanádico"],"hint":"H + VO₃⁻ (vanadato). V con EO=+5 (su valencia más común) → -ico → vanádico."},
-{"formula":"H₂N₂O₂","group":"ac-ox","level":"hard","trad":["ácido hiponitroso"],"stock":[],"sist":["ácido hiponitroso"],"hint":"2H⁺ + N₂O₂²⁻ (hiponitrito). N con EO=+1 (el más bajo) → hipo-oso → hiponitroso. Mismo patrón hipo- que el ácido hiposulfuroso."},
-{"formula":"HPO₃","group":"ac-ox","level":"hard","trad":["ácido metafosfórico"],"stock":[],"sist":["ácido metafosfórico"],"hint":"H + PO₃⁻ (metafosfato). Forma deshidratada del ácido fosfórico (H₃PO₄); P conserva EO=+5."},
-{"formula":"H₂MoO₄","group":"ac-ox","level":"hard","trad":["ácido molíbdico"],"stock":[],"sist":["ácido molíbdico"],"hint":"H₂ + MoO₄²⁻ (molibdato). Mo con EO=+6 → -ico → molíbdico. Mismo patrón que el ácido crómico (mismo grupo 6)."},
-{"formula":"H₂WO₄","group":"ac-ox","level":"hard","trad":["ácido túngstico"],"stock":[],"sist":["ácido túngstico"],"hint":"H₂ + WO₄²⁻ (tungstato). W con EO=+6 → -ico → túngstico. Mismo patrón que el ácido crómico y el molíbdico."},
+{"formula":"H₃SbO₄","group":"ac-ox","level":"hard","trad":["ácido antimónico"],"stock":[],"sist":[],"hint":"H₃ + SbO₄³⁻ (antimoniato). Sb con EO=+5 → -ico → antimónico. Mismo patrón que el ácido arsénico (mismo grupo 15)."},
+{"formula":"H₃SbO₃","group":"ac-ox","level":"hard","trad":["ácido antimonioso"],"stock":[],"sist":[],"hint":"H₃ + SbO₃³⁻ (antimonito). Sb con EO=+3 → -oso → antimonioso."},
+{"formula":"H₂GeO₃","group":"ac-ox","level":"hard","trad":["ácido germánico"],"stock":[],"sist":[],"hint":"H₂ + GeO₃²⁻ (germanato). Ge con EO=+4 (único común) → -ico → germánico. Mismo patrón que el ácido silícico (mismo grupo 14)."},
+{"formula":"H₄SiO₄","group":"ac-ox","level":"hard","trad":["ácido ortosilícico"],"stock":[],"sist":[],"hint":"H₄ + SiO₄⁴⁻ (ortosilicato). Forma más hidratada del ácido silícico (H₂SiO₃); Si conserva EO=+4."},
+{"formula":"HVO₃","group":"ac-ox","level":"hard","trad":["ácido vanádico"],"stock":[],"sist":[],"hint":"H + VO₃⁻ (vanadato). V con EO=+5 (su valencia más común) → -ico → vanádico."},
+{"formula":"H₂N₂O₂","group":"ac-ox","level":"hard","trad":["ácido hiponitroso"],"stock":[],"sist":[],"hint":"2H⁺ + N₂O₂²⁻ (hiponitrito). N con EO=+1 (el más bajo) → hipo-oso → hiponitroso. Mismo patrón hipo- que el ácido hiposulfuroso."},
+{"formula":"HPO₃","group":"ac-ox","level":"hard","trad":["ácido metafosfórico"],"stock":[],"sist":[],"hint":"H + PO₃⁻ (metafosfato). Forma deshidratada del ácido fosfórico (H₃PO₄); P conserva EO=+5."},
+{"formula":"H₂MoO₄","group":"ac-ox","level":"hard","trad":["ácido molíbdico"],"stock":[],"sist":[],"hint":"H₂ + MoO₄²⁻ (molibdato). Mo con EO=+6 → -ico → molíbdico. Mismo patrón que el ácido crómico (mismo grupo 6)."},
+{"formula":"H₂WO₄","group":"ac-ox","level":"hard","trad":["ácido túngstico"],"stock":[],"sist":[],"hint":"H₂ + WO₄²⁻ (tungstato). W con EO=+6 → -ico → túngstico. Mismo patrón que el ácido crómico y el molíbdico."},
 {"formula":"Ca(H₂PO₄)₂","group":"sal-ac","level":"hard","trad":["fosfato diácido de calcio"],"stock":["dihidrogenofosfato de calcio"],"sist":[],"hint":"Ca²⁺ + 2 H₂PO₄⁻ (PO₄³⁻ retuvo 2 H⁺ cada uno). Es el \"superfosfato simple\", un fertilizante fosfatado real usado en cultivos colombianos."},
 {"formula":"Mg(H₂PO₄)₂","group":"sal-ac","level":"hard","trad":["fosfato diácido de magnesio"],"stock":["dihidrogenofosfato de magnesio"],"sist":[],"hint":"Mg²⁺ + 2 H₂PO₄⁻. Mismo patrón que el fosfato diácido de calcio."},
 {"formula":"NH₄H₂PO₄","group":"sal-ac","level":"hard","trad":["fosfato diácido de amonio"],"stock":["dihidrogenofosfato de amonio"],"sist":[],"hint":"NH₄⁺ + H₂PO₄⁻. Conocido como MAP (fosfato monoamónico), uno de los fertilizantes fosfatados más usados en el mundo."},
