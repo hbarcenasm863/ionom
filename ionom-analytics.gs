@@ -470,14 +470,30 @@ function upsertRegistro(ss, d) {
   // Principiante...), no un tema — por eso "grupo" tiene prioridad aquí.
   const tema = String(d.grupo || d.nivel || '').trim();
 
-  // Buscar la fila de esta sesión, si ya existe.
+  // Buscar la fila de esta sesión, si ya existe. Antes se leía y recorría
+  // TODA "Registro" en cada envío, bajo el candado -- a medida que la hoja
+  // crece con el semestre, esa búsqueda se vuelve más lenta, retiene el
+  // candado más tiempo, y genera más "No se obtuvo el lock (servidor
+  // congestionado)" para los demás estudiantes que envían al mismo tiempo
+  // (empeora solo con el tiempo, nunca mejora -- confirmado en la hoja
+  // "Errores": ráfagas de ese error que se repiten en varios días).
+  // Los eventos de UNA misma sesión de juego (inicio -> fin/abandono)
+  // llegan separados por minutos, no por días, así que basta buscar en las
+  // últimas VENTANA_BUSQUEDA_SESION filas (las más recientes). Si una
+  // concurrencia extremadamente alta hiciera que esa fila ya no esté en la
+  // ventana, no se encuentra y se crea una fila nueva en vez de actualizar
+  // la existente -- un duplicado ocasional, no una pérdida de datos:
+  // limpiarRegistroDuplicados() ya existe para ese caso.
+  const VENTANA_BUSQUEDA_SESION = 500;
   let filaExistente = -1;
   let timestampOriginal = null;
   if (sesionCod && sh.getLastRow() > 1) {
-    const datos = sh.getRange(2, 1, sh.getLastRow() - 1, REG_HEADERS.length).getValues();
-    for (let i = 0; i < datos.length; i++) {
+    const filaInicio = Math.max(2, sh.getLastRow() - VENTANA_BUSQUEDA_SESION + 1);
+    const numFilas = sh.getLastRow() - filaInicio + 1;
+    const datos = sh.getRange(filaInicio, 1, numFilas, REG_HEADERS.length).getValues();
+    for (let i = datos.length - 1; i >= 0; i--) {
       if (String(datos[i][COL.SESION - 1]).trim() === sesionCod) {
-        filaExistente = i + 2;
+        filaExistente = filaInicio + i;
         timestampOriginal = datos[i][COL.TIMESTAMP - 1];
         break;
       }
