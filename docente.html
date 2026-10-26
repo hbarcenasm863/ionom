@@ -105,6 +105,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .hoja-pie{border-top:1px solid #ccc;padding-top:6px;margin-top:8px;font-size:.66rem;color:#777;flex-shrink:0;display:flex;justify-content:space-between;gap:12px}
 .hoja-marca{font-family:var(--serif);font-style:italic;color:#0d4a73}
 .hoja-marca b{color:#92720a}
+.hoja-lic{flex:1;text-align:center;font-family:var(--sans);color:#777}
 
 .sec-tit{font-family:var(--serif);font-style:italic;font-size:1.05rem;font-weight:700;color:var(--nav);margin:14px 0 10px;padding-bottom:5px;border-bottom:1.5px solid var(--brd)}
 .sect-previos,.sect-info{margin-bottom:14px;font-size:1rem}
@@ -317,11 +318,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .el .lf{font-size:1.05em}
 .lab-sheet:not(.play) .el{pointer-events:none}
 .lab-sheet .sfoot{position:absolute;left:30px;right:30px;display:flex;align-items:flex-end;gap:20px;font-size:17px}
-.lab-sheet .sfoot .fields{flex:1;white-space:nowrap}
+.lab-sheet .sfoot .fields{flex:1;white-space:nowrap;display:flex;align-items:flex-end;gap:8px;min-width:0}
+.lab-sheet .sfoot .fields i{flex:1;max-width:380px}
 .lab-sheet .sfoot i{display:inline-block;border-bottom:2px solid #0d2d42;height:18px;vertical-align:baseline;margin-right:14px}
 .lab-sheet .smark{font-family:var(--serif);font-style:italic;font-size:14px;color:#0d4a73;white-space:nowrap}
 .lab-sheet .smark b{color:#92720a}
-.lab-sheet .sdata{position:absolute;left:30px;right:30px;font-size:13.5px;color:#2a3f52;text-align:center}
+.lab-sheet .slic{display:block;font-family:var(--sans);font-style:normal;font-size:11px;color:#4f6d88;text-align:right;margin-top:2px}
+.lab-sheet .sdata{position:absolute;left:30px;right:30px;font-size:13.5px;line-height:1.45;color:#2a3f52;text-align:center;border-top:1px solid #e3e3e8;padding-top:4px}
 .lab-sheet .c-cat{color:var(--cat-t)}.lab-sheet .c-an{color:var(--an-t)}.lab-sheet .c-oh{color:var(--oh-t)}.lab-sheet .c-ox{color:var(--ox-t)}
 .lab-sheet.nocolor .c-cat,.lab-sheet.nocolor .c-an,.lab-sheet.nocolor .c-oh,.lab-sheet.nocolor .c-ox{color:inherit}
 /* clave */

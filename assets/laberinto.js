@@ -668,11 +668,25 @@ function hoja(mz, c, o){
   // documento (pantalla + impresión), url(#id) apuntaba a la de la hoja
   // oculta y las flechas impresas salían sin punta.
   const mk = 'lab-flecha-' + (++_nHoja);
+  let data = '';
+  if(c.mode === 'mol'){
+    data = 'Datos: N<sub>A</sub> = 6,022×10<sup>23</sup> partículas/mol' + (c.types.includes('gases') ? ' · Volumen molar (C.N.) = 22,4 L/mol' : '');
+    if(!c.hints && mz.fs.length){
+      const els = new Set(); mz.fs.forEach(f => Object.keys(parseF(f)).forEach(k => els.add(k)));
+      const m = masas();
+      data += '<br>Masas atómicas (g/mol): ' + [...els].sort().map(k => k + ' = ' + fmtNum(m[k], 1)).join(' · ');
+    }
+  } else if(c.mode === 'nom' && c.color){
+    data = '<span class="c-cat">■</span> catión &nbsp; <span class="c-an">■</span> anión &nbsp; <span class="c-oh">■</span> hidróxido &nbsp; <span class="c-ox">■</span> oxoanión';
+  }
+  // Pie en dos franjas que no se cruzan: «Ruta seguida» + marca/licencia
+  // arriba y, debajo, los datos (N_A, masas atómicas) o la leyenda de colores.
+  const lineasData = !data ? 0 : (data.indexOf('<br>') >= 0 ? 2 : 1);
   const largo = c.mode === 'nom' || c.mode === 'bal';
   // GX amplio: el rótulo de una flecha horizontal no debe tapar su punta
   // (auditoría UX); el ancho extra no reduce la escala al imprimir, que la
   // limita el alto de la hoja.
-  const G = {NW:210, NH:160, GX: largo ? 150 : 132, GY: largo ? 76 : 70, PX:30, TOP:160, BOT:70};
+  const G = {NW:210, NH:160, GX: largo ? 150 : 132, GY: largo ? 76 : 70, PX:30, TOP:160, BOT: 62 + lineasData*20};
   const maxW = {h: G.GX - 38, v: G.NW - 14, d: G.GX - 36};
   const {R, C, fin} = mz;
   const W = G.PX*2 + C*G.NW + (C-1)*G.GX, H = G.TOP + R*G.NH + (R-1)*G.GY + G.BOT;
@@ -700,17 +714,6 @@ function hoja(mz, c, o){
   const pf = P(fin);
   nodes += '<div class="node fin" data-n="' + fin + '" style="left:' + pf.x + 'px;top:' + pf.y + 'px;width:' + G.NW + 'px;height:' + G.NH + 'px"><div class="flag">🏁</div><div class="finw">FIN</div></div>';
 
-  let data = '';
-  if(c.mode === 'mol'){
-    data = 'Datos: N<sub>A</sub> = 6,022×10<sup>23</sup> partículas/mol' + (c.types.includes('gases') ? ' · Volumen molar (C.N.) = 22,4 L/mol' : '');
-    if(!c.hints && mz.fs.length){
-      const els = new Set(); mz.fs.forEach(f => Object.keys(parseF(f)).forEach(k => els.add(k)));
-      const m = masas();
-      data += '<br>Masas atómicas (g/mol): ' + [...els].sort().map(k => k + ' = ' + fmtNum(m[k], 1)).join(' · ');
-    }
-  } else if(c.mode === 'nom' && c.color){
-    data = '<span class="c-cat">■</span> catión &nbsp; <span class="c-an">■</span> anión &nbsp; <span class="c-oh">■</span> hidróxido &nbsp; <span class="c-ox">■</span> oxoanión';
-  }
   const titulo = esc(c.title);
   const el = document.createElement('div');
   el.className = 'lab-sheet' + (o.key ? ' key' : '') + (o.play ? ' play' : '') + (c.color ? '' : ' nocolor');
@@ -726,8 +729,8 @@ function hoja(mz, c, o){
     + '<div class="sform"><span>Nombre: <i class="w-nom"></i></span><span>Curso: <i class="w-cur"></i></span><span>Fecha: <i class="w-fec"></i></span></div>'
     + '<svg class="lines" width="' + W + '" height="' + H + '"><defs>' + marcador(mk, '#5b7389') + marcador(mk + '-r', '#dc2626') + marcador(mk + '-g', '#16a34a') + '</defs>' + lines + '</svg>'
     + nodes + labels
-    + '<div class="sfoot" style="top:' + (H - G.BOT + 10) + 'px"><div class="fields">Ruta seguida: <i style="width:360px"></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión</div></div>'
-    + '<div class="sdata" style="top:' + (H - 40) + 'px">' + data + '</div>';
+    + '<div class="sfoot" style="top:' + (H - G.BOT + 8) + 'px"><div class="fields">Ruta seguida: <i></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión<span class="slic">© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span></div></div>'
+    + (data ? '<div class="sdata" style="top:' + (H - G.BOT + 52) + 'px">' + data + '</div>' : '');
   return {el, W, H};
 }
 

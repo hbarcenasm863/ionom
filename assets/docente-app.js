@@ -705,7 +705,7 @@ function crearHoja(doc, esPrimera){
         : '<div class="hoja-enc-corto"><span>'+esc(tituloDocumento(doc))+' · '+esc(doc.F.colegio||'')+'</span><img class="hoja-enc-logo-sm" src="assets/logo-ionom-hoja.png" alt="IonNom"></div>')
     + '</div>'
     + '<div class="hoja-cuerpo"></div>'
-    + '<div class="hoja-pie"><span class="hoja-marca">Ion<b>Nom</b> · Nombra con precisión</span><span class="hoja-pagina"></span></div>';
+    + '<div class="hoja-pie"><span class="hoja-marca">Ion<b>Nom</b> · Nombra con precisión</span><span class="hoja-lic">© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span><span class="hoja-pagina"></span></div>';
   return hoja;
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
