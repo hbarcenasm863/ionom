@@ -183,9 +183,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-app[data-mode="mol"] .lab-only:not(.lab-mol),
 #lab-app[data-mode="rx"] .lab-only:not(.lab-rx),
 #lab-app[data-mode="bal"] .lab-only:not(.lab-bal){display:none!important}
-.lab-seed{display:flex;gap:6px}
-.lab-seed input{flex:1}
-.lab-seed button{flex-shrink:0;border:1.5px solid var(--brd);background:var(--surf);border-radius:var(--rs);padding:0 12px;cursor:pointer;font-size:1rem}
+.lab-nuevo{background:var(--gold);color:#3a2405;border:none;border-radius:var(--rs);padding:12px 20px;font-family:var(--sans);font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:var(--sh)}
+.lab-nuevo:hover{filter:brightness(.96)}
+.lab-adv{margin-top:6px;font-size:.84rem}
+.lab-adv summary{cursor:pointer;color:var(--dimmer);font-weight:700;padding:6px 0}
+.lab-adv .field{max-width:260px;margin-top:6px}
 .lab-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 10px}
 .lab-seg{display:inline-flex;border:1.5px solid var(--brd);border-radius:var(--rs);overflow:hidden;background:var(--surf)}
 .lab-seg button{border:none;background:none;padding:10px 16px;font-family:var(--sans);font-weight:700;font-size:.86rem;color:var(--nav);cursor:pointer}
@@ -590,14 +592,19 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <div class="field"><label for="lab-title">Título</label><input type="text" id="lab-title" maxlength="40"></div>
       </div>
       <div class="field-row">
-        <div class="field"><label for="lab-seed">Semilla</label><div class="lab-seed"><input type="text" id="lab-seed" maxlength="20"><button type="button" id="lab-btn-seed" title="Nueva semilla" aria-label="Nueva semilla">🎲</button></div></div>
         <div class="field"><label for="lab-nver">Versiones paralelas (impresión)</label><input type="text" inputmode="numeric" id="lab-nver" value="4"></div>
         <div class="field"><label for="lab-vsel">Versión en pantalla</label><select id="lab-vsel"></select></div>
       </div>
-      <p class="sect-hint">Con la misma semilla salen siempre los mismos laberintos. Cada versión tiene ejercicios y ruta distintos.</p>
+      <p class="sect-hint">Cada versión tiene ejercicios y ruta distintos, para evitar copia entre puestos vecinos.</p>
+      <details class="lab-adv">
+        <summary>Volver a generar hojas de otro día</summary>
+        <p class="sect-hint">Cada laberinto se arma al azar con todo el banco. Si necesitas reimprimir unas hojas anteriores (o su clave), escribe aquí el código que aparece en su hoja de clave.</p>
+        <div class="field"><label for="lab-seed">Código de la hoja de clave</label><input type="text" id="lab-seed" maxlength="20" autocomplete="off"></div>
+      </details>
     </div>
 
     <div class="lab-bar">
+      <button type="button" class="lab-nuevo" id="lab-btn-seed">🎲 Generar nuevo laberinto</button>
       <div class="lab-seg" id="lab-seg" role="group" aria-label="Vista">
         <button type="button" data-view="sheet" class="on">📄 Hoja</button>
         <button type="button" data-view="play">🎮 Jugar</button>

@@ -616,8 +616,13 @@ function claseLargo(h){
   return n > 30 ? ' xl' : n > 18 ? ' lg' : '';
 }
 
+let _nHoja = 0;
 function hoja(mz, c, o){
   o = o || {};
+  // id de la punta de flecha único por hoja: con varias hojas en el mismo
+  // documento (pantalla + impresión), url(#id) apuntaba a la de la hoja
+  // oculta y las flechas impresas salían sin punta.
+  const mk = 'lab-flecha-' + (++_nHoja);
   const largo = c.mode === 'nom' || c.mode === 'bal';
   const G = {NW:210, NH:160, GX: largo ? 118 : 104, GY: largo ? 82 : 70, PX:30, TOP:164, BOT:80};
   const {R, C, fin} = mz;
@@ -634,7 +639,7 @@ function hoja(mz, c, o){
       const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
       const tx = e.k === 'h' ? G.NW/2 + 6 : e.k === 'v' ? G.NH/2 + 6 : Math.min((G.NW/2+6)/Math.abs(dx/len), (G.NH/2+6)/Math.abs(dy/len));
       const x2 = b.x - dx/len*tx, y2 = b.y - dy/len*tx;
-      lines += '<line class="ln' + (on ? ' on' : '') + '" data-e="' + id + '" x1="' + a.x + '" y1="' + a.y + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" marker-end="url(#lab-flecha)"/>';
+      lines += '<line class="ln' + (on ? ' on' : '') + '" data-e="' + id + '" x1="' + a.x + '" y1="' + a.y + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" marker-end="url(#' + mk + ')"/>';
       labels += '<button type="button" class="el ' + e.k + (on ? ' on' : '') + (e.ok ? ' good' : '') + claseLargo(e.lab.h) + '" data-e="' + id + '" data-u="' + nd.u + '" style="left:' + ((a.x+b.x)/2) + 'px;top:' + ((a.y+b.y)/2) + 'px" tabindex="-1">' + e.lab.h + '</button>';
     });
     const p = P(nd.u), q = nd.q;
@@ -669,7 +674,7 @@ function hoja(mz, c, o){
     +   '<div class="sver">' + esc(o.label || '') + '</div>'
     + '</div>'
     + '<div class="sform"><span>Nombre: <i class="w-nom"></i></span><span>Curso: <i class="w-cur"></i></span><span>Fecha: <i class="w-fec"></i></span></div>'
-    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs><marker id="lab-flecha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk"/></marker></defs>' + lines + '</svg>'
+    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs><marker id="' + mk + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk"/></marker></defs>' + lines + '</svg>'
     + nodes + labels
     + '<div class="sfoot" style="top:' + (H - G.BOT + 10) + 'px"><div class="fields">Ruta seguida: <i style="width:360px"></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión</div></div>'
     + '<div class="sdata" style="top:' + (H - 40) + 'px">' + data + '</div>';
@@ -697,7 +702,7 @@ const seedOf = (c, i) => c.seed + '-' + (i+1);
 function getCfg(){
   const mode = ($('input[name="lab-mode"]:checked') || {}).value || 'nom';
   const [C, R] = $('#lab-size').value.split('x').map(Number);
-  const c = {mode, R, C, title: $('#lab-title').value.trim() || DEF[mode], seed: $('#lab-seed').value.trim() || 'ionom',
+  const c = {mode, R, C, title: $('#lab-title').value.trim() || DEF[mode], seed: $('#lab-seed').value.trim().replace(/-\d+$/, '') || 'ionom',
     nver: Math.max(1, Math.min(8, parseInt($('#lab-nver').value, 10) || 1)),
     hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value};
   if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.types = ['masa']; }
@@ -733,14 +738,14 @@ function render(){
   }
   curMz = mz;
   juego = {cur:0, errors:0, t0:0, path:[0], done:false};
-  const sh = hoja(mz, c, {key: vista === 'key', play: vista === 'play', label: 'Versión ' + (vi+1) + ' · ' + seedOf(c, vi)});
+  const sh = hoja(mz, c, {key: vista === 'key', play: vista === 'play', label: vista === 'key' ? 'Clave · código ' + c.seed + ' · versión ' + (vi+1) : 'Versión ' + (vi+1) + ' de ' + c.nver});
   curSheet = sh;
   const w = document.createElement('div'); w.className = 'lab-scaled'; w.appendChild(sh.el); stage.appendChild(w);
   ajustar();
   const v = $('#lab-verif');
   if(mz.verif && mz.verif.ok){ v.className = 'lab-verif ok'; v.textContent = '✔ Ruta única verificada · ' + mz.path.length + ' casillas en la ruta · ' + mz.verif.checks + ' salidas revisadas'; }
   else { v.className = 'lab-verif bad'; v.textContent = '⚠️ ' + ((mz.verif && mz.verif.errores[0]) || 'No se pudo verificar'); }
-  if(vista === 'key') $('#lab-keybox').innerHTML = '<p class="lab-ruta"><b>Ruta correcta:</b> ' + textoRuta(mz) + '</p>' + tablaClave(mz);
+  if(vista === 'key') $('#lab-keybox').innerHTML = '<p class="lab-ruta"><b>Ruta correcta:</b> ' + textoRuta(mz) + ' &nbsp;·&nbsp; <span style="color:var(--dimmer)">código para volver a generar estas hojas: <b>' + esc(c.seed) + '</b></span></p>' + tablaClave(mz);
   $('#lab-routebox').style.display = vista === 'play' ? 'none' : '';
   $('#lab-routemsg').textContent = '';
   $('#lab-fs-btn').style.display = vista === 'play' ? '' : 'none';
@@ -848,10 +853,16 @@ function esperarImagenes(root){
   return Promise.all([...root.querySelectorAll('img')].map(img => img.complete ? Promise.resolve() :
     new Promise(res => { img.addEventListener('load', res, {once:true}); img.addEventListener('error', res, {once:true}); })));
 }
+// Para imprimir se reduce con `zoom` y no con transform: el motor de
+// impresión de Chrome pagina con el tamaño SIN transformar y recortaba la
+// hoja (en 4×4 se perdía la última fila). Respaldo con transform solo si
+// el navegador no soporta zoom.
+const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '0.5'));
 function envolver(sh, s){
   const w = document.createElement('div'); w.className = 'lab-scaled';
   w.style.width = sh.W*s + 'px'; w.style.height = sh.H*s + 'px';
-  sh.el.style.transform = 'scale(' + s + ')'; w.appendChild(sh.el); return w;
+  if(ZOOM_OK) sh.el.style.zoom = s; else sh.el.style.transform = 'scale(' + s + ')';
+  w.appendChild(sh.el); return w;
 }
 // Área imprimible de una carta horizontal con márgenes de 0,3 in:
 // 10,4 × 7,9 in = 998 × 758 px (a 96 px/in). Se deja un pequeño respiro
@@ -865,17 +876,17 @@ function prepararImpresion(){
     const mz = construir(c, seedOf(c, i));
     if(mz.error){ $('#lab-status').textContent = '⚠️ ' + mz.error; root.innerHTML = ''; return false; }
     mzs.push(mz);
-    const sh = hoja(mz, c, {label: 'Versión ' + (i+1) + ' de ' + c.nver + ' · ' + seedOf(c, i)});
+    const sh = hoja(mz, c, {label: 'Versión ' + (i+1) + ' de ' + c.nver});
     // escala para que quepa TODO el laberinto (se agranda si sobra espacio)
     const s = Math.min(1.25, PAG_W/sh.W, PAG_H/sh.H);
     const pp = document.createElement('div'); pp.className = 'lab-pp'; pp.appendChild(envolver(sh, s)); root.appendChild(pp);
   }
   if($('#lab-withkeys').checked){
     mzs.forEach((mz, i) => {
-      const sh = hoja(mz, c, {key:true, label: 'Versión ' + (i+1) + ' · ' + seedOf(c, i)});
+      const sh = hoja(mz, c, {key:true, label: 'Clave · código ' + c.seed + ' · versión ' + (i+1)});
       const s = Math.min(560/sh.W, (PAG_H - 40)/sh.H);
       const pp = document.createElement('div'); pp.className = 'lab-pp keypage';
-      pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · semilla ' + esc(seedOf(c, i)) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
+      pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · código ' + esc(c.seed) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
       const kb = pp.querySelector('.kb'); kb.appendChild(envolver(sh, s));
       const tw = document.createElement('div'); tw.className = 'kt-wrap'; tw.innerHTML = tablaClave(mz); kb.appendChild(tw);
       root.appendChild(pp);
