@@ -2765,6 +2765,13 @@ function checkReactChain(el){
       if(ST.attempts>=2){
         if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
         scheduleNext(2000);
+      } else {
+        // Queda un segundo intento: sin esto, las opciones se quedaban
+        // deshabilitadas (disabled arriba, para TODAS, antes de saber si
+        // era la primera falla) y como scheduleNext() tampoco se llama
+        // aquí, no aparecía botón "Siguiente" ni nada clickeable -- el
+        // juego se congelaba por completo en esta pregunta.
+        document.querySelectorAll('#react-mc-opts .mc-opt').forEach(b=>{ if(b!==el) b.classList.remove('disabled'); });
       }
     }
   }catch(err){scheduleNext(0);}
