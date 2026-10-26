@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de octubre — Laberintos químicos en el Generador Docente
+
+- **Nueva pestaña «🧭 Laberintos»** en `docente.html` (la pestaña «📄 Guías, talleres y evaluaciones» queda igual que antes). Cuatro tipos de laberinto: nomenclatura inorgánica, mol y masa molar, tipos de reacción y balanceo.
+- **Las pistas salen de los bancos reales del sitio**: los compuestos, reacciones y ecuaciones de `banco.js` (el mismo banco del Juego y del Generador), las masas atómicas de la tabla periódica del Juego (redondeadas a 1 decimal) y el cálculo de estados de oxidación del Juego.
+- **Ruta única garantizada**: antes de mostrarse, cada laberinto se revisa entero. Ninguna salida falsa puede ser también correcta (por ejemplo, otro nombre válido del mismo compuesto, un múltiplo de los coeficientes o una reacción que admita dos clasificaciones), siguiendo solo respuestas correctas desde A se llega a FIN por la ruta de la clave, y desde una casilla trampa nunca se llega a FIN. El resultado aparece como «✔ Ruta única verificada».
+- **Imagen de marca IonNom**: logo en el encabezado, marca de agua del logo sobre la hoja, tipografías y colores del sitio y método cromático (catión · anión · hidróxido · oxoanión) en las fórmulas.
+- **Modo Jugar con pantalla completa** para proyectar en clase; vistas Hoja/Clave; impresión de varias versiones en carta horizontal con hojas de clave; verificación de la ruta escrita por el estudiante.
+
+---
+
 ## 21 de septiembre — Segunda tanda de la auditoría UX y pruebas en móvil real
 
 ### Correcciones de la auditoría (prioridad alta y media)

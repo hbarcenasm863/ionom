@@ -167,6 +167,130 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 @media(max-width:860px){
   .hoja{transform-origin:top center}
 }
+/* ══════════════ Pestañas: Guías | Laberintos ══════════════ */
+.doc-tabs{display:flex;gap:6px;margin:-6px 0 22px;border-bottom:2px solid var(--brd);flex-wrap:wrap}
+.doc-tab{background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;padding:10px 16px;font-family:var(--sans);font-size:.92rem;font-weight:700;color:var(--dimmer);cursor:pointer;border-radius:var(--rs) var(--rs) 0 0}
+.doc-tab:hover{color:var(--nav);background:var(--surf2)}
+.doc-tab.active{color:var(--nav);border-bottom-color:var(--nav)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ══════════════ Laberintos (controles) ══════════════ */
+.lab-modos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.lab-chks{display:flex;flex-wrap:wrap;gap:8px}
+.lab-chks .tema-chk{flex:1 1 200px}
+#lab-app[data-mode="nom"] .lab-only:not(.lab-nom),
+#lab-app[data-mode="mol"] .lab-only:not(.lab-mol),
+#lab-app[data-mode="rx"] .lab-only:not(.lab-rx),
+#lab-app[data-mode="bal"] .lab-only:not(.lab-bal){display:none!important}
+.lab-seed{display:flex;gap:6px}
+.lab-seed input{flex:1}
+.lab-seed button{flex-shrink:0;border:1.5px solid var(--brd);background:var(--surf);border-radius:var(--rs);padding:0 12px;cursor:pointer;font-size:1rem}
+.lab-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 10px}
+.lab-seg{display:inline-flex;border:1.5px solid var(--brd);border-radius:var(--rs);overflow:hidden;background:var(--surf)}
+.lab-seg button{border:none;background:none;padding:10px 16px;font-family:var(--sans);font-weight:700;font-size:.86rem;color:var(--nav);cursor:pointer}
+.lab-seg button+button{border-left:1.5px solid var(--brd)}
+.lab-seg button.on{background:var(--nav);color:#fff}
+.lab-verif{font-size:.8rem;font-weight:700;padding:6px 12px;border-radius:var(--r-pill,999px);display:inline-block;margin:0 0 8px}
+.lab-verif:empty{display:none}
+.lab-verif.ok{background:var(--ok-b);color:var(--ok-t)}
+.lab-verif.bad{background:var(--err-b);color:var(--err-t)}
+#lab-status{font-size:.86rem;font-weight:600;color:var(--tx2);min-height:22px;margin-bottom:8px}
+#lab-stage{width:100%}
+.lab-scaled{position:relative;margin:0 auto;overflow:hidden;background:#fff;box-shadow:0 2px 16px rgba(15,23,42,.16);border-radius:4px}
+#lab-routebox{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 6px}
+#lab-routebox input{max-width:280px;padding:9px 11px;border:1.5px solid var(--brd);border-radius:var(--rs);font-family:var(--sans);font-size:.88rem}
+#lab-routemsg{font-weight:700;font-size:.88rem}
+#lab-keybox{margin-top:12px;overflow-x:auto}
+.lab-ruta{font-size:.9rem;margin-bottom:8px}
+.lab-kt{border-collapse:collapse;width:100%;background:#fff;color:#111;font:13px/1.35 var(--sans)}
+.lab-kt th,.lab-kt td{border:1px solid #ccc;padding:4px 7px;text-align:left;vertical-align:top}
+.lab-kt th{background:#eef3f7;color:var(--nav)}
+.lab-kt tr.main td{background:#fff3f3;font-weight:600}
+.lab-kt .lf{font-family:var(--mono)}
+
+/* Jugar + pantalla completa */
+#lab-play-bar{display:none}
+#lab-playwrap.fs-on{background:#eef3f7;padding:10px 12px;overflow:auto}
+#lab-playwrap.fs-on #lab-play-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+#lab-playwrap.fs-on #lab-status,#lab-playwrap.fs-on .lab-verif{display:none}
+#lab-playwrap.pseudo-fs{position:fixed;inset:0;z-index:var(--z-modal,400)}
+#lab-play-bar .pb-logo{height:32px}
+#lab-play-msg{flex:1;min-width:200px;font-weight:700;color:var(--tx);font-size:.95rem}
+#lab-play-bar button{border:1.5px solid var(--brd);background:#fff;color:var(--nav);border-radius:var(--rs);padding:8px 14px;font-weight:700;font-family:var(--sans);cursor:pointer}
+#lab-play-bar #lab-fs-exit{background:var(--nav);color:#fff;border-color:var(--nav)}
+
+/* ══════════════ Laberintos (hoja) ══════════════ */
+.lab-sheet{position:absolute;left:0;top:0;transform-origin:0 0;background:#fff;color:#0d2d42;font-family:var(--sans);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.lab-sheet sub,.lab-sheet sup{font-size:.62em;line-height:0}
+.lab-sheet .wm{position:absolute;left:50%;top:54%;width:46%;max-width:620px;transform:translate(-50%,-50%);opacity:.07;z-index:5;pointer-events:none}
+.lab-sheet .shead{position:absolute;left:30px;right:30px;top:16px;height:90px;display:flex;align-items:center;gap:18px;border-bottom:3px solid #0d4a73}
+.lab-sheet .slogo{height:66px;width:auto;flex-shrink:0}
+.lab-sheet .stit{flex:1;text-align:center;min-width:0}
+.lab-sheet .title{font-family:var(--serif);font-style:italic;font-weight:900;font-size:40px;line-height:1.1;color:#0d4a73;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab-sheet .title.sm{font-size:30px}
+.lab-sheet .sub{font-size:17px;color:#2a3f52;margin-top:4px}
+.lab-sheet .sver{width:200px;flex-shrink:0;text-align:right;font-size:13px;color:#4f6d88;font-weight:600}
+.lab-sheet svg.lines{position:absolute;left:0;top:0;z-index:1;overflow:visible}
+.lab-sheet .ln{stroke:#5b7389;stroke-width:3;stroke-linecap:round}
+.lab-sheet .mk{fill:#5b7389}
+.lab-sheet .node{position:absolute;border:3px solid #0d4a73;border-radius:16px;background:#fff;padding:14px 10px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;z-index:2}
+.lab-sheet .node .q{font-size:15.5px;line-height:1.15;color:#2a3f52}
+.lab-sheet .node .fo{font-size:26px;font-weight:700;line-height:1.15;color:#0d2d42}
+.lab-sheet .node .fo.nm{font-size:19px;font-family:var(--serif);font-style:italic}
+.lab-sheet .node .fo.eq{font-size:17px;line-height:1.25}
+.lab-sheet .node .ft{font-size:13px;line-height:1.15;color:#4f6d88}
+.lab-sheet .lf{font-family:var(--mono);font-weight:700}
+.lab-sheet .badge{position:absolute;left:-16px;top:-16px;width:40px;height:40px;border-radius:50%;background:#0d4a73;color:#fff;font:italic 900 22px/40px var(--serif);text-align:center;box-shadow:0 0 0 3px #fff}
+.lab-sheet .node.fin{background:#0d4a73;border-color:#0d4a73;color:#fff}
+.lab-sheet .node.fin .flag{font-size:46px;line-height:1}
+.lab-sheet .node.fin .finw{font:italic 900 48px/1 var(--serif);color:#fcd34d;margin-top:4px}
+.lab-sheet .el{position:absolute;transform:translate(-50%,-50%);z-index:3;background:#fff;border:1.5px solid #cfcfd8;border-radius:10px;font-family:var(--sans);font-size:15px;line-height:1.1;padding:3px 7px;text-align:center;color:#0d2d42;max-width:106px;appearance:none;-webkit-appearance:none;cursor:default;font-weight:600}
+.lab-sheet .el.v{max-width:196px}
+.lab-sheet .el.d{max-width:120px}
+.lab-sheet .el.lg{font-size:13px}
+.lab-sheet .el.xl{font-size:11.5px}
+.lab-sheet .el .lf{font-size:1.05em}
+.lab-sheet:not(.play) .el{pointer-events:none}
+.lab-sheet .sfoot{position:absolute;left:30px;right:30px;display:flex;align-items:flex-end;gap:20px;font-size:17px}
+.lab-sheet .sfoot .fields{flex:1;white-space:nowrap}
+.lab-sheet .sfoot i{display:inline-block;border-bottom:2px solid #0d2d42;height:18px;vertical-align:baseline;margin-right:14px}
+.lab-sheet .smark{font-family:var(--serif);font-style:italic;font-size:14px;color:#0d4a73;white-space:nowrap}
+.lab-sheet .smark b{color:#92720a}
+.lab-sheet .sdata{position:absolute;left:30px;right:30px;font-size:13.5px;color:#2a3f52;text-align:center}
+.lab-sheet .c-cat{color:var(--cat-t)}.lab-sheet .c-an{color:var(--an-t)}.lab-sheet .c-oh{color:var(--oh-t)}.lab-sheet .c-ox{color:var(--ox-t)}
+.lab-sheet.nocolor .c-cat,.lab-sheet.nocolor .c-an,.lab-sheet.nocolor .c-oh,.lab-sheet.nocolor .c-ox{color:inherit}
+/* clave */
+.lab-sheet.key .ln.on{stroke:#dc2626;stroke-width:7}
+.lab-sheet.key .el.on{border:2.5px solid #dc2626;color:#b91c1c;font-weight:800}
+.lab-sheet.key .el.good:not(.on){border:2px dashed #d97706}
+.lab-sheet.key .node.onp{background:#fff5f5}
+/* jugar */
+.lab-sheet.play .el.hot{pointer-events:auto;cursor:pointer;background:#fef3c7;border:2px dashed #0d4a73}
+.lab-sheet.play .el.hot:hover,.lab-sheet.play .el.hot:focus-visible{background:#fde68a}
+.lab-sheet.play .node.visited{background:#dcfce7}
+.lab-sheet.play .node.cur{box-shadow:0 0 0 7px rgba(252,211,77,.85)}
+.lab-sheet.play .ln.trav{stroke:#16a34a;stroke-width:7}
+.lab-sheet.play .el.taken{color:#14532d;border-color:#16a34a;font-weight:800}
+.lab-sheet .el.bad{animation:labShake .38s;background:#fee2e2!important;border-color:#dc2626!important}
+@keyframes labShake{0%,100%{transform:translate(-50%,-50%)}20%{transform:translate(calc(-50% - 7px),-50%)}40%{transform:translate(calc(-50% + 7px),-50%)}60%{transform:translate(calc(-50% - 5px),-50%)}80%{transform:translate(calc(-50% + 5px),-50%)}}
+
+/* impresión del laberinto: carta horizontal (ver imprimir() en laberinto.js) */
+#lab-print-root{display:none}
+@media print{
+  body.lab-printing>*:not(#lab-print-root){display:none!important}
+  body.lab-printing #lab-print-root{display:block!important}
+  body.lab-printing .lab-pp{width:10.3in;height:7.6in;position:relative;overflow:hidden;break-after:page;page-break-after:always;display:flex;justify-content:center;align-items:center}
+  body.lab-printing .lab-pp:last-child{break-after:auto;page-break-after:auto}
+  body.lab-printing .lab-scaled{box-shadow:none;border-radius:0}
+  body.lab-printing .lab-pp.keypage{display:block}
+  body.lab-printing .keypage .kh{display:flex;align-items:center;gap:12px;font:13px var(--sans);margin-bottom:8px;color:#0d2d42}
+  body.lab-printing .keypage .kh img{height:30px}
+  body.lab-printing .keypage .kb{display:flex;gap:12px;align-items:flex-start}
+  body.lab-printing .keypage .kb .lab-scaled{margin:0;flex:none;border:1px solid #ccc}
+  body.lab-printing .keypage .kt-wrap{flex:1}
+  body.lab-printing .keypage .lab-kt{font-size:9.5px}
+}
 /* La nueva versión del service worker queda "esperando" (ver sw.js) hasta
    que el usuario toque "Actualizar" aquí -- igual que en index.html/
    nomenClash.html. Sin este banner, assets/docente-app.js (cache-first)
@@ -240,8 +364,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <div class="app">
   <div class="page-hdr no-print">
     <h1>🗂️ Generador para Docentes</h1>
-    <p>Arma guías, talleres y evaluaciones imprimibles en tamaño carta a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
+    <p>Arma guías, talleres, evaluaciones y laberintos imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
   </div>
+
+  <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
+    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias">📄 Guías, talleres y evaluaciones</button>
+    <button type="button" class="doc-tab" role="tab" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
+  </div>
+
+  <div id="tab-guias" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-guias">
 
   <!-- ══════════════ FORMULARIO ══════════════ -->
   <div id="s-form" class="screen active">
@@ -362,6 +493,133 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <div id="vista"></div>
   </div>
 
+  </div><!-- /tab-guias -->
+
+  <!-- ══════════════ LABERINTOS ══════════════ -->
+  <div id="tab-laberintos" class="tab-panel no-print" role="tabpanel" aria-labelledby="tabbtn-laberintos">
+   <div id="lab-app" data-mode="nom">
+
+    <div class="sect">
+      <h2>1 · Tipo de laberinto</h2>
+      <div class="lab-modos">
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="nom" checked><span><strong>Nomenclatura inorgánica</strong><br><small>Fórmula ↔ nombre, función, estado de oxidación</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="mol"><span><strong>Mol y masa molar</strong><br><small>Masa, moléculas, átomos, iones, gases</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="rx"><span><strong>Tipos de reacción</strong><br><small>Clasificar ecuaciones del banco</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="bal"><span><strong>Balanceo</strong><br><small>Elegir los coeficientes correctos</small></span></label>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>2 · Contenido</h2>
+      <p class="sect-hint">Las pistas salen de los mismos bancos del Juego y del Generador (banco.js y la tabla periódica del Juego).</p>
+
+      <div class="lab-only lab-nom">
+        <label class="sect-hint" style="display:block;font-weight:700;margin-top:4px">Tipo de pregunta</label>
+        <div class="lab-chks" id="lab-fs-forma">
+          <label class="tema-chk"><input type="checkbox" value="f2n" checked><span><strong>Fórmula → nombre</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="n2f" checked><span><strong>Nombre → fórmula</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="cls" checked><span><strong>Función química</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="oxn"><span><strong>Estado de oxidación</strong></span></label>
+        </div>
+        <label class="sect-hint" style="display:block;font-weight:700;margin-top:12px">Familias de compuestos</label>
+        <div class="temas-grid" id="lab-fs-fam">
+          <label class="tema-chk"><input type="checkbox" value="ox-bas" checked><span><strong>Óxidos básicos</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="anhid" checked><span><strong>Óxidos ácidos (anhídridos)</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="hidru"><span><strong>Hidruros metálicos</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="ac-hid"><span><strong>Ácidos hídricos</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="base" checked><span><strong>Bases / Hidróxidos</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="ac-ox"><span><strong>Ácidos oxácidos</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="sal-bin" checked><span><strong>Sales binarias</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="sal-ox"><span><strong>Sales oxigenadas</strong><br><small></small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="sal-ac"><span><strong>Sales ácidas</strong><br><small></small></span></label>
+        </div>
+        <div class="field-row" style="margin-top:12px">
+          <div class="field" style="max-width:240px">
+            <label for="lab-sys">Sistema de nomenclatura</label>
+            <select id="lab-sys">
+              <option value="all">Los 3 (varía por casilla)</option>
+              <option value="trad">Tradicional</option>
+              <option value="stock">Stock</option>
+              <option value="sist">Sistemática</option>
+            </select>
+          </div>
+        </div>
+        <label class="chk-linea"><input type="checkbox" id="lab-color" checked> Colorear fórmulas con el método cromático de IonNom (catión · anión · hidróxido · oxoanión)</label>
+      </div>
+
+      <div class="lab-only lab-mol">
+        <div class="lab-chks" id="lab-fs-mol">
+          <label class="tema-chk"><input type="checkbox" value="masa" checked><span><strong>Masa ↔ mol</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="molec" checked><span><strong>Moles ↔ moléculas (N<sub>A</sub>)</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="atomos" checked><span><strong>Átomos en moles de sustancia</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="iones" checked><span><strong>Moles de iones</strong><br><small>Disociación de sales e hidróxidos</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="gases"><span><strong>Volumen molar (C.N.)</strong></span></label>
+          <label class="tema-chk"><input type="checkbox" value="dos"><span><strong>Dos pasos</strong><br><small>gramos → moléculas / átomos</small></span></label>
+        </div>
+        <label class="chk-linea" style="margin-top:12px"><input type="checkbox" id="lab-hints" checked> Ayudas en cada casilla (masa molar, átomos por molécula, ecuación de disociación). Sin ayudas, se imprime la tabla de masas atómicas al pie.</label>
+      </div>
+
+      <div class="field-row lab-only lab-nom lab-rx lab-bal" style="margin-top:6px">
+        <div class="field" style="max-width:240px">
+          <label for="lab-nivel">Nivel</label>
+          <select id="lab-nivel">
+            <option value="all">Todos</option>
+            <option value="easy">Básico</option>
+            <option value="medium">Intermedio</option>
+            <option value="hard">Avanzado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>3 · Hoja y versiones</h2>
+      <div class="field-row">
+        <div class="field"><label for="lab-size">Tamaño</label>
+          <select id="lab-size"><option value="3x3">3×3 · 8 casillas</option><option value="4x3" selected>4×3 · 11 casillas</option><option value="4x4">4×4 · 15 casillas</option></select></div>
+        <div class="field"><label for="lab-title">Título</label><input type="text" id="lab-title" maxlength="40"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="lab-seed">Semilla</label><div class="lab-seed"><input type="text" id="lab-seed" maxlength="20"><button type="button" id="lab-btn-seed" title="Nueva semilla" aria-label="Nueva semilla">🎲</button></div></div>
+        <div class="field"><label for="lab-nver">Versiones paralelas (impresión)</label><input type="text" inputmode="numeric" id="lab-nver" value="4"></div>
+        <div class="field"><label for="lab-vsel">Versión en pantalla</label><select id="lab-vsel"></select></div>
+      </div>
+      <p class="sect-hint">Con la misma semilla salen siempre los mismos laberintos. Cada versión tiene ejercicios y ruta distintos.</p>
+    </div>
+
+    <div class="lab-bar">
+      <div class="lab-seg" id="lab-seg" role="group" aria-label="Vista">
+        <button type="button" data-view="sheet" class="on">📄 Hoja</button>
+        <button type="button" data-view="play">🎮 Jugar</button>
+        <button type="button" data-view="key">🔑 Clave</button>
+      </div>
+      <button type="button" class="btn-sec" id="lab-fs-btn" style="display:none">⛶ Pantalla completa</button>
+      <button type="button" class="btn-generar" id="lab-btn-print">🖨️ Imprimir versiones</button>
+      <label class="chk-linea" style="margin:0"><input type="checkbox" id="lab-withkeys" checked> con hojas de clave al final</label>
+    </div>
+
+    <div id="lab-playwrap">
+      <div id="lab-play-bar">
+        <img class="pb-logo" src="assets/logo-ionom.png" alt="IonNom">
+        <span id="lab-play-msg"></span>
+        <button type="button" id="lab-restart">↺ Reiniciar</button>
+        <button type="button" id="lab-fs-exit">✕ Salir de pantalla completa</button>
+      </div>
+      <div id="lab-verif" class="lab-verif"></div>
+      <div id="lab-status" aria-live="polite">Cargando bancos…</div>
+      <div id="lab-stage"></div>
+    </div>
+    <div id="lab-routebox">
+      <b>Verificar ruta del estudiante:</b>
+      <input id="lab-routein" type="text" placeholder="Ej.: A E I J K FIN" aria-label="Ruta escrita por el estudiante">
+      <button type="button" class="btn-sec" id="lab-routebtn">Comprobar</button>
+      <span id="lab-routemsg"></span>
+    </div>
+    <div id="lab-keybox"></div>
+    <p class="sect-hint" style="margin-top:12px">Reglas: en cada casilla se resuelve el ejercicio y se sigue la flecha rotulada con el resultado correcto (hacia la derecha, hacia abajo o en diagonal). Solo hay una ruta correcta hasta FIN; algunas casillas son trampas: su respuesta no aparece en ninguna salida.</p>
+   </div>
+  </div><!-- /tab-laberintos -->
+
   <!-- Medidor oculto: tamaño real (816×1056), visibility:hidden (NO display:none,
        que dejaría clientHeight/scrollHeight en 0 e impediría medir el desborde). -->
   <!-- A propósito NO se usa "left:-9999px" (fuera de pantalla): varios
@@ -383,6 +641,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <script src="banco.js"></script>
 <script src="assets/docente-datos.js"></script>
 <script src="assets/docente-app.js"></script>
+<script src="assets/laberinto.js"></script>
 <script>
 (function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
@@ -415,6 +674,23 @@ document.getElementById('theme-btn').addEventListener('click',function(){
   window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.addEventListener('DOMContentLoaded',apply);
+})();
+// Pestañas Guías | Laberintos (se recuerda la última; #laberintos abre directo esa)
+(function(){
+  var btns = document.querySelectorAll('.doc-tab');
+  function mostrar(id){
+    btns.forEach(function(b){
+      var on = b.dataset.tab === id;
+      b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+      document.getElementById('tab-' + b.dataset.tab).classList.toggle('active', on);
+    });
+    try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
+    if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ mostrar(b.dataset.tab); }); });
+  var ini = location.hash === '#laberintos' ? 'laberintos' : null;
+  if(!ini){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
+  if(ini === 'laberintos') mostrar('laberintos');
 })();
 document.querySelectorAll('.chk-tema').forEach(function(c){
   c.addEventListener('change', function(){ if(window.DOCENTE) DOCENTE.actualizarDisponibilidad(); });
@@ -462,6 +738,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<div id="lab-print-root"></div>
 <script src="assets/ionom-ui.js"></script>
 <div class="update-banner no-print" id="update-banner" role="status" aria-live="polite">
   <div class="update-banner-text"><strong>🔄 Nueva versión disponible</strong>Hay cambios nuevos en IonNom (ejercicios, correcciones). No se pierde nada de lo que tengas abierto.</div>

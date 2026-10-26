@@ -1154,6 +1154,11 @@ window.DOCENTE = {
 };
 
 document.addEventListener('DOMContentLoaded', function(){
-  initBancos(mostrarEstadoBancos);
+  initBancos(function(){
+    mostrarEstadoBancos();
+    // laberinto.js (pestaña «Laberintos») espera esto para usar ELEMENTS y
+    // getOxidationStates de juego.html sin cargar su propio iframe.
+    document.dispatchEvent(new Event('docente-bancos-listos'));
+  });
 });
 })();

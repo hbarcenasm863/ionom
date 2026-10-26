@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v39';
+const CACHE_NAME = 'ionom-v40';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -18,9 +18,12 @@ const ASSETS_TO_CACHE = [
   '/ionom/banco.js',
   '/ionom/assets/docente-datos.js',
   '/ionom/assets/docente-app.js',
+  '/ionom/assets/laberinto.js',
   '/ionom/manifest.json',
   '/ionom/assets/iononpwa.png',
   '/ionom/assets/logo.png',
+  '/ionom/assets/logo-ionom.png',
+  '/ionom/assets/marca-ionom.png',
   '/ionom/assets/icon-192.png',
   '/ionom/assets/icon-512.png',
   '/ionom/assets/icon-192-maskable.png',
@@ -90,7 +93,7 @@ self.addEventListener('fetch', (event) => {
   // estos dos solo los usa la herramienta de la docente -- preferir
   // "siempre la versión más nueva cuando hay internet" es más importante
   // aquí que ahorrar una petición de red.
-  if (url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js')) {
+  if (url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/laberinto.js')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
