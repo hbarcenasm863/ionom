@@ -2964,8 +2964,18 @@ function scheduleNext(ms){
   stopTimer();
   _updateStreak();
   // disable remaining action buttons so nothing can overwrite the feedback+button
-  const submitBtn=document.querySelector('.btn-submit');
-  if(submitBtn)submitBtn.disabled=true;
+  // Antes solo se deshabilitaba el PRIMER ".btn-submit" (querySelector, no
+  // querySelectorAll): en balance-eq hay dos ("Verificar" y "Ver respuesta")
+  // y en react-chain (modo escribir) el input de texto también se quedaba
+  // habilitado. Si el estudiante alcanzaba a hacer tiempo-agotado o ya
+  // había respondido y tocaba cualquiera de esos controles "sobrantes", el
+  // clic no hacía nada (ST.answered ya era true) -- parecía que el juego
+  // se congelaba, aunque el botón "Siguiente" ya estaba ahí más abajo.
+  document.querySelectorAll('.btn-submit').forEach(b=>b.disabled=true);
+  const balInputs=document.querySelectorAll('#area-balance input');
+  balInputs.forEach(i=>i.disabled=true);
+  const reactInp=document.getElementById('react-write-inp');
+  if(reactInp)reactInp.disabled=true;
   const hintBtn=document.getElementById('btn-hint-el');
   if(hintBtn)hintBtn.style.display='none';
   document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=true);
