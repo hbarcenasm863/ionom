@@ -666,14 +666,10 @@ function checkQ(btn,chosen,correct){
 
 renderQ();
 
-// Auto-narración de bienvenida (Mayer P8 — Modalidad)
-(function(){
-  if(sessionStorage.getItem('tts-intro-balavz')) return;
-  sessionStorage.setItem('tts-intro-balavz','1');
-  setTimeout(()=>{
-    if(window.speechSynthesis) speak('Esta sección es para cuando el tanteo no alcanza. Vas a aprender dos métodos más potentes: el algebraico y el de óxido-reducción. Son los que necesitas para reacciones complejas en química de once.');
-  }, 1500);
-})();
+// La narración de voz NO se dispara sola: en un salón silencioso, un audio
+// inesperado sin gesto previo del usuario puede avergonzar al estudiante.
+// El botón flotante "🔊" ya queda visible desde que carga la página;
+// la narración solo se activa si el estudiante lo pulsa (ver speakPage()).
 </script>
 <script>
 // ── Tamaño de letra persistente ──

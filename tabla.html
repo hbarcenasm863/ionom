@@ -466,8 +466,9 @@ html{font-size:var(--base-fs)}
     <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:.82rem;color:var(--dim)">
       <div style="padding:10px 12px;background:var(--an-b);border-radius:8px;border-left:3px solid var(--an)"><strong style="color:var(--an-t)">🎨 Colores por categoría:</strong> por defecto, ambar = metal, azul = no metal y rosado = metaloide (los mismos colores de nomenclatura). También puedes ver la tabla por familias o por bloques s·p·d·f: esos dos modos usan una paleta propia, distinta al sistema MDEC. La leyenda debajo de la tabla explica cada color.</div>
       <div style="padding:10px 12px;background:var(--cat-b);border-radius:8px;border-left:3px solid var(--cat)"><strong style="color:var(--cat-t)">👆 Toca o haz clic:</strong> selecciona cualquier elemento para ver su número atómico, masa, estados de oxidación (en chips amber/azul), electronegatividad y contexto colombiano.</div>
-      <div style="padding:10px 12px;background:var(--ox-b);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">🔊 Narración de voz:</strong> al abrir un elemento, escucharás su información en voz para reforzar el aprendizaje visual y auditivo.</div>
+      <div style="padding:10px 12px;background:var(--ox-b);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">🔊 Narración de voz:</strong> al abrir un elemento, pulsa el botón "Escuchar información" para oírla en voz alta.</div>
     </div>
+    <button onclick="speakTablaIntro()" style="width:100%;padding:11px;margin-bottom:8px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:100px;color:var(--tx);font-weight:700;font-size:.85rem;cursor:pointer">🔊 Escuchar</button>
     <button onclick="closeTablaIntro()" style="width:100%;padding:12px;background:var(--an);border:none;border-radius:100px;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer">¡Entendido! Explorar →</button>
   </div>
 </div>
@@ -876,7 +877,14 @@ function speak(text, onEnd) {
 }
 
 function openTablaIntro() {
+  // La narración de voz NO se dispara sola: en un salón silencioso, un
+  // audio inesperado sin gesto previo del usuario puede avergonzar al
+  // estudiante. El modal se sigue mostrando automáticamente, pero el TTS
+  // solo se activa si el estudiante pulsa el botón "🔊 Escuchar".
   document.getElementById('tabla-intro-overlay').style.display = 'flex';
+}
+
+function speakTablaIntro() {
   speak('¡Bienvenido a la tabla periódica de IonNom! Toca o haz clic en cualquier elemento para escuchar su información. ' +
     'Los colores indican el tipo de elemento usando una paleta geológica: rojo para metales alcalinos, naranja para alcalinotérreos, ' +
     'púrpura para metales de transición, teal para halógenos, y así. ' +

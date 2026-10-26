@@ -429,14 +429,10 @@ renderQ();
   document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
 })();
 
-// Auto-narración de bienvenida (Mayer P8 — Modalidad)
-(function(){
-  if(sessionStorage.getItem('tts-intro-rx')) return;
-  sessionStorage.setItem('tts-intro-rx','1');
-  setTimeout(()=>{
-    if(window.speechSynthesis) speak('Bienvenido a la sección de reacciones químicas. Aquí vas a aprender a reconocer los seis tipos de reacción que aparecen en las pruebas Saber y en el laboratorio. Al final podrás identificar cualquier ecuación con solo ver su estructura.');
-  }, 1500);
-})();
+// La narración de voz NO se dispara sola: en un salón silencioso, un audio
+// inesperado sin gesto previo del usuario puede avergonzar al estudiante.
+// El botón flotante "🔊" ya queda visible desde que carga la página;
+// la narración solo se activa si el estudiante lo pulsa (ver speakPage()).
 </script>
 <script>
 // ── Tamaño de letra persistente ──

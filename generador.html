@@ -338,6 +338,7 @@ html{font-size:var(--base-fs)}
       <div style="padding:10px;background:var(--surf2);border-radius:8px;border-left:3px solid var(--ox)"><strong style="color:var(--ox-t)">③ Sistema de nomenclatura:</strong><span style="color:var(--tx2)"> Tradicional (sufijos -oso/-ico), Stock (números romanos) o Sistemática (prefijos griegos).</span></div>
       <div style="padding:10px;background:var(--surf2);border-radius:8px;border-left:3px solid var(--ok)"><strong style="color:var(--ok-t)">④ Cantidad:</strong><span style="color:var(--tx2)"> entre 3 y 50 ejercicios. Puedes imprimir o guardar como PDF desde el diálogo de impresión del navegador.</span></div>
     </div>
+    <button onclick="speakGenTip()" style="width:100%;padding:11px;margin-bottom:8px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:100px;color:var(--tx);font-weight:700;font-size:.85rem;cursor:pointer">🔊 Escuchar</button>
     <button onclick="closeGenTip()" style="width:100%;padding:12px;background:linear-gradient(135deg,#d97706,#f59e0b);border:none;border-radius:100px;color:#000;font-weight:800;font-size:.88rem;cursor:pointer">¡Listo, a generar! →</button>
   </div>
 </div>
@@ -375,7 +376,14 @@ function speak(text, onEnd) {
 }
 
 function openGenTip() {
+  // La narración de voz NO se dispara sola: en un salón silencioso, un
+  // audio inesperado sin gesto previo del usuario puede avergonzar al
+  // estudiante. El modal se sigue mostrando automáticamente, pero el TTS
+  // solo se activa si el estudiante pulsa el botón "🔊 Escuchar".
   document.getElementById('gen-tip-overlay').style.display = 'flex';
+}
+
+function speakGenTip() {
   speak('¡Hola! El generador de ejercicios te permite crear hojas de trabajo personalizadas. ' +
     'Primero selecciona los grupos funcionales que quieres practicar: óxidos, bases, ácidos o sales. ' +
     'Luego elige el tipo de ejercicio y el sistema de nomenclatura. ' +

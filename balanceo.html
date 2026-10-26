@@ -489,14 +489,10 @@ renderEj();
   document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
 })();
 
-// Auto-narración de bienvenida (Mayer P8 — Modalidad)
-(function(){
-  if(sessionStorage.getItem('tts-intro-bal')) return;
-  sessionStorage.setItem('tts-intro-bal','1');
-  setTimeout(()=>{
-    if(window.speechSynthesis) speak('En esta sección vas a aprender por qué las ecuaciones químicas deben balancearse y cómo hacerlo paso a paso. La clave está en que los átomos no desaparecen: solo se reorganizan. Con un poco de práctica vas a poder balancear cualquier ecuación de tanteo en menos de dos minutos.');
-  }, 1500);
-})();
+// La narración de voz NO se dispara sola: en un salón silencioso, un audio
+// inesperado sin gesto previo del usuario puede avergonzar al estudiante.
+// El botón flotante "🔊 Leer" ya queda visible desde que carga la página;
+// la narración solo se activa si el estudiante lo pulsa (ver speakPage()).
 </script>
 <script>
 // ── Tamaño de letra persistente ──
