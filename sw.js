@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v40';
+const CACHE_NAME = 'ionom-v41';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -23,6 +23,7 @@ const ASSETS_TO_CACHE = [
   '/ionom/assets/iononpwa.png',
   '/ionom/assets/logo.png',
   '/ionom/assets/logo-ionom.png',
+  '/ionom/assets/logo-ionom-hoja.png',
   '/ionom/assets/marca-ionom.png',
   '/ionom/assets/icon-192.png',
   '/ionom/assets/icon-512.png',

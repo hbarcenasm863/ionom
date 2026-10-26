@@ -183,14 +183,21 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-app[data-mode="mol"] .lab-only:not(.lab-mol),
 #lab-app[data-mode="rx"] .lab-only:not(.lab-rx),
 #lab-app[data-mode="bal"] .lab-only:not(.lab-bal){display:none!important}
-.lab-nuevo{background:var(--gold);color:#3a2405;border:none;border-radius:var(--rs);padding:12px 20px;font-family:var(--sans);font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:var(--sh)}
-.lab-nuevo:hover{filter:brightness(.96)}
+/* acción secundaria (borde --nav): --nav es el único color de acción del
+   sitio; «Imprimir» queda como la acción primaria */
+.lab-nuevo{min-height:44px;border-color:var(--nav)}
+.lab-nuevo:hover{background:var(--an-b)}
+#tab-laberintos .btn-sec,#tab-laberintos .btn-generar{min-height:44px}
+.doc-tab{min-height:44px}
+.lab-adv summary{min-height:44px;display:flex;align-items:center}
+#tab-laberintos .chk-linea{min-height:44px;padding:4px 0}
+#tab-laberintos .chk-linea input{width:20px;height:20px;flex-shrink:0}
 .lab-adv{margin-top:6px;font-size:.84rem}
 .lab-adv summary{cursor:pointer;color:var(--dimmer);font-weight:700;padding:6px 0}
 .lab-adv .field{max-width:260px;margin-top:6px}
 .lab-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 10px}
 .lab-seg{display:inline-flex;border:1.5px solid var(--brd);border-radius:var(--rs);overflow:hidden;background:var(--surf)}
-.lab-seg button{border:none;background:none;padding:10px 16px;font-family:var(--sans);font-weight:700;font-size:.86rem;color:var(--nav);cursor:pointer}
+.lab-seg button{border:none;background:none;padding:10px 16px;min-height:44px;font-family:var(--sans);font-weight:700;font-size:.86rem;color:var(--nav);cursor:pointer}
 .lab-seg button+button{border-left:1.5px solid var(--brd)}
 .lab-seg button.on{background:var(--nav);color:#fff}
 .lab-verif{font-size:.8rem;font-weight:700;padding:6px 12px;border-radius:var(--r-pill,999px);display:inline-block;margin:0 0 8px}
@@ -217,6 +224,24 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-playwrap.fs-on #lab-play-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 #lab-playwrap.fs-on #lab-status,#lab-playwrap.fs-on .lab-verif{display:none}
 #lab-playwrap.pseudo-fs{position:fixed;inset:0;z-index:var(--z-modal,400)}
+/* Tarjeta de juego (pantallas angostas): casilla actual + salidas grandes */
+.lab-card{background:var(--surf);border:2px solid var(--nav);border-radius:var(--r);padding:14px 16px;margin:0 0 12px;box-shadow:var(--sh)}
+.lab-card[hidden]{display:none}
+.lc-head{display:flex;align-items:center;gap:10px;font-size:.84rem;font-weight:700;color:var(--dimmer);margin-bottom:8px}
+.lc-badge{width:36px;height:36px;border-radius:50%;background:var(--nav);color:#fff;font:italic 900 1.1rem/36px var(--serif);text-align:center;flex-shrink:0}
+.lc-q{font-size:1rem;color:var(--tx2);text-align:center}
+.lc-fo{font-size:1.5rem;font-weight:700;text-align:center;margin:6px 0;color:var(--tx);overflow-wrap:anywhere}
+.lc-fo .lf{font-family:var(--mono)}
+.lc-ft{font-size:.84rem;color:var(--dimmer);text-align:center;margin-bottom:6px}
+.lc-ops{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.lab-op{display:flex;align-items:center;gap:12px;min-height:52px;width:100%;padding:10px 14px;border:2px solid var(--brd2);border-radius:var(--rs);background:#fff;color:var(--tx);font-family:var(--sans);font-size:1.02rem;font-weight:700;text-align:left;cursor:pointer}
+.lab-op:hover,.lab-op:focus-visible{border-color:var(--nav);background:var(--an-b)}
+.lab-op .lc-dir{font-size:1.3rem;color:var(--nav);width:24px;text-align:center;flex-shrink:0}
+.lab-op .lf{font-family:var(--mono)}
+.lab-op.bad{animation:labShakeOp .38s;border-color:var(--err);background:var(--err-b)}
+@keyframes labShakeOp{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.lc-fin{font:italic 900 1.5rem var(--serif);color:var(--nav);text-align:center;margin-bottom:10px}
+.lab-op.lc-re{justify-content:center;background:var(--nav);color:#fff;border-color:var(--nav)}
 #lab-play-bar .pb-logo{height:32px}
 #lab-play-msg{flex:1;min-width:200px;font-weight:700;color:var(--tx);font-size:.95rem}
 #lab-play-bar button{border:1.5px solid var(--brd);background:#fff;color:var(--nav);border-radius:var(--rs);padding:8px 14px;font-weight:700;font-family:var(--sans);cursor:pointer}
@@ -225,14 +250,17 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 /* ══════════════ Laberintos (hoja) ══════════════ */
 .lab-sheet{position:absolute;left:0;top:0;transform-origin:0 0;background:#fff;color:#0d2d42;font-family:var(--sans);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .lab-sheet sub,.lab-sheet sup{font-size:.62em;line-height:0}
-.lab-sheet .wm{position:absolute;left:50%;top:54%;width:46%;max-width:620px;transform:translate(-50%,-50%);opacity:.07;z-index:5;pointer-events:none}
+.lab-sheet .wm{position:absolute;left:50%;top:54%;width:46%;max-width:620px;transform:translate(-50%,-50%);opacity:.08;z-index:0;pointer-events:none}
 .lab-sheet .shead{position:absolute;left:30px;right:30px;top:16px;height:90px;display:flex;align-items:center;gap:18px;border-bottom:3px solid #0d4a73}
-.lab-sheet .slogo{height:66px;width:auto;flex-shrink:0}
+.lab-sheet .slogo{height:56px;width:auto;flex-shrink:0}
 .lab-sheet .stit{flex:1;text-align:center;min-width:0}
-.lab-sheet .title{font-family:var(--serif);font-style:italic;font-weight:900;font-size:40px;line-height:1.1;color:#0d4a73;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lab-sheet .title.sm{font-size:30px}
+.lab-sheet .title{font-family:var(--serif);font-style:italic;font-weight:900;font-size:40px;line-height:1.05;color:#0d4a73;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lab-sheet .title.sm{font-size:31px}
+.lab-sheet .title.xs{font-size:25px}
 .lab-sheet .sub{font-size:17px;color:#2a3f52;margin-top:4px}
-.lab-sheet .sver{width:200px;flex-shrink:0;text-align:right;font-size:13px;color:#4f6d88;font-weight:600}
+.lab-sheet .shead.angosta .sub{font-size:14.5px}
+#lab-playwrap.con-tarjeta #lab-status{display:none}
+.lab-sheet .sver{width:150px;flex-shrink:0;text-align:right;font-size:13px;color:#4f6d88;font-weight:600}
 .lab-sheet .sform{position:absolute;left:30px;right:30px;top:114px;height:30px;display:flex;align-items:flex-end;gap:26px;font-size:16px;font-weight:600;color:#0d2d42;padding:0 14px 4px;border:1.5px solid #cfcfd8;border-radius:10px;background:#fff;z-index:6}
 .lab-sheet .sform span{display:flex;align-items:flex-end;gap:6px;white-space:nowrap}
 .lab-sheet .sform i{display:inline-block;border-bottom:1.8px solid #0d2d42;height:16px}
@@ -244,12 +272,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .ln{stroke:#5b7389;stroke-width:3;stroke-linecap:round}
 .lab-sheet .mk{fill:#5b7389}
 .lab-sheet .node{position:absolute;border:3px solid #0d4a73;border-radius:16px;background:#fff;padding:14px 10px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;z-index:2}
-.lab-sheet .node .q{font-size:15.5px;line-height:1.15;color:#2a3f52}
+.lab-sheet .node .q{font-size:16px;line-height:1.15;color:#2a3f52}
 .lab-sheet .node .fo{font-size:26px;font-weight:700;line-height:1.15;color:#0d2d42}
 .lab-sheet .node .fo.nm{font-size:19px;font-family:var(--serif);font-style:italic}
-.lab-sheet .node .fo.eq{font-size:17px;line-height:1.25}
+.lab-sheet .node .fo.eq{font-size:16px;line-height:1.3}
+.lab-sheet .nw,.lab-card .nw{white-space:nowrap}
 .lab-sheet .node .ft{font-size:13px;line-height:1.15;color:#4f6d88}
 .lab-sheet .lf{font-family:var(--mono);font-weight:700}
+.lab-sheet .qm{font-family:var(--sans);font-weight:600;margin-left:3px}
 .lab-sheet .badge{position:absolute;left:-16px;top:-16px;width:40px;height:40px;border-radius:50%;background:#0d4a73;color:#fff;font:italic 900 22px/40px var(--serif);text-align:center;box-shadow:0 0 0 3px #fff}
 .lab-sheet .node.fin{background:#0d4a73;border-color:#0d4a73;color:#fff}
 .lab-sheet .node.fin .flag{font-size:46px;line-height:1}
@@ -257,8 +287,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .el{position:absolute;transform:translate(-50%,-50%);z-index:3;background:#fff;border:1.5px solid #cfcfd8;border-radius:10px;font-family:var(--sans);font-size:15px;line-height:1.1;padding:3px 7px;text-align:center;color:#0d2d42;max-width:106px;appearance:none;-webkit-appearance:none;cursor:default;font-weight:600}
 .lab-sheet .el.v{max-width:196px}
 .lab-sheet .el.d{max-width:120px}
-.lab-sheet .el.lg{font-size:13px}
-.lab-sheet .el.xl{font-size:11.5px}
+.lab-sheet .el.lg{font-size:14px}
+.lab-sheet .el.xl{font-size:13px}
 .lab-sheet .el .lf{font-size:1.05em}
 .lab-sheet:not(.play) .el{pointer-events:none}
 .lab-sheet .sfoot{position:absolute;left:30px;right:30px;display:flex;align-items:flex-end;gap:20px;font-size:17px}
@@ -278,6 +308,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet.play .el.hot{pointer-events:auto;cursor:pointer;background:#fef3c7;border:2px dashed #0d4a73}
 .lab-sheet.play .el.hot:hover,.lab-sheet.play .el.hot:focus-visible{background:#fde68a}
 .lab-sheet.play .node.visited{background:#dcfce7}
+.lab-sheet.play .node.fin.visited{background:#0d4a73;box-shadow:0 0 0 7px rgba(22,163,74,.6)}
 .lab-sheet.play .node.cur{box-shadow:0 0 0 7px rgba(252,211,77,.85)}
 .lab-sheet.play .ln.trav{stroke:#16a34a;stroke-width:7}
 .lab-sheet.play .el.taken{color:#14532d;border-color:#16a34a;font-weight:800}
@@ -301,7 +332,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   body.lab-printing .keypage .kb{display:flex;gap:12px;align-items:flex-start}
   body.lab-printing .keypage .kb .lab-scaled{margin:0;flex:none;border:1px solid #ccc}
   body.lab-printing .keypage .kt-wrap{flex:1}
-  body.lab-printing .keypage .lab-kt{font-size:9.5px}
+  body.lab-printing .keypage .lab-kt{font-size:10px}
 }
 /* La nueva versión del service worker queda "esperando" (ver sw.js) hasta
    que el usuario toque "Actualizar" aquí -- igual que en index.html/
@@ -381,7 +412,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
     <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias">📄 Guías, talleres y evaluaciones</button>
-    <button type="button" class="doc-tab" role="tab" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
   </div>
 
   <div id="tab-guias" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-guias">
@@ -592,7 +623,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <div class="field"><label for="lab-title">Título</label><input type="text" id="lab-title" maxlength="40"></div>
       </div>
       <div class="field-row">
-        <div class="field"><label for="lab-nver">Versiones paralelas (impresión)</label><input type="text" inputmode="numeric" id="lab-nver" value="4"></div>
+        <div class="field"><label for="lab-nver">Versiones paralelas (impresión)</label><input type="number" inputmode="numeric" id="lab-nver" value="4" min="1" max="8" step="1"></div>
         <div class="field"><label for="lab-vsel">Versión en pantalla</label><select id="lab-vsel"></select></div>
       </div>
       <p class="sect-hint">Cada versión tiene ejercicios y ruta distintos, para evitar copia entre puestos vecinos.</p>
@@ -604,33 +635,35 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
 
     <div class="lab-bar">
-      <button type="button" class="lab-nuevo" id="lab-btn-seed">🎲 Generar nuevo laberinto</button>
+      <button type="button" class="btn-sec lab-nuevo" id="lab-btn-seed">🎲 Generar nuevo laberinto</button>
       <div class="lab-seg" id="lab-seg" role="group" aria-label="Vista">
-        <button type="button" data-view="sheet" class="on">📄 Hoja</button>
-        <button type="button" data-view="play">🎮 Jugar</button>
-        <button type="button" data-view="key">🔑 Clave</button>
+        <button type="button" data-view="sheet" class="on" aria-pressed="true">📄 Hoja</button>
+        <button type="button" data-view="play" aria-pressed="false">🎮 Jugar</button>
+        <button type="button" data-view="key" aria-pressed="false">🔑 Clave</button>
       </div>
       <button type="button" class="btn-sec" id="lab-fs-btn" style="display:none">⛶ Pantalla completa</button>
+      <button type="button" class="btn-sec" id="lab-restart2" style="display:none">↺ Reiniciar</button>
       <button type="button" class="btn-generar" id="lab-btn-print">🖨️ Imprimir versiones</button>
       <label class="chk-linea" style="margin:0"><input type="checkbox" id="lab-withkeys" checked> con hojas de clave al final</label>
     </div>
 
     <div id="lab-playwrap">
       <div id="lab-play-bar">
-        <img class="pb-logo" src="assets/logo-ionom.png" alt="IonNom">
-        <span id="lab-play-msg"></span>
+        <img class="pb-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+        <span id="lab-play-msg" aria-live="polite"></span>
         <button type="button" id="lab-restart">↺ Reiniciar</button>
         <button type="button" id="lab-fs-exit">✕ Salir de pantalla completa</button>
       </div>
       <div id="lab-verif" class="lab-verif"></div>
       <div id="lab-status" aria-live="polite">Cargando bancos…</div>
+      <div id="lab-card" class="lab-card" hidden></div>
       <div id="lab-stage"></div>
     </div>
     <div id="lab-routebox">
       <b>Verificar ruta del estudiante:</b>
       <input id="lab-routein" type="text" placeholder="Ej.: A E I J K FIN" aria-label="Ruta escrita por el estudiante">
-      <button type="button" class="btn-sec" id="lab-routebtn">Comprobar</button>
-      <span id="lab-routemsg"></span>
+      <button type="button" class="btn-sec" id="lab-routebtn" style="min-height:44px">Comprobar</button>
+      <span id="lab-routemsg" aria-live="polite"></span>
     </div>
     <div id="lab-keybox"></div>
     <p class="sect-hint" style="margin-top:12px">Reglas: en cada casilla se resuelve el ejercicio y se sigue la flecha rotulada con el resultado correcto (hacia la derecha, hacia abajo o en diagonal). Solo hay una ruta correcta hasta FIN; algunas casillas son trampas: su respuesta no aparece en ninguna salida.</p>
@@ -698,13 +731,22 @@ document.getElementById('theme-btn').addEventListener('click',function(){
   function mostrar(id){
     btns.forEach(function(b){
       var on = b.dataset.tab === id;
-      b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
       document.getElementById('tab-' + b.dataset.tab).classList.toggle('active', on);
     });
     try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
     if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
   }
-  btns.forEach(function(b){ b.addEventListener('click', function(){ mostrar(b.dataset.tab); }); });
+  btns.forEach(function(b, i){
+    b.addEventListener('click', function(){ mostrar(b.dataset.tab); });
+    // patrón ARIA de pestañas: ←/→/Inicio/Fin
+    b.addEventListener('keydown', function(e){
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? btns.length - 1 : null;
+      if(j === null) return;
+      e.preventDefault(); j = (j + btns.length) % btns.length;
+      mostrar(btns[j].dataset.tab); btns[j].focus();
+    });
+  });
   var ini = location.hash === '#laberintos' ? 'laberintos' : null;
   if(!ini){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
   if(ini === 'laberintos') mostrar('laberintos');

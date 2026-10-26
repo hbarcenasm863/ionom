@@ -76,7 +76,7 @@ function sciPartes(x){
   return {m, e};
 }
 function sciL(x, u){
-  const p = sciPartes(x), ms = fmtNum(p.m, 2);
+  const p = sciPartes(x), ms = p.m.toFixed(2).replace('.', ','); // siempre 3 cifras: 1,20×10²⁴
   return L(ms + '×10<sup>' + p.e + '</sup> ' + u, 'N:' + ms + 'e' + p.e + ' ' + u, {v:x, u});
 }
 const autoL = (x, u) => x >= 1e5 ? sciL(x, u) : numL(x, u);
@@ -131,6 +131,22 @@ const esMolecular = f => { const s = aAscii(f); if(/NH4/.test(s)) return false; 
 
 /* ───────────────────────── 4. Nomenclatura ───────────────────────── */
 function nombresDe(c, sis){ return (c[sis]||[]).filter(Boolean); }
+const PREFIJO = /(^|\s)(mono|di|tri|tetra|penta|hexa|hepta)/;
+const claveElems = f => Object.keys(parseF(f)).sort().join(',');
+// Nombre de un compuesto en el sistema pedido, SOLO si de verdad pertenece
+// a ese sistema (auditoría química):
+// - banco.js copia el nombre tradicional en `sist` para oxácidos y
+//   oxisales («sulfato cúprico» como «Sistemática»): no se usa;
+// - un sistemático sin prefijos es ambiguo si hay otro compuesto con los
+//   mismos elementos («cloruro de cobre»: ¿CuCl o CuCl₂?): no se usa.
+function nombreSis(c, s){
+  const n = nombresDe(c, s)[0]; if(!n) return null;
+  if(s === 'sist'){
+    if(['ac-ox','sal-ox','sal-ac'].includes(c.group) && nombresDe(c, 'trad').some(t => normNombre(t) === normNombre(n))) return null;
+    if(!PREFIJO.test(n) && (indice().porElems[claveElems(c.formula)] || new Set()).size > 1) return null;
+  }
+  return n;
+}
 let _idx = null;
 function indice(){
   // Índices sobre TODO el banco de nomenclatura: nombres válidos por
@@ -138,17 +154,18 @@ function indice(){
   // -- el validador acepta cualquier nombre real del compuesto, no solo
   // el que se pidió, así ningún distractor puede ser "también correcto".
   if(_idx && _idx.n === banco().length) return _idx;
-  const porF = {}, porNombre = {}, gruposF = {};
+  const porF = {}, porNombre = {}, gruposF = {}, porElems = {};
   banco().filter(c => GRUPOS_NOM.includes(c.group)).forEach(c => {
     const f = aAscii(c.formula);
     (gruposF[f] = gruposF[f] || new Set()).add(c.group);
+    (porElems[claveElems(f)] = porElems[claveElems(f)] || new Set()).add(f);
     const set = porF[f] = porF[f] || new Set();
     ['trad','stock','sist'].forEach(s => nombresDe(c, s).forEach(n => {
       set.add(normNombre(n));
       (porNombre[normNombre(n)] = porNombre[normNombre(n)] || new Set()).add(f);
     }));
   });
-  _idx = {n: banco().length, porF, porNombre, gruposF};
+  _idx = {n: banco().length, porF, porNombre, gruposF, porElems};
   return _idx;
 }
 
@@ -186,10 +203,18 @@ function mutarFormula(f, r){
 }
 const ROM = ['I','II','III','IV','V','VI','VII'];
 const PREF = ['mono','di','tri','tetra','penta','hexa','hepta'];
+// El cambio -ico ↔ -oso solo se acepta si el nombre resultante existe en el
+// banco: cambiarlo a ciegas inventaba palabras mal escritas («ferrico»,
+// «ácido clorhídroso») que se descartaban por ortografía.
 function mutarNombre(n, r){
   let m = n.match(/\((VII|VI|IV|V|III|II|I)\)/);
   if(m) return n.replace(m[0], '(' + pick(ROM.filter(x => x !== m[1]), r) + ')');
-  if((m = n.match(/(ico|oso)(\s|$)/))) return n.replace(/(ico|oso)(\s|$)/, (a, s, t) => (s === 'ico' ? 'oso' : 'ico') + t);
+  if((m = n.match(/(ico|oso)(\s|$)/))){
+    const alt = n.replace(/(ico|oso)(\s|$)/, (a, s, t) => (s === 'ico' ? 'oso' : 'ico') + t);
+    const quitaTilde = x => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const real = Object.keys(indice().porNombre).find(k => quitaTilde(k) === quitaTilde(normNombre(alt)));
+    return real || null;
+  }
   m = n.match(/^(mono|di|tri|tetra|penta|hexa|hepta)/);
   if(m) return n.replace(m[1], pick(PREF.filter(x => x !== m[1]), r));
   m = n.match(/de (di|tri|tetra)/);
@@ -221,24 +246,26 @@ function genNom(forma, r, o){
   const f = aAscii(c.formula), g = c.group;
   const fo = o.color ? formulaHTML(c.formula, g) : formulaHTML(c.formula);
   if(forma === 'f2n' || forma === 'n2f'){
-    // sistema: el pedido si el compuesto tiene nombre en él; si no, otro que sí tenga
-    const disp = o.sis.filter(s => nombresDe(c, s).length);
-    const todos = ['trad','stock','sist'].filter(s => nombresDe(c, s).length);
-    if(!todos.length) return null;
-    const s = disp.length ? pick(disp, r) : pick(todos, r);
-    const nombre = cap(nombresDe(c, s)[0]);
+    // Sistema: uno de los pedidos en el que el compuesto tenga un nombre
+    // real; si no tiene ninguno, se descarta el compuesto (antes se pasaba
+    // en silencio a otro sistema que el docente no había elegido).
+    const disp = o.sis.filter(s => nombreSis(c, s));
+    if(!disp.length) return null;
+    const s = pick(disp, r);
+    const nombre = cap(nombreSis(c, s));
     const validos = idx.porF[f] || new Set();
     if(forma === 'f2n'){
       const nomL = n => L(esc(cap(n)), 'T:' + normNombre(n));
       const cands = [];
       const mismos = banco().filter(x => x.group === g && aAscii(x.formula) !== f);
       const mismoEl = mismos.filter(x => Object.keys(parseF(x.formula))[0] === Object.keys(parseF(f))[0]);
-      mismoEl.concat(shuffle(mismos, r).slice(0, 6)).forEach(x => { const n = nombresDe(x, s)[0] || nombresDe(x, 'trad')[0]; if(n) cands.push(nomL(n)); });
+      // distractores SOLO del mismo sistema: mezclar sistemas regalaba la respuesta
+      mismoEl.concat(shuffle(mismos, r).slice(0, 8)).forEach(x => { const n = nombreSis(x, s); if(n) cands.push(nomL(n)); });
       for(let i=0;i<3;i++){ const m = mutarNombre(nombre.toLowerCase(), r); if(m) cands.push(nomL(m)); }
       return {
         key: 'f2n' + f + s, qh: 'Nombra en el sistema <b>' + SIS_NOMBRE[s] + '</b>:', fo, foc: '',
         ans: nomL(nombre), cands,
-        more: rr => { const x = pick(banco().filter(y => GRUPOS_NOM.includes(y.group)), rr); const n = nombresDe(x, s)[0] || nombresDe(x,'trad')[0]; return n ? nomL(n) : null; },
+        more: rr => { const x = pick(banco().filter(y => GRUPOS_NOM.includes(y.group)), rr); const n = nombreSis(x, s); return n ? nomL(n) : null; },
         acepta: lab => lab.k.startsWith('T:') && validos.has(lab.k.slice(2)),
         fs: []
       };
@@ -261,7 +288,9 @@ function genNom(forma, r, o){
     };
   }
   if(forma === 'cls'){
-    const gs = idx.gruposF[f] || new Set([g]);
+    const gs = new Set(idx.gruposF[f] || [g]);
+    // una sal ácida con oxígeno (NaHCO₃) también es una sal oxigenada
+    if(gs.has('sal-ac') && /O/.test(f)) gs.add('sal-ox');
     const gL = x => L(GRUPO_NOMBRE[x], 'G:' + x);
     return {
       key: 'cls' + f, qh: '¿A qué función química pertenece?', fo, foc: '',
@@ -292,6 +321,11 @@ const FACT = [0.1, 0.25, 0.5, 1.5, 2, 3, 4, 5, 10];
 const GASES = ['O₂','N₂','H₂','Cl₂','CO₂','CO','SO₂','NH₃','CH₄','He'];
 const CARGA_ANION = {F:1,Cl:1,Br:1,I:1,S:2,Se:2,N:3,P:3,OH:1,SO4:2,SO3:2,NO3:1,NO2:1,PO4:3,CO3:2,ClO4:1,ClO3:1,ClO2:1,ClO:1,BrO3:1,IO3:1,MnO4:1,CrO4:2,Cr2O7:2,SiO3:2,HCO3:1,HSO4:1,H2PO4:1,HPO4:2};
 
+// Compuestos que el banco clasifica como sal o hidróxido pero que en
+// bachillerato no se tratan como iónicos que se disocian.
+const NO_IONICOS = new Set(['BeCl2','BeBr2','BeI2','BeF2','AlCl3','AlBr3','AlI3','Fe2S3','CuOH','AuOH','HgOH']);
+// Sólidos de red o especies inestables: no se cuentan «moléculas» de ellos.
+const NO_MOLECULARES = new Set(['SiO2','B2O3','SeO2','TeO2','GeO2','H2SiO3','H4SiO4','SO','P2O5','P2O3']);
 // Disociación iónica de una sal o hidróxido del banco: CaCl₂ → Ca²⁺ + 2Cl⁻.
 // Se valida que la carga del catión salga entera y que sea uno de los
 // estados de oxidación reales del elemento (ELEMENTS.ox de juego.html).
@@ -307,7 +341,11 @@ function disociar(c){
   else { an = resto; nAn = 1; }
   const qAn = CARGA_ANION[an]; if(!qAn) return null;
   const qCat = qAn * nAn / nCat;
-  if(!Number.isInteger(qCat) || qCat < 1 || qCat > 4) return null;
+  // Sin cationes +4 (SnCl₄, PbCl₄, Sn(OH)₄: covalentes, no se disocian) ni
+  // Hg(I) (el catión real es el dímero Hg₂²⁺, no Hg⁺).
+  if(!Number.isInteger(qCat) || qCat < 1 || qCat > 3) return null;
+  if(cat === 'Hg' && qCat === 1) return null;
+  if(NO_IONICOS.has(s)) return null;
   if(cat === 'NH4'){ if(qCat !== 1) return null; }
   else {
     const E = D().ELEMENTS;
@@ -423,7 +461,7 @@ function tiposAceptados(rx){
 function genRx(r, o){
   const rx = pick(o.pool, r), ok = tiposAceptados(rx);
   const tL = t => L(TIPO_RX[t], 'R:' + t);
-  return {key:'rx' + rx.id, fs:[], qh:'¿Qué tipo de reacción es?', fo:'<span class="lf">' + esc(rx.ecuacion) + '</span>', foc:'eq', ft:'',
+  return {key:'rx' + rx.ecuacion, fs:[], qh:'¿Qué tipo de reacción es?', fo: fmtEq(rx.ecuacion), foc:'eq', ft:'',
     ans: tL(rx.tipo_rx), cands: Object.keys(TIPO_RX).map(tL),
     more: rr => tL(pick(Object.keys(TIPO_RX), rr)),
     acepta: lab => lab.k.startsWith('R:') && ok.has(lab.k.slice(2))};
@@ -441,7 +479,7 @@ function genBal(r, o){
   base.forEach((_, i) => { [1, -1].forEach(d => { const cs = base.slice(); cs[i] += d; if(cs[i] > 0) cands.push(cL(cs)); }); });
   for(let i=0;i<4;i++){ const cs = base.slice(), a = Math.floor(r()*cs.length), z = Math.floor(r()*cs.length); [cs[a], cs[z]] = [cs[z], cs[a]]; cands.push(cL(cs)); }
   cands.push(cL(base.map(x => x + 1)));
-  return {key:'bal' + b.id, fs:[], qh:'Balancea (coeficientes mínimos, en orden):', fo:'<span class="lf">' + esc(b.ecuacion_sin_coef) + '</span>', foc:'eq', ft:'',
+  return {key:'bal' + b.ecuacion_sin_coef, fs:[], qh:'Balancea (coeficientes mínimos, en orden):', fo: fmtEq(b.ecuacion_sin_coef), foc:'eq', ft:'',
     ans: cL(base), cands,
     more: rr => { const cs = base.map(x => Math.max(1, x + Math.floor(rr()*3) - 1)); return cL(cs); },
     // Se rechaza como distractor CUALQUIER juego de coeficientes que
@@ -466,7 +504,7 @@ function opcionesMol(cfg){
   const B = banco();
   const conMasa = f => masaMolar10(f) != null;
   const todos = [...new Set(B.filter(c => c.group === 'mol-masa').map(c => c.formula))].filter(conMasa);
-  const molec = [...new Set(B.filter(c => (c.group === 'mol-masa' || c.group === 'anhid' || c.group === 'ac-hid' || (c.group === 'ac-ox' && c.level !== 'hard')) && esMolecular(c.formula)).map(c => c.formula))].filter(conMasa);
+  const molec = [...new Set(B.filter(c => (c.group === 'mol-masa' || c.group === 'anhid' || c.group === 'ac-hid' || (c.group === 'ac-ox' && c.level !== 'hard')) && esMolecular(c.formula) && !NO_MOLECULARES.has(aAscii(c.formula))).map(c => c.formula))].filter(conMasa);
   const ionicos = B.filter(c => ['sal-bin','sal-ox','base'].includes(c.group) && c.level !== 'hard' && disociar(c));
   return {hints: cfg.hints, todos, molec, ionicos};
 }
@@ -617,6 +655,13 @@ function claseLargo(h){
 }
 
 let _nHoja = 0;
+// Punta de flecha de tamaño fijo (userSpaceOnUse): con markerUnits por
+// defecto crecía con el grosor de la línea y salía gigante en Jugar/Clave.
+// Una por color, para que la punta tome el color de la ruta.
+const marcador = (id, color) => '<marker id="' + id + '" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="' + color + '"/></marker>';
+// Ecuación con cada sustancia sin partir: solo se salta de línea entre
+// sustancias (antes quedaba «Fe +» / «CO» en renglones distintos).
+const fmtEq = eq => '<span class="lf">' + esc(eq).split(' → ').map(lado => lado.split(' + ').map(m => '<span class="nw">' + m + '</span>').join(' + ')).join(' → ') + '</span>';
 function hoja(mz, c, o){
   o = o || {};
   // id de la punta de flecha único por hoja: con varias hojas en el mismo
@@ -624,7 +669,11 @@ function hoja(mz, c, o){
   // oculta y las flechas impresas salían sin punta.
   const mk = 'lab-flecha-' + (++_nHoja);
   const largo = c.mode === 'nom' || c.mode === 'bal';
-  const G = {NW:210, NH:160, GX: largo ? 118 : 104, GY: largo ? 82 : 70, PX:30, TOP:164, BOT:80};
+  // GX amplio: el rótulo de una flecha horizontal no debe tapar su punta
+  // (auditoría UX); el ancho extra no reduce la escala al imprimir, que la
+  // limita el alto de la hoja.
+  const G = {NW:210, NH:160, GX: largo ? 150 : 132, GY: largo ? 76 : 70, PX:30, TOP:160, BOT:70};
+  const maxW = {h: G.GX - 38, v: G.NW - 14, d: G.GX - 36};
   const {R, C, fin} = mz;
   const W = G.PX*2 + C*G.NW + (C-1)*G.GX, H = G.TOP + R*G.NH + (R-1)*G.GY + G.BOT;
   const P = u => ({x: G.PX + (u % C)*(G.NW + G.GX), y: G.TOP + Math.floor(u/C)*(G.NH + G.GY)});
@@ -637,15 +686,15 @@ function hoja(mz, c, o){
       const b = M(e.to), id = nd.u + '-' + e.to, on = onE.has(id);
       // Flecha: la línea termina antes del borde de la casilla destino
       const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
-      const tx = e.k === 'h' ? G.NW/2 + 6 : e.k === 'v' ? G.NH/2 + 6 : Math.min((G.NW/2+6)/Math.abs(dx/len), (G.NH/2+6)/Math.abs(dy/len));
+      const tx = e.k === 'h' ? G.NW/2 + 4 : e.k === 'v' ? G.NH/2 + 4 : Math.min((G.NW/2+4)/Math.abs(dx/len), (G.NH/2+4)/Math.abs(dy/len));
       const x2 = b.x - dx/len*tx, y2 = b.y - dy/len*tx;
-      lines += '<line class="ln' + (on ? ' on' : '') + '" data-e="' + id + '" x1="' + a.x + '" y1="' + a.y + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" marker-end="url(#' + mk + ')"/>';
-      labels += '<button type="button" class="el ' + e.k + (on ? ' on' : '') + (e.ok ? ' good' : '') + claseLargo(e.lab.h) + '" data-e="' + id + '" data-u="' + nd.u + '" style="left:' + ((a.x+b.x)/2) + 'px;top:' + ((a.y+b.y)/2) + 'px" tabindex="-1">' + e.lab.h + '</button>';
+      lines += '<line class="ln' + (on ? ' on' : '') + '" data-e="' + id + '" data-mk="' + mk + '" x1="' + a.x + '" y1="' + a.y + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" marker-end="url(#' + mk + (on && o.key ? '-r' : '') + ')"/>';
+      labels += '<button type="button" class="el ' + e.k + (on ? ' on' : '') + (e.ok ? ' good' : '') + claseLargo(e.lab.h) + '" data-e="' + id + '" data-u="' + nd.u + '" style="left:' + ((a.x+b.x)/2) + 'px;top:' + ((a.y+b.y)/2) + 'px;max-width:' + maxW[e.k] + 'px" tabindex="-1">' + e.lab.h + '</button>';
     });
-    const p = P(nd.u), q = nd.q;
+    const p = P(nd.u), q = nd.q, cierra = q.qh.includes('¿') && !q.qh.includes('?') ? '<span class="qm">?</span>' : '';
     nodes += '<div class="node' + (nd.onPath ? ' onp' : '') + '" data-n="' + nd.u + '" style="left:' + p.x + 'px;top:' + p.y + 'px;width:' + G.NW + 'px;height:' + G.NH + 'px">'
       + '<span class="badge">' + nd.letter + '</span><div class="q">' + q.qh + '</div>'
-      + (q.fo ? '<div class="fo ' + (q.foc||'') + '">' + q.fo + '</div>' : '')
+      + (q.fo ? '<div class="fo ' + (q.foc||'') + '">' + q.fo + cierra + '</div>' : '')
       + (q.ft ? '<div class="ft">' + q.ft + '</div>' : '') + '</div>';
   });
   const pf = P(fin);
@@ -668,13 +717,14 @@ function hoja(mz, c, o){
   el.style.width = W + 'px'; el.style.height = H + 'px';
   el.innerHTML =
     '<img class="wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">'
-    + '<div class="shead">'
-    +   '<img class="slogo" src="assets/logo-ionom.png" alt="IonNom">'
-    +   '<div class="stit"><div class="title' + (c.title.length > 26 ? ' sm' : '') + '">' + titulo + '</div><div class="sub">' + SUBT[c.mode] + '</div></div>'
+    + '<div class="shead' + (W < 1150 ? ' angosta' : '') + '">'
+    +   '<img class="slogo" src="assets/logo-ionom-hoja.png" alt="IonNom">'
+    // tamaño del título según el ancho REAL de la hoja (en 3×3 se cortaba)
+    +   '<div class="stit"><div class="title' + (W < 1150 || c.title.length > 26 ? ' sm' : '') + (W < 1150 && c.title.length > 26 ? ' xs' : '') + '">' + titulo + '</div><div class="sub">' + SUBT[c.mode] + '</div></div>'
     +   '<div class="sver">' + esc(o.label || '') + '</div>'
     + '</div>'
     + '<div class="sform"><span>Nombre: <i class="w-nom"></i></span><span>Curso: <i class="w-cur"></i></span><span>Fecha: <i class="w-fec"></i></span></div>'
-    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs><marker id="' + mk + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk"/></marker></defs>' + lines + '</svg>'
+    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs>' + marcador(mk, '#5b7389') + marcador(mk + '-r', '#dc2626') + marcador(mk + '-g', '#16a34a') + '</defs>' + lines + '</svg>'
     + nodes + labels
     + '<div class="sfoot" style="top:' + (H - G.BOT + 10) + 'px"><div class="fields">Ruta seguida: <i style="width:360px"></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión</div></div>'
     + '<div class="sdata" style="top:' + (H - 40) + 'px">' + data + '</div>';
@@ -686,7 +736,7 @@ function tablaClave(mz){
   mz.nodes.forEach(nd => {
     const e = nd.edges.find(x => x.ok);
     const dest = e ? (e.to === mz.fin ? 'FIN' : String.fromCharCode(65 + e.to)) : '— (trampa: no hay salida)';
-    h += '<tr class="' + (nd.onPath ? 'main' : '') + '"><td>' + nd.letter + (nd.onPath ? ' ★' : '') + '</td><td>' + nd.q.qh + ' ' + (nd.q.fo || '') + '</td><td>' + nd.q.ans.h + '</td><td>' + dest + '</td></tr>';
+    h += '<tr class="' + (nd.onPath ? 'main' : '') + '"><td>' + nd.letter + (nd.onPath ? ' ★' : '') + '</td><td>' + nd.q.qh + ' ' + (nd.q.fo || '') + (nd.q.qh.includes('¿') && !nd.q.qh.includes('?') ? '?' : '') + '</td><td>' + nd.q.ans.h + '</td><td>' + dest + '</td></tr>';
   });
   return h + '</tbody></table>';
 }
@@ -705,10 +755,12 @@ function getCfg(){
   const c = {mode, R, C, title: $('#lab-title').value.trim() || DEF[mode], seed: $('#lab-seed').value.trim().replace(/-\d+$/, '') || 'ionom',
     nver: Math.max(1, Math.min(8, parseInt($('#lab-nver').value, 10) || 1)),
     hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value};
-  if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.types = ['masa']; }
+  if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de ejercicio.'; }
   if(mode === 'nom'){
-    c.forms = $$('#lab-fs-forma input:checked').map(x => x.value); if(!c.forms.length) c.forms = ['f2n'];
-    c.fam = $$('#lab-fs-fam input:checked').map(x => x.value); if(!c.fam.length) c.fam = ['ox-bas'];
+    c.forms = $$('#lab-fs-forma input:checked').map(x => x.value);
+    c.fam = $$('#lab-fs-fam input:checked').map(x => x.value);
+    if(!c.forms.length) c.vacio = 'Marca al menos un tipo de pregunta.';
+    if(!c.fam.length) c.vacio = 'Marca al menos una familia de compuestos.';
     const s = $('#lab-sys').value; c.sis = s === 'all' ? ['trad','stock','sist'] : [s];
   }
   if(mode !== 'nom') c.color = false;
@@ -726,7 +778,7 @@ function contarFamilias(){
 function render(){
   if(!listo) return;
   const c = getCfg(), vi = Math.min(+$('#lab-vsel').value || 0, c.nver - 1);
-  const mz = construir(c, seedOf(c, vi));
+  const mz = c.vacio ? {error: c.vacio} : construir(c, seedOf(c, vi));
   curCfg = c;
   const stage = $('#lab-stage'); stage.innerHTML = '';
   $('#lab-keybox').innerHTML = '';
@@ -734,6 +786,7 @@ function render(){
     curMz = null; curSheet = null;
     $('#lab-status').textContent = '⚠️ ' + mz.error;
     $('#lab-verif').className = 'lab-verif bad'; $('#lab-verif').textContent = '';
+    $('#lab-card').hidden = true;
     return;
   }
   curMz = mz;
@@ -749,6 +802,7 @@ function render(){
   $('#lab-routebox').style.display = vista === 'play' ? 'none' : '';
   $('#lab-routemsg').textContent = '';
   $('#lab-fs-btn').style.display = vista === 'play' ? '' : 'none';
+  $('#lab-restart2').style.display = vista === 'play' ? '' : 'none';
   if(vista === 'play') pintarJuego();
   else $('#lab-status').textContent = vista === 'key'
     ? 'Clave: la ruta correcta va en rojo; las salidas punteadas naranja son la respuesta correcta de las casillas trampa (llevan a otra trampa, nunca a FIN).'
@@ -761,10 +815,18 @@ function ajustar(){
   const fs = esPantallaCompleta();
   let availW = stage.clientWidth - 4;
   if(availW <= 0) return; // pestaña oculta: se reajusta al mostrarla
+  // En pantallas angostas (celular/tableta vertical) la hoja entera queda
+  // ilegible para jugar: se muestra arriba una tarjeta con la casilla actual
+  // y sus salidas como botones grandes; la hoja queda debajo como mapa.
+  const card = $('#lab-card');
+  const conTarjeta = vista === 'play' && !!curMz && availW < 760;
+  card.hidden = !conTarjeta;
+  $('#lab-playwrap').classList.toggle('con-tarjeta', conTarjeta);
+  if(conTarjeta) pintarTarjeta();
   let s = Math.min(1, availW / curSheet.W);
   if(fs){
-    const availH = window.innerHeight - $('#lab-play-bar').offsetHeight - 24;
-    s = Math.min(availW / curSheet.W, availH / curSheet.H);
+    const availH = window.innerHeight - $('#lab-play-bar').offsetHeight - (conTarjeta ? card.offsetHeight + 12 : 0) - 24;
+    s = Math.max(0.2, Math.min(availW / curSheet.W, availH / curSheet.H));
   }
   const w = curSheet.el.parentNode;
   w.style.width = curSheet.W*s + 'px'; w.style.height = curSheet.H*s + 'px';
@@ -783,7 +845,12 @@ function pintarJuego(){
     b.classList.toggle('hot', hot); b.tabIndex = hot ? 0 : -1;
     b.classList.toggle('taken', taken.has(b.dataset.e));
   });
-  st.querySelectorAll('.ln').forEach(l => l.classList.toggle('trav', taken.has(l.dataset.e)));
+  st.querySelectorAll('.ln').forEach(l => {
+    const t = taken.has(l.dataset.e);
+    l.classList.toggle('trav', t);
+    l.setAttribute('marker-end', 'url(#' + l.dataset.mk + (t ? '-g' : '') + ')');
+  });
+  if(!$('#lab-card').hidden) pintarTarjeta();
   let msg;
   if(juego.done){
     const s = Math.round((Date.now() - juego.t0)/1000);
@@ -792,18 +859,53 @@ function pintarJuego(){
   $('#lab-status').textContent = msg;
   $('#lab-play-msg').textContent = msg;
 }
+const FLECHA = {h:'→', v:'↓', d:'↘'};
+function pintarTarjeta(){
+  const card = $('#lab-card');
+  if(!curMz || !juego) return;
+  if(juego.done){
+    card.innerHTML = '<div class="lc-fin">🏁 ¡Llegaste a FIN!</div><button type="button" class="lab-op lc-re" data-accion="reiniciar">↺ Jugar otra vez</button>';
+    return;
+  }
+  const nd = curMz.nodes[juego.cur], q = nd.q;
+  const cierra = q.qh.includes('¿') && !q.qh.includes('?') ? '?' : '';
+  card.innerHTML = '<div class="lc-head"><span class="lc-badge">' + nd.letter + '</span><span>Casilla ' + nd.letter + ' · errores: ' + juego.errors + '</span></div>'
+    + '<div class="lc-q">' + q.qh + '</div>'
+    + (q.fo ? '<div class="lc-fo">' + q.fo + cierra + '</div>' : '')
+    + (q.ft ? '<div class="lc-ft">' + q.ft + '</div>' : '')
+    + '<div class="lc-ops">' + nd.edges.map(e => '<button type="button" class="lab-op" data-e="' + nd.u + '-' + e.to + '" data-u="' + nd.u + '"><span class="lc-dir" aria-hidden="true">' + FLECHA[e.k] + '</span><span>' + e.lab.h + '</span></button>').join('') + '</div>';
+}
 function clicJuego(ev){
-  if(vista !== 'play' || !juego || juego.done || !curMz) return;
-  const b = ev.target.closest('.el'); if(!b) return;
+  if(vista !== 'play' || !juego || !curMz) return;
+  if(ev.target.closest('[data-accion="reiniciar"]')){ reiniciarJuego(); return; }
+  if(juego.done) return;
+  const b = ev.target.closest('.el, .lab-op'); if(!b || !b.dataset.e) return;
   const u = +b.dataset.u; if(u !== juego.cur) return;
   const v = +b.dataset.e.split('-')[1];
   const e = curMz.nodes[u].edges.find(x => x.to === v);
   if(!e) return;
   if(!juego.t0) juego.t0 = Date.now();
-  if(e.ok){ juego.cur = v; juego.path.push(v); if(v === curMz.fin) juego.done = true; pintarJuego(); }
-  else { juego.errors++; pintarJuego(); b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); }
+  const desdeTarjeta = b.classList.contains('lab-op');
+  if(e.ok){
+    juego.cur = v; juego.path.push(v); if(v === curMz.fin) juego.done = true;
+    pintarJuego();
+    // el foco pasa a la primera salida de la nueva casilla (teclado)
+    const sig = desdeTarjeta ? $('#lab-card .lab-op') : $('#lab-stage .el.hot');
+    if(sig) sig.focus();
+  } else {
+    juego.errors++; pintarJuego();
+    const mal = desdeTarjeta ? $('#lab-card .lab-op[data-e="' + b.dataset.e + '"]') : b;
+    const enHoja = $('#lab-stage .el[data-e="' + b.dataset.e + '"]');
+    [mal, enHoja].forEach(x => { if(x){ x.classList.remove('bad'); void x.offsetWidth; x.classList.add('bad'); } });
+    if(mal && desdeTarjeta) mal.focus();
+  }
 }
-function reiniciarJuego(){ if(!curMz) return; juego = {cur:0, errors:0, t0:0, path:[0], done:false}; pintarJuego(); }
+function reiniciarJuego(){
+  if(!curMz) return;
+  juego = {cur:0, errors:0, t0:0, path:[0], done:false};
+  $$('#lab-stage .el.bad, #lab-card .bad').forEach(b => b.classList.remove('bad'));
+  pintarJuego();
+}
 
 /* ----- pantalla completa ----- */
 function esPantallaCompleta(){
@@ -841,11 +943,12 @@ function comprobarRuta(){
   const clave = curMz.path.filter(u => u !== curMz.fin).map(u => curMz.nodes[u].letter);
   const m = $('#lab-routemsg');
   if(!t.length){ m.textContent = 'Escribe la ruta, p. ej. ' + clave.slice(0, 3).join(' ') + '…'; m.style.color = 'var(--dimmer)'; return; }
-  if(t.join('') === clave.join('')){ m.textContent = '✔ Ruta correcta'; m.style.color = 'var(--ok)'; return; }
+  if(t.join('') === clave.join('')){ m.textContent = '✔ Ruta correcta'; m.style.color = 'var(--ok-t)'; return; }
   let i = 0; while(i < t.length && i < clave.length && t[i] === clave[i]) i++;
   m.textContent = i >= clave.length ? '✖ Sobran casillas después del paso ' + clave.length
+    : i >= t.length ? '✖ Ruta incompleta: faltan casillas desde el paso ' + (i+1)
     : '✖ La ruta no coincide (primer desvío en el paso ' + (i+1) + ')';
-  m.style.color = 'var(--err)';
+  m.style.color = 'var(--err-t)';
 }
 
 /* ----- imprimir ----- */
@@ -884,9 +987,9 @@ function prepararImpresion(){
   if($('#lab-withkeys').checked){
     mzs.forEach((mz, i) => {
       const sh = hoja(mz, c, {key:true, label: 'Clave · código ' + c.seed + ' · versión ' + (i+1)});
-      const s = Math.min(560/sh.W, (PAG_H - 40)/sh.H);
+      const s = Math.min(640/sh.W, (PAG_H - 40)/sh.H);
       const pp = document.createElement('div'); pp.className = 'lab-pp keypage';
-      pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · código ' + esc(c.seed) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
+      pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom-hoja.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · código ' + esc(c.seed) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
       const kb = pp.querySelector('.kb'); kb.appendChild(envolver(sh, s));
       const tw = document.createElement('div'); tw.className = 'kt-wrap'; tw.innerHTML = tablaClave(mz); kb.appendChild(tw);
       root.appendChild(pp);
@@ -925,6 +1028,7 @@ function finImpresion(){
 /* ----- controles ----- */
 function llenarVersiones(){
   const n = Math.max(1, Math.min(8, parseInt($('#lab-nver').value, 10) || 1)), sel = $('#lab-vsel'), keep = +sel.value || 0;
+  $('#lab-nver').value = n; // muestra el valor real usado (1 a 8)
   sel.innerHTML = ''; for(let i=0;i<n;i++) sel.insertAdjacentHTML('beforeend', '<option value="' + i + '">Versión ' + (i+1) + '</option>');
   sel.value = String(Math.min(keep, n-1));
 }
@@ -947,7 +1051,7 @@ function init(){
   $('#lab-nver').addEventListener('change', () => { llenarVersiones(); render(); });
   $('#lab-btn-seed').addEventListener('click', () => { $('#lab-seed').value = rndSeed(); render(); });
   $$('#lab-seg button').forEach(b => b.addEventListener('click', () => {
-    vista = b.dataset.view; $$('#lab-seg button').forEach(x => x.classList.toggle('on', x === b));
+    vista = b.dataset.view; $$('#lab-seg button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     if(vista !== 'play' && esPantallaCompleta()) salirPantallaCompleta();
     render();
   }));
@@ -958,6 +1062,8 @@ function init(){
   $('#lab-fs-btn').addEventListener('click', entrarPantallaCompleta);
   $('#lab-fs-exit').addEventListener('click', salirPantallaCompleta);
   $('#lab-restart').addEventListener('click', reiniciarJuego);
+  $('#lab-restart2').addEventListener('click', reiniciarJuego);
+  $('#lab-card').addEventListener('click', clicJuego);
   document.addEventListener('fullscreenchange', cambioPantallaCompleta);
   document.addEventListener('webkitfullscreenchange', cambioPantallaCompleta);
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('#lab-playwrap').classList.contains('pseudo-fs')) salirPantallaCompleta(); });
