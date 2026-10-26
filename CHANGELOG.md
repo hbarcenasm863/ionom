@@ -21,6 +21,24 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Banco ampliado +20 % o más en cada tipo** (`banco.js`: de 560 a 681 entradas). Lo usan el Juego, el Generador, el Generador Docente y los Laberintos:
+
+  | Grupo | Antes | Ahora |
+  |---|---|---|
+  | Óxidos básicos | 41 | 50 |
+  | Anhídridos | 35 | 42 |
+  | Hidruros | 25 | 30 |
+  | Ácidos hídricos | 9 | 10 |
+  | Hidróxidos | 35 | 42 |
+  | Ácidos oxácidos | 42 | 51 |
+  | Sales binarias | 98 | 119 |
+  | Sales oxigenadas | 73 | 89 |
+  | Sales ácidas | 42 | 51 |
+  | Tipos de reacción | 69 | 85 |
+  | Balanceo | 50 | 61 |
+  | Mol y masa molar | 41 | 51 |
+
+  Todas las reacciones y ecuaciones nuevas quedaron verificadas como balanceadas, con coeficientes mínimos, y las masas molares se recalcularon. Los ácidos hídricos son una familia cerrada: solo se agregó HSCN (ácido sulfocianhídrico), porque los demás ya estaban. Se eliminó un duplicado que ya existía en balanceo («P + O₂ → P₂O₅» aparecía dos veces).
 - **Ácidos oxácidos y sales oxigenadas sin nomenclatura sistemática** (decisión del docente: se enseñan solo con la Tradicional, y Stock cuando corresponde). `banco.js` copiaba el nombre tradicional en el campo sistemático de los 42 oxácidos y las 73 oxisales («sulfato cúprico» como «Sistemática»); ese campo quedó vacío. Por eso la tabla del Generador ya muestra «—» en la columna Sistemática, la retroalimentación del Juego ya no dice «Sistemática: sulfato cúprico», y nunca se pide su nombre sistemático en ningún módulo.
 - **Auditoría exacta de distractores (399 compuestos, todos los sistemas)**. Se corrigió:
   - **Distractores que en realidad eran correctos**: «sulfuro de dihidrógeno» para H₂S (ahora se acepta como sinónimo), «ácido silícico» para H₄SiO₄ (aceptado para ambas fórmulas) y «Óxido ácido» para MnO₂, SnO₂, PbO₂ y otros anfóteros (ahora se acepta).

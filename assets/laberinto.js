@@ -344,7 +344,7 @@ const NA = 6.022e23, VM = 22.4;
 const NV = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
 const FACT = [0.1, 0.25, 0.5, 1.5, 2, 3, 4, 5, 10];
 const GASES = ['O₂','N₂','H₂','Cl₂','CO₂','CO','SO₂','NH₃','CH₄','He'];
-const CARGA_ANION = {F:1,Cl:1,Br:1,I:1,S:2,Se:2,N:3,P:3,OH:1,SO4:2,SO3:2,NO3:1,NO2:1,PO4:3,CO3:2,ClO4:1,ClO3:1,ClO2:1,ClO:1,BrO3:1,IO3:1,MnO4:1,CrO4:2,Cr2O7:2,SiO3:2,HCO3:1,HSO4:1,H2PO4:1,HPO4:2};
+const CARGA_ANION = {F:1,Cl:1,Br:1,I:1,S:2,Se:2,N:3,P:3,OH:1,SO4:2,SO3:2,NO3:1,NO2:1,PO4:3,CO3:2,ClO4:1,ClO3:1,ClO2:1,ClO:1,BrO3:1,IO3:1,MnO4:1,CrO4:2,Cr2O7:2,SiO3:2,HCO3:1,HSO4:1,H2PO4:1,HPO4:2,HS:1,HSO3:1,S2O3:2};
 
 // Compuestos que el banco clasifica como sal o hidróxido pero que en
 // bachillerato no se tratan como iónicos que se disocian.
@@ -418,7 +418,7 @@ const FAM_ANION = [['NO3','NO2'],['SO4','SO3','HSO4'],['ClO4','ClO3','ClO2','ClO
 // Estados de oxidación que se enseñan en bachillerato para los elementos
 // cuyo listado en ELEMENTS (juego.html) es el exhaustivo (Cl +2/+4/+6, Mn +1…):
 // sirven para descartar fórmulas imposibles en los distractores.
-const OX_ESCOLAR = {Cl:[-1,1,3,5,7], Br:[-1,1,3,5,7], I:[-1,1,3,5,7], F:[-1], S:[-2,4,6], Se:[-2,4,6], Te:[-2,4,6],
+const OX_ESCOLAR = {Cl:[-1,1,3,5,7], Br:[-1,1,3,5,7], I:[-1,1,3,5,7], F:[-1], S:[-2,2,4,6], Se:[-2,2,4,6], Te:[-2,2,4,6],
   N:[-3,1,2,3,4,5], P:[-3,3,5], As:[-3,3,5], Sb:[3,5], C:[-4,2,4], Si:[4], B:[3], Cr:[2,3,6], Mn:[2,3,4,6,7], V:[2,3,4,5]};
 function oxDe(sym){
   if(OX_ESCOLAR[sym]) return OX_ESCOLAR[sym];

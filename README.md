@@ -19,7 +19,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `balanceo.html` | Balanceo | Balanceo de ecuaciones por tanteo |
 | `balanceo-avanzado.html` | Balanceo avanzado | Balanceo algebraico y por óxido-reducción |
 | `estequiometria.html` | Estequiometría | Cálculos estequiométricos con cadena de factores de conversión |
-| `banco.js` | Banco | 457 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) |
+| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) |
 | `ionom-analytics.gs` | Registro | Google Apps Script para registrar resultados del Modo Estudiante en Google Sheets |
 
 ## Funciones inorgánicas cubiertas
