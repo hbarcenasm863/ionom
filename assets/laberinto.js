@@ -265,9 +265,16 @@ function genNom(forma, r, o){
       const nomL = n => L(esc(cap(n)), 'T:' + normNombre(n));
       const cands = [];
       const mismos = banco().filter(x => x.group === g && aAscii(x.formula) !== f);
-      const mismoEl = mismos.filter(x => Object.keys(parseF(x.formula))[0] === Object.keys(parseF(f))[0]);
+      const mismoEl = mismos.filter(x => elemClave(x.formula, g) === elemClave(f, g));
       // distractores SOLO del mismo sistema: mezclar sistemas regalaba la respuesta
       const cercanos = variantesNombre(nombre).map(nomL);
+      // ácidos: nombres reales de los otros ácidos del banco con el MISMO
+      // elemento central (H₃AsO₄ → ácido arsenioso, H₃AsO₃)
+      if(g === 'ac-ox' || g === 'ac-hid'){
+        const ce = centralAcido(f);
+        if(ce) banco().filter(x => (x.group === 'ac-ox' || x.group === 'ac-hid') && aAscii(x.formula) !== f && centralAcido(aAscii(x.formula)) === ce)
+          .forEach(x => { const n = nombreSis(x, s); if(n) cercanos.push(nomL(n)); });
+      }
       // nombres reales (mismo sistema) de las fórmulas vecinas: SnH₂ para SnH₄
       variantesFormula(c).forEach(fv => (indice().porFormulaEntradas[fv] || []).forEach(x => { const n = nombreSis(x, s); if(n) cercanos.push(nomL(n)); }));
       mismoEl.forEach(x => { const n = nombreSis(x, s); if(n) cercanos.push(nomL(n)); });
@@ -290,7 +297,7 @@ function genNom(forma, r, o){
     const fL = x => L(o.color ? formulaHTML(x, g) : formulaHTML(x), 'F:' + aAscii(x));
     const cands = [];
     const mismos = banco().filter(x => x.group === g && aAscii(x.formula) !== f);
-    const mismoEl = mismos.filter(x => Object.keys(parseF(x.formula))[0] === Object.keys(parseF(f))[0]);
+    const mismoEl = mismos.filter(x => elemClave(x.formula, g) === elemClave(f, g));
     const cercanos = variantesFormula(c).map(fL);
     mismoEl.forEach(x => cercanos.push(fL(x.formula)));
     // mismos elementos en otra proporción (FeCl₂ / FeCl₃)
@@ -438,9 +445,14 @@ function variantesFormula(c){
   out.delete(s);
   return [...out].filter(x => /^[A-Z(]/.test(x) && masaMolar10(x) != null);
 }
+// Elemento central de un ácido (el único distinto de H y O), o null
+const centralAcido = f => { const e = Object.keys(parseF(f)).filter(x => x !== 'H' && x !== 'O'); return e.length === 1 ? e[0] : null; };
+// Elemento que define «el mismo compuesto, otra variante»: en los ácidos
+// el elemento central (todos empiezan por H); en el resto, el primero (metal)
+const elemClave = (f, g) => (g === 'ac-ox' || g === 'ac-hid') ? centralAcido(f) : Object.keys(parseF(f))[0];
 const OXW = ['monóxido','dióxido','trióxido','tetraóxido','pentaóxido','hexaóxido','heptaóxido'];
 // Cada lista: [nombre del compuesto, distractores cercanos…] (el primero es la clave)
-const FAM_NOMBRE = [['nitrato','nitrito'],['nitrito','nitrato'],['sulfato','sulfito','bisulfato'],['sulfito','sulfato','sulfuro'],['perclorato','clorato','clorito','hipoclorito'],['clorato','perclorato','clorito','hipoclorito'],['clorito','clorato','hipoclorito','perclorato'],['hipoclorito','clorito','clorato','cloruro'],['carbonato','bicarbonato'],['bicarbonato','carbonato'],['fosfato','fosfito'],['cloruro','clorato','clorito','hipoclorito'],['sulfuro','sulfito','sulfato'],['bromuro','bromato','hipobromito'],['yoduro','yodato','hipoyodito'],['cromato','dicromato'],['dicromato','cromato'],['permanganato','manganato'],
+const FAM_NOMBRE = [['nitrato','nitrito'],['nitrito','nitrato'],['sulfato','sulfito','bisulfato'],['sulfito','sulfato','sulfuro'],['perclorato','clorato','clorito','hipoclorito'],['clorato','perclorato','clorito','hipoclorito'],['clorito','clorato','hipoclorito','perclorato'],['hipoclorito','clorito','clorato','cloruro'],['carbonato','bicarbonato'],['bicarbonato','carbonato'],['fosfato','fosfito'],['cloruro','clorato','clorito','hipoclorito'],['sulfuro','sulfito','sulfato'],['bromuro','bromato','hipobromito'],['yoduro','yodato','hipoyodito'],['fluoruro','fluorato','hipofluorito'],['seleniuro','selenito','selenato'],['telururo','telurito','telurato'],['cianuro','cianato'],['azida','nitruro','nitrito'],['cromato','dicromato'],['dicromato','cromato'],['permanganato','manganato'],
   // confusiones clásicas entre funciones con el mismo metal
   ['hidruro','hidróxido','óxido'],['hidróxido','óxido','hidruro','peróxido'],['óxido','peróxido','hidróxido'],
   // ácidos: hídrico ↔ oxácidos del mismo no metal
@@ -448,7 +460,20 @@ const FAM_NOMBRE = [['nitrato','nitrito'],['nitrito','nitrato'],['sulfato','sulf
   ['ácido clórico','ácido perclórico','ácido cloroso','ácido hipocloroso'],['ácido cloroso','ácido clórico','ácido hipocloroso','ácido perclórico'],['ácido hipocloroso','ácido cloroso','ácido clórico','ácido clorhídrico'],
   ['ácido sulfhídrico','ácido sulfúrico','ácido sulfuroso'],['ácido sulfúrico','ácido sulfuroso','ácido sulfhídrico'],['ácido sulfuroso','ácido sulfúrico','ácido sulfhídrico'],
   ['ácido bromhídrico','ácido brómico','ácido bromoso'],['ácido yodhídrico','ácido yódico','ácido yodoso'],['ácido fluorhídrico','ácido clorhídrico','ácido bromhídrico'],
-  ['ácido nítrico','ácido nitroso'],['ácido nitroso','ácido nítrico'],['ácido fosfórico','ácido fosforoso'],['ácido fosforoso','ácido fosfórico'],['ácido carbónico','ácido carbonoso']];
+  ['ácido nítrico','ácido nitroso'],['ácido nitroso','ácido nítrico'],['ácido fosfórico','ácido fosforoso'],['ácido fosforoso','ácido fosfórico'],
+  // ácidos con pocos o ningún «hermano» del mismo elemento en banco.js:
+  // mismo elemento con otra terminación o prefijo (-oso/-ico, per-, hipo-,
+  // orto-, di-), bien escritos
+  ['ácido cianhídrico','ácido ciánico','ácido cianoso'],['ácido carbónico','ácido carbonoso','ácido percarbónico'],
+  ['ácido bórico','ácido boroso','ácido perbórico'],['ácido silícico','ácido ortosilícico','ácido silicoso'],['ácido ortosilícico','ácido silícico','ácido metasilícico'],
+  ['ácido crómico','ácido dicrómico','ácido cromoso'],['ácido dicrómico','ácido crómico','ácido cromoso'],
+  ['ácido permangánico','ácido mangánico','ácido manganoso'],['ácido mangánico','ácido permangánico','ácido manganoso'],
+  ['ácido arsénico','ácido arsenioso','ácido hipoarsenioso'],['ácido arsenioso','ácido arsénico','ácido hipoarsenioso'],
+  ['ácido antimónico','ácido antimonioso','ácido hipoantimonioso'],['ácido antimonioso','ácido antimónico','ácido hipoantimonioso'],
+  ['ácido germánico','ácido germanioso','ácido pergermánico'],['ácido vanádico','ácido vanadioso','ácido hipovanadioso'],
+  ['ácido molíbdico','ácido molibdoso','ácido permolíbdico'],['ácido túngstico','ácido tungstoso','ácido pertúngstico'],
+  ['ácido selénico','ácido selenioso','ácido selenhídrico'],['ácido selenioso','ácido selénico','ácido selenhídrico'],
+  ['ácido telúrico','ácido teluroso','ácido telurhídrico'],['ácido teluroso','ácido telúrico','ácido telurhídrico']];
 // pares -oso/-ico del nombre tradicional del metal (bien escritos)
 const ADJ_METAL = [['ferroso','férrico'],['cuproso','cúprico'],['plumboso','plúmbico'],['estannoso','estánnico'],['cobaltoso','cobáltico'],['niqueloso','niquélico'],['mercurioso','mercúrico'],['auroso','áurico'],['cromoso','crómico'],['manganoso','mangánico'],['platinoso','platínico'],['vanadioso','vanádico']];
 function variantesNombre(nombre){
@@ -469,6 +494,9 @@ function variantesNombre(nombre){
   if(mp && !w){ const i = PREF.indexOf(mp[1]); [i-1, i+1, i+2].filter(j => j >= 0 && j < PREF.length).forEach(j => out.add(PREF[j] + n.slice(mp[1].length))); }
   const md = n.match(/ de (tetra|penta|hexa|mono|tri|di)(?=[a-záéíóú])/);
   if(md){ const i = PREF.indexOf(md[1]); [i-1, i+1].filter(j => j >= 0).forEach(j => out.add(n.replace(' de ' + md[1], ' de ' + (j === 0 ? '' : PREF[j])))); }
+  // «… de hidrógeno» ↔ «… de dihidrógeno» (sistemáticos de los hídricos)
+  if(/ de hidrógeno$/.test(n)){ out.add(n.replace(/ de hidrógeno$/, ' de dihidrógeno')); out.add(n.replace(/ de hidrógeno$/, ' de trihidrógeno')); }
+  else if(/ de dihidrógeno$/.test(n)){ out.add(n.replace(/ de dihidrógeno$/, ' de hidrógeno')); out.add(n.replace(/ de dihidrógeno$/, ' de trihidrógeno')); }
   FAM_NOMBRE.forEach(fam => { const a = fam[0]; if(n === a || n.startsWith(a + ' ')) fam.slice(1).forEach(b => out.add(b + n.slice(a.length))); });
   ADJ_METAL.forEach(([o, i]) => { const re = w => new RegExp('(^|\\s)' + w + '(?=\\s|$)'); if(re(o).test(n)) out.add(n.replace(re(o), '$1' + i)); else if(re(i).test(n)) out.add(n.replace(re(i), '$1' + o)); });
   out.delete(n);
@@ -875,6 +903,9 @@ const textoRuta = mz => mz.path.map(u => u === mz.fin ? 'FIN' : mz.nodes[u].lett
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 let vista = 'sheet', curMz = null, curCfg = null, curSheet = null, juego = null, listo = false;
 
+// Hasta 40 versiones: una por estudiante en un curso completo (antes el
+// tope era 8 y pedir 23 dejaba 8 sin avisar).
+const MAX_VERSIONES = 40;
 const rndSeed = () => Math.random().toString(36).slice(2, 6);
 const seedOf = (c, i) => c.seed + '-' + (i+1);
 
@@ -882,7 +913,7 @@ function getCfg(){
   const mode = ($('input[name="lab-mode"]:checked') || {}).value || 'nom';
   const [C, R] = $('#lab-size').value.split('x').map(Number);
   const c = {mode, R, C, title: $('#lab-title').value.trim() || DEF[mode], seed: $('#lab-seed').value.trim().replace(/-\d+$/, '') || 'ionom',
-    nver: Math.max(1, Math.min(8, parseInt($('#lab-nver').value, 10) || 1)),
+    nver: Math.max(1, Math.min(MAX_VERSIONES, parseInt($('#lab-nver').value, 10) || 1)),
     hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value};
   if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de ejercicio.'; }
   if(mode === 'nom'){
@@ -1182,8 +1213,8 @@ function finImpresion(){
 
 /* ----- controles ----- */
 function llenarVersiones(){
-  const n = Math.max(1, Math.min(8, parseInt($('#lab-nver').value, 10) || 1)), sel = $('#lab-vsel'), keep = +sel.value || 0;
-  $('#lab-nver').value = n; // muestra el valor real usado (1 a 8)
+  const n = Math.max(1, Math.min(MAX_VERSIONES, parseInt($('#lab-nver').value, 10) || 1)), sel = $('#lab-vsel'), keep = +sel.value || 0;
+  $('#lab-nver').value = n; // muestra el valor real usado (1 a MAX_VERSIONES)
   sel.innerHTML = ''; for(let i=0;i<n;i++) sel.insertAdjacentHTML('beforeend', '<option value="' + i + '">Versión ' + (i+1) + '</option>');
   sel.value = String(Math.min(keep, n-1));
 }

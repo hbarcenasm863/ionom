@@ -21,6 +21,8 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Ácidos con distractores del mismo elemento**: los 51 ácidos del banco reciben como salidas falsas otros ácidos reales del mismo elemento central (H₃AsO₄ → ácido arsenioso) y, para los que no tienen «hermanos» en el banco, variantes con otra terminación o prefijo (ácido tungstoso, pertúngstico; ácido ciánico, cianoso; «fluoruro de dihidrógeno»).
+- **Hasta 40 versiones de laberinto** (antes el tope era 8 y, al pedir 23, se quedaba en 8 sin avisar).
 - **Cada rótulo junto a su casilla de origen**: el rótulo va cerca del inicio de la flecha y no en la mitad, para que no parezca una opción de la casilla a la que llega.
 - **Licencia unificada: CC BY-NC 4.0** (Atribución – No comercial). El pie de 8 páginas decía CC BY-SA 4.0, mientras que el README y el certificado del Juego decían CC BY-NC 4.0; ahora todo dice CC BY-NC 4.0. Además, el pie de cada hoja generada (laberintos, guías, talleres y evaluaciones) lleva «© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0».
 - **Generador — taller que no se generaba**: con «Todos los grupos» + «Todos (diversos)» la página fallaba sin generar nada, porque intentaba nombrar reacciones y ecuaciones de balanceo. Ahora esos tipos usan solo compuestos con nombre.
