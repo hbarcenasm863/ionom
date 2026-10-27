@@ -618,16 +618,27 @@ function bloqueSesionPrevios(F, rngFn){
     const t = temasData.find(x=>x.id===tid);
     if(!t || !t.previos) return;
     const p = t.previos;
-    let html = '<div class="sect-previos"><h3>'+t.titulo+'</h3>';
-    if(p.curiosos && p.curiosos.length) html += '<p class="curioso">💡 <strong>¿Sabías que…?</strong> '+p.curiosos[Math.floor(rngFn()*p.curiosos.length)]+'</p>';
+    // Antes se armaba un solo bloque gigante por tema (título + las 4
+    // piezas pegadas, ~300px) -- con varios temas marcados, ese bloque no
+    // cabía dos veces completo en lo que quedaba de hoja y el relleno
+    // elástico tapaba el sobrante con una cuadrícula de Notas grande en
+    // vez de dejar fluir ahí la pieza del siguiente tema (el bug
+    // reportado). Ahora cada pieza (curioso/contexto/cotidiano/
+    // activación) es su propio bloque, igual que ya hace
+    // bloqueSesionInfo() con la lectura de la Sesión 2.
+    const piezas = [];
+    if(p.curiosos && p.curiosos.length) piezas.push('<p class="curioso">💡 <strong>¿Sabías que…?</strong> '+p.curiosos[Math.floor(rngFn()*p.curiosos.length)]+'</p>');
     if(p.contexto && p.contexto.length){
       const c = p.contexto[Math.floor(rngFn()*p.contexto.length)];
-      html += '<p class="contexto"><strong>Contexto '+c.amb+':</strong> '+c.t+'</p>';
+      piezas.push('<p class="contexto"><strong>Contexto '+c.amb+':</strong> '+c.t+'</p>');
     }
-    if(p.cotidianos && p.cotidianos.length) html += '<p>'+p.cotidianos[Math.floor(rngFn()*p.cotidianos.length)]+'</p>';
-    if(p.activacion && p.activacion.length) html += '<p class="activacion"><strong>Antes de empezar:</strong> '+p.activacion[Math.floor(rngFn()*p.activacion.length)]+'</p>';
-    html += '</div>';
-    out.push({html:html, esMultiple:false});
+    if(p.cotidianos && p.cotidianos.length) piezas.push('<p>'+p.cotidianos[Math.floor(rngFn()*p.cotidianos.length)]+'</p>');
+    if(p.activacion && p.activacion.length) piezas.push('<p class="activacion"><strong>Antes de empezar:</strong> '+p.activacion[Math.floor(rngFn()*p.activacion.length)]+'</p>');
+    if(!piezas.length) piezas.push('');
+    piezas.forEach(function(pieza, i){
+      const html = '<div class="sect-previos">'+(i===0?'<h3>'+t.titulo+'</h3>':'')+pieza+'</div>';
+      out.push({html:html, esMultiple:false});
+    });
   });
   return out;
 }
@@ -1141,8 +1152,15 @@ async function generar(){
     });
     // Último recurso: la(s) hoja(s) donde ya no quedó nada más que subir
     // (normalmente solo la última de cada documento) se rellena con la
-    // cuadrícula elástica / bloque de Notas.
-    Object.values(grupos).forEach(function(hs){ hs.forEach(llenarHoja); });
+    // cuadrícula elástica / bloque de Notas -- salvo la rúbrica, que es
+    // una tabla de referencia para calificar, no un ejercicio: no
+    // necesita espacio de cuadrícula en blanco debajo, y casi siempre le
+    // sobra la mayor parte de su única hoja.
+    Object.keys(grupos).forEach(function(g){
+      const doc = documentos[parseInt(g,10)];
+      if(doc && doc.clase === 'rubrica') return;
+      grupos[g].forEach(llenarHoja);
+    });
     // Renumerar "página X de Y" por documento: compactar puede haber
     // cambiado cuántas hojas tiene cada uno.
     Object.values(grupos).forEach(function(hs){
