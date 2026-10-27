@@ -22,7 +22,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
 - **Nueva pestaña «🔤 Crucigramas»** en el Generador Docente, solo de nomenclatura y con los compuestos del banco:
-  - **Cuatro tipos de pista, mezclados en ronda**: fórmula → nombre completo («Nombra en Stock: FeCl₃» → CLORURODEHIERROIII), ion → nombre («Anión SO₄²⁻» → SULFATO, «Catión Fe³⁺» → FERRICO), completar el nombre y función química.
+  - **Cuatro tipos de pista, mezclados en ronda**: fórmula → nombre completo («Nombra en Stock: FeCl₃» → CLORURODEHIERROIII), ion → nombre («Anión SO₄²⁻» → SULFATO, «Nombre tradicional del catión Fe³⁺ (terminación -oso o -ico)» → FERRICO), completar el nombre y función química.
   - **Respuestas**: sin espacios ni tildes; la Ñ cuenta como letra y los romanos se escriben con letras.
   - **Verificación de cada crucigrama**: todas las palabras conectadas, ninguna palabra «accidental» al cruzarse y sin respuestas repetidas. Se descartan las pistas con más de una respuesta posible: nombres repetidos en el banco, compuestos con dos nombres en el mismo sistema, anfóteros y sistemáticos sin prefijo ambiguos.
   - **Hoja carta vertical** con logo, marca de agua, Nombre/Curso/Fecha y licencia. Si las pistas no caben, se reduce su letra.

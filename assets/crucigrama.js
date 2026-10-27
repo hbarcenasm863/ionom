@@ -150,7 +150,7 @@ function iones(){
   Object.entries(an).forEach(([k, ns]) => { if(ns.size !== 1) return; const [sym, q] = k.split('|'); const n = [...ns][0];
     lista.push({tipo:'ion', clave:'a:' + k, respuesta: palabra(n), solucion: n, pista: 'Nombre del anión <b class="fx">' + ion(sym, +q, '-') + '</b>'}); });
   Object.entries(cat).forEach(([k, ns]) => { if(ns.size !== 1) return; const [sym, q] = k.split('|'); const n = [...ns][0];
-    lista.push({tipo:'ion', clave:'k:' + k, respuesta: palabra(n), solucion: n, pista: 'Catión <b class="fx">' + ion(sym, +q, '+') + '</b> en nomenclatura tradicional (adjetivo)'}); });
+    lista.push({tipo:'ion', clave:'k:' + k, respuesta: palabra(n), solucion: n, pista: 'Nombre tradicional del catión <b class="fx">' + ion(sym, +q, '+') + '</b> (terminación -oso o -ico)'}); });
   lista.push({tipo:'ion', clave:'k:NH4', respuesta:'AMONIO', solucion:'amonio', pista:'Nombre del catión <b class="fx">NH₄⁺</b>'});
   _iones = {n: banco().length, lista};
   return _iones;
