@@ -21,6 +21,15 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Auditoría química de todo el banco (681 entradas)**. No hubo errores numéricos: reacciones y balanceos correctos con coeficientes mínimos, masas molares exactas. Se corrigió:
+  - **Prefijos que no coincidían con la fórmula**: BeH₂ → «dihidruro de berilio» y Be(OH)₂ → «dihidróxido de berilio». Antes, el Juego marcaba como incorrecta la respuesta bien escrita.
+  - **Juego**: ya acepta «monosulfuro»/«sulfuro», «monóxido»/«óxido» y «pentóxido»/«pentaóxido» como el mismo nombre (el banco usaba unas veces una forma y otras la otra). «Combustión» ahora es «compuesto orgánico + O₂ → CO₂ + H₂O», así que el etanol, la glucosa y el metanol quedan bien clasificados.
+  - **Nombres contradictorios**:
+    - MnO₂ («óxido mangánico», cuando en el banco «mangánico» es Mn³⁺) y V₂O₅ («óxido pervanádico» frente a «anhídrido vanádico») quedan solo como anhídridos, con su nombre Stock.
+    - HgOH sale del banco, porque el mercurio (I) es Hg₂²⁺.
+    - HPO₃ («ácido metafosfórico») sale por la regla de no usar formas meta-.
+    - En su lugar entran Mn₂O₃, PdO₂, Ti(OH)₄ y HCNO.
+  - **Explicaciones y datos**: una reacción repetida (rx-064) se cambió por otra. Se unificó «pentaóxido/heptaóxido», y el Stock de los metales de valencia fija quedó vacío como en el resto del banco. Se corrigieron explicaciones con errores (Bi₂O₃, Hg₂I₂, AlH₃, MnO, H₃PO₂, bal-008, bal-027, rx-017) y datos de contexto falsos o dudosos (CaCl₂ como antiácido, malaquita, aluminio «producido en Colombia», superfosfato, Cerrejón, minería de manganeso).
 - **Banco ampliado +20 % o más en cada tipo** (`banco.js`: de 560 a 681 entradas). Lo usan el Juego, el Generador, el Generador Docente y los Laberintos:
 
   | Grupo | Antes | Ahora |

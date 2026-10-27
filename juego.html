@@ -1136,6 +1136,15 @@ function norm(s){
   return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
     .replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').replace(/\s+/g,' ').trim();
 }
+// Para comparar NOMBRES: el banco escribe el prefijo «mono-» unas veces sí y
+// otras no («monosulfuro de cobalto» / «sulfuro de cobalto», «monóxido de
+// cobre» / «óxido de cobre») y alterna «pentóxido»/«pentaóxido». Ambas
+// formas son correctas, así que se igualan antes de comparar (antes una
+// respuesta bien escrita podía marcarse como incorrecta).
+function normNom(s){
+  return norm(s).replace(/(^|\s)monoxido/g,'$1oxido').replace(/(^|\s)mono(?=[a-z])/g,'$1')
+    .replace(/(penta|hepta|hexa|tetra)?(pent|hept|hex|tetr)oxido/g,(m,a,b)=>({pent:'penta',hept:'hepta',hex:'hexa',tetr:'tetra'}[b])+'oxido');
+}
 function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 // ── Inline fallback (used only if banco.js fails) ──
@@ -2847,28 +2856,28 @@ function checkInvert(el,chosen,correct){
 
 // ── isCorrect ──
 function isCorrect(input,q,mode){
-  const ni=norm(input);
+  const ni=normNom(input);
   const allNames=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[])].filter(Boolean);
   if(mode==='stock'){
     const stockNames=(q.stock||[]).filter(Boolean);
-    return stockNames.some(v=>norm(v)===ni);
+    return stockNames.some(v=>normNom(v)===ni);
   }
   if(mode==='sist'){
     const sistNames=(q.sist||[]).filter(Boolean);
-    return sistNames.some(v=>norm(v)===ni);
+    return sistNames.some(v=>normNom(v)===ni);
   }
   // ac-ox, sal-ox: curriculum requires only traditional nomenclature
-  if(q.group==='sal-ox'||q.group==='ac-ox') return (q.trad||[]).some(v=>norm(v)===ni);
+  if(q.group==='sal-ox'||q.group==='ac-ox') return (q.trad||[]).some(v=>normNom(v)===ni);
   // ac-hid: acepta "ácido ___hídrico" (trad, en solución) Y "___uro de
   // hidrógeno" (sist, gas/puro) — el propio mensaje de retroalimentación
   // del juego enseña ambas formas como válidas para ácidos hídricos.
-  if(q.group==='ac-hid') return [...(q.trad||[]),...(q.sist||[])].some(v=>norm(v)===ni);
+  if(q.group==='ac-hid') return [...(q.trad||[]),...(q.sist||[])].some(v=>normNom(v)===ni);
   // 'any' mode: accept all systems; also accept Colombian "óxido" variant for anhídridos
-  if(allNames.some(v=>norm(v)===ni)) return true;
+  if(allNames.some(v=>normNom(v)===ni)) return true;
   if(q.group==='anhid'){
     // Accept "óxido X" when banco only stored "anhídrido X" (and vice-versa)
     const alt=ni.replace(/^oxido\s+/,'anhidrido ').replace(/^anhidrido\s+/,'oxido ');
-    if(allNames.some(v=>norm(v)===alt)) return true;
+    if(allNames.some(v=>normNom(v)===alt)) return true;
   }
   return false;
 }
@@ -2995,7 +3004,7 @@ function endGame(){
 
 const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (hidrocarburo+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
@@ -3561,7 +3570,7 @@ const TIPO_RX_LABELS = {
   descomposicion: 'Descomposición  (AB → A + B)',
   'sus-simple': 'Sustitución simple  (A + BC → AC + B)',
   'sus-doble': 'Sustitución doble  (AB + CD → AD + CB)',
-  combustion: 'Combustión  (hidrocarburo + O₂ → CO₂ + H₂O)',
+  combustion: 'Combustión  (compuesto orgánico + O₂ → CO₂ + H₂O)',
   neutralizacion: 'Neutralización  (ácido + base → sal + H₂O)'
 };
 

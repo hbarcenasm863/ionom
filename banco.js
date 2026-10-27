@@ -219,15 +219,7 @@ const BANCO = [
     trad: ['óxido manganoso'],
     stock: ['óxido de manganeso (II)'],
     sist: ['óxido de manganeso'],
-    hint: 'Mn puede tener EO +2,+4,+7. EO=+2 (menor habitual) → -oso → manganoso.'
-  },
-  {
-    formula: 'MnO₂',
-    group: 'ox-bas', level: 'hard',
-    trad: ['óxido mangánico'],
-    stock: ['óxido de manganeso (IV)'],
-    sist: ['dióxido de manganeso'],
-    hint: 'Mn con EO=+4 entre +2 y +7. En tradicional hay ambigüedad; se acepta -ico para EO central.'
+    hint: "El Mn tiene varios EO (+2, +3, +4, +6, +7). Como catión, +2 es el menor → -oso → manganoso."
   },
   {
     formula: 'Cr₂O₃',
@@ -246,20 +238,12 @@ const BANCO = [
     hint: 'Ti con EO=+4 (el más estable). → -ico → titánico. Mineral: rutilo.'
   },
   {
-    formula: 'V₂O₅',
-    group: 'ox-bas', level: 'hard',
-    trad: ['óxido pervanádico'],
-    stock: ['óxido de vanadio (V)'],
-    sist: ['pentaóxido de divanadio'],
-    hint: 'V con EO=+5 (máximo de la serie hipo-oso/-oso/-ico/per-ico) → prefijo per- → pervanádico. 2(+5)+5(−2)=0.'
-  },
-  {
     formula: 'Bi₂O₃',
     group: 'ox-bas', level: 'hard',
     trad: ['óxido de bismuto'],
     stock: ['óxido de bismuto (III)'],
     sist: ['trióxido de dibismuto'],
-    hint: 'Bi³⁺ (valencia fija, +3) + O²⁻. Al no tener más de un EO común no lleva sufijo -oso/-ico. 2(+3)+3(−2)=0.'
+    hint: "Bi³⁺ (EO +3, el más común; el bismuto también tiene +5) + O²⁻. 2(+3)+3(−2)=0. Stock: óxido de bismuto (III)."
   },
   {
     formula: 'HgO',
@@ -958,7 +942,7 @@ const BANCO = [
     trad: ['hidróxido de bismuto'],
     stock: ['hidróxido de bismuto (III)'],
     sist: ['trihidróxido de bismuto'],
-    hint: 'Bi³⁺ es el EO más común del Bi. En trad. suele decirse hidróxido de bismuto.'
+    hint: "Bi³⁺ es el EO más común del Bi (también existe +5). En trad. suele decirse hidróxido de bismuto."
   },
   {
     formula: 'NH₄OH',
@@ -1895,7 +1879,7 @@ const BANCO = [
     group: 'anhid', level: 'medium',
     trad: ['anhídrido brómico'],
     stock: ['óxido de bromo (V)'],
-    sist: ['pentóxido de dibromo'],
+    sist: ["pentaóxido de dibromo"],
     hint: 'Br en EO +5 → brómico. 2Br + 5O → Br₂O₅.'
   },
   {
@@ -1903,7 +1887,7 @@ const BANCO = [
     group: 'anhid', level: 'hard',
     trad: ['anhídrido perbrómico'],
     stock: ['óxido de bromo (VII)'],
-    sist: ['heptóxido de dibromo'],
+    sist: ["heptaóxido de dibromo"],
     hint: 'Br en EO +7 (máximo) → per…ico. 2Br + 7O → Br₂O₇.'
   },
   {
@@ -1927,7 +1911,7 @@ const BANCO = [
     group: 'anhid', level: 'hard',
     trad: ['anhídrido peryódico'],
     stock: ['óxido de yodo (VII)'],
-    sist: ['heptóxido de diyodo'],
+    sist: ["heptaóxido de diyodo"],
     hint: 'I en EO +7 (máximo) → per…ico. 2I + 7O → I₂O₇.'
   },
   {
@@ -1960,7 +1944,7 @@ const BANCO = [
     formula: 'CsOH',
     group: 'base', level: 'easy',
     trad: ['hidróxido de cesio'],
-    stock: ['hidróxido de cesio'],
+    stock: [],
     sist: ['monohidróxido de cesio'],
     hint: 'Cs⁺ (valencia fija) + OH⁻ → CsOH; base fuerte del grupo 1. Valencia única → sin sufijo -oso/-ico.'
   },
@@ -1968,17 +1952,9 @@ const BANCO = [
     formula: 'Cd(OH)₂',
     group: 'base', level: 'easy',
     trad: ['hidróxido de cadmio'],
-    stock: ['hidróxido de cadmio'],
+    stock: [],
     sist: ['dihidróxido de cadmio'],
     hint: 'Cd²⁺ (valencia fija) + 2OH⁻ → Cd(OH)₂. Valencia única → sin sufijo -oso/-ico.'
-  },
-  {
-    formula: 'HgOH',
-    group: 'base', level: 'medium',
-    trad: ['hidróxido mercurioso'],
-    stock: ['hidróxido de mercurio (I)'],
-    sist: ['monohidróxido de mercurio'],
-    hint: 'Hg⁺ (EO menor) → mercurioso. Hg⁺ + OH⁻ → HgOH.'
   },
 
   // ── ÁCIDOS OXÁCIDOS (banco adicional) ──
@@ -2011,7 +1987,7 @@ const BANCO = [
     formula: 'LiF',
     group: 'sal-bin', level: 'easy',
     trad: ['fluoruro de litio'],
-    stock: ['fluoruro de litio'],
+    stock: [],
     sist: ['monofluoruro de litio'],
     hint: 'Li⁺ (valencia fija) + F⁻ → LiF; sal binaria de flúor y litio. Valencia única → sin sufijo -oso/-ico.'
   },
@@ -2019,7 +1995,7 @@ const BANCO = [
     formula: 'BaI₂',
     group: 'sal-bin', level: 'easy',
     trad: ['yoduro de bario'],
-    stock: ['yoduro de bario'],
+    stock: [],
     sist: ['diyoduro de bario'],
     hint: 'Ba²⁺ (valencia fija) + 2I⁻ → BaI₂. Valencia única → sin sufijo -oso/-ico.'
   },
@@ -2027,7 +2003,7 @@ const BANCO = [
     formula: 'AlF₃',
     group: 'sal-bin', level: 'easy',
     trad: ['fluoruro de aluminio'],
-    stock: ['fluoruro de aluminio'],
+    stock: [],
     sist: ['trifluoruro de aluminio'],
     hint: 'Al³⁺ (valencia fija) + 3F⁻ → AlF₃. Valencia única → sin sufijo -oso/-ico.'
   },
@@ -2035,7 +2011,7 @@ const BANCO = [
     formula: 'ZnS',
     group: 'sal-bin', level: 'easy',
     trad: ['sulfuro de zinc'],
-    stock: ['sulfuro de zinc'],
+    stock: [],
     sist: ['monosulfuro de zinc'],
     hint: 'Zn²⁺ (valencia fija) + S²⁻ → ZnS. Valencia única → sin sufijo -oso/-ico.'
   },
@@ -2045,7 +2021,7 @@ const BANCO = [
     trad: ['yoduro mercurioso'],
     stock: ['yoduro de mercurio (I)'],
     sist: ['diyoduro de dimercurio'],
-    hint: 'Hg⁺ (EO menor) → mercurioso. 2Hg⁺ + 2I⁻ → Hg₂I₂.'
+    hint: "El mercurio (I) existe como ion dímero Hg₂²⁺ (EO +1 cada Hg) → mercurioso. Hg₂²⁺ + 2I⁻ → Hg₂I₂."
   },
   {
     formula: 'HgI₂',
@@ -2252,7 +2228,7 @@ const BANCO = [
     group: 'reaccion', level: 'medium',
     ecuacion: 'NH₄Cl → NH₃ + HCl',
     tipo_rx: 'descomposicion',
-    hint: 'Una sal de amonio se descompone en gas amoníaco y ácido clorhídrico. AB → A + B.',
+    hint: "Una sal de amonio se descompone en gas amoníaco y cloruro de hidrógeno (gas). AB → A + B.",
     col: 'El cloruro de amonio (NH₄Cl) se usa en baterías y en metalurgia en Colombia.'
   },
   {
@@ -2261,7 +2237,7 @@ const BANCO = [
     ecuacion: '2Fe(OH)₃ → Fe₂O₃ + 3H₂O',
     tipo_rx: 'descomposicion',
     hint: 'El hidróxido de hierro (III) al calentarse se descompone en óxido y agua. AB → A + B.',
-    col: 'La herrumbre hidratada Fe(OH)₃ se convierte en Fe₂O₃ con el calor solar en estructuras colombianas.'
+    col: "Al calentar el hidróxido de hierro (III) se obtiene óxido de hierro (III), un pigmento rojo usado en pinturas y cerámica."
   },
 
   // -- Sustitución simple (8) --
@@ -2295,7 +2271,7 @@ const BANCO = [
     ecuacion: '2Al + 6HCl → 2AlCl₃ + 3H₂',
     tipo_rx: 'sus-simple',
     hint: 'El aluminio desplaza al H del HCl. A + BC → AC + B. Necesita balanceo cuidadoso.',
-    col: 'El aluminio producido en Colombia (Alumina S.A.) reacciona con ácidos liberando H₂.'
+    col: "El aluminio reacciona con ácidos como el muriático (HCl) y libera hidrógeno: por eso no se deben guardar ácidos en recipientes de aluminio."
   },
   {
     id: 'rx-023',
@@ -2509,7 +2485,7 @@ const BANCO = [
     ecuacion: '2HCl + Ca(OH)₂ → CaCl₂ + 2H₂O',
     tipo_rx: 'neutralizacion',
     hint: 'Ácido monoprótico + base divalente → sal + agua. 2 HCl neutralizan los 2 OH⁻ del Ca(OH)₂.',
-    col: 'El cloruro de calcio CaCl₂ se usa como antiácido estomacal y deshidratante en laboratorios colombianos.'
+    col: "El cloruro de calcio (CaCl₂) se usa como deshidratante en laboratorios y para controlar el polvo en vías destapadas."
   },
 
   // ─────────────────────────────────────────────
@@ -2586,7 +2562,7 @@ const BANCO = [
     ecuacion_sin_coef: 'CaO + H₂O → Ca(OH)₂',
     coeficientes: [1, 1, 1],
     especies: ['CaO', 'H₂O', 'Ca(OH)₂'],
-    hint: 'Ya balanceada: 1 Ca, 1 O+2 O=2 O(+), 2 H. Coeficientes: 1, 1, 1.',
+    hint: "Ya balanceada: Ca 1=1; O: 1 (CaO) + 1 (H₂O) = 2; H: 2=2. Coeficientes: 1, 1, 1.",
     col: 'La cal apagada Ca(OH)₂ se usa para encalar cultivos en el campo colombiano.'
   },
   {
@@ -2616,7 +2592,7 @@ const BANCO = [
     coeficientes: [4, 3, 2],
     especies: ['Al', 'O₂', 'Al₂O₃'],
     hint: 'Al₂O₃: 2 Al, 3 O. MCM(2,3)=6 → 2 Al₂O₃ → 4 Al; 3 O₂. Coeficientes: 4, 3, 2.',
-    col: 'El óxido de aluminio Al₂O₃ (alúmina) se refina en Colombia para obtener aluminio metálico.'
+    col: "El óxido de aluminio (alúmina) es la materia prima para obtener aluminio metálico por electrólisis."
   },
   {
     id: 'bal-012',
@@ -2761,7 +2737,7 @@ const BANCO = [
     ecuacion_sin_coef: 'K₂Cr₂O₇ + HCl → KCl + CrCl₃ + H₂O + Cl₂',
     coeficientes: [1, 14, 2, 2, 7, 3],
     especies: ['K₂Cr₂O₇', 'HCl', 'KCl', 'CrCl₃', 'H₂O', 'Cl₂'],
-    hint: 'Cr: +6→+3 (gana 3e⁻ cada uno, 6e⁻ total). Cl⁻→Cl₂ (pierde 1e⁻ cada par). Coeficientes: 1, 14, 2, 2, 7, 3.',
+    hint: "Cr: +6→+3 (gana 3e⁻ cada uno, 6e⁻ por K₂Cr₂O₇). Cada Cl⁻ pierde 1e⁻ (2e⁻ por cada Cl₂) → 3Cl₂. Coeficientes: 1, 14, 2, 2, 7, 3.",
     col: 'El dicromato de potasio K₂Cr₂O₇ se usa como oxidante en análisis de DQO en aguas residuales colombianas.'
   },
   {
@@ -2771,7 +2747,7 @@ const BANCO = [
     coeficientes: [1, 3, 3, 2],
     especies: ['Ca₃(PO₄)₂', 'H₂SO₄', 'CaSO₄', 'H₃PO₄'],
     hint: 'Ca: 3→3CaSO₄→3H₂SO₄. PO₄: 2→2H₃PO₄. Coeficientes: 1, 3, 3, 2.',
-    col: 'La roca fosfórica Ca₃(PO₄)₂ se trata con H₂SO₄ para producir superfosfato, fertilizante colombiano.'
+    col: "Al tratar la roca fosfórica con suficiente ácido sulfúrico se obtiene ácido fosfórico, base de muchos fertilizantes."
   },
   {
     id: 'bal-029',
@@ -2998,10 +2974,10 @@ const BANCO = [
   },
 
   // ── Hidruros adicionales ──
-  {formula:'AlH₃', group:'hidru',level:'medium', trad:['hidruro de aluminio'],  stock:[],                        sist:['trihidruro de aluminio'],   hint:'Al³⁺ + 3 H⁻. En todos los sistemas: hidruro de aluminio.'},
+  {formula:'AlH₃', group:'hidru',level:'medium', trad:['hidruro de aluminio'],  stock:[],                        sist:['trihidruro de aluminio'],   hint:"Al³⁺ + 3 H⁻. Al tiene valencia fija: tradicional «hidruro de aluminio»; sistemática «trihidruro de aluminio»."},
   // ── Sales binarias adicionales ──
-  {formula:'AgBr',   group:'sal-bin',level:'easy',   trad:['bromuro de plata'],   stock:['bromuro de plata (I)'],    sist:['bromuro de plata'],           hint:'Ag⁺ + Br⁻. Sensible a la luz (fotografía antigua).'},
-  {formula:'AgI',    group:'sal-bin',level:'easy',   trad:['yoduro de plata'],    stock:['yoduro de plata (I)'],     sist:['yoduro de plata'],            hint:'Ag⁺ + I⁻. Precipitado amarillo insoluble.'},
+  {formula:'AgBr',   group:'sal-bin',level:'easy',   trad:['bromuro de plata'],   stock:[],    sist:['bromuro de plata'],           hint:'Ag⁺ + Br⁻. Sensible a la luz (fotografía antigua).'},
+  {formula:'AgI',    group:'sal-bin',level:'easy',   trad:['yoduro de plata'],    stock:[],     sist:['yoduro de plata'],            hint:'Ag⁺ + I⁻. Precipitado amarillo insoluble.'},
   {formula:'BaS',    group:'sal-bin',level:'easy',   trad:['sulfuro de bario'],   stock:[],                          sist:['sulfuro de bario'],           hint:'Ba²⁺ + S²⁻. Ambos con valencia fija.'},
   {formula:'CaS',    group:'sal-bin',level:'easy',   trad:['sulfuro de calcio'],  stock:[],                          sist:['sulfuro de calcio'],          hint:'Ca²⁺ + S²⁻.'},
   {formula:'NaF',    group:'sal-bin',level:'easy',   trad:['fluoruro de sodio'],  stock:[],                          sist:['fluoruro de sodio'],          hint:'Na⁺ + F⁻. Presente en pastas dentales.'},
@@ -3045,7 +3021,7 @@ const BANCO = [
   {formula:'Ba(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de bario'],  stock:['hidrogenocarbonato de bario'],  sist:[], hint:'Ba²⁺ + 2 HCO₃⁻. Catión divalente, mismo patrón que el bicarbonato de calcio.'},
   {formula:'Sr(HCO₃)₂',group:'sal-ac',level:'medium',trad:['bicarbonato de estroncio'],stock:['hidrogenocarbonato de estroncio'],sist:[], hint:'Sr²⁺ + 2 HCO₃⁻. Igual razonamiento que el bicarbonato de calcio o magnesio.'},
   {formula:'NH₄HSO₄',group:'sal-ac',level:'medium', trad:['bisulfato de amonio'],   stock:['hidrogenosulfato de amonio'],   sist:[], hint:'NH₄⁺ + HSO₄⁻. El amonio actúa como catión de carga fija +1.'},
-  {formula:'Fe(HCO₃)₂',group:'sal-ac',level:'hard',  trad:['bicarbonato ferroso'],   stock:['hidrogenocarbonato de hierro (II)'],sist:[], hint:'Fe²⁺ (EO menor) + 2 HCO₃⁻ → bicarbonato ferroso. Responsable del "agua rojiza" en fuentes con hierro disuelto.'},
+  {formula:'Fe(HCO₃)₂',group:'sal-ac',level:'hard',  trad:['bicarbonato ferroso'],   stock:['hidrogenocarbonato de hierro (II)'],sist:[], hint:"Fe²⁺ (EO menor) + 2 HCO₃⁻ → bicarbonato ferroso. Disuelto en aguas subterráneas; al oxidarse forma Fe(OH)₃, que da el color rojizo."},
 
   // ── Ácidos hídricos: pseudohalógeno adicional ──
   {formula:'HN₃',    group:'ac-hid',level:'hard',   trad:['ácido hidrazoico'],      stock: [], sist: ['azida de hidrógeno'], hint:'H + N₃⁻ (azida). Pseudohalógeno; ácido hídrico poco común pero real, muy tóxico e inestable. IUPAC: azida de hidrógeno.'},
@@ -3067,13 +3043,13 @@ const BANCO = [
   {formula:'CdO', group:'ox-bas',level:'easy', trad:['óxido de cadmio'], stock:[], sist:['óxido de cadmio'], hint:'Cd²⁺ (valencia fija +2, igual que Zn²⁺) + O²⁻ → CdO.'},
 
   // ── Hidruros: el alcalinotérreo que faltaba ──
-  {formula:'BeH₂', group:'hidru',level:'easy', trad:['hidruro de berilio'], stock:[], sist:['hidruro de berilio'], hint:'Be²⁺ (grupo 2A, valencia fija +2) + 2H⁻ → BeH₂. Mismo patrón que el hidruro de magnesio.'},
+  {formula:'BeH₂', group:'hidru',level:'easy', trad:['hidruro de berilio'], stock:[], sist:["dihidruro de berilio"], hint:'Be²⁺ (grupo 2A, valencia fija +2) + 2H⁻ → BeH₂. Mismo patrón que el hidruro de magnesio.'},
 
   // ── Bases: el alcalinotérreo que faltaba ──
-  {formula:'Be(OH)₂', group:'base',level:'easy', trad:['hidróxido de berilio'], stock:[], sist:['hidróxido de berilio'], hint:'Be²⁺ (valencia fija +2) + 2OH⁻ → Be(OH)₂. Mismo patrón que el hidróxido de magnesio.'},
+  {formula:'Be(OH)₂', group:'base',level:'easy', trad:['hidróxido de berilio'], stock:[], sist:["dihidróxido de berilio"], hint:'Be²⁺ (valencia fija +2) + 2OH⁻ → Be(OH)₂. Mismo patrón que el hidróxido de magnesio.'},
 
   // ── Ácidos oxácidos: los 2 miembros que faltaban en familias ya vistas ──
-  {formula:'H₃PO₂', group:'ac-ox',level:'medium', trad:['ácido hipofosforoso'], stock:[], sist: [], hint:'H₃ + PO₂³⁻ (formal). P con EO=+1 → hipo-oso → hipofosforoso. Mismo patrón hipo-/-oso/-ico que el ácido sulfúrico/sulfuroso/hiposulfuroso.'},
+  {formula:'H₃PO₂', group:'ac-ox',level:'medium', trad:['ácido hipofosforoso'], stock:[], sist: [], hint:"P con EO=+1 → hipo-…-oso → hipofosforoso (fórmula formal H₃ + PO₂³⁻; en la realidad solo 1 H es ácido). Mismo patrón hipo-/-oso/-ico que el azufre."},
   {formula:'H₂MnO₄', group:'ac-ox',level:'hard', trad:['ácido mangánico'], stock:[], sist: [], hint:'H₂ + MnO₄²⁻ (manganato). Mn con EO=+6 → -ico → mangánico (EO+7 → per-ico → permangánico, ya visto).'},
 
   // ── Sales binarias: completar la parrilla alcalinos/alcalinotérreos × halógeno/azufre ──
@@ -3158,7 +3134,7 @@ const BANCO = [
 {formula:'Sb₂O₃',group:'anhid',level:'hard',trad:['anhídrido antimonioso'],stock:['óxido de antimonio (III)'],sist:['trióxido de diantimonio'],hint:'Sb con EO=+3 (menor). → -oso → antimonioso → anhídrido antimonioso.'},
 {formula:'Sb₂O₅',group:'anhid',level:'hard',trad:['anhídrido antimónico'],stock:['óxido de antimonio (V)'],sist:['pentaóxido de diantimonio'],hint:'Sb con EO=+5 (mayor). → -ico → antimónico → anhídrido antimónico.'},
 {formula:'GeO₂',group:'anhid',level:'hard',trad:['anhídrido germánico'],stock:['óxido de germanio (IV)'],sist:['dióxido de germanio'],hint:'Ge con EO=+4 (único EO común del Ge, como el Si). → -ico → germánico → anhídrido germánico.'},
-{formula:'V₂O₅',group:'anhid',level:'hard',trad:['anhídrido vanádico'],stock:['óxido de vanadio (V)'],sist:['pentaóxido de divanadio'],hint:'V con EO=+5 (el más estable del V, actúa como no metal). → -ico → vanádico → anhídrido vanádico.'},
+{formula:'V₂O₅',group:'anhid',level:'hard',trad:['anhídrido vanádico'],stock:["óxido de vanadio (V)"],sist:['pentaóxido de divanadio'],hint:'V con EO=+5 (el más estable del V, actúa como no metal). → -ico → vanádico → anhídrido vanádico.'},
 {formula:'AgH',group:'hidru',level:'hard',trad:['hidruro de plata'],stock:[],sist:['hidruro de plata'],hint:'Ag tiene valencia fija +1 (como catión simple). Ag⁺ + H⁻ → AgH. Nombre igual en los 3 sistemas.'},
 {formula:'CdH₂',group:'hidru',level:'hard',trad:['hidruro de cadmio'],stock:[],sist:['dihidruro de cadmio'],hint:'Cd tiene valencia fija +2. Cd²⁺ + 2H⁻ → CdH₂. Mismo patrón que el hidruro de zinc.'},
 {formula:'SnH₂',group:'hidru',level:'hard',trad:['hidruro estannoso'],stock:['hidruro de estaño (II)'],sist:['dihidruro de estaño'],hint:'Sn²⁺ (EO menor del Sn) → -oso → estannoso → hidruro estannoso.'},
@@ -3169,10 +3145,9 @@ const BANCO = [
 {"formula":"H₄SiO₄","group":"ac-ox","level":"hard","trad":["ácido ortosilícico"],"stock":[],"sist":[],"hint":"H₄ + SiO₄⁴⁻ (ortosilicato). Forma más hidratada del ácido silícico (H₂SiO₃); Si conserva EO=+4."},
 {"formula":"HVO₃","group":"ac-ox","level":"hard","trad":["ácido vanádico"],"stock":[],"sist":[],"hint":"H + VO₃⁻ (vanadato). V con EO=+5 (su valencia más común) → -ico → vanádico."},
 {"formula":"H₂N₂O₂","group":"ac-ox","level":"hard","trad":["ácido hiponitroso"],"stock":[],"sist":[],"hint":"2H⁺ + N₂O₂²⁻ (hiponitrito). N con EO=+1 (el más bajo) → hipo-oso → hiponitroso. Mismo patrón hipo- que el ácido hiposulfuroso."},
-{"formula":"HPO₃","group":"ac-ox","level":"hard","trad":["ácido metafosfórico"],"stock":[],"sist":[],"hint":"H + PO₃⁻ (metafosfato). Forma deshidratada del ácido fosfórico (H₃PO₄); P conserva EO=+5."},
 {"formula":"H₂MoO₄","group":"ac-ox","level":"hard","trad":["ácido molíbdico"],"stock":[],"sist":[],"hint":"H₂ + MoO₄²⁻ (molibdato). Mo con EO=+6 → -ico → molíbdico. Mismo patrón que el ácido crómico (mismo grupo 6)."},
 {"formula":"H₂WO₄","group":"ac-ox","level":"hard","trad":["ácido túngstico"],"stock":[],"sist":[],"hint":"H₂ + WO₄²⁻ (tungstato). W con EO=+6 → -ico → túngstico. Mismo patrón que el ácido crómico y el molíbdico."},
-{"formula":"Ca(H₂PO₄)₂","group":"sal-ac","level":"hard","trad":["fosfato diácido de calcio"],"stock":["dihidrogenofosfato de calcio"],"sist":[],"hint":"Ca²⁺ + 2 H₂PO₄⁻ (PO₄³⁻ retuvo 2 H⁺ cada uno). Es el \"superfosfato simple\", un fertilizante fosfatado real usado en cultivos colombianos."},
+{"formula":"Ca(H₂PO₄)₂","group":"sal-ac","level":"hard","trad":["fosfato diácido de calcio"],"stock":["dihidrogenofosfato de calcio"],"sist":[],"hint":"Ca²⁺ + 2 H₂PO₄⁻ (PO₄³⁻ retuvo 2 H⁺ cada uno). Es el componente principal del «superfosfato», un fertilizante fosfatado."},
 {"formula":"Mg(H₂PO₄)₂","group":"sal-ac","level":"hard","trad":["fosfato diácido de magnesio"],"stock":["dihidrogenofosfato de magnesio"],"sist":[],"hint":"Mg²⁺ + 2 H₂PO₄⁻. Mismo patrón que el fosfato diácido de calcio."},
 {"formula":"NH₄H₂PO₄","group":"sal-ac","level":"hard","trad":["fosfato diácido de amonio"],"stock":["dihidrogenofosfato de amonio"],"sist":[],"hint":"NH₄⁺ + H₂PO₄⁻. Conocido como MAP (fosfato monoamónico), uno de los fertilizantes fosfatados más usados en el mundo."},
 {"formula":"(NH₄)₂HPO₄","group":"sal-ac","level":"hard","trad":["fosfato monoácido de amonio"],"stock":["hidrogenofosfato de amonio"],"sist":[],"hint":"2 NH₄⁺ + HPO₄²⁻. Conocido como DAP (fosfato diamónico), el fertilizante fosfatado de mayor uso agrícola en el mundo, incluida Colombia."},
@@ -3184,16 +3159,16 @@ const BANCO = [
 {"id":"rx-052","group":"reaccion","level":"easy","ecuacion":"4Na + O₂ → 2Na₂O","tipo_rx":"sintesis","hint":"Metal alcalino + oxígeno → óxido básico. 4 átomos de Na por cada O₂.","col":"El sodio metálico se maneja con extremo cuidado en laboratorios de química industrial colombianos."},
 {"id":"rx-053","group":"reaccion","level":"medium","ecuacion":"CO₂ + H₂O → H₂CO₃","tipo_rx":"sintesis","hint":"Óxido ácido + agua → ácido oxácido. A + B → AB.","col":"Esta reacción ocurre al carbonatar las bebidas gaseosas producidas por la industria de alimentos colombiana."},
 {"id":"rx-054","group":"reaccion","level":"medium","ecuacion":"Si + O₂ → SiO₂","tipo_rx":"sintesis","hint":"No metal + oxígeno → óxido ácido. A + B → AB.","col":"El dióxido de silicio (SiO₂) es la base de la industria del vidrio y la cerámica de Ráquira, Boyacá."},
-{"id":"rx-055","group":"reaccion","level":"medium","ecuacion":"CuCO₃ → CuO + CO₂","tipo_rx":"descomposicion","hint":"Un carbonato metálico se descompone con calor en óxido y CO₂. AB → A + B.","col":"La malaquita (CuCO₃) es un mineral de cobre estudiado en la geología minera colombiana."},
+{"id":"rx-055","group":"reaccion","level":"medium","ecuacion":"CuCO₃ → CuO + CO₂","tipo_rx":"descomposicion","hint":"Un carbonato metálico se descompone con calor en óxido y CO₂. AB → A + B.","col":"Al calentar los carbonatos de cobre se obtiene óxido de cobre; la malaquita, un mineral de cobre, es un carbonato básico de cobre."},
 {"id":"rx-056","group":"reaccion","level":"medium","ecuacion":"2KNO₃ → 2KNO₂ + O₂","tipo_rx":"descomposicion","hint":"El nitrato de potasio se descompone con calor liberando oxígeno. AB → A + B.","col":"El nitrato de potasio (KNO₃) es un fertilizante nitro-potásico usado en cultivos de flores de exportación."},
 {"id":"rx-057","group":"reaccion","level":"hard","ecuacion":"2Al(OH)₃ → Al₂O₃ + 3H₂O","tipo_rx":"descomposicion","hint":"El hidróxido de aluminio se deshidrata con calor formando alúmina. AB → A + B.","col":"La deshidratación del Al(OH)₃ para obtener alúmina (Al₂O₃) es un paso clave en la producción de aluminio."},
 {"id":"rx-058","group":"reaccion","level":"medium","ecuacion":"MgCO₃ → MgO + CO₂","tipo_rx":"descomposicion","hint":"Un carbonato metálico se descompone con calor en óxido y CO₂. AB → A + B.","col":"La magnesita (MgCO₃) se calcina para producir óxido de magnesio usado en refractarios industriales."},
 {"id":"rx-059","group":"reaccion","level":"easy","ecuacion":"Mg + 2HCl → MgCl₂ + H₂","tipo_rx":"sus-simple","hint":"Metal más activo que H desplaza al hidrógeno del ácido. A + BC → AC + B.","col":"El magnesio metálico reacciona con ácido clorhídrico diluido en prácticas de laboratorio escolar colombianas."},
 {"id":"rx-060","group":"reaccion","level":"easy","ecuacion":"Ca + 2HCl → CaCl₂ + H₂","tipo_rx":"sus-simple","hint":"Metal más activo que H desplaza al hidrógeno del ácido. A + BC → AC + B.","col":"El cloruro de calcio producido en esta reacción se usa como deshidratante industrial en Colombia."},
-{"id":"rx-061","group":"reaccion","level":"hard","ecuacion":"2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂","tipo_rx":"sus-simple","hint":"Metal más activo que H desplaza al hidrógeno del ácido sulfúrico. Requiere balanceo cuidadoso.","col":"El aluminio producido en plantas colombianas reacciona con ácido sulfúrico liberando hidrógeno gaseoso."},
+{"id":"rx-061","group":"reaccion","level":"hard","ecuacion":"2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂","tipo_rx":"sus-simple","hint":"Metal más activo que H desplaza al hidrógeno del ácido sulfúrico. Requiere balanceo cuidadoso.","col":"El aluminio reacciona con ácido sulfúrico diluido liberando hidrógeno gaseoso."},
 {"id":"rx-062","group":"reaccion","level":"medium","ecuacion":"Zn + Pb(NO₃)₂ → Zn(NO₃)₂ + Pb","tipo_rx":"sus-simple","hint":"El Zn más activo que Pb desplaza al Pb²⁺ de su sal. A + BC → AC + B.","col":"Este desplazamiento metálico se estudia en análisis de metales pesados en muestras mineras colombianas."},
 {"id":"rx-063","group":"reaccion","level":"easy","ecuacion":"K₂CO₃ + CaCl₂ → CaCO₃ + 2KCl","tipo_rx":"sus-doble","hint":"Dos sales intercambian iones. AB + CD → AD + CB. CaCO₃ precipita.","col":"La precipitación de CaCO₃ se usa para identificar la dureza del agua en acueductos colombianos."},
-{"id":"rx-064","group":"reaccion","level":"easy","ecuacion":"AgNO₃ + NaCl → AgCl + NaNO₃","tipo_rx":"sus-doble","hint":"Dos sales intercambian iones. AB + CD → AD + CB. AgCl es precipitado blanco.","col":"Esta reacción identifica cloruros disueltos en muestras de agua potable colombiana."},
+{"id":"rx-064","group":"reaccion","level":"easy","ecuacion":"Ba(NO₃)₂ + K₂CO₃ → BaCO₃ + 2KNO₃","tipo_rx":"sus-doble","hint":"Intercambio de iones; precipita el carbonato de bario (blanco). AB + CD → AD + CB.","col":"Las reacciones de precipitación como esta se usan en el laboratorio para separar e identificar iones."},
 {"id":"rx-065","group":"reaccion","level":"medium","ecuacion":"BaCl₂ + K₂SO₄ → BaSO₄ + 2KCl","tipo_rx":"sus-doble","hint":"Dos sales intercambian iones. AB + CD → AD + CB. BaSO₄ es precipitado blanco insoluble.","col":"El precipitado de BaSO₄ se usa en análisis gravimétrico en laboratorios universitarios colombianos."},
 {"id":"rx-066","group":"reaccion","level":"medium","ecuacion":"Pb(NO₃)₂ + 2NaCl → PbCl₂ + 2NaNO₃","tipo_rx":"sus-doble","hint":"Dos sales intercambian iones. AB + CD → AD + CB. PbCl₂ precipita.","col":"La formación de PbCl₂ se usa en análisis de contaminación por plomo en ríos colombianos."},
 {"id":"rx-067","group":"reaccion","level":"hard","ecuacion":"2C₂H₆ + 7O₂ → 4CO₂ + 6H₂O","tipo_rx":"combustion","hint":"Etano + O₂ → CO₂ + H₂O. Combustión completa con coeficientes que requieren duplicar todo para evitar fracciones.","col":"El etano (C₂H₆) es un componente del gas natural distribuido por empresas colombianas de gas domiciliario."},
@@ -3215,7 +3190,7 @@ const BANCO = [
 {"id":"bal-045","group":"balanceo","level":"medium","ecuacion_sin_coef":"Ba + H₂O → Ba(OH)₂ + H₂","coeficientes":[1,2,1,1],"especies":["Ba","H₂O","Ba(OH)₂","H₂"],"hint":"Ba(OH)₂ necesita 2 OH → 2 H₂O. H: 4 izq = 2(Ba(OH)₂)+2(H₂)=4 der. Coeficientes: 1, 2, 1, 1.","col":"El bario metálico reacciona con agua de forma similar al calcio, aunque es mucho menos común en el laboratorio escolar."},
 {"id":"bal-046","group":"balanceo","level":"medium","ecuacion_sin_coef":"SO₂ + O₂ → SO₃","coeficientes":[2,1,2],"especies":["SO₂","O₂","SO₃"],"hint":"S: 2=2. O: 4+2=6=6 (2×3 en SO₃). Coeficientes: 2, 1, 2.","col":"Esta reacción catalítica es el paso central del proceso de contacto para producir ácido sulfúrico industrial."},
 {"id":"bal-047","group":"balanceo","level":"medium","ecuacion_sin_coef":"NaOH + H₃PO₄ → Na₃PO₄ + H₂O","coeficientes":[3,1,1,3],"especies":["NaOH","H₃PO₄","Na₃PO₄","H₂O"],"hint":"Na₃PO₄ necesita 3 Na → 3 NaOH. H: 3+3=6 izq = 6 der (3H₂O). O: 3+4=7 = 4(Na₃PO₄)+3(H₂O)=7. Coeficientes: 3, 1, 1, 3.","col":"El fosfato trisódico se usa en productos de limpieza industrial y tratamiento de agua en Colombia."},
-{"id":"bal-048","group":"balanceo","level":"easy","ecuacion_sin_coef":"C + H₂O → CO + H₂","coeficientes":[1,1,1,1],"especies":["C","H₂O","CO","H₂"],"hint":"Ya balanceada: C 1=1, H 2=2, O 1=1. Coeficientes: 1, 1, 1, 1.","col":"La gasificación del carbón del Cerrejón y el Cesar produce gas de síntesis mediante esta reacción."},
+{"id":"bal-048","group":"balanceo","level":"easy","ecuacion_sin_coef":"C + H₂O → CO + H₂","coeficientes":[1,1,1,1],"especies":["C","H₂O","CO","H₂"],"hint":"Ya balanceada: C 1=1, H 2=2, O 1=1. Coeficientes: 1, 1, 1, 1.","col":"Esta reacción produce «gas de síntesis» (CO + H₂), materia prima de la industria química."},
 {"id":"bal-049","group":"balanceo","level":"medium","ecuacion_sin_coef":"Fe₂O₃ + C → Fe + CO","coeficientes":[1,3,2,3],"especies":["Fe₂O₃","C","Fe","CO"],"hint":"Fe: 2→2Fe. O: 3→3CO, que necesita 3 C. Coeficientes: 1, 3, 2, 3.","col":"La reducción del mineral de hierro con carbón es el proceso base del alto horno en Paz de Río, Boyacá."},
 {"id":"bal-050","group":"balanceo","level":"easy","ecuacion_sin_coef":"Ca(OH)₂ + CO₂ → CaCO₃ + H₂O","coeficientes":[1,1,1,1],"especies":["Ca(OH)₂","CO₂","CaCO₃","H₂O"],"hint":"Ya balanceada: Ca 1=1, O 2+2=4=3+1=4, H 2=2, C 1=1. Coeficientes: 1, 1, 1, 1.","col":"Esta reacción (agua de cal que se enturbia) se usa en colegios colombianos para identificar la presencia de CO₂."},
 {"formula":"KCl","group":"mol-masa","level":"easy","masa_molar":74.548,"formula_calc":"39.098 + 35.45 = 74.548","hint":"KCl: 1 K (39.098) + 1 Cl (35.45) = 74.548 g/mol","col":"El cloruro de potasio (KCl, 74.548 g/mol) es un fertilizante potásico usado en cultivos de papa de Boyacá."},
@@ -3233,7 +3208,7 @@ const BANCO = [
 {"formula":"Pb(NO₃)₂","group":"mol-masa","level":"hard","masa_molar":331.208,"formula_calc":"207.2 + 2(14.007+3(15.999)) = 207.2 + 2(62.004) = 207.2 + 124.008 = 331.208","hint":"Pb(NO₃)₂: 1 Pb (207.2) + 2 grupos NO₃ (2×62.004=124.008) = 331.208 g/mol","col":"El nitrato de plomo (331.208 g/mol) se usa en análisis de contaminación por metales pesados en ríos colombianos."},
 {"formula":"KNO₃","group":"mol-masa","level":"medium","masa_molar":101.102,"formula_calc":"39.098 + 14.007 + 3(15.999) = 39.098 + 14.007 + 47.997 = 101.102","hint":"KNO₃: 1 K (39.098) + 1 N (14.007) + 3 O (47.997) = 101.102 g/mol","col":"El nitrato de potasio (101.102 g/mol) es un fertilizante nitro-potásico usado en floricultura colombiana."},
 {"formula":"ZnSO₄","group":"mol-masa","level":"medium","masa_molar":161.436,"formula_calc":"65.38 + 32.06 + 4(15.999) = 65.38 + 32.06 + 63.996 = 161.436","hint":"ZnSO₄: 1 Zn (65.38) + 1 S (32.06) + 4 O (63.996) = 161.436 g/mol","col":"El sulfato de zinc (161.436 g/mol) se usa como fungicida y suplemento nutricional en agricultura colombiana."},
-{"formula":"MnO₂","group":"mol-masa","level":"easy","masa_molar":86.936,"formula_calc":"54.938 + 2(15.999) = 54.938 + 31.998 = 86.936","hint":"MnO₂: 1 Mn (54.938) + 2 O (31.998) = 86.936 g/mol","col":"El dióxido de manganeso (86.936 g/mol) se usa en pilas secas y proviene de minería colombiana de manganeso."},
+{"formula":"MnO₂","group":"mol-masa","level":"easy","masa_molar":86.936,"formula_calc":"54.938 + 2(15.999) = 54.938 + 31.998 = 86.936","hint":"MnO₂: 1 Mn (54.938) + 2 O (31.998) = 86.936 g/mol","col":"El dióxido de manganeso (86.936 g/mol) se usa en las pilas secas."},
 
   // ── AMPLIACIÓN (+20 % por grupo): óxidos, anhídridos, hidruros, hídricos, bases, oxácidos,
   //    sales binarias, oxisales, sales ácidas, reacciones, balanceo y mol-masa ──
@@ -3250,7 +3225,7 @@ const BANCO = [
 {"formula": "MnO₃", "group": "anhid", "level": "hard", "trad": ["anhídrido mangánico"], "stock": [], "sist": ["trióxido de manganeso"], "hint": "Mn con EO +6 → anhídrido mangánico (con agua da H₂MnO₄, ácido mangánico)."},
 {"formula": "MoO₃", "group": "anhid", "level": "hard", "trad": ["anhídrido molíbdico"], "stock": [], "sist": ["trióxido de molibdeno"], "hint": "Mo con EO +6 → anhídrido molíbdico (con agua da H₂MoO₄, ácido molíbdico)."},
 {"formula": "WO₃", "group": "anhid", "level": "hard", "trad": ["anhídrido túngstico"], "stock": [], "sist": ["trióxido de tungsteno"], "hint": "W con EO +6 → anhídrido túngstico (con agua da H₂WO₄, ácido túngstico)."},
-{"formula": "MnO₂", "group": "anhid", "level": "hard", "trad": ["anhídrido manganoso"], "stock": [], "sist": ["dióxido de manganeso"], "hint": "Mn con EO +4 actuando como no metal → anhídrido manganoso (con agua da H₂MnO₃). También se clasifica como óxido."},
+{"formula": "MnO₂", "group": "anhid", "level": "hard", "trad": ["anhídrido manganoso"], "stock": ["óxido de manganeso (IV)"], "sist": ["dióxido de manganeso"], "hint": "Mn con EO +4 actuando como no metal → anhídrido manganoso (con agua da H₂MnO₃). También se clasifica como óxido."},
 {"formula": "SnO₂", "group": "anhid", "level": "hard", "trad": ["anhídrido estánnico"], "stock": [], "sist": ["dióxido de estaño"], "hint": "Sn con EO +4 tiene carácter anfótero → como anhídrido: anhídrido estánnico (con agua da H₂SnO₃)."},
 {"formula": "PbO₂", "group": "anhid", "level": "hard", "trad": ["anhídrido plúmbico"], "stock": [], "sist": ["dióxido de plomo"], "hint": "Pb con EO +4 tiene carácter anfótero → como anhídrido: anhídrido plúmbico (con agua da H₂PbO₃)."},
 {"formula": "PbH₄", "group": "hidru", "level": "hard", "trad": ["hidruro plúmbico"], "stock": ["hidruro de plomo (IV)"], "sist": ["tetrahidruro de plomo"], "hint": "Pb⁴⁺ (EO mayor) → -ico → plúmbico. Pb⁴⁺ + 4H⁻ → PbH₄."},
@@ -3358,7 +3333,11 @@ const BANCO = [
 {"id": "bal-059", "group": "balanceo", "level": "hard", "ecuacion_sin_coef": "Cu + HNO₃ → Cu(NO₃)₂ + NO₂ + H₂O", "coeficientes": [1, 4, 1, 2, 2], "especies": ["Cu", "HNO₃", "Cu(NO₃)₂", "NO₂", "H₂O"], "hint": "Cu: 1; N: 2 en la sal + 2 en NO₂ = 4 HNO₃; H: 4 → 2H₂O. O: 12 = 6+4+2.", "col": "Con ácido nítrico concentrado el cobre libera NO₂, un gas café rojizo."},
 {"id": "bal-060", "group": "balanceo", "level": "easy", "ecuacion_sin_coef": "NH₄NO₃ → N₂O + H₂O", "coeficientes": [1, 1, 2], "especies": ["NH₄NO₃", "N₂O", "H₂O"], "hint": "N: 2 = 2; H: 4 → 2H₂O; O: 3 = 1 + 2.", "col": "La descomposición del nitrato de amonio produce N₂O, el «gas de la risa»."},
 {"id": "bal-061", "group": "balanceo", "level": "easy", "ecuacion_sin_coef": "Mg + N₂ → Mg₃N₂", "coeficientes": [3, 1, 1], "especies": ["Mg", "N₂", "Mg₃N₂"], "hint": "Mg: 3 → 3Mg; N: 2 = 2.", "col": "Al arder en el aire, parte del magnesio reacciona con el nitrógeno y forma nitruro."},
-{"id": "bal-062", "group": "balanceo", "level": "medium", "ecuacion_sin_coef": "H₂S + O₂ → SO₂ + H₂O", "coeficientes": [2, 3, 2, 2], "especies": ["H₂S", "O₂", "SO₂", "H₂O"], "hint": "S: 1=1; H: 2 → 1H₂O; O: 2+1=3 → 3/2 O₂. Se duplica: 2, 3, 2, 2.", "col": "El H₂S de los gases volcánicos y de los pozos petroleros se quema y produce SO₂."}
+{"id": "bal-062", "group": "balanceo", "level": "medium", "ecuacion_sin_coef": "H₂S + O₂ → SO₂ + H₂O", "coeficientes": [2, 3, 2, 2], "especies": ["H₂S", "O₂", "SO₂", "H₂O"], "hint": "S: 1=1; H: 2 → 1H₂O; O: 2+1=3 → 3/2 O₂. Se duplica: 2, 3, 2, 2.", "col": "El H₂S de los gases volcánicos y de los pozos petroleros se quema y produce SO₂."},
+{"formula": "Mn₂O₃", "group": "ox-bas", "level": "hard", "trad": ["óxido mangánico"], "stock": ["óxido de manganeso (III)"], "sist": ["trióxido de dimanganeso"], "hint": "Mn³⁺ es el EO mayor del manganeso como catión (+2/+3) → -ico → óxido mangánico. 2(+3)+3(−2)=0."},
+{"formula": "PdO₂", "group": "ox-bas", "level": "hard", "trad": ["óxido paládico"], "stock": ["óxido de paladio (IV)"], "sist": ["dióxido de paladio"], "hint": "Pd⁴⁺ es el EO mayor del paladio (+2/+4) → -ico → óxido paládico. Pd⁴⁺ + 2O²⁻ → PdO₂."},
+{"formula": "Ti(OH)₄", "group": "base", "level": "hard", "trad": ["hidróxido titánico"], "stock": ["hidróxido de titanio (IV)"], "sist": ["tetrahidróxido de titanio"], "hint": "Ti⁴⁺ (EO mayor, como en el TiO₂ óxido titánico) → -ico → titánico. Ti⁴⁺ + 4OH⁻."},
+{"formula": "HCNO", "group": "ac-ox", "level": "hard", "trad": ["ácido ciánico"], "stock": [], "sist": [], "hint": "H + OCN⁻ (cianato). A diferencia del HCN (ácido cianhídrico, sin oxígeno), este sí tiene oxígeno → oxácido. Su sal de sodio es el cianato de sodio."}
 ];
 
 // Total: 681 entradas (incluye la ampliación +20 % por grupo; sin duplicados, sin formas meta-/piro-/hidratadas)

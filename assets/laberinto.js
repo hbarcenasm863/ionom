@@ -174,6 +174,17 @@ function indice(){
       (porNombre[normNombre(n)] = porNombre[normNombre(n)] || new Set()).add(f);
     }));
   });
+  // Variantes equivalentes de un mismo nombre (el banco escribe «mono-» unas
+  // veces sí y otras no, y alterna «pentóxido»/«pentaóxido»): todas se
+  // aceptan, así ninguna puede aparecer como salida falsa.
+  const variantes = n => {
+    const v = new Set([n]);
+    if(/^monóxido/.test(n)) v.add(n.replace(/^monóxido/, 'óxido'));
+    else if(/^mono(?=[a-záéíóú])/.test(n)) v.add(n.replace(/^mono/, ''));
+    [['pentóxido','pentaóxido'],['heptóxido','heptaóxido'],['tetróxido','tetraóxido']].forEach(([x, y]) => { if(n.includes(x)) v.add(n.replace(x, y)); if(n.includes(y)) v.add(n.replace(y, x)); });
+    return v;
+  };
+  Object.keys(porF).forEach(f => [...porF[f]].forEach(n => variantes(n).forEach(x => { porF[f].add(x); (porNombre[x] = porNombre[x] || new Set()).add(f); })));
   // Nombres que en los textos se usan para OTRA fórmula del banco y que,
   // por eso, se aceptan para ambas: la IUPAC llama «ácido silícico» a H₄SiO₄,
   // y banco.js se lo da a H₂SiO₃.
