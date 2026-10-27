@@ -684,7 +684,12 @@ const TITULO_TIPODOC = {
 };
 function tituloDocumento(doc){
   let titulo = TITULO_TIPODOC[doc.clase] || 'Documento';
-  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica'){
+  // En guía/taller, listar los temas marcados es información útil para el
+  // estudiante (le dice qué va a practicar). En una evaluación, con varios
+  // temas marcados ese listado vuelve el título 2-3 líneas largas justo en
+  // la hoja con menos espacio de sobra (la primera, con el encabezado
+  // completo) -- el tema ya se ve en cada pregunta, así que aquí se omite.
+  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica' && doc.clase!=='evaluacion'){
     const temasData = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.TEMAS) || [];
     const nombres = (doc.F.temas||[]).map(id=>{ const t=temasData.find(x=>x.id===id); return t?t.titulo:id; }).join(' · ');
     if(nombres) titulo += ': '+nombres;
