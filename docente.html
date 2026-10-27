@@ -362,6 +362,65 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   body.lab-printing .keypage .kt-wrap{flex:1}
   body.lab-printing .keypage .lab-kt{font-size:10px}
 }
+/* ══════════════ Crucigramas ══════════════ */
+#cz-status{font-size:.86rem;font-weight:600;color:var(--tx2);min-height:22px;margin-bottom:8px}
+#cz-stage{width:100%}
+.cz-escala{position:relative;margin:0 auto;overflow:hidden;box-shadow:0 2px 16px rgba(15,23,42,.16);border-radius:4px;background:#fff}
+.cz-escala .cz-hoja{transform-origin:0 0;position:absolute;left:0;top:0}
+.cz-hoja{width:816px;height:1056px;background:#fff;color:#0d2d42;font-family:var(--sans);padding:34px 44px 28px;box-sizing:border-box;display:flex;flex-direction:column;position:relative;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cz-wm{position:absolute;left:50%;top:55%;width:58%;transform:translate(-50%,-50%);opacity:.06;pointer-events:none;z-index:0}
+.cz-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #0d4a73;padding-bottom:8px;position:relative;z-index:1}
+.cz-head img{height:46px}
+.cz-tit{flex:1;text-align:center;min-width:0}
+.cz-tit .t{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;color:#0d4a73;line-height:1.1}
+.cz-tit .s{font-size:11.5px;color:#2a3f52;margin-top:3px}
+.cz-ver{width:120px;text-align:right;font-size:11px;color:#4f6d88;font-weight:600}
+.cz-form{display:flex;gap:22px;align-items:flex-end;border:1.5px solid #cfcfd8;border-radius:10px;padding:6px 12px 5px;margin:10px 0 12px;font-size:13px;font-weight:600;position:relative;z-index:1}
+.cz-form span{display:flex;gap:6px;align-items:flex-end;white-space:nowrap}
+.cz-form span:first-child{flex:1}
+.cz-form i{display:inline-block;border-bottom:1.6px solid #0d2d42;height:14px}
+.cz-form .w1{flex:1}.cz-form .w2{width:80px}.cz-form .w3{width:120px}
+.cz-cuerpo{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:1}
+.cz-grid{display:grid;gap:0;flex-shrink:0}
+.cz-v{background:transparent}
+.cz-c{position:relative;border:1.5px solid #0d2d42;margin:-0.75px;background:#fff;display:flex;align-items:center;justify-content:center}
+.cz-c i{position:absolute;left:2px;top:0;font-style:normal;font-size:calc(var(--celda) * .3);font-weight:700;color:#0d4a73;line-height:1.1}
+.cz-c b{font-family:var(--mono);font-size:calc(var(--celda) * .55);color:#b91c1c}
+.cz-pistas{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;width:100%;font-size:13px;line-height:1.3}
+.cz-pistas h4{font-family:var(--serif);font-style:italic;color:#0d4a73;font-size:1.05em;margin:0 0 3px;border-bottom:1.5px solid #e3e3e8}
+.cz-pistas ol{margin:0;padding-left:2em}
+.cz-pistas li{margin:0 0 2px}
+.cz-pistas em{color:#4f6d88;font-style:normal;font-size:.9em}
+.cz-pistas .fx{font-family:var(--mono)}
+.cz-sol{font-family:var(--mono);color:#b91c1c}
+.cz-pie{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #ccc;padding-top:5px;margin-top:8px;font-size:10.5px;color:#777;position:relative;z-index:1}
+.cz-pie .m{font-family:var(--serif);font-style:italic;color:#0d4a73}.cz-pie .m b{color:#92720a}
+/* resolver en pantalla */
+.cz-jugar{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:14px}
+/* sin flex-center: con la cuadrícula más ancha que la pantalla, el centrado
+   dejaba la parte izquierda fuera de alcance; margin:auto centra solo si cabe */
+.cz-gwrap{overflow-x:auto;padding:4px;margin-bottom:12px}
+.cz-gwrap .cz-grid{width:max-content;margin:0 auto}
+.cz-jugar .cz-c input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-family:var(--mono);font-weight:700;font-size:max(16px, calc(var(--celda) * .5));color:#0d2d42;text-transform:uppercase;padding:0;outline:none;caret-color:#0d4a73}
+.cz-jugar .cz-c.sel{background:#fef3c7}
+.cz-jugar .cz-c:focus-within{background:#fde68a}
+.cz-jugar .cz-c.bien{background:#dcfce7}
+.cz-jugar .cz-c.mal{background:#fee2e2}
+.cz-jugar .cz-pistas{font-size:.92rem}
+.cz-jugar .cz-pistas li{cursor:pointer;padding:3px 4px;border-radius:6px}
+.cz-jugar .cz-pistas li.sel{background:var(--an-b)}
+.cz-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.cz-bar button{min-height:44px}
+#cz-msg{font-weight:700;color:var(--tx)}
+@media(max-width:600px){ .cz-jugar .cz-pistas{grid-template-columns:1fr} }
+/* impresión de crucigramas: carta vertical, una hoja por página */
+#cz-print-root{display:none}
+@media print{
+  body.cz-printing>*:not(#cz-print-root){display:none!important}
+  body.cz-printing #cz-print-root{display:block!important}
+  body.cz-printing .cz-hoja{break-after:page;page-break-after:always;box-shadow:none;height:1055px}
+  body.cz-printing .cz-hoja:last-child{break-after:auto;page-break-after:auto}
+}
 /* La nueva versión del service worker queda "esperando" (ver sw.js) hasta
    que el usuario toque "Actualizar" aquí -- igual que en index.html/
    nomenClash.html. Sin este banner, assets/docente-app.js (cache-first)
@@ -441,6 +500,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
     <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias">📄 Guías, talleres y evaluaciones</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-crucigramas" aria-controls="tab-crucigramas" aria-selected="false" data-tab="crucigramas">🔤 Crucigramas</button>
   </div>
 
   <div id="tab-guias" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-guias">
@@ -705,6 +765,74 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
    </div>
   </div><!-- /tab-laberintos -->
 
+  <!-- ══════════════ CRUCIGRAMAS (solo nomenclatura) ══════════════ -->
+  <div id="tab-crucigramas" class="tab-panel no-print" role="tabpanel" aria-labelledby="tabbtn-crucigramas">
+   <div id="cz-app">
+    <div class="sect">
+      <h2>1 · Tipos de pista</h2>
+      <p class="sect-hint">Solo nomenclatura inorgánica, con los compuestos del banco del Juego y del Generador. Las respuestas se escriben sin espacios ni tildes; la Ñ cuenta como letra.</p>
+      <div class="lab-chks" id="cz-tipos">
+        <label class="tema-chk"><input type="checkbox" value="f2n" checked><span><strong>Fórmula → nombre</strong><br><small>«Nombra en Stock: FeCl₃» → CLORURODEHIERROIII</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="ion" checked><span><strong>Ion → nombre</strong><br><small>«Anión SO₄²⁻» → SULFATO · «Catión Fe³⁺» → FERRICO</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="comp" checked><span><strong>Completar el nombre</strong><br><small>«Óxido ____ (Fe₂O₃)» → FERRICO</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="func" checked><span><strong>Función química</strong><br><small>«Función de NaOH» → HIDROXIDO</small></span></label>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>2 · Compuestos</h2>
+      <div class="temas-grid" id="cz-fam">
+        <label class="tema-chk"><input type="checkbox" value="ox-bas" checked><span><strong>Óxidos básicos</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="anhid" checked><span><strong>Óxidos ácidos (anhídridos)</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="hidru"><span><strong>Hidruros metálicos</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="ac-hid"><span><strong>Ácidos hídricos</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="base" checked><span><strong>Bases / Hidróxidos</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="ac-ox"><span><strong>Ácidos oxácidos</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="sal-bin" checked><span><strong>Sales binarias</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="sal-ox" checked><span><strong>Sales oxigenadas</strong><br><small></small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="sal-ac"><span><strong>Sales ácidas</strong><br><small></small></span></label>
+      </div>
+      <div class="field-row" style="margin-top:12px">
+        <div class="field" style="max-width:240px"><label for="cz-sys">Sistema de nomenclatura</label>
+          <select id="cz-sys"><option value="all">Los 3 (varía por pista)</option><option value="trad">Tradicional</option><option value="stock">Stock</option><option value="sist">Sistemática</option></select></div>
+        <div class="field" style="max-width:240px"><label for="cz-nivel">Nivel</label>
+          <select id="cz-nivel"><option value="all">Todos</option><option value="easy">Básico</option><option value="medium">Intermedio</option><option value="hard">Avanzado</option></select></div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>3 · Hoja y versiones</h2>
+      <div class="field-row">
+        <div class="field"><label for="cz-n">Número de palabras (6 a 20)</label><input type="number" inputmode="numeric" id="cz-n" value="12" min="6" max="20"></div>
+        <div class="field"><label for="cz-max">Largo máximo de palabra (8 a 22)</label><input type="number" inputmode="numeric" id="cz-max" value="16" min="8" max="22"></div>
+        <div class="field"><label for="cz-title">Título</label><input type="text" id="cz-title" maxlength="40"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="cz-nver">Versiones paralelas (1 a 40)</label><input type="number" inputmode="numeric" id="cz-nver" value="4" min="1" max="40"></div>
+        <div class="field"><label for="cz-vsel">Versión en pantalla</label><select id="cz-vsel"></select></div>
+      </div>
+      <p class="sect-hint">Cada versión tiene otras pistas y otra cuadrícula. Las palabras largas (nombres completos) agrandan la cuadrícula: baja el largo máximo si sale muy grande.</p>
+      <details class="lab-adv">
+        <summary>Volver a generar hojas de otro día</summary>
+        <p class="sect-hint">Escribe el código que aparece en la hoja de clave.</p>
+        <div class="field"><label for="cz-seed">Código de la hoja de clave</label><input type="text" id="cz-seed" maxlength="20" autocomplete="off"></div>
+      </details>
+    </div>
+    <div class="lab-bar">
+      <button type="button" class="btn-sec lab-nuevo" id="cz-btn-seed">🎲 Generar nuevo crucigrama</button>
+      <div class="lab-seg" id="cz-seg" role="group" aria-label="Vista">
+        <button type="button" data-view="sheet" class="on" aria-pressed="true">📄 Hoja</button>
+        <button type="button" data-view="play" aria-pressed="false">✏️ Resolver</button>
+        <button type="button" data-view="key" aria-pressed="false">🔑 Clave</button>
+      </div>
+      <button type="button" class="btn-generar" id="cz-btn-print">🖨️ Imprimir versiones</button>
+      <label class="chk-linea" style="margin:0"><input type="checkbox" id="cz-withkeys" checked> con hojas de clave al final</label>
+    </div>
+    <div id="cz-verif" class="lab-verif"></div>
+    <div id="cz-status" aria-live="polite"></div>
+    <div id="cz-stage"></div>
+    <div id="cz-play"></div>
+   </div>
+  </div><!-- /tab-crucigramas -->
+
   <!-- Medidor oculto: tamaño real (816×1056), visibility:hidden (NO display:none,
        que dejaría clientHeight/scrollHeight en 0 e impediría medir el desborde). -->
   <!-- A propósito NO se usa "left:-9999px" (fuera de pantalla): varios
@@ -727,6 +855,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <script src="assets/docente-datos.js"></script>
 <script src="assets/docente-app.js"></script>
 <script src="assets/laberinto.js"></script>
+<script src="assets/crucigrama.js"></script>
 <script>
 (function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
 document.getElementById('theme-btn').addEventListener('click',function(){
@@ -771,6 +900,7 @@ document.getElementById('theme-btn').addEventListener('click',function(){
     });
     try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
     if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
+    if(id === 'crucigramas' && window.CRUCIGRAMA) window.CRUCIGRAMA.render();
   }
   btns.forEach(function(b, i){
     b.addEventListener('click', function(){ mostrar(b.dataset.tab); });
@@ -782,9 +912,9 @@ document.getElementById('theme-btn').addEventListener('click',function(){
       mostrar(btns[j].dataset.tab); btns[j].focus();
     });
   });
-  var ini = location.hash === '#laberintos' ? 'laberintos' : null;
+  var ini = location.hash === '#laberintos' ? 'laberintos' : location.hash === '#crucigramas' ? 'crucigramas' : null;
   if(!ini){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
-  if(ini === 'laberintos') mostrar('laberintos');
+  if(ini === 'laberintos' || ini === 'crucigramas') mostrar(ini);
 })();
 document.querySelectorAll('.chk-tema').forEach(function(c){
   c.addEventListener('change', function(){ if(window.DOCENTE) DOCENTE.actualizarDisponibilidad(); });
@@ -833,6 +963,7 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <div id="lab-print-root"></div>
+<div id="cz-print-root"></div>
 <script src="assets/ionom-ui.js"></script>
 <div class="update-banner no-print" id="update-banner" role="status" aria-live="polite">
   <div class="update-banner-text"><strong>🔄 Nueva versión disponible</strong>Hay cambios nuevos en IonNom (ejercicios, correcciones). No se pierde nada de lo que tengas abierto.</div>
