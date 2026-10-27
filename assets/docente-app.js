@@ -522,8 +522,20 @@ function construirVersion(F, numVersion, totalVersiones){
     const saberBloques = armarBloquesSaber(F, rngSaber);
     numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
+    // La hoja de respuestas (burbujas) va AQUÍ, como bloques normales del
+    // mismo documento -- no como un documento aparte con su propia primera
+    // hoja (ver nota en construirTodas). Así fluye en lo que quede de
+    // espacio al final de la Parte I, igual que en el modelo de referencia
+    // (hoja de respuestas + inicio de la Parte II comparten página), en vez
+    // de abrir casi siempre una página nueva que queda medio vacía.
+    if(F.incluirHojaResp && numSaberReal>0){
+      bloques.push.apply(bloques, bloquesHojaRespuestas(numSaberReal));
+    }
     const abiertasBloques = armarBloquesAbiertas(F, rngAbiertas);
-    if(abiertasBloques.length) bloques.push.apply(bloques, abiertasBloques);
+    if(abiertasBloques.length){
+      bloques.push({html:'<h2 class="sec-tit">Preguntas abiertas</h2>', esTitulo:true});
+      bloques.push.apply(bloques, abiertasBloques);
+    }
   }
 
   return {
@@ -538,8 +550,10 @@ function construirVersion(F, numVersion, totalVersiones){
 // Hoja de respuestas tipo "ICFES": una fila por pregunta Saber 11, con 4
 // círculos A-D para que el estudiante rellene a mano -- separada de las
 // preguntas (que no llevan marcada la opción correcta en ningún lado, ver
-// principio "sin clave de respuestas impresa").
-function construirHojaRespuestas(F, numVersion, totalVersiones, numPreguntas){
+// principio "sin clave de respuestas impresa"). Devuelve bloques sueltos
+// (no un documento aparte) para que construirVersion() los inserte en el
+// mismo flujo de paginación que la Parte I/II -- ver nota ahí.
+function bloquesHojaRespuestas(numPreguntas){
   let filas = '';
   for(let i=1;i<=numPreguntas;i++){
     filas += '<div class="hr-row"><span class="hr-num">'+i+'.</span>'
@@ -547,16 +561,12 @@ function construirHojaRespuestas(F, numVersion, totalVersiones, numPreguntas){
       + '</div>';
   }
   const html = '<div class="hoja-resp">'
-    + '<h2 class="sec-tit">Hoja de respuestas'+(totalVersiones>1?' — Versión '+numVersion+' de '+totalVersiones:'')+'</h2>'
+    + '<h2 class="sec-tit">Hoja de respuestas</h2>'
     + '<div class="hr-meta">Nombre: <span class="hr-linea"></span> Fecha: <span class="hr-linea" style="max-width:140px"></span></div>'
     + '<p class="hr-instr">Rellena por completo el círculo de tu respuesta para cada pregunta.</p>'
     + '<div class="hr-grid">'+filas+'</div>'
     + '</div>';
-  return {
-    clase: 'hoja-respuestas',
-    etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
-    bloques: [{html:html, esMultiple:false}]
-  };
+  return [{html: html, esMultiple:false}];
 }
 
 // Rúbrica de evaluación: anexo fijo y genérico (no depende del tema ni de la
@@ -901,15 +911,13 @@ function llenarHoja(hoja){
 function construirTodas(F){
   const docs = [];
   const N = F.versiones || 1;
-  // La hoja de respuestas (burbujas) va una por versión de evaluación,
-  // justo después de esa versión -- igual principio que las sesiones:
-  // la guía sale una vez, la evaluación (y su hoja de respuestas) N veces.
+  // La hoja de respuestas (burbujas) ya viene incluida dentro de los
+  // bloques de cada versión de evaluación (ver construirVersion) -- no se
+  // agrega aquí como documento aparte para que pueda compartir página con
+  // el final de la Parte I y el inicio de la Parte II, en vez de abrir casi
+  // siempre una página nueva que queda medio vacía.
   function agregarVersionEval(Fversion, i, total){
-    const doc = construirVersion(Fversion, i, total);
-    docs.push(doc);
-    if(F.incluirHojaResp && doc.numSaberReal>0){
-      docs.push(construirHojaRespuestas(F, i, total, doc.numSaberReal));
-    }
+    docs.push(construirVersion(Fversion, i, total));
   }
   if(F.tipoDoc==='completa'){
     // la guía (sesiones 1-3) sale una sola vez; la evaluación sale N veces.
