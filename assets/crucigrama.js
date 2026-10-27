@@ -56,8 +56,24 @@ function banco(){ try{ return BANCO; }catch(e){ return []; } }
 /* ───────────── pistas ───────────── */
 const GRUPOS = ['ox-bas','anhid','hidru','ac-hid','base','ac-ox','sal-bin','sal-ox','sal-ac'];
 const SIS = {trad:'Tradicional', stock:'Stock', sist:'Sistemática'};
-const FUNCION = {'ox-bas':'óxido básico','anhid':'anhídrido','hidru':'hidruro','ac-hid':'ácido hídrico','base':'hidróxido',
-  'ac-ox':'ácido oxácido','sal-bin':'sal binaria','sal-ox':'sal oxigenada','sal-ac':'sal ácida'};
+// Función química: se pide SOLO la palabra que clasifica, dentro de un marco
+// fijo y con las opciones a la vista (auditoría: «Función de KMnO₄ (12)»
+// admitía PERMANGANATO, OXISAL, SALOXIGENADA…). [marco, respuesta, opciones]
+const FUNCION = {
+  'ox-bas':['óxido','básico','básico o ácido'], 'anhid':['óxido','ácido','básico o ácido'],
+  'ac-hid':['ácido','hídrico','hídrico u oxácido'], 'ac-ox':['ácido','oxácido','hídrico u oxácido'],
+  'sal-bin':['sal','binaria','binaria, oxigenada o ácida'], 'sal-ox':['sal','oxigenada','binaria, oxigenada o ácida'],
+  // una sal ácida con oxígeno también es «oxigenada»: para ella se pregunta
+  // otra cosa (¿neutra o ácida?), así no hay dos respuestas válidas
+  'sal-ac':['sal','ácida','neutra o ácida'],
+  'hidru':[null,'hidruro','hidruro o hidróxido'], 'base':[null,'hidróxido','hidruro o hidróxido']};
+// Excluidos del crucigrama: óxidos neutros o inestables que el banco trae
+// como «anhídrido» (no forman ácido con agua) …
+const EXCLUIR = new Set(['CO','N2O','SO']);
+// … y, solo para «función química», anfóteros (su función es discutible),
+// sales de amonio (no son «metal + no metal») y pseudohídricos.
+const SIN_FUNCION = new Set(['Al2O3','ZnO','BeO','Ga2O3','SnO','PbO','Cr2O3','SnO2','PbO2','HN3','HSCN','HCN','NH4OH']);
+const RE_PREFIJO = /^(monóxido|(mono|di|tri|tetra|penta|hexa|hepta)(óxido|oxido|hidróxido|hidruro|cloruro|bromuro|yoduro|fluoruro|sulfuro|seleniuro|telururo|nitruro|fosfuro|hidrogeno))/;
 const CARGA = {F:1,Cl:1,Br:1,I:1,S:2,Se:2,Te:2,N:3,P:3,O:2,H:1,OH:1,SO4:2,SO3:2,NO3:1,NO2:1,PO4:3,CO3:2,ClO4:1,ClO3:1,ClO2:1,ClO:1,
   BrO3:1,IO3:1,MnO4:1,CrO4:2,Cr2O7:2,SiO3:2,S2O3:2};
 // Catión + anión de una fórmula iónica, con sus cargas (null si no se puede)
@@ -104,14 +120,23 @@ function nombreUnico(c, s){
   if(idx.porF[f].length > 1) return null;                             // fórmula en dos grupos (anfóteros)
   // sistemático sin prefijo con varios compuestos de los mismos elementos («cloruro de cobre»)
   if(s === 'sist' && !/(^|\s)(mono|di|tri|tetra|penta|hexa|hepta)/.test(n) && idx.porElems[idx.claveElems(f)].size > 1) return null;
+  // «mono-» con el otro elemento sin prefijo («monosulfuro de mercurio»): el
+  // sitio enseña a omitirlo (funciones.html), así que las casillas no
+  // coincidirían con lo que escribe el estudiante
+  if(s === 'sist' && /^mon/.test(n) && !/ de (di|tri|tetra|penta|hexa|hepta)/.test(n)) return null;
+  // ácidos hídricos: el sitio no los nombra en «Sistemática»
+  if(s === 'sist' && c.group === 'ac-hid') return null;
   return n;
 }
 function pistaFormula(c, sisPermitidos, r){
   const ss = shuffle(sisPermitidos, r).filter(s => nombreUnico(c, s));
   if(!ss.length) return null;
   const s = ss[0], n = nombreUnico(c, s);
+  // ácido hídrico: «ácido ___hídrico» (en solución) y «___uro de hidrógeno»
+  // (gas) son ambos válidos; se pide explícitamente la forma de ácido
+  const como = c.group === 'ac-hid' ? 'Nómbralo como ácido (en solución)' : 'Nombra en ' + SIS[s];
   return {tipo:'f2n', clave:'c:' + c.formula, respuesta: palabra(n), solucion: cap(n),
-    pista: 'Nombra en ' + SIS[s] + ': <b class="fx">' + esc(c.formula) + '</b>'};
+    pista: como + ': <b class="fx">' + esc(c.formula) + '</b>'};
 }
 function pistaCompletar(c, sisPermitidos, r){
   const ss = shuffle(sisPermitidos, r).filter(s => nombreUnico(c, s));
@@ -123,14 +148,18 @@ function pistaCompletar(c, sisPermitidos, r){
   let i = /(oso|ico)$/.test(ws[ws.length-1]) ? ws.length - 1 : 0;
   if(palabra(ws[i]).length < 4) return null;
   const hueco = ws.map((w, j) => j === i ? '________' : w).join(' ');
+  // si la palabra que falta lleva prefijo numérico (TRIHIDROXIDO), se avisa
+  const conPref = RE_PREFIJO.test(ws[i].toLowerCase()) ? ' <i>(con su prefijo)</i>' : '';
   return {tipo:'comp', clave:'c:' + c.formula, respuesta: palabra(ws[i]), solucion: ws[i],
-    pista: 'Completa (' + SIS[s] + ', <b class="fx">' + esc(c.formula) + '</b>): ' + esc(cap(hueco))};
+    pista: 'Completa (' + (c.group === 'ac-hid' ? 'como ácido' : SIS[s]) + ', <b class="fx">' + esc(c.formula) + '</b>): ' + esc(cap(hueco)) + conPref};
 }
 function pistaFuncion(c){
-  if(indice().porF[aAscii(c.formula)].length > 1) return null; // en dos grupos: función ambigua
-  const fn = FUNCION[c.group];
-  return {tipo:'func', clave:'c:' + c.formula, respuesta: palabra(fn), solucion: fn,
-    pista: 'Función química de <b class="fx">' + esc(c.formula) + '</b> (sin espacios)'};
+  const f = aAscii(c.formula);
+  if(indice().porF[f].length > 1) return null; // en dos grupos: función ambigua
+  if(SIN_FUNCION.has(f) || (c.group === 'sal-bin' && /NH4/.test(f))) return null;
+  const [marco, w, ops] = FUNCION[c.group];
+  return {tipo:'func', clave:'c:' + c.formula, respuesta: palabra(w), solucion: (marco ? marco + ' ' : '') + w,
+    pista: 'Clasifica <b class="fx">' + esc(c.formula) + '</b>: ' + (marco ? marco + ' ' : '') + '________ <i>(' + ops + ')</i>'};
 }
 // Iones: el nombre del anión es la primera palabra del nombre tradicional y
 // el del catión de valencia variable, el adjetivo -oso/-ico. Solo se usan
@@ -150,7 +179,7 @@ function iones(){
   Object.entries(an).forEach(([k, ns]) => { if(ns.size !== 1) return; const [sym, q] = k.split('|'); const n = [...ns][0];
     lista.push({tipo:'ion', clave:'a:' + k, respuesta: palabra(n), solucion: n, pista: 'Nombre del anión <b class="fx">' + ion(sym, +q, '-') + '</b>'}); });
   Object.entries(cat).forEach(([k, ns]) => { if(ns.size !== 1) return; const [sym, q] = k.split('|'); const n = [...ns][0];
-    lista.push({tipo:'ion', clave:'k:' + k, respuesta: palabra(n), solucion: n, pista: 'Nombre tradicional del catión <b class="fx">' + ion(sym, +q, '+') + '</b> (terminación -oso o -ico)'}); });
+    lista.push({tipo:'ion', clave:'k:' + k, respuesta: palabra(n), solucion: n, pista: 'Nombre tradicional del catión <b class="fx">' + (k === 'Hg|1' ? 'Hg₂²⁺' : ion(sym, +q, '+')) + '</b> (adjetivo -oso o -ico, con su prefijo hipo-/per- si lo lleva)'}); });
   lista.push({tipo:'ion', clave:'k:NH4', respuesta:'AMONIO', solucion:'amonio', pista:'Nombre del catión <b class="fx">NH₄⁺</b>'});
   _iones = {n: banco().length, lista};
   return _iones;
@@ -158,7 +187,7 @@ function iones(){
 
 function candidatos(cfg, r){
   const idx = indice();
-  const comp = shuffle(idx.comp.filter(c => cfg.fam.includes(c.group) && (cfg.nivel === 'all' || c.level === cfg.nivel)), r);
+  const comp = shuffle(idx.comp.filter(c => cfg.fam.includes(c.group) && (cfg.nivel === 'all' || c.level === cfg.nivel) && !EXCLUIR.has(aAscii(c.formula))), r);
   const gen = {
     f2n: c => pistaFormula(c, cfg.sis, r),
     comp: c => pistaCompletar(c, cfg.sis, r),
@@ -400,7 +429,11 @@ function jugar(cz){
   box.querySelectorAll('.cz-c input').forEach(inp => {
     const f = +inp.parentNode.dataset.f, c = +inp.parentNode.dataset.c;
     inp.addEventListener('focus', () => { const p = palDe(f, c, dir) || palDe(f, c, dir === 'h' ? 'v' : 'h'); if(p) dir = p.dir; resaltar(p); });
-    inp.addEventListener('click', () => { if(palDe(f, c, 'h') && palDe(f, c, 'v')){ dir = dir === 'h' ? 'v' : 'h'; resaltar(palDe(f, c, dir)); } });
+    // la dirección se alterna solo al tocar OTRA VEZ la casilla que ya estaba
+    // activa (con el primer toque se escribía en la dirección contraria)
+    let yaActiva = false;
+    inp.addEventListener('pointerdown', () => { yaActiva = document.activeElement === inp; });
+    inp.addEventListener('click', () => { if(yaActiva && palDe(f, c, 'h') && palDe(f, c, 'v')){ dir = dir === 'h' ? 'v' : 'h'; resaltar(palDe(f, c, dir)); } yaActiva = false; });
     inp.addEventListener('input', () => {
       inp.value = palabra(inp.value).slice(-1); inp.parentNode.classList.remove('bien', 'mal');
       if(inp.value){ const n = celdaEl(f + (dir==='v'?1:0), c + (dir==='h'?1:0)); if(n) n.focus(); }

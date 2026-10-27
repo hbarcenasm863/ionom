@@ -21,6 +21,12 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - al nombrar: otro número romano, -oso/-ico (ferroso/férrico), otro prefijo, hidruro ↔ hidróxido ↔ óxido, clorhídrico ↔ clórico ↔ cloroso.
 
   Solo si una pregunta no da para suficientes variantes se usan compuestos de otro metal.
+- **Crucigramas: auditoría de pistas (2208 pistas revisadas)**.
+  - **Función química**: la pista ahora fija el término y muestra las opciones: «Clasifica KMnO₄: sal ____ (binaria, oxigenada o ácida)» → OXIGENADA. Antes, «Función química de KMnO₄ (12)» admitía también PERMANGANATO, OXISAL…, y lo mismo pasaba en las 9 funciones (HNO₃ → ÁCIDO NÍTRICO, CO₂ → CARBÓNICO). Las sales ácidas usan las opciones «neutra o ácida», porque también tienen oxígeno.
+  - **Química corregida**: CO, N₂O y SO salen del crucigrama (son óxidos neutros o inestables, no anhídridos); el mercurio (I) se muestra como Hg₂²⁺; las sales de amonio y los óxidos anfóteros ya no se clasifican.
+  - **Ácidos hídricos**: se piden «como ácido» (ácido ___hídrico) y nunca en «Sistemática», como enseña el sitio.
+  - **Avisos**: se indica cuándo la palabra que falta lleva prefijo (TRIHIDROXIDO, MONOXIDO) o cuándo el catión puede llevar hipo-/per-. También se descartan los sistemáticos con «mono-» que contradicen la regla del sitio.
+  - **Modo Resolver**: el primer toque en una casilla de cruce ya no cambia la dirección de escritura.
 - **Nueva pestaña «🔤 Crucigramas»** en el Generador Docente, solo de nomenclatura y con los compuestos del banco:
   - **Cuatro tipos de pista, mezclados en ronda**: fórmula → nombre completo («Nombra en Stock: FeCl₃» → CLORURODEHIERROIII), ion → nombre («Anión SO₄²⁻» → SULFATO, «Nombre tradicional del catión Fe³⁺ (terminación -oso o -ico)» → FERRICO), completar el nombre y función química.
   - **Respuestas**: sin espacios ni tildes; la Ñ cuenta como letra y los romanos se escriben con letras.
