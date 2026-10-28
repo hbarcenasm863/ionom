@@ -1107,7 +1107,7 @@ function pintarTarjeta(){
 function clicJuego(ev){
   if(vista !== 'play' || !juego || !curMz) return;
   if(ev.target.closest('[data-accion="reiniciar"]')){ reiniciarJuego(); return; }
-  if(juego.done) return;
+  if(juego.done || juego.pausa) return;
   const b = ev.target.closest('.el, .lab-op'); if(!b || !b.dataset.e) return;
   const u = +b.dataset.u; if(u !== juego.cur) return;
   const v = +b.dataset.e.split('-')[1];
@@ -1117,6 +1117,12 @@ function clicJuego(ev){
   const desdeTarjeta = b.classList.contains('lab-op');
   if(e.ok){
     juego.cur = v; juego.path.push(v); if(v === curMz.fin) juego.done = true;
+    if(desdeTarjeta){
+      // en la tarjeta el acierto se ve en verde un instante antes de pasar de casilla
+      const j = juego; j.pausa = true; b.classList.add('good');
+      setTimeout(() => { if(juego !== j) return; j.pausa = false; pintarJuego(); const s = $('#lab-card .lab-op'); if(s) s.focus(); }, 450);
+      return;
+    }
     pintarJuego();
     // el foco pasa a la primera salida de la nueva casilla (teclado)
     const sig = desdeTarjeta ? $('#lab-card .lab-op') : $('#lab-stage .el.hot');
