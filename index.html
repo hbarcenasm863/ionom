@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d4a73">
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
@@ -11,7 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="IonNom">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230d4a73' width='100' height='100'/><text x='50' y='50' font-size='60' font-weight='bold' fill='%23fcd34d' text-anchor='middle' dominant-baseline='central'>⚛</text></svg>">
-<title>IonNom — Nomenclatura Inorgánica</title>
+<title>IonNom — Química interactiva</title>
+<meta name="description" content="IonNom: química de 10° y 11° con simuladores y juegos. Teoría atómica, configuración electrónica, enlace químico, nomenclatura inorgánica, reacciones, balanceo y estequiometría.">
 <link rel="stylesheet" href="assets/shared-tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -150,7 +152,20 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
 .hd-result strong{color:var(--nav)}
 
 /* Hero actions */
-.hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.hero-go{display:inline-flex;align-items:center;min-height:44px;padding:10px 20px;border-radius:var(--rs);background:var(--nav);color:#fff;font-weight:800;font-size:.9rem;text-decoration:none;box-shadow:var(--sh);transition:transform .15s}
+.hero-go:hover{transform:translateY(-2px)}
+a.narr-btn{text-decoration:none}
+
+/* Los 4 niveles en el hero */
+.hero-niveles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.hn{display:flex;flex-direction:column;gap:2px;padding:12px 12px 12px 14px;border-radius:var(--rs);background:var(--surf);border:1.5px solid var(--brd);border-left:5px solid var(--c);text-decoration:none;color:var(--tx);box-shadow:var(--sh);transition:transform .15s,border-color .15s}
+.hn:hover{transform:translateY(-3px);border-color:var(--c)}
+.hn-n{font-family:var(--mono);font-size:.68rem;font-weight:800;color:var(--c)}
+.hn-e{font-size:1.4rem;line-height:1.2}
+.hn-t{font-weight:800;font-size:.92rem}
+.hn-d{font-size:.72rem;color:var(--tx2);line-height:1.4}
+@media(max-width:640px){.hero-niveles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .narr-btn{
   display:inline-flex;
   align-items:center;
@@ -349,47 +364,81 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   border-top:1px solid var(--brd);
 }
 
-/* ===== RUTA RECOMENDADA ===== */
-.ruta-card{
-  background:var(--surf);
-  border:1.5px solid var(--brd);
-  border-radius:var(--r);
-  padding:20px 22px;
-  margin-bottom:28px;
-  box-shadow:var(--sh);
-}
-.ruta-steps{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.rs{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:11px 16px;
-  border-radius:var(--rs);
-  border:2px solid;
-  text-decoration:none;
-  flex:1;
-  min-width:140px;
-  transition:transform .18s,box-shadow .18s;
-}
-.rs:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
-.rs.r1{border-color:var(--an);background:var(--an-b);color:var(--an-t)}
-.rs.r2{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
-.rs.r3{border-color:#8B6914;background:#fdf6e3;color:#5a3e06}
-.ruta-arrow{color:var(--dimmer);font-size:1.1rem;flex-shrink:0}
-.rs-n{font-family:var(--serif);font-size:1.5rem;font-weight:700;flex-shrink:0;line-height:1}
-.rs-title{font-size:.88rem;font-weight:800;margin-bottom:2px}
-.rs-desc{font-size:.72rem;line-height:1.45;opacity:.8}
-.rs.r1.highlight-signal{
-  box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2);
-  animation:pulse-signal 2.5s ease-in-out infinite;
-}
-@media(prefers-reduced-motion:reduce){.rs.r1.highlight-signal{animation:none}}
-@keyframes pulse-signal{
-  0%,100%{box-shadow:0 0 0 3px rgba(3,105,161,.35),var(--sh2)}
-  50%{box-shadow:0 0 0 6px rgba(3,105,161,.18),var(--sh2)}
-}
+/* ===== MENÚ ÁTOMO ===== */
+.atomo-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:var(--r);padding:18px;margin-bottom:28px;box-shadow:var(--sh)}
+.atomo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.atomo-top .section-lbl{margin-bottom:4px}
+.atomo-sub{font-size:.82rem;color:var(--tx2);line-height:1.5;max-width:60ch}
+.atomo-lista{font-size:.76rem;font-weight:700;color:var(--an-t);text-decoration:none;white-space:nowrap;padding:6px 0}
+.niveles{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none}
+.niveles::-webkit-scrollbar{display:none}
+.niveles button{flex-shrink:0;display:flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px;border-radius:100px;border:2px solid var(--brd2);background:var(--surf);color:var(--tx2);font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.niveles button .nn{font-family:var(--mono);font-weight:800}
+.niveles button .np{font-size:.68rem;opacity:.75}
+.niveles button.on{color:#fff}
+.atomo-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+@media(max-width:760px){.atomo-grid{grid-template-columns:1fr}}
+.atomo-view{position:relative;width:100%;max-width:440px;margin:0 auto;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,#f3f9fd 0%,#e6f1f8 62%,rgba(230,241,248,0) 72%)}
+#atomo-svg{display:block;width:100%;height:100%;overflow:visible}
+#atomo-svg .capa{cursor:pointer}
+#atomo-svg .capa-ring{fill:none;stroke-width:2.5;transition:stroke-width .2s,opacity .2s}
+#atomo-svg .capa-hit{fill:none;stroke:transparent;stroke-width:26}
+#atomo-svg .capa.on .capa-ring{stroke-width:5}
+#atomo-svg .dim{opacity:.32}
+#atomo-svg .ele{cursor:pointer;transition:opacity .2s}
+#atomo-svg .ele:focus{outline:none}
+#atomo-svg .ele:focus .ele-disc,#atomo-svg .ele.hl .ele-disc{stroke:var(--nav);stroke-width:5}
+#atomo-svg .nucleo{cursor:pointer}
+#atomo-svg .nucleo:focus{outline:none}
+#atomo-svg .nucleo:focus circle.nuc-bg{stroke:var(--gold);stroke-width:5}
+#atomo-svg .pulse{animation:atPulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes atPulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.15;transform:scale(1.45)}}
+@media(prefers-reduced-motion:reduce){#atomo-svg .pulse{animation:none}}
+.atomo-docente{position:absolute;right:0;bottom:2%;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:100px;background:var(--surf);border:1.5px solid var(--brd2);color:var(--tx2);font-size:.72rem;font-weight:700;text-decoration:none;box-shadow:var(--sh)}
+.atomo-docente:hover{border-color:var(--nav);color:var(--nav)}
+.atomo-juego{position:absolute;left:0;bottom:2%;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:100px;background:var(--surf);border:1.5px solid var(--brd2);color:var(--tx2);font-size:.72rem;font-weight:700;text-decoration:none;box-shadow:var(--sh)}
+.atomo-juego:hover{border-color:var(--cat);color:var(--cat-t)}
+.nivel-jue{margin-top:12px;padding:10px 12px;border-radius:var(--rs);background:var(--surf2);border:1.5px dashed var(--brd2)}
+.nivel-jue .nj-t{font-size:.72rem;font-weight:800;color:var(--tx2);margin-bottom:6px}
+.nivel-jue .nj-chips{display:flex;flex-wrap:wrap;gap:6px}
+.nivel-jue a{display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:100px;background:var(--surf);border:1.5px solid var(--brd);color:var(--tx);font-size:.76rem;font-weight:700;text-decoration:none}
+.nivel-jue a:hover{border-color:var(--cat);color:var(--cat-t)}
+.nivel-panel{min-width:0}
+.nivel-head{border-left:5px solid;padding:4px 0 4px 12px;margin-bottom:12px}
+.nivel-n{font-family:var(--mono);font-size:.72rem;font-weight:800;letter-spacing:.06em}
+.nivel-tit{font-family:var(--serif);font-size:1.3rem;font-weight:700;font-style:italic;color:var(--tx);line-height:1.2;margin:2px 0 4px}
+.nivel-q{font-size:.8rem;color:var(--tx2);line-height:1.5}
+.nivel-q strong{color:var(--tx)}
+.nivel-bar{height:6px;border-radius:3px;background:var(--brd);overflow:hidden;margin-top:8px}
+.nivel-bar span{display:block;height:100%;border-radius:3px;transition:width .4s}
+.nivel-lst{display:flex;flex-direction:column;gap:8px}
+.nivel-st{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;min-height:56px;border:2px solid var(--brd);border-radius:var(--rs);background:var(--surf);text-decoration:none;color:var(--tx);transition:border-color .15s,transform .15s}
+.nivel-st:hover{transform:translateX(3px)}
+.nivel-st.hl{animation:stFlash 1.2s ease}
+@keyframes stFlash{0%,100%{box-shadow:none}30%{box-shadow:0 0 0 4px rgba(252,211,77,.8)}}
+.nivel-st .ic{font-size:1.5rem;line-height:1}
+.nivel-st .tt{font-weight:800;font-size:.9rem;line-height:1.25}
+.nivel-st .dd{font-size:.74rem;color:var(--tx2);line-height:1.4;margin-top:2px}
+.nivel-st .ss{font-size:.66rem;font-weight:800;white-space:nowrap;padding:3px 8px;border-radius:100px}
+.ss.vis{background:var(--ok-b);color:var(--ok-t)}
+.ss.sig{background:#fef3c7;color:#92400e}
+.ss.nue{background:var(--err-b);color:var(--err-t)}
+.ss.opc{background:var(--surf2);color:var(--dimmer)}
+.nuc-lvls{display:flex;flex-direction:column;gap:8px;margin:10px 0 14px}
+.nuc-lv{display:grid;grid-template-columns:120px 1fr 44px;gap:8px;align-items:center;font-size:.78rem;font-weight:700;color:var(--tx2);background:none;border:none;font-family:inherit;cursor:pointer;text-align:left;padding:2px 0}
+.nuc-lv .b{height:10px;border-radius:5px;background:var(--brd);overflow:hidden}
+.nuc-lv .b span{display:block;height:100%}
+.nuc-go{display:inline-flex;align-items:center;min-height:44px;padding:9px 18px;border-radius:var(--rs);background:var(--nav);color:#fff;font-weight:800;font-size:.86rem;text-decoration:none}
+@media(max-width:640px){.atomo-card{padding:14px 12px}}
 
 /* ===== MODULES GRID ===== */
+.mods-nivel{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 12px;padding-left:10px;border-left:5px solid var(--c)}
+.mods-nivel .mn-n{font-family:var(--mono);font-size:.7rem;font-weight:800;color:#fff;background:var(--c);padding:2px 9px;border-radius:100px}
+.mods-nivel .mn-t{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.1rem;color:var(--tx)}
+.mods-nivel .mn-nom{margin-left:auto;font-size:.74rem;font-weight:700;color:var(--an-t);text-decoration:none}
+.nom-sec{margin-top:8px;padding-top:8px}
+.nom-intro{font-size:.86rem;color:var(--tx2);line-height:1.6;max-width:70ch;margin-bottom:14px}
+.nom-sec .hero-demo{margin-left:auto;margin-right:auto}
 .mods-lbl{
   font-size:.58rem;
   font-weight:800;
@@ -480,6 +529,9 @@ footer a:hover{text-decoration:underline}
 .welcome-modal-inner h3{font-family:var(--serif);font-style:italic;font-size:1.35rem;margin-bottom:10px;text-align:center}
 .welcome-modal-inner p{font-size:.88rem;line-height:1.65;color:var(--tx2);margin-bottom:14px}
 .welcome-legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px}
+.welcome-niveles{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.welcome-niveles span{font-size:.82rem;padding:7px 12px;border-radius:10px;background:var(--surf2);border-left:4px solid var(--c);color:var(--tx)}
+.welcome-niveles b{font-family:var(--mono);color:var(--c);margin-right:4px}
 .welcome-legend span{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px}
 .welcome-legend .w-cat{background:var(--cat-b);color:var(--cat-t)}
 .welcome-legend .w-an{background:var(--an-b);color:var(--an-t)}
@@ -524,9 +576,6 @@ footer a:hover{text-decoration:underline}
   .parts-grid{grid-template-columns:1fr}
   .mods{grid-template-columns:1fr}
   .hero{padding:24px 20px 20px}
-  .ruta-steps{flex-direction:column}
-  .rs{min-width:unset;width:100%}
-  .ruta-arrow{transform:rotate(90deg)}
 }
 @media(min-width:641px) and (max-width:899px){
   .mods{grid-template-columns:repeat(2,1fr)}
@@ -571,6 +620,9 @@ html{font-size:var(--base-fs)}
   </div>
   <nav class="drawer-links">
     <a href="index.html" class="active"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
@@ -593,12 +645,356 @@ html{font-size:var(--base-fs)}
 <div class="hero">
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:22px">
     <img src="assets/logo.png" alt="IonNom" class="ion-logo-float" style="height:140px;max-width:260px;object-fit:contain;border-radius:20px;margin-bottom:18px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.35));" onerror="this.style.display='none'">
-    <div class="hero-eyebrow">Nomenclatura Inorgánica · Sistema MDEC</div>
-    <h1>Nombra cualquier compuesto<br><em>inorgánico</em> sin memorizar</h1>
+    <div class="hero-eyebrow">Química general · Grados 10° y 11°</div>
+    <h1>Del <em>átomo</em> a la reacción,<br>paso a paso</h1>
   </div>
-  <p class="hero-sub" style="text-align:center;margin-left:auto;margin-right:auto;">IonNom te enseña los tres sistemas de nomenclatura — Tradicional, Stock e IUPAC — usando un código de cuatro colores. Identifica la función química de cada parte y construye el nombre paso a paso.</p>
+  <p class="hero-sub" style="text-align:center;margin-left:auto;margin-right:auto;">Teoría con simuladores, juegos y laboratorios virtuales para aprender química de adentro hacia afuera: el átomo y el enlace, la nomenclatura inorgánica, las reacciones y los cálculos.</p>
 
-  <!-- Live formula demo — the page demonstrates its own method -->
+  <!-- Los 4 niveles del átomo IonNom: cada uno abre su capa en el menú átomo -->
+  <nav class="hero-niveles" aria-label="Los 4 niveles de IonNom">
+    <a class="hn" href="#atomo-card" data-n="1" style="--c:#0d9488"><span class="hn-n">n = 1</span><span class="hn-e">⚛️</span><span class="hn-t">El átomo</span><span class="hn-d">Modelos, configuración, tabla periódica y enlace</span></a>
+    <a class="hn" href="#atomo-card" data-n="2" style="--c:#0072B2"><span class="hn-n">n = 2</span><span class="hn-e">🏷️</span><span class="hn-t">Nomenclatura</span><span class="hn-d">Óxidos, hidruros, ácidos, bases y sales</span></a>
+    <a class="hn" href="#atomo-card" data-n="3" style="--c:#b45309"><span class="hn-n">n = 3</span><span class="hn-e">⚗️</span><span class="hn-t">Reacciones</span><span class="hn-d">Tipos de reacción, balanceo y simulador</span></a>
+    <a class="hn" href="#atomo-card" data-n="4" style="--c:#7c3aed"><span class="hn-n">n = 4</span><span class="hn-e">🧮</span><span class="hn-t">Cálculos y redox</span><span class="hn-d">Mol, estequiometría y balanceo redox</span></a>
+  </nav>
+
+  <div class="hero-actions">
+    <a class="hero-go" id="hero-go" href="atomo.html">▶️ Empezar por Teoría Atómica</a>
+    <a class="narr-btn" href="juego.html">🎮 Jugar</a>
+    <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
+    <button class="narr-btn" onclick="openWelcomeModal()">👋 ¿Qué es IonNom?</button>
+  </div>
+</div>
+
+<!-- ===== MODAL DE PRESENTACIÓN ===== -->
+<div id="welcome-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:250;align-items:center;justify-content:center;padding:20px">
+  <div class="welcome-modal-inner">
+    <h3>👋 Bienvenido a Ion<em style="color:var(--gold);font-style:normal">Nom</em></h3>
+    <p>IonNom es un recorrido por la química de 10° y 11° organizado como un átomo: empiezas cerca del núcleo y subes de nivel como un electrón excitado.</p>
+    <div class="welcome-niveles">
+      <span style="--c:#0d9488"><b>n = 1</b> ⚛️ El átomo y el enlace</span>
+      <span style="--c:#0072B2"><b>n = 2</b> 🏷️ Nomenclatura inorgánica</span>
+      <span style="--c:#b45309"><b>n = 3</b> ⚗️ Reacciones y balanceo</span>
+      <span style="--c:#7c3aed"><b>n = 4</b> 🧮 Mol, estequiometría y redox</span>
+    </div>
+    <p style="text-align:center;font-size:.82rem">Cada estación tiene teoría, simuladores y práctica. El <strong>Juego</strong> tiene preguntas de todos los niveles y, con el <strong>Modo Estudiante</strong>, tu profe recibe tus resultados.</p>
+    <div class="welcome-actions">
+      <a class="welcome-btn primary" href="atomo.html" onclick="markWelcomeSeen()">▶️ Empezar por Teoría Atómica</a>
+      <a class="welcome-btn dl" href="assets/guia-nomenclatura-inorganica.pdf" download onclick="markWelcomeSeen()">📘 Descargar guía de nomenclatura (PDF)</a>
+      <button class="welcome-btn ghost" onclick="closeWelcomeModal()">Cerrar y explorar por mi cuenta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MENÚ ÁTOMO ===== -->
+<section class="atomo-card" id="atomo-card" aria-labelledby="atomo-tit">
+  <div class="atomo-top">
+    <div>
+      <div class="section-lbl" id="atomo-tit">⚛️ Tu átomo IonNom</div>
+      <p class="atomo-sub">Cada <strong>capa</strong> es un nivel de la química y cada <strong>electrón</strong>, un módulo. Empieza cerca del núcleo y sube de nivel como un electrón excitado. Toca una capa o un electrón.</p>
+    </div>
+    <a class="atomo-lista" href="#modulos">Ver como lista ↓</a>
+  </div>
+  <div class="niveles" id="niveles" role="tablist" aria-label="Niveles del átomo"></div>
+  <div class="atomo-grid">
+    <div class="atomo-view">
+      <svg id="atomo-svg" viewBox="-222 -222 444 444" aria-label="Menú en forma de átomo: el núcleo muestra tu progreso, las capas son los niveles y los electrones son los módulos."></svg>
+      <a class="atomo-juego" href="juego.html" title="Juego: preguntas de todos los niveles">🎮 Juego</a>
+      <a class="atomo-docente" href="docente.html" title="Generador Docente">🗂️ Sala docente</a>
+    </div>
+    <div class="nivel-panel" id="nivel-panel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ===== MÓDULOS (agrupados por nivel del átomo) ===== -->
+<div class="mods-lbl" id="modulos">Todos los módulos, por nivel</div>
+<div class="mods-nivel" style="--c:#0d9488"><span class="mn-n">n = 1</span><span class="mn-t">⚛️ El átomo</span></div>
+<div class="mods">
+
+  <a class="mod-card teal" href="atomo.html">
+    <div class="mod-top">
+      <span class="mod-icon">🪐</span>
+      <div class="mod-paso">Parada 1 · n = 1</div>
+      <div class="mod-title">Teoría Atómica</div>
+      <div class="mod-subtitle">Aprenderás: los modelos atómicos de Demócrito al modelo cuántico</div>
+      <div class="mod-desc">Línea del tiempo, simuladores de Thomson, Rutherford y Bohr, constructor de átomos e iones y simulaciones PhET.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🧪 3 simuladores</span><span class="mc">🧱 Constructor</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card teal" href="configuracion.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧬</span>
+      <div class="mod-paso">Parada 2 · n = 1</div>
+      <div class="mod-title">Configuración Electrónica</div>
+      <div class="mod-subtitle">Aprenderás: Aufbau, Pauli, Hund y el diagrama de Moeller</div>
+      <div class="mod-desc">Configurador de los 118 elementos e iones, diagrama de orbitales, números cuánticos y práctica de llenar orbitales.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">↙️ Moeller</span><span class="mc">🔧 118 elementos</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card teal" href="tabla.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚗️</span>
+      <div class="mod-paso">Parada 3 · n = 1</div>
+      <div class="mod-title">Tabla Periódica</div>
+      <div class="mod-subtitle">Aprenderás: estados de oxidación y electronegatividad</div>
+      <div class="mod-desc">118 elementos interactivos: símbolo, masa, electronegatividad de Pauling y contexto colombiano.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">118 elementos</span><span class="mc">Pauling</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Básico</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card teal" href="enlace.html">
+    <div class="mod-top">
+      <span class="mod-icon">🔗</span>
+      <div class="mod-paso">Parada 4 · n = 1</div>
+      <div class="mod-title">Enlace Químico</div>
+      <div class="mod-subtitle">Aprenderás: enlace iónico, covalente y metálico, Lewis y ΔEN</div>
+      <div class="mod-desc">Estructuras de Lewis paso a paso, calculadora de electronegatividad, 4 simuladores y laboratorio virtual para deducir el tipo de enlace.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">✏️ Lewis</span><span class="mc">⚖️ ΔEN</span><span class="mc">🔬 Laboratorio</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="mods-nivel" style="--c:#0072B2"><span class="mn-n">n = 2</span><span class="mn-t">🏷️ Nomenclatura</span><a class="mn-nom" href="#codigo-colores">Código de 4 colores ↓</a></div>
+<div class="mods">
+
+  <a class="mod-card azul" href="teoria.html">
+    <div class="mod-top">
+      <span class="mod-icon">📖</span>
+      <div class="mod-paso">Parada 5 · n = 2</div>
+      <div class="mod-title">Principios</div>
+      <div class="mod-subtitle">Aprenderás: estados de oxidación y los 3 sistemas</div>
+      <div class="mod-desc">Compuestos binarios y ternarios, reglas y ejemplos paso a paso con el modelo de colores.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">7 temas</span><span class="mc">Trad · Stock · IUPAC</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Básico</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card verde" href="funciones.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧪</span>
+      <div class="mod-paso">Parada 6 · n = 2</div>
+      <div class="mod-title">Funciones Inorgánicas</div>
+      <div class="mod-subtitle">Aprenderás: los 9 grupos funcionales con contexto real</div>
+      <div class="mod-desc">Ejercicios interactivos y compuestos colombianos reales (Cerrejón, Galeras, Paz de Río…).</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">9 grupos</span><span class="mc">Contexto 🇨🇴</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card duelo" href="nomenClash.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚔️</span>
+      <div class="mod-paso" style="color:var(--gold);opacity:.9">Parada 7 · n = 2</div>
+      <div class="mod-title">NomenClash — El Duelo</div>
+      <div class="mod-subtitle" style="color:rgba(242,232,213,.6)">Combina iones, forma compuestos y derrota a la IA</div>
+      <div class="mod-desc" style="color:rgba(242,232,213,.72)">Juego de cartas medieval: cationes vs aniones, nombramiento en los 3 sistemas. Modo básico y completo.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips">
+        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">Cartas</span>
+        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">IA oponente</span>
+      </div>
+      <div class="mod-meta">
+        <span class="mod-badge avanzado">Avanzado</span>
+        <span class="mod-arrow" style="color:var(--gold)">→</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="mods-nivel" style="--c:#b45309"><span class="mn-n">n = 3</span><span class="mn-t">⚗️ Reacciones</span></div>
+<div class="mods">
+
+  <a class="mod-card ambar" href="reacciones.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚗️</span>
+      <div class="mod-paso">Parada 8 · n = 3</div>
+      <div class="mod-title">Tipos de Reacción</div>
+      <div class="mod-subtitle">Aprenderás: síntesis, descomposición, sustitución, combustión, neutralización</div>
+      <div class="mod-desc">Identifica y clasifica los 6 tipos de reacción química con ejemplos colombianos y quiz interactivo.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🧪 Síntesis</span><span class="mc">🔥 Combustión</span><span class="mc">⚖️ Neutralización</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge facil">Básico</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card azul" href="balanceo.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚖️</span>
+      <div class="mod-paso">Parada 9 · n = 3</div>
+      <div class="mod-title">Balanceo de Ecuaciones</div>
+      <div class="mod-subtitle">Aprenderás: ajustar coeficientes por el método de tanteo</div>
+      <div class="mod-desc">Método de inspección paso a paso con práctica interactiva. Incluye 8 ejercicios de dificultad progresiva.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">⚖️ Tanteo</span><span class="mc">🔢 Coeficientes</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card verde" href="simulador.html">
+    <div class="mod-top">
+      <span class="mod-icon">🔬</span>
+      <div class="mod-paso">Opcional · n = 3</div>
+      <div class="mod-title">Simulador</div>
+      <div class="mod-subtitle">Aprenderás: a predecir productos de reacciones inorgánicas</div>
+      <div class="mod-desc">Simula reacciones para los 8 grupos. Laboratorio virtual de pH con fenolftaleína y repollo morado.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">⚗️ Reacciones</span><span class="mc">🧪 pH virtual</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="mods-nivel" style="--c:#7c3aed"><span class="mn-n">n = 4</span><span class="mn-t">🧮 Cálculos y redox</span></div>
+<div class="mods">
+
+  <a class="mod-card teal" href="moles.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚛️</span>
+      <div class="mod-paso">Parada 10 · n = 4</div>
+      <div class="mod-title">Mol, Masa Molar y Estequiometría</div>
+      <div class="mod-subtitle">Aprenderás: n = m/M, factores de conversión, cálculos estequiométricos</div>
+      <div class="mod-desc">De la ecuación balanceada a los gramos reales. Siempre con cadenas de factores de conversión, nunca regla de tres.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">⚛️ Mol</span><span class="mc">⚖️ Masa molar</span><span class="mc">🔗 Factores</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card violeta" href="estequiometria.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧮</span>
+      <div class="mod-paso">Parada 11 · n = 4</div>
+      <div class="mod-title">Estequiometría</div>
+      <div class="mod-subtitle">Aprenderás: factores de conversión mol-masa, reactivo limitante, rendimiento</div>
+      <div class="mod-desc">De la ecuación balanceada a gramos reales usando únicamente cadenas de factores. Nunca regla de tres.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🔗 Factores</span><span class="mc">⚗️ Reacción</span><span class="mc">⚖️ Masa</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card azul" href="balanceo-avanzado.html">
+    <div class="mod-top">
+      <span class="mod-icon">⚡</span>
+      <div class="mod-paso">Parada 12 · n = 4</div>
+      <div class="mod-title">Balanceo Algebraico y Redox</div>
+      <div class="mod-subtitle">Aprenderás: método algebraico, semirreacciones, estados de oxidación</div>
+      <div class="mod-desc">Para ecuaciones difíciles: álgebra matricial y transferencia de electrones por el método de semirreacciones.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">📐 Álgebra</span><span class="mc">⚡ Redox</span><span class="mc">🔬 Avanzado</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge avanzado">Avanzado</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="mods-nivel" style="--c:#0d4a73"><span class="mn-n">Todos</span><span class="mn-t">🎯 Practica y enseña</span></div>
+<div class="mods">
+
+  <a class="mod-card ambar" href="juego.html">
+    <div class="mod-top">
+      <span class="mod-icon">🎮</span>
+      <div class="mod-paso">Todos los niveles</div>
+      <div class="mod-title">Juego</div>
+      <div class="mod-subtitle">Pon a prueba lo aprendido en los 4 niveles</div>
+      <div class="mod-desc">20 preguntas cronometradas (60 s c/u) de teoría atómica, tabla periódica, enlace, nomenclatura, reacciones, balanceo y mol. Con Modo Estudiante, el docente recibe los resultados.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">15 temas</span><span class="mc">🎓 Modo Estudiante</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge medio">Medio</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card violeta" href="docente.html">
+    <div class="mod-top">
+      <span class="mod-icon">🗂️</span>
+      <div class="mod-paso">Para docentes</div>
+      <div class="mod-title">Generador Docente</div>
+      <div class="mod-subtitle">Arma guías, talleres y evaluaciones imprimibles para tu clase</div>
+      <div class="mod-desc">Los 18 temas del sitio (incluidos la región «El átomo» y el enlace químico), versiones reproducibles por semilla para evitar copia, hoja de respuestas y rúbricas incluidas.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">18 temas</span><span class="mc">Imprimible</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge avanzado">Docente</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- ===== NIVEL 2: CÓDIGO DE 4 COLORES (Sistema MDEC) ===== -->
+<section class="nom-sec" id="codigo-colores" aria-labelledby="nom-tit">
+  <div class="mods-nivel" style="--c:#0072B2"><span class="mn-n">n = 2</span><span class="mn-t" id="nom-tit">🏷️ Nomenclatura: el código de 4 colores</span></div>
+  <p class="nom-intro">En el nivel de nomenclatura, cada parte de un compuesto tiene un color según su función (Sistema MDEC). Con él se construye el nombre en los tres sistemas —Tradicional, Stock e IUPAC— sin memorizar.</p>
   <div class="hero-demo" role="img" aria-label="Ejemplo: sulfato de hierro III = catión Fe más oxoanión SO4">
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
       <span class="hd-pill cat">Fe³⁺</span>
@@ -616,306 +1012,6 @@ html{font-size:var(--base-fs)}
     </div>
   </div>
 
-  <div class="hero-actions">
-    <button class="narr-btn" id="narr-btn-home" onclick="toggleNarration()">🔊 Escuchar introducción</button>
-    <button class="narr-btn" onclick="openWelcomeModal()">👋 ¿Qué es IonNom?</button>
-  </div>
-</div>
-
-<!-- ===== MODAL DE PRESENTACIÓN ===== -->
-<div id="welcome-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:250;align-items:center;justify-content:center;padding:20px">
-  <div class="welcome-modal-inner">
-    <h3>👋 Bienvenido a Ion<em style="color:var(--gold);font-style:normal">Nom</em></h3>
-    <p>Aprende a nombrar cualquier compuesto inorgánico con un código de 4 colores: identifica el catión y el anión, y construye el nombre en los tres sistemas — Tradicional, Stock y Sistemática.</p>
-    <div class="welcome-legend">
-      <span class="w-cat">① Ámbar · Catión</span>
-      <span class="w-an">② Azul · Anión simple</span>
-      <span class="w-oh">③ Rosado · OH⁻</span>
-      <span class="w-ox">④ Verde · Oxoanión</span>
-    </div>
-    <p style="text-align:center;font-size:.82rem">¿Primera vez? Empieza por <strong>Principios</strong>, practica con <strong>Funciones</strong> y pon a prueba lo aprendido en el <strong>Juego</strong>.</p>
-    <div class="welcome-actions">
-      <a class="welcome-btn primary" href="teoria.html" onclick="markWelcomeSeen()">▶️ Empezar por Principios</a>
-      <a class="welcome-btn dl" href="assets/guia-nomenclatura-inorganica.pdf" download onclick="markWelcomeSeen()">📘 Descargar guía completa (PDF)</a>
-      <button class="welcome-btn ghost" onclick="closeWelcomeModal()">Cerrar y explorar por mi cuenta</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PRETRAIN: 4 GRUPOS MDEC (referencia rápida y compacta; el detalle ya está en el modal de bienvenida) ===== -->
-<div class="pretrain-box" role="note">
-  <div class="pretrain-chips">
-    <span class="pt-chip">
-      <span class="chip-dot" style="background:var(--cat)"></span>
-      <strong style="color:var(--cat-t)">① Ámbar</strong>
-    </span>
-    <span class="pt-chip">
-      <span class="chip-dot" style="background:var(--an)"></span>
-      <strong style="color:var(--an-t)">② Azul</strong>
-    </span>
-    <span class="pt-chip">
-      <span class="chip-dot" style="background:var(--oh)"></span>
-      <strong style="color:var(--oh-t)">③ Rosado</strong>
-    </span>
-    <span class="pt-chip">
-      <span class="chip-dot" style="background:var(--ox)"></span>
-      <strong style="color:var(--ox-t)">④ Verde</strong>
-    </span>
-    <button type="button" class="pt-chip" onclick="openWelcomeModal()" style="cursor:pointer;font:inherit;border-style:dashed">Ver ruta recomendada →</button>
-  </div>
-</div>
-
-<!-- ===== RUTA RECOMENDADA ===== -->
-<div class="ruta-card">
-  <div class="section-lbl">Ruta recomendada</div>
-  <div class="ruta-steps">
-    <a class="rs r1 highlight-signal" href="teoria.html">
-      <span class="rs-n">①</span>
-      <div><div class="rs-title">Principios</div><div class="rs-desc">Conceptos, oxidación y 3 sistemas</div></div>
-    </a>
-    <span class="ruta-arrow" aria-hidden="true">→</span>
-    <a class="rs r1" href="funciones.html" style="border-color:var(--ok);background:var(--ok-b);color:var(--ok-t)">
-      <span class="rs-n">②</span>
-      <div><div class="rs-title">Funciones</div><div class="rs-desc">Ejercicios por los 9 grupos inorgánicos</div></div>
-    </a>
-    <span class="ruta-arrow" aria-hidden="true">→</span>
-    <a class="rs r2" href="juego.html">
-      <span class="rs-n">③</span>
-      <div><div class="rs-title">Juego</div><div class="rs-desc">20 preguntas cronometradas · medallas</div></div>
-    </a>
-    <span class="ruta-arrow" aria-hidden="true">→</span>
-    <a class="rs r3" href="nomenClash.html">
-      <span class="rs-n">④</span>
-      <div><div class="rs-title">NomenClash</div><div class="rs-desc">Duelo de iones contra la IA</div></div>
-    </a>
-  </div>
-</div>
-
-<!-- ===== MÓDULOS ===== -->
-<div class="mods-lbl">Módulos</div>
-<div class="mods">
-
-  <a class="mod-card azul" href="teoria.html">
-    <div class="mod-top">
-      <span class="mod-icon">📖</span>
-      <div class="mod-paso">① Empieza aquí</div>
-      <div class="mod-title">Principios</div>
-      <div class="mod-subtitle">Aprenderás: estados de oxidación y los 3 sistemas</div>
-      <div class="mod-desc">Compuestos binarios y ternarios, reglas y ejemplos paso a paso con el modelo de colores.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">7 temas</span><span class="mc">Trad · Stock · IUPAC</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge basico">Básico</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card verde" href="funciones.html">
-    <div class="mod-top">
-      <span class="mod-icon">🧪</span>
-      <div class="mod-paso">② Practica por grupo</div>
-      <div class="mod-title">Funciones Inorgánicas</div>
-      <div class="mod-subtitle">Aprenderás: los 9 grupos funcionales con contexto real</div>
-      <div class="mod-desc">Ejercicios interactivos y compuestos colombianos reales (Cerrejón, Galeras, Paz de Río…).</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">9 grupos</span><span class="mc">Contexto 🇨🇴</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card ambar" href="juego.html">
-    <div class="mod-top">
-      <span class="mod-icon">🎮</span>
-      <div class="mod-paso">③ Pon a prueba lo aprendido</div>
-      <div class="mod-title">Juego</div>
-      <div class="mod-subtitle">Aprenderás: a reconocer nombres y fórmulas bajo presión</div>
-      <div class="mod-desc">20 preguntas cronometradas (60 s c/u), 13 tipos distintos, banco de 459 compuestos + 118 elementos.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">20 preguntas</span><span class="mc">459 compuestos</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card teal" href="tabla.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚗️</span>
-      <div class="mod-paso">④ Referencia</div>
-      <div class="mod-title">Tabla Periódica</div>
-      <div class="mod-subtitle">Aprenderás: estados de oxidación y electronegatividad</div>
-      <div class="mod-desc">118 elementos interactivos: símbolo, masa, electronegatividad de Pauling y contexto colombiano.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">118 elementos</span><span class="mc">Pauling</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge basico">Básico</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card violeta" href="docente.html">
-    <div class="mod-top">
-      <span class="mod-icon">🗂️</span>
-      <div class="mod-paso">⑤ Para docentes</div>
-      <div class="mod-title">Generador Docente</div>
-      <div class="mod-subtitle">Arma guías, talleres y evaluaciones imprimibles para tu clase</div>
-      <div class="mod-desc">Los 14 temas del sitio, versiones reproducibles por semilla para evitar copia, hoja de respuestas y rúbricas incluidas.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">14 temas</span><span class="mc">Imprimible</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge avanzado">Docente</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card duelo" href="nomenClash.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚔️</span>
-      <div class="mod-paso" style="color:var(--gold);opacity:.9">⑥ Competencia</div>
-      <div class="mod-title">NomenClash — El Duelo</div>
-      <div class="mod-subtitle" style="color:rgba(242,232,213,.6)">Combina iones, forma compuestos y derrota a la IA</div>
-      <div class="mod-desc" style="color:rgba(242,232,213,.72)">Juego de cartas medieval: cationes vs aniones, nombramiento en los 3 sistemas. Modo básico y completo.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips">
-        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">Cartas</span>
-        <span class="mc" style="background:rgba(252,211,77,.15);color:var(--gold)">IA oponente</span>
-      </div>
-      <div class="mod-meta">
-        <span class="mod-badge avanzado">Avanzado</span>
-        <span class="mod-arrow" style="color:var(--gold)">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card verde" href="simulador.html">
-    <div class="mod-top">
-      <span class="mod-icon">🔬</span>
-      <div class="mod-paso">⑦ Experimenta</div>
-      <div class="mod-title">Simulador</div>
-      <div class="mod-subtitle">Aprenderás: a predecir productos de reacciones inorgánicas</div>
-      <div class="mod-desc">Simula reacciones para los 8 grupos. Laboratorio virtual de pH con fenolftaleína y repollo morado.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">⚗️ Reacciones</span><span class="mc">🧪 pH virtual</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card ambar" href="reacciones.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚗️</span>
-      <div class="mod-paso">⑧ Clasifica</div>
-      <div class="mod-title">Tipos de Reacción</div>
-      <div class="mod-subtitle">Aprenderás: síntesis, descomposición, sustitución, combustión, neutralización</div>
-      <div class="mod-desc">Identifica y clasifica los 6 tipos de reacción química con ejemplos colombianos y quiz interactivo.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">🧪 Síntesis</span><span class="mc">🔥 Combustión</span><span class="mc">⚖️ Neutralización</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge facil">Básico</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card azul" href="balanceo.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚖️</span>
-      <div class="mod-paso">⑨ Balancea</div>
-      <div class="mod-title">Balanceo de Ecuaciones</div>
-      <div class="mod-subtitle">Aprenderás: ajustar coeficientes por el método de tanteo</div>
-      <div class="mod-desc">Método de inspección paso a paso con práctica interactiva. Incluye 8 ejercicios de dificultad progresiva.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">⚖️ Tanteo</span><span class="mc">🔢 Coeficientes</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card teal" href="moles.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚛️</span>
-      <div class="mod-paso">⑩ Calcula</div>
-      <div class="mod-title">Mol, Masa Molar y Estequiometría</div>
-      <div class="mod-subtitle">Aprenderás: n = m/M, factores de conversión, cálculos estequiométricos</div>
-      <div class="mod-desc">De la ecuación balanceada a los gramos reales. Siempre con cadenas de factores de conversión, nunca regla de tres.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">⚛️ Mol</span><span class="mc">⚖️ Masa molar</span><span class="mc">🔗 Factores</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card violeta" href="estequiometria.html">
-    <div class="mod-top">
-      <span class="mod-icon">🧮</span>
-      <div class="mod-paso">⑪ Calcula</div>
-      <div class="mod-title">Estequiometría</div>
-      <div class="mod-subtitle">Aprenderás: factores de conversión mol-masa, reactivo limitante, rendimiento</div>
-      <div class="mod-desc">De la ecuación balanceada a gramos reales usando únicamente cadenas de factores. Nunca regla de tres.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">🔗 Factores</span><span class="mc">⚗️ Reacción</span><span class="mc">⚖️ Masa</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge medio">Medio</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="mod-card azul" href="balanceo-avanzado.html">
-    <div class="mod-top">
-      <span class="mod-icon">⚡</span>
-      <div class="mod-paso">⑫ Domina</div>
-      <div class="mod-title">Balanceo Algebraico y Redox</div>
-      <div class="mod-subtitle">Aprenderás: método algebraico, semirreacciones, estados de oxidación</div>
-      <div class="mod-desc">Para ecuaciones difíciles: álgebra matricial y transferencia de electrones por el método de semirreacciones.</div>
-    </div>
-    <div class="mod-bottom">
-      <div class="mod-chips"><span class="mc">📐 Álgebra</span><span class="mc">⚡ Redox</span><span class="mc">🔬 Avanzado</span></div>
-      <div class="mod-meta">
-        <span class="mod-badge avanzado">Avanzado</span>
-        <span class="mod-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-</div>
-
-<!-- ===== REAL-WORLD ===== -->
-<div class="rw-section">
-  <div class="section-lbl">¿Por qué estudiar nomenclatura? — Compuestos de tu vida cotidiana</div>
-  <div class="rw-row">
-    <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
-    <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
-    <div class="rw-card"><div class="rw-formula">Fe₂O₃</div><div class="rw-name">Óxido de hierro (III)</div><div class="rw-use">Herrumbre · óxido del hierro</div></div>
-    <div class="rw-card"><div class="rw-formula">NaHCO₃</div><div class="rw-name">Bicarbonato de sodio</div><div class="rw-use">Levante en repostería · antiácido</div></div>
-    <div class="rw-card"><div class="rw-formula">Ca(OH)₂</div><div class="rw-name">Hidróxido de calcio</div><div class="rw-use">Cal apagada · lechada de cal</div></div>
-    <div class="rw-card"><div class="rw-formula">KMnO₄</div><div class="rw-name">Permanganato de potasio</div><div class="rw-use">Desinfectante · tratamiento de agua</div></div>
-  </div>
-</div>
 
 <!-- ===== 4-PART GRID ===== -->
 <div class="parts-grid">
@@ -959,6 +1055,20 @@ html{font-size:var(--base-fs)}
     → <em>sulfato férrico</em> (Tradicional) · <em>sulfato de hierro (III)</em> (Stock) · <em>trisulfato de dihierro</em> (IUPAC)
   </div>
 </div>
+
+<!-- ===== REAL-WORLD ===== -->
+<div class="rw-section">
+  <div class="section-lbl">Compuestos de tu vida cotidiana</div>
+  <div class="rw-row">
+    <div class="rw-card"><div class="rw-formula">NaCl</div><div class="rw-name">Cloruro de sodio</div><div class="rw-use">Sal de mesa · conservante</div></div>
+    <div class="rw-card"><div class="rw-formula">CaO</div><div class="rw-name">Óxido de calcio</div><div class="rw-use">Cal viva · construcción</div></div>
+    <div class="rw-card"><div class="rw-formula">Fe₂O₃</div><div class="rw-name">Óxido de hierro (III)</div><div class="rw-use">Herrumbre · óxido del hierro</div></div>
+    <div class="rw-card"><div class="rw-formula">NaHCO₃</div><div class="rw-name">Bicarbonato de sodio</div><div class="rw-use">Levante en repostería · antiácido</div></div>
+    <div class="rw-card"><div class="rw-formula">Ca(OH)₂</div><div class="rw-name">Hidróxido de calcio</div><div class="rw-use">Cal apagada · lechada de cal</div></div>
+    <div class="rw-card"><div class="rw-formula">KMnO₄</div><div class="rw-name">Permanganato de potasio</div><div class="rw-use">Desinfectante · tratamiento de agua</div></div>
+  </div>
+</div>
+</section>
 
 </div>
 
@@ -1042,10 +1152,11 @@ function toggleNarration() {
   narrating = true;
   btn.textContent = '⏹ Detener';
   btn.classList.add('playing');
-  const texto = '¡Hola! Bienvenido a IonNom, tu herramienta para aprender nomenclatura inorgánica. ' +
-    'Aquí encontrarás cuatro colores clave: ámbar para los cationes o metales, azul para los aniones simples, ' +
-    'rosado para el grupo hidroxilo, y verde para los oxoaniones. ' +
-    'Te recomendamos empezar por Principios, luego practicar con Funciones, y después jugar para poner a prueba lo que aprendiste. ' +
+  const texto = '¡Hola! Bienvenido a IonNom, tu herramienta para aprender química. ' +
+    'El menú tiene forma de átomo y cada capa es un nivel. En el primero, el átomo, verás los modelos atómicos, la configuración electrónica, la tabla periódica y el enlace químico. ' +
+    'En el segundo aprenderás a nombrar compuestos inorgánicos con un código de cuatro colores. ' +
+    'En el tercero, las reacciones y el balanceo, y en el cuarto, el mol, la estequiometría y el balanceo redox. ' +
+    'Empieza cerca del núcleo, con la Teoría Atómica, y usa el Juego para poner a prueba lo que aprendiste en cada nivel. ' +
     '¡Mucho éxito en tu aprendizaje!';
   speak(texto, () => {
     narrating = false;
@@ -1169,6 +1280,182 @@ window.addEventListener('appinstalled', () => {
   window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script>
+// ── Menú átomo ──
+// La portada presenta los módulos como un átomo de Bohr: el núcleo es el
+// progreso del estudiante, cada capa (n = 1…4) es una región temática en el
+// orden recomendado y cada electrón es un módulo. Tocar una capa o un
+// electrón abre el panel de ese nivel (con enlaces grandes, fáciles de tocar
+// en celular); el átomo nunca navega por sí solo. Los electrones visitados
+// se marcan con ✓ a partir del registro 'ionom-visitas' de assets/ionom-ui.js.
+(function(){
+  var svg=document.getElementById('atomo-svg'); if(!svg) return;
+  var NS='http://www.w3.org/2000/svg';
+  var NIV=[
+    {n:1,k:'atomo',t:'El átomo',e:'⚛️',c:'#0d9488',f:'#d5f3ef',r:64,q:'¿Cómo es un átomo que nadie ha visto y por qué se une con otros?'},
+    {n:2,k:'nom',t:'Nomenclatura',e:'🏷️',c:'#0072B2',f:'#dbebf4',r:110,q:'¿Cómo puede un nombre decir de qué está hecha una sustancia?'},
+    {n:3,k:'rx',t:'Reacciones',e:'⚗️',c:'#b45309',f:'#fcf2db',r:155,q:'¿Qué cambia y qué se conserva cuando las sustancias reaccionan?'},
+    {n:4,k:'calc',t:'Cálculos y redox',e:'🧮',c:'#7c3aed',f:'#efe9fd',r:198,q:'¿Cómo predecir cuánto producto se obtendrá de una reacción?'}
+  ];
+  // r: orden en la ruta recomendada (null = desvío opcional)
+  var ST=[
+    {id:'atomo.html',r:1,n:1,e:'🪐',t:'Teoría Atómica',d:'Modelos atómicos, experimentos de Thomson, Rutherford y Bohr, y constructor de átomos.',nuevo:true},
+    {id:'configuracion.html',r:2,n:1,e:'🧬',t:'Configuración Electrónica',d:'Aufbau, Pauli y Hund, diagrama de Moeller, configurador de cualquier elemento o ion y práctica de orbitales.',nuevo:true},
+    {id:'tabla.html',r:3,n:1,e:'📊',t:'Tabla Periódica',d:'118 elementos: configuración electrónica, electronegatividad y estados de oxidación.'},
+    {id:'enlace.html',r:4,n:1,e:'🔗',t:'Enlace Químico',d:'Iónico, covalente y metálico: estructuras de Lewis, ΔEN, simuladores y laboratorio virtual.',nuevo:true},
+    {id:'teoria.html',r:5,n:2,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas con el código de 4 colores.'},
+    {id:'funciones.html',r:6,n:2,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso.'},
+    {id:'nomenClash.html',r:7,n:2,e:'⚔️',t:'NomenClash',d:'Duelo de cartas de iones contra la IA.'},
+    {id:'guia.html',r:null,n:2,e:'📘',t:'Guía descargable',d:'La guía completa para imprimir o estudiar sin conexión.'},
+    {id:'reacciones.html',r:8,n:3,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización.'},
+    {id:'balanceo.html',r:9,n:3,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo, paso a paso.'},
+    {id:'simulador.html',r:null,n:3,e:'🔬',t:'Simulador',d:'Predice productos de reacción y usa el laboratorio de pH.'},
+    {id:'moles.html',r:10,n:4,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M con factores de conversión.'},
+    {id:'estequiometria.html',r:11,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
+    {id:'balanceo-avanzado.html',r:12,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
+  ];
+  // El Juego no es una estación: tiene preguntas de todos los niveles. Cada
+  // panel de nivel enlaza a sus temas con juego.html?g=<grupo>, que resalta
+  // ese tema en la portada del Juego.
+  var JUEGO={
+    1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico']],
+    2:[['ox-anh','💨 Óxidos'],['sal-bin','🔵 Sales binarias'],['ac-ox','⚡ Ácidos oxácidos'],['sal-ox','🟠 Sales oxigenadas'],['all','🔬 Repaso: todos']],
+    3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo']],
+    4:[['mol-masa','🔢 Mol y masa molar']]
+  };
+  var visitas={};
+  try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}
+  var route=ST.filter(function(s){return s.r;}).sort(function(a,b){return a.r-b.r;});
+  var next=null; for(var i=0;i<route.length;i++){ if(!visitas[route[i].id]){ next=route[i]; break; } }
+  var hechos=route.filter(function(s){return visitas[s.id];}).length;
+  function deNivel(n){ return ST.filter(function(s){return s.n===n;}); }
+  function progNivel(n){ var l=deNivel(n).filter(function(s){return s.r;}); return [l.filter(function(s){return visitas[s.id];}).length,l.length]; }
+  function el(tag,attrs,parent){ var x=document.createElementNS(NS,tag); for(var k in attrs) x.setAttribute(k,attrs[k]); if(parent) parent.appendChild(x); return x; }
+  function txt(node,t){ node.textContent=t; return node; }
+
+  // ── Dibujo ──
+  var capas={}, eles={}, eleList=[];
+  NIV.slice().reverse().forEach(function(N){
+    var g=el('g',{class:'capa',role:'button',tabindex:-1,'aria-label':'Nivel '+N.n+': '+N.t},svg);
+    el('circle',{r:N.r,class:'capa-hit'},g);
+    el('circle',{r:N.r,class:'capa-ring',stroke:N.c,'stroke-dasharray':N.n===1?'':'3 6'},g);
+    var lb=el('g',{transform:'translate(0 '+(-N.r)+')'},g);
+    el('rect',{x:-17,y:-9,width:34,height:18,rx:9,fill:N.c},lb);
+    txt(el('text',{y:4.5,'text-anchor':'middle','font-size':11,'font-weight':800,fill:'#fff','font-family':'Courier New, monospace'},lb),'n='+N.n);
+    g.addEventListener('click',function(e){ if(e.target.closest('.ele')) return; elegir(N.n); });
+    capas[N.n]=g;
+  });
+  // núcleo: protones y neutrones + progreso
+  var nuc=el('g',{class:'nucleo',role:'button',tabindex:0,'aria-label':'Núcleo: tu progreso, '+hechos+' de '+route.length+' estaciones'},svg);
+  el('circle',{r:34,fill:'#fff',stroke:'#dc2626','stroke-width':2.5,class:'nuc-bg'},nuc);
+  var NP=[[-10,-14,'p'],[8,-15,'n'],[-16,2,'n'],[0,-1,'p'],[16,1,'p'],[-6,14,'p'],[10,14,'n']];
+  NP.forEach(function(q){ el('circle',{cx:q[0],cy:q[1],r:8.5,fill:q[2]==='p'?'#ef4444':'#94a3b8',opacity:.28},nuc); });
+  txt(el('text',{y:2,'text-anchor':'middle','font-size':17,'font-weight':900,fill:'#0d2d42','font-family':'Trebuchet MS, sans-serif'},nuc),hechos+'/'+route.length);
+  txt(el('text',{y:16,'text-anchor':'middle','font-size':8.5,'font-weight':800,fill:'#4f6d88','letter-spacing':'.8','font-family':'Trebuchet MS, sans-serif'},nuc),'NÚCLEO');
+  nuc.addEventListener('click',function(){ elegir(0); });
+  nuc.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); elegir(0); } });
+  // electrones (módulos)
+  NIV.forEach(function(N){
+    var lst=deNivel(N.n);
+    lst.forEach(function(s,j){
+      var g=el('g',{class:'ele',role:'button',tabindex:0,'aria-label':s.t+(visitas[s.id]?' (visitado)':'')+', nivel '+N.n},svg);
+      if(next===s) el('circle',{r:27,fill:'none',stroke:'#d4a843','stroke-width':5,class:'pulse'},g);
+      el('circle',{r:20,fill:'#fff',stroke:N.c,'stroke-width':3,class:'ele-disc'},g);
+      txt(el('text',{y:7,'text-anchor':'middle','font-size':19},g),s.e);
+      if(visitas[s.id]){ el('circle',{cx:15,cy:-15,r:8,fill:'#16a34a',stroke:'#fff','stroke-width':2},g); txt(el('text',{x:15,y:-11.5,'text-anchor':'middle','font-size':10,'font-weight':900,fill:'#fff'},g),'✓'); }
+      else if(s.nuevo){ el('circle',{cx:15,cy:-15,r:8,fill:'#dc2626',stroke:'#fff','stroke-width':2},g); txt(el('text',{x:15,y:-11.5,'text-anchor':'middle','font-size':10,'font-weight':900,fill:'#fff'},g),'!'); }
+      var item={g:g,s:s,N:N,a0:-Math.PI/2+(j+.5)/lst.length*Math.PI*2+N.n*0.6};
+      function act(){ elegir(N.n,s.id); }
+      g.addEventListener('click',act);
+      g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } });
+      eles[s.id]=item; eleList.push(item);
+    });
+  });
+
+  // ── Giro de los electrones (más rápido cerca del núcleo, como en Bohr) ──
+  var rot=0, pausa=false, last=performance.now();
+  var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function colocar(){
+    eleList.forEach(function(it){
+      var a=it.a0+rot/(it.N.n*it.N.n*0.5+0.5);
+      it.g.setAttribute('transform','translate('+(Math.cos(a)*it.N.r).toFixed(1)+' '+(Math.sin(a)*it.N.r).toFixed(1)+')');
+    });
+  }
+  function tick(now){
+    var dt=Math.min(0.1,(now-last)/1000); last=now;
+    if(!pausa&&!quieto&&!document.hidden){ rot+=dt*0.12; colocar(); }
+    requestAnimationFrame(tick);
+  }
+  colocar(); requestAnimationFrame(tick);
+  // Se detiene mientras el dedo o el ratón están sobre el átomo, para poder tocar con calma.
+  var vista=svg.parentNode;
+  vista.addEventListener('pointerenter',function(){ pausa=true; });
+  vista.addEventListener('pointerleave',function(){ pausa=false; });
+  vista.addEventListener('focusin',function(){ pausa=true; });
+  vista.addEventListener('focusout',function(){ pausa=false; });
+
+  // ── Selector de niveles ──
+  var bar=document.getElementById('niveles');
+  var chips=[{n:0,h:'<span>⚛️ Núcleo</span><span class="np">'+hechos+'/'+route.length+'</span>',c:'#0d4a73'}].concat(NIV.map(function(N){
+    var p=progNivel(N.n);
+    return {n:N.n,h:'<span class="nn">n='+N.n+'</span><span>'+N.t+'</span><span class="np">'+p[0]+'/'+p[1]+'</span>',c:N.c};
+  }));
+  chips.forEach(function(c){
+    var b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab'); b.innerHTML=c.h; b.dataset.n=c.n; b.dataset.c=c.c;
+    b.addEventListener('click',function(){ elegir(c.n); });
+    bar.appendChild(b);
+  });
+
+  // ── Panel del nivel ──
+  var panel=document.getElementById('nivel-panel');
+  function estado(s){
+    if(visitas[s.id]) return '<span class="ss vis">✓ Visitado</span>';
+    if(next===s) return '<span class="ss sig">⭐ Siguiente</span>';
+    if(s.nuevo) return '<span class="ss nue">Nuevo</span>';
+    if(!s.r) return '<span class="ss opc">Opcional</span>';
+    return '';
+  }
+  function elegir(n,resaltar){
+    bar.querySelectorAll('button').forEach(function(b){
+      var on=+b.dataset.n===n; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+      b.style.background=on?b.dataset.c:''; b.style.borderColor=on?b.dataset.c:'';
+    });
+    NIV.forEach(function(N){ capas[N.n].classList.toggle('on',N.n===n); capas[N.n].classList.toggle('dim',n!==0&&N.n!==n); });
+    eleList.forEach(function(it){ it.g.classList.toggle('dim',n!==0&&it.N.n!==n); it.g.classList.toggle('hl',it.s.id===resaltar); });
+    if(n===0){
+      panel.innerHTML='<div class="nivel-head" style="border-color:#0d4a73"><div class="nivel-n" style="color:#0d4a73">NÚCLEO</div><div class="nivel-tit">Tu progreso</div>'+
+        '<div class="nivel-q">Has visitado <strong>'+hechos+' de '+route.length+'</strong> estaciones de la ruta recomendada.</div></div>'+
+        '<div class="nuc-lvls">'+NIV.map(function(N){ var p=progNivel(N.n); return '<button type="button" class="nuc-lv" data-n="'+N.n+'"><span>n='+N.n+' · '+N.t+'</span><span class="b"><span style="width:'+(p[0]/p[1]*100)+'%;background:'+N.c+'"></span></span><span>'+p[0]+'/'+p[1]+'</span></button>'; }).join('')+'</div>'+
+        (next?'<a class="nuc-go" href="'+next.id+'">⭐ Siguiente parada: '+next.e+' '+next.t+' →</a>':'<div class="nivel-q"><strong>🏁 ¡Recorriste todo el átomo!</strong> Vuelve a las estaciones para repasar.</div>');
+      panel.querySelectorAll('.nuc-lv').forEach(function(b){ b.addEventListener('click',function(){ elegir(+b.dataset.n); }); });
+      return;
+    }
+    var N=NIV[n-1], p=progNivel(n);
+    panel.innerHTML='<div class="nivel-head" style="border-color:'+N.c+'"><div class="nivel-n" style="color:'+N.c+'">NIVEL n = '+n+' · '+N.e+'</div><div class="nivel-tit">'+N.t+'</div>'+
+      '<div class="nivel-q"><strong>Pregunta guía:</strong> '+N.q+'</div><div class="nivel-bar"><span style="width:'+(p[0]/p[1]*100)+'%;background:'+N.c+'"></span></div></div>'+
+      '<div class="nivel-lst">'+deNivel(n).map(function(s){
+        return '<a class="nivel-st'+(s.id===resaltar?' hl':'')+'" href="'+s.id+'" style="border-color:'+(s.id===resaltar?N.c:'')+'"><span class="ic">'+s.e+'</span><span><div class="tt">'+(s.r?s.r+'. ':'')+s.t+'</div><div class="dd">'+s.d+'</div></span><span>'+estado(s)+'</span></a>';
+      }).join('')+'</div>'+
+      '<div class="nivel-jue"><div class="nj-t">🎮 Practica este nivel en el Juego</div><div class="nj-chips">'+
+      JUEGO[n].map(function(j){ return '<a href="juego.html?g='+j[0]+'">'+j[1]+'</a>'; }).join('')+'</div></div>';
+    if(resaltar&&window.innerWidth<=760){
+      var a=panel.querySelector('.nivel-st.hl'); if(a) a.scrollIntoView({block:'nearest',behavior:'smooth'});
+    }
+  }
+  elegir(next?next.n:0);
+
+  // ── Hero: botón de la siguiente parada y accesos a cada nivel ──
+  var go=document.getElementById('hero-go');
+  if(go){
+    if(!hechos){ /* primera visita: el texto «Empezar por Teoría Atómica» ya es correcto */ }
+    else if(next){ go.href=next.id; go.textContent='⭐ Siguiente parada: '+next.e+' '+next.t; }
+    else { go.href='#atomo-card'; go.textContent='🏁 Repasar el átomo'; }
+  }
+  document.querySelectorAll('.hero-niveles .hn').forEach(function(a){
+    a.addEventListener('click',function(){ elegir(+a.dataset.n); });
+  });
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>

@@ -1,7 +1,7 @@
 {
-  "name": "IonNom — Nomenclatura Inorgánica",
+  "name": "IonNom — Química interactiva",
   "short_name": "IonNom",
-  "description": "Plataforma educativa completa para aprender nomenclatura inorgánica: teoría, juego interactivo y 8 grupos funcionales explicados.",
+  "description": "Plataforma educativa para aprender química de 10° y 11°: teoría atómica, configuración electrónica, enlace químico, nomenclatura inorgánica, reacciones, balanceo y estequiometría, con simuladores y juego interactivo.",
   "start_url": "/ionom/index.html",
   "scope": "/ionom/",
   "display": "standalone",

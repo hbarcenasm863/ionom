@@ -172,6 +172,9 @@ function contarDisponiblesTema(id){
   // poolPorGrupo(['estequiometria']) siempre da 0 y el contador de la
   // Sección 2 mostraba "0 ejercicios" aunque sí hubiera 50 disponibles.
   else if(id==='estequiometria') nEj = poolPorGrupo(['balanceo']).length;
+  else if(id==='atomo') nEj = ESPECIES_ATOMO.length;
+  else if(id==='config-e') nEj = poolConfig().length;
+  else if(id==='enlace') nEj = PARES_ENLACE.length;
   else nEj = poolPorGrupo([id]).length;
   const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
   const nSaber = saber.filter(q=>q.tema===id).length;
@@ -182,13 +185,42 @@ function contarDisponiblesTema(id){
 // mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
 // este momento -- se recalcula cada vez que cambia la selección de temas,
 // igual que los "(N disponibles)" de ChromaNom.
-const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria'];
+const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace'];
 // Mapa tema→tipo de ejercicio "D" que le corresponde. Se usa para
 // auto-marcar el tipo de ejercicio apenas se marca su tema (ver
 // actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
 // "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
 // Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
-const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria'};
+const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':'d-config', enlace:'d-enlace'};
+
+// Región «El átomo» (atomo / config-e): no viven en banco.js.
+// ESPECIES_ATOMO: isótopos e iones reales [Z, A, carga] para el ejercicio
+// "partículas subatómicas" (solo isótopos que existen; los radiactivos
+// usados en clase -- ³H, ¹⁴C, ²³⁵U -- también son reales).
+const ESPECIES_ATOMO = [
+  [1,1,0],[1,2,0],[1,3,0],[2,4,0],[3,7,1],[4,9,2],[5,11,0],[6,12,0],[6,13,0],[6,14,0],
+  [7,14,-3],[7,15,0],[8,16,-2],[8,18,0],[9,19,-1],[10,20,0],[11,23,1],[12,24,2],[12,26,0],[13,27,3],
+  [14,28,0],[15,31,-3],[16,32,-2],[17,35,-1],[17,37,-1],[18,40,0],[19,39,1],[20,40,2],[26,56,2],[26,56,3],
+  [29,63,2],[30,64,2],[35,79,-1],[47,107,1],[53,127,-1],[92,235,0],[92,238,0]
+];
+// config-e: elementos con Z = 1–36 que siguen la regla de Moeller (sin las
+// excepciones Cr y Cu, para que el ejercicio tenga una sola respuesta).
+function poolConfig(){
+  const out = [];
+  for(let z=1; z<=36; z++) if(z!==24 && z!==29 && B.ELEMENTS && B.ELEMENTS[z]) out.push(z);
+  return out;
+}
+// enlace: parejas de elementos [símbolo, EN, símbolo, EN] con la EN de
+// Pauling de tabla.html. Se evitan los casos dudosos cerca de los límites
+// (ΔEN ≈ 0,4 o ≈ 1,7, como N–O o H–F) para que la clasificación sea única.
+const PARES_ENLACE = [
+  ['Na',0.93,'Cl',3.16],['K',0.82,'Br',2.96],['Li',0.98,'F',3.98],['Mg',1.31,'O',3.44],['Ca',1.00,'Cl',3.16],
+  ['Na',0.93,'O',3.44],['K',0.82,'Cl',3.16],['Ca',1.00,'O',3.44],['Mg',1.31,'F',3.98],['Ca',1.00,'F',3.98],
+  ['H',2.20,'Cl',3.16],['H',2.20,'O',3.44],['N',3.04,'H',2.20],['C',2.55,'O',3.44],['C',2.55,'Cl',3.16],
+  ['P',2.19,'Cl',3.16],['H',2.20,'Br',2.96],['S',2.58,'O',3.44],['C',2.55,'F',3.98],
+  ['Cl',3.16,'Cl',3.16],['O',3.44,'O',3.44],['N',3.04,'N',3.04],['H',2.20,'H',2.20],['C',2.55,'H',2.20],['C',2.55,'S',2.58],
+  ['Cu',1.90,'Cu',1.90],['Fe',1.83,'Fe',1.83],['Al',1.61,'Al',1.61]
+];
 function contarDisponiblesTipo(temasMarcados){
   const gruposCompuestos = temasMarcados.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
@@ -198,7 +230,10 @@ function contarDisponiblesTipo(temasMarcados){
     'd-reaccion': temasMarcados.includes('reaccion') ? poolPorGrupo(['reaccion']).length : 0,
     'd-balanceo': temasMarcados.includes('balanceo') ? poolPorGrupo(['balanceo']).length : 0,
     'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0,
-    'd-estequiometria': temasMarcados.includes('estequiometria') ? poolPorGrupo(['balanceo']).length : 0
+    'd-estequiometria': temasMarcados.includes('estequiometria') ? poolPorGrupo(['balanceo']).length : 0,
+    'd-atomo': temasMarcados.includes('atomo') ? ESPECIES_ATOMO.length : 0,
+    'd-config': temasMarcados.includes('config-e') ? poolConfig().length : 0,
+    'd-enlace': temasMarcados.includes('enlace') ? PARES_ENLACE.length : 0
   };
 }
 
@@ -234,6 +269,9 @@ const TIPO_ROTULO = {
   'd-reaccion':'Tipos de reacción',
   'd-balanceo':'Balanceo de ecuaciones',
   'd-molmasa':'Mol y masa molar',
+  'd-atomo':'Partículas subatómicas',
+  'd-config':'Configuración electrónica',
+  'd-enlace':'Tipo de enlace (ΔEN)',
   'x-errores':'Cazar errores',
   'ox-estado':'Estado de oxidación'
 };
@@ -350,6 +388,47 @@ function tarjetaEstequiometria(bal, rngFn, numero){
     +'</div>';
 }
 
+// Partículas subatómicas: notación ᴬ_Z X^carga y tabla para completar.
+function tarjetaParticulas(esp, numero){
+  const z = esp[0], a = esp[1], q = esp[2], el = (B.ELEMENTS||{})[z] || {sym:'?'};
+  const SUP = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
+  const carga = q===0 ? '' : String(Math.abs(q)>1?Math.abs(q):'').split('').map(d=>SUP[d]).join('') + (q>0?'⁺':'⁻');
+  const notacion = '<span style="display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.62em;line-height:1.05;vertical-align:middle;margin-right:2px"><span>'+a+'</span><span>'+z+'</span></span>'+el.sym+carga;
+  const celda = '<td style="border:1px solid var(--brd2);height:30px;min-width:56px"></td>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.88rem;margin:4px 0 8px">Completa la tabla para la especie <strong style="font-family:var(--mono);font-size:1.25rem">'+notacion+'</strong></p>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:.78rem;text-align:center"><tr>'
+    +['Protones','Neutrones','Electrones','¿Átomo neutro, catión o anión?'].map(t=>'<th style="border:1px solid var(--brd2);padding:4px;background:var(--an-b);color:var(--an-t)">'+t+'</th>').join('')
+    +'</tr><tr>'+celda+celda+celda+celda+'</tr></table>'
+    +'</div>';
+}
+// Configuración electrónica de un elemento (Z = 1–36, sin excepciones).
+function tarjetaConfig(z, numero){
+  const el = (B.ELEMENTS||{})[z] || {sym:'?', name:'?'};
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:70px;margin:0 6px 0 4px">&nbsp;</span>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.9rem;margin:4px 0 6px">Para el <strong>'+el.name+' ('+el.sym+', Z = '+z+')</strong>:</p>'
+    +'<p style="font-size:.84rem;margin:4px 0">a) Configuración electrónica completa:</p><div class="cuad" style="height:37.8px"></div>'
+    +'<p style="font-size:.84rem;margin:6px 0 4px">b) Configuración abreviada (con gas noble) y diagrama de orbitales del último nivel:</p><div class="cuad" style="height:37.8px"></div>'
+    +'<p style="font-size:.84rem;margin:8px 0 0">c) Periodo'+linea+'Grupo'+linea+'Bloque'+linea+'e⁻ de valencia'+linea+'</p>'
+    +'</div>';
+}
+
+// Tipo de enlace: con las EN dadas, calcular ΔEN, clasificar y representar.
+function tarjetaEnlace(par, numero){
+  const en = x => x.toFixed(2).replace('.', ',');
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:70px;margin:0 6px 0 4px">&nbsp;</span>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.9rem;margin:4px 0 6px">Enlace entre <strong style="font-family:var(--mono)">'+par[0]+'</strong> (EN = '+en(par[1])+') y <strong style="font-family:var(--mono)">'+par[2]+'</strong> (EN = '+en(par[3])+'):</p>'
+    +'<p style="font-size:.84rem;margin:4px 0">a) ¿Metal o no metal?'+linea+'y'+linea+' ΔEN ='+linea+'</p>'
+    +'<p style="font-size:.84rem;margin:6px 0 4px">b) Tipo de enlace (iónico, covalente polar, covalente apolar o metálico) y por qué:</p><div class="cuad" style="height:37.8px"></div>'
+    +'<p style="font-size:.84rem;margin:6px 0 4px">c) Representa el enlace (Lewis, transferencia de electrones o mar de electrones) y escribe la fórmula:</p><div class="cuad" style="height:75.6px"></div>'
+    +'</div>';
+}
+
 function tarjetaError(e, numero){
   return '<div class="exercise-card" style="border-left:4px solid var(--err)">'
     +'<div class="ex-num">Ejercicio '+numero+'</div>'
@@ -420,6 +499,24 @@ function armarBloquesPractica(F, rngFn, usados){
         usados.add(b.id);
         bloques.push({html:tarjetaEstequiometria(b, rngFn, numero++), esMultiple:false});
       });
+    } else if(tipo==='d-atomo'){
+      let pool = ESPECIES_ATOMO.filter(e => !usados.has('esp-'+e.join('|')));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.join('|')).forEach(e=>{
+        usados.add('esp-'+e.join('|'));
+        bloques.push({html:tarjetaParticulas(e, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-config'){
+      let pool = poolConfig().filter(z => !usados.has('cfg-'+z));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>String(x)).forEach(z=>{
+        usados.add('cfg-'+z);
+        bloques.push({html:tarjetaConfig(z, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-enlace'){
+      let pool = PARES_ENLACE.filter(e => !usados.has('enl-'+e.join('|')));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.join('|')).forEach(e=>{
+        usados.add('enl-'+e.join('|'));
+        bloques.push({html:tarjetaEnlace(e, numero++), esMultiple:false});
+      });
     } else if(tipo==='x-errores'){
       const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
       let pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula));
@@ -455,11 +552,12 @@ function armarBloquesSaber(F, rngFn){
 
 function tarjetaAbierta(q, numero){
   const alto = q.t==='mdec' ? 94.5 : 113.4; // 5 / 6 cuadros
-  // Solo la fórmula, en una ficha neutra: separar el compuesto en sus
-  // partes (catión/anión/hidróxido/oxoanión) y dar sus cargas es
-  // justamente lo que piden las preguntas "mdec", así que mostrar
-  // q.partes ya coloreadas regalaría la respuesta en la hoja del estudiante.
-  const fChip = q.f ? '<span style="font-family:var(--mono);font-weight:700;color:#0d2d42;background:#eef2f6;padding:2px 8px;border-radius:6px">'+q.f+'</span>' : '';
+  // Fichas neutras. Si la pregunta trae fórmula (q.f), sus q.partes son la
+  // respuesta (catión/anión con carga, δ+/δ−...) y NO se muestran: solo la
+  // fórmula. Si no trae fórmula, q.partes es el dato del enunciado
+  // (partículas, subniveles de una configuración) y sí se muestra.
+  const ficha = t => '<span style="font-family:var(--mono);font-weight:700;color:#0d2d42;background:#eef2f6;padding:2px 8px;border-radius:6px;margin-right:4px">'+t+'</span>';
+  const fChip = q.f ? ficha(q.f) : (q.partes ? q.partes.map(p => ficha(p[0])).join('') : '');
   return '<div class="exercise-card">'
     +'<div class="ex-num">Pregunta '+numero+'</div>'
     +'<div style="font-size:.9rem;margin-bottom:10px">'+q.q+(fChip?' '+fChip:'')+(q.n?' <span style="font-style:italic;font-weight:700">'+q.n+'</span>':'')+'</div>'
@@ -493,9 +591,8 @@ function construirVersion(F, numVersion, totalVersiones){
   const usados = new Set();
 
   const bloques = [];
-  // 'guia' es un tipoDoc interno (solo lo usa construirTodas) para la pasada
-  // de lectura+práctica de una "Guía completa", separada de la(s) pasada(s)
-  // de evaluación -- no es un valor que el formulario produzca directamente.
+  // 'guia' = lectura+práctica sin evaluación: lo produce la pestaña «Guías»
+  // y también construirTodas para la primera pasada de una "Guía completa".
   const incluyeLectura = F.tipoDoc==='completa' || F.tipoDoc==='guia';
   const incluyeGuia = incluyeLectura || F.tipoDoc==='taller';
   const incluyeEval = F.tipoDoc==='completa' || F.tipoDoc==='evaluacion';
@@ -507,7 +604,7 @@ function construirVersion(F, numVersion, totalVersiones){
   if(incluyeGuia){
     const practicaBloques = armarBloquesPractica(F, rngEj, usados);
     if(practicaBloques.length){
-      bloques.push({html:'<h2 class="sec-tit">Sesión 3 · Trabajo práctico</h2>', esTitulo:true});
+      bloques.push({html:'<h2 class="sec-tit">'+(incluyeLectura ? 'Sesión 3 · Trabajo práctico' : 'Ejercicios')+'</h2>', esTitulo:true});
       bloques.push.apply(bloques, practicaBloques);
     }
   }
@@ -685,7 +782,7 @@ const CUADRO = 18.9;
 // — Versión 2 de 3"), igual idea que ChromaNom: identifica de un vistazo qué
 // hoja es y cuál versión, sin tener que ir a buscar el pie de página.
 const TITULO_TIPODOC = {
-  completa:'Guía completa', guia:'Guía completa', taller:'Taller de ejercicios',
+  completa:'Guía completa', guia:'Guía de estudio', taller:'Taller de ejercicios',
   evaluacion:'Evaluación', 'hoja-respuestas':'Hoja de respuestas', rubrica:'Rúbrica de evaluación'
 };
 function tituloDocumento(doc){
@@ -921,7 +1018,8 @@ function llenarHoja(hoja){
 /* ───────────────────────── 8. Orquestación ───────────────────────── */
 function construirTodas(F){
   const docs = [];
-  const N = F.versiones || 1;
+  // la guía de estudio sale una sola vez (las versiones son para taller/evaluación)
+  const N = F.tipoDoc==='guia' ? 1 : (F.versiones || 1);
   // La hoja de respuestas (burbujas) ya viene incluida dentro de los
   // bloques de cada versión de evaluación (ver construirVersion) -- no se
   // agrega aquí como documento aparte para que pueda compartir página con

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Configuración Electrónica</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:1000px;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── Encabezado y pestañas ── */
+.page-hdr{padding:30px 0 18px}
+.page-hdr .eyebrow{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--nav);margin-bottom:6px}
+.page-hdr h1{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.1rem);font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.9rem;color:var(--tx2);max-width:62ch}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;margin-bottom:18px;position:sticky;top:48px;z-index:100;background:var(--bg);border-bottom:2px solid var(--brd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;min-height:44px;border:2px solid var(--brd);border-radius:100px;background:var(--surf);color:var(--tx2);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab:hover{border-color:var(--an)}
+.tab.on{background:var(--nav);border-color:var(--nav);color:#fff}
+@media(max-width:640px){.tabs{top:52px}}
+.panel{display:none}
+.panel.on{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 24px;margin-bottom:18px;box-shadow:var(--sh)}
+.sect h2{font-size:1.12rem;font-weight:800;color:var(--tx);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.8rem;font-weight:800;color:var(--dimmer);margin:16px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul{margin-left:20px;margin-bottom:10px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.6;margin-bottom:4px}
+.sect strong{color:var(--tx)}
+@media(max-width:640px){.sect{padding:18px 16px}}
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 16px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--nav);color:#fff;font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:var(--surf);color:var(--nav)}
+.btn.ghost:hover{background:var(--an-b);filter:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0}
+.ro{background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:8px 12px}
+.ro .k{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer)}
+.ro .v{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--tx)}
+.seg{display:inline-flex;border:2px solid var(--nav);border-radius:var(--rs);overflow:hidden}
+.seg button{min-height:40px;border:none;background:var(--surf);color:var(--nav);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;padding:6px 12px}
+.seg button.on{background:var(--nav);color:#fff}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0 12px}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--brd);text-align:center}
+.tbl th{background:var(--an-b);color:var(--an-t);font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl-wrap{overflow-x:auto}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:10px 0}
+.rule{border:2px solid var(--brd);border-radius:var(--r);padding:14px;background:var(--surf)}
+.rule .rt{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+.rule h4{font-family:var(--serif);font-style:italic;font-size:1.1rem;margin:2px 0 6px}
+.rule p{font-size:.82rem!important;margin-bottom:6px!important}
+.rule .demo{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end;margin-top:6px}
+.rule .demo .lb{font-size:.7rem;font-weight:700;color:var(--dimmer);width:100%}
+.ok-t{color:var(--ok-t);font-weight:800}.err-t{color:var(--err-t);font-weight:800}
+/* bloques s p d f */
+:root{--bs:#E69F00;--bs-b:#fcf2db;--bp:#0072B2;--bp-b:#dbebf4;--bd:#009E73;--bd-b:#dbf1eb;--bf:#CC79A7;--bf-b:#f8ecf3}
+/* casillas de orbitales */
+.orb-wrap{display:flex;flex-wrap:wrap;gap:10px 14px;margin:8px 0}
+.sub{display:flex;flex-direction:column;align-items:center;gap:3px}
+.sub .boxes{display:flex}
+.box{width:30px;height:34px;border:2px solid var(--tx2);margin-left:-2px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:900;color:var(--tx);background:var(--surf);font-family:var(--sans);line-height:1}
+.box:first-child{margin-left:0}
+button.box{cursor:pointer;padding:0}
+button.box:hover{background:var(--an-b)}
+.sub .lbl{font-family:var(--mono);font-size:.78rem;font-weight:800}
+.sub.s .lbl{color:#8a5f00}.sub.p .lbl{color:var(--an-t)}.sub.d .lbl{color:var(--ox-t)}.sub.f .lbl{color:var(--oh-t)}
+.sub.bad .boxes{outline:3px solid var(--err);outline-offset:2px;border-radius:2px}
+.sub.good .boxes{outline:3px solid var(--ok);outline-offset:2px;border-radius:2px}
+/* configuración escrita */
+.cfg{font-family:var(--mono);font-size:1.05rem;font-weight:700;line-height:2;word-break:break-word}
+.cfg span{padding:1px 3px;border-radius:4px;margin-right:2px;white-space:nowrap}
+.cfg .s{background:var(--bs-b);color:#8a5f00}.cfg .p{background:var(--bp-b);color:var(--an-t)}.cfg .d{background:var(--bd-b);color:var(--ox-t)}.cfg .f{background:var(--bf-b);color:var(--oh-t)}
+.cfg .core{background:var(--surf2);color:var(--tx);border:1.5px solid var(--brd2)}
+.cfg-box{background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 14px;margin:8px 0}
+.cfg-box .k{font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer)}
+/* mini tabla periódica */
+.ptable{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));gap:2px;margin:8px 0 4px;min-width:560px}
+.ptable-wrap{overflow-x:auto;padding-bottom:4px}
+.pt{aspect-ratio:1/1.1;border:1.5px solid transparent;border-radius:4px;font:inherit;font-size:.68rem;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;padding:0;color:var(--tx)}
+.pt small{font-size:.5rem;font-weight:600;opacity:.75}
+.pt.s{background:var(--bs-b);border-color:#f3d08a}.pt.p{background:var(--bp-b);border-color:#9cc6e3}.pt.d{background:var(--bd-b);border-color:#93d6c2}.pt.f{background:var(--bf-b);border-color:#e3b6cf}
+.pt.on{outline:3px solid var(--nav);outline-offset:1px;position:relative;z-index:1}
+.pt.gap{visibility:hidden}
+.pt.ph{background:var(--bf-b);font-size:.5rem;cursor:default;opacity:.8}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.72rem;font-weight:700;color:var(--tx2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.pick-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pick-row select,.pick-row input{min-height:42px;border:2px solid var(--brd);border-radius:8px;padding:6px 10px;font:inherit;font-size:.88rem;background:var(--surf);color:var(--tx)}
+.elem-head{display:flex;gap:14px;align-items:center;margin:12px 0}
+.elem-sym{position:relative;width:84px;height:84px;flex-shrink:0;background:var(--surf);border:2px solid var(--nav);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.elem-sym .s{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--nav)}
+.elem-sym .z{position:absolute;top:5px;left:7px;font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--tx2)}
+.elem-sym .c{position:absolute;top:5px;right:7px;font-family:var(--mono);font-size:.78rem;font-weight:800;color:var(--an-t)}
+.elem-name{font-family:var(--serif);font-size:1.3rem;font-weight:700;font-style:italic}
+.tag{display:inline-block;font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:100px;border:1.5px solid;margin:3px 4px 0 0}
+.tag.warn{background:var(--warn-b);border-color:var(--warn);color:var(--warn-t)}
+.tag.neu{background:var(--surf);border-color:var(--brd2);color:var(--tx2)}
+.levels{display:flex;gap:6px;flex-wrap:wrap}
+.levels span{font-family:var(--mono);font-size:.8rem;font-weight:700;background:var(--surf);border:1.5px solid var(--brd2);border-radius:8px;padding:4px 8px}
+/* Moeller */
+.moeller{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:760px){.moeller{grid-template-columns:1fr}}
+.moeller svg{width:100%;max-width:420px;display:block;margin:0 auto}
+.seq{display:flex;flex-wrap:wrap;gap:4px;font-family:var(--mono);font-size:.82rem;font-weight:700}
+.seq span{padding:3px 6px;border-radius:6px;border:1.5px solid var(--brd);background:var(--surf);color:var(--dimmer)}
+.seq span.full{color:var(--tx);border-color:var(--brd2)}
+.seq span.cur{background:var(--nav);border-color:var(--nav);color:#fff}
+.ctrl label{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:4px}
+.ctrl label output{font-family:var(--mono);color:var(--nav)}
+.ctrl input[type=range]{width:100%;accent-color:var(--nav);min-height:32px}
+/* práctica */
+.fb{font-size:.86rem;margin-top:8px;line-height:1.55;min-height:1.2em}
+.mq-q{font-size:.92rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+@media(max-width:560px){.mq-opts{grid-template-columns:1fr}}
+.mq-btn{padding:10px 12px;min-height:48px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font:inherit;font-size:.86rem;cursor:pointer;text-align:left;font-weight:600}
+.mq-btn.mono{font-family:var(--mono);font-weight:700}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--ox));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+</style>
+
+<link rel="stylesheet" href="assets/ionom.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html" class="active"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <div class="eyebrow">Nivel n = 1 · El átomo</div>
+    <h1>🧬 Configuración Electrónica</h1>
+    <p>¿Dónde están los electrones de un átomo? Del modelo de Bohr pasamos a los <strong>orbitales</strong>: aquí aprendes las reglas para ubicar cada electrón, las practicas y descubres por qué la configuración explica la forma de la tabla periódica.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Secciones de Configuración Electrónica">
+    <button class="tab on" role="tab" data-tab="conceptos" aria-selected="true">📚 Conceptos</button>
+    <button class="tab" role="tab" data-tab="moeller" aria-selected="false">↙️ Diagrama de Moeller</button>
+    <button class="tab" role="tab" data-tab="configurador" aria-selected="false">🔧 Configurador</button>
+    <button class="tab" role="tab" data-tab="orbitales" aria-selected="false">✍️ Llena los orbitales</button>
+    <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
+  </div>
+
+  <!-- ═══════════ CONCEPTOS ═══════════ -->
+  <section class="panel on" id="p-conceptos" role="tabpanel">
+    <div class="sect">
+      <h2>🪐 De las órbitas de Bohr a los orbitales</h2>
+      <p>En la <a href="atomo.html">página de Teoría Atómica</a> viste que Bohr ubicó los electrones en <strong>niveles de energía</strong> (n = 1, 2, 3…). El modelo mecánico-cuántico conserva esos niveles, pero dice que cada uno se divide en <strong>subniveles</strong> (s, p, d, f) y cada subnivel en <strong>orbitales</strong>: regiones donde es muy probable encontrar al electrón. En cada orbital caben como máximo <strong>2 electrones</strong>.</p>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Subnivel</th><th>Orbitales</th><th>Electrones máx.</th><th>Aparece desde</th><th>Casillas</th></tr>
+        <tr><td><strong>s</strong> (l = 0)</td><td>1</td><td>2</td><td>n = 1</td><td><div class="orb-demo" data-n="1"></div></td></tr>
+        <tr><td><strong>p</strong> (l = 1)</td><td>3</td><td>6</td><td>n = 2</td><td><div class="orb-demo" data-n="3"></div></td></tr>
+        <tr><td><strong>d</strong> (l = 2)</td><td>5</td><td>10</td><td>n = 3</td><td><div class="orb-demo" data-n="5"></div></td></tr>
+        <tr><td><strong>f</strong> (l = 3)</td><td>7</td><td>14</td><td>n = 4</td><td><div class="orb-demo" data-n="7"></div></td></tr>
+      </table></div>
+      <div class="info-box">📐 <strong>Capacidad de cada nivel:</strong> 2n² electrones → n = 1: 2 · n = 2: 8 · n = 3: 18 · n = 4: 32.</div>
+      <h3>¿Cómo se lee una configuración?</h3>
+      <div class="cfg-box"><div class="cfg" style="font-size:1.6rem"><span class="p">2p⁴</span></div>
+        <p style="margin:4px 0 0">El <strong>2</strong> es el nivel (n), la <strong>p</strong> es el subnivel y el exponente <strong>⁴</strong> son los electrones que hay en ese subnivel.</p></div>
+    </div>
+
+    <div class="sect">
+      <h2>📏 Las tres reglas para ubicar los electrones</h2>
+      <div class="rules">
+        <div class="rule" style="border-color:var(--an)"><div class="rt" style="color:var(--an-t)">Regla 1</div><h4>Principio de Aufbau</h4>
+          <p>Los electrones ocupan primero los subniveles de <strong>menor energía</strong>. El orden no es 3p → 3d, sino 3p → <strong>4s</strong> → 3d: el 4s tiene menos energía que el 3d. Ese orden se recuerda con el <strong>diagrama de Moeller</strong>.</p></div>
+        <div class="rule" style="border-color:var(--ox)"><div class="rt" style="color:var(--ox-t)">Regla 2</div><h4>Exclusión de Pauli</h4>
+          <p>En un orbital caben <strong>máximo 2 electrones</strong> y deben tener <strong>espines opuestos</strong> (↑↓).</p>
+          <div class="demo"><span class="lb">Bien · Mal</span><span class="box">↑↓</span>&nbsp;&nbsp;<span class="box" style="border-color:var(--err);color:var(--err-t)">↑↑</span></div></div>
+        <div class="rule" style="border-color:var(--cat)"><div class="rt" style="color:var(--cat-t)">Regla 3</div><h4>Regla de Hund</h4>
+          <p>En un subnivel con varios orbitales, los electrones se ubican <strong>primero uno en cada orbital</strong> (con el mismo espín) y luego se aparean. Como las personas en un bus: nadie se sienta al lado de otro mientras haya puestos vacíos.</p>
+          <div class="demo"><span class="lb">2p³ · bien</span><span class="boxes" style="display:flex"><span class="box">↑</span><span class="box">↑</span><span class="box">↑</span></span></div>
+          <div class="demo"><span class="lb">2p³ · mal</span><span class="boxes" style="display:flex"><span class="box" style="border-color:var(--err)">↑↓</span><span class="box" style="border-color:var(--err)">↑</span><span class="box" style="border-color:var(--err)"></span></span></div></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>🔎 Lo que dice la configuración de un elemento</h2>
+      <ul>
+        <li><strong>Periodo</strong> = el nivel más alto que tiene electrones. Ej.: Cl termina en 3p⁵ → periodo 3.</li>
+        <li><strong>Bloque</strong> = el subnivel donde entra el último electrón (s, p, d o f). Por eso la tabla periódica tiene esa forma: 2 columnas s, 6 columnas p, 10 columnas d y 14 de f.</li>
+        <li><strong>Electrones de valencia</strong> = los del último nivel. Son los que participan en los enlaces y deciden los estados de oxidación que usas en nomenclatura.</li>
+        <li><strong>Grupo</strong>: en el bloque s es el número de electrones s; en el bloque p es 10 + electrones s + p del último nivel (Cl: 10 + 2 + 5 = 17).</li>
+      </ul>
+      <h3>Configuración abreviada (con gas noble)</h3>
+      <p>Para no escribir todo, se reemplaza la parte interna por el símbolo del gas noble anterior entre corchetes: Na = 1s² 2s² 2p⁶ 3s¹ = <strong>[Ne] 3s¹</strong>.</p>
+      <h3>Excepciones famosas</h3>
+      <p>Algunos elementos "prefieren" tener un subnivel d <strong>lleno</strong> (d¹⁰) o <strong>semilleno</strong> (d⁵), porque es más estable. Por eso el cromo es [Ar] 4s¹ 3d⁵ (no 4s² 3d⁴) y el cobre es [Ar] 4s¹ 3d¹⁰ (no 4s² 3d⁹). El configurador te avisa cuando un elemento es una excepción.</p>
+      <h3>Iones</h3>
+      <p>Un <strong>anión</strong> gana electrones: se agregan siguiendo el orden de Moeller (Cl⁻: [Ne] 3s² 3p⁶). Un <strong>catión</strong> pierde electrones del <strong>nivel más alto</strong> primero: el hierro pierde los 4s antes que los 3d (Fe²⁺: [Ar] 3d⁶).</p>
+      <div class="btn-row"><button class="btn" onclick="irTab('moeller')">Siguiente: diagrama de Moeller →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ MOELLER ═══════════ -->
+  <section class="panel" id="p-moeller" role="tabpanel">
+    <div class="sect">
+      <h2>↙️ Diagrama de Moeller (regla de las diagonales)</h2>
+      <p>Escribe los subniveles en filas por nivel y sigue las flechas diagonales de arriba hacia abajo: así obtienes el orden de energía creciente. Mueve el control o agrega electrones uno por uno y observa cómo se llena.</p>
+      <div class="moeller">
+        <div><svg id="moe-svg" viewBox="0 0 400 420" role="img" aria-label="Diagrama de Moeller"></svg></div>
+        <div>
+          <div class="ctrl"><label for="moe-z">Número de electrones <output id="moe-z-o">0</output></label><input type="range" id="moe-z" min="0" max="118" value="0"></div>
+          <div class="btn-row"><button class="btn ghost" id="moe-menos">− 1 e⁻</button><button class="btn" id="moe-mas">+ 1 e⁻</button><button class="btn ghost" id="moe-play">▶ Animar</button></div>
+          <div class="cfg-box"><div class="k">Elemento</div><div id="moe-el" style="font-weight:800">—</div></div>
+          <div class="cfg-box"><div class="k">Configuración (orden de llenado)</div><div class="cfg" id="moe-cfg">—</div></div>
+          <div class="k" style="font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer);margin-top:10px">Orden de energía</div>
+          <div class="seq" id="moe-seq"></div>
+          <div class="warn-box" id="moe-note" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONFIGURADOR ═══════════ -->
+  <section class="panel" id="p-configurador" role="tabpanel">
+    <div class="sect">
+      <h2>🔧 Configurador: cualquier elemento o ion</h2>
+      <p>Toca un elemento de la tabla (o búscalo) y elige su carga. Verás su configuración completa y abreviada, su diagrama de orbitales y lo que la configuración dice de su lugar en la tabla.</p>
+      <div class="pick-row">
+        <input id="cf-buscar" list="cf-lista" placeholder="Buscar: Fe, hierro, 26…" aria-label="Buscar elemento" style="flex:1;min-width:180px">
+        <datalist id="cf-lista"></datalist>
+        <label style="font-size:.8rem;font-weight:700;color:var(--tx2)">Carga
+          <select id="cf-carga" aria-label="Carga del ion">
+            <option value="-3">3−</option><option value="-2">2−</option><option value="-1">1−</option><option value="0" selected>0 (neutro)</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option>
+          </select></label>
+      </div>
+      <div class="ptable-wrap"><div class="ptable" id="cf-tabla"></div></div>
+      <div class="legend"><span><i style="background:var(--bs-b);border:1px solid #f3d08a"></i>Bloque s</span><span><i style="background:var(--bp-b);border:1px solid #9cc6e3"></i>Bloque p</span><span><i style="background:var(--bd-b);border:1px solid #93d6c2"></i>Bloque d</span><span><i style="background:var(--bf-b);border:1px solid #e3b6cf"></i>Bloque f</span></div>
+
+      <div class="elem-head">
+        <div class="elem-sym"><span class="z" id="cf-z"></span><span class="s" id="cf-s"></span><span class="c" id="cf-c"></span></div>
+        <div><div class="elem-name" id="cf-name"></div><div id="cf-tags"></div></div>
+      </div>
+      <div class="cfg-box"><div class="k" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">Configuración completa
+        <span class="seg" id="cf-orden"><button class="on" data-o="llenado">Orden de llenado</button><button data-o="niveles">Por niveles</button></span></div>
+        <div class="cfg" id="cf-full"></div></div>
+      <div class="cfg-box"><div class="k">Configuración abreviada</div><div class="cfg" id="cf-abr"></div></div>
+      <div class="cfg-box"><div class="k">Diagrama de orbitales</div><div class="orb-wrap" id="cf-orb"></div></div>
+      <div class="readout">
+        <div class="ro"><div class="k">Electrones</div><div class="v" id="cf-e"></div></div>
+        <div class="ro"><div class="k">Periodo</div><div class="v" id="cf-per"></div></div>
+        <div class="ro"><div class="k">Grupo</div><div class="v" id="cf-gr"></div></div>
+        <div class="ro"><div class="k">Bloque</div><div class="v" id="cf-bl"></div></div>
+        <div class="ro"><div class="k" id="cf-val-k">e⁻ de valencia</div><div class="v" id="cf-val"></div></div>
+        <div class="ro"><div class="k">e⁻ desapareados</div><div class="v" id="cf-desap"></div></div>
+      </div>
+      <div class="cfg-box"><div class="k">Electrones por nivel (como en Bohr)</div><div class="levels" id="cf-niv"></div></div>
+      <div class="cfg-box"><div class="k">Números cuánticos del electrón diferencial (el último)</div><div id="cf-qn" style="font-family:var(--mono);font-weight:700;margin-top:4px"></div>
+        <div style="font-size:.72rem;color:var(--dimmer);margin-top:4px">Convención usada: los orbitales se llenan de m<sub>l</sub> = −l a +l, primero con espín ↑ (m<sub>s</sub> = +½) y luego ↓ (m<sub>s</sub> = −½).</div></div>
+      <div class="warn-box" id="cf-nota" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ LLENA LOS ORBITALES ═══════════ -->
+  <section class="panel" id="p-orbitales" role="tabpanel">
+    <div class="sect">
+      <h2>✍️ Llena los orbitales</h2>
+      <p>Toca cada casilla para poner electrones: un toque = <strong>↑</strong>, dos toques = <strong>↑↓</strong>, tres toques = vacía. Respeta Aufbau, Pauli y Hund.</p>
+      <div class="cfg-box"><div class="k">Reto</div><div id="lo-q" style="font-weight:800;font-size:1.05rem"></div></div>
+      <div class="orb-wrap" id="lo-orb"></div>
+      <div class="btn-row"><button class="btn" id="lo-check">Comprobar</button><button class="btn ghost" id="lo-clear">↺ Vaciar</button><button class="btn ghost" id="lo-next">Otro elemento →</button><span style="font-size:.8rem;color:var(--dimmer)" id="lo-score"></span></div>
+      <div class="fb" id="lo-fb"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ REPASO ═══════════ -->
+  <section class="panel" id="p-repaso" role="tabpanel">
+    <div class="sect">
+      <h2>✅ Repaso: configuración electrónica</h2>
+      <p style="font-size:.8rem">Preguntas generadas al azar con elementos reales: cada intento es distinto.</p>
+      <div class="progress-bar"><div class="progress-fill" id="q-fill"></div></div>
+      <div class="progress-label" id="q-label"></div>
+      <div id="q-box"></div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="atomo.html">← Teoría Atómica</a> &nbsp;|&nbsp; <a href="tabla.html">Siguiente parada: Tabla Periódica →</a><br><br>
+    <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+function $(id){ return document.getElementById(id); }
+/* ════════════════ Núcleo de cálculo ════════════════ */
+// Datos de los 118 elementos (símbolo, nombre, periodo, grupo, tipo) tomados
+// de la tabla periódica del sitio (tabla.html). En lantánidos y actínidos el
+// "grupo" es la columna de su fila f (3–17), igual que en tabla.html.
+var EL=[['H','Hidrógeno',1,1,'nonmetal'],['He','Helio',1,18,'noble'],['Li','Litio',2,1,'alkali'],['Be','Berilio',2,2,'alkaline'],['B','Boro',2,13,'metalloid'],['C','Carbono',2,14,'nonmetal'],['N','Nitrógeno',2,15,'nonmetal'],['O','Oxígeno',2,16,'nonmetal'],['F','Flúor',2,17,'halogen'],['Ne','Neón',2,18,'noble'],['Na','Sodio',3,1,'alkali'],['Mg','Magnesio',3,2,'alkaline'],['Al','Aluminio',3,13,'post'],['Si','Silicio',3,14,'metalloid'],['P','Fósforo',3,15,'nonmetal'],['S','Azufre',3,16,'nonmetal'],['Cl','Cloro',3,17,'halogen'],['Ar','Argón',3,18,'noble'],['K','Potasio',4,1,'alkali'],['Ca','Calcio',4,2,'alkaline'],['Sc','Escandio',4,3,'transition'],['Ti','Titanio',4,4,'transition'],['V','Vanadio',4,5,'transition'],['Cr','Cromo',4,6,'transition'],['Mn','Manganeso',4,7,'transition'],['Fe','Hierro',4,8,'transition'],['Co','Cobalto',4,9,'transition'],['Ni','Níquel',4,10,'transition'],['Cu','Cobre',4,11,'transition'],['Zn','Zinc',4,12,'transition'],['Ga','Galio',4,13,'post'],['Ge','Germanio',4,14,'metalloid'],['As','Arsénico',4,15,'metalloid'],['Se','Selenio',4,16,'nonmetal'],['Br','Bromo',4,17,'halogen'],['Kr','Kriptón',4,18,'noble'],['Rb','Rubidio',5,1,'alkali'],['Sr','Estroncio',5,2,'alkaline'],['Y','Itrio',5,3,'transition'],['Zr','Circonio',5,4,'transition'],['Nb','Niobio',5,5,'transition'],['Mo','Molibdeno',5,6,'transition'],['Tc','Tecnecio',5,7,'transition'],['Ru','Rutenio',5,8,'transition'],['Rh','Rodio',5,9,'transition'],['Pd','Paladio',5,10,'transition'],['Ag','Plata',5,11,'transition'],['Cd','Cadmio',5,12,'transition'],['In','Indio',5,13,'post'],['Sn','Estaño',5,14,'post'],['Sb','Antimonio',5,15,'metalloid'],['Te','Teluro',5,16,'metalloid'],['I','Yodo',5,17,'halogen'],['Xe','Xenón',5,18,'noble'],['Cs','Cesio',6,1,'alkali'],['Ba','Bario',6,2,'alkaline'],['La','Lantano',6,3,'lanthanide'],['Ce','Cerio',6,4,'lanthanide'],['Pr','Praseodimio',6,5,'lanthanide'],['Nd','Neodimio',6,6,'lanthanide'],['Pm','Prometio',6,7,'lanthanide'],['Sm','Samario',6,8,'lanthanide'],['Eu','Europio',6,9,'lanthanide'],['Gd','Gadolinio',6,10,'lanthanide'],['Tb','Terbio',6,11,'lanthanide'],['Dy','Disprosio',6,12,'lanthanide'],['Ho','Holmio',6,13,'lanthanide'],['Er','Erbio',6,14,'lanthanide'],['Tm','Tulio',6,15,'lanthanide'],['Yb','Iterbio',6,16,'lanthanide'],['Lu','Lutecio',6,17,'lanthanide'],['Hf','Hafnio',6,4,'transition'],['Ta','Tántalo',6,5,'transition'],['W','Tungsteno',6,6,'transition'],['Re','Renio',6,7,'transition'],['Os','Osmio',6,8,'transition'],['Ir','Iridio',6,9,'transition'],['Pt','Platino',6,10,'transition'],['Au','Oro',6,11,'transition'],['Hg','Mercurio',6,12,'transition'],['Tl','Talio',6,13,'post'],['Pb','Plomo',6,14,'post'],['Bi','Bismuto',6,15,'post'],['Po','Polonio',6,16,'metalloid'],['At','Ástato',6,17,'halogen'],['Rn','Radón',6,18,'noble'],['Fr','Francio',7,1,'alkali'],['Ra','Radio',7,2,'alkaline'],['Ac','Actinio',7,3,'actinide'],['Th','Torio',7,4,'actinide'],['Pa','Protactinio',7,5,'actinide'],['U','Uranio',7,6,'actinide'],['Np','Neptunio',7,7,'actinide'],['Pu','Plutonio',7,8,'actinide'],['Am','Americio',7,9,'actinide'],['Cm','Curio',7,10,'actinide'],['Bk','Berkelio',7,11,'actinide'],['Cf','Californio',7,12,'actinide'],['Es','Einsteinio',7,13,'actinide'],['Fm','Fermio',7,14,'actinide'],['Md','Mendelevio',7,15,'actinide'],['No','Nobelio',7,16,'actinide'],['Lr','Laurencio',7,17,'actinide'],['Rf','Rutherfordio',7,4,'transition'],['Db','Dubnio',7,5,'transition'],['Sg','Seaborgio',7,6,'transition'],['Bh','Bohrio',7,7,'transition'],['Hs','Hasio',7,8,'transition'],['Mt','Meitnerio',7,9,'transition'],['Ds','Darmstadtio',7,10,'transition'],['Rg','Roentgenio',7,11,'transition'],['Cn','Copernicio',7,12,'transition'],['Nh','Nihonio',7,13,'post'],['Fl','Flerovio',7,14,'post'],['Mc','Moscovio',7,15,'post'],['Lv','Livermorio',7,16,'post'],['Ts','Teneso',7,17,'halogen'],['Og','Oganesón',7,18,'noble']];
+var ORD=['1s','2s','2p','3s','3p','4s','3d','4p','5s','4d','5p','6s','4f','5d','6p','7s','5f','6d','7p'];
+var LN={s:0,p:1,d:2,f:3}, CAP={s:2,p:6,d:10,f:14};
+var NOBLE=[2,10,18,36,54,86];
+// Excepciones a la regla de Moeller: las mismas que usan tabla.html y juego.html
+// (campo "valence"). Rg (111) es predicha, no medida.
+var EXC={24:{'4s':1,'3d':5},29:{'4s':1,'3d':10},41:{'5s':1,'4d':4},42:{'5s':1,'4d':5},44:{'5s':1,'4d':7},45:{'5s':1,'4d':8},46:{'5s':0,'4d':10},47:{'5s':1,'4d':10},
+  57:{'4f':0,'5d':1},58:{'4f':1,'5d':1},64:{'4f':7,'5d':1},78:{'6s':1,'5d':9},79:{'6s':1,'5d':10},
+  89:{'5f':0,'6d':1},90:{'5f':0,'6d':2},91:{'5f':2,'6d':1},92:{'5f':3,'6d':1},93:{'5f':4,'6d':1},96:{'5f':7,'6d':1},103:{'6d':0,'7p':1},111:{'7s':1,'6d':10}};
+var SUPD={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
+function sup(x){ return String(x).split('').map(function(c){return SUPD[c]||c;}).join(''); }
+function nOf(s){ return +s[0]; }
+function lOf(s){ return LN[s[1]]; }
+function mad(e){ var o={}; for(var i=0;i<ORD.length&&e>0;i++){ var k=Math.min(e,CAP[ORD[i][1]]); o[ORD[i]]=k; e-=k; } return o; }
+function neutral(z){ var o=mad(z), x=EXC[z]; if(x) for(var k in x) o[k]=x[k]; return o; }
+function ionCfg(z,q){
+  var o=neutral(z), k;
+  if(q>0){
+    for(var r=0;r<q;r++){
+      var best=null;
+      for(k in o){ if(o[k]>0&&(!best||nOf(k)>nOf(best)||(nOf(k)===nOf(best)&&lOf(k)>lOf(best)))) best=k; }
+      if(!best) break; o[best]--;
+    }
+  }else if(q<0){
+    var add=-q;
+    for(var i=0;i<ORD.length&&add>0;i++){ var s=ORD[i]; o[s]=o[s]||0; while(o[s]<CAP[s[1]]&&add>0){ o[s]++; add--; } }
+  }
+  return o;
+}
+function total(o){ var t=0; for(var k in o) t+=o[k]; return t; }
+function lista(o,orden){
+  var l=Object.keys(o).filter(function(k){return o[k]>0;});
+  if(orden==='niveles') l.sort(function(a,b){return nOf(a)-nOf(b)||lOf(a)-lOf(b);});
+  else l.sort(function(a,b){return ORD.indexOf(a)-ORD.indexOf(b);});
+  return l;
+}
+function txtCfg(o,orden){ return lista(o,orden).map(function(k){return k+sup(o[k]);}).join(' '); }
+function htmlCfg(o,orden,core){
+  var h=core?'<span class="core">['+EL[core-1][0]+']</span>':'';
+  return h+lista(o,orden).map(function(k){return '<span class="'+k[1]+'">'+k+sup(o[k])+'</span>';}).join('');
+}
+// Configuración abreviada: núcleo de gas noble + lo que sobra. En un ion
+// isoelectrónico con un gas noble (Na⁺, Cl⁻…) se escribe solo [gas noble].
+function abreviada(o,esIon){
+  var t=total(o), core=0;
+  NOBLE.forEach(function(g){
+    if(g>t||(g===t&&!esIon)) return;
+    var m=mad(g), ok=true;
+    for(var k in m) if((o[k]||0)<m[k]) ok=false;
+    if(ok) core=g;
+  });
+  var rest={};
+  var m2=core?mad(core):{};
+  for(var k in o){ var r=o[k]-(m2[k]||0); if(r>0) rest[k]=r; }
+  return {core:core,rest:rest};
+}
+function bloque(z){ if(z===2) return 's'; var m=mad(z), l=lista(m,'llenado'); return l[l.length-1][1]; }
+function grupo(z){
+  var b=bloque(z), p=EL[z-1][2], m=mad(z);
+  if(z===2) return 18;
+  if(b==='s') return m[p+'s'];
+  if(b==='p') return 10+(m[p+'s']||0)+(m[p+'p']||0);
+  if(b==='d') return (m[(p-1)+'d']||0)+(m[p+'s']||0);
+  return null;
+}
+function porNivel(o){ var r={}; for(var k in o){ if(o[k]>0){ r[nOf(k)]=(r[nOf(k)]||0)+o[k]; } } return r; }
+function desap(o){ var u=0; for(var k in o){ var m=2*lOf(k)+1, c=o[k]; u+=c<=m?c:2*m-c; } return u; }
+function ultimo(o){ var l=lista(o,'llenado'); return l[l.length-1]; }
+function numCuant(o){
+  var s=ultimo(o); if(!s) return null;
+  var l=lOf(s), m=2*l+1, k=o[s], ml, ms;
+  if(k<=m){ ml=-l+(k-1); ms='+½'; } else { ml=-l+(k-m-1); ms='−½'; }
+  return {n:nOf(s),l:l,ml:ml,ms:ms,s:s};
+}
+function cajas(s,c){ // reparto de Hund: primero ↑ en cada orbital, luego ↓
+  var m=2*lOf(s)+1, b=[];
+  for(var i=0;i<m;i++) b.push(c>i?(c-m>i?2:1):0);
+  return b;
+}
+function orbHTML(o,orden){
+  return lista(o,orden).map(function(s){
+    return '<div class="sub '+s[1]+'"><div class="boxes">'+cajas(s,o[s]).map(function(v){return '<span class="box">'+(v===2?'↑↓':v===1?'↑':'')+'</span>';}).join('')+'</div><span class="lbl">'+s+sup(o[s])+'</span></div>';
+  }).join('');
+}
+function cargaStr(q){ return q===0?'':(Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':'−'); }
+function norm(t){ return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim(); }
+
+/* ════════════════ Pestañas ════════════════ */
+var TABS=['conceptos','moeller','configurador','orbitales','repaso'];
+function showTab(name,push){
+  if(TABS.indexOf(name)<0) name='conceptos';
+  document.querySelectorAll('.tabs .tab').forEach(function(b){
+    var on=b.getAttribute('data-tab')===name;
+    b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+  });
+  TABS.forEach(function(t){ $('p-'+t).classList.toggle('on',t===name); });
+  if(push!==false){ try{ history.replaceState(null,'','#'+name); }catch(e){} }
+}
+document.querySelectorAll('.tabs .tab').forEach(function(b){ b.addEventListener('click',function(){ showTab(b.getAttribute('data-tab')); }); });
+window.irTab=function(t){ showTab(t); window.scrollTo({top:0,behavior:'smooth'}); };
+document.querySelectorAll('.orb-demo').forEach(function(d){
+  var n=+d.getAttribute('data-n'), h='<div class="boxes" style="display:flex;justify-content:center">';
+  for(var i=0;i<n;i++) h+='<span class="box" style="width:22px;height:24px"></span>';
+  d.innerHTML=h+'</div>';
+});
+
+/* ════════════════ Diagrama de Moeller ════════════════ */
+(function(){
+  var svg=$('moe-svg'), NS='http://www.w3.org/2000/svg', z=0, timer=null;
+  var COL={s:'#E69F00',p:'#0072B2',d:'#009E73',f:'#CC79A7'}, BG={s:'#fcf2db',p:'#dbebf4',d:'#dbf1eb',f:'#f8ecf3'};
+  function pos(s){ return {x:62+lOf(s)*92, y:46+(nOf(s)-1)*55}; }
+  function el(t,a,p){ var x=document.createElementNS(NS,t); for(var k in a) x.setAttribute(k,a[k]); if(p) p.appendChild(x); return x; }
+  var defs=el('defs',{},svg), mk=el('marker',{id:'moe-ar',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);
+  el('path',{d:'M0 0 L10 5 L0 10 z',fill:'#94a3b8'},mk);
+  // diagonales: subniveles con el mismo n + l, de arriba-derecha a abajo-izquierda
+  for(var v=1;v<=8;v++){
+    var mem=ORD.filter(function(s){return nOf(s)+lOf(s)===v;}).sort(function(a,b){return lOf(b)-lOf(a);});
+    if(!mem.length) continue;
+    var a=pos(mem[0]), b=pos(mem[mem.length-1]);
+    el('line',{x1:a.x+40,y1:a.y-30,x2:b.x-36,y2:b.y+27,stroke:'#cbd5e1','stroke-width':3,'marker-end':'url(#moe-ar)'},svg);
+    var t=el('text',{x:a.x+46,y:a.y-31,'font-size':11,'font-weight':800,fill:'#94a3b8','font-family':'Trebuchet MS, sans-serif'},svg); t.textContent=v;
+  }
+  var cells={};
+  ORD.forEach(function(s){
+    var p=pos(s), g=el('g',{},svg);
+    var r=el('rect',{x:p.x-34,y:p.y-16,width:68,height:32,rx:8,fill:'#fff',stroke:COL[s[1]],'stroke-width':2},g);
+    var f=el('rect',{x:p.x-34,y:p.y-16,width:0,height:32,rx:8,fill:BG[s[1]]},g);
+    var t=el('text',{x:p.x,y:p.y+6,'text-anchor':'middle','font-size':16,'font-weight':800,fill:'#0d2d42','font-family':'Courier New, monospace'},g);
+    t.textContent=s; cells[s]={r:r,f:f,t:t};
+  });
+  $('moe-seq').innerHTML=ORD.map(function(s){return '<span data-s="'+s+'">'+s+'</span>';}).join('');
+  function render(){
+    var m=mad(z), last=z?ultimo(m):null;
+    ORD.forEach(function(s){
+      var c=m[s]||0, C=cells[s];
+      C.f.setAttribute('width',68*c/CAP[s[1]]);
+      C.t.textContent=s+(c?sup(c):'');
+      C.r.setAttribute('stroke-width',s===last?4:2);
+      C.r.setAttribute('stroke',s===last?'#0d4a73':COL[s[1]]);
+    });
+    document.querySelectorAll('#moe-seq span').forEach(function(sp){
+      var s=sp.getAttribute('data-s'), c=m[s]||0;
+      sp.className=s===last&&c<CAP[s[1]]?'cur':c?'full':'';
+      if(s===last&&c===CAP[s[1]]) sp.className='cur';
+    });
+    $('moe-z').value=z; $('moe-z-o').textContent=z;
+    $('moe-el').textContent=z?EL[z-1][1]+' ('+EL[z-1][0]+', Z = '+z+')':'Sin electrones';
+    $('moe-cfg').innerHTML=z?htmlCfg(m,'llenado'):'—';
+    var n=$('moe-note');
+    if(EXC[z]){ n.style.display='block'; n.innerHTML='⚠️ <strong>'+EL[z-1][1]+' es una excepción.</strong> Moeller predice lo de arriba, pero la configuración real es <strong>'+txtCfg(neutral(z),'llenado')+'</strong>. Míralo en el Configurador.'; }
+    else n.style.display='none';
+  }
+  function set(v){ z=Math.max(0,Math.min(118,v)); render(); }
+  $('moe-z').addEventListener('input',function(){ set(+this.value); });
+  $('moe-mas').addEventListener('click',function(){ set(z+1); });
+  $('moe-menos').addEventListener('click',function(){ set(z-1); });
+  $('moe-play').addEventListener('click',function(){
+    var b=this;
+    if(timer){ clearInterval(timer); timer=null; b.textContent='▶ Animar'; return; }
+    if(z>=118) z=0;
+    b.textContent='⏸ Pausar';
+    timer=setInterval(function(){ if(z>=118){ clearInterval(timer); timer=null; b.textContent='▶ Animar'; return; } set(z+1); },350);
+  });
+  render();
+})();
+
+/* ════════════════ Configurador ════════════════ */
+(function(){
+  var cur=26, q=0, orden='llenado';
+  // mini tabla periódica
+  var tb=$('cf-tabla'), h='';
+  for(var z=1;z<=118;z++){
+    var e=EL[z-1], row, col;
+    if(z>=57&&z<=71){ row=9; col=e[3]; } else if(z>=89&&z<=103){ row=10; col=e[3]; } else { row=e[2]; col=e[3]; }
+    h+='<button class="pt '+bloque(z)+'" data-z="'+z+'" style="grid-row:'+row+';grid-column:'+col+'" title="'+e[1]+' ('+z+')"><small>'+z+'</small>'+e[0]+'</button>';
+  }
+  h+='<span class="pt ph" style="grid-row:6;grid-column:3">57–71</span><span class="pt ph" style="grid-row:7;grid-column:3">89–103</span><span style="grid-row:8;grid-column:1;height:8px"></span>';
+  tb.innerHTML=h;
+  tb.addEventListener('click',function(ev){ var b=ev.target.closest('.pt[data-z]'); if(b){ cur=+b.getAttribute('data-z'); render(); } });
+  $('cf-lista').innerHTML=EL.map(function(e,i){return '<option value="'+e[0]+' — '+e[1]+' ('+(i+1)+')">';}).join('');
+  $('cf-buscar').addEventListener('change',function(){
+    var t=norm(this.value), m=t.match(/\((\d+)\)/), z=0;
+    if(m) z=+m[1];
+    else if(/^\d+$/.test(t)) z=+t;
+    else EL.forEach(function(e,i){ if(!z&&(norm(e[0])===t||norm(e[1])===t)) z=i+1; });
+    if(z>=1&&z<=118){ cur=z; render(); this.value=''; }
+  });
+  $('cf-carga').addEventListener('change',function(){ q=+this.value; render(); });
+  document.querySelectorAll('#cf-orden button').forEach(function(b){
+    b.addEventListener('click',function(){ orden=b.getAttribute('data-o'); document.querySelectorAll('#cf-orden button').forEach(function(x){x.classList.toggle('on',x===b);}); render(); });
+  });
+  function render(){
+    var e=EL[cur-1], o=ionCfg(cur,q), t=total(o), b=bloque(cur), g=grupo(cur), per=e[2];
+    document.querySelectorAll('#cf-tabla .pt').forEach(function(x){ x.classList.toggle('on',+x.getAttribute('data-z')===cur); });
+    $('cf-z').textContent=cur; $('cf-s').textContent=e[0]; $('cf-c').textContent=q?sup(cargaStr(q).replace('−','-')):'';
+    $('cf-name').textContent=(q?'Ion ':'')+e[1]+(q?' '+e[0]+sup(cargaStr(q).replace('−','-')):'');
+    var tags=['<span class="tag neu">Bloque '+b+'</span>'];
+    tags.push(q===0?'<span class="tag neu">Átomo neutro</span>':q>0?'<span class="tag neu">Catión: perdió '+q+' e⁻</span>':'<span class="tag neu">Anión: ganó '+(-q)+' e⁻</span>');
+    if(q!==0&&NOBLE.indexOf(t)>=0) tags.push('<span class="tag neu">Isoelectrónico con '+EL[t-1][0]+'</span>');
+    if(EXC[cur]&&q===0) tags.push('<span class="tag warn">Excepción a Moeller</span>');
+    if(cur>=104) tags.push('<span class="tag warn">Configuración predicha</span>');
+    $('cf-tags').innerHTML=tags.join('');
+    if(!t){
+      ['cf-full','cf-abr','cf-orb'].forEach(function(id){ $(id).innerHTML='<span style="font-family:var(--sans);font-size:.85rem">Sin electrones (un protón solo, como el H⁺).</span>'; });
+    }else{
+      $('cf-full').innerHTML=htmlCfg(o,orden);
+      var ab=abreviada(o,q!==0);
+      $('cf-abr').innerHTML=htmlCfg(ab.rest,orden,ab.core)||'—';
+      $('cf-orb').innerHTML=orbHTML(o,orden);
+    }
+    $('cf-e').textContent=t;
+    $('cf-per').textContent=per;
+    $('cf-gr').textContent=g==null?(cur<=71?'Lantánido':'Actínido'):g;
+    $('cf-bl').textContent=b;
+    var niv=porNivel(o), nmax=0; for(var k in niv) nmax=Math.max(nmax,+k);
+    var val=q===0?(niv[per]||0):(niv[nmax]||0);
+    $('cf-val').textContent=t?val:0;
+    $('cf-val-k').textContent=q===0?'e⁻ de valencia':'e⁻ en el último nivel (n='+(nmax||0)+')';
+    $('cf-desap').textContent=desap(o);
+    $('cf-niv').innerHTML=Object.keys(niv).sort().map(function(n){return '<span>n='+n+': '+niv[n]+'</span>';}).join('')||'—';
+    var qn=numCuant(o);
+    $('cf-qn').innerHTML=qn?'Está en '+qn.s+' → n = '+qn.n+' · l = '+qn.l+' · m<sub>l</sub> = '+(qn.ml>0?'+':'')+qn.ml+' · m<sub>s</sub> = '+qn.ms:'—';
+    var notas=[];
+    if(EXC[cur]&&q===0){
+      var esF=b==='f'||cur===103;
+      notas.push('⚠️ <strong>Excepción:</strong> la regla de Moeller predice '+txtCfg(mad(cur),'llenado').split(' ').slice(-3).join(' ')+'… pero experimentalmente es '+txtCfg(o,'llenado').split(' ').slice(-3).join(' ')+'. '+(esF?'En estos elementos los subniveles f y d tienen energías casi iguales.':'Un subnivel d semilleno (d⁵) o lleno (d¹⁰) es especialmente estable.'));
+    }
+    if(q>0&&b==='d') notas.push('🔁 Los metales de transición pierden primero los electrones del <strong>nivel más alto (ns)</strong> y después los (n−1)d.');
+    if(q===0&&cur===46) notas.push('Pd no tiene electrones en el nivel 5: es el único elemento cuyo último nivel ocupado (4) es menor que su periodo (5).');
+    if(q===0&&b==='d') notas.push('En los metales de transición, además de los electrones de valencia del último nivel, los (n−1)d también pueden participar en los enlaces: por eso tienen varios estados de oxidación.');
+    if(cur>=104) notas.push('🧪 Los elementos desde Z = 104 son sintéticos y duran fracciones de segundo: su configuración es una predicción teórica.');
+    $('cf-nota').style.display=notas.length?'block':'none';
+    $('cf-nota').innerHTML=notas.join('<br>');
+  }
+  render();
+})();
+
+/* ════════════════ Llena los orbitales ════════════════ */
+(function(){
+  var POOL=[]; for(var z=1;z<=36;z++) if(!EXC[z]) POOL.push(z);
+  var cur, subs, st, score=0, tries=0;
+  function nuevo(){
+    var prev=cur; do{ cur=POOL[Math.floor(Math.random()*POOL.length)]; }while(cur===prev);
+    var m=mad(cur), l=lista(m,'llenado');
+    var extra=ORD[ORD.indexOf(l[l.length-1])+1];
+    subs=l.concat(extra?[extra]:[]);
+    st={}; subs.forEach(function(s){ st[s]=new Array(2*lOf(s)+1).fill(0); });
+    $('lo-q').innerHTML='Ubica los <strong>'+cur+' electrones</strong> del <strong>'+EL[cur-1][1]+' ('+EL[cur-1][0]+')</strong>';
+    $('lo-fb').innerHTML=''; draw();
+  }
+  function draw(mark){
+    $('lo-orb').innerHTML=subs.map(function(s){
+      var cls=mark&&mark[s]?' '+mark[s]:'';
+      var c=st[s].reduce(function(a,b){return a+b;},0);
+      return '<div class="sub '+s[1]+cls+'"><div class="boxes">'+st[s].map(function(v,i){return '<button type="button" class="box" data-s="'+s+'" data-i="'+i+'" aria-label="'+s+' orbital '+(i+1)+'">'+(v===2?'↑↓':v===1?'↑':'')+'</button>';}).join('')+'</div><span class="lbl">'+s+(c?sup(c):'')+'</span></div>';
+    }).join('');
+  }
+  $('lo-orb').addEventListener('click',function(ev){
+    var b=ev.target.closest('button.box'); if(!b) return;
+    var s=b.getAttribute('data-s'), i=+b.getAttribute('data-i');
+    st[s][i]=(st[s][i]+1)%3; draw(); $('lo-fb').innerHTML='';
+  });
+  $('lo-clear').addEventListener('click',function(){ subs.forEach(function(s){ st[s].fill(0); }); draw(); $('lo-fb').innerHTML=''; });
+  $('lo-next').addEventListener('click',nuevo);
+  $('lo-check').addEventListener('click',function(){
+    var m=mad(cur), mark={}, errs=[], put=0;
+    subs.forEach(function(s){ put+=st[s].reduce(function(a,b){return a+b;},0); });
+    subs.forEach(function(s){
+      var c=st[s].reduce(function(a,b){return a+b;},0), want=m[s]||0;
+      if(c!==want){ mark[s]='bad'; errs.push(c>want?'En <strong>'+s+'</strong> sobran electrones ('+c+' en vez de '+want+').':'En <strong>'+s+'</strong> faltan electrones ('+c+' en vez de '+want+').'); return; }
+      var singles=st[s].filter(function(v){return v===1;}).length, mm=st[s].length, wantU=want<=mm?want:2*mm-want;
+      if(singles!==wantU){ mark[s]='bad'; errs.push('En <strong>'+s+'</strong> no se cumple la <strong>regla de Hund</strong>: primero un electrón en cada orbital, luego se aparean.'); return; }
+      if(want) mark[s]='good';
+    });
+    tries++;
+    if(!errs.length){ score++; $('lo-fb').innerHTML='<span class="ok-t">✓ ¡Perfecto!</span> '+EL[cur-1][0]+': '+txtCfg(m,'llenado')+' · Toca «Otro elemento».'; }
+    else{
+      var head=put!==cur?'Pusiste '+put+(put===1?' electrón':' electrones')+' y el '+EL[cur-1][1]+' tiene '+cur+'. ':'';
+      $('lo-fb').innerHTML='<span class="err-t">✗ Revisa:</span> '+head+errs.slice(0,2).join(' ')+(errs.length>2?' (y '+(errs.length-2)+' subnivel(es) más).':'')+' <br><small>Pista: sigue el orden del diagrama de Moeller y no pases al siguiente subnivel hasta llenar el anterior.</small>';
+    }
+    $('lo-score').textContent='Aciertos: '+score+' de '+tries;
+    draw(mark);
+  });
+  nuevo();
+})();
+
+/* ════════════════ Repaso (preguntas generadas) ════════════════ */
+(function(){
+  function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function rango(a,b,f){ var r=[]; for(var z=a;z<=b;z++) if(!f||f(z)) r.push(z); return r; }
+  function abrTxt(o,esIon){ var ab=abreviada(o,esIon); return (ab.core?'['+EL[ab.core-1][0]+'] ':'')+txtCfg(ab.rest,'llenado'); }
+  var principal=function(z){ var b=bloque(z); return b==='s'||b==='p'; };
+  var GEN={
+    full:function(){
+      var z=rnd(rango(3,36)), ok=txtCfg(neutral(z),'llenado');
+      var d=[z-1,z+1,z+2,z-2].filter(function(x){return x>=1&&x<=36;}).map(function(x){return txtCfg(neutral(x),'llenado');});
+      if(EXC[z]) d.unshift(txtCfg(mad(z),'llenado'));
+      return {q:'¿Cuál es la configuración electrónica del <strong>'+EL[z-1][1]+' ('+EL[z-1][0]+', Z = '+z+')</strong>?',ok:ok,d:d,mono:true,
+        x:EXC[z]?EL[z-1][0]+' es una excepción: d semilleno o lleno es más estable.':'Z = '+z+' → '+z+' electrones repartidos siguiendo el diagrama de Moeller.'};
+    },
+    abr:function(){
+      var z=rnd(rango(3,56,function(z){return !EXC[z];})), ok=EL[z-1][1];
+      var d=[z+1,z-1,z+8,z-8,z+2].filter(function(x){return x>=1&&x<=56;}).map(function(x){return EL[x-1][1];});
+      return {q:'¿Qué elemento tiene la configuración <strong style="font-family:var(--mono)">'+abrTxt(neutral(z))+'</strong>?',ok:ok,d:d,
+        x:'Suma los electrones: los del gas noble más los que siguen = '+z+' → Z = '+z+', '+EL[z-1][1]+'.'};
+    },
+    val:function(){
+      var z=rnd(rango(1,56,function(z){return principal(z)&&NOBLE.indexOf(z)<0;})), o=neutral(z), v=porNivel(o)[EL[z-1][2]];
+      var d=[v+1,v-1,v+2,8,2,v+3].filter(function(x){return x>=1&&x<=8&&x!==v;}).map(String);
+      return {q:'Con su configuración <strong style="font-family:var(--mono)">'+abrTxt(o)+'</strong>, ¿cuántos electrones de valencia tiene el '+EL[z-1][1]+'?',ok:String(v),d:d,
+        x:'Se cuentan los electrones del último nivel (n = '+EL[z-1][2]+'): '+v+'.'};
+    },
+    bloque:function(){
+      var z=rnd(rango(1,86,function(z){return !EXC[z];})), s=ultimo(mad(z)), b=bloque(z);
+      return {q:'La configuración de un elemento neutro termina en <strong style="font-family:var(--mono)">'+s+sup(mad(z)[s])+'</strong>. ¿A qué bloque pertenece?',ok:'Bloque '+b,d:['s','p','d','f'].filter(function(x){return x!==b;}).map(function(x){return 'Bloque '+x;}),
+        x:'El bloque es el subnivel donde entra el último electrón: '+s[1]+'.'};
+    },
+    pergr:function(){
+      var z=rnd(rango(1,56,function(z){return principal(z)&&z!==2;})), s=ultimo(mad(z)), p=EL[z-1][2], g=grupo(z);
+      var ok='Periodo '+p+', grupo '+g;
+      var d=['Periodo '+(p===2?3:p-1)+', grupo '+g,'Periodo '+p+', grupo '+(g===1?2:g-1),'Periodo '+(g>7?g-10:g)+', grupo '+p,'Periodo '+(p+1)+', grupo '+(g===18?17:g+1)];
+      return {q:'Un elemento neutro termina su configuración en <strong style="font-family:var(--mono)">'+s+sup(mad(z)[s])+'</strong>. ¿Cuál es su periodo y su grupo?',ok:ok,d:d,
+        x:'Periodo = nivel más alto ('+p+'). '+(s[1]==='s'?'Bloque s: grupo = electrones s = '+g+'.':'Bloque p: grupo = 10 + electrones s + p del último nivel = '+g+'.')+' Es el '+EL[z-1][1]+'.'};
+    },
+    ion:function(){
+      var IONES=[[11,1],[12,2],[13,3],[19,1],[20,2],[9,-1],[17,-1],[8,-2],[16,-2],[7,-3],[26,2],[26,3],[29,2],[30,2],[25,2],[28,2]];
+      var it=rnd(IONES), z=it[0], q=it[1], ok=abrTxt(ionCfg(z,q),true);
+      var d=[abrTxt(neutral(z)),abrTxt(ionCfg(z,q>0?q+1:q-1),true),abrTxt(ionCfg(z,q>0?q-1:q+1),true)];
+      if(q>0&&bloque(z)==='d'){ // error típico: quitar los d antes que los s
+        var w=neutral(z), r=q; ['3d','4s'].forEach(function(s){ while(r>0&&w[s]>0){ w[s]--; r--; } }); d.unshift(abrTxt(w,true));
+      }
+      return {q:'¿Cuál es la configuración abreviada del ion <strong>'+EL[z-1][0]+sup(cargaStr(q).replace('−','-'))+'</strong>?',ok:ok,d:d,mono:true,
+        x:q>0?(bloque(z)==='d'?'Un catión de transición pierde primero los electrones 4s (nivel más alto) y luego los 3d.':'El catión pierde '+q+' electrón(es) del último nivel y queda como el gas noble anterior.'):'El anión gana '+(-q)+' electrón(es) y completa su subnivel p.'};
+    },
+    desap:function(){
+      var z=rnd(rango(1,36)), o=neutral(z), u=desap(o);
+      var d=[u+1,u-1,u+2,u+3,0,1].filter(function(x){return x>=0&&x!==u;}).map(String);
+      return {q:'¿Cuántos electrones <strong>desapareados</strong> tiene el '+EL[z-1][1]+' ('+EL[z-1][0]+') en su estado fundamental?',ok:String(u),d:d,
+        x:'Con la regla de Hund: '+txtCfg(o,'llenado').split(' ').slice(-2).join(' ')+' → '+u+' electrón(es) sin pareja.'};
+    },
+    qn:function(){
+      var z=rnd(rango(1,36,function(z){return !EXC[z];})), o=neutral(z), qn=numCuant(o);
+      function f(n,l,ml,ms){ return '('+n+', '+l+', '+(ml>0?'+':'')+ml+', '+ms+')'; }
+      var ok=f(qn.n,qn.l,qn.ml,qn.ms);
+      var d=[f(qn.n,qn.l,qn.ml,qn.ms==='+½'?'−½':'+½'),f(qn.n,qn.l===0?1:qn.l-1,0,qn.ms),f(qn.n+1,qn.l,qn.ml,qn.ms),f(qn.n,qn.l,qn.ml===qn.l?-qn.l:qn.ml+1,qn.ms),f(qn.n-1,qn.l,qn.ml,qn.ms)];
+      return {q:'Números cuánticos (n, l, m<sub>l</sub>, m<sub>s</sub>) del electrón diferencial del <strong>'+EL[z-1][1]+'</strong> (termina en '+qn.s+sup(o[qn.s])+'):',ok:ok,d:d,mono:true,
+        x:qn.s+': n = '+qn.n+', l = '+qn.l+' ('+qn.s[1]+'). Llenando de −l a +l, primero ↑: m<sub>l</sub> = '+qn.ml+', m<sub>s</sub> = '+qn.ms+'.'};
+    }
+  };
+  var TIPOS=['full','abr','val','bloque','pergr','ion','desap','qn','full','ion'];
+  var qs=[], qi=0, score=0;
+  function build(t){
+    for(var k=0;k<20;k++){
+      var Q=GEN[t](), seen={}, opts=[Q.ok]; seen[Q.ok]=1;
+      Q.d.forEach(function(x){ if(!seen[x]&&opts.length<4){ seen[x]=1; opts.push(x); } });
+      if(opts.length===4){ Q.opts=shuffle(opts); return Q; }
+    }
+    return null;
+  }
+  function start(){ qs=shuffle(TIPOS.slice()).map(build).filter(Boolean); qi=0; score=0; render(); }
+  function render(){
+    var box=$('q-box');
+    $('q-fill').style.width=(qi/qs.length*100)+'%';
+    $('q-label').textContent=qi+' de '+qs.length+' respondidas';
+    if(qi>=qs.length){
+      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+qs.length+'.</strong> '+(score>=8?'¡Excelente! Ya puedes usar la configuración en la Tabla Periódica.':'Repasa los Conceptos y practica en «Llena los orbitales».')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Preguntas nuevas</button><a class="btn ghost" href="tabla.html">Ir a la Tabla Periódica →</a></div>';
+      $('q-again').addEventListener('click',start); return;
+    }
+    var Q=qs[qi];
+    box.innerHTML='<div class="mq-q">'+(qi+1)+'. '+Q.q+'</div><div class="mq-opts">'+Q.opts.map(function(o,i){return '<button class="mq-btn'+(Q.mono?' mono':'')+'" data-i="'+i+'">'+o+'</button>';}).join('')+'</div><div class="fb" id="q-fb"></div><button class="btn" id="q-next" style="display:none;margin-top:10px">Siguiente →</button>';
+    box.querySelectorAll('.mq-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var o=Q.opts[+b.getAttribute('data-i')], ok=o===Q.ok;
+        box.querySelectorAll('.mq-btn').forEach(function(x,i){ x.disabled=true; if(Q.opts[i]===Q.ok) x.classList.add('mq-correct'); });
+        if(!ok) b.classList.add('mq-wrong'); else score++;
+        $('q-fb').innerHTML=(ok?'<span class="ok-t">✓ ¡Correcto!</span> ':'<span class="err-t">✗ No es así.</span> ')+Q.x;
+        $('q-next').style.display='inline-flex';
+      });
+    });
+    $('q-next').addEventListener('click',function(){ qi++; render(); });
+  }
+  start();
+})();
+
+/* Abrir la pestaña indicada en la URL (configuracion.html#configurador, etc.) */
+var h=(location.hash||'').replace('#','');
+if(h) showTab(h,false);
+
+/* ── Hamburger nav ── */
+(function(){
+  var ham=$('ham-btn'), drawer=$('nav-drawer'), overlay=$('nav-overlay'), closeBtn=$('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

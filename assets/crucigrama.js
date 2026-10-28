@@ -1,5 +1,6 @@
 /* ════════════════════════════════════════════════════════════════════════
-   crucigrama.js — pestaña «Crucigramas» de docente.html (solo nomenclatura)
+   crucigrama.js — pestaña «Crucigramas» de docente.html (nomenclatura y
+   región «El átomo»: glosario de teoría atómica y configuración → elemento)
    Las pistas salen de BANCO (banco.js, el mismo del Juego y del Generador):
    - Fórmula → nombre completo (sin espacios ni tildes; romanos en letras)
    - Ion → nombre del ion (aniones y adjetivos -oso/-ico de los cationes)
@@ -185,6 +186,64 @@ function iones(){
   return _iones;
 }
 
+/* ───────────── pistas de la región «El átomo» ───────────── */
+// Glosario de teoría atómica: cada pista tiene UNA sola palabra posible.
+const GLOSARIO_AT = [
+  ['ELECTRÓN', 'Partícula subatómica con carga negativa'],
+  ['PROTÓN', 'Partícula del núcleo con carga positiva'],
+  ['NEUTRÓN', 'Partícula del núcleo sin carga eléctrica'],
+  ['NÚCLEO', 'Región central, diminuta y densa del átomo, propuesta por Rutherford'],
+  ['ISÓTOPOS', 'Átomos del mismo elemento con distinto número de neutrones'],
+  ['CATIÓN', 'Ion con carga positiva (perdió electrones)'],
+  ['ANIÓN', 'Ion con carga negativa (ganó electrones)'],
+  ['ORBITAL', 'Región del espacio donde es más probable encontrar un electrón (modelo actual)'],
+  ['DALTON', 'Científico del modelo de la «bola de billar» (1808)'],
+  ['THOMSON', 'Descubrió el electrón con el tubo de rayos catódicos (1897)'],
+  ['RUTHERFORD', 'Propuso el núcleo atómico con el experimento de la lámina de oro'],
+  ['BOHR', 'Propuso que el electrón solo ocupa ciertos niveles de energía (1913)'],
+  ['DEMÓCRITO', 'Filósofo griego que propuso la idea de átomo sin hacer experimentos'],
+  ['CHADWICK', 'Descubrió el neutrón en 1932'],
+  ['MILLIKAN', 'Midió la carga del electrón con gotas de aceite'],
+  ['HEISENBERG', 'Enunció el principio de incertidumbre'],
+  ['HUND', 'Regla: en un subnivel, un electrón en cada orbital antes de aparearse'],
+  ['PAULI', 'Principio de exclusión: máximo dos electrones por orbital, con espines opuestos'],
+  ['AUFBAU', 'Principio de llenado: primero los subniveles de menor energía (palabra alemana)'],
+  ['MOELLER', 'Diagrama de las diagonales para el orden de llenado de los subniveles'],
+  ['ALFA', 'Partículas (núcleos de helio) que se dispararon contra la lámina de oro'],
+  ['ORO', 'Metal de la lámina del experimento de Rutherford'],
+  ['FOTÓN', 'Partícula de luz que emite un electrón al bajar de nivel'],
+  ['ESPÍN', 'Propiedad del electrón representada con las flechas ↑ y ↓'],
+  ['ESPECTRO', 'Conjunto de líneas de colores que emite un elemento al excitarse'],
+  ['VALENCIA', 'Electrones de ____: los del último nivel de energía'],
+  ['PERIODO', 'Fila de la tabla periódica; coincide con el nivel más alto ocupado'],
+  ['PASAS', 'Modelo de Thomson: el «budín de ____»'],
+  ['CATÓDICOS', 'Rayos ____: haz de electrones del tubo de Thomson'],
+  ['SEMILLENO', 'El cromo prefiere un subnivel d ____ (d⁵), por eso es una excepción'],
+  ['HIDRÓGENO', 'Único elemento cuyo espectro explicó con exactitud el modelo de Bohr']
+];
+// Configuración → elemento (Z = 3–36, sin las excepciones Cr y Cu).
+const EL_CZ = ['','hidrógeno','helio','litio','berilio','boro','carbono','nitrógeno','oxígeno','flúor','neón','sodio','magnesio','aluminio','silicio','fósforo','azufre','cloro','argón',
+  'potasio','calcio','escandio','titanio','vanadio','cromo','manganeso','hierro','cobalto','níquel','cobre','zinc','galio','germanio','arsénico','selenio','bromo','kriptón'];
+const SIM_CZ = {2:'He',10:'Ne',18:'Ar',36:'Kr'};
+const ORD_CZ = ['1s','2s','2p','3s','3p','4s','3d','4p'], CAP_CZ = {s:2, p:6, d:10};
+function madCz(z){ const o = []; let e = z; for(const s of ORD_CZ){ if(!e) break; const k = Math.min(e, CAP_CZ[s[1]]); o.push(s + sup(k)); e -= k; } return o; }
+function abrCz(z){ const core = [18,10,2].find(g => g < z); return '[' + SIM_CZ[core] + '] ' + madCz(z).slice(madCz(core).length).join(' '); }
+function pistasAtomo(tipo, r){
+  if(tipo === 'ato') return GLOSARIO_AT.map(([w, p]) => ({tipo:'ato', clave:'g:' + palabra(w), respuesta: palabra(w), solucion: w.toLowerCase(), pista: p}));
+  const out = [];
+  for(let z = 3; z <= 36; z++){
+    if(z === 24 || z === 29 || [10,18,36].includes(z)) continue;
+    const fin = madCz(z)[madCz(z).length - 1];
+    // en el bloque p cada final (2p⁴, 3p⁴…) es único; en s y d se usa la abreviada
+    const pista = /p/.test(fin) && r() < 0.5
+      ? 'Elemento neutro cuya configuración termina en <b class="fx">' + fin + '</b>'
+      : 'Elemento con configuración <b class="fx">' + abrCz(z) + '</b>';
+    out.push({tipo:'cfg', clave:'z:' + z, respuesta: palabra(EL_CZ[z]), solucion: EL_CZ[z], pista});
+  }
+  return out;
+}
+const TIPOS_NOM = ['f2n','ion','comp','func'];
+
 function candidatos(cfg, r){
   const idx = indice();
   const comp = shuffle(idx.comp.filter(c => cfg.fam.includes(c.group) && (cfg.nivel === 'all' || c.level === cfg.nivel) && !EXCLUIR.has(aAscii(c.formula))), r);
@@ -195,6 +254,7 @@ function candidatos(cfg, r){
   };
   const colas = {};
   cfg.tipos.forEach(t => {
+    if(t === 'ato' || t === 'cfg'){ colas[t] = shuffle(pistasAtomo(t, r), r); return; }
     if(t === 'ion'){
       // solo iones que aparecen en las familias elegidas
       const syms = new Set(); comp.forEach(c => { const p = partes(c.formula); if(p){ syms.add('a:' + p.an + '|' + p.qAn); syms.add('k:' + p.cat + '|' + p.qCat); if(p.cat === 'NH4') syms.add('k:NH4'); } });
@@ -326,6 +386,7 @@ function construir(cfg, seed){
 
 /* ───────────── hoja ───────────── */
 const DEF_TIT = 'Crucigrama de nomenclatura';
+const DEF_TIT_AT = 'Crucigrama del átomo';
 function cuadricula(cz, modo, celda){
   // modo: 'hoja' (vacía), 'clave' (con letras), 'jugar' (inputs)
   const nums = {}; cz.pal.forEach(p => { nums[p.f + ',' + p.c] = p.num; });
@@ -384,7 +445,10 @@ function getCfg(){
   };
   const s = $('#cz-sys').value; c.sis = s === 'all' ? ['trad','stock','sist'] : [s];
   if(!c.tipos.length) c.vacio = 'Marca al menos un tipo de pista.';
-  if(!c.fam.length) c.vacio = 'Marca al menos una familia de compuestos.';
+  if(!c.fam.length && c.tipos.some(t => TIPOS_NOM.includes(t))) c.vacio = 'Marca al menos una familia de compuestos.';
+  // Título por defecto según las pistas marcadas (si el docente no escribió otro)
+  const titDef = c.tipos.length && c.tipos.every(t => !TIPOS_NOM.includes(t)) ? DEF_TIT_AT : DEF_TIT;
+  if(!$('#cz-title').value.trim() || [DEF_TIT, DEF_TIT_AT].includes($('#cz-title').value.trim())){ $('#cz-title').value = titDef; c.title = titDef; }
   return c;
 }
 function envolver(el){

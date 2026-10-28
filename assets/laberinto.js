@@ -681,6 +681,125 @@ function genBal(r, o){
     acepta: lab => lab.k.startsWith('B:') && balanceada(b, lab.cs)};
 }
 
+/* ───────────────────────── 6b. Teoría atómica y configuración ───────────────────────── */
+// Región «El átomo» (atomo.html / configuracion.html). Los datos de los
+// elementos 1–36 (más Ag, I y U para isótopos) van aquí mismo: son pocos y
+// así el laberinto no depende de que juego.html haya terminado de cargar.
+const EL_AT = {1:['H','hidrógeno'],2:['He','helio'],3:['Li','litio'],4:['Be','berilio'],5:['B','boro'],6:['C','carbono'],7:['N','nitrógeno'],8:['O','oxígeno'],9:['F','flúor'],10:['Ne','neón'],
+  11:['Na','sodio'],12:['Mg','magnesio'],13:['Al','aluminio'],14:['Si','silicio'],15:['P','fósforo'],16:['S','azufre'],17:['Cl','cloro'],18:['Ar','argón'],19:['K','potasio'],20:['Ca','calcio'],
+  21:['Sc','escandio'],22:['Ti','titanio'],23:['V','vanadio'],24:['Cr','cromo'],25:['Mn','manganeso'],26:['Fe','hierro'],27:['Co','cobalto'],28:['Ni','níquel'],29:['Cu','cobre'],30:['Zn','zinc'],
+  31:['Ga','galio'],32:['Ge','germanio'],33:['As','arsénico'],34:['Se','selenio'],35:['Br','bromo'],36:['Kr','kriptón'],47:['Ag','plata'],53:['I','yodo'],92:['U','uranio']};
+// Isótopos e iones reales [Z, A, carga] (los mismos del Generador Docente).
+const ESP_AT = [[1,1,0],[1,2,0],[1,3,0],[2,4,0],[3,7,1],[4,9,2],[5,11,0],[6,12,0],[6,13,0],[6,14,0],[7,14,-3],[7,15,0],[8,16,-2],[8,18,0],[9,19,-1],[10,20,0],
+  [11,23,1],[12,24,2],[12,26,0],[13,27,3],[14,28,0],[15,31,-3],[16,32,-2],[17,35,-1],[17,37,-1],[18,40,0],[19,39,1],[20,40,2],[26,56,2],[26,56,3],[29,63,2],[30,64,2],
+  [35,79,-1],[47,107,1],[53,127,-1],[92,235,0],[92,238,0]];
+const ORD_AT = ['1s','2s','2p','3s','3p','4s','3d','4p'];
+const CAP_AT = {s:2, p:6, d:10};
+// Z = 1–36 que siguen la regla de Moeller (sin Cr ni Cu: una sola respuesta).
+const Z_CFG = Object.keys(EL_AT).map(Number).filter(z => z >= 3 && z <= 36 && z !== 24 && z !== 29);
+function madAt(z){ const o = []; let e = z; for(const s of ORD_AT){ if(!e) break; const k = Math.min(e, CAP_AT[s[1]]); o.push([s, k]); e -= k; } return o; }
+function cfgAbrAt(z, coreForzado){
+  const core = coreForzado != null ? coreForzado : [36,18,10,2].find(g => g < z) || 0;
+  const nCore = core ? madAt(core).length : 0;
+  return (core ? '[' + EL_AT[core][0] + '] ' : '') + madAt(z).slice(nCore).map(([s, k]) => s + sup(k)).join(' ');
+}
+const finAt = z => { const m = madAt(z), u = m[m.length-1]; return u[0] + sup(u[1]); };
+const bloqueAt = z => z === 2 ? 's' : madAt(z)[madAt(z).length-1][0][1];
+const periodoAt = z => Math.max(...madAt(z).map(([s]) => +s[0]));
+function grupoAt(z){
+  if(z === 2) return 18;
+  const m = Object.fromEntries(madAt(z)), p = periodoAt(z), b = bloqueAt(z);
+  if(b === 's') return m[p + 's'];
+  if(b === 'p') return 10 + m[p + 's'] + m[p + 'p'];
+  return (m[(p-1) + 'd']||0) + (m[p + 's']||0);
+}
+const valenciaAt = z => madAt(z).filter(([s]) => +s[0] === periodoAt(z)).reduce((a, [, k]) => a + k, 0);
+function notacionAt(z, a, q){
+  const carga = q === 0 ? '' : sup((Math.abs(q) > 1 ? Math.abs(q) : '') + (q > 0 ? '+' : '-'));
+  return '<span class="nuc"><span>' + a + '</span><span>' + z + '</span></span>' + EL_AT[z][0] + carga;
+}
+// Preguntas de teoría con respuestas cortas (caben en un rótulo de flecha).
+const TEO_AT = [
+  ['¿Quién descubrió el electrón', '', 'Thomson', ['Rutherford','Bohr','Dalton']],
+  ['¿Quién propuso el núcleo atómico', '', 'Rutherford', ['Thomson','Bohr','Chadwick']],
+  ['¿Quién propuso los niveles de energía', '', 'Bohr', ['Rutherford','Dalton','Thomson']],
+  ['¿Quién descubrió el neutrón', '', 'Chadwick', ['Rutherford','Millikan','Thomson']],
+  ['¿Quién midió la carga del electrón', '', 'Millikan', ['Thomson','Bohr','Chadwick']],
+  ['¿De quién es el modelo del «budín de pasas»', '', 'Thomson', ['Dalton','Rutherford','Bohr']],
+  ['¿De quién es el modelo de la «bola de billar»', '', 'Dalton', ['Demócrito','Thomson','Bohr']],
+  ['¿Quién enunció el principio de incertidumbre', '', 'Heisenberg', ['Schrödinger','Bohr','Pauli']],
+  ['¿Qué se disparó contra la lámina de oro', '', 'Partículas alfa', ['Electrones','Neutrones','Rayos X']],
+  ['Casi todas las α atravesaron el oro. El átomo es…', '', 'Casi todo vacío', ['Macizo','Negativo','Indivisible']],
+  ['¿Cuál es la carga del electrón', '', 'Negativa', ['Positiva','Neutra','Variable']],
+  ['¿Qué partícula del núcleo no tiene carga', '', 'Neutrón', ['Protón','Electrón','Fotón']],
+  ['El número atómico Z cuenta los…', '', 'Protones', ['Neutrones','Nucleones','e⁻ de valencia']],
+  ['El número de masa A es…', '', 'p⁺ + n⁰', ['Solo p⁺','Solo n⁰','p⁺ + e⁻']],
+  ['Los isótopos tienen igual número de…', '', 'Protones', ['Neutrones','Nucleones','Masa']],
+  ['Un catión se forma al…', '', 'Perder e⁻', ['Ganar e⁻','Ganar p⁺','Perder n⁰']],
+  ['Al bajar de nivel, el electrón…', '', 'Emite un fotón', ['Absorbe un fotón','Cae al núcleo','Gana masa']],
+  ['¿Qué es la región de probabilidad del electrón', '', 'Orbital', ['Órbita','Núcleo','Espín']],
+  ['¿Cuántos e⁻ caben como máximo en un orbital', '', '2', ['1','6','8']],
+  ['¿Cuántos e⁻ caben como máximo en un subnivel p', '', '6', ['2','10','14']],
+  ['¿Cuántos e⁻ caben como máximo en un subnivel d', '', '10', ['6','14','18']],
+  ['¿Qué subnivel se llena justo después del 3p', '', '4s', ['3d','4p','3f']],
+  ['Un e⁻ en cada orbital antes de aparearse: regla de…', '', 'Hund', ['Pauli','Aufbau','Moeller']],
+  ['Máximo 2 e⁻ por orbital con espines opuestos: principio de…', '', 'Pauli', ['Hund','Aufbau','Bohr']],
+  ['Llenar primero lo de menor energía: principio de…', '', 'Aufbau', ['Hund','Pauli','Heisenberg']]
+];
+
+const GA = {};
+GA.part = (r) => {
+  const [z, a, q] = pick(ESP_AT, r), cual = pick(['p','n','e'], r);
+  const val = {p:z, n:a-z, e:z-q}[cual], uni = {p:'protones', n:'neutrones', e:'electrones'}[cual];
+  const pL = x => L(x + ' ' + uni, 'P:' + x);
+  return {key:'part' + z + a + q + cual, fs:[], qh:'¿Cuántos <b>' + uni + '</b> tiene', fo: notacionAt(z, a, q), ft:'',
+    ans: pL(val), cands: [z, a, a-z, z-q, z+q, a+z, a-z+q, val+1, val-1].filter(x => x > 0).map(pL),
+    more: rr => pL(Math.max(1, val + pick([-3,-2,-1,1,2,3], rr))), acepta: lab => lab.k === 'P:' + val};
+};
+GA.ident = (r) => {
+  const [z, a, q] = pick(ESP_AT, r), n = a - z, e = z - q;
+  const sL = (zz, aa, qq) => EL_AT[zz] && aa >= zz ? L(notacionAt(zz, aa, qq), 'S:' + zz + '|' + aa + '|' + qq) : null;
+  const cands = [sL(z, a, -q), sL(z, a, 0), sL(z, z + e, q), sL(z, a + 1, q), sL(z, a - 1, q), sL(e, e + n, 0), sL(z + 1, a, q), sL(z - 1, a, q), sL(z, a, q + 1), sL(z, a, q - 1)].filter(Boolean);
+  return {key:'ident' + z + a + q, fs:[], qh:'¿Qué especie tiene', fo: z + ' p⁺ · ' + n + ' n⁰ · ' + e + ' e⁻', foc:'eq', ft:'',
+    ans: sL(z, a, q), cands, more: rr => sL(z, a + pick([-2,2,3], rr), q) || sL(z, a, q === 0 ? 1 : 0),
+    acepta: lab => lab.k === 'S:' + z + '|' + a + '|' + q};
+};
+GA.cfg = (r) => {
+  const z = pick(Z_CFG, r), cL = t => L(t, 'C:' + t);
+  const otros = [z-1, z+1, z-2, z+2].filter(x => Z_CFG.includes(x) || (x >= 3 && x <= 36 && x !== 24 && x !== 29));
+  const nobles = [2,10,18,36].filter(g => g < z);
+  const coreMal = nobles.length > 1 ? cL(cfgAbrAt(z, nobles[nobles.length-2]).replace(/^\[[A-Za-z]+\]/, '[' + EL_AT[nobles[nobles.length-1]][0] + ']')) : null;
+  return {key:'cfg' + z, fs:[], qh:'Configuración abreviada del', fo: EL_AT[z][1] + ' (Z = ' + z + ')', foc:'nm', ft:'',
+    ans: cL(cfgAbrAt(z)), cands: otros.map(x => cL(cfgAbrAt(x))).concat(coreMal ? [coreMal] : []),
+    more: rr => cL(cfgAbrAt(pick(Z_CFG, rr))), acepta: lab => lab.k === 'C:' + cfgAbrAt(z)};
+};
+GA.cfg2el = (r) => {
+  const z = pick(Z_CFG, r), eL = x => L(cap(EL_AT[x][1]), 'E:' + x);
+  return {key:'cfg2el' + z, fs:[], qh:'¿Qué elemento tiene esta configuración', fo: cfgAbrAt(z), foc:'eq', ft:'',
+    ans: eL(z), cands: [z-1, z+1, z-2, z+2, z-8, z+8].filter(x => EL_AT[x] && x >= 1 && x <= 36).map(eL),
+    more: rr => eL(pick(Z_CFG, rr)), acepta: lab => lab.k === 'E:' + z};
+};
+GA.pg = (r) => {
+  const z = pick(Z_CFG.filter(x => bloqueAt(x) !== 'd'), r), p = periodoAt(z), g = grupoAt(z);
+  const pgL = (pp, gg) => pp >= 1 && gg >= 1 && gg <= 18 ? L('Periodo ' + pp + ' · grupo ' + gg, 'PG:' + pp + '|' + gg) : null;
+  return {key:'pg' + z, fs:[], qh:'Un átomo neutro termina su configuración en', fo: finAt(z), ft:'¿En qué periodo y grupo está?',
+    ans: pgL(p, g), cands: [pgL(p+1, g), pgL(p-1, g), pgL(p, g+1), pgL(p, g-1), pgL(p, g-10), pgL(g > 10 ? g-10 : g, p)].filter(Boolean),
+    more: rr => pgL(Math.max(1, p + pick([-1,1,2], rr)), g), acepta: lab => lab.k === 'PG:' + p + '|' + g};
+};
+GA.val = (r) => {
+  const z = pick(Z_CFG.filter(x => bloqueAt(x) !== 'd'), r), v = valenciaAt(z);
+  const vL = x => L(x + ' e⁻ de valencia', 'V:' + x);
+  return {key:'val' + z, fs:[], qh:'¿Cuántos electrones de valencia tiene', fo: cfgAbrAt(z), foc:'eq', ft:'',
+    ans: vL(v), cands: [1,2,3,4,5,6,7,8].filter(x => x !== v).map(vL),
+    more: rr => vL(pick([1,2,3,4,5,6,7,8], rr)), acepta: lab => lab.k === 'V:' + v};
+};
+GA.teo = (r) => {
+  const t = pick(TEO_AT, r), tL = x => L(x, 'T:' + x);
+  return {key:'teo' + t[0], fs:[], qh: t[0] + (t[0].startsWith('¿') ? '?' : ''), fo: '', ft:'',
+    ans: tL(t[2]), cands: t[3].map(tL), more: rr => tL(pick(t[3], rr)), acepta: lab => lab.k === 'T:' + t[2]};
+};
+const ATG = {part:['part','ident'], cfg:['cfg','cfg2el'], tabla:['pg','val'], teo:['teo']};
+
 /* ───────────────────────── 7. Construcción del laberinto ───────────────────────── */
 function poolDe(cfg, necesarios){
   // Si el nivel elegido no alcanza para llenar todas las casillas con
@@ -749,6 +868,10 @@ function intentar(cfg, seed){
     });
     if(!grupos.length) return {error:'No hay compuestos suficientes en el banco para los ejercicios elegidos.'};
     gen = g => GM[pick(MOLG[g], r)](r, o);
+  } else if(cfg.mode === 'atomo'){
+    grupos = cfg.types.slice();
+    if(!grupos.length) return {error:'Marca al menos un tipo de pregunta.'};
+    gen = g => GA[pick(ATG[g], r)](r);
   } else if(cfg.mode === 'nom'){
     const pool = poolDe(cfg, N-1);
     if(pool.length * cfg.forms.length < N-1 || pool.length < 4) return {error:'Con estas familias solo hay ' + pool.length + ' compuestos en el banco para ' + (N-1) + ' casillas: marca más familias o tipos de pregunta, o elige un tamaño menor.'};
@@ -842,12 +965,13 @@ function construir(cfg, seed){
 }
 
 /* ───────────────────────── 8. Hoja (HTML) ───────────────────────── */
-const DEF = {nom:'Laberinto de nomenclatura', mol:'Laberinto de moles', rx:'Laberinto de reacciones', bal:'Laberinto de balanceo'};
+const DEF = {nom:'Laberinto de nomenclatura', mol:'Laberinto de moles', rx:'Laberinto de reacciones', bal:'Laberinto de balanceo', atomo:'Laberinto del átomo'};
 const SUBT = {
   nom:'Resuelve cada casilla y sigue la flecha con la respuesta correcta hasta llegar a FIN.',
   mol:'Calcula en cada casilla y sigue la flecha con tu resultado hasta llegar a FIN.',
   rx:'Clasifica cada reacción y sigue la flecha correcta hasta llegar a FIN.',
-  bal:'Balancea cada ecuación y sigue la flecha con los coeficientes correctos.'
+  bal:'Balancea cada ecuación y sigue la flecha con los coeficientes correctos.',
+  atomo:'Responde cada casilla y sigue la flecha con la respuesta correcta hasta llegar a FIN.'
 };
 function claseLargo(h){
   const n = h.replace(/<[^>]+>/g,'').length;
@@ -885,7 +1009,7 @@ function hoja(mz, c, o){
   // que en una hoja de examen se lee como «incorrecto»).
   if(o.key) data = '<span class="sley"><b>Clave</b> · <span class="sv">━ verde</span>: ruta correcta · <span class="sn">┅ punteado naranja</span>: respuesta correcta de una casilla trampa (no lleva a FIN)</span>' + (data ? '<br>' + data : '');
   const lineasData = !data ? 0 : (data.indexOf('<br>') >= 0 ? 2 : 1);
-  const largo = c.mode === 'nom' || c.mode === 'bal';
+  const largo = c.mode === 'nom' || c.mode === 'bal' || c.mode === 'atomo';
   // GX amplio: el rótulo de una flecha horizontal no debe tapar su punta
   // (auditoría UX); el ancho extra no reduce la escala al imprimir, que la
   // limita el alto de la hoja.
@@ -970,6 +1094,7 @@ function getCfg(){
     nver: Math.max(1, Math.min(MAX_VERSIONES, parseInt($('#lab-nver').value, 10) || 1)),
     hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value};
   if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de ejercicio.'; }
+  if(mode === 'atomo'){ c.types = $$('#lab-fs-atomo input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de pregunta.'; }
   if(mode === 'nom'){
     c.forms = $$('#lab-fs-forma input:checked').map(x => x.value);
     c.fam = $$('#lab-fs-fam input:checked').map(x => x.value);
@@ -1293,7 +1418,7 @@ function init(){
   ['#lab-size','#lab-sys','#lab-hints','#lab-color','#lab-vsel','#lab-nivel'].forEach(s => $(s).addEventListener('change', render));
   let tmr = null;
   ['#lab-title','#lab-seed'].forEach(s => $(s).addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(render, 250); }));
-  $$('#lab-fs-mol input, #lab-fs-forma input, #lab-fs-fam input').forEach(x => x.addEventListener('change', render));
+  $$('#lab-fs-mol input, #lab-fs-forma input, #lab-fs-fam input, #lab-fs-atomo input').forEach(x => x.addEventListener('change', render));
   $('#lab-nver').addEventListener('change', () => { llenarVersiones(); render(); });
   $('#lab-btn-seed').addEventListener('click', () => { $('#lab-seed').value = rndSeed(); render(); });
   $$('#lab-seg button').forEach(b => b.addEventListener('click', () => {

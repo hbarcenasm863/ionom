@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Teoría Atómica</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:1000px;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── Encabezado y pestañas ── */
+.page-hdr{padding:30px 0 18px}
+.page-hdr .eyebrow{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--nav);margin-bottom:6px}
+.page-hdr h1{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.1rem);font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.9rem;color:var(--tx2);max-width:62ch}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;margin-bottom:18px;position:sticky;top:48px;z-index:100;background:var(--bg);border-bottom:2px solid var(--brd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;min-height:44px;border:2px solid var(--brd);border-radius:100px;background:var(--surf);color:var(--tx2);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab:hover{border-color:var(--an)}
+.tab.on{background:var(--nav);border-color:var(--nav);color:#fff}
+@media(max-width:640px){.tabs{top:52px}}
+.panel{display:none}
+.panel.on{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 24px;margin-bottom:18px;box-shadow:var(--sh)}
+.sect h2{font-size:1.12rem;font-weight:800;color:var(--tx);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.8rem;font-weight:800;color:var(--dimmer);margin:16px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul{margin-left:20px;margin-bottom:10px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.6;margin-bottom:4px}
+.sect strong{color:var(--tx)}
+@media(max-width:640px){.sect{padding:18px 16px}}
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 16px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--nav);color:#fff;font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:var(--surf);color:var(--nav)}
+.btn.ghost:hover{background:var(--an-b);filter:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── LÍNEA DEL TIEMPO ── */
+.tl-years{display:flex;align-items:center;gap:0;margin:4px 0 14px;overflow-x:auto;scrollbar-width:none;padding:4px 2px}
+.tl-years::-webkit-scrollbar{display:none}
+.tl-year{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font:inherit;color:var(--dimmer);padding:4px 6px;min-width:64px;position:relative}
+.tl-year::before{content:"";position:absolute;top:13px;left:0;right:0;height:3px;background:var(--brd)}
+.tl-year:first-child::before{left:50%}
+.tl-year:last-child::before{right:50%}
+.tl-dot{width:22px;height:22px;border-radius:50%;background:var(--surf);border:3px solid var(--brd2);position:relative;z-index:1;transition:all .2s}
+.tl-year .yl{font-size:.7rem;font-weight:800;font-family:var(--mono)}
+.tl-year .yn{font-size:.66rem;font-weight:600;white-space:nowrap}
+.tl-year.on{color:var(--nav)}
+.tl-year.on .tl-dot{background:var(--gold);border-color:var(--nav);transform:scale(1.2)}
+.tl-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.tl-card{flex:0 0 min(88%,620px);scroll-snap-align:center;background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.tl-head{display:flex;gap:14px;align-items:center;padding:16px 18px;background:var(--surf2);border-bottom:1px solid var(--brd)}
+.tl-head svg{width:96px;height:96px;flex-shrink:0}
+.tl-when{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--an-t);background:var(--an-b);padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:4px}
+.tl-who{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;line-height:1.2}
+.tl-nick{font-size:.78rem;color:var(--dimmer);font-weight:600}
+.tl-body{padding:12px 18px 16px;flex:1}
+.tl-body h4{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin:10px 0 4px}
+.tl-body h4.prop{color:var(--an-t)}
+.tl-body h4.evid{color:var(--ox-t)}
+.tl-body h4.lim{color:var(--err-t)}
+.tl-body p,.tl-body li{font-size:.84rem;color:var(--tx2);line-height:1.6}
+.tl-body ul{margin-left:18px}
+.tl-foot{padding:0 18px 16px;display:flex;gap:8px;flex-wrap:wrap}
+.tl-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tl-count{font-size:.8rem;color:var(--dimmer);font-weight:700}
+
+/* ── SIMULADORES ── */
+.sim-pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sim-pick .tab{border-radius:var(--rs)}
+.sim{display:none}
+.sim.on{display:block}
+.canvas-wrap{position:relative;border-radius:var(--rs);overflow:hidden;background:#0b1622;border:2px solid #1d3348}
+.canvas-wrap canvas{display:block;width:100%;height:auto;touch-action:manipulation}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 18px;margin:14px 0 6px}
+.ctrl label{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:4px;gap:8px}
+.ctrl label output{font-family:var(--mono);color:var(--nav)}
+.ctrl input[type=range]{width:100%;accent-color:var(--nav);min-height:32px}
+.ctrl select{width:100%;min-height:40px;border:2px solid var(--brd);border-radius:8px;padding:6px 10px;font:inherit;font-size:.86rem;background:var(--surf);color:var(--tx)}
+.seg{display:flex;border:2px solid var(--nav);border-radius:var(--rs);overflow:hidden}
+.seg button{flex:1;min-height:42px;border:none;background:var(--surf);color:var(--nav);font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;padding:6px 8px}
+.seg button.on{background:var(--nav);color:#fff}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.ro{background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:8px 12px}
+.ro .k{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer)}
+.ro .v{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--tx)}
+.bars{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.bar-row{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:8px;font-size:.78rem;font-weight:700;color:var(--tx2)}
+.bar-bg{height:16px;background:var(--surf2);border:1px solid var(--brd);border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;width:0;transition:width .3s}
+.bar-row .n{font-family:var(--mono);text-align:right}
+@media(max-width:520px){.bar-row{grid-template-columns:110px 1fr 58px;font-size:.72rem}}
+.predict{background:var(--cat-b);border:2px dashed var(--cat);border-radius:var(--rs);padding:12px 14px;margin:10px 0}
+.predict p{color:var(--cat-t)!important;font-weight:700;margin-bottom:8px!important}
+.predict .btn-row{margin:0}
+.predict .btn{border-color:var(--cat-t);background:var(--surf);color:var(--cat-t);font-size:.8rem}
+.predict .btn.sel{background:var(--cat-t);color:#fff}
+.predict-fb{font-size:.82rem;margin-top:8px;color:var(--tx)}
+.lvl-btns{display:flex;gap:6px;flex-wrap:wrap}
+.lvl-btns button{min-width:48px;min-height:44px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--surf);color:var(--nav);font:inherit;font-weight:800;cursor:pointer}
+.lvl-btns button.on{background:var(--nav);color:#fff}
+
+/* ── CONSTRUCTOR ── */
+.builder{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:760px){.builder{grid-template-columns:1fr}}
+.atom-view{background:radial-gradient(circle at 50% 50%,#13263a,#0b1622 70%);border-radius:var(--r);border:2px solid #1d3348;aspect-ratio:1/1;width:100%;max-width:440px;margin:0 auto}
+.atom-view svg{width:100%;height:100%;display:block}
+.shell-rot{transform-origin:200px 200px;animation:spin linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.shell-rot{animation:none}}
+.counter{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;padding:8px 10px;border:2px solid var(--brd);border-radius:var(--rs);margin-bottom:8px;background:var(--surf)}
+.counter .lbl{display:flex;align-items:center;gap:8px;font-weight:800;font-size:.86rem}
+.counter .sw{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:900}
+.counter button{width:44px;height:44px;border-radius:50%;border:2px solid var(--brd2);background:var(--surf2);font:inherit;font-size:1.2rem;font-weight:800;cursor:pointer;color:var(--tx)}
+.counter button:hover{border-color:var(--nav)}
+.counter .num{font-family:var(--mono);font-size:1.15rem;font-weight:800;min-width:2ch;text-align:center}
+.elem-card{display:flex;gap:14px;align-items:center;border:2px solid var(--nav);border-radius:var(--r);padding:12px 14px;margin:10px 0;background:var(--an-b)}
+.elem-sym{position:relative;width:96px;height:96px;flex-shrink:0;background:var(--surf);border:2px solid var(--nav);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.elem-sym .s{font-family:var(--serif);font-size:2.3rem;font-weight:700;color:var(--nav)}
+.elem-sym .a{position:absolute;top:6px;left:8px;font-family:var(--mono);font-size:.8rem;font-weight:700;color:var(--tx2)}
+.elem-sym .z{position:absolute;bottom:6px;left:8px;font-family:var(--mono);font-size:.8rem;font-weight:700;color:var(--err-t)}
+.elem-sym .c{position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:.8rem;font-weight:800;color:var(--an-t)}
+.elem-name{font-family:var(--serif);font-size:1.25rem;font-weight:700;font-style:italic}
+.elem-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:100px;border:1.5px solid}
+.tag.neu{background:var(--surf);border-color:var(--brd2);color:var(--tx2)}
+.tag.cat{background:var(--cat-b);border-color:var(--cat);color:var(--cat-t)}
+.tag.an{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
+.tag.ok{background:var(--ok-b);border-color:var(--ok);color:var(--ok-t)}
+.tag.err{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
+.config{font-family:var(--mono);font-size:.86rem;background:var(--surf2);border:1.5px solid var(--brd);border-radius:8px;padding:8px 10px;margin-top:6px;word-break:break-word}
+.reto{border:2px solid var(--ox);background:var(--ox-b);border-radius:var(--r);padding:12px 14px;margin-top:12px}
+.reto .rt{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ox-t)}
+.reto .rq{font-weight:800;font-size:.95rem;color:var(--tx);margin:4px 0 8px}
+.reto-fb{font-size:.84rem;margin-top:8px;min-height:1.2em}
+
+/* ── PHET ── */
+.phet-card{border:2px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:16px;background:var(--surf)}
+.phet-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 16px;background:var(--surf2);border-bottom:1px solid var(--brd)}
+.phet-head h3{font-size:1rem;font-weight:800;margin:0;text-transform:none;letter-spacing:0;color:var(--tx)}
+.phet-head p{font-size:.8rem;color:var(--tx2);margin:2px 0 0}
+.phet-frame{position:relative;width:100%;aspect-ratio:4/3;background:#f6f6f8;display:flex;align-items:center;justify-content:center}
+.phet-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.phet-ph{text-align:center;padding:20px;font-size:.84rem;color:var(--dimmer)}
+.phet-ph .big{font-size:2.6rem;display:block;margin-bottom:6px}
+
+/* ── QUIZ ── */
+.mq-q{font-size:.92rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+@media(max-width:560px){.mq-opts{grid-template-columns:1fr}}
+.mq-btn{padding:10px 12px;min-height:48px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font:inherit;font-size:.86rem;cursor:pointer;text-align:left;font-weight:600;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.84rem;min-height:20px;color:var(--tx);margin-top:8px;line-height:1.55}
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--ox));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html" class="active"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <div class="eyebrow">Región 1 · El átomo</div>
+    <h1>🪐 Teoría Atómica</h1>
+    <p>De Demócrito al modelo cuántico: cada modelo nació de un experimento y cayó ante otro. Recorre la historia, repite los experimentos clave y construye tus propios átomos.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Secciones de Teoría Atómica">
+    <button class="tab on" role="tab" data-tab="historia" aria-selected="true">🕰️ Historia</button>
+    <button class="tab" role="tab" data-tab="experimentos" aria-selected="false">🧪 Experimentos</button>
+    <button class="tab" role="tab" data-tab="constructor" aria-selected="false">🧱 Constructor</button>
+    <button class="tab" role="tab" data-tab="phet" aria-selected="false">🌐 PhET</button>
+    <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
+  </div>
+
+  <!-- ═══════════ HISTORIA ═══════════ -->
+  <section class="panel on" id="p-historia" role="tabpanel">
+    <div class="tl-years" id="tl-years"></div>
+    <div class="tl-track" id="tl-track"></div>
+    <div class="tl-nav">
+      <button class="btn ghost" id="tl-prev">← Anterior</button>
+      <span class="tl-count" id="tl-count"></span>
+      <button class="btn ghost" id="tl-next">Siguiente →</button>
+    </div>
+    <div class="info-box" style="margin-top:16px">💡 <strong>Idea clave:</strong> un modelo atómico no es una "foto" del átomo, sino una explicación que funciona mientras los experimentos la respalden. Cuando aparece un resultado que el modelo no puede explicar, se propone uno nuevo.</div>
+  </section>
+
+  <!-- ═══════════ EXPERIMENTOS ═══════════ -->
+  <section class="panel" id="p-experimentos" role="tabpanel">
+    <div class="sim-pick" role="tablist" aria-label="Elegir experimento">
+      <button class="tab on" data-sim="thomson">⚡ Rayos catódicos (Thomson)</button>
+      <button class="tab" data-sim="rutherford">✨ Lámina de oro (Rutherford)</button>
+      <button class="tab" data-sim="bohr">🌈 Espectro del hidrógeno (Bohr)</button>
+    </div>
+
+    <!-- THOMSON -->
+    <div class="sim on" id="sim-thomson">
+      <div class="sect">
+        <h2>⚡ Tubo de rayos catódicos — J. J. Thomson (1897)</h2>
+        <p>Un cátodo caliente emite un haz invisible que viaja hasta una pantalla fluorescente. Entre medio hay dos <strong>placas con carga eléctrica</strong> y un <strong>imán</strong>. Mueve los controles y observa hacia dónde se desvía el haz.</p>
+        <div class="predict" id="th-predict">
+          <p>🤔 Predice antes de mover nada: si la placa de arriba es positiva (+), ¿hacia dónde irá el haz?</p>
+          <div class="btn-row">
+            <button class="btn" data-p="up">Hacia arriba (+)</button>
+            <button class="btn" data-p="down">Hacia abajo (−)</button>
+            <button class="btn" data-p="none">No se desvía</button>
+          </div>
+          <div class="predict-fb" id="th-predict-fb"></div>
+        </div>
+        <div class="canvas-wrap"><canvas id="cv-thomson" width="800" height="380" aria-label="Simulación del tubo de rayos catódicos"></canvas></div>
+        <div class="ctrls">
+          <div class="ctrl"><label for="th-v">Voltaje entre placas (placa de arriba) <output id="th-v-o">0 V</output></label><input type="range" id="th-v" min="-300" max="300" step="5" value="0"></div>
+          <div class="ctrl"><label for="th-b">Campo del imán <output id="th-b-o">0,00 mT</output></label><input type="range" id="th-b" min="-0.6" max="0.6" step="0.01" value="0"></div>
+          <div class="ctrl"><label for="th-va">Voltaje de aceleración <output id="th-va-o">2000 V</output></label><input type="range" id="th-va" min="1000" max="3000" step="100" value="2000"></div>
+          <div class="ctrl"><label for="th-metal">Metal del cátodo</label>
+            <select id="th-metal"><option>Cobre</option><option>Hierro</option><option>Aluminio</option><option>Platino</option></select></div>
+        </div>
+        <div class="btn-row"><button class="btn ghost" id="th-reset">↺ Reiniciar controles</button><button class="btn ghost" id="th-balance">🎯 Reto: equilibra el haz</button></div>
+        <div class="readout">
+          <div class="ro"><div class="k">Velocidad de los electrones</div><div class="v" id="th-r-v">—</div></div>
+          <div class="ro"><div class="k">Desviación en la pantalla</div><div class="v" id="th-r-y">—</div></div>
+          <div class="ro"><div class="k">v = E / B (si se equilibra)</div><div class="v" id="th-r-eb">—</div></div>
+        </div>
+        <div class="info-box" id="th-msg">Mueve el voltaje de las placas para empezar.</div>
+        <h3>¿Qué concluyó Thomson?</h3>
+        <ul>
+          <li>El haz se acerca a la placa <strong>positiva</strong>: está formado por partículas con <strong>carga negativa</strong> (los <strong>electrones</strong>).</li>
+          <li>Equilibrando la fuerza eléctrica con la magnética midió su velocidad y su relación carga/masa: <strong>e/m ≈ 1,76 × 10¹¹ C/kg</strong>, unas 1800 veces mayor que la del ion hidrógeno → el electrón es muchísimo más liviano que un átomo.</li>
+          <li>Cambia el metal del cátodo: <strong>el resultado es idéntico</strong>. Todos los átomos contienen los mismos electrones → el átomo <strong>sí es divisible</strong> (Dalton estaba equivocado en eso).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RUTHERFORD -->
+    <div class="sim" id="sim-rutherford">
+      <div class="sect">
+        <h2>✨ Experimento de la lámina de oro — Rutherford, Geiger y Marsden (1909–1911)</h2>
+        <p>Se disparan <strong>partículas alfa</strong> (núcleos de helio, carga 2+) contra una lámina de oro muy delgada. Aquí ves la lámina "con lupa": cada círculo es un átomo de oro. Elige un <strong>modelo de átomo</strong>, dispara y compara qué predice cada uno.</p>
+        <div class="predict" id="ru-predict">
+          <p>🤔 Predice: si el átomo fuera como el "budín de pasas" de Thomson (carga positiva repartida), ¿alguna partícula alfa rebotaría hacia atrás?</p>
+          <div class="btn-row">
+            <button class="btn" data-p="si">Sí, muchas</button>
+            <button class="btn" data-p="pocas">Sí, unas pocas</button>
+            <button class="btn" data-p="no">Prácticamente ninguna</button>
+          </div>
+          <div class="predict-fb" id="ru-predict-fb"></div>
+        </div>
+        <div class="ctrls" style="margin-top:0">
+          <div class="ctrl"><label>Modelo de átomo en la lámina</label>
+            <div class="seg" id="ru-model"><button class="on" data-m="thomson">Thomson (budín)</button><button data-m="rutherford">Rutherford (núcleo)</button></div></div>
+          <div class="ctrl"><label for="ru-e">Energía de las partículas α <output id="ru-e-o">media</output></label><input type="range" id="ru-e" min="3" max="6" step="0.5" value="4"></div>
+        </div>
+        <div class="canvas-wrap"><canvas id="cv-rutherford" width="800" height="420" aria-label="Simulación de la lámina de oro"></canvas></div>
+        <div class="btn-row">
+          <button class="btn" id="ru-one">• Disparar 1</button>
+          <button class="btn" id="ru-burst">••• Ráfaga de 50</button>
+          <button class="btn ghost" id="ru-cont">▶ Haz continuo</button>
+          <button class="btn ghost" id="ru-clear">↺ Reiniciar conteo</button>
+        </div>
+        <div class="readout"><div class="ro"><div class="k">Partículas detectadas</div><div class="v" id="ru-total">0</div></div><div class="ro"><div class="k">Desviación máxima observada</div><div class="v" id="ru-max">—</div></div></div>
+        <div class="bars">
+          <div class="bar-row"><span>Casi rectas (&lt; 10°)</span><div class="bar-bg"><div class="bar-fill" id="ru-b0" style="background:var(--ok)"></div></div><span class="n" id="ru-n0">0</span></div>
+          <div class="bar-row"><span>Desviadas (10°–90°)</span><div class="bar-bg"><div class="bar-fill" id="ru-b1" style="background:var(--cat)"></div></div><span class="n" id="ru-n1">0</span></div>
+          <div class="bar-row"><span>Rebotan (&gt; 90°)</span><div class="bar-bg"><div class="bar-fill" id="ru-b2" style="background:var(--err)"></div></div><span class="n" id="ru-n2">0</span></div>
+        </div>
+        <div class="info-box" id="ru-msg">Dispara una ráfaga con cada modelo y compara los conteos.</div>
+        <div class="warn-box">🔎 <strong>Ojo con la escala:</strong> para que veas rebotes en pocos segundos, aquí el núcleo está dibujado miles de veces más grande de lo real. En el experimento original solo rebotaba aproximadamente <strong>1 de cada 8000</strong> partículas alfa.</div>
+        <h3>¿Qué concluyó Rutherford?</h3>
+        <ul>
+          <li>Casi todas las partículas pasan derecho → el átomo es <strong>casi todo espacio vacío</strong>.</li>
+          <li>Unas pocas rebotan → existe un <strong>núcleo</strong> diminuto, muy denso y con <strong>carga positiva</strong> donde está casi toda la masa. "Fue como disparar un proyectil de artillería contra papel de seda y que rebotara".</li>
+          <li>Los electrones se mueven alrededor del núcleo, muy lejos de él (si el núcleo fuera una canica en el centro de un estadio, los electrones estarían en las graderías).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BOHR -->
+    <div class="sim" id="sim-bohr">
+      <div class="sect">
+        <h2>🌈 Espectro del hidrógeno — Niels Bohr (1913)</h2>
+        <p>Al pasar corriente por un tubo con gas hidrógeno, este no brilla con todos los colores, sino solo con <strong>algunas líneas</strong>. Bohr lo explicó así: el electrón solo puede estar en ciertos <strong>niveles de energía</strong>; al <strong>bajar</strong> de nivel emite un fotón con una energía (y un color) exacta. Toca un nivel para mover el electrón.</p>
+        <div class="canvas-wrap"><canvas id="cv-bohr" width="800" height="440" aria-label="Simulación del modelo de Bohr"></canvas></div>
+        <div class="ctrls">
+          <div class="ctrl"><label>Mover el electrón al nivel n =</label><div class="lvl-btns" id="bo-lvls"></div></div>
+          <div class="ctrl"><label>Tubo de descarga</label><div class="btn-row" style="margin:0"><button class="btn" id="bo-auto">⚡ Encender tubo</button><button class="btn ghost" id="bo-clear">↺ Borrar espectro</button></div></div>
+        </div>
+        <div class="readout">
+          <div class="ro"><div class="k">Nivel actual</div><div class="v" id="bo-n">n = 1</div></div>
+          <div class="ro"><div class="k">Energía del nivel</div><div class="v" id="bo-e">−13,6 eV</div></div>
+          <div class="ro"><div class="k">Último fotón</div><div class="v" id="bo-ph">—</div></div>
+        </div>
+        <div class="info-box" id="bo-msg">El electrón empieza en el nivel más bajo (n = 1, estado fundamental). Llévalo a un nivel alto y luego hazlo bajar al nivel 2.</div>
+        <h3>¿Qué explica (y qué no) el modelo de Bohr?</h3>
+        <ul>
+          <li>Las transiciones que terminan en <strong>n = 2</strong> (serie de Balmer) dan las 4 líneas <strong>visibles</strong>: 656 nm (rojo), 486 nm (azul verdoso), 434 nm y 410 nm (violeta).</li>
+          <li>Las que terminan en n = 1 emiten <strong>ultravioleta</strong> (serie de Lyman) y las que terminan en n = 3 emiten <strong>infrarrojo</strong> (serie de Paschen): no las vemos, pero los instrumentos sí.</li>
+          <li>Limitación: funciona muy bien para el hidrógeno (1 electrón), pero falla con átomos de muchos electrones. Eso llevó al <strong>modelo mecánico-cuántico</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONSTRUCTOR ═══════════ -->
+  <section class="panel" id="p-constructor" role="tabpanel">
+    <div class="sect">
+      <h2>🧱 Constructor de átomos</h2>
+      <p>Agrega o quita <strong>protones</strong>, <strong>neutrones</strong> y <strong>electrones</strong>. Observa qué cambia: el número de protones decide el <strong>elemento</strong>, los neutrones el <strong>isótopo</strong> y los electrones la <strong>carga</strong> (ion).</p>
+      <div class="builder">
+        <div class="atom-view" id="atom-view"></div>
+        <div>
+          <div class="counter"><span class="lbl"><span class="sw" style="background:#dc2626">+</span>Protones (p⁺)</span><button data-k="p" data-d="-1" aria-label="Quitar protón">−</button><span class="num" id="c-p">0</span><button data-k="p" data-d="1" aria-label="Agregar protón">+</button></div>
+          <div class="counter"><span class="lbl"><span class="sw" style="background:#64748b"></span>Neutrones (n⁰)</span><button data-k="n" data-d="-1" aria-label="Quitar neutrón">−</button><span class="num" id="c-n">0</span><button data-k="n" data-d="1" aria-label="Agregar neutrón">+</button></div>
+          <div class="counter"><span class="lbl"><span class="sw" style="background:#2563eb">−</span>Electrones (e⁻)</span><button data-k="e" data-d="-1" aria-label="Quitar electrón">−</button><span class="num" id="c-e">0</span><button data-k="e" data-d="1" aria-label="Agregar electrón">+</button></div>
+          <div class="elem-card">
+            <div class="elem-sym"><span class="a" id="el-a"></span><span class="s" id="el-s">?</span><span class="z" id="el-z"></span><span class="c" id="el-c"></span></div>
+            <div style="min-width:0">
+              <div class="elem-name" id="el-name">Sin protones</div>
+              <div class="elem-tags" id="el-tags"></div>
+            </div>
+          </div>
+          <div class="readout" style="margin:6px 0">
+            <div class="ro"><div class="k">Número atómico Z</div><div class="v" id="r-z">0</div></div>
+            <div class="ro"><div class="k">Número de masa A</div><div class="v" id="r-a">0</div></div>
+            <div class="ro"><div class="k">Carga neta</div><div class="v" id="r-c">0</div></div>
+          </div>
+          <div class="config" id="r-config">Configuración electrónica: —</div>
+          <a href="configuracion.html#configurador" style="font-size:.78rem;font-weight:700;color:var(--an-t);text-decoration:none;display:inline-block;margin-top:6px">🧬 Ver orbitales, Moeller y Hund en Configuración Electrónica →</a>
+          <div class="btn-row"><button class="btn ghost" id="b-reset">↺ Vaciar</button></div>
+        </div>
+      </div>
+      <div class="reto">
+        <div class="rt">🎯 Reto</div>
+        <div class="rq" id="reto-q"></div>
+        <div class="btn-row" style="margin:0"><button class="btn" id="reto-check">Comprobar</button><button class="btn ghost" id="reto-next">Otro reto →</button></div>
+        <div class="reto-fb" id="reto-fb"></div>
+      </div>
+      <div class="info-box" style="margin-top:14px"><strong>Recuerda:</strong> Z = número de protones · A = protones + neutrones · carga = protones − electrones. Si el átomo pierde electrones queda como <strong>catión</strong> (+); si gana, como <strong>anión</strong> (−).</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHET ═══════════ -->
+  <section class="panel" id="p-phet" role="tabpanel">
+    <div class="sect">
+      <h2>🌐 Simulaciones PhET (Universidad de Colorado)</h2>
+      <p>Las simulaciones <strong>PhET</strong> de la Universidad de Colorado Boulder son gratuitas y permiten incrustarse dentro de otras páginas. Aquí están las tres que acompañan este tema, en español. <strong>Necesitan conexión a internet</strong> (no funcionan sin conexión como el resto de IonNom), por eso se cargan solo cuando tocas el botón.</p>
+      <div id="phet-list"></div>
+      <p style="font-size:.76rem;color:var(--dimmer)">Simulaciones de <a href="https://phet.colorado.edu/es/" target="_blank" rel="noopener">PhET Interactive Simulations</a>, University of Colorado Boulder, con licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ REPASO ═══════════ -->
+  <section class="panel" id="p-repaso" role="tabpanel">
+    <div class="sect">
+      <h2>✅ Repaso: modelos atómicos</h2>
+      <div class="progress-bar"><div class="progress-fill" id="q-fill"></div></div>
+      <div class="progress-label" id="q-label"></div>
+      <div id="q-box"></div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="configuracion.html">Siguiente parada: Configuración Electrónica →</a> &nbsp;|&nbsp; <a href="index.html">← Mapa de IonNom</a><br><br>
+    <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ════════════════ Utilidades ════════════════ */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ return x.toFixed(d).replace('.',','); }
+function sci(x){
+  if(x===0) return '0';
+  var e=Math.floor(Math.log10(Math.abs(x)));
+  var m=x/Math.pow(10,e);
+  var sup={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  return fmt(m,2)+' × 10'+String(e).split('').map(function(c){return sup[c];}).join('');
+}
+// Ajusta el canvas a su ancho en pantalla manteniendo un sistema de
+// coordenadas fijo (W×H) para el dibujo, nítido en pantallas de alta densidad.
+function setupCanvas(cv,W,H){
+  var ctx=cv.getContext('2d');
+  function fit(){
+    var w=cv.clientWidth||W;
+    var dpr=Math.min(2,window.devicePixelRatio||1);
+    cv.width=Math.round(w*dpr); cv.height=Math.round(w*H/W*dpr);
+    cv.style.height=(w*H/W)+'px';
+    ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);
+  }
+  fit();
+  window.addEventListener('resize',fit);
+  return {ctx:ctx,fit:fit};
+}
+function visible(el){ return el && el.offsetParent!==null; }
+
+/* ════════════════ Pestañas ════════════════ */
+var TABS=['historia','experimentos','constructor','phet','repaso'];
+var refitters=[];
+function showTab(name,push){
+  if(TABS.indexOf(name)<0) name='historia';
+  document.querySelectorAll('.tabs .tab').forEach(function(b){
+    var on=b.getAttribute('data-tab')===name;
+    b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+  });
+  TABS.forEach(function(t){ $('p-'+t).classList.toggle('on',t===name); });
+  if(push!==false){ try{ history.replaceState(null,'','#'+name); }catch(e){} }
+  // Los canvas ocultos miden 0 de ancho: se reajustan al mostrarse.
+  refitters.forEach(function(f){ f(); });
+}
+document.querySelectorAll('.tabs .tab').forEach(function(b){
+  b.addEventListener('click',function(){ showTab(b.getAttribute('data-tab')); });
+});
+function showSim(name){
+  document.querySelectorAll('.sim-pick .tab').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-sim')===name); });
+  ['thomson','rutherford','bohr'].forEach(function(s){ $('sim-'+s).classList.toggle('on',s===name); });
+  refitters.forEach(function(f){ f(); });
+}
+document.querySelectorAll('.sim-pick .tab').forEach(function(b){
+  b.addEventListener('click',function(){ showSim(b.getAttribute('data-sim')); });
+});
+window.irExperimento=function(sim){ showTab('experimentos'); showSim(sim); window.scrollTo({top:0,behavior:'smooth'}); };
+
+/* ════════════════ Línea del tiempo ════════════════ */
+var MODELOS=[
+  {y:'~400 a. C.',short:'Demócrito',who:'Leucipo y Demócrito',nick:'La idea del átomo',
+   svg:'<circle cx="34" cy="40" r="16" fill="#94a3b8"/><rect x="56" y="22" width="26" height="26" rx="4" fill="#64748b"/><polygon points="30,84 46,58 62,84" fill="#475569"/><circle cx="74" cy="72" r="10" fill="#cbd5e1"/>',
+   prop:'La materia no se puede dividir infinitamente: al final hay partículas <strong>indivisibles</strong> ("átomo" = sin división) que se mueven en el vacío. Los átomos de distintas sustancias tendrían formas diferentes.',
+   evid:'Ninguna: era una idea <strong>filosófica</strong>, basada en el razonamiento y no en experimentos. Aristóteles la rechazó y fue olvidada por casi 2000 años.',
+   lim:'No se podía comprobar ni hacer predicciones medibles.'},
+  {y:'1808',short:'Dalton',who:'John Dalton',nick:'Modelo de la "bola de billar"',
+   svg:'<defs><radialGradient id="gd" cx="35%" cy="35%"><stop offset="0" stop-color="#e2e8f0"/><stop offset="1" stop-color="#334155"/></radialGradient></defs><circle cx="50" cy="50" r="36" fill="url(#gd)"/>',
+   prop:'<ul><li>Los elementos están formados por átomos <strong>indivisibles</strong>.</li><li>Los átomos de un mismo elemento son <strong>iguales</strong> en masa y propiedades.</li><li>Los compuestos se forman al unir átomos en proporciones de <strong>números enteros sencillos</strong>.</li><li>En una reacción los átomos solo se <strong>reorganizan</strong>: no se crean ni se destruyen.</li></ul>',
+   evid:'Las leyes ponderales: conservación de la masa (Lavoisier) y proporciones definidas (Proust). Por primera vez, la teoría atómica se apoyaba en <strong>mediciones</strong>.',
+   lim:'El átomo sí se puede dividir (Thomson descubrió el electrón) y no todos los átomos de un elemento tienen la misma masa (isótopos).'},
+  {y:'1897',short:'Thomson',who:'Joseph John Thomson',nick:'Modelo del "budín de pasas"',sim:'thomson',
+   svg:'<defs><radialGradient id="gt" cx="40%" cy="40%"><stop offset="0" stop-color="#fbcfe8"/><stop offset="1" stop-color="#db2777"/></radialGradient></defs><circle cx="50" cy="50" r="38" fill="url(#gt)"/><g fill="#1e3a8a" font-size="14" font-weight="900" text-anchor="middle" font-family="sans-serif"><text x="34" y="36">−</text><text x="62" y="32">−</text><text x="48" y="54">−</text><text x="28" y="66">−</text><text x="68" y="62">−</text><text x="50" y="80">−</text></g>',
+   prop:'El átomo es una <strong>esfera de carga positiva</strong> con los <strong>electrones incrustados</strong> como pasas en un budín. En total es eléctricamente neutro.',
+   evid:'El <strong>tubo de rayos catódicos</strong>: el haz se desvía hacia la placa positiva, luego está hecho de partículas negativas, iguales en cualquier metal (los electrones). En 1909 Millikan midió su carga: 1,6 × 10⁻¹⁹ C.',
+   lim:'No pudo explicar el experimento de la lámina de oro: algunas partículas alfa rebotaban.'},
+  {y:'1911',short:'Rutherford',who:'Ernest Rutherford',nick:'Modelo nuclear (planetario)',sim:'rutherford',
+   svg:'<g fill="none" stroke="#64748b" stroke-width="1.6"><ellipse cx="50" cy="50" rx="40" ry="14"/><ellipse cx="50" cy="50" rx="40" ry="14" transform="rotate(60 50 50)"/><ellipse cx="50" cy="50" rx="40" ry="14" transform="rotate(120 50 50)"/></g><circle cx="50" cy="50" r="6" fill="#dc2626"/><g fill="#2563eb"><circle cx="90" cy="50" r="4"/><circle cx="30" cy="85" r="4"/><circle cx="30" cy="15" r="4"/></g>',
+   prop:'El átomo tiene un <strong>núcleo</strong> diminuto, denso y positivo donde está casi toda la masa. Los electrones giran alrededor, y la mayor parte del átomo es <strong>espacio vacío</strong>. En 1919 identificó al <strong>protón</strong>.',
+   evid:'El <strong>experimento de la lámina de oro</strong> (Geiger y Marsden): casi todas las partículas alfa atravesaban la lámina, pero unas pocas rebotaban.',
+   lim:'Según la física clásica, un electrón girando perdería energía y caería en espiral al núcleo en una fracción de segundo. Tampoco explicaba por qué cada elemento emite solo ciertos colores de luz.'},
+  {y:'1913',short:'Bohr',who:'Niels Bohr',nick:'Modelo de niveles de energía',sim:'bohr',
+   svg:'<g fill="none" stroke="#64748b" stroke-width="1.6"><circle cx="50" cy="50" r="16"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="40"/></g><circle cx="50" cy="50" r="6" fill="#dc2626"/><circle cx="78" cy="50" r="4.5" fill="#2563eb"/><path d="M72 30 q4 -4 8 0 t8 0" stroke="#f59e0b" stroke-width="2" fill="none"/>',
+   prop:'Los electrones solo pueden estar en ciertas <strong>órbitas o niveles de energía</strong> (n = 1, 2, 3…), donde no pierden energía. Al <strong>saltar</strong> de un nivel alto a uno bajo emiten un fotón de energía exacta; para subir deben absorberla.',
+   evid:'El <strong>espectro de líneas del hidrógeno</strong>: calculó con exactitud los colores (longitudes de onda) que emite.',
+   lim:'Solo funciona bien para átomos de un electrón (H, He⁺). Supone órbitas definidas, algo que la mecánica cuántica mostró que no se puede conocer.'},
+  {y:'1926',short:'Cuántico',who:'Schrödinger, Heisenberg, de Broglie',nick:'Modelo mecánico-cuántico (actual)',
+   svg:'<defs><radialGradient id="gq"><stop offset="0" stop-color="#2563eb" stop-opacity=".85"/><stop offset=".55" stop-color="#60a5fa" stop-opacity=".35"/><stop offset="1" stop-color="#93c5fd" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="44" fill="url(#gq)"/><ellipse cx="50" cy="28" rx="11" ry="20" fill="#7c3aed" opacity=".35"/><ellipse cx="50" cy="72" rx="11" ry="20" fill="#7c3aed" opacity=".35"/><circle cx="50" cy="50" r="4" fill="#dc2626"/>',
+   prop:'El electrón se comporta como <strong>onda</strong> (de Broglie). No tiene una trayectoria definida: solo se conoce la <strong>probabilidad</strong> de encontrarlo en una región llamada <strong>orbital</strong> (s, p, d, f), descrita por la ecuación de Schrödinger y los <strong>números cuánticos</strong>. Heisenberg: no se puede conocer a la vez la posición y la velocidad exactas del electrón.',
+   evid:'La difracción de electrones, los espectros de átomos con muchos electrones y la organización de la tabla periódica. En 1932 Chadwick descubrió el <strong>neutrón</strong>, completando el núcleo.',
+   lim:'Es el modelo vigente. Es la base de la configuración electrónica que usas en la Tabla Periódica.'}
+];
+var tlIdx=0;
+(function buildTimeline(){
+  var years=$('tl-years'), track=$('tl-track');
+  years.innerHTML=MODELOS.map(function(m,i){
+    return '<button class="tl-year" data-i="'+i+'" aria-label="'+m.who+', '+m.y+'"><span class="tl-dot"></span><span class="yl">'+m.y+'</span><span class="yn">'+m.short+'</span></button>';
+  }).join('');
+  track.innerHTML=MODELOS.map(function(m,i){
+    return '<article class="tl-card" data-i="'+i+'">'+
+      '<div class="tl-head"><svg viewBox="0 0 100 100" aria-hidden="true">'+m.svg+'</svg><div><span class="tl-when">'+m.y+'</span><div class="tl-who">'+m.who+'</div><div class="tl-nick">'+m.nick+'</div></div></div>'+
+      '<div class="tl-body"><h4 class="prop">💡 ¿Qué propuso?</h4>'+(m.prop.indexOf('<ul>')===0?m.prop:'<p>'+m.prop+'</p>')+
+      '<h4 class="evid">🔬 Evidencia</h4><p>'+m.evid+'</p>'+
+      '<h4 class="lim">⚠️ ¿Qué no podía explicar?</h4><p>'+m.lim+'</p></div>'+
+      (m.sim?'<div class="tl-foot"><button class="btn" onclick="irExperimento(\''+m.sim+'\')">🧪 Hacer el experimento</button></div>':'')+
+      '</article>';
+  }).join('');
+  years.querySelectorAll('.tl-year').forEach(function(b){
+    b.addEventListener('click',function(){ goTl(+b.getAttribute('data-i')); });
+  });
+  $('tl-prev').addEventListener('click',function(){ goTl(Math.max(0,tlIdx-1)); });
+  $('tl-next').addEventListener('click',function(){ goTl(Math.min(MODELOS.length-1,tlIdx+1)); });
+  var t=null;
+  track.addEventListener('scroll',function(){
+    clearTimeout(t);
+    t=setTimeout(function(){
+      var cards=track.querySelectorAll('.tl-card'), mid=track.scrollLeft+track.clientWidth/2, best=0, bd=1e9;
+      cards.forEach(function(c,i){ var cm=c.offsetLeft+c.offsetWidth/2; var d=Math.abs(cm-mid); if(d<bd){bd=d;best=i;} });
+      markTl(best);
+    },80);
+  });
+  markTl(0);
+})();
+function markTl(i){
+  tlIdx=i;
+  $('tl-years').querySelectorAll('.tl-year').forEach(function(b,j){ b.classList.toggle('on',j===i); });
+  $('tl-count').textContent=(i+1)+' de '+MODELOS.length;
+  $('tl-prev').disabled=i===0; $('tl-next').disabled=i===MODELOS.length-1;
+  var yb=$('tl-years').children[i];
+  if(yb&&yb.scrollIntoView&&visible(yb)) yb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+}
+function goTl(i){
+  var track=$('tl-track'), c=track.children[i];
+  if(c) track.scrollTo({left:c.offsetLeft-(track.clientWidth-c.offsetWidth)/2,behavior:'smooth'});
+  markTl(i);
+}
+
+/* Predicciones (antes de experimentar) */
+function setupPredict(boxId,correct,fbOk,fbNo){
+  var box=$(boxId), fb=$(boxId+'-fb');
+  box.querySelectorAll('[data-p]').forEach(function(b){
+    b.addEventListener('click',function(){
+      box.querySelectorAll('[data-p]').forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+      var ok=b.getAttribute('data-p')===correct;
+      fb.innerHTML=(ok?'👍 Buena predicción. ':'🤔 Interesante… ')+(ok?fbOk:fbNo);
+    });
+  });
+}
+setupPredict('th-predict','up','Ahora compruébalo moviendo el voltaje hacia valores positivos.','Compruébalo tú mismo: mueve el voltaje hacia valores positivos y observa el haz.');
+setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una ráfaga y compruébalo. Luego cambia al modelo de Rutherford.','Con el modelo de Thomson elegido, dispara una ráfaga y mira el contador de "Rebotan". Luego cambia al modelo de Rutherford.');
+
+/* ════════════════ Simulador de Thomson ════════════════ */
+(function(){
+  var W=800,H=380, cv=$('cv-thomson'), S=setupCanvas(cv,W,H), ctx=S.ctx;
+  refitters.push(S.fit);
+  var EM=1.759e11;          // relación carga/masa del electrón (C/kg)
+  var Lp=0.05, D=0.15, d=0.02, Ymax=0.04; // largo placas, distancia a pantalla, separación, media pantalla (m)
+  var X0=250, XL=420, XS=740, CY=190, PXMM=3.6; // geometría de dibujo
+  var st={V:0,B:0,Va:2000};
+  var phase=0, balanceDone=false;
+  function v0(){ return Math.sqrt(2*EM*st.Va); }
+  function trajectory(){
+    var v=v0(), a=EM*(st.V/d - v*st.B*1e-3);   // a>0: hacia arriba
+    var t=Lp/v, y1=0.5*a*t*t;
+    var res={a:a,v:v,hit:null};
+    if(Math.abs(y1)>=d/2){ res.hit=v*Math.sqrt(2*(d/2)/Math.abs(a)); return res; }
+    var slope=a*Lp/(v*v);
+    res.y1=y1; res.slope=slope; res.ys=y1+slope*D;
+    return res;
+  }
+  function yPx(ym){ return CY-ym*1000*PXMM; }
+  function draw(){
+    var tr=trajectory();
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0b1622'; ctx.fillRect(0,0,W,H);
+    // tubo de vidrio
+    ctx.strokeStyle='rgba(148,197,255,.35)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(30,CY-40); ctx.lineTo(200,CY-40); ctx.lineTo(XS-30,CY-170); ctx.lineTo(XS,CY-170); ctx.lineTo(XS,CY+170); ctx.lineTo(XS-30,CY+170); ctx.lineTo(200,CY+40); ctx.lineTo(30,CY+40); ctx.closePath(); ctx.stroke();
+    ctx.fillStyle='rgba(148,197,255,.04)'; ctx.fill();
+    // cátodo y ánodo
+    ctx.fillStyle='#f97316'; ctx.fillRect(40,CY-22,10,44);
+    ctx.fillStyle='#cbd5e1'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('Cátodo (−)',45,CY+60);
+    ctx.fillStyle='#94a3b8'; ctx.fillRect(140,CY-30,8,24); ctx.fillRect(140,CY+6,8,24);
+    ctx.fillStyle='#cbd5e1'; ctx.fillText('Ánodo (+)',144,CY+60);
+    // placas
+    var pg=d/2*1000*PXMM;
+    function plateColor(sign){ return sign>0?'#ef4444':sign<0?'#3b82f6':'#64748b'; }
+    var sTop=Math.sign(st.V), sBot=-sTop;
+    ctx.fillStyle=plateColor(sTop); ctx.fillRect(X0,CY-pg-8,XL-X0,8);
+    ctx.fillStyle=plateColor(sBot); ctx.fillRect(X0,CY+pg,XL-X0,8);
+    ctx.fillStyle='#fff'; ctx.font='bold 14px sans-serif';
+    if(sTop){ ctx.fillText(sTop>0?'+ + + + +':'− − − − −',(X0+XL)/2,CY-pg-14); ctx.fillText(sBot>0?'+ + + + +':'− − − − −',(X0+XL)/2,CY+pg+24); }
+    // imán (región de campo B)
+    if(Math.abs(st.B)>0.001){
+      ctx.fillStyle='rgba(168,85,247,'+Math.min(.28,Math.abs(st.B)*.5)+')';
+      ctx.fillRect(X0,CY-pg,XL-X0,2*pg);
+      ctx.fillStyle='#d8b4fe'; ctx.font='bold 16px sans-serif';
+      var sym=st.B>0?'⊙':'⊗';
+      for(var gx=X0+20;gx<XL;gx+=40){ ctx.fillText(sym,gx,CY-pg+16); ctx.fillText(sym,gx,CY+pg-6); }
+    }
+    ctx.fillStyle='#cbd5e1'; ctx.font='bold 12px sans-serif';
+    ctx.fillText('Placas + imán',(X0+XL)/2,CY+pg+44);
+    // pantalla
+    ctx.fillStyle='rgba(74,222,128,.12)'; ctx.fillRect(XS-6,CY-150,8,300);
+    ctx.fillStyle='#cbd5e1'; ctx.fillText('Pantalla',XS-4,CY+168);
+    // marcas de la pantalla (mm)
+    ctx.strokeStyle='rgba(203,213,225,.4)'; ctx.lineWidth=1; ctx.textAlign='left'; ctx.font='10px monospace';
+    for(var mm=-40;mm<=40;mm+=10){ var yy=yPx(mm/1000); ctx.beginPath(); ctx.moveTo(XS+2,yy); ctx.lineTo(XS+10,yy); ctx.stroke(); ctx.fillStyle='rgba(203,213,225,.7)'; ctx.fillText((mm>0?'+':'')+mm,XS+13,yy+3); }
+    ctx.textAlign='center';
+    // haz
+    var pts=[[50,CY],[X0,CY]];
+    var N=30,i,xm;
+    var endX=tr.hit!=null?Math.min(Lp,tr.hit):Lp;
+    for(i=1;i<=N;i++){ xm=endX*i/N; var tt=xm/tr.v; pts.push([X0+(XL-X0)*xm/Lp, yPx(0.5*tr.a*tt*tt)]); }
+    var spot=null;
+    if(tr.hit==null){
+      var ys=tr.ys, yClip=Math.max(-Ymax,Math.min(Ymax,ys));
+      var frac=ys===tr.y1?1:(yClip-tr.y1)/(ys-tr.y1);
+      if(!isFinite(frac)) frac=1;
+      pts.push([XL+(XS-XL)*frac, yPx(yClip)]);
+      if(Math.abs(ys)<=Ymax) spot=[XS,yPx(ys)];
+    }
+    ctx.save();
+    ctx.shadowColor='#4ade80'; ctx.shadowBlur=12;
+    ctx.strokeStyle='rgba(74,222,128,.75)'; ctx.lineWidth=3; ctx.beginPath();
+    pts.forEach(function(p,k){ if(k) ctx.lineTo(p[0],p[1]); else ctx.moveTo(p[0],p[1]); }); ctx.stroke();
+    ctx.restore();
+    // electrones viajando
+    var total=0, seg=[];
+    for(i=1;i<pts.length;i++){ var l=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]); seg.push(l); total+=l; }
+    ctx.fillStyle='#bbf7d0';
+    for(var k=0;k<14;k++){
+      var s=((phase+k/14)%1)*total, j=0;
+      while(j<seg.length-1&&s>seg[j]){ s-=seg[j]; j++; }
+      var f=seg[j]?s/seg[j]:0, px=pts[j][0]+(pts[j+1][0]-pts[j][0])*f, py=pts[j][1]+(pts[j+1][1]-pts[j][1])*f;
+      ctx.beginPath(); ctx.arc(px,py,2.4,0,7); ctx.fill();
+    }
+    if(spot){
+      var g=ctx.createRadialGradient(spot[0],spot[1],0,spot[0],spot[1],18);
+      g.addColorStop(0,'rgba(187,247,208,1)'); g.addColorStop(1,'rgba(74,222,128,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(spot[0],spot[1],18,0,7); ctx.fill();
+    }
+    return tr;
+  }
+  function update(){
+    var tr=trajectory();
+    $('th-v-o').textContent=(st.V>0?'+':'')+st.V+' V';
+    $('th-b-o').textContent=(st.B>0?'+':'')+fmt(st.B,2)+' mT';
+    $('th-va-o').textContent=st.Va+' V';
+    $('th-r-v').textContent=sci(tr.v)+' m/s';
+    var msg;
+    if(tr.hit!=null){
+      $('th-r-y').textContent='choca con la placa';
+      msg='💥 El haz se desvió tanto que choca contra la placa '+(tr.a>0?'de arriba':'de abajo')+'. Reduce el voltaje o compénsalo con el imán.';
+    }else if(Math.abs(tr.ys)>Ymax){
+      $('th-r-y').textContent='fuera de la pantalla';
+      msg='El haz se sale de la pantalla. Reduce el campo.';
+    }else{
+      var mm=tr.ys*1000;
+      $('th-r-y').textContent=(mm>0?'+':'')+fmt(mm,1)+' mm';
+      if(st.V===0&&Math.abs(st.B)<0.005) msg='Sin campos, el haz viaja en línea recta hasta el centro de la pantalla.';
+      else if(Math.abs(mm)<0.6&&st.V!==0) msg='🎯 ¡Haz equilibrado! La fuerza eléctrica y la magnética se anulan. Así Thomson calculó la velocidad: v = E/B.';
+      else if(Math.abs(st.B)<0.005) msg=(st.V>0?'⬆️ El haz se acerca a la placa de arriba, que es positiva':'⬇️ El haz se acerca a la placa de abajo, que ahora es la positiva')+' → los rayos catódicos tienen <strong>carga negativa</strong>.';
+      else if(st.V===0) msg='🧲 El imán también desvía el haz: son partículas cargadas en movimiento. Ahora combina imán y placas para dejarlo en el centro.';
+      else msg='Placas e imán actúan a la vez. Ajusta uno de los dos hasta que el punto vuelva a 0 mm.';
+    }
+    var balanced=tr.hit==null&&Math.abs(tr.ys*1000)<0.6&&st.V!==0&&Math.abs(st.B)>=0.005;
+    if(balanced){
+      var vEB=(st.V/d)/(st.B*1e-3);
+      $('th-r-eb').textContent=sci(Math.abs(vEB))+' m/s';
+      if(!balanceDone){ balanceDone=true; }
+    }else $('th-r-eb').textContent='—';
+    $('th-msg').innerHTML=msg;
+  }
+  function loop(){
+    phase=(phase+0.006)%1;
+    if(visible(cv)) draw();
+    requestAnimationFrame(loop);
+  }
+  function bind(id,key,parse){
+    $(id).addEventListener('input',function(e){ st[key]=parse(e.target.value); update(); });
+  }
+  bind('th-v','V',function(v){return parseInt(v,10);});
+  bind('th-b','B',function(v){return parseFloat(v);});
+  bind('th-va','Va',function(v){return parseInt(v,10);});
+  $('th-metal').addEventListener('change',function(){
+    $('th-msg').innerHTML='🔁 Cambiaste el cátodo a <strong>'+this.value.toLowerCase()+'</strong> y el haz se desvía <strong>exactamente igual</strong>: los electrones son los mismos en todos los átomos.';
+  });
+  $('th-reset').addEventListener('click',function(){
+    st={V:0,B:0,Va:2000}; $('th-v').value=0; $('th-b').value=0; $('th-va').value=2000; update();
+  });
+  $('th-balance').addEventListener('click',function(){
+    st.V=150; st.B=0; $('th-v').value=150; $('th-b').value=0; update();
+    $('th-msg').innerHTML='🎯 <strong>Reto:</strong> las placas están en +150 V. Mueve <strong>solo el imán</strong> hasta que el punto vuelva al centro (0 mm). Luego lee la velocidad v = E/B y compárala con la velocidad real.';
+  });
+  update(); requestAnimationFrame(loop);
+})();
+
+/* ════════════════ Simulador de Rutherford ════════════════ */
+(function(){
+  var W=800,H=420, cv=$('cv-rutherford'), S=setupCanvas(cv,W,H), ctx=S.ctx;
+  refitters.push(S.fit);
+  var R=44, K=6.4, model='thomson', speed=4, parts=[], trails=[], queue=0, cont=false;
+  var counts=[0,0,0], maxAng=0;
+  var atoms=[];
+  [380,470].forEach(function(x,ci){
+    for(var y=ci?55:10; y<H+R; y+=90) atoms.push({x:x,y:y});
+  });
+  // Fuerza de un átomo sobre la partícula alfa (repulsiva, radial).
+  //  Thomson: carga positiva repartida en toda la esfera → dentro, F ∝ r/R³; fuera, 0.
+  //  Rutherford: misma carga concentrada en un núcleo puntual, apantallada por
+  //  la nube de electrones → F ∝ 1/r² − r/R³ (se anula en el borde del átomo).
+  // Es la MISMA carga total en ambos modelos: la diferencia sale solo de cómo se reparte.
+  function force(dx,dy){
+    var r2=dx*dx+dy*dy; if(r2>=R*R) return null;
+    var r=Math.sqrt(r2), f;
+    if(model==='thomson') f=K*r/(R*R*R);
+    else { r=Math.max(r,0.25); f=K*(1/(r*r)-r/(R*R*R)); }
+    return [f*dx/r,f*dy/r];
+  }
+  function spawn(){
+    parts.push({x:-5,y:20+Math.random()*(H-40),vx:speed,vy:0,trail:[]});
+  }
+  function step(p,T){
+    var t=0;
+    while(t<T){
+      var ax=0,ay=0,rmin=1e9;
+      for(var i=0;i<atoms.length;i++){
+        var a=atoms[i], dx=p.x-a.x, dy=p.y-a.y;
+        if(Math.abs(dx)>R||Math.abs(dy)>R) continue;
+        var F=force(dx,dy); if(!F) continue;
+        ax+=F[0]; ay+=F[1];
+        rmin=Math.min(rmin,Math.sqrt(dx*dx+dy*dy));
+      }
+      var v=Math.hypot(p.vx,p.vy);
+      var dt=Math.min(T-t,1,model==='rutherford'?Math.max(0.004,0.04*rmin/v):1);
+      p.vx+=ax*dt; p.vy+=ay*dt; p.x+=p.vx*dt; p.y+=p.vy*dt; t+=dt;
+    }
+  }
+  function record(p){
+    var ang=Math.abs(Math.atan2(p.vy,p.vx))*180/Math.PI;
+    counts[ang<10?0:ang<=90?1:2]++;
+    if(ang>maxAng) maxAng=ang;
+    trails.push({pts:p.trail,ang:ang}); if(trails.length>60) trails.shift();
+    paintStats();
+  }
+  function paintStats(){
+    var tot=counts[0]+counts[1]+counts[2];
+    $('ru-total').textContent=tot;
+    $('ru-max').textContent=tot?fmt(maxAng,1)+'°':'—';
+    for(var i=0;i<3;i++){
+      $('ru-n'+i).textContent=counts[i]+(tot?' ('+Math.round(counts[i]/tot*100)+'%)':'');
+      $('ru-b'+i).style.width=(tot?counts[i]/tot*100:0)+'%';
+    }
+    if(tot>=30){
+      var msg;
+      if(model==='thomson') msg=counts[2]===0?'📊 Con el modelo de Thomson <strong>ninguna</strong> partícula rebota: la carga positiva está tan repartida que solo desvía las partículas unas décimas de grado. Pero en el laboratorio real <strong>sí</strong> hubo rebotes… Cambia al modelo de Rutherford.':'📊 Con el modelo de Thomson las desviaciones son mínimas.';
+      else msg=counts[2]>0?'📊 Con el núcleo, la mayoría pasa derecho (el átomo es casi vacío), pero las que pasan muy cerca del núcleo se desvían mucho o <strong>rebotan</strong>. ¡Eso es lo que observaron Geiger y Marsden!':'📊 La mayoría pasa derecho. Sigue disparando: las que pasen muy cerca de un núcleo rebotarán.';
+      $('ru-msg').innerHTML=msg;
+    }
+  }
+  function draw(){
+    ctx.fillStyle='#0b1622'; ctx.fillRect(0,0,W,H);
+    // fuente
+    ctx.fillStyle='#475569'; ctx.fillRect(0,0,14,H);
+    ctx.save(); ctx.translate(9,H/2); ctx.rotate(-Math.PI/2); ctx.fillStyle='#e2e8f0'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center'; ctx.fillText('FUENTE DE PARTÍCULAS α',0,0); ctx.restore();
+    // átomos
+    atoms.forEach(function(a){
+      if(model==='thomson'){
+        var g=ctx.createRadialGradient(a.x-10,a.y-10,4,a.x,a.y,R);
+        g.addColorStop(0,'rgba(251,207,232,.55)'); g.addColorStop(1,'rgba(219,39,119,.35)');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(a.x,a.y,R,0,7); ctx.fill();
+        ctx.fillStyle='#93c5fd'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+        [[-18,-14],[14,-20],[0,4],[-22,16],[20,12],[2,26]].forEach(function(o){ ctx.fillText('−',a.x+o[0],a.y+o[1]+4); });
+      }else{
+        ctx.strokeStyle='rgba(147,197,253,.28)'; ctx.setLineDash([4,5]); ctx.lineWidth=1;
+        ctx.beginPath(); ctx.arc(a.x,a.y,R,0,7); ctx.stroke(); ctx.setLineDash([]);
+        var g2=ctx.createRadialGradient(a.x,a.y,0,a.x,a.y,8);
+        g2.addColorStop(0,'rgba(248,113,113,1)'); g2.addColorStop(1,'rgba(248,113,113,0)');
+        ctx.fillStyle=g2; ctx.beginPath(); ctx.arc(a.x,a.y,8,0,7); ctx.fill();
+        ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(a.x,a.y,2.5,0,7); ctx.fill();
+        ctx.fillStyle='#93c5fd';
+        var tt=performance.now()/1400;
+        for(var e=0;e<3;e++){ var an=tt*(1+e*.3)+e*2.1; ctx.beginPath(); ctx.arc(a.x+Math.cos(an)*R*.8,a.y+Math.sin(an)*R*.8,1.8,0,7); ctx.fill(); }
+      }
+    });
+    ctx.fillStyle='rgba(226,232,240,.75)'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('Lámina de oro (átomos vistos "con lupa")',425,H-8);
+    // trayectorias recientes
+    trails.forEach(function(t){
+      ctx.strokeStyle=t.ang>90?'rgba(248,113,113,.8)':t.ang>=10?'rgba(251,191,36,.6)':'rgba(250,204,21,.16)';
+      ctx.lineWidth=t.ang>=10?1.6:1; ctx.beginPath();
+      t.pts.forEach(function(q,i){ if(i) ctx.lineTo(q[0],q[1]); else ctx.moveTo(q[0],q[1]); }); ctx.stroke();
+    });
+    // partículas en vuelo
+    parts.forEach(function(p){
+      ctx.strokeStyle='rgba(250,204,21,.5)'; ctx.lineWidth=1.2; ctx.beginPath();
+      p.trail.forEach(function(q,i){ if(i) ctx.lineTo(q[0],q[1]); else ctx.moveTo(q[0],q[1]); }); ctx.stroke();
+      ctx.fillStyle='#fde047'; ctx.beginPath(); ctx.arc(p.x,p.y,3.2,0,7); ctx.fill();
+    });
+  }
+  var lastSpawn=0;
+  function loop(ts){
+    if(visible(cv)){
+      if((queue>0||cont)&&ts-lastSpawn>(cont?120:45)){ spawn(); if(queue>0) queue--; lastSpawn=ts; }
+      for(var i=parts.length-1;i>=0;i--){
+        var p=parts[i];
+        step(p,1.6);
+        p.trail.push([p.x,p.y]);
+        if(p.x>W+8||p.x<-8||p.y<-8||p.y>H+8){ record(p); parts.splice(i,1); }
+      }
+      draw();
+    }
+    requestAnimationFrame(loop);
+  }
+  document.querySelectorAll('#ru-model button').forEach(function(b){
+    b.addEventListener('click',function(){
+      model=b.getAttribute('data-m');
+      document.querySelectorAll('#ru-model button').forEach(function(x){ x.classList.toggle('on',x===b); });
+      parts=[]; trails=[]; counts=[0,0,0]; maxAng=0; paintStats();
+      $('ru-msg').innerHTML=model==='thomson'?'Modelo de Thomson: carga positiva repartida en todo el átomo. Dispara una ráfaga.':'Modelo de Rutherford: la misma carga positiva, pero concentrada en un núcleo diminuto. Dispara una ráfaga y compara.';
+    });
+  });
+  $('ru-e').addEventListener('input',function(){
+    speed=parseFloat(this.value);
+    $('ru-e-o').textContent=speed<=3.5?'baja':speed>=5.5?'alta':'media';
+  });
+  $('ru-one').addEventListener('click',function(){ queue+=1; });
+  $('ru-burst').addEventListener('click',function(){ queue+=50; });
+  $('ru-cont').addEventListener('click',function(){ cont=!cont; this.textContent=cont?'⏸ Detener haz':'▶ Haz continuo'; });
+  $('ru-clear').addEventListener('click',function(){ trails=[]; counts=[0,0,0]; maxAng=0; paintStats(); $('ru-msg').innerHTML='Conteo reiniciado.'; });
+  paintStats(); requestAnimationFrame(loop);
+})();
+
+/* ════════════════ Simulador de Bohr ════════════════ */
+(function(){
+  var W=800,H=440, cv=$('cv-bohr'), S=setupCanvas(cv,W,H), ctx=S.ctx;
+  refitters.push(S.fit);
+  var NMAX=6, RH=1.0968e7, n=1, anim=null, lines=[], auto=false, autoT=0;
+  var AX=190, AY=175;
+  function rad(k){ return 16+(k-1)*26; }          // radios no a escala (en Bohr crecen como n²)
+  function En(k){ return -13.6/(k*k); }
+  function lambda(ni,nf){ return 1e9/(RH*Math.abs(1/(nf*nf)-1/(ni*ni))); }
+  function wlColor(l){
+    var r=0,g=0,b=0;
+    if(l>=380&&l<440){r=-(l-440)/60;b=1;} else if(l<490){g=(l-440)/50;b=1;} else if(l<510){g=1;b=-(l-510)/20;}
+    else if(l<580){r=(l-510)/70;g=1;} else if(l<645){r=1;g=-(l-645)/65;} else if(l<=750){r=1;}
+    var f=l<420?.3+.7*(l-380)/40:l>700?.3+.7*(750-l)/50:1;
+    return 'rgb('+[r,g,b].map(function(c){return Math.round(255*Math.pow(c*f,.8));}).join(',')+')';
+  }
+  function region(l){ return l<380?'ultravioleta':l>750?'infrarrojo':'visible'; }
+  // Diagrama de niveles: la energía se dibuja a escala real
+  var DX0=420, DX1=780, DY0=30, DY1=270;
+  function eY(E){ return DY0+(DY1-DY0)*(E/-13.6); }
+  var SX0=40, SX1=760, SY=388;
+  function sX(l){ return SX0+(SX1-SX0)*(l-380)/(750-380); }
+  function draw(ts){
+    ctx.fillStyle='#0b1622'; ctx.fillRect(0,0,W,H);
+    // átomo
+    for(var k=1;k<=NMAX;k++){
+      ctx.strokeStyle=k===n&&!anim?'rgba(147,197,253,.85)':'rgba(147,197,253,.25)'; ctx.lineWidth=k===n?2:1;
+      ctx.beginPath(); ctx.arc(AX,AY,rad(k),0,7); ctx.stroke();
+      ctx.fillStyle='rgba(203,213,225,.6)'; ctx.font='10px monospace'; ctx.textAlign='left';
+      ctx.fillText('n='+k,AX+rad(k)*.72+2,AY-rad(k)*.72);
+    }
+    ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(AX,AY,6,0,7); ctx.fill();
+    var r=rad(n), ang=ts/700/Math.sqrt(n);
+    if(anim){
+      var p=Math.min(1,(ts-anim.t0)/700);
+      r=rad(anim.from)+(rad(anim.to)-rad(anim.from))*p;
+      if(anim.photon){
+        // fotón saliendo del átomo (emisión) o llegando (absorción)
+        var dist=anim.emit?40+p*170:210-p*170;
+        var px=AX+Math.cos(anim.dir)*dist, py=AY+Math.sin(anim.dir)*dist;
+        ctx.strokeStyle=anim.col; ctx.lineWidth=2.4; ctx.beginPath();
+        for(var s=-20;s<=20;s+=2){
+          var w=Math.sin((s+ts/30)/3)*5;
+          var qx=px+Math.cos(anim.dir)*s-Math.sin(anim.dir)*w, qy=py+Math.sin(anim.dir)*s+Math.cos(anim.dir)*w;
+          if(s===-20) ctx.moveTo(qx,qy); else ctx.lineTo(qx,qy);
+        }
+        ctx.stroke();
+      }
+      if(p>=1){ n=anim.to; if(anim.emit) addLine(anim.lam); anim=null; }
+    }
+    ctx.fillStyle='#60a5fa'; ctx.beginPath(); ctx.arc(AX+Math.cos(ang)*r,AY+Math.sin(ang)*r,5.5,0,7); ctx.fill();
+    ctx.fillStyle='rgba(226,232,240,.75)'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('Átomo de hidrógeno (radios no a escala)',AX,AY+rad(NMAX)+18);
+    // niveles de energía
+    ctx.textAlign='left';
+    for(k=1;k<=NMAX;k++){
+      var y=eY(En(k));
+      ctx.strokeStyle=k===n?'#93c5fd':'rgba(148,163,184,.55)'; ctx.lineWidth=k===n?3:1.5;
+      ctx.beginPath(); ctx.moveTo(DX0+60,y); ctx.lineTo(DX1-60,y); ctx.stroke();
+      if(k<=4){ ctx.fillStyle='rgba(203,213,225,.85)'; ctx.font='11px monospace';
+        ctx.fillText('n='+k,DX0+18,y+4+(k===4?-4:k===3?3:0)); ctx.fillText(fmt(En(k),2)+' eV',DX1-56,y+4+(k===4?-4:k===3?3:0)); }
+    }
+    ctx.fillStyle='#60a5fa'; ctx.beginPath(); ctx.arc((DX0+DX1)/2,eY(En(anim?anim.from:n)),5,0,7); ctx.fill();
+    ctx.fillStyle='rgba(226,232,240,.75)'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('Niveles de energía (a escala) · n = 5, 6… se juntan arriba',(DX0+DX1)/2,DY0-12);
+    // espectro
+    ctx.fillStyle='#000'; ctx.fillRect(SX0,SY-18,SX1-SX0,36);
+    lines.forEach(function(l){
+      if(l.lam<380||l.lam>750) return;
+      ctx.fillStyle=wlColor(l.lam); ctx.globalAlpha=Math.min(1,.45+l.c*.18);
+      ctx.fillRect(sX(l.lam)-2,SY-18,4,36); ctx.globalAlpha=1;
+      ctx.fillStyle='rgba(226,232,240,.9)'; ctx.font='10px monospace'; ctx.fillText(Math.round(l.lam)+' nm',sX(l.lam),SY+30);
+    });
+    var grd=ctx.createLinearGradient(SX0,0,SX1,0);
+    for(var lam=380;lam<=750;lam+=10) grd.addColorStop((lam-380)/370,wlColor(lam));
+    ctx.fillStyle=grd; ctx.globalAlpha=.18; ctx.fillRect(SX0,SY-18,SX1-SX0,36); ctx.globalAlpha=1;
+    ctx.fillStyle='rgba(226,232,240,.75)'; ctx.font='bold 11px sans-serif';
+    ctx.fillText('Espectro de emisión observado (luz visible, 380–750 nm)',(SX0+SX1)/2,SY-24);
+    var uv=lines.filter(function(l){return l.lam<380;}).length, ir=lines.filter(function(l){return l.lam>750;}).length;
+    ctx.textAlign='left'; ctx.fillText('UV invisibles: '+uv,SX0,SY+44);
+    ctx.textAlign='right'; ctx.fillText('IR invisibles: '+ir,SX1,SY+44);
+  }
+  function addLine(lam){
+    var f=null; lines.forEach(function(l){ if(Math.abs(l.lam-lam)<0.5) f=l; });
+    if(f) f.c++; else lines.push({lam:lam,c:1});
+  }
+  function goLevel(to,silent){
+    if(anim||to===n) return;
+    var from=n, lam=lambda(from,to), emit=to<from;
+    var reg=region(lam), col=reg==='visible'?wlColor(lam):reg==='ultravioleta'?'#c4b5fd':'#fca5a5';
+    anim={from:from,to:to,t0:performance.now(),photon:true,emit:emit,lam:lam,col:col,dir:-Math.PI/2+(Math.random()-.5)*1.6};
+    paintLevels(to);
+    $('bo-n').textContent='n = '+to;
+    $('bo-e').textContent=fmt(En(to),2)+' eV';
+    var dE=Math.abs(En(to)-En(from));
+    $('bo-ph').textContent=Math.round(lam)+' nm · '+fmt(dE,2)+' eV';
+    if(silent) return;
+    var msg;
+    if(!emit) msg='⬆️ Para subir de n = '+from+' a n = '+to+' el electrón <strong>absorbe</strong> un fotón de '+fmt(dE,2)+' eV ('+Math.round(lam)+' nm, '+reg+'). Ahora hazlo bajar.';
+    else{
+      msg='⬇️ Al bajar de n = '+from+' a n = '+to+' el electrón <strong>emite</strong> un fotón de '+fmt(dE,2)+' eV: '+Math.round(lam)+' nm, ';
+      if(reg==='visible') msg+='<strong>luz visible</strong> (serie de Balmer). ¡Mira la línea en el espectro!';
+      else if(reg==='ultravioleta') msg+='<strong>ultravioleta</strong> (serie de Lyman): invisible para nuestros ojos.';
+      else msg+='<strong>infrarrojo</strong> (serie de Paschen o siguientes): invisible para nuestros ojos.';
+    }
+    $('bo-msg').innerHTML=msg;
+  }
+  function paintLevels(cur){
+    $('bo-lvls').querySelectorAll('button').forEach(function(b){ b.classList.toggle('on',+b.textContent===cur); });
+  }
+  var lv=$('bo-lvls');
+  for(var k=1;k<=NMAX;k++){ var b=document.createElement('button'); b.textContent=k; b.addEventListener('click',(function(kk){return function(){ goLevel(kk); };})(k)); lv.appendChild(b); }
+  paintLevels(1);
+  $('bo-auto').addEventListener('click',function(){
+    auto=!auto; this.textContent=auto?'⏸ Apagar tubo':'⚡ Encender tubo';
+    if(auto) $('bo-msg').innerHTML='⚡ El tubo excita los átomos una y otra vez. Al regresar a niveles bajos aparecen siempre las <strong>mismas líneas</strong>: el "código de barras" del hidrógeno.';
+  });
+  $('bo-clear').addEventListener('click',function(){ lines=[]; });
+  function loop(ts){
+    if(auto&&!anim&&ts-autoT>300){
+      autoT=ts;
+      var to;
+      if(n===1) to=3+Math.floor(Math.random()*(NMAX-2));      // excitación por la descarga
+      else if(n>2&&Math.random()<.55) to=2;                   // muchas caídas terminan en n=2 → líneas visibles
+      else to=1+Math.floor(Math.random()*(n-1));              // cualquier nivel más bajo
+      goLevel(to,true);
+    }
+    if(visible(cv)) draw(ts);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ════════════════ Constructor de átomos ════════════════ */
+(function(){
+  var EL=[null,
+    ['H','Hidrógeno',[0,1]],['He','Helio',[1,2]],['Li','Litio',[3,4]],['Be','Berilio',[5]],['B','Boro',[5,6]],
+    ['C','Carbono',[6,7]],['N','Nitrógeno',[7,8]],['O','Oxígeno',[8,9,10]],['F','Flúor',[10]],['Ne','Neón',[10,11,12]],
+    ['Na','Sodio',[12]],['Mg','Magnesio',[12,13,14]],['Al','Aluminio',[14]],['Si','Silicio',[14,15,16]],['P','Fósforo',[16]],
+    ['S','Azufre',[16,17,18,20]],['Cl','Cloro',[18,20]],['Ar','Argón',[18,20,22]],['K','Potasio',[20,22]],['Ca','Calcio',[20,22,23,24,26]]
+  ];
+  var MAX={p:20,n:30,e:20};
+  var s={p:0,n:0,e:0};
+  var SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
+  function sup(str){ return String(str).split('').map(function(c){return SUP[c]||c;}).join(''); }
+  function chargeStr(c){ return c===0?'':(Math.abs(c)>1?Math.abs(c):'')+(c>0?'+':'-'); }
+  function config(e){
+    var ORB=[['1s',2],['2s',2],['2p',6],['3s',2],['3p',6],['4s',2]], out=[];
+    for(var i=0;i<ORB.length&&e>0;i++){ var k=Math.min(e,ORB[i][1]); out.push(ORB[i][0]+sup(k)); e-=k; }
+    return out.join(' ');
+  }
+  function shells(e){ var cap=[2,8,8,2], out=[]; for(var i=0;i<cap.length&&e>0;i++){ var k=Math.min(e,cap[i]); out.push(k); e-=k; } return out; }
+  function render(){
+    var Z=s.p, A=s.p+s.n, c=s.p-s.e, el=EL[Z];
+    ['p','n','e'].forEach(function(k){ $('c-'+k).textContent=s[k]; });
+    // dibujo
+    var svg='<svg viewBox="0 0 400 400" role="img" aria-label="Átomo con '+s.p+' protones, '+s.n+' neutrones y '+s.e+' electrones">';
+    var sh=shells(s.e), RAD=[78,112,146,180];
+    sh.forEach(function(k,i){
+      svg+='<circle cx="200" cy="200" r="'+RAD[i]+'" fill="none" stroke="rgba(147,197,253,.35)" stroke-width="1.5"/>';
+      svg+='<g class="shell-rot" style="animation-duration:'+(14+i*7)+'s">';
+      for(var j=0;j<k;j++){
+        var an=j/k*Math.PI*2+i*.4, x=200+Math.cos(an)*RAD[i], y=200+Math.sin(an)*RAD[i];
+        svg+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="8" fill="#2563eb" stroke="#bfdbfe" stroke-width="1.2"/><text x="'+x.toFixed(1)+'" y="'+(y+4).toFixed(1)+'" fill="#fff" font-size="12" font-weight="900" text-anchor="middle" font-family="sans-serif">−</text>';
+      }
+      svg+='</g>';
+    });
+    // núcleo: empaquetado en espiral (ángulo áureo), protones y neutrones intercalados
+    var N=s.p+s.n, list=[], pi=0, ni=0;
+    for(var q=0;q<N;q++){
+      var wantP=(pi/(s.p||1))<=(ni/(s.n||1));
+      if((wantP&&pi<s.p)||ni>=s.n){ list.push('p'); pi++; } else { list.push('n'); ni++; }
+    }
+    var nr=N>1?9:0;
+    for(q=N-1;q>=0;q--){
+      var rr=nr*Math.sqrt(q)*0.95, th=q*2.39996;
+      var nx=200+Math.cos(th)*rr, ny=200+Math.sin(th)*rr;
+      svg+='<circle cx="'+nx.toFixed(1)+'" cy="'+ny.toFixed(1)+'" r="9" fill="'+(list[q]==='p'?'#dc2626':'#64748b')+'" stroke="rgba(255,255,255,.55)" stroke-width="1"/>';
+      if(list[q]==='p') svg+='<text x="'+nx.toFixed(1)+'" y="'+(ny+4).toFixed(1)+'" fill="#fff" font-size="11" font-weight="900" text-anchor="middle" font-family="sans-serif">+</text>';
+    }
+    if(!N&&!s.e) svg+='<text x="200" y="205" fill="rgba(226,232,240,.7)" font-size="15" text-anchor="middle" font-family="sans-serif">Agrega partículas con los botones +</text>';
+    svg+='</svg>';
+    $('atom-view').innerHTML=svg;
+    // ficha del elemento
+    $('el-s').textContent=el?el[0]:'?';
+    $('el-a').textContent=Z?A:''; $('el-z').textContent=Z?Z:'';
+    $('el-c').textContent=Z&&c?sup(chargeStr(c)):'';
+    $('r-z').textContent=Z; $('r-a').textContent=A; $('r-c').textContent=c>0?'+'+c:c;
+    var tags=[];
+    if(!el){ $('el-name').textContent=Z?'Elemento '+Z:'Sin protones'; tags.push('<span class="tag neu">'+(Z?'Fuera del rango (1–20)':'Sin protones no hay elemento')+'</span>'); }
+    else{
+      $('el-name').textContent=el[1]+(A?'-'+A:'');
+      tags.push(c===0?'<span class="tag neu">Átomo neutro</span>':c>0?'<span class="tag cat">Catión '+el[0]+sup(chargeStr(c))+'</span>':'<span class="tag an">Anión '+el[0]+sup(chargeStr(c))+'</span>');
+      var stable=el[2].indexOf(s.n)>=0;
+      tags.push(stable?'<span class="tag ok">Núcleo estable</span>':'<span class="tag err">Núcleo inestable (radiactivo)</span>');
+      if(Math.abs(c)>3) tags.push('<span class="tag err">Carga poco común</span>');
+    }
+    $('el-tags').innerHTML=tags.join('');
+    $('r-config').textContent='Configuración electrónica: '+(s.e?config(s.e):'—');
+  }
+  document.querySelectorAll('.counter button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-k'), d=+b.getAttribute('data-d');
+      s[k]=Math.max(0,Math.min(MAX[k],s[k]+d)); render(); $('reto-fb').textContent='';
+    });
+  });
+  $('b-reset').addEventListener('click',function(){ s={p:0,n:0,e:0}; render(); });
+
+  var RETOS=[
+    {q:'Construye un átomo neutro de <strong>carbono-12</strong>.',p:6,n:6,e:6},
+    {q:'Construye el ion <strong>sodio Na⁺</strong> (sodio-23).',p:11,n:12,e:10},
+    {q:'Construye el anión <strong>cloruro ³⁵Cl⁻</strong>.',p:17,n:18,e:18},
+    {q:'Construye <strong>deuterio</strong> (hidrógeno-2) neutro.',p:1,n:1,e:1},
+    {q:'Construye el ion <strong>óxido O²⁻</strong> (oxígeno-16).',p:8,n:8,e:10},
+    {q:'Construye el catión <strong>magnesio Mg²⁺</strong> (magnesio-24).',p:12,n:12,e:10},
+    {q:'Construye un átomo neutro de <strong>helio-4</strong> (como una partícula α, pero con sus electrones).',p:2,n:2,e:2},
+    {q:'Construye <strong>carbono-14</strong> neutro, el isótopo radiactivo que se usa para fechar fósiles.',p:6,n:8,e:6},
+    {q:'Construye el ion <strong>calcio Ca²⁺</strong> (calcio-40).',p:20,n:20,e:18},
+    {q:'Construye el ion <strong>aluminio Al³⁺</strong> (aluminio-27).',p:13,n:14,e:10},
+    {q:'Construye el ion <strong>fluoruro F⁻</strong> (flúor-19).',p:9,n:10,e:10},
+    {q:'Construye un átomo neutro de <strong>litio-7</strong>.',p:3,n:4,e:3},
+    {q:'Construye la <strong>partícula α</strong> de Rutherford: un núcleo de helio-4 <strong>sin electrones</strong> (carga 2+).',p:2,n:2,e:0}
+  ];
+  // Fisher-Yates: sort(()=>Math.random()-.5) no reparte el orden de forma uniforme.
+  var order=(function(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; })(RETOS.map(function(_,i){return i;})), ri=0;
+  function showReto(){ $('reto-q').innerHTML=RETOS[order[ri]].q; $('reto-fb').textContent=''; }
+  $('reto-next').addEventListener('click',function(){ ri=(ri+1)%order.length; showReto(); });
+  $('reto-check').addEventListener('click',function(){
+    var r=RETOS[order[ri]], fb=[];
+    if(s.p!==r.p) fb.push('los <strong>protones</strong> deciden el elemento: '+(s.p<r.p?'te faltan':'te sobran'));
+    if(s.n!==r.n) fb.push('los <strong>neutrones</strong> no dan el número de masa pedido (A = p + n): '+(s.n<r.n?'te faltan':'te sobran'));
+    if(s.e!==r.e) fb.push('los <strong>electrones</strong> no dan la carga pedida (carga = p − e): '+(s.e<r.e?'te faltan':'te sobran'));
+    $('reto-fb').innerHTML=fb.length?'<span style="color:var(--err-t)">✗ Casi. Revisa: '+fb.join('; ')+'.</span>':'<span style="color:var(--ok-t)">✓ ¡Correcto! '+r.p+' p⁺, '+r.n+' n⁰ y '+r.e+' e⁻.</span> Toca «Otro reto».';
+  });
+  render(); showReto();
+})();
+
+/* ════════════════ PhET ════════════════ */
+(function(){
+  var SIMS=[
+    {id:'build-an-atom',t:'Construir un átomo',d:'Arma átomos e iones, juega a identificar elementos y descubre qué partícula cambia cada propiedad.'},
+    {id:'rutherford-scattering',t:'Dispersión de Rutherford',d:'Compara el modelo del budín de pasas con el átomo nuclear disparando partículas alfa.'},
+    {id:'isotopes-and-atomic-mass',t:'Isótopos y masa atómica',d:'Construye isótopos y descubre por qué la masa atómica de la tabla periódica tiene decimales.'}
+  ];
+  function url(id){ return 'https://phet.colorado.edu/sims/html/'+id+'/latest/'+id+'_all.html?locale=es'; }
+  $('phet-list').innerHTML=SIMS.map(function(s){
+    return '<div class="phet-card"><div class="phet-head"><div><h3>'+s.t+'</h3><p>'+s.d+'</p></div>'+
+      '<a class="btn ghost" href="'+url(s.id)+'" target="_blank" rel="noopener">↗ Pantalla completa</a></div>'+
+      '<div class="phet-frame" data-id="'+s.id+'"><div class="phet-ph"><span class="big">🌐</span>Simulación externa (requiere internet)<br><br><button class="btn">▶ Cargar aquí</button></div></div></div>';
+  }).join('');
+  document.querySelectorAll('.phet-frame').forEach(function(f){
+    f.querySelector('button').addEventListener('click',function(){
+      var id=f.getAttribute('data-id');
+      if(!navigator.onLine){ f.querySelector('.phet-ph').innerHTML='<span class="big">📵</span>No hay conexión a internet. Las simulaciones PhET se cargan desde la Universidad de Colorado.'; return; }
+      f.innerHTML='<iframe src="'+url(id)+'" title="Simulación PhET: '+id+'" allowfullscreen loading="lazy"></iframe>';
+    });
+  });
+})();
+
+/* ════════════════ Repaso ════════════════ */
+(function(){
+  var QS=[
+    {q:'¿Qué modelo atómico se apoyó por primera vez en mediciones experimentales (las leyes ponderales)?',o:['Dalton','Demócrito','Thomson','Bohr'],a:0,x:'Demócrito solo razonó; Dalton usó las leyes de conservación de la masa y de proporciones definidas.'},
+    {q:'En el tubo de rayos catódicos, el haz se desvía hacia la placa positiva. ¿Qué se concluye?',o:['Las partículas tienen carga negativa','Las partículas tienen carga positiva','Las partículas no tienen carga','El haz es luz'],a:0,x:'Cargas opuestas se atraen: si el haz va hacia la placa +, las partículas son negativas (electrones).'},
+    {q:'¿Por qué el descubrimiento del electrón contradijo a Dalton?',o:['Mostró que el átomo es divisible','Mostró que el átomo es vacío','Mostró que existen isótopos','Mostró niveles de energía'],a:0,x:'Si los electrones salen de cualquier átomo, el átomo tiene partes: no es indivisible.'},
+    {q:'En el experimento de la lámina de oro, la mayoría de partículas alfa atravesó la lámina sin desviarse. Esto indica que…',o:['el átomo es casi todo espacio vacío','el átomo es una esfera maciza','los electrones son muy pesados','el oro es un metal blando'],a:0,x:'Si casi nada desvía las partículas, casi todo el átomo está "vacío".'},
+    {q:'¿Qué observación obligó a proponer el núcleo atómico?',o:['Algunas partículas alfa rebotaron','Todas las partículas atravesaron la lámina','La lámina se calentó','Las partículas cambiaron de color'],a:0,x:'Solo una carga positiva muy concentrada y masiva puede devolver una partícula alfa: el núcleo.'},
+    {q:'Según Bohr, ¿qué ocurre cuando un electrón pasa del nivel n = 3 al nivel n = 2?',o:['Emite un fotón de energía definida','Absorbe un fotón','Cae al núcleo','Se convierte en protón'],a:0,x:'Bajar de nivel libera la diferencia de energía como un fotón (en este caso, luz roja de 656 nm).'},
+    {q:'¿Qué describe un orbital en el modelo mecánico-cuántico?',o:['Una región donde es probable encontrar al electrón','Una órbita circular exacta','La posición fija del electrón','El tamaño del núcleo'],a:0,x:'En el modelo actual no hay trayectorias: solo probabilidades de encontrar al electrón.'},
+    {q:'Un ion tiene 12 protones, 12 neutrones y 10 electrones. ¿Cuál es?',o:['Mg²⁺ (A = 24)','Mg²⁻ (A = 24)','Ne (A = 22)','C²⁺ (A = 12)'],a:0,x:'Z = 12 → magnesio; A = 12 + 12 = 24; carga = 12 − 10 = +2.'},
+    {q:'El carbono-12 y el carbono-14 se diferencian en el número de…',o:['neutrones','protones','electrones','orbitales'],a:0,x:'Son isótopos: mismo número de protones (6) pero distinto número de neutrones (6 y 8).'},
+    {q:'¿Quién descubrió el neutrón y en qué año?',o:['Chadwick, 1932','Rutherford, 1911','Thomson, 1897','Bohr, 1913'],a:0,x:'James Chadwick lo descubrió en 1932, completando la imagen del núcleo (protones + neutrones).'}
+  ];
+  var order=[], qi=0, score=0;
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function start(){ order=shuffle(QS.map(function(_,i){return i;})); qi=0; score=0; render(); }
+  function render(){
+    var box=$('q-box');
+    $('q-fill').style.width=(qi/QS.length*100)+'%';
+    $('q-label').textContent=qi+' de '+QS.length+' respondidas';
+    if(qi>=QS.length){
+      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+QS.length+'.</strong> '+(score>=8?'¡Excelente! Ya puedes seguir a la Configuración Electrónica.':'Repasa la línea del tiempo y repite los experimentos.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="configuracion.html">Ir a Configuración Electrónica →</a></div>';
+      $('q-again').addEventListener('click',start);
+      return;
+    }
+    var Q=QS[order[qi]], opts=shuffle(Q.o.map(function(t,i){return {t:t,ok:i===Q.a};}));
+    box.innerHTML='<div class="mq-q">'+(qi+1)+'. '+Q.q+'</div><div class="mq-opts">'+opts.map(function(o,i){return '<button class="mq-btn" data-i="'+i+'">'+o.t+'</button>';}).join('')+'</div><div class="mq-fb" id="q-fb"></div><button class="btn" id="q-next" style="display:none;margin-top:10px">Siguiente →</button>';
+    box.querySelectorAll('.mq-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var o=opts[+b.getAttribute('data-i')];
+        box.querySelectorAll('.mq-btn').forEach(function(x,i){ x.disabled=true; if(opts[i].ok) x.classList.add('mq-correct'); });
+        if(!o.ok) b.classList.add('mq-wrong'); else score++;
+        $('q-fb').innerHTML=(o.ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ No es así.</span> ')+Q.x;
+        $('q-next').style.display='inline-flex';
+      });
+    });
+    $('q-next').addEventListener('click',function(){ qi++; render(); });
+  }
+  start();
+})();
+
+/* Abrir la pestaña indicada en la URL (atomo.html#constructor, etc.) */
+var h=(location.hash||'').replace('#','');
+if(h) showTab(h,false);
+
+/* ── Hamburger nav ── */
+(function(){
+  var ham=$('ham-btn'), drawer=$('nav-drawer'), overlay=$('nav-overlay'), closeBtn=$('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

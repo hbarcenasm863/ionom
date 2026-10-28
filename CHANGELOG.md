@@ -4,11 +4,164 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
-## 28 de octubre — Preguntas abiertas del Generador Docente
+## 28 de octubre (11) — Preguntas abiertas del Generador Docente
 
-- **20 preguntas abiertas por tema** (antes 3): 300 en total, repartidas entre las de ecuación, nomenclatura e identificación de partes o cálculo. Ya se pueden pedir, por ejemplo, 10 abiertas de Balanceo + Masa molar, o 20 de un solo tema, sin que salgan menos de las pedidas ni repetidas.
-- **Las preguntas abiertas ya no muestran la respuesta**: en las de «identifica el catión y el anión», la ficha mostraba el compuesto ya separado y con sus cargas (Mg²⁺ · O²⁻). Ahora solo aparece la fórmula (MgO). También se quitaron enunciados que nombraban el producto que se pide nombrar (ácidos hidrácidos, bicarbonato).
+- **20 preguntas abiertas por tema** (antes 3, o 6 en Átomo, Configuración electrónica y Enlace): 360 en total en los 18 temas, repartidas entre las de ecuación, nomenclatura e identificación de partes o cálculo. Ya se pueden pedir, por ejemplo, 10 abiertas de Balanceo + Masa molar, o 20 de un solo tema, sin que salgan menos de las pedidas ni repetidas.
+- **Las preguntas abiertas ya no muestran la respuesta**: en las de «identifica el catión y el anión», la ficha mostraba el compuesto ya separado y con sus cargas (Mg²⁺ · O²⁻). Ahora solo aparece la fórmula (MgO); lo mismo con «O δ− · H δ+» en la del agua. Las fichas sí se siguen mostrando cuando son el dato del ejercicio (las partículas de un ion, los subniveles de una configuración). También se quitaron enunciados que nombraban el producto que se pide nombrar (ácidos hidrácidos, bicarbonato).
 - **Laberinto en celular**: al tocar la salida correcta, el botón se pone verde un instante antes de pasar a la siguiente casilla.
+
+---
+
+## 28 de octubre (10) — iPhone: el Juego no arrancaba o volvía a la portada; opciones bien mezcladas
+
+**Bloqueos en iOS**
+- **El Juego no arrancaba en iPhones con iOS anterior a 13.4.** Tres líneas usaban `?.` (encadenamiento opcional), que esos Safari no entienden. Por eso no cargaba nada del script del Juego: tocar un tema no hacía nada. Se reescribieron, y ahora todos los scripts del sitio se verifican como ES2018 (Safari de iOS 12).
+- **Almacenamiento bloqueado.** Con «Bloquear todas las cookies» o en modo privado, Safari lanza un error al usar `localStorage`, y eso podía detener la página. Todas las páginas traen ahora un reemplazo en memoria que se activa solo en ese caso.
+- **«Me sacó del juego a la portada».** iOS descarta la pestaña cuando el estudiante abre otra app (calculadora, WhatsApp) y, al volver, Safari recarga la página. Ahora la partida se guarda al empezar cada pregunta (`sessionStorage`). La portada muestra «⏸️ Tienes una partida sin terminar · Continuar / Descartar» con el tema, la pregunta y el puntaje.
+  - En Modo Estudiante se conservan el código y la sesión, así que el docente recibe una sola partida.
+  - Al continuar se repite la pregunta en la que iba, con el puntaje que tenía antes de responderla: no se puede sumar dos veces.
+- Cerrar «¿Cómo jugar?» ya no falla en los navegadores dentro de apps que no tienen voz.
+- Enlace Químico: las simulaciones usaban `ctx.roundRect`, que no existe en iOS 15 o anterior, y dejaban de dibujarse. Se agregó un reemplazo.
+
+**Posición de la respuesta correcta**
+- En el Juego la mezcla ya era uniforme. Medido en 344 preguntas de los 16 temas: A 29 %, B 21 %, C 30 % y D 21 %.
+- Los quizzes de Tipos de Reacción, Mol, Estequiometría y Balanceo Avanzado mezclaban con `sort(() => Math.random() - .5)`, que **no es aleatorio de verdad**: la correcta caía en A o D cerca del 31–36 % de las veces y en B o C solo 16–19 %. Ahora usan Fisher-Yates (25 % por letra). Lo mismo con el orden de los retos de Teoría Atómica.
+- `sw.js` pasó a `ionom-v57`.
+
+## 28 de octubre (9) — Juego: temas en secuencia de complejidad
+
+- La portada del Juego muestra los 15 temas agrupados en los mismos 4 niveles del menú átomo y numerados del más sencillo al más complejo:
+  - **n = 1 El átomo**: teoría atómica → tabla periódica → enlace químico.
+  - **n = 2 Nomenclatura**: primero los binarios (óxidos, hidruros, ácidos hídricos, sales binarias), luego los ternarios (bases, oxácidos, sales oxigenadas) y al final los cuaternarios (sales ácidas). «Todos los grupos» pasó al final como **Repaso**.
+  - **n = 3 Reacciones**: tipos de reacción → cadena de reactividad → balanceo.
+  - **n = 4 Cálculos**: mol y masa molar.
+- El encabezado del Juego dice «Química · Modo Juego» y «15 temas».
+- Los accesos «Practica este nivel» de la portada siguen el mismo orden.
+
+## 28 de octubre (8) — Portada para toda la química y menú átomo actualizado
+
+IonNom ya no es solo nomenclatura, así que la portada se reorganizó:
+- **Hero nuevo**: «Del átomo a la reacción, paso a paso». Muestra los 4 niveles como tarjetas que abren su capa del átomo. El botón principal dice la siguiente parada del estudiante, y hay un acceso directo al Juego.
+- **El menú átomo sube** justo debajo del hero. Es la navegación principal.
+- **El Juego ya no es una estación de nomenclatura**: tiene preguntas de todos los niveles. Queda junto al átomo («🎮 Juego»), y cada nivel tiene «🎮 Practica este nivel en el Juego» con sus temas. Por ejemplo, el nivel 1 enlaza a teoría atómica, tabla periódica y enlace químico, y cada enlace resalta ese tema en el Juego. La ruta quedó de 12 paradas.
+- **Módulos agrupados por nivel** (n = 1 a n = 4, y «Practica y enseña»), con el número de parada.
+- **El código de 4 colores** pasó a su propia sección del nivel 2, con el ejemplo Fe₂(SO₄)₃, las 4 partes, la lectura de un nombre y los compuestos cotidianos.
+- El modal de bienvenida, la narración, el título de la página, la descripción y `manifest.json` hablan de química general.
+- Barra inferior del celular: Inicio, Átomo, Principios, Juego y Tabla.
+- Juego: «¿Cómo jugar?» y la portada del Juego ya no dicen «elige un grupo funcional», sino «elige un tema».
+- `sw.js` pasó a `ionom-v56`.
+
+## 28 de octubre (7) — Enlace químico en el Juego y en el Generador Docente
+
+- **Juego: tema nuevo «Enlace químico»** (🧲), en Modo Libre y en Modo Estudiante. Tiene 47 preguntas con explicación sobre octeto y Lewis, enlace iónico, covalente, electronegatividad y polaridad, enlace metálico y propiedades. Cada partida toma 20 sin repetir, y cada pregunta muestra su subtema.
+- **Generador Docente: tema «Enlace químico»**, con:
+  - aprendizajes previos con contexto colombiano (la sal de Zipaquirá, el cobre de las redes eléctricas);
+  - lectura, esquema y ejemplo resuelto Na–Cl;
+  - un tipo de ejercicio nuevo, **D Tipo de enlace (ΔEN)**, con 28 parejas de elementos;
+  - 12 preguntas tipo Saber 11 y 6 abiertas.
+- La pantalla final del Modo Libre decía «Dominas este grupo de nomenclatura» también en los temas que no son de nomenclatura; ahora dice «Dominas este tema».
+- `ionom-analytics.gs`: «Enlace químico» se agregó a `TEMAS_PRINCIPALES`. **Hay que copiarlo a Apps Script y crear una nueva versión de la implementación.**
+- `sw.js` pasó a `ionom-v55` (cambiaron `banco.js`, `docente-datos.js` y `docente-app.js`).
+
+## 28 de octubre (6) — Enlace Químico: simulaciones nuevas
+
+`enlace.html` deja de ser una copia de EnlaceLab. Las animaciones y simulaciones se rehicieron con el estilo de los simuladores de Teoría Atómica (lienzos oscuros, táctiles y animados):
+
+- **Lewis animado**: cada electrón conserva el color de su átomo y se desliza a los enlaces y pares libres; en el NaCl se ve saltar el electrón del Na al Cl. Se puede ver con puntos o con rayas.
+- **Del átomo al cristal**: 7 compuestos iónicos en 5 fases (átomos → transferencia → iones → atracción → red). El estudiante arrastra los electrones con el dedo o usa el modo automático; la red final resalta la unidad fórmula.
+- **Nube compartida**: se acercan dos átomos (H₂, Cl₂, O₂, N₂), las nubes se suman y una curva de Morse con datos reales sigue la energía. Con «Soltar», la molécula vibra.
+- **Polaridad**: un deslizador de ΔEN transforma la nube de apolar a polar a iónica, con δ+/δ− y la flecha del dipolo.
+- **Mar de electrones**: 4 modos (normal, pila con bombillo, calor con termómetro y golpe).
+- **Maleable vs. frágil**: el golpe se ve en cámara lenta.
+- **Laboratorio animado**: cada ensayo tiene su escena (mechero y termómetro, circuito con bombillo, iones que viajan a los electrodos, vaso con agua y martillo).
+- `sw.js` pasó a `ionom-v54`.
+
+## 28 de octubre (5) — Nueva página: Enlace Químico
+
+- **`enlace.html` — 🔗 Enlace Químico**, la cuarta parada del nivel n = 1 (después de la Tabla Periódica). Retoma «EnlaceLab» con el diseño de IonNom. Tiene 6 pestañas:
+  - **Conceptos**: regla del octeto, símbolos de Lewis de Z = 1–20 que se pueden tocar, los tres tipos de enlace con sus propiedades, y molécula vs. unidad fórmula.
+  - **Lewis**: estructuras paso a paso de H₂O, NH₃, CH₄, HCl, CO₂, N₂ y NaCl, contando los electrones en cada paso.
+  - **ΔEN**: calculadora con las electronegatividades de la tabla del sitio y un reto de 10 parejas.
+  - **Simuladores**: transferencia de electrones en 9 compuestos iónicos (con la fórmula por cruce de cargas), curva de energía del enlace H–H, O=O y N≡N con datos reales, mar de electrones (pila y calor) y maleable vs. frágil.
+  - **Laboratorio virtual**: 8 muestras y 6 ensayos para deducir el tipo de enlace; incluye casos trampa como el azúcar y el cuarzo.
+  - **Repaso**: 10 preguntas.
+- **Química corregida respecto a EnlaceLab**: la clasificación por ΔEN ahora es coherente (H–S, H–F y HCl estaban mal o contradictorios), «todos los iónicos son solubles» pasó a «muchos», y se agregaron los sólidos covalentes de red.
+- **Menú átomo**: la estación 🔗 está en la capa n = 1 y la ruta tiene 13 paradas. Hay una tarjeta nueva en la lista y el enlace aparece en el menú lateral de todas las páginas y en «Más» del celular.
+- `sw.js` pasó a `ionom-v53`.
+
+## 28 de octubre (4) — El átomo en Laberintos y Crucigramas
+
+- **Laberintos: tipo nuevo «Teoría atómica y configuración»**. Tiene 4 grupos de preguntas que se pueden combinar:
+  - partículas subatómicas: ¿cuántos neutrones tiene ¹⁹F⁻?, o ¿qué especie tiene 13 p⁺, 14 n⁰ y 10 e⁻?;
+  - configuración electrónica: de elemento a configuración abreviada y al revés;
+  - configuración y tabla: periodo y grupo, y electrones de valencia;
+  - modelos y reglas: 25 preguntas cortas.
+
+  Mantiene la ruta única verificada, las versiones, el modo Jugar y la hoja de clave. Se probaron 270 laberintos y todos pasaron la verificación.
+- **Crucigramas: dos tipos de pista nuevos**:
+  - «Teoría atómica»: un glosario de 31 términos, como NEUTRON, THOMSON, ORBITAL o HUND.
+  - «Configuración → elemento»: por ejemplo, «[Ne] 3s² 3p⁴» → AZUFRE.
+
+  Si solo se marcan pistas del átomo, no hace falta elegir familias de compuestos y el título cambia a «Crucigrama del átomo». Se probaron 60 crucigramas y todos quedaron verificados.
+- `sw.js` pasó a `ionom-v52`.
+
+## 28 de octubre (3) — Temas del átomo en el Generador Docente
+
+- **Dos temas nuevos en `docente.html`**: «Teoría atómica y estructura del átomo» y «Configuración electrónica». Cada uno tiene aprendizajes previos con contexto colombiano, lectura, esquema y ejemplo resuelto con el código de colores.
+- **Ejercicios prácticos nuevos** que se marcan solos al elegir el tema:
+  - **D Partículas subatómicas**: 37 isótopos e iones reales; se completan protones, neutrones, electrones y tipo de especie.
+  - **D Configuración electrónica**: 34 elementos; se piden la configuración completa y abreviada, el diagrama de orbitales, el periodo, el grupo, el bloque y la valencia.
+- **Evaluación**: 24 preguntas tipo Saber 11 nuevas (12 por tema) y 12 preguntas abiertas (6 por tema).
+- Se probaron una guía completa y una evaluación generadas solo con estos temas: sin errores y con la paginación correcta.
+- La tarjeta del Generador Docente en la portada ahora dice «17 temas». `sw.js` pasó a `ionom-v50`.
+
+## 28 de octubre (2) — Configuración Electrónica y tema nuevo en el Juego
+
+- **Nueva página `configuracion.html` — 🧬 Configuración Electrónica**, la segunda parada del nivel n = 1, entre Teoría Atómica y Tabla Periódica. Tiene 5 pestañas:
+  - **Conceptos**: de Bohr a los orbitales, las reglas de Aufbau, Pauli y Hund, la configuración abreviada, las excepciones y los iones.
+  - **Diagrama de Moeller** interactivo.
+  - **Configurador** de los 118 elementos e iones: configuración completa y abreviada, diagrama de orbitales, periodo, grupo, bloque, valencia y números cuánticos.
+  - **Llena los orbitales**: el estudiante ubica los electrones en las casillas.
+  - **Repaso** con preguntas generadas al azar.
+- Los datos salen de la tabla periódica del sitio. Se verificó por script que los 118 elementos coinciden con `tabla.html` en configuración, periodo y grupo.
+- **Juego: tema nuevo «Teoría atómica y configuración»**, con un banco de **49 preguntas** (`BANCO_ATOMO` en `banco.js`): 19 de modelos atómicos, 11 de estructura del átomo e iones y 19 de configuración electrónica. Cada pregunta trae su explicación. Funciona en Modo Libre y en Modo Estudiante, y se registra como «Teoría atómica y configuración electrónica».
+- `ionom-analytics.gs`: el tema nuevo se agregó a `TEMAS_PRINCIPALES`. **Requiere volver a implementar a mano el Apps Script** para que tenga columna propia en «Estadísticas». Sin eso, igual se registra en «Eficacia por tema».
+- **Menú átomo**: la nueva estación 🧬 queda en la capa n = 1 y la ruta pasa a tener 12 paradas. Hay una tarjeta nueva en la lista de módulos y el enlace aparece en el menú lateral de todas las páginas y en «Más» del celular.
+- `atomo.html`: la siguiente parada es ahora Configuración Electrónica, y el constructor de átomos enlaza al configurador.
+- `sw.js`: `configuracion.html` se agregó a la caché y `CACHE_NAME` pasó a `ionom-v49` (cambiaron `banco.js` y `ionom-ui.js`).
+- Documentación completa de la región en `TEORIA_ATOMICA.md`.
+
+## 28 de octubre — Teoría Atómica y menú en forma de átomo en la portada
+
+- **Nueva página `atomo.html` — 🪐 Teoría Atómica**, con 5 pestañas:
+  - **🕰️ Historia**: línea del tiempo deslizable (Demócrito, Dalton, Thomson, Rutherford, Bohr y modelo cuántico). Cada modelo explica qué propuso, en qué evidencia se apoyó y qué no podía explicar. Desde Thomson, Rutherford y Bohr hay un botón directo a su experimento.
+  - **🧪 Experimentos**: tres simuladores propios que funcionan sin conexión.
+    - *Rayos catódicos (Thomson)*: voltaje de las placas, campo del imán, voltaje de aceleración y metal del cátodo. El haz se calcula con la física real (e/m = 1,76 × 10¹¹ C/kg). Incluye el reto de equilibrar el haz para medir v = E/B. Cambiar el metal no cambia nada, porque los electrones son iguales en todos los átomos.
+    - *Lámina de oro (Rutherford)*: el estudiante elige el modelo de átomo (budín de Thomson o núcleo de Rutherford) y dispara partículas alfa. En los dos modelos la carga es la misma; solo cambia cómo está repartida. Con Thomson ninguna partícula rebota y con el núcleo algunas sí. Hay conteo por ángulo y un aviso de que el núcleo está dibujado mucho más grande que el real.
+    - *Espectro del hidrógeno (Bohr)*: se mueve el electrón entre los niveles n = 1 a 6 y se ve el fotón absorbido o emitido, con su longitud de onda calculada con la ecuación de Rydberg. Las líneas visibles (656, 486, 434 y 410 nm) aparecen en el espectro; las UV e IR se cuentan aparte. El «tubo de descarga» va armando el espectro solo.
+    - Cada experimento empieza con una **predicción** del estudiante antes de manipular.
+  - **🧱 Constructor de átomos**: protones, neutrones y electrones (Z = 1–20). Muestra el elemento, A, Z, la carga, si es catión o anión, si el núcleo es estable o radiactivo (isótopos estables reales) y la configuración electrónica. Trae 13 retos (Na⁺, ³⁵Cl⁻, O²⁻, carbono-14, partícula α…) con retroalimentación sobre qué partícula falla.
+  - **🌐 PhET**: se incrustan en la página tres simulaciones de la Universidad de Colorado en español: *Construir un átomo*, *Dispersión de Rutherford* e *Isótopos y masa atómica*. Se cargan solo al tocar «Cargar aquí», porque necesitan internet. También hay un botón de pantalla completa y se da el crédito de la licencia CC BY 4.0.
+  - **✅ Repaso**: 10 preguntas sobre modelos atómicos, isótopos e iones, con explicación.
+- **Portada: menú en forma de átomo («Tu átomo IonNom»)** en lugar del recuadro «Ruta recomendada». La primera versión era un mapa con regiones para arrastrar; se cambió por el átomo, que la docente prefirió.
+  - **Núcleo**: muestra el progreso (por ejemplo, «4/11»). Al tocarlo aparece el avance por nivel y un botón a la siguiente parada sugerida.
+  - **Capas n = 1 a 4**: cada una es un nivel temático en el orden recomendado: El átomo, Nomenclatura, Reacciones, y Cálculos y redox. Cada nivel tiene su **pregunta guía** (por ejemplo, «¿Cómo sabemos cómo es algo que nadie ha visto?»).
+  - **Electrones**: cada uno es un módulo. Giran despacio, más rápido cerca del núcleo, como en Bohr. Se detienen al poner el dedo o el ratón encima, y no giran si el celular tiene activado «reducir movimiento».
+  - Al tocar una capa, un electrón o los botones de nivel, se abre el panel de ese nivel con enlaces grandes. El átomo nunca abre una página por sí solo.
+  - Los módulos visitados se marcan con ✓ y la siguiente parada sugerida lleva un anillo dorado. «Sala docente» queda aparte, fuera del átomo.
+  - La lista de tarjetas sigue debajo («Ver como lista ↓») e incluye la nueva tarjeta de Teoría Atómica.
+- `assets/ionom-ui.js` guarda en el navegador qué páginas visitó el estudiante (`ionom-visitas`, solo en su equipo y sin enviarse a ningún lado). También agrega «Teoría Atómica» a la hoja «Más» de la barra inferior del celular. El menú lateral de las 15 páginas tiene el nuevo enlace.
+- `sw.js`: `atomo.html` se agregó a la caché y `CACHE_NAME` pasó de `ionom-v47` a `ionom-v48` (cambió `ionom-ui.js`, que se sirve cache-first).
+
+## 28 de octubre — Guías, talleres y evaluaciones en pestañas separadas
+
+- **Por sugerencia de un docente**, la pestaña «📄 Guías, talleres y evaluaciones» de `docente.html` se dividió en tres pestañas propias, igual que Laberintos y Crucigramas: **📘 Guías** (4 sesiones + evaluación en hojas aparte), **✏️ Talleres** (solo ejercicios de práctica) y **📝 Evaluaciones** (tipo Saber 11 + abiertas).
+- **Cada pestaña genera solo su documento**:
+  - **Guías** → guía de estudio: Sesión 1 (saberes previos), Sesión 2 (información) y Sesión 3 (trabajo práctico), **sin evaluación**. Sale una sola vez (sin versiones).
+  - **Talleres** → solo ejercicios de práctica, con el título «Ejercicios» y versiones opcionales.
+  - **Evaluaciones** → solo preguntas tipo Saber 11, hoja de respuestas, preguntas abiertas y rúbrica opcional, con versiones.
+- Cada pestaña muestra un recuadro que explica qué genera, solo las opciones que le aplican (los números de las secciones se ajustan solos) y un botón con su nombre («Generar guía», «Generar taller», «Generar evaluación»).
+- La página recuerda la última pestaña usada y se puede abrir directo con `docente.html#talleres` o `docente.html#evaluaciones`.
 
 ---
 

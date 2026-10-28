@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Enlace Químico</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:1000px;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── Encabezado y pestañas ── */
+.page-hdr{padding:30px 0 18px}
+.page-hdr .eyebrow{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--nav);margin-bottom:6px}
+.page-hdr h1{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.1rem);font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.9rem;color:var(--tx2);max-width:62ch}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;margin-bottom:18px;position:sticky;top:48px;z-index:100;background:var(--bg);border-bottom:2px solid var(--brd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;min-height:44px;border:2px solid var(--brd);border-radius:100px;background:var(--surf);color:var(--tx2);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab:hover{border-color:var(--an)}
+.tab.on{background:var(--nav);border-color:var(--nav);color:#fff}
+@media(max-width:640px){.tabs{top:52px}}
+.panel{display:none}
+.panel.on{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 24px;margin-bottom:18px;box-shadow:var(--sh)}
+.sect h2{font-size:1.12rem;font-weight:800;color:var(--tx);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.8rem;font-weight:800;color:var(--dimmer);margin:16px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul{margin-left:20px;margin-bottom:10px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.6;margin-bottom:4px}
+.sect strong{color:var(--tx)}
+@media(max-width:640px){.sect{padding:18px 16px}}
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 16px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--nav);color:#fff;font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:var(--surf);color:var(--nav)}
+.btn.ghost:hover{background:var(--an-b);filter:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── ENLACE QUÍMICO ── */
+:root{--ion:#d97706;--ion-b:#fef3c7;--ion-t:#92400e;--cov:#059669;--cov-b:#d1fae5;--cov-t:#065f46;--met:#4f46e5;--met-b:#e0e7ff;--met-t:#3730a3;--pol:#7c3aed;--pol-b:#ede9fe;--pol-t:#5b21b6}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0}
+.ro{background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:8px 12px}
+.ro .k{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dimmer)}
+.ro .v{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--tx)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.seg{display:inline-flex;flex-wrap:wrap;border:2px solid var(--nav);border-radius:var(--rs);overflow:hidden}
+.seg button{min-height:42px;border:none;background:var(--surf);color:var(--nav);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;padding:6px 12px}
+.seg button.on{background:var(--nav);color:#fff}
+.sim-pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sim-pick .tab{border-radius:var(--rs)}
+.sim{display:none}.sim.on{display:block}
+.canvas-wrap{position:relative;border-radius:var(--rs);overflow:hidden;background:#0b1622;border:2px solid #1d3348}
+.canvas-wrap canvas{touch-action:none}
+.lw-svg canvas{display:block;width:100%;height:auto}
+.lw-tools{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.lw-leg{display:flex;gap:10px;flex-wrap:wrap;font-size:.72rem;font-weight:700;color:var(--tx2)}
+.lw-leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.lab-tests button.on{outline:3px solid var(--nav);outline-offset:1px}
+.canvas-wrap canvas{display:block;width:100%;height:auto}
+.ctrl label{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:4px;gap:8px}
+.ctrl label output{font-family:var(--mono);color:var(--nav)}
+.ctrl input[type=range]{width:100%;accent-color:var(--nav);min-height:32px}
+.ctrl select,.pick select{min-height:42px;border:2px solid var(--brd);border-radius:8px;padding:6px 10px;font:inherit;font-size:.88rem;background:var(--surf);color:var(--tx)}
+/* tarjetas de tipo de enlace */
+.tipos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tipo{border:2px solid;border-radius:var(--r);padding:16px;background:var(--surf)}
+.tipo.ion{border-color:var(--ion)}.tipo.cov{border-color:var(--cov)}.tipo.met{border-color:var(--met)}
+.tipo .tt{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.2rem;margin-bottom:2px}
+.tipo.ion .tt{color:var(--ion-t)}.tipo.cov .tt{color:var(--cov-t)}.tipo.met .tt{color:var(--met-t)}
+.tipo .who{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--dimmer);margin-bottom:8px}
+.tipo p{font-size:.84rem!important}
+.props{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.prop{background:var(--surf2);border:1px solid var(--brd);border-radius:8px;padding:6px 8px}
+.prop .k{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--dimmer)}
+.prop .v{font-size:.78rem;font-weight:700;color:var(--tx)}
+.ejs{font-size:.78rem;color:var(--tx2);margin-top:8px}
+.ejs b{font-family:var(--mono)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.vs{grid-template-columns:1fr}}
+.vs>div{border-radius:var(--r);padding:14px;border:2px solid}
+/* símbolos de Lewis */
+.dots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px;margin:10px 0}
+.dot-card{border:1.5px solid var(--brd);border-radius:10px;background:var(--surf);text-align:center;padding:4px 2px 6px;cursor:pointer;font:inherit}
+.dot-card:hover,.dot-card.on{border-color:var(--nav);background:var(--an-b)}
+.dot-card svg{width:64px;height:64px}
+.dot-card small{display:block;font-size:.62rem;color:var(--dimmer);font-weight:700}
+/* Lewis paso a paso */
+.lw{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:760px){.lw{grid-template-columns:1fr}}
+.lw-svg{background:#fff;border:2px solid var(--brd);border-radius:var(--r)}
+.lw-svg svg{display:block;width:100%;height:auto}
+.mol-pick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.mol-pick button{min-height:42px;padding:6px 14px;border-radius:var(--rs);border:2px solid var(--brd);background:var(--surf);font:inherit;font-family:var(--mono);font-weight:800;font-size:.95rem;cursor:pointer;color:var(--tx)}
+.mol-pick button.on{border-color:var(--nav);background:var(--nav);color:#fff}
+.lw-step{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dimmer)}
+.lw-tit{font-weight:800;font-size:1rem;margin:2px 0 6px;color:var(--tx)}
+.lw-desc{font-size:.86rem;line-height:1.6;color:var(--tx2)}
+.lw-desc b{color:var(--tx)}
+.lw-cuenta{font-family:var(--mono);font-size:.82rem;background:var(--surf2);border:1.5px solid var(--brd);border-radius:8px;padding:8px 10px;margin-top:8px}
+.lw-dots{display:flex;gap:6px;justify-content:center;margin:8px 0}
+.lw-dots span{width:9px;height:9px;border-radius:50%;background:var(--brd2)}
+.lw-dots span.on{background:var(--nav)}
+/* ΔEN */
+.en-calc{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.en-bar{position:relative;height:30px;border-radius:100px;background:linear-gradient(90deg,#3b82f6 0%,#3b82f6 12.1%,#7c3aed 12.1%,#7c3aed 51.5%,#d97706 51.5%,#d97706 100%);margin:26px 0 4px}
+.en-bar .mk{position:absolute;top:-8px;width:4px;height:46px;border-radius:2px;background:#0d2d42;transform:translateX(-50%);transition:left .35s}
+.en-bar .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0d2d42;color:#fff;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;transition:left .35s}
+.en-lbl{display:flex;justify-content:space-between;font-size:.66rem;color:var(--dimmer);font-weight:700}
+.en-zonas{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.zona{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:100px;border:1.5px solid}
+.zona.ap{background:#dbeafe;border-color:#3b82f6;color:#1e40af}
+.zona.po{background:var(--pol-b);border-color:var(--pol);color:var(--pol-t)}
+.zona.io{background:var(--ion-b);border-color:var(--ion);color:var(--ion-t)}
+.zona.me{background:var(--met-b);border-color:var(--met);color:var(--met-t)}
+.en-res{border-radius:var(--rs);padding:12px 14px;margin-top:10px;border:2px solid;font-size:.88rem;line-height:1.55}
+.par{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:6px 0 12px}
+.par .at{min-width:86px;text-align:center;border:2px solid var(--nav);border-radius:12px;padding:8px 10px;background:var(--surf)}
+.par .at b{display:block;font-family:var(--serif);font-size:1.8rem;color:var(--nav);line-height:1.1}
+.par .at small{font-size:.7rem;color:var(--dimmer);font-weight:700}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.opts4{grid-template-columns:1fr}}
+.opt{min-height:48px;padding:10px;border-radius:10px;border:2px solid var(--brd);background:var(--surf);font:inherit;font-weight:800;font-size:.88rem;cursor:pointer;color:var(--tx)}
+.opt:hover:not(:disabled){border-color:var(--nav);background:var(--an-b)}
+.opt.ok{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.opt.bad{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+/* laboratorio */
+.lab{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:760px){.lab{grid-template-columns:1fr}}
+.lab-tests{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.lab-tests button{min-height:44px;text-align:left;padding:8px 12px;border-radius:10px;border:2px solid var(--brd);background:var(--surf);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;color:var(--tx)}
+.lab-tests button:hover{border-color:var(--nav)}
+.lab-tests button.done{border-color:var(--ok);background:var(--ok-b)}
+.lab-log{font-family:var(--mono);font-size:.8rem;line-height:1.6;background:#0b1622;color:#a7f3d0;border-radius:var(--rs);padding:12px 14px;min-height:150px;max-height:260px;overflow-y:auto}
+.lab-log div{margin-bottom:4px}
+.lab-log .t{color:#fde68a}
+.fb{font-size:.86rem;margin-top:8px;line-height:1.55;min-height:1.2em}
+.ok-t{color:var(--ok-t);font-weight:800}.err-t{color:var(--err-t);font-weight:800}
+/* repaso */
+.mq-q{font-size:.92rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+@media(max-width:560px){.mq-opts{grid-template-columns:1fr}}
+.mq-btn{padding:10px 12px;min-height:48px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font:inherit;font-size:.86rem;cursor:pointer;text-align:left;font-weight:600}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--ox));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+</style>
+
+<link rel="stylesheet" href="assets/ionom.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html" class="active"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+<div class="app">
+  <div class="page-hdr">
+    <div class="eyebrow">Nivel n = 1 · El átomo</div>
+    <h1>🔗 Enlace Químico</h1>
+    <p>¿Por qué los átomos se unen? Para quedar más estables, casi siempre con 8 electrones en su último nivel. Según quién "gana" los electrones, el enlace es <strong>iónico</strong>, <strong>covalente</strong> o <strong>metálico</strong>. Aquí lo ves, lo calculas, lo dibujas con Lewis y lo compruebas en el laboratorio.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Secciones de Enlace Químico">
+    <button class="tab on" role="tab" data-tab="conceptos" aria-selected="true">📚 Conceptos</button>
+    <button class="tab" role="tab" data-tab="lewis" aria-selected="false">✏️ Lewis</button>
+    <button class="tab" role="tab" data-tab="en" aria-selected="false">⚖️ ΔEN</button>
+    <button class="tab" role="tab" data-tab="simuladores" aria-selected="false">🧪 Simuladores</button>
+    <button class="tab" role="tab" data-tab="laboratorio" aria-selected="false">🔬 Laboratorio</button>
+    <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
+  </div>
+
+  <!-- ═══════════ CONCEPTOS ═══════════ -->
+  <section class="panel on" id="p-conceptos" role="tabpanel">
+    <div class="sect">
+      <h2>🎯 La regla del octeto</h2>
+      <p>Los gases nobles casi no reaccionan: su último nivel está lleno (8 electrones; el helio, 2). Los demás átomos <strong>ganan, pierden o comparten electrones</strong> hasta parecerse a un gas noble. Esa es la <strong>regla del octeto</strong>, y el resultado es un <strong>enlace químico</strong>.</p>
+      <p>En la <a href="configuracion.html">página de Configuración</a> aprendiste a contar los <strong>electrones de valencia</strong> (los del último nivel). Ellos son los protagonistas del enlace. Los <strong>símbolos de Lewis</strong> los dibujan como puntos alrededor del símbolo del elemento. Toca uno:</p>
+      <div class="dots-grid" id="dots-grid"></div>
+      <div class="info-box" id="dots-info">Toca un elemento para ver cuántos electrones de valencia tiene y qué hace para cumplir el octeto.</div>
+    </div>
+
+    <div class="sect">
+      <h2>🔀 Los tres tipos de enlace</h2>
+      <div class="tipos">
+        <div class="tipo ion"><div class="tt">⚡ Enlace iónico</div><div class="who">Metal + no metal · ΔEN ≥ 1,7</div>
+          <p>El metal <strong>cede</strong> electrones y queda como <strong>catión (+)</strong>; el no metal los <strong>recibe</strong> y queda como <strong>anión (−)</strong>. Los iones se atraen y forman una <strong>red cristalina</strong>. Son los compuestos que nombras en nomenclatura: óxidos básicos, sales…</p>
+          <div class="props">
+            <div class="prop"><div class="k">Estado (25 °C)</div><div class="v">Sólido cristalino</div></div>
+            <div class="prop"><div class="k">Punto de fusión</div><div class="v">Alto (NaCl: 801 °C)</div></div>
+            <div class="prop"><div class="k">Conduce en sólido</div><div class="v">No</div></div>
+            <div class="prop"><div class="k">Conduce fundido o disuelto</div><div class="v">Sí (iones libres)</div></div>
+            <div class="prop"><div class="k">En agua</div><div class="v">Muchos se disuelven</div></div>
+            <div class="prop"><div class="k">Al golpearlo</div><div class="v">Duro pero frágil</div></div>
+          </div>
+          <div class="ejs">Ejemplos: <b>NaCl</b> (sal de Zipaquirá), <b>CaO</b> (cal viva), <b>KBr</b>, <b>MgO</b>.</div></div>
+        <div class="tipo cov"><div class="tt">🔗 Enlace covalente</div><div class="who">No metal + no metal · ΔEN &lt; 1,7</div>
+          <p>Ninguno de los dos átomos puede quitarle electrones al otro, así que los <strong>comparten</strong>. Un par compartido es un enlace <strong>simple</strong>; dos pares, <strong>doble</strong>; tres, <strong>triple</strong>. Forma <strong>moléculas</strong>. Si los átomos atraen igual el par (ΔEN &lt; 0,4) es <strong>apolar</strong>; si uno lo atrae más, es <strong>polar</strong>.</p>
+          <div class="props">
+            <div class="prop"><div class="k">Estado (25 °C)</div><div class="v">Gas, líquido o sólido</div></div>
+            <div class="prop"><div class="k">Punto de fusión</div><div class="v">Bajo (H₂O: 0 °C)</div></div>
+            <div class="prop"><div class="k">Conductividad</div><div class="v">No conduce</div></div>
+            <div class="prop"><div class="k">Disuelto en agua</div><div class="v">No conduce (azúcar)</div></div>
+            <div class="prop"><div class="k">En agua</div><div class="v">Polares sí; apolares no</div></div>
+            <div class="prop"><div class="k">Al golpearlo</div><div class="v">Blando o quebradizo</div></div>
+          </div>
+          <div class="ejs">Ejemplos: <b>H₂O</b>, <b>CO₂</b>, <b>CH₄</b> (gas natural), <b>O₂</b>, <b>N₂</b>, azúcar.</div></div>
+        <div class="tipo met"><div class="tt">⚙️ Enlace metálico</div><div class="who">Metal + metal</div>
+          <p>Los átomos metálicos sueltan sus electrones de valencia, que forman un <strong>"mar de electrones"</strong> que se mueve libremente entre los cationes. Por eso los metales <strong>conducen</strong> la corriente y el calor, tienen <strong>brillo</strong> y se pueden laminar e hilar (<strong>maleables y dúctiles</strong>).</p>
+          <div class="props">
+            <div class="prop"><div class="k">Estado (25 °C)</div><div class="v">Sólido (excepto Hg)</div></div>
+            <div class="prop"><div class="k">Punto de fusión</div><div class="v">Variable (Fe: 1538 °C)</div></div>
+            <div class="prop"><div class="k">Conduce en sólido</div><div class="v">Sí, muy bien</div></div>
+            <div class="prop"><div class="k">Brillo</div><div class="v">Metálico</div></div>
+            <div class="prop"><div class="k">En agua</div><div class="v">No se disuelven</div></div>
+            <div class="prop"><div class="k">Al golpearlo</div><div class="v">Se deforma (maleable)</div></div>
+          </div>
+          <div class="ejs">Ejemplos: <b>Cu</b> (cables), <b>Fe</b> (Paz de Río), <b>Ni</b> (Cerro Matoso), <b>Au</b>, aleaciones como el bronce.</div></div>
+      </div>
+      <div class="warn-box">⚠️ <strong>Ojo con las reglas rápidas:</strong> "metal + no metal = iónico" funciona casi siempre, pero hay casos intermedios. El AlCl₃ (ΔEN = 1,55) y el BeCl₂ se comportan como covalentes. Y el HF (ΔEN = 1,78) es covalente polar, porque entre dos no metales nunca hay transferencia completa de electrones. En la pestaña ΔEN usamos las dos ideas juntas: el tipo de elementos y la diferencia de electronegatividad.</div>
+    </div>
+
+    <div class="sect">
+      <h2>🔷 Molécula vs. unidad fórmula</h2>
+      <div class="vs">
+        <div style="border-color:var(--cov);background:var(--cov-b)"><strong style="color:var(--cov-t)">🔗 Molécula (covalente)</strong>
+          <p style="margin:6px 0 0">Un grupo <strong>definido</strong> de átomos unidos. La fórmula dice cuántos átomos tiene de verdad: una molécula de H₂O tiene 2 H y 1 O.</p></div>
+        <div style="border-color:var(--ion);background:var(--ion-b)"><strong style="color:var(--ion-t)">⚡ Unidad fórmula (iónico)</strong>
+          <p style="margin:6px 0 0">No existe "una molécula de NaCl": hay una red gigante de Na⁺ y Cl⁻. La fórmula solo dice la <strong>proporción</strong> de iones (1:1 en NaCl, 1:2 en CaCl₂).</p></div>
+      </div>
+      <div class="info-box">⚙️ <strong>Los metales</strong> no forman ni moléculas ni unidades fórmula: se escriben solo con su símbolo (Fe, Cu, Al).</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ LEWIS ═══════════ -->
+  <section class="panel" id="p-lewis" role="tabpanel">
+    <div class="sect">
+      <h2>✏️ Estructuras de Lewis paso a paso</h2>
+      <p>Cada punto es un <strong>electrón de valencia</strong> y su color dice de qué átomo vino. Avanza paso a paso y mira cómo viajan: en cada enlace hay <strong>un electrón de cada átomo</strong>. Los que aún no tienen lugar esperan en la bandeja «por ubicar». Con «Rayas» ves la notación usual: cada raya es un par compartido.</p>
+      <div class="mol-pick" id="mol-pick"></div>
+      <div class="lw">
+        <div>
+          <div class="lw-svg"><canvas id="cv-lw" width="400" height="260" aria-label="Estructura de Lewis animada"></canvas></div>
+          <div class="lw-tools"><div class="seg" id="lw-not"><button class="on" data-n="puntos">• Puntos</button><button data-n="rayas">— Rayas</button></div><div class="lw-leg" id="lw-leg"></div></div>
+        </div>
+        <div>
+          <div class="lw-step" id="lw-step"></div>
+          <div class="lw-tit" id="lw-tit"></div>
+          <div class="lw-desc" id="lw-desc"></div>
+          <div class="lw-cuenta" id="lw-cuenta"></div>
+          <div class="lw-dots" id="lw-dots"></div>
+          <div class="btn-row" style="justify-content:space-between"><button class="btn ghost" id="lw-prev">← Anterior</button><button class="btn" id="lw-next">Siguiente →</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>📋 Las reglas, en resumen</h2>
+      <ol style="margin-left:20px">
+        <li><strong>Cuenta</strong> los electrones de valencia de todos los átomos.</li>
+        <li><strong>Átomo central:</strong> el menos electronegativo (nunca el H; el H siempre va en la orilla).</li>
+        <li><strong>Une</strong> el central con los demás con enlaces simples (cada uno gasta 2 e⁻).</li>
+        <li><strong>Completa el octeto</strong> de los átomos de la orilla con pares libres (el H solo necesita 2 e⁻).</li>
+        <li>Los electrones que sobren van como pares libres en el <strong>central</strong>.</li>
+        <li>Si el central no completa 8, convierte pares libres de la orilla en <strong>enlaces dobles o triples</strong>.</li>
+        <li><strong>Verifica:</strong> los electrones dibujados deben ser exactamente los que contaste.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══════════ ΔEN ═══════════ -->
+  <section class="panel" id="p-en" role="tabpanel">
+    <div class="sect">
+      <h2>⚖️ Calculadora de diferencia de electronegatividad</h2>
+      <p>La <strong>electronegatividad (EN)</strong> mide qué tanto atrae un átomo los electrones de un enlace (escala de Pauling, la misma de la <a href="tabla.html">Tabla Periódica</a>). Elige dos elementos:</p>
+      <div class="en-calc pick">
+        <select id="en-a" aria-label="Primer elemento"></select>
+        <span style="font-weight:800;color:var(--dimmer)">con</span>
+        <select id="en-b" aria-label="Segundo elemento"></select>
+      </div>
+      <div class="en-bar" id="en-bar"><div class="mk" id="en-mk"></div><div class="tip" id="en-tip"></div></div>
+      <div class="en-lbl" style="position:relative;height:16px"><span style="position:absolute;left:0">0</span><span style="position:absolute;left:12.1%;transform:translateX(-50%)">0,4</span><span style="position:absolute;left:51.5%;transform:translateX(-50%)">1,7</span><span style="position:absolute;right:0">3,3</span></div>
+      <div class="en-zonas"><span class="zona ap">0 – 0,4 · covalente apolar</span><span class="zona po">0,4 – 1,7 · covalente polar</span><span class="zona io">≥ 1,7 (metal + no metal) · iónico</span><span class="zona me">metal + metal · metálico</span></div>
+      <div class="en-res" id="en-res"></div>
+    </div>
+    <div class="sect">
+      <h2>🎮 Reto: ¿qué enlace forman?</h2>
+      <p style="font-size:.82rem">10 parejas al azar. Primero piensa si son metales o no metales; luego, la ΔEN.</p>
+      <div class="progress-bar"><div class="progress-fill" id="eg-fill"></div></div>
+      <div class="progress-label" id="eg-label"></div>
+      <div id="eg-box"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SIMULADORES ═══════════ -->
+  <section class="panel" id="p-simuladores" role="tabpanel">
+    <div class="sim-pick" role="tablist" aria-label="Elegir simulador">
+      <button class="tab on" data-sim="ionico">⚡ Del átomo al cristal</button>
+      <button class="tab" data-sim="covalente">🔗 Nube compartida</button>
+      <button class="tab" data-sim="polaridad">🌈 Polaridad</button>
+      <button class="tab" data-sim="metalico">⚙️ Mar de electrones</button>
+      <button class="tab" data-sim="golpe">🔨 Maleable vs. frágil</button>
+    </div>
+
+    <div class="sim on" id="sim-ionico"><div class="sect">
+      <h2>⚡ Del átomo al cristal (enlace iónico)</h2>
+      <p>Elige un compuesto. <b>Arrastra con el dedo</b> los electrones de valencia del metal (amarillos) hasta los huecos del no metal. Luego avanza por las fases: los átomos se vuelven iones, se atraen y forman una red cristalina.</p>
+      <div class="btn-row"><div class="seg" id="io-pick"></div></div>
+      <div class="canvas-wrap"><canvas id="cv-io" width="720" height="400" aria-label="Simulación del enlace iónico: del átomo al cristal"></canvas></div>
+      <div class="btn-row"><button class="btn" id="io-auto">▶ Automático</button><button class="btn ghost" id="io-next">Siguiente fase →</button><button class="btn ghost" id="io-reset">↺ Reiniciar</button></div>
+      <div class="info-box" id="io-msg"></div>
+    </div></div>
+
+    <div class="sim" id="sim-covalente"><div class="sect">
+      <h2>🔗 Nube compartida (enlace covalente)</h2>
+      <p><b>Arrastra el átomo de la derecha</b> hacia el otro. Mira cómo se suman las nubes de electrones y cómo, en la distancia justa, los electrones pasan a recorrer los <b>dos núcleos</b>: eso es compartir. La curva de energía de la derecha te dice si el enlace se formó.</p>
+      <div class="btn-row"><div class="seg" id="cv-pick"><button class="on" data-m="H2">H₂ · simple</button><button data-m="Cl2">Cl₂ · simple</button><button data-m="O2">O₂ · doble</button><button data-m="N2">N₂ · triple</button></div></div>
+      <div class="canvas-wrap"><canvas id="cv-cov" width="720" height="380" aria-label="Simulación del enlace covalente con curva de energía"></canvas></div>
+      <div class="btn-row"><button class="btn" id="cv-soltar">〰️ Soltar (vibrar)</button><button class="btn ghost" id="cv-reset">↺ Separar los átomos</button></div>
+      <div class="readout"><div class="ro"><div class="k">Distancia</div><div class="v" id="cv-r2"></div></div><div class="ro"><div class="k">Energía</div><div class="v" id="cv-e"></div></div><div class="ro"><div class="k">Enlace real (longitud · energía)</div><div class="v" id="cv-re"></div></div></div>
+      <div class="info-box" id="cv-msg"></div>
+      <p style="font-size:.74rem;color:var(--dimmer)">Curva de Morse con longitudes y energías de enlace reales. Compara: a más pares compartidos (simple → doble → triple), el enlace es <b>más corto y más fuerte</b>.</p>
+    </div></div>
+
+    <div class="sim" id="sim-polaridad"><div class="sect">
+      <h2>🌈 Polaridad: del apolar al iónico</h2>
+      <p>Mueve la diferencia de electronegatividad y mira cómo se corre el par compartido. Los colores son un <b>mapa de carga</b>: <span style="color:#dc2626;font-weight:800">rojo</span> = zona con más electrones (δ−), <span style="color:#2563eb;font-weight:800">azul</span> = zona con menos (δ+), <span style="color:#059669;font-weight:800">verde</span> = neutra.</p>
+      <div class="btn-row"><div class="seg" id="pol-ej"></div></div>
+      <div class="canvas-wrap"><canvas id="cv-pol" width="720" height="340" aria-label="Simulación de polaridad del enlace"></canvas></div>
+      <div class="ctrl" style="margin-top:12px"><label for="pol-d">Diferencia de electronegatividad (ΔEN) <output id="pol-d-o"></output></label><input type="range" id="pol-d" min="0" max="3.3" step="0.01" value="0.96"></div>
+      <div class="info-box" id="pol-msg"></div>
+    </div></div>
+
+    <div class="sim" id="sim-metalico"><div class="sect">
+      <h2>⚙️ Mar de electrones (enlace metálico)</h2>
+      <p>Los cationes metálicos quedan fijos y los electrones de valencia se mueven libres por toda la red. Prueba qué pasa al conectar una pila, al calentar un extremo o al golpear.</p>
+      <div class="btn-row"><div class="seg" id="me-pick"><button class="on" data-m="normal">Normal</button><button data-m="volt">🔋 Conectar pila</button><button data-m="calor">🔥 Calentar un extremo</button><button data-m="golpe">🔨 Golpear</button></div></div>
+      <div class="canvas-wrap"><canvas id="cv-me" width="720" height="380" aria-label="Simulación del enlace metálico"></canvas></div>
+      <div class="info-box" id="me-msg"></div>
+    </div></div>
+
+    <div class="sim" id="sim-golpe"><div class="sect">
+      <h2>🔨 ¿Por qué el cobre se dobla y la sal se rompe?</h2>
+      <p>El mismo golpe a los dos cristales, en cámara lenta. En ambos una capa se desliza sobre la otra. ¿Qué pasa después?</p>
+      <div class="canvas-wrap"><canvas id="cv-gol" width="720" height="360" aria-label="Comparación de maleabilidad y fragilidad"></canvas></div>
+      <div class="btn-row"><button class="btn" id="gol-go">🔨 Golpear</button><button class="btn ghost" id="gol-reset">↺ Reiniciar</button></div>
+      <div class="info-box" id="gol-msg">Toca «Golpear».</div>
+    </div></div>
+  </section>
+
+  <!-- ═══════════ LABORATORIO ═══════════ -->
+  <section class="panel" id="p-laboratorio" role="tabpanel">
+    <div class="sect">
+      <h2>🔬 Laboratorio: ¿qué enlace tiene la muestra?</h2>
+      <p>Haz los ensayos que necesites, como en el laboratorio del colegio, y decide qué tipo de enlace tiene la sustancia. Gana el que acierta con <strong>menos ensayos</strong>.</p>
+      <div class="lab">
+        <div>
+          <label class="sect-hint" for="lab-m" style="display:block;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:4px">Muestra</label>
+          <div class="pick"><select id="lab-m" style="width:100%"></select></div>
+          <div class="lab-tests" id="lab-tests">
+            <button data-t="aspecto">👀 Aspecto</button>
+            <button data-t="fusion">🔥 Calentar (punto de fusión)</button>
+            <button data-t="cond">💡 Conductividad del sólido</button>
+            <button data-t="agua">💧 Disolver en agua</button>
+            <button data-t="cond2">🔌 Conductividad disuelto o fundido</button>
+            <button data-t="golpe">🔨 Golpear con el martillo</button>
+          </div>
+        </div>
+        <div>
+          <div class="canvas-wrap"><canvas id="cv-lab" width="560" height="320" aria-label="Escena animada del ensayo de laboratorio"></canvas></div>
+          <div class="lab-log" id="lab-log" style="margin-top:10px;min-height:90px;max-height:160px"></div>
+          <div style="font-weight:800;margin:12px 0 6px">¿Qué tipo de enlace tiene?</div>
+          <div class="opts4" id="lab-v">
+            <button class="opt" data-v="ionico">⚡ Iónico</button>
+            <button class="opt" data-v="covalente">🔗 Covalente</button>
+            <button class="opt" data-v="metalico">⚙️ Metálico</button>
+          </div>
+          <div class="fb" id="lab-fb"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ REPASO ═══════════ -->
+  <section class="panel" id="p-repaso" role="tabpanel">
+    <div class="sect">
+      <h2>✅ Repaso: enlace químico</h2>
+      <div class="progress-bar"><div class="progress-fill" id="q-fill"></div></div>
+      <div class="progress-label" id="q-label"></div>
+      <div id="q-box"></div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="tabla.html">← Tabla Periódica</a> &nbsp;|&nbsp; <a href="teoria.html">Siguiente parada: Nomenclatura →</a><br><br>
+    <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+function $(id){ return document.getElementById(id); }
+const fmt = (x, d) => x.toFixed(d == null ? 2 : d).replace('.', ',');
+const pick = a => a[Math.floor(Math.random()*a.length)];
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+// Safari de iOS 15 o anterior no tiene ctx.roundRect: sin este reemplazo
+// cada cuadro de las simulaciones lanzaba un error y dejaban de dibujarse.
+if(window.CanvasRenderingContext2D && !CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r){
+    r = Math.max(0, Math.min(typeof r === 'number' ? r : (r && r[0]) || 0, Math.abs(w)/2, Math.abs(h)/2));
+    this.moveTo(x + r, y); this.arcTo(x + w, y, x + w, y + h, r); this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r); this.arcTo(x, y, x + w, y, r); this.closePath(); return this;
+  };
+}
+function setupCanvas(cv, W, H){
+  const ctx = cv.getContext('2d');
+  function fit(){
+    const w = cv.clientWidth || W, dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr); cv.style.height = (w*H/W) + 'px';
+    ctx.setTransform(cv.width/W, 0, 0, cv.height/H, 0, 0);
+  }
+  fit(); window.addEventListener('resize', fit);
+  return {ctx, fit};
+}
+const visible = el => el && el.offsetParent !== null;
+const SUPD = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
+const sup = s => String(s).split('').map(c => SUPD[c] || c).join('');
+const SUBD = '₀₁₂₃₄₅₆₇₈₉';
+const sub = n => n > 1 ? String(n).split('').map(d => SUBD[d]).join('') : '';
+const carga = q => sup((Math.abs(q) > 1 ? Math.abs(q) : '') + (q > 0 ? '+' : '-'));
+
+/* ════════ Pestañas ════════ */
+const TABS = ['conceptos','lewis','en','simuladores','laboratorio','repaso'];
+const refit = [];
+function showTab(name, push){
+  if(TABS.indexOf(name) < 0) name = 'conceptos';
+  document.querySelectorAll('.tabs .tab').forEach(b => { const on = b.dataset.tab === name; b.classList.toggle('on', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+  TABS.forEach(t => $('p-' + t).classList.toggle('on', t === name));
+  if(push !== false){ try{ history.replaceState(null, '', '#' + name); }catch(e){} }
+  refit.forEach(f => f());
+}
+document.querySelectorAll('.tabs .tab').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+const SIMS = ['ionico','covalente','polaridad','metalico','golpe'];
+document.querySelectorAll('.sim-pick .tab').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.sim-pick .tab').forEach(x => x.classList.toggle('on', x === b));
+  SIMS.forEach(s => $('sim-' + s).classList.toggle('on', s === b.dataset.sim));
+  refit.forEach(f => f());
+}));
+
+/* ════════ Electronegatividades (Pauling, las mismas de tabla.html) ════════ */
+// [símbolo, nombre, EN, clase] — clase: m = metal, n = no metal, s = metaloide
+const ELS = [['H','Hidrógeno',2.20,'n'],['Li','Litio',0.98,'m'],['Be','Berilio',1.57,'m'],['B','Boro',2.04,'s'],['C','Carbono',2.55,'n'],['N','Nitrógeno',3.04,'n'],['O','Oxígeno',3.44,'n'],['F','Flúor',3.98,'n'],
+  ['Na','Sodio',0.93,'m'],['Mg','Magnesio',1.31,'m'],['Al','Aluminio',1.61,'m'],['Si','Silicio',1.90,'s'],['P','Fósforo',2.19,'n'],['S','Azufre',2.58,'n'],['Cl','Cloro',3.16,'n'],['K','Potasio',0.82,'m'],['Ca','Calcio',1.00,'m'],
+  ['Fe','Hierro',1.83,'m'],['Ni','Níquel',1.91,'m'],['Cu','Cobre',1.90,'m'],['Zn','Zinc',1.65,'m'],['Br','Bromo',2.96,'n'],['Ag','Plata',1.93,'m'],['I','Yodo',2.66,'n'],['Ba','Bario',0.89,'m'],['Au','Oro',2.54,'m']];
+const E = {}; ELS.forEach(e => E[e[0]] = {s:e[0], n:e[1], en:e[2], c:e[3]});
+const CLASE = {m:'metal', n:'no metal', s:'metaloide'};
+// Tipo de enlace: primero la clase de los elementos, luego la ΔEN.
+function tipoEnlace(a, b){
+  const A = E[a], B = E[b], d = Math.abs(A.en - B.en);
+  if(A.c === 'm' && B.c === 'm') return {t:'metalico', d};
+  if(A.c !== 'm' && B.c !== 'm') return {t: d < 0.4 ? 'apolar' : 'polar', d};
+  return {t: d >= 1.7 ? 'ionico' : 'polar', d, intermedio: d < 1.7};
+}
+const TNOM = {ionico:'Iónico', polar:'Covalente polar', apolar:'Covalente apolar', metalico:'Metálico'};
+const TCLS = {ionico:'io', polar:'po', apolar:'ap', metalico:'me'};
+const TCOL = {ionico:['var(--ion-b)','var(--ion)','var(--ion-t)'], polar:['var(--pol-b)','var(--pol)','var(--pol-t)'], apolar:['#dbeafe','#3b82f6','#1e40af'], metalico:['var(--met-b)','var(--met)','var(--met-t)']};
+function explicar(a, b){
+  const A = E[a], B = E[b], r = tipoEnlace(a, b);
+  const base = A.s + ' (' + CLASE[A.c] + ', EN ' + fmt(A.en) + ') y ' + B.s + ' (' + CLASE[B.c] + ', EN ' + fmt(B.en) + '): ΔEN = |' + fmt(A.en) + ' − ' + fmt(B.en) + '| = <b>' + fmt(r.d) + '</b>. ';
+  let why;
+  if(r.t === 'metalico') why = 'Dos metales: sus electrones de valencia forman un mar de electrones → <b>enlace metálico</b> (la ΔEN no se usa aquí).';
+  else if(r.t === 'apolar') why = (a === b ? 'Átomos iguales: comparten el par por partes iguales' : 'ΔEN < 0,4: comparten el par casi por igual') + ' → <b>covalente apolar</b>.';
+  else if(r.t === 'polar' && r.intermedio) why = 'Metal y no metal, pero ΔEN < 1,7: el metal no cede del todo sus electrones → <b>covalente polar</b> con carácter iónico parcial (como el AlCl₃).';
+  else if(r.t === 'polar') why = (r.d >= 1.7 ? 'Aunque ΔEN ≥ 1,7, son dos no metales: ninguno cede del todo sus electrones (como en el HF)' : 'Dos no metales con ΔEN entre 0,4 y 1,7: el par se comparte, pero más cerca del más electronegativo') + ' → <b>covalente polar</b> (' + (A.en > B.en ? A.s : B.s) + ' queda con carga parcial δ−).';
+  else why = 'Metal y no metal con ΔEN ≥ 1,7: el ' + (A.c === 'm' ? A.n : B.n).toLowerCase() + ' cede electrones → <b>enlace iónico</b>.';
+  return {html: base + why, r};
+}
+
+/* ════════ Símbolos de Lewis de los elementos ════════ */
+const DOTS_EL = [['H',1],['He',2],['Li',1],['Be',2],['B',3],['C',4],['N',5],['O',6],['F',7],['Ne',8],['Na',1],['Mg',2],['Al',3],['Si',4],['P',5],['S',6],['Cl',7],['Ar',8],['K',1],['Ca',2]];
+const COL = {H:'#2563eb',He:'#64748b',Li:'#7c3aed',Be:'#7c3aed',B:'#a16207',C:'#0f172a',N:'#1d4ed8',O:'#dc2626',F:'#0e7490',Ne:'#64748b',Na:'#7c3aed',Mg:'#7c3aed',Al:'#7c3aed',Si:'#a16207',P:'#c2410c',S:'#a16207',Cl:'#047857',Ar:'#64748b',K:'#7c3aed',Ca:'#7c3aed',Br:'#9a3412'};
+// Puntos alrededor del símbolo: primero uno por lado (arriba, derecha, abajo, izquierda) y luego en parejas.
+function ladosLewis(sym, v){ if(sym === 'He') return [2,0,0,0]; const l = [0,0,0,0]; for(let i=0;i<v;i++) l[i%4]++; return l; }
+function puntosSVG(sym, v, x, y, color, d){
+  d = d || 21; color = color || '#0d2d42';
+  const l = ladosLewis(sym, v), P = [[0,-1],[1,0],[0,1],[-1,0]];
+  let s = '<text x="' + x + '" y="' + (y + 9) + '" text-anchor="middle" font-size="26" font-weight="800" font-family="Georgia,serif" fill="' + (COL[sym]||'#0d2d42') + '">' + sym + '</text>';
+  const dx = sym.length > 1 ? d + 7 : d;   // símbolos de dos letras: puntos laterales más afuera
+  l.forEach((n, i) => {
+    const [px, py] = P[i], cx = x + px*dx, cy = y + py*d;
+    if(n === 1) s += '<circle cx="' + cx + '" cy="' + cy + '" r="3.2" fill="' + color + '"/>';
+    if(n === 2) s += '<circle cx="' + (cx - py*5.5) + '" cy="' + (cy - px*5.5) + '" r="3.2" fill="' + color + '"/><circle cx="' + (cx + py*5.5) + '" cy="' + (cy + px*5.5) + '" r="3.2" fill="' + color + '"/>';
+  });
+  return s;
+}
+(function(){
+  const g = $('dots-grid');
+  g.innerHTML = DOTS_EL.map(([s, v]) => '<button type="button" class="dot-card" data-s="' + s + '" data-v="' + v + '"><svg viewBox="-34 -34 68 68" aria-hidden="true">' + puntosSVG(s, v, 0, -2, '#0d2d42', 20) + '</svg><small>' + v + ' e⁻</small></button>').join('');
+  g.addEventListener('click', ev => {
+    const b = ev.target.closest('.dot-card'); if(!b) return;
+    g.querySelectorAll('.dot-card').forEach(x => x.classList.toggle('on', x === b));
+    const s = b.dataset.s, v = +b.dataset.v;
+    let t;
+    if(v === 8 || s === 'He') t = 'ya tiene su último nivel lleno (como un gas noble): casi nunca forma enlaces.';
+    else if(s === 'H') t = 'comparte su electrón (enlace covalente) para quedar con 2, como el helio. Con metales muy activos lo gana y queda como hidruro H⁻.';
+    else if(s === 'B') t = 'comparte sus 3 electrones (3 enlaces) y suele quedar con solo 6: es una excepción al octeto.';
+    else if(v <= 3) t = 'es un metal: tiende a <b>perder</b> sus ' + v + ' e⁻ y quedar como catión <b>' + s + carga(v) + '</b> (enlace iónico o metálico).';
+    else if(v === 4) t = 'tiende a <b>compartir</b> sus 4 e⁻: forma 4 enlaces covalentes (como el C en el CH₄).';
+    else t = 'tiende a <b>ganar ' + (8 - v) + ' e⁻</b> y quedar como anión <b>' + s + carga(-(8 - v)) + '</b> (enlace iónico), o a <b>compartir ' + (8 - v) + ' par' + (8 - v > 1 ? 'es' : '') + '</b> (enlace covalente).';
+    $('dots-info').innerHTML = '<b>' + s + '</b> tiene <b>' + v + ' electrón' + (v > 1 ? 'es' : '') + ' de valencia</b>: ' + t;
+  });
+})();
+
+/* ════════ Estructuras de Lewis animadas ════════ */
+// Cada electrón de valencia es un punto con identidad propia (átomo de origen
+// + número). En cada paso se calcula dónde va cada uno: en un enlace (un
+// electrón de cada átomo), en un par libre o, si todavía no se ha ubicado, en
+// la «bandeja» de electrones por ubicar. Entre pasos, los puntos viajan con
+// una animación: el estudiante ve de dónde sale cada electrón.
+const VAL = {H:1,C:4,N:5,O:6,Cl:7,Na:1};
+const ECOL = {H:'#2563eb',C:'#0f766e',N:'#7c3aed',O:'#dc2626',Cl:'#059669',Na:'#d97706'};
+const MOLS = [
+  {id:'h2o', f:'H₂O', n:'agua', at:[['O',200,100],['H',122,170],['H',278,170]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'El O aporta 6 e⁻ (rojos) y cada H aporta 1 (azules).', c:'Total = 6 + 1 + 1 = <b>8 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1]], t:'Esqueleto con enlaces simples', d:'El O va en el centro (el H nunca es central). Cada enlace es un <b>par compartido: un electrón de cada átomo</b>. Los que sobran esperan en la bandeja.', c:'Usados: 2 enlaces × 2 = 4 e⁻ · Quedan: 8 − 4 = <b>4 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1]], lp:{0:[-140,-40]}, t:'Pares libres en el central', d:'Los 4 e⁻ que sobran pasan al O como <b>2 pares libres</b>. Cada H ya tiene sus 2 e⁻.', c:'O: 2 enlaces (4) + 2 pares (4) = 8 ✓ · H: 2 ✓ · Quedan: <b>0</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1]], lp:{0:[-140,-40]}, q:{0:'δ−',1:'δ+',2:'δ+'}, qp:{0:[0,42],1:[0,34],2:[0,34]}, t:'Estructura final', d:'Molécula <b>angular</b> (104,5°): los pares libres empujan los enlaces hacia abajo. ΔEN(O–H) = 1,24 → enlaces <b>polares</b> y, como la forma no es simétrica, molécula <b>polar</b>. Por eso el agua disuelve la sal y el azúcar.', c:'Enlace covalente polar · molécula polar'}]},
+  {id:'nh3', f:'NH₃', n:'amoníaco', at:[['N',200,92],['H',116,158],['H',200,190],['H',284,158]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'El N aporta 5 e⁻ y cada H aporta 1.', c:'Total = 5 + 3 × 1 = <b>8 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1],[0,3,1]], t:'Esqueleto con enlaces simples', d:'El N en el centro, unido a los 3 H con un par compartido cada uno.', c:'Usados: 3 × 2 = 6 e⁻ · Quedan: <b>2 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1],[0,3,1]], lp:{0:[-90]}, t:'Par libre en el central', d:'Los 2 e⁻ que sobran forman <b>1 par libre</b> en el N.', c:'N: 3 enlaces (6) + 1 par (2) = 8 ✓ · H: 2 ✓'},
+    {m:'mol', b:[[0,1,1],[0,2,1],[0,3,1]], lp:{0:[-90]}, q:{0:'δ−',1:'δ+',2:'δ+',3:'δ+'}, qp:{0:[-36,-4],1:[0,34],2:[0,34],3:[0,34]}, t:'Estructura final', d:'<b>Pirámide trigonal</b> (107°): el par libre empuja a los 3 H. ΔEN(N–H) = 0,84 → molécula <b>polar</b>.', c:'Enlace covalente polar · molécula polar'}]},
+  {id:'ch4', f:'CH₄', n:'metano (gas natural)', at:[['C',200,125],['H',200,48],['H',282,125],['H',200,202],['H',118,125]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'El C aporta 4 e⁻ y cada H aporta 1.', c:'Total = 4 + 4 × 1 = <b>8 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]], t:'Esqueleto con enlaces simples', d:'Los 4 e⁻ del C se emparejan con el electrón de cada H: <b>4 enlaces</b>.', c:'Usados: 4 × 2 = 8 e⁻ · Quedan: <b>0</b>'},
+    {m:'mol', b:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]], t:'Estructura final', d:'C: 4 enlaces = 8 e⁻ ✓; cada H: 2 ✓. En 3D es un <b>tetraedro</b> (109,5°). ΔEN(C–H) = 0,35 → <b>covalente apolar</b>: por eso el gas natural no se mezcla con el agua.', c:'Enlace covalente apolar · molécula apolar'}]},
+  {id:'hcl', f:'HCl', n:'cloruro de hidrógeno', at:[['H',150,125],['Cl',250,125]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'El H aporta 1 e⁻ y el Cl aporta 7.', c:'Total = 1 + 7 = <b>8 e⁻</b>'},
+    {m:'mol', b:[[0,1,1]], t:'Enlace simple', d:'El electrón del H y uno del Cl forman el par compartido.', c:'Usados: 2 e⁻ · Quedan: <b>6 e⁻</b>'},
+    {m:'mol', b:[[0,1,1]], lp:{1:[-90,0,90]}, t:'Pares libres', d:'Los 6 e⁻ restantes quedan en el Cl como <b>3 pares libres</b>.', c:'Cl: 1 enlace (2) + 3 pares (6) = 8 ✓ · H: 2 ✓'},
+    {m:'mol', b:[[0,1,1]], lp:{1:[-90,0,90]}, q:{0:'δ+',1:'δ−'}, qp:{0:[0,-30],1:[-32,-26]}, t:'Estructura final', d:'ΔEN(H–Cl) = 0,96 → <b>covalente polar</b>: el Cl atrae más el par. Disuelto en agua es el ácido clorhídrico.', c:'Enlace covalente polar · molécula polar'}]},
+  {id:'co2', f:'CO₂', n:'dióxido de carbono', at:[['O',105,125],['C',200,125],['O',295,125]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'El C aporta 4 e⁻ y cada O aporta 6.', c:'Total = 4 + 2 × 6 = <b>16 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[1,2,1]], t:'Esqueleto con enlaces simples', d:'El C (menos electronegativo) va en el centro.', c:'Usados: 4 e⁻ · Quedan: <b>12 e⁻</b>'},
+    {m:'mol', b:[[0,1,1],[1,2,1]], lp:{0:[180,-90,90],2:[0,-90,90]}, t:'Completar los átomos de la orilla', d:'Cada O recibe 3 pares libres (dos de esos electrones vienen del C). Se acabaron los electrones, pero el C solo tiene 4: <b>¡no cumple el octeto!</b>', c:'O: 8 ✓ · C: 4 ✗ · Quedan: 0'},
+    {m:'mol', b:[[0,1,2],[1,2,2]], lp:{0:[-135,135],2:[-45,45]}, t:'Enlaces dobles', d:'Mira cómo un par libre de cada O <b>se mueve</b> al espacio entre los átomos: ahora es un segundo enlace. <b>O=C=O</b>.', c:'C: 2 enlaces dobles = 8 ✓ · cada O: 2 enlaces + 2 pares = 8 ✓'},
+    {m:'mol', b:[[0,1,2],[1,2,2]], lp:{0:[-135,135],2:[-45,45]}, q:{0:'δ−',1:'δ+',2:'δ−'}, qp:{0:[0,54],1:[0,-30],2:[0,54]}, t:'Estructura final', d:'Cada C=O es <b>polar</b> (ΔEN = 0,89), pero la molécula es <b>lineal</b>: los dos dipolos se cancelan y el CO₂ es <b>apolar</b>.', c:'Enlaces polares · molécula apolar'}]},
+  {id:'n2', f:'N₂', n:'nitrógeno (78 % del aire)', at:[['N',165,125],['N',235,125]], steps:[
+    {m:'sep', t:'Contar electrones de valencia', d:'Cada N aporta 5 e⁻.', c:'Total = 5 + 5 = <b>10 e⁻</b>'},
+    {m:'mol', b:[[0,1,1]], lp:{0:[180,-90,90],1:[0]}, t:'Enlace simple y pares libres', d:'Con un solo enlace, el N de la derecha queda con 4 e⁻: <b>no cumple el octeto</b>.', c:'N izq.: 8 ✓ · N der.: 4 ✗'},
+    {m:'mol', b:[[0,1,3]], lp:{0:[180],1:[0]}, t:'Enlace triple', d:'Dos pares libres se mueven al centro: <b>N≡N</b>, con 1 par libre en cada N.', c:'Cada N: 3 enlaces (6) + 1 par (2) = 8 ✓ · Total: 10 ✓'},
+    {m:'mol', b:[[0,1,3]], lp:{0:[180],1:[0]}, t:'Estructura final', d:'ΔEN = 0 → <b>covalente apolar</b>. El triple enlace es de los más fuertes que existen (945 kJ/mol): por eso el N₂ del aire casi no reacciona.', c:'Enlace covalente apolar triple'}]},
+  {id:'nacl', f:'NaCl', n:'cloruro de sodio', at:[['Na',125,125],['Cl',275,125]], steps:[
+    {m:'sep', t:'Electrones de valencia', d:'El Na (metal) tiene 1 e⁻ de valencia y el Cl (no metal) tiene 7. ΔEN = 2,23 ≥ 1,7 → <b>iónico</b>: no se comparte, se <b>transfiere</b>.', c:'Na: 1 e⁻ · Cl: 7 e⁻'},
+    {m:'ion', t:'Transferencia', d:'Mira el electrón naranja: sale del Na y completa el octeto del Cl.', c:'Na → Na⁺ + e⁻ · Cl + e⁻ → Cl⁻'},
+    {m:'ion', br:true, t:'Iones con octeto', d:'El Na⁺ queda con la configuración del neón y el Cl⁻ con la del argón. En Lewis, los iones van entre corchetes con su carga.', c:'Na⁺: 2, 8 · Cl⁻: 2, 8, 8'},
+    {m:'red', t:'Red cristalina', d:'Los iones de cargas opuestas se atraen en todas las direcciones y forman una <b>red</b>. "NaCl" es la <b>unidad fórmula</b> (1 : 1), no una molécula.', c:'Enlace iónico · unidad fórmula'}]}
+];
+const LADO = [[0,-1],[1,0],[0,1],[-1,0]];
+function puntosLado(sym, v, x, y){
+  // posiciones de los v puntos de Lewis alrededor de (x, y)
+  const l = ladosLewis(sym, v), d = 22, dx = sym.length > 1 ? 29 : 22, out = [];
+  l.forEach((n, i) => { const [px, py] = LADO[i], cx = x + px*dx, cy = y + py*d;
+    if(n === 1) out.push([cx, cy]);
+    if(n === 2){ out.push([cx - py*5.5, cy - px*5.5]); out.push([cx + py*5.5, cy + px*5.5]); } });
+  return out;
+}
+function layoutLewis(M, st){
+  const A = M.at, pos = {}, atoms = [];
+  const sepX = i => 200 + (i - (A.length - 1)/2)*(A.length > 3 ? 80 : 115);
+  const ids = A.map(([s], i) => Array.from({length: VAL[s]}, (_, k) => i*10 + k));
+  if(st.m === 'sep'){
+    A.forEach(([s], i) => { atoms.push([sepX(i), 125]); puntosLado(s, VAL[s], sepX(i), 125).forEach((p, k) => pos[ids[i][k]] = p); });
+    return {atoms, pos};
+  }
+  A.forEach(([, x, y]) => atoms.push([x, y]));
+  if(st.m === 'ion' || st.m === 'red'){
+    // NaCl: los 7 del Cl en sus lados y el 1 del Na pasa al hueco del lado izquierdo del Cl
+    const cl = puntosLado('Cl', 8, A[1][1], A[1][2]);
+    const orden = [0,1,2,3,4,5,6,7]; // 8 posiciones del octeto; la 6 o 7 (izquierda) recibe al del Na
+    ids[1].forEach((id, k) => pos[id] = cl[orden[k]]);
+    pos[ids[0][0]] = cl[7];
+    return {atoms, pos};
+  }
+  const libres = ids.map(l => l.slice()), enl = new Set();
+  (st.b || []).forEach(([i, j, n]) => {
+    const [, x1, y1] = A[i], [, x2, y2] = A[j], L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1)/L, uy = (y2 - y1)/L, mx = (x1 + x2)/2, my = (y1 + y2)/2;
+    for(let p=0;p<n;p++){
+      const o = (p - (n - 1)/2)*10;
+      const ei = libres[i].shift(), ej = libres[j].shift();
+      if(ei != null){ pos[ei] = [mx - ux*5 - uy*o, my - uy*5 + ux*o]; enl.add(String(ei)); }
+      if(ej != null){ pos[ej] = [mx + ux*5 - uy*o, my + uy*5 + ux*o]; enl.add(String(ej)); }
+    }
+  });
+  const huecos = [];
+  Object.keys(st.lp || {}).forEach(i => { const [, x, y] = A[i];
+    st.lp[i].forEach(g => { const t = g*Math.PI/180, px = x + Math.cos(t)*27, py = y + Math.sin(t)*27, ox = -Math.sin(t)*5.5, oy = Math.cos(t)*5.5;
+      [[px + ox, py + oy], [px - ox, py - oy]].forEach(p => { const e = libres[i].shift(); if(e != null) pos[e] = p; else huecos.push(p); }); }); });
+  // los pares libres que el átomo no alcanza a llenar con sus electrones toman los que sobran de otros
+  const sobran = [].concat(...libres);
+  huecos.forEach(p => { const e = sobran.shift(); if(e != null) pos[e] = p; });
+  sobran.forEach((e, k) => pos[e] = [96 + k*15, 228]);   // bandeja de electrones por ubicar
+  return {atoms, pos, bandeja: sobran.length, enl};
+}
+(function(){
+  const W = 400, H = 260, cv = $('cv-lw'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  let mi = 0, si = 0, from = null, to = null, t0 = 0, rayas = false;
+  const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3)/2;
+  const pickEl = $('mol-pick');
+  pickEl.innerHTML = MOLS.map((m, i) => '<button type="button" data-i="' + i + '">' + m.f + '</button>').join('');
+  function ir(nmi, nsi){
+    const M2 = MOLS[nmi], L2 = layoutLewis(M2, M2.steps[nsi]);
+    from = (nmi === mi && to) ? snapshot(performance.now()) : null;
+    mi = nmi; si = nsi; to = L2; t0 = performance.now();
+    panel();
+  }
+  function snapshot(now){
+    const p = Math.min(1, (now - t0)/700), e = ease(p), out = {atoms:[], pos:{}};
+    to.atoms.forEach((a, i) => { const f = from && from.atoms[i] || a; out.atoms.push([f[0] + (a[0] - f[0])*e, f[1] + (a[1] - f[1])*e]); });
+    Object.keys(to.pos).forEach(id => { const a = to.pos[id], f = from && from.pos[id] || a; out.pos[id] = [f[0] + (a[0] - f[0])*e, f[1] + (a[1] - f[1])*e]; });
+    return out;
+  }
+  function panel(){
+    const M = MOLS[mi], st = M.steps[si], n = M.steps.length;
+    pickEl.querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === mi));
+    $('lw-step').textContent = 'Paso ' + (si + 1) + ' de ' + n;
+    $('lw-tit').textContent = st.t; $('lw-desc').innerHTML = st.d; $('lw-cuenta').innerHTML = st.c;
+    $('lw-dots').innerHTML = M.steps.map((_, i) => '<span class="' + (i <= si ? 'on' : '') + '"></span>').join('');
+    $('lw-prev').disabled = si === 0; $('lw-next').disabled = si === n - 1;
+    $('lw-leg').innerHTML = [...new Set(M.at.map(a => a[0]))].map(s => '<span><i style="background:' + ECOL[s] + '"></i>e⁻ del ' + s + '</span>').join('');
+  }
+  function draw(now){
+    const M = MOLS[mi], st = M.steps[si], p = Math.min(1, (now - t0)/700), cur = snapshot(now);
+    ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    if(st.m === 'red'){
+      const a = ease(p);
+      for(let r=0;r<3;r++) for(let c=0;c<5;c++){
+        const x = 60 + c*70, y = 50 + r*70, na = (r + c) % 2 === 0, sx = 200 + (x - 200)*a, sy = 125 + (y - 125)*a;
+        ctx.globalAlpha = a; ctx.fillStyle = na ? '#fcd34d' : '#93c5fd'; ctx.strokeStyle = na ? '#b45309' : '#1d4ed8'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(sx, sy, na ? 15 : 24, 0, 7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#0d2d42'; ctx.font = '800 12px Trebuchet MS'; ctx.fillText(na ? 'Na⁺' : 'Cl⁻', sx, sy + 1);
+      }
+      ctx.globalAlpha = 1;
+    } else {
+      // enlaces: rayas (si se eligió esa notación) que aparecen poco a poco
+      if(st.m === 'mol') (st.b || []).forEach(([i, j, n]) => {
+        const [x1, y1] = cur.atoms[i], [x2, y2] = cur.atoms[j], L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1)/L, uy = (y2 - y1)/L;
+        ctx.strokeStyle = rayas ? 'rgba(13,45,66,' + p + ')' : 'rgba(148,163,184,' + 0.35*p + ')'; ctx.lineWidth = rayas ? 3 : 8; ctx.lineCap = 'round';
+        for(let k=0;k<n;k++){ const o = (k - (n - 1)/2)*(rayas ? 8 : 10); ctx.beginPath(); ctx.moveTo(x1 + ux*19 - uy*o, y1 + uy*19 + ux*o); ctx.lineTo(x2 - ux*19 - uy*o, y2 - uy*19 + ux*o); ctx.stroke(); }
+      });
+      // átomos
+      cur.atoms.forEach(([x, y], i) => { const s = M.at[i][0]; ctx.fillStyle = ECOL[s]; ctx.font = '800 26px Georgia'; ctx.fillText(s, x, y + 2); });
+      if(st.br){
+        const al = Math.min(1, p*1.5); ctx.globalAlpha = al; ctx.fillStyle = '#475569'; ctx.font = '300 46px Georgia';
+        [[cur.atoms[0][0], 22, '+', '#b45309'], [cur.atoms[1][0], 40, '−', '#1d4ed8']].forEach(([x, w, q, c]) => {
+          ctx.fillStyle = '#475569'; ctx.fillText('[', x - w, 128); ctx.fillText(']', x + w, 128);
+          ctx.fillStyle = c; ctx.font = '800 20px Trebuchet MS'; ctx.fillText(q, x + w + 14, 98); ctx.font = '300 46px Georgia'; });
+        ctx.globalAlpha = 1;
+      }
+      // electrones: cada uno con el color de su átomo de origen
+      const bandeja = st.m === 'mol' && Object.values(to.pos).some(q => q[1] === 228);
+      if(bandeja){ ctx.fillStyle = '#4f6d88'; ctx.font = '700 11px Trebuchet MS'; ctx.textAlign = 'left'; ctx.fillText('por ubicar:', 22, 229); ctx.textAlign = 'center'; }
+      Object.keys(cur.pos).forEach(id => {
+        const s = M.at[Math.floor(id/10)][0], [x, y] = cur.pos[id];
+        const enEnlace = rayas && st.m === 'mol' && to.enl && to.enl.has(id);
+        if(enEnlace && p >= 1) return;
+        ctx.globalAlpha = enEnlace ? 1 - p : 1;
+        ctx.fillStyle = ECOL[s]; ctx.beginPath(); ctx.arc(x, y, 3.8, 0, 7); ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+      if(st.q && p >= 1) Object.keys(st.q).forEach(i => { const [x, y] = cur.atoms[i], o = st.qp[i]; ctx.fillStyle = st.q[i] === 'δ−' ? '#1d4ed8' : '#b45309'; ctx.font = '800 15px Georgia'; ctx.fillText(st.q[i], x + o[0], y + o[1]); });
+    }
+    ctx.fillStyle = '#4f6d88'; ctx.font = '700 13px Georgia'; ctx.textAlign = 'center'; ctx.fillText(M.f + ' · ' + M.n, 200, 252);
+  }
+  pickEl.addEventListener('click', ev => { const b = ev.target.closest('button'); if(b){ to = null; ir(+b.dataset.i, 0); } });
+  $('lw-prev').addEventListener('click', () => { if(si > 0) ir(mi, si - 1); });
+  $('lw-next').addEventListener('click', () => { if(si < MOLS[mi].steps.length - 1) ir(mi, si + 1); });
+  $('lw-not').addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return; rayas = b.dataset.n === 'rayas'; $('lw-not').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); t0 = performance.now() - 700; });
+  ir(0, 0);
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Calculadora y reto de ΔEN ════════ */
+(function(){
+  const opts = ELS.slice().sort((a, b) => a[2] - b[2]).map(e => '<option value="' + e[0] + '">' + e[0] + ' · ' + e[1] + ' (' + fmt(e[2]) + ')</option>').join('');
+  $('en-a').innerHTML = opts; $('en-b').innerHTML = opts;
+  $('en-a').value = 'Na'; $('en-b').value = 'Cl';
+  function calc(){
+    const a = $('en-a').value, b = $('en-b').value, ex = explicar(a, b), r = ex.r, c = TCOL[r.t];
+    const pct = Math.min(100, r.d/3.3*100);
+    $('en-mk').style.left = pct + '%'; $('en-tip').style.left = pct + '%';
+    $('en-tip').textContent = 'ΔEN = ' + fmt(r.d);
+    $('en-res').style.background = c[0]; $('en-res').style.borderColor = c[1]; $('en-res').style.color = c[2];
+    $('en-res').innerHTML = '<b style="font-size:1rem">' + TNOM[r.t] + '</b><br>' + ex.html;
+  }
+  $('en-a').addEventListener('change', calc); $('en-b').addEventListener('change', calc);
+  calc();
+
+  // Reto: parejas "limpias" (lejos de los límites 0,4 y 1,7) de 4 categorías
+  const MET = ['Li','Na','K','Mg','Ca','Ba','Al','Fe','Cu','Zn','Ag','Ni'], NOM = ['H','C','N','O','F','P','S','Cl','Br','I'];
+  function parejas(){
+    const out = {ionico:[], polar:[], apolar:[], metalico:[]};
+    MET.forEach(m => NOM.forEach(n => { const d = Math.abs(E[m].en - E[n].en); if(d >= 1.8) out.ionico.push([m, n]); }));
+    NOM.forEach((a, i) => NOM.forEach((b, j) => { if(j < i) return; const d = Math.abs(E[a].en - E[b].en);
+      if(d <= 0.3) out.apolar.push([a, b]); else if(d >= 0.5 && d <= 1.6) out.polar.push([a, b]); }));
+    MET.forEach((a, i) => MET.forEach((b, j) => { if(j >= i) out.metalico.push([a, b]); }));
+    return out;
+  }
+  const P = parejas();
+  let qs = [], qi = 0, score = 0;
+  function start(){
+    const cats = shuffle(['ionico','ionico','ionico','polar','polar','polar','apolar','apolar','metalico','metalico']);
+    const used = new Set(); qs = [];
+    cats.forEach(c => { let p, k = 0; do{ p = pick(P[c]); if(Math.random() < .5) p = [p[1], p[0]]; k++; }while(used.has(p.slice().sort().join()) && k < 40); used.add(p.slice().sort().join()); qs.push(p); });
+    qi = 0; score = 0; render();
+  }
+  function render(){
+    const box = $('eg-box');
+    $('eg-fill').style.width = (qi/qs.length*100) + '%';
+    $('eg-label').textContent = qi + ' de ' + qs.length + ' · ' + score + ' correctas';
+    if(qi >= qs.length){
+      box.innerHTML = '<div class="' + (score >= 8 ? 'ok-box' : 'warn-box') + '"><b>Resultado: ' + score + ' de ' + qs.length + '.</b> ' + (score >= 8 ? '¡Dominas la electronegatividad!' : 'Repasa: primero mira si son metales o no metales y luego calcula la ΔEN.') + '</div><div class="btn-row"><button class="btn" id="eg-again">↺ Otras 10 parejas</button></div>';
+      $('eg-again').addEventListener('click', start); return;
+    }
+    const [a, b] = qs[qi], A = E[a], B = E[b];
+    const at = X => '<div class="at"><b>' + X.s + '</b><small>' + X.n + '<br>' + CLASE[X.c] + ' · EN ' + fmt(X.en) + '</small></div>';
+    box.innerHTML = '<div class="par">' + at(A) + '<span style="font-size:1.4rem;font-weight:800;color:var(--dimmer)">+</span>' + at(B) + '</div>'
+      + '<div class="opts4">' + ['ionico','polar','apolar','metalico'].map(t => '<button class="opt" data-t="' + t + '">' + TNOM[t] + '</button>').join('') + '</div>'
+      + '<div class="fb" id="eg-fb"></div><button class="btn" id="eg-next" style="display:none;margin-top:8px">Siguiente →</button>';
+    box.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => {
+      const ex = explicar(a, b), ok = o.dataset.t === ex.r.t;
+      box.querySelectorAll('.opt').forEach(x => { x.disabled = true; if(x.dataset.t === ex.r.t) x.classList.add('ok'); });
+      if(!ok) o.classList.add('bad'); else score++;
+      $('eg-fb').innerHTML = (ok ? '<span class="ok-t">✓ ¡Correcto!</span> ' : '<span class="err-t">✗ No es así.</span> ') + ex.html;
+      $('eg-next').style.display = 'inline-flex';
+    }));
+    $('eg-next').addEventListener('click', () => { qi++; render(); });
+  }
+  start();
+})();
+
+/* ════════ Simulador: del átomo al cristal (iónico) ════════ */
+// Modelos de Bohr con sus capas. El estudiante ARRASTRA los electrones de
+// valencia del metal hasta los huecos del no metal (o usa «Automático").
+// Fases: átomos → transferencia → iones (cambian de tamaño) → atracción →
+// red cristalina armándose, con la unidad fórmula resaltada.
+(function(){
+  const W = 720, H = 400, cv = $('cv-io'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const CAPAS = {Li:[2,1], Na:[2,8,1], K:[2,8,8,1], Mg:[2,8,2], Ca:[2,8,8,2], F:[2,7], Cl:[2,8,7], O:[2,6]};
+  const GAS = {Li:'helio', Na:'neón', K:'argón', Mg:'neón', Ca:'argón', F:'neón', Cl:'argón', O:'neón'};
+  const PARES = [['Na','Cl',1,1,'cloruro de sodio','la sal de Zipaquirá'],['Li','F',1,1,'fluoruro de litio',''],['K','Cl',1,1,'cloruro de potasio','abono de los cultivos'],['Mg','O',1,1,'óxido de magnesio',''],
+    ['Ca','Cl',1,2,'cloruro de calcio','secante'],['Mg','F',1,2,'fluoruro de magnesio',''],['Na','O',2,1,'óxido de sodio','']];
+  const FASES = ['Átomos','Transferencia','Iones','Atracción','Red cristalina'];
+  let pi = 0, fase = 0, tf = 0, st, drag = null, auto = false, autoT = 0;
+  $('io-pick').innerHTML = PARES.map((p, i) => '<button data-i="' + i + '"' + (i === 0 ? ' class="on"' : '') + '>' + p[0] + sub(p[2]) + p[1] + sub(p[3]) + '</button>').join('');
+  const rCapa = (k, sc) => (16 + k*15)*(sc || 1);
+  const ease = x => x < .5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2)/2;
+  function preparar(){
+    const [M, X, nm, nx] = PARES[pi], vM = CAPAS[M].slice(-1)[0], vX = CAPAS[X].slice(-1)[0];
+    const col = (k, x) => Array.from({length:k}, (_, i) => ({x, y: 205 + (i - (k - 1)/2)*(k > 1 ? 150 : 0)}));
+    const mets = col(nm, 190).map(a => Object.assign(a, {s:M, ox:a.x, oy:a.y})), nons = col(nx, 520).map(a => Object.assign(a, {s:X, ox:a.x, oy:a.y, recibidos:0}));
+    if(nx === 2) nons.forEach((n, i) => n.y = n.oy = 205 + (i - .5)*175);
+    if(nm === 2) mets.forEach((m, i) => m.y = m.oy = 205 + (i - .5)*175);
+    const elec = [];
+    mets.forEach((m, mi) => { for(let k=0;k<vM;k++) elec.push({m: mi, k, n: -1, slot: -1, x: 0, y: 0, vuela: null}); });
+    st = {M, X, nm, nx, vM, vX, mets, nons, elec, red: null};
+    fase = 0; tf = performance.now(); drag = null; auto = false;
+    mensaje();
+  }
+  // posición de un electrón de valencia que sigue «en casa» (gira en la capa externa del metal)
+  function enMetal(e, now){ const m = st.mets[e.m], nc = CAPAS[st.M].length, a = now/5200 + e.k*2*Math.PI/st.vM; return [m.x + Math.cos(a)*rCapa(nc), m.y + Math.sin(a)*rCapa(nc)]; }
+  function hueco(n, j, now, sc){ const nc = CAPAS[st.X].length, a = now/4200 + (st.vX + j)*2*Math.PI/8; return [n.x + Math.cos(a)*rCapa(nc, sc), n.y + Math.sin(a)*rCapa(nc, sc)]; }
+  function atomo(a, capas, nVal, tipo, now, sc, fadeExt, completo){
+    const nc = capas.length, R = rCapa(nc, sc);
+    const g = ctx.createRadialGradient(a.x, a.y, 4, a.x, a.y, R + 12);
+    g.addColorStop(0, tipo === 'm' ? 'rgba(251,191,36,.22)' : 'rgba(96,165,250,.22)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(a.x, a.y, R + 12, 0, 7); ctx.fill();
+    capas.forEach((ne, k) => {
+      const ext = k === nc - 1 && !completo, r = rCapa(k + 1, sc);
+      ctx.globalAlpha = ext ? (fadeExt != null ? fadeExt : 1) : 1;
+      ctx.strokeStyle = ext ? (tipo === 'm' ? 'rgba(251,191,36,.7)' : 'rgba(96,165,250,.8)') : 'rgba(148,163,184,.35)';
+      ctx.setLineDash(ext ? [5, 5] : []); ctx.lineWidth = ext ? 1.6 : 1; ctx.beginPath(); ctx.arc(a.x, a.y, r, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+      if(!ext){ for(let i=0;i<ne;i++){ const an = now/(1800 + k*900)*(k % 2 ? -1 : 1) + i*2*Math.PI/ne; ctx.fillStyle = 'rgba(226,232,240,.85)'; ctx.beginPath(); ctx.arc(a.x + Math.cos(an)*r, a.y + Math.sin(an)*r, 2.6, 0, 7); ctx.fill(); } }
+      ctx.globalAlpha = 1;
+    });
+    ctx.fillStyle = tipo === 'm' ? '#f59e0b' : '#3b82f6'; ctx.beginPath(); ctx.arc(a.x, a.y, 10*Math.min(1, sc || 1) + 2, 0, 7); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '800 12px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(a.s, a.x, a.y + 1);
+  }
+  function electron(x, y, col, glow){
+    if(glow){ const g = ctx.createRadialGradient(x, y, 0, x, y, 12); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 12, 0, 7); ctx.fill(); }
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.stroke();
+  }
+  function stepper(){
+    const w = 128; FASES.forEach((f, i) => { const x = 40 + i*w, on = i <= fase;
+      ctx.fillStyle = on ? '#fbbf24' : 'rgba(148,163,184,.35)'; ctx.beginPath(); ctx.arc(x, 20, 9, 0, 7); ctx.fill();
+      if(i < FASES.length - 1){ ctx.strokeStyle = i < fase ? '#fbbf24' : 'rgba(148,163,184,.3)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x + 11, 20); ctx.lineTo(x + w - 11, 20); ctx.stroke(); }
+      ctx.fillStyle = on ? '#0b1622' : '#94a3b8'; ctx.font = '800 10px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(i + 1, x, 21);
+      ctx.fillStyle = on ? '#fde68a' : '#94a3b8'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText(f, x, 40); });
+  }
+  function draw(now){
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    stepper();
+    const dt = (now - tf)/1000;
+    if(fase <= 1){
+      st.mets.forEach(m => atomo(m, CAPAS[st.M], st.vM, 'm', now, 1));
+      st.nons.forEach(n => { atomo(n, CAPAS[st.X], st.vX, 'n', now, 1);
+        for(let j=0;j<st.vX;j++){ const a = now/4200 + j*2*Math.PI/8, R = rCapa(CAPAS[st.X].length); electron(n.x + Math.cos(a)*R, n.y + Math.sin(a)*R, '#60a5fa'); }
+        for(let j=n.recibidos;j<8 - st.vX;j++){ const [x, y] = hueco(n, j, now); ctx.strokeStyle = 'rgba(253,230,138,.8)'; ctx.setLineDash([2, 2]); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, 5.5, 0, 7); ctx.stroke(); ctx.setLineDash([]); } });
+      // electrones transferibles
+      st.elec.forEach(e => {
+        let x, y;
+        if(e === drag){ x = e.x; y = e.y; }
+        else if(e.vuela){ const q = Math.min(1, (now - e.vuela.t)/650), qq = ease(q), [tx, ty] = e.n >= 0 ? hueco(st.nons[e.n], e.slot, now) : enMetal(e, now);
+          x = e.vuela.x + (tx - e.vuela.x)*qq; y = e.vuela.y + (ty - e.vuela.y)*qq - Math.sin(q*Math.PI)*40; if(q >= 1) e.vuela = null; }
+        else if(e.n >= 0) [x, y] = hueco(st.nons[e.n], e.slot, now);
+        else [x, y] = enMetal(e, now);
+        e.x = x; e.y = y;
+        electron(x, y, '#fbbf24', true);
+      });
+      ctx.fillStyle = '#fde68a'; ctx.font = '700 13px Trebuchet MS'; ctx.textAlign = 'center';
+      ctx.fillText(E[st.M].n + ' (metal) · ' + CAPAS[st.M].join(', '), 190, H - 18);
+      ctx.fillStyle = '#bfdbfe'; ctx.fillText(E[st.X].n + ' (no metal) · ' + CAPAS[st.X].join(', '), 520, H - 18);
+      if(fase === 0 && !drag && !auto){ ctx.fillStyle = 'rgba(253,230,138,.9)'; ctx.font = '700 12px Trebuchet MS'; ctx.fillText('☝ Arrastra los electrones amarillos a los huecos punteados', 360, 64); }
+      if(auto && now - autoT > 520){ const e = st.elec.find(x => x.n < 0 && !x.vuela); if(e){ colocar(e, siguienteNoMetal(), now); autoT = now; } }
+      if(st.elec.every(e => e.n >= 0 && !e.vuela) && fase <= 1){ fase = 2; tf = now; mensaje(); }
+    } else if(fase === 2 || fase === 3){
+      const p = Math.min(1, dt/1.1), e2 = ease(p);
+      const scM = fase === 2 ? 1 - 0.22*e2 : 0.78, scX = fase === 2 ? 1 + 0.08*e2 : 1.08;
+      // en la fase 3 los iones se acercan hasta tocarse
+      let p3 = 0;
+      if(fase === 3){ p3 = ease(Math.min(1, dt/1.4)); }
+      const capasM = CAPAS[st.M].slice(0, -1), capasX = CAPAS[st.X].slice(0, -1).concat([8]);
+      st.mets.forEach(m => { m.x = m.ox + (300 - m.ox)*p3;
+        if(fase === 2) atomo(m, CAPAS[st.M], 0, 'm', now, scM, 1 - e2);
+        else atomo(m, capasM, 0, 'm', now, scM, null, true); });
+      st.nons.forEach(n => { n.x = n.ox + (412 - n.ox)*p3;
+        atomo(n, capasX, 0, 'n', now, scX, 1);
+        const R = rCapa(capasX.length, scX); for(let j=0;j<8;j++){ const a = now/4200 + j*2*Math.PI/8; electron(n.x + Math.cos(a)*R, n.y + Math.sin(a)*R, j < st.vX ? '#60a5fa' : '#fbbf24'); } });
+      const qM = st.vM, qX = 8 - st.vX;
+      ctx.font = '800 22px Trebuchet MS'; ctx.textAlign = 'center';
+      st.mets.forEach(m => { ctx.fillStyle = '#fbbf24'; ctx.fillText(qM > 1 ? qM + '+' : '+', m.x + 38, m.y - 40); });
+      st.nons.forEach(n => { ctx.fillStyle = '#60a5fa'; ctx.fillText(qX > 1 ? qX + '−' : '−', n.x + 62, n.y - 62); });
+      if(fase === 3){
+        // líneas de atracción entre cargas opuestas y destello al unirse
+        st.mets.forEach(m => st.nons.forEach(n => { ctx.strokeStyle = 'rgba(253,224,71,' + (0.5 - 0.3*p3) + ')'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.lineDashOffset = -now/30; ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(n.x, n.y); ctx.stroke(); ctx.setLineDash([]); }));
+        if(p3 >= 1){ const fl = Math.max(0, 1 - (dt - 1.4)/0.9); if(fl > 0){ ctx.strokeStyle = 'rgba(253,224,71,' + fl + ')'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(360, 205, 60 + (1 - fl)*120, 0, 7); ctx.stroke(); ctx.fillStyle = 'rgba(253,224,71,' + fl + ')'; ctx.font = '800 16px Trebuchet MS'; ctx.fillText('¡se libera energía!', 360, 92); } }
+      }
+      ctx.font = '700 13px Trebuchet MS'; ctx.fillStyle = '#fde68a';
+      ctx.fillText(st.M + carga(qM) + ' · ' + capasM.join(', ') + ' · como el ' + GAS[st.M] + ' · más pequeño', 190, H - 18);
+      ctx.fillStyle = '#bfdbfe'; ctx.fillText(st.X + carga(-qX) + ' · ' + capasX.join(', ') + ' · como el ' + GAS[st.X] + ' · más grande', 520, H - 18);
+      if(fase === 2 && p >= 1 && dt > 2.6 && auto){ fase = 3; tf = now; mensaje(); }
+      if(fase === 3 && dt > 2.6 && auto){ fase = 4; tf = now; mensaje(); }
+    } else {
+      // red cristalina 2D que se arma: proporción según la fórmula
+      if(!st.red) st.red = armarRed();
+      const qM = st.vM, qX = 8 - st.vX;
+      st.red.forEach((io, i) => {
+        const p = ease(Math.max(0, Math.min(1, (dt - io.d)/0.9)));
+        const x = io.sx + (io.x - io.sx)*p, y = io.sy + (io.y - io.sy)*p + Math.sin(now/300 + i)*1.2*p;
+        const m = io.t === 'm', r = m ? 13 : 19;
+        const g = ctx.createRadialGradient(x - r/3, y - r/3, 1, x, y, r); g.addColorStop(0, m ? '#fff7d6' : '#e0f2fe'); g.addColorStop(1, m ? '#f59e0b' : '#3b82f6');
+        ctx.globalAlpha = 0.25 + 0.75*p; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.fillStyle = '#0b1622'; ctx.font = '800 10px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(m ? st.M + carga(qM) : st.X + carga(-qX), x, y + 1);
+      });
+      const fin = dt > st.red.maxD + 1;
+      if(fin){
+        const u = st.red.unidad, a = 0.5 + 0.5*Math.sin(now/300);
+        ctx.strokeStyle = 'rgba(253,224,71,' + (0.6 + 0.4*a) + ')'; ctx.lineWidth = 3; ctx.setLineDash([7, 5]);
+        ctx.beginPath(); ctx.roundRect(u.x, u.y, u.w, u.h, 16); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = '#fde68a'; ctx.font = '800 22px Georgia'; ctx.textAlign = 'center';
+        ctx.fillText(st.M + sub(st.nm) + st.X + sub(st.nx) + ' — unidad fórmula', 360, H - 18);
+      }
+    }
+  }
+  function armarRed(){
+    // rejilla 2D: 1:1 → tablero de ajedrez; 1:2 → catión en (par, par) y aniones en (x+y impar); 2:1 al revés
+    const out = [], cols = 9, rows = 6, sx = 360 - (cols - 1)*36, sy = 92;
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+      let t = null;
+      if(st.nm === st.nx) t = (r + c) % 2 ? 'n' : 'm';
+      else { const a = r % 2 === 0 && c % 2 === 0, b = (r + c) % 2 === 1; if(st.nm < st.nx){ t = a ? 'm' : b ? 'n' : null; } else { t = a ? 'n' : b ? 'm' : null; } }
+      if(!t) continue;
+      const x = sx + c*72, y = sy + r*48, ang = Math.random()*Math.PI*2;
+      out.push({t, x, y, sx: 360 + Math.cos(ang)*480, sy: 220 + Math.sin(ang)*320, d: 0.08*out.length*0.6});
+    }
+    out.maxD = Math.max(...out.map(o => o.d)) + 0.9;
+    // unidad fórmula resaltada alrededor de un catión central (o un anión en 2:1)
+    const cen = st.nm < st.nx ? {x: sx + 4*72, y: sy + 2*48} : {x: sx + 4*72, y: sy + 2*48};
+    out.unidad = st.nm === st.nx ? {x: cen.x - 26, y: cen.y - 26, w: 72 + 52, h: 52} : st.nm < st.nx ? {x: cen.x - 26, y: cen.y - 26, w: 72 + 52, h: 48 + 52} : {x: cen.x - 26, y: cen.y - 26, w: 72 + 52, h: 48 + 52};
+    return out;
+  }
+  function siguienteNoMetal(){ return st.nons.findIndex(n => n.recibidos < 8 - st.vX); }
+  function colocar(e, ni, now){
+    if(ni < 0) return false;
+    const n = st.nons[ni];
+    if(n.recibidos >= 8 - st.vX) return false;
+    e.vuela = {x: e.x, y: e.y, t: now}; e.n = ni; e.slot = n.recibidos++;
+    if(fase === 0){ fase = 1; mensaje(); }
+    return true;
+  }
+  function mensaje(){
+    const [M, X, nm, nx, nom, ctxt] = PARES[pi], qM = st.vM, qX = 8 - st.vX;
+    const msg = [
+      'El <b>' + E[M].n.toLowerCase() + '</b> (metal) tiene <b>' + qM + '</b> electrón' + (qM > 1 ? 'es' : '') + ' en su última capa; al <b>' + E[X].n.toLowerCase() + '</b> (no metal) le faltan <b>' + qX + '</b> para completar 8 (los huecos punteados). <b>Arrastra</b> los electrones amarillos a los huecos, o toca «Automático».',
+      'Bien: cada electrón que llega a un hueco completa poco a poco el octeto del ' + X + '. Para que <b>todos</b> los huecos se llenen se necesitan ' + nm + ' ' + M + ' y ' + nx + ' ' + X + '.',
+      'El ' + M + ' perdió su capa externa: queda como <b>' + M + carga(qM) + '</b>, con la configuración del ' + GAS[M] + ' y <b>más pequeño</b>. El ' + X + ' completó 8: queda como <b>' + X + carga(-qX) + '</b>, como el ' + GAS[X] + ', y <b>un poco más grande</b> (sus electrones se repelen). Toca «Siguiente fase».',
+      'Cargas opuestas se <b>atraen</b>: los iones se acercan y, al unirse, se <b>libera energía</b>. Esa atracción eléctrica es el <b>enlace iónico</b>.',
+      'Millones de iones se ordenan en una <b>red cristalina</b>. En la red hay ' + (nm === nx ? 'un ' + M + carga(qM) + ' por cada ' + X + carga(-qX) : nm < nx ? 'un ' + M + carga(qM) + ' por cada ' + nx + ' ' + X + carga(-qX) : nm + ' ' + M + carga(qM) + ' por cada ' + X + carga(-qX)) + ': esa proporción es la <b>unidad fórmula ' + M + sub(nm) + X + sub(nx) + '</b> (' + nom + (ctxt ? ', ' + ctxt : '') + '). ¡Es el cruce de cargas que usas en nomenclatura!'
+    ][fase];
+    $('io-msg').innerHTML = msg;
+    $('io-next').disabled = fase < 2 || fase >= 4;
+  }
+  // arrastre con dedo o ratón
+  const punto = ev => { const r = cv.getBoundingClientRect(); return [(ev.clientX - r.left)*W/r.width, (ev.clientY - r.top)*H/r.height]; };
+  cv.addEventListener('pointerdown', ev => {
+    if(fase > 1) return;
+    // se agarra el electrón libre más cercano (radio generoso: el electrón se mueve y se toca con el dedo)
+    const [x, y] = punto(ev); let e = null, dm = 34;
+    st.elec.forEach(q => { if(q.n < 0 && !q.vuela){ const d = Math.hypot(q.x - x, q.y - y); if(d < dm){ dm = d; e = q; } } });
+    if(e){ drag = e; cv.setPointerCapture(ev.pointerId); e.x = x; e.y = y; ev.preventDefault(); }
+  });
+  cv.addEventListener('pointermove', ev => { if(!drag) return; const [x, y] = punto(ev); drag.x = x; drag.y = y; });
+  const soltar = () => {
+    if(!drag) return; const e = drag; drag = null;
+    const ni = st.nons.findIndex(n => Math.hypot(n.x - e.x, n.y - e.y) < rCapa(CAPAS[st.X].length) + 22 && n.recibidos < 8 - st.vX);
+    if(ni < 0 || !colocar(e, ni, performance.now())){ e.vuela = {x: e.x, y: e.y, t: performance.now()}; }
+  };
+  cv.addEventListener('pointerup', soltar); cv.addEventListener('pointercancel', soltar);
+  cv.style.touchAction = 'none';
+  $('io-pick').addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return; pi = +b.dataset.i; $('io-pick').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); preparar(); });
+  $('io-auto').addEventListener('click', () => { if(fase >= 4) preparar(); auto = true; autoT = 0; if(fase >= 2){ fase++; tf = performance.now(); mensaje(); } });
+  $('io-next').addEventListener('click', () => { if(fase >= 2 && fase < 4){ fase++; tf = performance.now(); mensaje(); } });
+  $('io-reset').addEventListener('click', preparar);
+  preparar();
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Simulador: nube compartida (covalente) ════════ */
+// Se ARRASTRA el átomo de la derecha. Las nubes electrónicas se suman
+// (mezcla aditiva) y, cerca de la distancia de enlace, los electrones de
+// valencia dejan de girar cada uno en su átomo y pasan a recorrer los dos
+// núcleos. La curva de Morse (datos reales) se actualiza en vivo. «Soltar»
+// deja que la molécula vibre alrededor de su longitud de enlace.
+(function(){
+  const W = 720, H = 380, cv = $('cv-cov'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const MOL = {
+    H2:{s:'H', re:74, De:436, a:0.0199, n:1, lp:0, lbl:'H–H', tipo:'simple (σ)'},
+    Cl2:{s:'Cl', re:199, De:242, a:0.0200, n:1, lp:3, lbl:'Cl–Cl', tipo:'simple (σ)'},
+    O2:{s:'O', re:121, De:498, a:0.0267, n:2, lp:2, lbl:'O=O', tipo:'doble (σ + π)'},
+    N2:{s:'N', re:110, De:945, a:0.0270, n:3, lp:1, lbl:'N≡N', tipo:'triple (σ + 2π)'}};
+  let m = MOL.H2, r = 0, v = 0, libre = false, drag = false, avisado = false;
+  const En = x => m.De*(Math.pow(1 - Math.exp(-m.a*(x - m.re)), 2) - 1);
+  const dEn = x => { const e = Math.exp(-m.a*(x - m.re)); return 2*m.De*m.a*(1 - e)*e; };
+  const K = () => 118/m.re;                       // px por pm: la longitud de enlace se ve siempre igual
+  const RMIN = () => m.re*0.55, RMAX = () => m.re*2.9;
+  const CX = 210, CY = 200;
+  // gráfica
+  const X0 = 450, X1 = 700, Y0 = 70, Y1 = 330;
+  const gx = x => X0 + (x - RMIN())/(RMAX() - RMIN())*(X1 - X0);
+  const gy = e => Y0 + (m.De*0.7 - Math.max(-m.De*1.1, Math.min(m.De*0.7, e)))/(m.De*1.8)*(Y1 - Y0);
+  function reset(){ r = m.re*2.6; v = 0; libre = false; avisado = false; update(); }
+  function nube(x, y, R, a){ const g = ctx.createRadialGradient(x, y, 0, x, y, R); g.addColorStop(0, 'rgba(56,189,248,' + a + ')'); g.addColorStop(.6, 'rgba(56,189,248,' + a*0.35 + ')'); g.addColorStop(1, 'rgba(56,189,248,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill(); }
+  function draw(now){
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    const d = r*K(), xa = CX - d/2, xb = CX + d/2, e = En(r), b = Math.max(0, Math.min(1, -e/m.De));   // b: qué tan formado está el enlace
+    // nubes (se suman donde se superponen)
+    ctx.globalCompositeOperation = 'lighter';
+    nube(xa, CY, 78, 0.45); nube(xb, CY, 78, 0.45);
+    if(b > 0.05){ const g = ctx.createRadialGradient(CX, CY, 0, CX, CY, d/2 + 40); g.addColorStop(0, 'rgba(250,204,21,' + 0.35*b + ')'); g.addColorStop(1, 'rgba(250,204,21,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(CX, CY, d/2 + 40, 46, 0, 0, 7); ctx.fill(); }
+    ctx.globalCompositeOperation = 'source-over';
+    // pares libres (no enlazantes), quietos y tenues
+    for(let s=0;s<2;s++){ const x = s ? xb : xa, dir = s ? 1 : -1;
+      for(let k=0;k<m.lp;k++){ const ang = (s ? 0 : Math.PI) + (k - (m.lp - 1)/2)*0.95, px = x + Math.cos(ang)*46, py = CY + Math.sin(ang)*46;
+        ctx.fillStyle = 'rgba(226,232,240,.75)'; [-4, 4].forEach(o => { ctx.beginPath(); ctx.arc(px - Math.sin(ang)*o, py + Math.cos(ang)*o, 3, 0, 7); ctx.fill(); }); } }
+    // electrones que forman el enlace: uno de cada átomo por par; con el enlace formado recorren ambos núcleos
+    const t = now/1000;
+    for(let p=0;p<m.n;p++) for(let s=0;s<2;s++){
+      const fase = t*(2.4 - p*0.3) + p*2.1 + s*Math.PI, col = s ? '#f472b6' : '#facc15';
+      const xo = s ? xb : xa;
+      const solo = [xo + Math.cos(fase)*34, CY + Math.sin(fase)*34];
+      // órbita compartida: elipse alrededor de los dos núcleos (los pares π van arriba y abajo)
+      const off = m.n === 1 ? 0 : (p === 0 ? 0 : (p === 1 ? -16 : 16));
+      const comp = [CX + Math.cos(fase)*(d/2 + 26), CY + off + Math.sin(fase*2)*(14 + 6*p)];
+      const x = solo[0] + (comp[0] - solo[0])*b, y = solo[1] + (comp[1] - solo[1])*b;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 10); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 10, 0, 7); ctx.fill();
+      ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill();
+    }
+    // núcleos
+    [xa, xb].forEach((x, i) => { const g = ctx.createRadialGradient(x - 4, CY - 4, 1, x, CY, 13); g.addColorStop(0, '#fecaca'); g.addColorStop(1, '#dc2626'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, CY, 13, 0, 7); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '800 12px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(m.s, x, CY + 1);
+      if(i === 1 && !libre){ ctx.strokeStyle = 'rgba(253,230,138,.8)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, CY, 20 + 3*Math.sin(t*4), 0, 7); ctx.stroke(); ctx.setLineDash([]); } });
+    if(e > m.De*0.15){ ctx.strokeStyle = '#f87171'; ctx.lineWidth = 3; [[xa, -1], [xb, 1]].forEach(([x, sg]) => { ctx.beginPath(); ctx.moveTo(x + sg*18, CY - 34); ctx.lineTo(x + sg*44, CY - 34); ctx.lineTo(x + sg*36, CY - 40); ctx.moveTo(x + sg*44, CY - 34); ctx.lineTo(x + sg*36, CY - 28); ctx.stroke(); });
+      ctx.fillStyle = '#f87171'; ctx.font = '700 12px Trebuchet MS'; ctx.fillText('los núcleos se repelen', CX, CY - 52); }
+    ctx.fillStyle = '#cbd5e1'; ctx.font = '700 12px Trebuchet MS'; ctx.textAlign = 'center';
+    ctx.fillText('r = ' + Math.round(r) + ' pm', CX, CY + 108);
+    if(!libre && !drag){ ctx.fillStyle = 'rgba(253,230,138,.9)'; ctx.fillText('☝ arrastra el átomo de la derecha', CX, 36); }
+    // gráfica de energía
+    ctx.strokeStyle = 'rgba(148,163,184,.6)'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X0, Y1); ctx.lineTo(X1, Y1); ctx.stroke();
+    ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(X0, gy(0)); ctx.lineTo(X1, gy(0)); ctx.stroke(); ctx.beginPath(); ctx.moveTo(gx(m.re), Y0); ctx.lineTo(gx(m.re), Y1); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = '#34d399'; ctx.lineWidth = 3; ctx.beginPath();
+    for(let k=0;k<=120;k++){ const x = RMIN() + (RMAX() - RMIN())*k/120, X = gx(x), Y = gy(En(x)); if(k) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
+    ctx.stroke();
+    ctx.fillStyle = '#94a3b8'; ctx.font = '11px Trebuchet MS'; ctx.textAlign = 'center';
+    ctx.fillText('energía (kJ/mol)', X0 + 50, Y0 - 12); ctx.fillText('distancia →', X1 - 30, Y1 + 16);
+    ctx.fillText('E = 0', X1 - 18, gy(0) - 6); ctx.fillText(m.re + ' pm', gx(m.re), Y1 + 16);
+    ctx.textAlign = 'right'; ctx.fillText('−' + m.De, X0 - 4, gy(-m.De) + 4);
+    const g = ctx.createRadialGradient(gx(r), gy(e), 0, gx(r), gy(e), 14); g.addColorStop(0, '#fbbf24'); g.addColorStop(1, 'rgba(251,191,36,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(gx(r), gy(e), 14, 0, 7); ctx.fill(); ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(gx(r), gy(e), 5, 0, 7); ctx.fill();
+  }
+  function update(){
+    const e = En(r);
+    $('cv-e').textContent = (e > 0 ? '+' : '') + Math.round(e) + ' kJ/mol';
+    $('cv-r2').textContent = Math.round(r) + ' pm';
+    $('cv-re').textContent = m.re + ' pm · ' + m.De + ' kJ/mol';
+    let msg;
+    if(libre) msg = '〰️ <b>Vibración:</b> la molécula oscila alrededor de su longitud de enlace (' + m.re + ' pm), como un resorte. Las moléculas reales vibran así todo el tiempo.';
+    else if(Math.abs(r - m.re) <= m.re*0.07) msg = '🎯 <b>¡Enlace ' + m.tipo + '!</b> En el mínimo de energía los dos electrones de cada par (amarillo de un átomo, rosado del otro) recorren <b>ambos núcleos</b>: eso es compartir. Para romper un mol de enlaces ' + m.lbl + ' se necesitan <b>' + m.De + ' kJ</b>.';
+    else if(r < m.re) msg = '⛔ <b>Demasiado cerca:</b> los núcleos, ambos positivos, se repelen y la energía sube.';
+    else if(e > -m.De*0.06) msg = '↔️ <b>Lejos:</b> cada electrón gira alrededor de su propio núcleo; los átomos casi no se sienten.';
+    else msg = '🧲 <b>Se atraen:</b> cada núcleo atrae el electrón del otro átomo, las nubes se superponen y la energía baja.';
+    $('cv-msg').innerHTML = msg;
+  }
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(0.05, (now - last)/1000); last = now;
+    if(libre && !drag){
+      // dinámica: período ≈ 1,2 s; amortiguamiento suave
+      const mass = 2*m.De*m.a*m.a/Math.pow(2*Math.PI/1.2, 2);
+      for(let k=0;k<4;k++){ const a = -dEn(r)/mass - 0.6*v; v += a*dt/4; r += v*dt/4; }
+      r = Math.max(RMIN(), Math.min(RMAX(), r)); update();
+    }
+    if(visible(cv)) draw(now);
+    requestAnimationFrame(loop);
+  }
+  const punto = ev => { const R = cv.getBoundingClientRect(); return [(ev.clientX - R.left)*W/R.width, (ev.clientY - R.top)*H/R.height]; };
+  cv.style.touchAction = 'none';
+  cv.addEventListener('pointerdown', ev => { const [x, y] = punto(ev); if(x < 430){ drag = true; libre = false; cv.setPointerCapture(ev.pointerId); mover(x); } });
+  cv.addEventListener('pointermove', ev => { if(drag) mover(punto(ev)[0]); });
+  const fin = () => { drag = false; };
+  cv.addEventListener('pointerup', fin); cv.addEventListener('pointercancel', fin);
+  function mover(x){ r = Math.max(RMIN(), Math.min(RMAX(), 2*(x - CX)/K())); v = 0; update(); }
+  $('cv-pick').addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return; m = MOL[b.dataset.m]; $('cv-pick').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); reset(); });
+  $('cv-soltar').addEventListener('click', () => { if(!libre){ if(Math.abs(r - m.re) < 3) r = m.re*1.35; libre = true; v = 0; } else libre = false; update(); });
+  $('cv-reset').addEventListener('click', reset);
+  reset(); requestAnimationFrame(loop);
+})();
+
+/* ════════ Simulador: polaridad (de apolar a iónico) ════════ */
+// Un control de ΔEN transforma poco a poco el enlace: el par compartido se
+// corre hacia el átomo más electronegativo, el mapa de potencial (rojo = más
+// electrones, azul = menos) se intensifica y, pasando 1,7, el electrón se
+// transfiere del todo y quedan dos iones.
+(function(){
+  const W = 720, H = 340, cv = $('cv-pol'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const EJ = [['Cl','Cl'],['C','H'],['H','Br'],['H','Cl'],['H','O'],['H','F'],['Na','Cl'],['K','F']];
+  let A = 'H', B = 'Cl', obj = 0.96, val = 0.96, libreVal = false;
+  $('pol-ej').innerHTML = EJ.map(([a, b]) => { const d = Math.abs(E[a].en - E[b].en); const [x, y] = E[a].en <= E[b].en ? [a, b] : [b, a]; return '<button data-a="' + x + '" data-b="' + y + '">' + x + '–' + y + ' · ' + fmt(d) + '</button>'; }).join('');
+  function tipo(d){ return d < 0.4 ? 'apolar' : d < 1.7 ? 'polar' : 'ionico'; }
+  const mix = (c1, c2, t) => c1.map((v, i) => Math.round(v + (c2[i] - v)*t));
+  const rgb = c => 'rgb(' + c.join(',') + ')';
+  function draw(now){
+    val += (obj - val)*0.12;
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    const d = val, f = Math.min(1, d/1.7), ion = Math.max(0, Math.min(1, (d - 1.7)/0.35)), sep = ion*40;
+    const xa = 260 - sep, xb = 460 + sep, cy = 165, ra = 82 - 18*f, rb = 82 + 14*f;
+    // mapa de potencial: verde (neutro) → azul (δ+) a la izquierda y → rojo (δ−) a la derecha
+    const neu = [52,211,153], azul = [59,130,246], rojo = [239,68,68];
+    const g = ctx.createLinearGradient(xa - ra, 0, xb + rb, 0);
+    g.addColorStop(0, rgb(mix(neu, azul, f))); g.addColorStop(0.5, rgb(mix(neu, mix(azul, rojo, .5), f*0.4))); g.addColorStop(1, rgb(mix(neu, rojo, f)));
+    ctx.globalAlpha = 0.85; ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(xa, cy, ra, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(xb, cy, rb, 0, 7); ctx.fill();
+    if(ion < 1){ ctx.globalAlpha = 0.85*(1 - ion); ctx.fillRect(xa, cy - Math.min(ra, rb)*0.62, xb - xa, Math.min(ra, rb)*1.24); }
+    ctx.globalAlpha = 1;
+    // núcleos y símbolos
+    [[xa, A], [xb, B]].forEach(([x, s]) => { ctx.fillStyle = '#0b1622'; ctx.font = '800 30px Georgia'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(s, x, cy + 2); });
+    // par compartido: del centro hacia B
+    const mid = (xa + xb)/2, ex = mid + (xb - 34 - mid)*Math.pow(f, 1.1), t = now/600;
+    [[-1, '#facc15'], [1, '#f472b6']].forEach(([s, col]) => { const x = ex + s*7 + Math.sin(t + s)*2*(1 - f), y = cy - 52 + (ion ? 0 : 0) + Math.cos(t*1.3 + s)*2;
+      const gg = ctx.createRadialGradient(x, y, 0, x, y, 11); gg.addColorStop(0, col); gg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.fill(); ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 7); ctx.fill(); });
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText(ion >= 1 ? 'el par quedó en ' + B : 'par compartido', ex, cy - 74);
+    // cargas
+    if(ion >= 0.5){
+      ctx.fillStyle = '#475569'; ctx.font = '300 70px Georgia';
+      [[xa, ra], [xb, rb]].forEach(([x, r]) => { ctx.fillText('[', x - r - 6, cy + 4); ctx.fillText(']', x + r + 6, cy + 4); });
+      ctx.font = '800 24px Trebuchet MS'; ctx.fillStyle = '#93c5fd'; ctx.fillText('+', xa + ra + 22, cy - ra + 6); ctx.fillStyle = '#fca5a5'; ctx.fillText('−', xb + rb + 22, cy - rb + 6);
+    } else if(d >= 0.05){
+      const sz = 12 + 14*f;
+      ctx.font = '800 ' + sz + 'px Georgia'; ctx.fillStyle = '#bfdbfe'; ctx.fillText('δ+', xa, cy + ra + 20); ctx.fillStyle = '#fecaca'; ctx.fillText('δ−', xb, cy + rb + 20);
+      // flecha de dipolo: apunta al extremo negativo, con una cruz en la cola
+      const L = 40 + 120*f, x0 = mid - L/2, x1 = mid + L/2, y = cy + 112;
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.lineTo(x1 - 9, y - 6); ctx.moveTo(x1, y); ctx.lineTo(x1 - 9, y + 6); ctx.moveTo(x0 + 8, y - 7); ctx.lineTo(x0 + 8, y + 7); ctx.stroke();
+      ctx.fillStyle = '#94a3b8'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText('momento dipolar', mid, y + 18);
+    }
+    // escala abajo
+    const s0 = 120, s1 = 600, sy = 316;
+    [[0, 0.4, '#3b82f6'], [0.4, 1.7, '#7c3aed'], [1.7, 3.3, '#d97706']].forEach(([a, b, c]) => { ctx.fillStyle = c; ctx.fillRect(s0 + a/3.3*(s1 - s0), sy, (b - a)/3.3*(s1 - s0), 8); });
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s0 + Math.min(3.3, d)/3.3*(s1 - s0), sy + 4, 7, 0, 7); ctx.fill();
+    ctx.fillStyle = '#94a3b8'; ctx.font = '700 10px Trebuchet MS'; ctx.fillText('apolar', s0 + 0.2/3.3*(s1 - s0), sy - 8); ctx.fillText('polar', s0 + 1.05/3.3*(s1 - s0), sy - 8); ctx.fillText('iónico', s0 + 2.5/3.3*(s1 - s0), sy - 8);
+    ctx.fillStyle = '#fde68a'; ctx.font = '800 16px Trebuchet MS'; ctx.fillText('ΔEN = ' + fmt(d), 360, 26);
+  }
+  function update(){
+    obj = +$('pol-d').value;
+    $('pol-d-o').textContent = fmt(obj);
+    const t = tipo(obj);
+    const real = libreVal ? '' : ' Ejemplo real: <b>' + A + '–' + B + '</b>.';
+    $('pol-msg').innerHTML = (t === 'apolar' ? '🔵 <b>Covalente apolar:</b> los dos átomos atraen el par casi igual; la nube queda simétrica (toda verde).'
+      : t === 'polar' ? '🟣 <b>Covalente polar:</b> el par se corre hacia el átomo más electronegativo. Ese lado queda con más electrones (<b>δ−</b>, rojo) y el otro con menos (<b>δ+</b>, azul). A mayor ΔEN, más grande el dipolo.'
+      : '🟠 <b>Iónico:</b> la diferencia es tan grande que el electrón se <b>transfiere del todo</b>: ya no hay par compartido sino dos iones con cargas completas.')
+      + (A === 'H' && B === 'F' && !libreVal ? ' <i>Ojo: el HF (ΔEN = 1,78) se comporta como covalente polar porque los dos son no metales; la escala es una guía, no una ley exacta.</i>' : real);
+  }
+  $('pol-d').addEventListener('input', () => { libreVal = true; $('pol-ej').querySelectorAll('button').forEach(x => x.classList.remove('on')); A = 'A'; B = 'B'; update(); });
+  $('pol-ej').addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return; A = b.dataset.a; B = b.dataset.b; libreVal = false;
+    $('pol-ej').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); $('pol-d').value = Math.abs(E[A].en - E[B].en).toFixed(2); update(); });
+  $('pol-ej').querySelector('button[data-a="H"][data-b="Cl"]').classList.add('on');
+  $('pol-d').value = 0.96; update();
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Simulador: mar de electrones (metálico) ════════ */
+(function(){
+  const W = 720, H = 380, cv = $('cv-me'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const COLS = 10, ROWS = 5, X0 = 110, Y0 = 110, DX = 56, DY = 48;
+  const cat = []; for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) cat.push({r, c, x: X0 + c*DX, y: Y0 + r*DY, sh: 0});
+  const XL = X0 - 34, XR = X0 + (COLS - 1)*DX + 34, YT = Y0 - 30, YB = Y0 + (ROWS - 1)*DY + 30;
+  const el = Array.from({length: 70}, () => ({x: XL + Math.random()*(XR - XL), y: YT + Math.random()*(YB - YT), vx: 0, vy: 0, tr: []}));
+  let modo = 'normal', T = new Array(COLS).fill(0), t0 = performance.now(), golpe = 0;
+  const MSG = {normal:'Los cationes metálicos (+) quedan fijos en la red y los electrones de valencia se mueven libremente entre todos. Ese «mar de electrones» compartido por toda la red es el <b>enlace metálico</b>.',
+    volt:'Con la pila, los electrones libres fluyen del polo − al polo + y el bombillo enciende: es la <b>corriente eléctrica</b>. Como los electrones ya están libres, el metal conduce aun en estado sólido.',
+    calor:'La llama calienta el extremo izquierdo. Los cationes de ese lado vibran más y los electrones libres llevan esa energía rápido por todo el metal: mira subir el termómetro del otro extremo. Por eso los metales son <b>buenos conductores del calor</b>.',
+    golpe:'Al golpear, las capas de cationes se deslizan unas sobre otras, pero el mar de electrones las sigue manteniendo unidas: el metal <b>se deforma sin romperse</b> (es maleable y dúctil).'};
+  const tc = x => { const c1 = [99,102,241], c2 = [251,146,60], c3 = [239,68,68]; const k = Math.min(1, x); const c = k < .5 ? c1.map((v, i) => v + (c2[i] - v)*k*2) : c2.map((v, i) => v + (c3[i] - v)*(k - .5)*2); return 'rgb(' + c.map(Math.round).join(',') + ')'; };
+  function draw(now){
+    const dt = 1/60, t = now/1000;
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    // calor: difusión 1D por columnas (fuente en la izquierda)
+    if(modo === 'calor'){ for(let k=0;k<6;k++){ const n = T.slice(); for(let c=0;c<COLS;c++){ const l = c ? T[c - 1] : 1, rr = c < COLS - 1 ? T[c + 1] : T[c]; n[c] = T[c] + 0.08*(l + rr - 2*T[c]); } T = n; } }
+    else T = T.map(x => x*0.995);
+    // golpe: las 2 capas de arriba se corren media celda
+    const pg = modo === 'golpe' ? Math.min(1, Math.max(0, (now - golpe - 500)/700)) : 0;
+    ctx.fillStyle = 'rgba(99,102,241,.08)'; ctx.beginPath(); ctx.roundRect(XL, YT, XR - XL + pg*DX/2, YB - YT, 18); ctx.fill();
+    // circuito y bombillo
+    if(modo === 'volt'){
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(XL - 10, (YT + YB)/2); ctx.lineTo(40, (YT + YB)/2); ctx.lineTo(40, 345); ctx.lineTo(320, 345); ctx.moveTo(400, 345); ctx.lineTo(W - 40, 345); ctx.lineTo(W - 40, (YT + YB)/2); ctx.lineTo(XR + 10, (YT + YB)/2); ctx.stroke();
+      ctx.fillStyle = '#334155'; ctx.fillRect(320, 330, 80, 30); ctx.fillStyle = '#e2e8f0'; ctx.font = '800 13px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('−   pila   +', 360, 346);
+      // bombillo arriba
+      ctx.strokeStyle = '#94a3b8'; ctx.beginPath(); ctx.moveTo(40, (YT + YB)/2); ctx.lineTo(40, 48); ctx.lineTo(340, 48); ctx.moveTo(380, 48); ctx.lineTo(W - 40, 48); ctx.lineTo(W - 40, (YT + YB)/2); ctx.stroke();
+      const brillo = 0.75 + 0.25*Math.sin(t*20)*0.1, g = ctx.createRadialGradient(360, 44, 2, 360, 44, 60); g.addColorStop(0, 'rgba(253,224,71,' + brillo + ')'); g.addColorStop(1, 'rgba(253,224,71,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(360, 44, 60, 0, 7); ctx.fill();
+      ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(360, 44, 16, 0, 7); ctx.fill(); ctx.fillStyle = '#92400e'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText('💡', 360, 45);
+      ctx.fillStyle = '#93c5fd'; ctx.font = '700 12px Trebuchet MS'; ctx.fillText('flujo de electrones →', 560, YT - 14);
+    }
+    if(modo === 'calor'){
+      for(let k=0;k<5;k++){ const fx = 40 + Math.sin(t*9 + k)*4, fy = Y0 + k*DY; const g = ctx.createRadialGradient(fx, fy, 2, fx, fy, 28); g.addColorStop(0, 'rgba(254,240,138,.95)'); g.addColorStop(.5, 'rgba(249,115,22,.7)'); g.addColorStop(1, 'rgba(239,68,68,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(fx, fy, 22, 30 + Math.sin(t*12 + k)*4, 0, 0, 7); ctx.fill(); }
+      // termómetro en el extremo frío
+      const tx = W - 46, temp = T[COLS - 1];
+      ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.roundRect(tx - 8, 90, 16, 210, 8); ctx.fill();
+      ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(tx, 306, 13, 0, 7); ctx.fill(); ctx.fillRect(tx - 4, 300 - 200*temp, 8, 200*temp + 6);
+      ctx.fillStyle = '#fecaca'; ctx.font = '800 12px Trebuchet MS'; ctx.textAlign = 'center'; ctx.fillText(Math.round(20 + 180*temp) + ' °C', tx, 76);
+    }
+    // cationes
+    cat.forEach((c, i) => {
+      const temp = T[c.c], amp = modo === 'calor' ? 1 + 6*temp : 1;
+      let x = c.x + (c.r < 2 ? pg*DX/2 : 0) + Math.sin(t*(14 + temp*20) + i)*amp, y = c.y + Math.cos(t*(12 + temp*18) + i*1.7)*amp;
+      c.px = x; c.py = y;
+      const col = modo === 'calor' ? tc(temp) : 'rgb(129,140,248)';
+      const g = ctx.createRadialGradient(x - 5, y - 5, 2, x, y, 17); g.addColorStop(0, '#eef2ff'); g.addColorStop(1, col);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 16, 0, 7); ctx.fill();
+      ctx.fillStyle = '#1e1b4b'; ctx.font = '800 15px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('+', x, y + 1);
+    });
+    // electrones con estela
+    el.forEach(e => {
+      const col = Math.max(0, Math.min(COLS - 1, Math.round((e.x - X0)/DX))), temp = T[col];
+      const vel = modo === 'calor' ? 1.4 + 3*temp : 1.5;
+      e.vx += (Math.random() - .5)*0.7; e.vy += (Math.random() - .5)*0.7;
+      const sp = Math.hypot(e.vx, e.vy) || 1; e.vx = e.vx/sp*vel; e.vy = e.vy/sp*vel;
+      e.x += e.vx + (modo === 'volt' ? 2.2 : 0); e.y += e.vy;
+      const xr = XR + (modo === 'golpe' ? pg*DX/2 : 0);
+      if(e.y < YT + 4){ e.y = YT + 4; e.vy = Math.abs(e.vy); } if(e.y > YB - 4){ e.y = YB - 4; e.vy = -Math.abs(e.vy); }
+      if(e.x > xr){ if(modo === 'volt'){ e.x = XL; e.tr = []; } else { e.x = xr; e.vx = -Math.abs(e.vx); } }
+      if(e.x < XL){ e.x = XL; e.vx = Math.abs(e.vx); }
+      e.tr.push([e.x, e.y]); if(e.tr.length > 8) e.tr.shift();
+      ctx.strokeStyle = 'rgba(96,165,250,.35)'; ctx.lineWidth = 2; ctx.beginPath(); e.tr.forEach((p, k) => k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke();
+      ctx.fillStyle = '#93c5fd'; ctx.beginPath(); ctx.arc(e.x, e.y, 3.4, 0, 7); ctx.fill();
+    });
+    // martillo
+    if(modo === 'golpe'){
+      const q = Math.min(1, (now - golpe)/500), ang = -1.1 + 1.1*Math.pow(q, 2), hx = X0 - 10, hy = YT - 6;
+      ctx.save(); ctx.translate(hx - 70, hy - 40); ctx.rotate(ang);
+      ctx.fillStyle = '#a16207'; ctx.fillRect(0, -5, 110, 10); ctx.fillStyle = '#64748b'; ctx.fillRect(100, -22, 34, 44); ctx.restore();
+      if(q >= 1 && now - golpe < 900){ ctx.strokeStyle = 'rgba(253,224,71,' + (1 - (now - golpe - 500)/400) + ')'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(X0 + 30, YT, 30 + (now - golpe - 500)/8, Math.PI, 2*Math.PI); ctx.stroke(); }
+    }
+    ctx.fillStyle = '#94a3b8'; ctx.font = '700 12px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    if(modo !== 'volt') ctx.fillText('+ catión metálico   ·   ● electrón libre', 360, H - 16);
+  }
+  $('me-pick').addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return; modo = b.dataset.m; $('me-pick').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); $('me-msg').innerHTML = MSG[modo]; if(modo === 'calor') T = new Array(COLS).fill(0); if(modo === 'golpe') golpe = performance.now(); el.forEach(e => e.tr = []); });
+  $('me-msg').innerHTML = MSG.normal;
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Simulador: maleable vs. frágil ════════ */
+(function(){
+  const W = 720, H = 360, cv = $('cv-gol'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const SP = 44, ROWS = 4, COLS = 5;
+  let t0 = 0, activo = false, frag = [];
+  function iniciar(){ activo = true; t0 = performance.now(); frag = []; $('gol-msg').textContent = 'Observa en cámara lenta…'; }
+  function draw(now){
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    const t = activo ? (now - t0)/1000 : 0;
+    const qh = Math.min(1, t/0.6), impacto = t >= 0.6, desl = Math.max(0, Math.min(1, (t - 0.6)/0.8)), rompe = Math.max(0, Math.min(1, (t - 1.6)/0.7));
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '800 15px Trebuchet MS'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Metal (cobre)', 180, 24); ctx.fillText('Cristal iónico (sal)', 540, 24);
+    ctx.strokeStyle = 'rgba(148,163,184,.25)'; ctx.beginPath(); ctx.moveTo(360, 40); ctx.lineTo(360, H - 30); ctx.stroke();
+    [[80, 'met'], [440, 'ion']].forEach(([ox, tipo]) => {
+      const oy = 130;
+      if(tipo === 'met'){ ctx.fillStyle = 'rgba(99,102,241,.12)'; ctx.beginPath(); ctx.roundRect(ox - 26, oy - 26, (COLS - 1)*SP + 52 + desl*SP, (ROWS - 1)*SP + 52, 14); ctx.fill(); }
+      for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+        const arriba = r < 2;
+        let x = ox + c*SP + (arriba ? desl*SP : 0), y = oy + r*SP;
+        if(tipo === 'ion' && arriba){ y -= rompe*60 + rompe*rompe*20; x += rompe*10; }
+        if(tipo === 'met'){
+          const g = ctx.createRadialGradient(x - 4, y - 4, 1, x, y, 16); g.addColorStop(0, '#eef2ff'); g.addColorStop(1, '#818cf8'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 15, 0, 7); ctx.fill();
+          ctx.fillStyle = '#1e1b4b'; ctx.font = '800 14px Trebuchet MS'; ctx.fillText('+', x, y + 1);
+        } else {
+          const pos = (r + c) % 2 === 0, g = ctx.createRadialGradient(x - 4, y - 4, 1, x, y, pos ? 13 : 18);
+          g.addColorStop(0, pos ? '#fff7d6' : '#e0f2fe'); g.addColorStop(1, pos ? '#f59e0b' : '#3b82f6');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, pos ? 12 : 17, 0, 7); ctx.fill();
+          ctx.fillStyle = '#0b1622'; ctx.font = '800 13px Trebuchet MS'; ctx.fillText(pos ? '+' : '−', x, y + 1);
+        }
+      }
+      if(tipo === 'met'){ for(let k=0;k<30;k++){ const x = ox - 18 + ((k*53 + now/20*(k % 3 + 1)) % ((COLS - 1)*SP + 36 + desl*SP)), y = oy - 18 + ((k*37 + now/30*(k % 2 + 1)) % ((ROWS - 1)*SP + 36)); ctx.fillStyle = '#93c5fd'; ctx.beginPath(); ctx.arc(x, y, 3, 0, 7); ctx.fill(); } }
+      if(tipo === 'ion' && desl >= 1){
+        const fl = 0.5 + 0.5*Math.sin(now/90);
+        ctx.strokeStyle = 'rgba(248,113,113,' + (0.6 + 0.4*fl) + ')'; ctx.lineWidth = 3;
+        for(let c=0;c<COLS - 1;c++){ const x = ox + (c + 1)*SP, y1 = oy + SP - rompe*70 + 18, y2 = oy + 2*SP - 18;
+          if(y2 - y1 < 4) continue;
+          ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, (y1 + y2)/2 - 3); ctx.moveTo(x - 5, y1 + 6); ctx.lineTo(x, y1); ctx.lineTo(x + 5, y1 + 6); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(x, y2); ctx.lineTo(x, (y1 + y2)/2 + 3); ctx.moveTo(x - 5, y2 - 6); ctx.lineTo(x, y2); ctx.lineTo(x + 5, y2 - 6); ctx.stroke(); }
+        if(rompe > 0 && !frag.length){ for(let k=0;k<14;k++) frag.push({x: ox + Math.random()*(COLS - 1)*SP, y: oy + 1.5*SP, vx: (Math.random() - .5)*160, vy: -80 - Math.random()*120, s: 3 + Math.random()*5}); }
+      }
+      // martillo
+      const hx = ox + (COLS - 1)*SP/2, ang = -1.2 + 1.2*Math.pow(qh, 2);
+      ctx.save(); ctx.translate(hx - 120, oy - 70); ctx.rotate(ang); ctx.fillStyle = '#a16207'; ctx.fillRect(0, -5, 115, 10); ctx.fillStyle = '#64748b'; ctx.fillRect(108, -20, 30, 40); ctx.restore();
+      if(impacto && t < 1){ ctx.strokeStyle = 'rgba(253,224,71,' + (1 - (t - 0.6)/0.4) + ')'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(hx, oy - 30, 20 + (t - 0.6)*120, Math.PI*1.1, Math.PI*1.9); ctx.stroke(); }
+    });
+    // fragmentos que saltan del cristal iónico
+    const dtf = 1/60; frag.forEach(f => { f.vy += 300*dtf; f.x += f.vx*dtf; f.y += f.vy*dtf; if(f.y < H - 20){ ctx.fillStyle = '#bfdbfe'; ctx.fillRect(f.x, f.y, f.s, f.s); } });
+    ctx.font = '800 14px Trebuchet MS';
+    if(t > 2.4){ ctx.fillStyle = '#4ade80'; ctx.fillText('✓ se deforma, no se rompe', 180, H - 22); ctx.fillStyle = '#f87171'; ctx.fillText('✗ se rompe', 540, H - 22);
+      if(!draw.dicho){ draw.dicho = true; $('gol-msg').innerHTML = '<b>Metal:</b> tras deslizarse, cada catión sigue rodeado por el mismo mar de electrones, así que solo cambia de forma: es <b>maleable y dúctil</b> (láminas, alambres). <b>Cristal iónico:</b> al correrse una capa quedan cargas iguales enfrentadas (+ con +, − con −); se <b>repelen</b> y el cristal se parte: es <b>duro pero frágil</b>.'; } }
+  }
+  $('gol-go').addEventListener('click', () => { draw.dicho = false; iniciar(); });
+  $('gol-reset').addEventListener('click', () => { activo = false; frag = []; draw.dicho = false; $('gol-msg').textContent = 'Toca «Golpear».'; });
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Laboratorio animado ════════ */
+// Cada ensayo tiene su escena: mechero + termómetro, circuito con bombillo,
+// vaso de agua (se disuelve, flota o se hunde), conductividad de la
+// disolución (los iones migran a los electrodos) y martillo.
+(function(){
+  const W = 560, H = 320, cv = $('cv-lab'), S = setupCanvas(cv, W, H), ctx = S.ctx; refit.push(S.fit);
+  const M = [
+    {id:'nacl', n:'Cloruro de sodio (sal de cocina)', v:'ionico', forma:'cubos', mp:801, condS:0, condL:1, sol:'si', part:'iones', gt:'fragil', liq:'#fdba74',
+      aspecto:'Cristales blancos, duros, con forma de cubitos.', fusion:'Funde a 801 °C: hay que calentar muchísimo.', cond:'El bombillo NO enciende.', agua:'Se disuelve fácilmente.', cond2:'Disuelta en agua el bombillo SÍ enciende: los iones Na⁺ y Cl⁻ quedan libres y viajan a los electrodos.', golpe:'Se parte en pedacitos: es frágil.',
+      x:'Alto punto de fusión, no conduce en sólido pero sí disuelta (los iones quedan libres para moverse) y es frágil: <b>iónico</b>.'},
+    {id:'cacl2', n:'Cloruro de calcio (secante)', v:'ionico', forma:'granulos', mp:772, condS:0, condL:1, sol:'si', part:'iones', gt:'fragil', liq:'#fdba74',
+      aspecto:'Gránulos blancos que absorben la humedad del aire.', fusion:'Funde a 772 °C: muy alto.', cond:'El bombillo NO enciende.', agua:'Se disuelve muy bien (y la solución se calienta).', cond2:'Disuelto en agua el bombillo SÍ enciende: hay iones Ca²⁺ y Cl⁻ libres.', golpe:'Se quiebra: es frágil.',
+      x:'Funde muy alto y solo conduce cuando sus iones (Ca²⁺ y Cl⁻) quedan libres al disolverse: <b>iónico</b>.'},
+    {id:'cu', n:'Alambre de cobre', v:'metalico', forma:'alambre', mp:1085, condS:1, condL:1, sol:'no', part:null, gt:'maleable', liq:'#fb923c',
+      aspecto:'Sólido rojizo con brillo metálico.', fusion:'Funde a 1085 °C: el mechero (unos 1000 °C) no alcanza.', cond:'El bombillo enciende con fuerza: conduce muy bien en estado sólido.', agua:'No se disuelve: se hunde.', cond2:'No se disuelve; fundido (en un horno) también conduce.', golpe:'Se aplana y se dobla sin romperse: es maleable.',
+      x:'Brillo metálico, conduce en estado sólido y es maleable: el mar de electrones lo explica todo. <b>Metálico</b>.'},
+    {id:'al', n:'Papel de aluminio', v:'metalico', forma:'lamina', mp:660, condS:1, condL:1, sol:'no', part:null, gt:'maleable', liq:'#e2e8f0',
+      aspecto:'Lámina gris plateada y brillante.', fusion:'Funde a 660 °C.', cond:'El bombillo enciende: conduce en sólido.', agua:'No se disuelve.', cond2:'No se disuelve; fundido también conduce.', golpe:'Se arruga y se aplana sin romperse.',
+      x:'Conduce en estado sólido, tiene brillo y se deja doblar y laminar: <b>metálico</b>.'},
+    {id:'azucar', n:'Azúcar (sacarosa)', v:'covalente', forma:'azucar', mp:186, condS:0, condL:0, sol:'si', part:'moleculas', gt:'fragil', liq:'#92400e',
+      aspecto:'Cristales blancos, parecidos a la sal.', fusion:'Se funde y se carameliza hacia los 186 °C: bajo comparado con la sal.', cond:'El bombillo NO enciende.', agua:'Se disuelve muy bien.', cond2:'Disuelta en agua el bombillo NO enciende: en el agua quedan moléculas enteras, no iones.', golpe:'Se tritura.',
+      x:'Se parece a la sal y también se disuelve, pero funde bajo y su disolución NO conduce: está hecha de <b>moléculas</b>, no de iones. <b>Covalente</b>. ¡El ensayo de conductividad de la disolución es el que la delata!'},
+    {id:'parafina', n:'Parafina (vela)', v:'covalente', forma:'cera', mp:55, condS:0, condL:0, sol:'flota', part:null, gt:'blando', liq:'#fef9c3',
+      aspecto:'Sólido blanco, ceroso y blando.', fusion:'Funde hacia los 55 °C: muy bajo.', cond:'El bombillo NO enciende.', agua:'No se disuelve: flota (es apolar).', cond2:'Fundida tampoco conduce.', golpe:'Se marca y se deforma un poco: es blanda.',
+      x:'Punto de fusión muy bajo, no conduce nunca y no se mezcla con el agua (moléculas apolares de C e H): <b>covalente</b>.'},
+    {id:'agua', n:'Agua destilada', v:'covalente', forma:'agua', mp:0, hierve:100, condS:0, condL:0.08, sol:'disolvente', part:null, gt:'hielo', liq:'#bae6fd',
+      aspecto:'Líquido incoloro.', fusion:'Como hielo funde a 0 °C; el agua hierve a 100 °C.', cond:'Como hielo no conduce.', agua:'Es el disolvente.', cond2:'Pura, el bombillo casi no brilla: el agua de la llave conduce porque trae sales disueltas.', golpe:'Como hielo, se quiebra.',
+      x:'Puntos de fusión y ebullición bajos y casi no conduce: moléculas de H₂O con enlaces <b>covalentes</b> polares.'},
+    {id:'cuarzo', n:'Cuarzo (SiO₂, arena)', v:'covalente', forma:'cuarzo', mp:1700, condS:0, condL:0, sol:'no', part:null, gt:'duro', liq:'#fde68a',
+      aspecto:'Cristal transparente y muy duro (raya el vidrio).', fusion:'Funde hacia los 1700 °C: el mechero no alcanza.', cond:'El bombillo NO enciende.', agua:'No se disuelve: se hunde.', cond2:'Fundido (en un horno) casi no conduce: no tiene iones.', golpe:'Es durísimo: el martillo rebota; con mucha fuerza se quiebra.',
+      x:'¡Caso trampa! Funde altísimo como un compuesto iónico, pero no conduce ni fundido y no se disuelve: es una <b>red covalente</b> gigante de Si y O (como el diamante). El Si y el O son no metales: <b>covalente</b>.'}
+  ];
+  const T = {aspecto:'👀 Aspecto', fusion:'🔥 Calentar', cond:'💡 Conductividad (sólido)', agua:'💧 En agua', cond2:'🔌 Conductividad (disuelto o fundido)', golpe:'🔨 Golpe'};
+  const sel = $('lab-m'), log = $('lab-log'), fb = $('lab-fb');
+  sel.innerHTML = '<option value="">— Muestra al azar (misterio) —</option>' + M.map((m, i) => '<option value="' + i + '">' + m.n + '</option>').join('');
+  let cur = null, hechos = 0, resuelto = false, ens = 'aspecto', t0 = performance.now(), parts = [], misterio = true;
+  const ease = x => x < .5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2)/2;
+  // ── dibujo de cada muestra ──
+  function muestra(x, y, sc, st){
+    st = st || {}; const m = cur, f = m.forma;
+    ctx.save(); ctx.translate(x, y); ctx.scale(sc*(st.sx || 1), sc*(st.sy || 1));
+    if(st.funde){ // charco líquido
+      const g = ctx.createRadialGradient(0, 0, 2, 0, 0, 38); g.addColorStop(0, '#fff7ed'); g.addColorStop(1, m.liq);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 6, 34 + 6*st.funde, 9 + 4*(1 - st.funde), 0, 0, 7); ctx.fill();
+      if(st.funde < 1){ ctx.globalAlpha = 1 - st.funde; }
+      else { ctx.restore(); return; }
+    }
+    if(f === 'cubos' || f === 'azucar'){
+      const n = f === 'cubos' ? [[-16,0,14],[6,-2,16],[-4,-16,12],[18,-18,10],[-22,-14,9]] : Array.from({length:14}, (_, i) => [((i*37) % 50) - 25, -((i*23) % 26), 6]);
+      n.forEach(([cx, cy, s]) => { ctx.fillStyle = '#f8fafc'; ctx.fillRect(cx - s/2, cy - s/2, s, s); ctx.fillStyle = '#e2e8f0'; ctx.beginPath(); ctx.moveTo(cx - s/2, cy - s/2); ctx.lineTo(cx - s/2 + s*0.35, cy - s/2 - s*0.35); ctx.lineTo(cx + s/2 + s*0.35, cy - s/2 - s*0.35); ctx.lineTo(cx + s/2, cy - s/2); ctx.fill(); ctx.fillStyle = '#cbd5e1'; ctx.beginPath(); ctx.moveTo(cx + s/2, cy - s/2); ctx.lineTo(cx + s/2 + s*0.35, cy - s/2 - s*0.35); ctx.lineTo(cx + s/2 + s*0.35, cy + s/2 - s*0.35); ctx.lineTo(cx + s/2, cy + s/2); ctx.fill(); });
+    } else if(f === 'granulos'){
+      for(let i=0;i<11;i++){ const cx = ((i*41) % 54) - 27, cy = -((i*29) % 24); const g = ctx.createRadialGradient(cx - 2, cy - 3, 1, cx, cy, 8); g.addColorStop(0, '#fff'); g.addColorStop(1, '#cbd5e1'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, 7, 0, 7); ctx.fill(); }
+    } else if(f === 'alambre'){
+      ctx.lineWidth = 4; for(let i=0;i<6;i++){ const g = ctx.createLinearGradient(-30, 0, 30, 0); g.addColorStop(0, '#9a3412'); g.addColorStop(.5, '#fdba74'); g.addColorStop(1, '#c2410c'); ctx.strokeStyle = g; ctx.beginPath(); ctx.ellipse(-20 + i*8, -10, 10, 20, 0.25, 0, 7); ctx.stroke(); }
+    } else if(f === 'lamina'){
+      const g = ctx.createLinearGradient(-30, -30, 30, 10); g.addColorStop(0, '#f1f5f9'); g.addColorStop(.4, '#94a3b8'); g.addColorStop(.7, '#e2e8f0'); g.addColorStop(1, '#64748b');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-32, 4); ctx.lineTo(-24, -20); ctx.lineTo(-6, -26); ctx.lineTo(8, -16); ctx.lineTo(26, -24); ctx.lineTo(34, 2); ctx.lineTo(10, 8); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-20, -6); ctx.lineTo(-4, -18); ctx.lineTo(12, -6); ctx.stroke();
+    } else if(f === 'cera'){
+      const g = ctx.createLinearGradient(-18, 0, 18, 0); g.addColorStop(0, '#e7e5e4'); g.addColorStop(.5, '#fafaf9'); g.addColorStop(1, '#d6d3d1');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect(-18, -46, 36, 50, 6); ctx.fill(); ctx.fillStyle = '#f5f5f4'; ctx.beginPath(); ctx.ellipse(0, -46, 18, 5, 0, 0, 7); ctx.fill();
+      if(st.marca){ ctx.fillStyle = '#a8a29e'; ctx.beginPath(); ctx.ellipse(0, -44, 10*st.marca, 3*st.marca, 0, 0, 7); ctx.fill(); }
+    } else if(f === 'agua'){
+      if(st.hielo){ ctx.fillStyle = 'rgba(186,230,253,.8)'; ctx.beginPath(); ctx.roundRect(-20, -38, 40, 40, 5); ctx.fill(); ctx.strokeStyle = '#e0f2fe'; ctx.stroke(); }
+      else { ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(-26, -50); ctx.lineTo(-22, 4); ctx.lineTo(22, 4); ctx.lineTo(26, -50); ctx.stroke(); ctx.fillStyle = 'rgba(125,211,252,.45)'; ctx.fillRect(-23, -30, 46, 33); }
+    } else if(f === 'cuarzo'){
+      const g = ctx.createLinearGradient(-14, -50, 14, 0); g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(.5, 'rgba(203,213,225,.55)'); g.addColorStop(1, 'rgba(241,245,249,.85)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, -58); ctx.lineTo(14, -42); ctx.lineTo(14, 2); ctx.lineTo(-14, 2); ctx.lineTo(-14, -42); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, -58); ctx.lineTo(0, 2); ctx.stroke();
+      if(st.grieta){ ctx.strokeStyle = '#475569'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(-6, -40); ctx.lineTo(2, -28); ctx.lineTo(-3, -18); ctx.lineTo(4, -6); ctx.stroke(); }
+    }
+    ctx.restore();
+  }
+  function mesa(){ ctx.fillStyle = '#3f2d1d'; ctx.fillRect(0, H - 34, W, 34); ctx.fillStyle = '#5b4330'; ctx.fillRect(0, H - 34, W, 4); }
+  function bombillo(x, y, on){
+    if(on > 0){ const g = ctx.createRadialGradient(x, y, 2, x, y, 70); g.addColorStop(0, 'rgba(253,224,71,' + 0.9*on + ')'); g.addColorStop(1, 'rgba(253,224,71,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 70, 0, 7); ctx.fill(); }
+    ctx.fillStyle = on > 0.3 ? '#fde047' : on > 0 ? 'rgba(253,224,71,' + (0.25 + on) + ')' : '#334155'; ctx.beginPath(); ctx.arc(x, y, 18, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = '#64748b'; ctx.fillRect(x - 8, y + 16, 16, 10);
+    ctx.strokeStyle = on > 0.3 ? '#92400e' : '#64748b'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x - 6, y + 14); ctx.lineTo(x - 3, y - 4); ctx.lineTo(x, y + 4); ctx.lineTo(x + 3, y - 4); ctx.lineTo(x + 6, y + 14); ctx.stroke();
+  }
+  function cable(pts, on, now){
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3; ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke();
+    if(on > 0.3){ let L = 0; const seg = []; for(let i=1;i<pts.length;i++){ const l = Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]); seg.push(l); L += l; }
+      for(let k=0;k<Math.floor(L/26);k++){ let s = ((now/12 + k*26) % L), i = 0; while(i < seg.length - 1 && s > seg[i]){ s -= seg[i]; i++; } const q = s/seg[i], x = pts[i][0] + (pts[i+1][0] - pts[i][0])*q, y = pts[i][1] + (pts[i+1][1] - pts[i][1])*q; ctx.fillStyle = '#93c5fd'; ctx.beginPath(); ctx.arc(x, y, 2.6, 0, 7); ctx.fill(); } }
+  }
+  function draw(now){
+    const t = (now - t0)/1000;
+    ctx.fillStyle = '#0b1622'; ctx.fillRect(0, 0, W, H);
+    if(!cur) return;
+    mesa();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const tit = txt => { ctx.fillStyle = '#e2e8f0'; ctx.font = '800 14px Trebuchet MS'; ctx.fillText(txt, W/2, 20); };
+    if(ens === 'aspecto'){
+      tit(T.aspecto + (misterio ? ' · muestra misteriosa' : ' · ' + cur.n));
+      const k = 1 + 0.03*Math.sin(t*2); muestra(W/2, 220, 2.1*k, {});
+      for(let i=0;i<3;i++){ const a = t*1.5 + i*2.1, x = W/2 + Math.cos(a)*70, y = 150 + Math.sin(a*1.3)*40, s = 4 + 3*Math.sin(t*5 + i); ctx.fillStyle = 'rgba(255,255,255,' + (0.4 + 0.4*Math.sin(t*5 + i)) + ')'; ctx.beginPath(); ctx.moveTo(x, y - s*2); ctx.lineTo(x + s/2, y); ctx.lineTo(x, y + s*2); ctx.lineTo(x - s/2, y); ctx.fill(); }
+    } else if(ens === 'fusion'){
+      tit(T.fusion);
+      const meta = cur.forma === 'agua' ? cur.hierve : Math.min(cur.mp, 1000), Tt = 20 + (meta - 20)*ease(Math.min(1, t/3)), funde = cur.mp <= 1000 && Tt >= cur.mp - 1 ? Math.min(1, (t - 3)/0.8 + 0.001) : 0;
+      // mechero y llama
+      ctx.fillStyle = '#475569'; ctx.fillRect(W/2 - 12, H - 90, 24, 56); ctx.fillRect(W/2 - 30, H - 40, 60, 8);
+      for(let k=0;k<3;k++){ const g = ctx.createRadialGradient(W/2, H - 110, 2, W/2, H - 110, 34 - k*8); g.addColorStop(0, k ? 'rgba(96,165,250,.9)' : 'rgba(254,240,138,.9)'); g.addColorStop(1, 'rgba(59,130,246,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(W/2 + Math.sin(t*14 + k)*2, H - 112, 14 - k*3, 30 - k*6 + Math.sin(t*18)*3, 0, 0, 7); ctx.fill(); }
+      // trípode y crisol
+      ctx.strokeStyle = '#64748b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(W/2 - 50, H - 34); ctx.lineTo(W/2 - 40, 168); ctx.lineTo(W/2 + 40, 168); ctx.lineTo(W/2 + 50, H - 34); ctx.stroke();
+      const hot = Math.min(1, (Tt - 20)/900);
+      ctx.fillStyle = 'rgb(' + Math.round(148 + 100*hot) + ',' + Math.round(163 - 60*hot) + ',' + Math.round(184 - 140*hot) + ')';
+      ctx.beginPath(); ctx.moveTo(W/2 - 46, 120); ctx.lineTo(W/2 + 46, 120); ctx.lineTo(W/2 + 32, 166); ctx.lineTo(W/2 - 32, 166); ctx.closePath(); ctx.fill();
+      if(cur.forma === 'agua'){ ctx.fillStyle = 'rgba(125,211,252,.7)'; ctx.fillRect(W/2 - 38, 128, 76, 30); if(Tt > 95) for(let k=0;k<10;k++){ const bx = W/2 - 30 + ((k*17 + now/8) % 60), by = 150 - ((now/6 + k*13) % 30); ctx.strokeStyle = '#e0f2fe'; ctx.beginPath(); ctx.arc(bx, by, 3, 0, 7); ctx.stroke(); } }
+      else muestra(W/2, 128, 0.9, {funde});
+      // termómetro
+      const tx = W - 70; ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.roundRect(tx - 9, 50, 18, 200, 9); ctx.fill();
+      ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(tx, 252, 14, 0, 7); ctx.fill(); const hh = 190*Math.min(1, Tt/1100); ctx.fillRect(tx - 4, 246 - hh, 8, hh + 6);
+      ctx.fillStyle = '#fecaca'; ctx.font = '800 15px Trebuchet MS'; ctx.fillText(Math.round(Tt) + ' °C', tx, 36);
+      ctx.fillStyle = '#94a3b8'; ctx.font = '10px Trebuchet MS'; [0, 500, 1000].forEach(v => ctx.fillText(v, tx - 30, 246 - 190*v/1100));
+      ctx.font = '700 13px Trebuchet MS';
+      if(t > 3.2){ ctx.fillStyle = funde > 0 || cur.forma === 'agua' ? '#4ade80' : '#fca5a5';
+        ctx.fillText(cur.forma === 'agua' ? 'hierve a 100 °C' : funde > 0 ? (cur.id === 'azucar' ? 'se funde y se carameliza a ' + cur.mp + ' °C' : 'funde a ' + cur.mp + ' °C') : 'a 1000 °C sigue sólido: el mechero no alcanza', W/2 - 40, 60); }
+    } else if(ens === 'cond' || ens === 'cond2'){
+      const disuelto = ens === 'cond2' && cur.sol === 'si', fundido = ens === 'cond2' && !disuelto && cur.forma !== 'agua';
+      const on = Math.min(1, t/0.8)*(ens === 'cond' ? cur.condS : cur.condL);
+      tit(ens === 'cond' ? T.cond : T.cond2 + (disuelto ? ' · disuelto en agua' : fundido ? ' · fundido' : ''));
+      // pila
+      ctx.fillStyle = '#334155'; ctx.fillRect(50, 150, 46, 70); ctx.fillStyle = '#e2e8f0'; ctx.font = '800 12px Trebuchet MS'; ctx.fillText('pila', 73, 186); ctx.fillText('+', 73, 160); ctx.fillText('−', 73, 212);
+      const ex1 = W/2 - 40, ex2 = W/2 + 40, ey = ens === 'cond' ? 200 : 170;
+      cable([[73, 150], [73, 70], [W/2 - 18, 70]], on, now); cable([[W/2 + 18, 70], [W - 60, 70], [W - 60, 120], [ex2, 120], [ex2, ey]], on, now); cable([[73, 220], [73, 260], [ex1 - 60, 260], [ex1 - 60, 120], [ex1, 120], [ex1, ey]], on, now);
+      bombillo(W/2, 66, on);
+      ctx.fillStyle = '#94a3b8'; ctx.fillRect(ex1 - 3, 120, 6, ey - 120 + 30); ctx.fillRect(ex2 - 3, 120, 6, ey - 120 + 30);
+      if(ens === 'cond') muestra(W/2, 248, 1.4, {});
+      else if(disuelto || cur.forma === 'agua'){
+        ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W/2 - 90, 150); ctx.lineTo(W/2 - 84, H - 36); ctx.lineTo(W/2 + 84, H - 36); ctx.lineTo(W/2 + 90, 150); ctx.stroke();
+        ctx.fillStyle = 'rgba(125,211,252,.25)'; ctx.fillRect(W/2 - 86, 170, 172, H - 207);
+        if(!parts.length) for(let k=0;k<22;k++) parts.push({x: W/2 - 70 + Math.random()*140, y: 185 + Math.random()*90, q: k % 2 ? 1 : -1, ph: Math.random()*6});
+        parts.forEach(p => {
+          if(cur.part === 'iones'){ const objX = p.q > 0 ? ex1 + 8 : ex2 - 8; p.x += (objX - p.x)*0.004 + Math.sin(now/300 + p.ph)*0.3; p.y += Math.cos(now/280 + p.ph)*0.3;
+            ctx.fillStyle = p.q > 0 ? '#fbbf24' : '#60a5fa'; ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, 7); ctx.fill(); ctx.fillStyle = '#0b1622'; ctx.font = '800 10px Trebuchet MS'; ctx.fillText(p.q > 0 ? '+' : '−', p.x, p.y + 1); }
+          else if(cur.part === 'moleculas'){ p.x += Math.sin(now/500 + p.ph)*0.4; p.y += Math.cos(now/450 + p.ph)*0.4; ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 1.5; ctx.beginPath(); for(let a=0;a<6;a++){ const an = a*Math.PI/3 + now/900; ctx[a ? 'lineTo' : 'moveTo'](p.x + Math.cos(an)*6, p.y + Math.sin(an)*6); } ctx.closePath(); ctx.stroke(); }
+        });
+        if(cur.part === 'iones'){ ctx.fillStyle = '#fde68a'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText('los cationes (+) van al electrodo −, los aniones (−) al +', W/2, H - 46); }
+        if(cur.part === 'moleculas'){ ctx.fillStyle = '#e2e8f0'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText('moléculas neutras: nadie lleva la corriente', W/2, H - 46); }
+      } else {
+        ctx.fillStyle = '#64748b'; ctx.beginPath(); ctx.moveTo(W/2 - 70, 190); ctx.lineTo(W/2 + 70, 190); ctx.lineTo(W/2 + 54, H - 40); ctx.lineTo(W/2 - 54, H - 40); ctx.closePath(); ctx.fill();
+        const g = ctx.createLinearGradient(0, 200, 0, H - 44); g.addColorStop(0, cur.liq); g.addColorStop(1, '#f97316'); ctx.fillStyle = g; ctx.fillRect(W/2 - 62, 200, 124, H - 246);
+        ctx.fillStyle = '#fde68a'; ctx.font = '700 11px Trebuchet MS'; ctx.fillText(cur.mp > 1000 ? 'fundido en un horno (' + cur.mp + ' °C)' : 'fundido', W/2, 180);
+      }
+    } else if(ens === 'agua'){
+      tit(T.agua);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W/2 - 100, 90); ctx.lineTo(W/2 - 92, H - 36); ctx.lineTo(W/2 + 92, H - 36); ctx.lineTo(W/2 + 100, 90); ctx.stroke();
+      const nivel = 130, wob = Math.sin(t*3)*2;
+      ctx.fillStyle = 'rgba(125,211,252,.3)'; ctx.fillRect(W/2 - 95, nivel, 190, H - 36 - nivel);
+      ctx.strokeStyle = 'rgba(186,230,253,.7)'; ctx.beginPath(); ctx.moveTo(W/2 - 95, nivel + wob); ctx.quadraticCurveTo(W/2, nivel - wob, W/2 + 95, nivel + wob); ctx.stroke();
+      if(cur.forma === 'agua'){ ctx.fillStyle = '#e2e8f0'; ctx.font = '700 13px Trebuchet MS'; ctx.fillText('el agua es el disolvente de los demás ensayos 💧', W/2, 70); }
+      else {
+        const caida = Math.min(1, t/0.7), yS = 50 + (cur.sol === 'flota' ? nivel - 40 : H - 80 - 50)*ease(caida);
+        if(cur.sol === 'si'){
+          const d = Math.max(0, Math.min(1, (t - 0.8)/2.2));
+          if(d < 1) muestra(W/2, Math.min(yS, H - 80), 1.1*(1 - d) + 0.05, {});
+          if(t > 0.8){ if(!parts.length) for(let k=0;k<40;k++) parts.push({x: W/2 + (Math.random() - .5)*20, y: H - 90, vx: (Math.random() - .5)*1.6, vy: -Math.random()*1.4, q: k % 2 ? 1 : -1});
+            parts.forEach(p => { p.x += p.vx*0.6; p.y += p.vy*0.6; p.vx *= 0.99; p.vy = p.vy*0.99 + (Math.random() - .5)*0.05; p.x = Math.max(W/2 - 88, Math.min(W/2 + 88, p.x)); p.y = Math.max(nivel + 8, Math.min(H - 42, p.y));
+              if(cur.part === 'iones'){ ctx.fillStyle = p.q > 0 ? '#fbbf24' : '#60a5fa'; ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, 7); ctx.fill(); }
+              else { ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 1; ctx.beginPath(); for(let a=0;a<6;a++){ const an = a*Math.PI/3; ctx[a ? 'lineTo' : 'moveTo'](p.x + Math.cos(an)*4, p.y + Math.sin(an)*4); } ctx.closePath(); ctx.stroke(); } }); }
+          if(d >= 1){ ctx.fillStyle = '#4ade80'; ctx.font = '700 13px Trebuchet MS'; ctx.fillText(cur.part === 'iones' ? 'se disolvió: el agua separó los iones' : 'se disolvió: las moléculas se separaron', W/2, 70); }
+        } else {
+          muestra(W/2, cur.sol === 'flota' ? yS + Math.sin(t*2)*3 : Math.min(yS, H - 40), 1.1, {});
+          if(t > 1){ ctx.fillStyle = '#fca5a5'; ctx.font = '700 13px Trebuchet MS'; ctx.fillText(cur.sol === 'flota' ? 'no se disuelve: flota (es apolar)' : 'no se disuelve: se hunde', W/2, 70); }
+        }
+      }
+    } else if(ens === 'golpe'){
+      tit(T.golpe);
+      const q = Math.min(1, t/0.55), ang = -0.9 + 1.4*Math.pow(q, 2), imp = t >= 0.55, r = Math.max(0, Math.min(1, (t - 0.55)/0.5));
+      const tipo = cur.gt, x = W/2, y = H - 40;
+      let stM = {};
+      if(tipo === 'maleable') stM = {sx: 1 + 0.7*r, sy: 1 - 0.55*r};
+      if(tipo === 'blando') stM = {sx: 1 + 0.12*r, sy: 1 - 0.12*r, marca: r};
+      if(tipo === 'duro') stM = {grieta: t > 1.6};
+      if(tipo === 'hielo') stM = {hielo: true};
+      if(tipo === 'fragil' || tipo === 'hielo'){
+        if(!imp) muestra(x, y, 1.5, stM);
+        else { if(!parts.length) for(let k=0;k<26;k++) parts.push({x: x + (Math.random() - .5)*40, y: y - 20, vx: (Math.random() - .5)*7, vy: -2 - Math.random()*5, s: 3 + Math.random()*7, rot: Math.random()*6});
+          parts.forEach(p => { p.vy += 0.25; p.x += p.vx; p.y += p.vy; if(p.y > H - 38){ p.y = H - 38; p.vx *= 0.6; p.vy = 0; } p.rot += p.vx*0.05;
+            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = tipo === 'hielo' ? 'rgba(186,230,253,.9)' : '#f1f5f9'; ctx.fillRect(-p.s/2, -p.s/2, p.s, p.s); ctx.restore(); }); }
+      } else muestra(x, y, 1.5, stM);
+      // martillo (en «duro» rebota)
+      const reb = tipo === 'duro' && imp ? Math.sin(Math.min(1, (t - 0.55)/0.4)*Math.PI)*0.6 : 0;
+      ctx.save(); ctx.translate(x - 150, y - 110); ctx.rotate(ang - reb); ctx.fillStyle = '#a16207'; ctx.fillRect(0, -6, 150, 12); ctx.fillStyle = '#64748b'; ctx.fillRect(140, -26, 40, 52); ctx.restore();
+      if(imp && t < 1){ ctx.strokeStyle = 'rgba(253,224,71,' + (1 - (t - 0.55)/0.45) + ')'; ctx.lineWidth = 3; for(let k=0;k<8;k++){ const a = Math.PI + k*Math.PI/7, r1 = 30 + (t - 0.55)*80; ctx.beginPath(); ctx.moveTo(x + Math.cos(a)*20, y - 30 + Math.sin(a)*20); ctx.lineTo(x + Math.cos(a)*r1, y - 30 + Math.sin(a)*r1); ctx.stroke(); } }
+      if(t > 1.3){ ctx.font = '700 13px Trebuchet MS'; ctx.fillStyle = tipo === 'maleable' ? '#4ade80' : '#fde68a'; ctx.fillText({maleable:'se aplanó sin romperse: maleable', fragil:'se partió en pedazos: frágil', blando:'quedó marcada: es blanda', duro:'el martillo rebotó: durísimo', hielo:'el hielo se partió'}[tipo], W/2, 70); }
+    }
+  }
+  function nueva(){
+    const v = sel.value; misterio = v === '';
+    cur = M[misterio ? Math.floor(Math.random()*M.length) : +v]; hechos = 0; resuelto = false; ens = 'aspecto'; t0 = performance.now(); parts = [];
+    log.innerHTML = '<div class="t">&gt; Muestra: ' + (misterio ? 'misteriosa 🧪' : cur.n) + '</div><div>&gt; Elige un ensayo.</div>';
+    fb.innerHTML = '';
+    document.querySelectorAll('#lab-tests button').forEach(b => b.classList.remove('done', 'on'));
+    document.querySelectorAll('#lab-v .opt').forEach(b => { b.disabled = false; b.classList.remove('ok', 'bad'); });
+  }
+  sel.addEventListener('change', nueva);
+  $('lab-tests').addEventListener('click', ev => {
+    const b = ev.target.closest('button'); if(!b || !cur) return;
+    if(!b.classList.contains('done')){ hechos++; b.classList.add('done'); }
+    document.querySelectorAll('#lab-tests button').forEach(x => x.classList.toggle('on', x === b));
+    ens = b.dataset.t; t0 = performance.now(); parts = [];
+    log.insertAdjacentHTML('beforeend', '<div><span class="t">&gt; ' + T[ens] + ':</span> ' + cur[ens] + '</div>');
+    log.scrollTop = log.scrollHeight;
+  });
+  $('lab-v').addEventListener('click', ev => {
+    const b = ev.target.closest('.opt'); if(!b || resuelto) return;
+    if(!hechos){ fb.innerHTML = '<span class="err-t">Primero haz al menos un ensayo: la química se decide con evidencia.</span>'; return; }
+    resuelto = true;
+    const ok = b.dataset.v === cur.v;
+    document.querySelectorAll('#lab-v .opt').forEach(x => { x.disabled = true; if(x.dataset.v === cur.v) x.classList.add('ok'); });
+    if(!ok) b.classList.add('bad');
+    fb.innerHTML = (ok ? '<span class="ok-t">✓ ¡Correcto con ' + hechos + ' ensayo' + (hechos > 1 ? 's' : '') + '!</span> ' : '<span class="err-t">✗ No es así.</span> ') + 'La muestra era: <b>' + cur.n + '</b>. ' + cur.x + ' <br><button class="btn ghost" id="lab-otra" style="margin-top:8px">🧪 Otra muestra</button>';
+    $('lab-otra').addEventListener('click', () => { sel.value = ''; nueva(); });
+  });
+  nueva();
+  (function loop(now){ if(visible(cv)) draw(now); requestAnimationFrame(loop); })(performance.now());
+})();
+
+/* ════════ Repaso ════════ */
+(function(){
+  const QS = [
+    {q:'En la formación del NaCl, ¿qué le pasa al sodio?', o:['Cede 1 electrón y queda como Na⁺','Gana 1 electrón y queda como Na⁻','Comparte un par de electrones con el Cl','No cambia'], x:'El Na es un metal con 1 e⁻ de valencia: lo cede al Cl y queda como catión Na⁺, con la configuración del neón.'},
+    {q:'¿Qué tipo de enlace hay entre el C y el H del metano (CH₄)?', o:['Covalente apolar (ΔEN = 0,35)','Iónico (ΔEN = 2,2)','Metálico','Covalente polar (ΔEN = 1,9)'], x:'C y H son no metales con ΔEN = |2,55 − 2,20| = 0,35 < 0,4: covalente apolar.'},
+    {q:'¿Por qué el cobre conduce la electricidad en estado sólido?', o:['Por su mar de electrones que se mueven libremente','Porque tiene iones libres en una disolución','Porque sus moléculas son polares','Porque es un no metal'], x:'En el enlace metálico los electrones de valencia están deslocalizados y pueden fluir.'},
+    {q:'Una sustancia funde a 801 °C, no conduce sólida pero sí disuelta en agua. ¿Qué enlace tiene?', o:['Iónico','Covalente','Metálico','No se puede saber'], x:'Conducir solo disuelta o fundida es la marca de los compuestos iónicos: los iones quedan libres.'},
+    {q:'¿Cuántos electrones de valencia hay en total para dibujar la estructura de Lewis del NH₃?', o:['8','5','7','10'], x:'N aporta 5 y cada H aporta 1: 5 + 3 = 8.'},
+    {q:'¿Cuántos pares libres tiene el oxígeno en la molécula de agua?', o:['2','0','1','3'], x:'8 e⁻ en total: 4 en los dos enlaces O–H y 4 como 2 pares libres en el O.'},
+    {q:'¿Qué tipo de enlace une los dos átomos de la molécula de N₂?', o:['Covalente triple','Covalente simple','Covalente doble','Iónico'], x:'Cada N necesita compartir 3 pares para completar el octeto: N≡N.'},
+    {q:'H (EN 2,20) y Cl (EN 3,16): ΔEN = 0,96. ¿Qué enlace forman?', o:['Covalente polar','Covalente apolar','Iónico','Metálico'], x:'Dos no metales con ΔEN entre 0,4 y 1,7: comparten el par, pero el Cl lo atrae más.'},
+    {q:'¿Por qué es incorrecto hablar de "una molécula de NaCl"?', o:['Porque es una red de iones; NaCl es la unidad fórmula','Porque el NaCl es un metal','Porque el NaCl es un gas','Porque tiene enlaces triples'], x:'Los compuestos iónicos forman redes cristalinas; la fórmula indica la proporción de iones (1:1).'},
+    {q:'El azúcar se disuelve en agua, pero la disolución no enciende el bombillo. ¿Por qué?', o:['Es covalente: se separan moléculas enteras, no iones','Es iónico pero sus iones son muy grandes','Es metálico','Porque no se disuelve de verdad'], x:'Sin iones libres no hay corriente: el azúcar está formado por moléculas covalentes.'},
+    {q:'¿Por qué un cristal de sal se rompe al golpearlo?', o:['Al deslizarse una capa quedan iones de igual carga enfrentados y se repelen','Porque pierde sus electrones','Porque es blando','Porque se funde con el golpe'], x:'En el cristal iónico, desplazar una capa enfrenta + con + y − con −: la repulsión lo parte.'},
+    {q:'¿Cuál de estas sustancias tiene enlace iónico?', o:['CaO','CO₂','H₂O','Cl₂'], x:'Ca (metal) y O (no metal) con ΔEN = 2,44: iónico. Los otros tres solo tienen no metales.'},
+    {q:'El CO₂ tiene enlaces C=O polares, pero la molécula es apolar. ¿Por qué?', o:['Es lineal y simétrica: los dos dipolos se cancelan','Porque el C no es electronegativo','Porque los enlaces son iónicos','Porque tiene pares libres en el C'], x:'O=C=O es lineal: los dos enlaces polares apuntan en direcciones opuestas y se anulan.'}
+  ];
+  let order = [], qi = 0, score = 0;
+  function start(){ order = shuffle(QS.map((_, i) => i)).slice(0, 10); qi = 0; score = 0; render(); }
+  function render(){
+    const box = $('q-box');
+    $('q-fill').style.width = (qi/order.length*100) + '%';
+    $('q-label').textContent = qi + ' de ' + order.length + ' respondidas';
+    if(qi >= order.length){
+      box.innerHTML = '<div class="' + (score >= 8 ? 'ok-box' : 'warn-box') + '"><strong>Resultado: ' + score + ' de ' + order.length + '.</strong> ' + (score >= 8 ? '¡Excelente! Ya puedes pasar a nombrar compuestos.' : 'Repasa los Conceptos y las estructuras de Lewis.') + '</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="teoria.html">Ir a Nomenclatura →</a></div>';
+      $('q-again').addEventListener('click', start); return;
+    }
+    const Q = QS[order[qi]], opts = shuffle(Q.o.map((t, i) => ({t, ok: i === 0})));
+    box.innerHTML = '<div class="mq-q">' + (qi + 1) + '. ' + Q.q + '</div><div class="mq-opts">' + opts.map((o, i) => '<button class="mq-btn" data-i="' + i + '">' + o.t + '</button>').join('') + '</div><div class="fb" id="q-fb"></div><button class="btn" id="q-next" style="display:none;margin-top:10px">Siguiente →</button>';
+    box.querySelectorAll('.mq-btn').forEach(b => b.addEventListener('click', () => {
+      const o = opts[+b.dataset.i];
+      box.querySelectorAll('.mq-btn').forEach((x, i) => { x.disabled = true; if(opts[i].ok) x.classList.add('mq-correct'); });
+      if(!o.ok) b.classList.add('mq-wrong'); else score++;
+      $('q-fb').innerHTML = (o.ok ? '<span class="ok-t">✓ ¡Correcto!</span> ' : '<span class="err-t">✗ No es así.</span> ') + Q.x;
+      $('q-next').style.display = 'inline-flex';
+    }));
+    $('q-next').addEventListener('click', () => { qi++; render(); });
+  }
+  start();
+})();
+
+const h = (location.hash || '').replace('#', '');
+if(h) showTab(h, false);
+
+/* ── Hamburger nav ── */
+(function(){
+  var ham=$('ham-btn'), drawer=$('nav-drawer'), overlay=$('nav-overlay'), closeBtn=$('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

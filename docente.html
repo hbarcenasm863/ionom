@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d4a73">
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
@@ -185,6 +186,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .doc-tab.active{color:var(--nav);border-bottom-color:var(--nav)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
+#s-form [hidden]{display:none}
+.tipo-intro{background:var(--surf2);border-left:4px solid var(--nav);border-radius:var(--rs);padding:12px 14px;margin:0 0 18px;font-size:.88rem;line-height:1.45}
+.tipo-intro strong{display:block;font-size:1rem;margin-bottom:2px;color:var(--nav)}
 
 /* ══════════════ Laberintos (controles) ══════════════ */
 .lab-modos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
@@ -193,7 +197,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-app[data-mode="nom"] .lab-only:not(.lab-nom),
 #lab-app[data-mode="mol"] .lab-only:not(.lab-mol),
 #lab-app[data-mode="rx"] .lab-only:not(.lab-rx),
-#lab-app[data-mode="bal"] .lab-only:not(.lab-bal){display:none!important}
+#lab-app[data-mode="bal"] .lab-only:not(.lab-bal),
+#lab-app[data-mode="atomo"] .lab-only:not(.lab-atomo){display:none!important}
 /* acción secundaria (borde --nav): --nav es el único color de acción del
    sitio; «Imprimir» queda como la acción primaria */
 .lab-nuevo{min-height:44px;border-color:var(--nav)}
@@ -307,6 +312,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .node .fo{font-size:26px;font-weight:700;line-height:1.15;color:#0d2d42}
 .lab-sheet .node .fo.nm{font-size:19px;font-family:var(--serif);font-style:italic}
 .lab-sheet .node .fo.eq{font-size:16px;line-height:1.3}
+/* notación nuclear ᴬ_Z X (laberinto «Teoría atómica»): A arriba y Z abajo */
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.5em;line-height:1.05;vertical-align:middle;margin-right:1px;font-weight:700}
 .lab-sheet .nw,.lab-card .nw{white-space:nowrap}
 .lab-sheet .node .ft{font-size:13px;line-height:1.15;color:#4f6d88}
 .lab-sheet .lf{font-family:var(--mono);font-weight:700}
@@ -481,6 +488,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   </div>
   <nav class="drawer-links">
     <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
@@ -500,11 +510,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <div class="app">
   <div class="page-hdr no-print">
     <h1>🗂️ Generador para Docentes</h1>
-    <p>Arma guías, talleres, evaluaciones y laberintos imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
+    <p>Arma guías, talleres, evaluaciones, laberintos y crucigramas imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
   </div>
 
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
-    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias">📄 Guías, talleres y evaluaciones</button>
+    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="guia">📘 Guías</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-talleres" aria-controls="tab-guias" aria-selected="false" data-tab="talleres" data-panel="guias" data-tipo="taller">✏️ Talleres</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-evaluaciones" aria-controls="tab-guias" aria-selected="false" data-tab="evaluaciones" data-panel="guias" data-tipo="evaluacion">📝 Evaluaciones</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-crucigramas" aria-controls="tab-crucigramas" aria-selected="false" data-tab="crucigramas">🔤 Crucigramas</button>
   </div>
@@ -514,10 +526,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <!-- ══════════════ FORMULARIO ══════════════ -->
   <div id="s-form" class="screen active">
 
-    <div class="sect">
+    <div class="tipo-intro" data-solo="guia"><strong>📘 Guía de estudio</strong> Sesión 1 (saberes previos), Sesión 2 (información del tema) y Sesión 3 (trabajo práctico). No incluye evaluación: ésta se arma en la pestaña «Evaluaciones».</div>
+    <div class="tipo-intro" data-solo="taller"><strong>✏️ Taller</strong> Solo ejercicios de práctica (nombrar, formular, completar tablas, cazar errores…), sin lecturas ni evaluación.</div>
+    <div class="tipo-intro" data-solo="evaluacion"><strong>📝 Evaluación</strong> Preguntas tipo Saber 11 con hoja de respuestas y preguntas abiertas, con rúbrica opcional. Sin clave impresa.</div>
+
+    <div class="sect" id="sect-tipo-doc" hidden>
       <h2>1 · Documento</h2>
       <div class="tipo-doc-col">
-        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="completa" checked><span><strong>Guía completa</strong><br><small>4 sesiones + evaluación en hojas aparte</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="guia" checked><span><strong>Guía de estudio</strong><br><small>Sesiones de estudio + trabajo práctico, sin evaluación</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="completa"><span><strong>Guía completa</strong><br><small>4 sesiones + evaluación en hojas aparte</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="taller"><span><strong>Solo taller</strong><br><small>Ejercicios de práctica</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="evaluacion"><span><strong>Solo evaluación</strong><br><small>Tipo Saber 11 + abiertas</small></span></label>
       </div>
@@ -527,6 +544,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <h2>2 · Tema(s)</h2>
       <p class="sect-hint">Los ejercicios salen de los bancos del Juego y del Generador; los temas nuevos del Juego aparecen solos.</p>
       <div class="temas-grid" id="temas-grid">
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="atomo"><span><strong>Teoría atómica y estructura del átomo</strong><br><small class="tema-disp"></small></span></label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="config-e"><span><strong>Configuración electrónica</strong><br><small class="tema-disp"></small></span></label>
+        <label class="tema-chk"><input type="checkbox" class="chk-tema" value="enlace"><span><strong>Enlace químico</strong><br><small class="tema-disp"></small></span></label>
         <label class="tema-chk"><input type="checkbox" class="chk-tema" value="ox-bas" checked><span><strong>Óxidos básicos</strong><br><small class="tema-disp"></small></span></label>
         <label class="tema-chk"><input type="checkbox" class="chk-tema" value="anhid" checked><span><strong>Anhídridos (óxidos ácidos)</strong><br><small class="tema-disp"></small></span></label>
         <label class="tema-chk"><input type="checkbox" class="chk-tema" value="hidru"><span><strong>Hidruros metálicos</strong><br><small class="tema-disp"></small></span></label>
@@ -545,7 +565,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
     </div>
 
-    <div class="sect">
+    <div class="sect" data-solo="guia completa taller">
       <h2>3 · Trabajo práctico</h2>
       <div class="field-row">
         <div class="field" style="max-width:220px">
@@ -567,6 +587,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-balanceo"><span><strong>D</strong> Balanceo<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-molmasa"><span><strong>D</strong> Mol y masa molar<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-estequiometria"><span><strong>D</strong> Estequiometría<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-atomo"><span><strong>D</strong> Partículas subatómicas<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-config"><span><strong>D</strong> Configuración electrónica<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-enlace"><span><strong>D</strong> Tipo de enlace (ΔEN)<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="x-errores" checked><span><strong>X</strong> Cazar errores<br><small class="ej-disp"></small></span></label>
       </div>
       <div class="field-row" style="margin-top:12px">
@@ -575,7 +598,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <p class="sect-hint">El total se reparte en ronda entre los tipos marcados (uno de cada hasta completarlo), respetando cuántos hay disponibles de cada uno.</p>
     </div>
 
-    <div class="sect">
+    <div class="sect" data-solo="completa evaluacion">
       <h2>4 · Evaluación</h2>
       <div class="field-row">
         <div class="field"><label for="f-saber">Preguntas tipo Saber 11</label><input type="text" inputmode="numeric" id="f-saber" value="6"></div>
@@ -588,10 +611,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
     <div class="sect">
       <h2>5 · Versiones (para evitar copia)</h2>
-      <div class="field-row">
+      <div class="field-row" data-solo="completa taller evaluacion">
         <div class="field"><label for="f-versiones">Número de versiones</label><input type="text" inputmode="numeric" id="f-versiones" value="1"></div>
       </div>
-      <p class="sect-hint">Guía completa: las sesiones de estudio salen una sola vez y la evaluación (hojas aparte) sale en esa cantidad de versiones, cada una con distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
+      <p class="sect-hint" data-solo="taller">Cada versión del taller trae otra selección y otro orden de ejercicios, marcada «Versión X de N».</p>
+      <p class="sect-hint" data-solo="evaluacion">Cada versión trae distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
+      <p class="sect-hint" data-solo="completa">Guía completa: las sesiones de estudio salen una sola vez y la evaluación (hojas aparte) sale en esa cantidad de versiones, cada una con distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
       <div class="field-row">
         <div class="field"><label for="f-variante">Código de variante</label><input type="text" id="f-variante" value="v1"></div>
       </div>
@@ -615,7 +640,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
 
     <div class="sect">
-      <button class="btn-generar" id="btn-generar" onclick="DOCENTE.generar()">⚙️ Generar vista previa</button>
+      <button class="btn-generar" id="btn-generar" onclick="DOCENTE.generar()">⚙️ Generar <span id="btn-generar-tipo">vista previa</span></button>
       <div id="estado-bancos" style="margin-top:10px">Cargando bancos…</div>
     </div>
   </div>
@@ -643,6 +668,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="mol"><span><strong>Mol y masa molar</strong><br><small>Masa, moléculas, átomos, iones, gases</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="rx"><span><strong>Tipos de reacción</strong><br><small>Clasificar ecuaciones del banco</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="bal"><span><strong>Balanceo</strong><br><small>Elegir los coeficientes correctos</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="atomo"><span><strong>Teoría atómica y configuración</strong><br><small>Partículas, isótopos, iones, configuración, modelos</small></span></label>
       </div>
     </div>
 
@@ -682,6 +708,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
           </div>
         </div>
         <label class="chk-linea"><input type="checkbox" id="lab-color" checked> Colorear fórmulas con el método cromático de IonNom (catión · anión · hidróxido · oxoanión)</label>
+      </div>
+
+      <div class="lab-only lab-atomo">
+        <div class="lab-chks" id="lab-fs-atomo">
+          <label class="tema-chk"><input type="checkbox" value="part" checked><span><strong>Partículas subatómicas</strong><br><small>¿Cuántos neutrones tiene ³⁷Cl⁻? · ¿Qué especie tiene 12 p⁺, 12 n⁰, 10 e⁻?</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="cfg" checked><span><strong>Configuración electrónica</strong><br><small>Elemento → configuración abreviada y al revés (Z = 3–36)</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="tabla" checked><span><strong>Configuración y tabla</strong><br><small>Periodo y grupo, electrones de valencia</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="teo"><span><strong>Modelos y reglas</strong><br><small>Dalton, Thomson, Rutherford, Bohr · Aufbau, Pauli, Hund</small></span></label>
+        </div>
       </div>
 
       <div class="lab-only lab-mol">
@@ -776,12 +811,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
    <div id="cz-app">
     <div class="sect">
       <h2>1 · Tipos de pista</h2>
-      <p class="sect-hint">Solo nomenclatura inorgánica, con los compuestos del banco del Juego y del Generador. Las respuestas se escriben sin espacios ni tildes; la Ñ cuenta como letra.</p>
+      <p class="sect-hint">Nomenclatura inorgánica (compuestos del banco del Juego y del Generador) y región «El átomo» (teoría atómica y configuración electrónica). Las respuestas se escriben sin espacios ni tildes; la Ñ cuenta como letra. Si solo marcas pistas del átomo, no hace falta marcar familias de compuestos.</p>
       <div class="lab-chks" id="cz-tipos">
         <label class="tema-chk"><input type="checkbox" value="f2n" checked><span><strong>Fórmula → nombre</strong><br><small>«Nombra en Stock: FeCl₃» → CLORURODEHIERROIII</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="ion" checked><span><strong>Ion → nombre</strong><br><small>«Nombre del anión SO₄²⁻» → SULFATO · «Nombre tradicional del catión Fe³⁺» → FERRICO</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="comp" checked><span><strong>Completar el nombre</strong><br><small>«Completa (Tradicional, Fe₂O₃): Óxido ____» → FERRICO</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="func" checked><span><strong>Función química</strong><br><small>«Clasifica KMnO₄: sal ____ (binaria, oxigenada o ácida)» → OXIGENADA</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="ato"><span><strong>Teoría atómica</strong><br><small>«Partícula del núcleo sin carga eléctrica» → NEUTRON · «Descubrió el electrón…» → THOMSON</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="cfg"><span><strong>Configuración → elemento</strong><br><small>«Elemento con configuración [Ne] 3s² 3p⁴» → AZUFRE (Z = 3–36)</small></span></label>
       </div>
     </div>
     <div class="sect">
@@ -895,14 +932,47 @@ document.getElementById('theme-btn').addEventListener('click',function(){
   window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.addEventListener('DOMContentLoaded',apply);
 })();
-// Pestañas Guías | Laberintos (se recuerda la última; #laberintos abre directo esa)
+// Pestañas Guías | Talleres | Evaluaciones | Laberintos | Crucigramas (se
+// recuerda la última; #talleres, #laberintos, etc. abren directo esa).
+// Guías, Talleres y Evaluaciones comparten el mismo formulario (#tab-guias):
+// cada pestaña fija el tipoDoc (radio oculto) y muestra solo las secciones
+// que aplican a ese tipo (data-solo), renumerando los títulos visibles.
 (function(){
   var btns = document.querySelectorAll('.doc-tab');
+  var IDS = Array.prototype.map.call(btns, function(b){ return b.dataset.tab; });
+  var form = document.getElementById('s-form');
+  var tipoActual = null;
+  function aplicarTipo(tipo){
+    var radio = document.querySelector('input[name="tipoDoc"][value="' + tipo + '"]');
+    if(radio) radio.checked = true;
+    form.querySelectorAll('[data-solo]').forEach(function(el){
+      el.hidden = el.dataset.solo.split(' ').indexOf(tipo) < 0;
+    });
+    var n = 0;
+    form.querySelectorAll(':scope > .sect').forEach(function(sec){
+      var h = sec.querySelector('h2');
+      if(sec.hidden || !h) return;
+      h.textContent = h.textContent.replace(/^\d+ · /, (++n) + ' · ');
+    });
+    // si había una vista previa de otro tipo, volver al formulario
+    if(tipoActual && tipoActual !== tipo && window.DOCENTE) DOCENTE.volverForm();
+    var rot = {guia:'guía', taller:'taller', evaluacion:'evaluación', completa:'guía completa'}[tipo];
+    var bt = document.getElementById('btn-generar-tipo'); if(bt && rot) bt.textContent = rot;
+    tipoActual = tipo;
+  }
   function mostrar(id){
+    var panel = null;
     btns.forEach(function(b){
       var on = b.dataset.tab === id;
       b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
-      document.getElementById('tab-' + b.dataset.tab).classList.toggle('active', on);
+      if(on){
+        panel = b.dataset.panel || b.dataset.tab;
+        document.getElementById('tab-' + panel).setAttribute('aria-labelledby', b.id);
+        if(b.dataset.tipo) aplicarTipo(b.dataset.tipo);
+      }
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p){
+      p.classList.toggle('active', p.id === 'tab-' + panel);
     });
     try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
     if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
@@ -918,9 +988,9 @@ document.getElementById('theme-btn').addEventListener('click',function(){
       mostrar(btns[j].dataset.tab); btns[j].focus();
     });
   });
-  var ini = location.hash === '#laberintos' ? 'laberintos' : location.hash === '#crucigramas' ? 'crucigramas' : null;
-  if(!ini){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
-  if(ini === 'laberintos' || ini === 'crucigramas') mostrar(ini);
+  var ini = location.hash.slice(1);
+  if(IDS.indexOf(ini) < 0){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
+  mostrar(IDS.indexOf(ini) >= 0 ? ini : 'guias');
 })();
 document.querySelectorAll('.chk-tema').forEach(function(c){
   c.addEventListener('change', function(){ if(window.DOCENTE) DOCENTE.actualizarDisponibilidad(); });
