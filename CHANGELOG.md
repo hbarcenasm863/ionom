@@ -4,6 +4,14 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre — Preguntas abiertas del Generador Docente
+
+- **20 preguntas abiertas por tema** (antes 3): 300 en total, repartidas entre las de ecuación, nomenclatura e identificación de partes o cálculo. Ya se pueden pedir, por ejemplo, 10 abiertas de Balanceo + Masa molar, o 20 de un solo tema, sin que salgan menos de las pedidas ni repetidas.
+- **Las preguntas abiertas ya no muestran la respuesta**: en las de «identifica el catión y el anión», la ficha mostraba el compuesto ya separado y con sus cargas (Mg²⁺ · O²⁻). Ahora solo aparece la fórmula (MgO). También se quitaron enunciados que nombraban el producto que se pide nombrar (ácidos hidrácidos, bicarbonato).
+- **Laberinto en celular**: al tocar la salida correcta, el botón se pone verde un instante antes de pasar a la siguiente casilla.
+
+---
+
 ## 26 de octubre — Laberintos químicos en el Generador Docente
 
 - **Nueva pestaña «🧭 Laberintos»** en `docente.html` (la pestaña «📄 Guías, talleres y evaluaciones» queda igual que antes). Cuatro tipos de laberinto: nomenclatura inorgánica, mol y masa molar, tipos de reacción y balanceo.

@@ -455,16 +455,11 @@ function armarBloquesSaber(F, rngFn){
 
 function tarjetaAbierta(q, numero){
   const alto = q.t==='mdec' ? 94.5 : 113.4; // 5 / 6 cuadros
-  // Preguntas "mdec" de reconocimiento de partes: en vez de describir el
-  // código de 4 colores en el enunciado, la fórmula se muestra YA
-  // separada y coloreada según el rol real de cada parte (mismo código
-  // cat/an/oh/ox que el "Ejemplo resuelto" de la lectura) -- el
-  // reconocimiento es visual, no una instrucción en palabras.
-  const fChip = q.partes
-    ? q.partes.map(function(p){
-        return '<span style="font-family:var(--mono);font-weight:700;color:var(--'+p[1]+'-t);background:var(--'+p[1]+'-b);padding:2px 8px;border-radius:6px;margin-right:4px">'+p[0]+'</span>';
-      }).join('')
-    : (q.f ? '<span style="font-family:var(--mono);font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:2px 8px;border-radius:6px">'+q.f+'</span>' : '');
+  // Solo la fórmula, en una ficha neutra: separar el compuesto en sus
+  // partes (catión/anión/hidróxido/oxoanión) y dar sus cargas es
+  // justamente lo que piden las preguntas "mdec", así que mostrar
+  // q.partes ya coloreadas regalaría la respuesta en la hoja del estudiante.
+  const fChip = q.f ? '<span style="font-family:var(--mono);font-weight:700;color:#0d2d42;background:#eef2f6;padding:2px 8px;border-radius:6px">'+q.f+'</span>' : '';
   return '<div class="exercise-card">'
     +'<div class="ex-num">Pregunta '+numero+'</div>'
     +'<div style="font-size:.9rem;margin-bottom:10px">'+q.q+(fChip?' '+fChip:'')+(q.n?' <span style="font-style:italic;font-weight:700">'+q.n+'</span>':'')+'</div>'
