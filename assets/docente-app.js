@@ -522,8 +522,20 @@ function construirVersion(F, numVersion, totalVersiones){
     const saberBloques = armarBloquesSaber(F, rngSaber);
     numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
+    // La hoja de respuestas (burbujas) va AQUÍ, como bloques normales del
+    // mismo documento -- no como un documento aparte con su propia primera
+    // hoja (ver nota en construirTodas). Así fluye en lo que quede de
+    // espacio al final de la Parte I, igual que en el modelo de referencia
+    // (hoja de respuestas + inicio de la Parte II comparten página), en vez
+    // de abrir casi siempre una página nueva que queda medio vacía.
+    if(F.incluirHojaResp && numSaberReal>0){
+      bloques.push.apply(bloques, bloquesHojaRespuestas(numSaberReal));
+    }
     const abiertasBloques = armarBloquesAbiertas(F, rngAbiertas);
-    if(abiertasBloques.length) bloques.push.apply(bloques, abiertasBloques);
+    if(abiertasBloques.length){
+      bloques.push({html:'<h2 class="sec-tit">Preguntas abiertas</h2>', esTitulo:true});
+      bloques.push.apply(bloques, abiertasBloques);
+    }
   }
 
   return {
@@ -538,8 +550,10 @@ function construirVersion(F, numVersion, totalVersiones){
 // Hoja de respuestas tipo "ICFES": una fila por pregunta Saber 11, con 4
 // círculos A-D para que el estudiante rellene a mano -- separada de las
 // preguntas (que no llevan marcada la opción correcta en ningún lado, ver
-// principio "sin clave de respuestas impresa").
-function construirHojaRespuestas(F, numVersion, totalVersiones, numPreguntas){
+// principio "sin clave de respuestas impresa"). Devuelve bloques sueltos
+// (no un documento aparte) para que construirVersion() los inserte en el
+// mismo flujo de paginación que la Parte I/II -- ver nota ahí.
+function bloquesHojaRespuestas(numPreguntas){
   let filas = '';
   for(let i=1;i<=numPreguntas;i++){
     filas += '<div class="hr-row"><span class="hr-num">'+i+'.</span>'
@@ -547,16 +561,12 @@ function construirHojaRespuestas(F, numVersion, totalVersiones, numPreguntas){
       + '</div>';
   }
   const html = '<div class="hoja-resp">'
-    + '<h2 class="sec-tit">Hoja de respuestas'+(totalVersiones>1?' — Versión '+numVersion+' de '+totalVersiones:'')+'</h2>'
+    + '<h2 class="sec-tit">Hoja de respuestas</h2>'
     + '<div class="hr-meta">Nombre: <span class="hr-linea"></span> Fecha: <span class="hr-linea" style="max-width:140px"></span></div>'
     + '<p class="hr-instr">Rellena por completo el círculo de tu respuesta para cada pregunta.</p>'
     + '<div class="hr-grid">'+filas+'</div>'
     + '</div>';
-  return {
-    clase: 'hoja-respuestas',
-    etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
-    bloques: [{html:html, esMultiple:false}]
-  };
+  return [{html: html, esMultiple:false}];
 }
 
 // Rúbrica de evaluación: anexo fijo y genérico (no depende del tema ni de la
@@ -608,16 +618,27 @@ function bloqueSesionPrevios(F, rngFn){
     const t = temasData.find(x=>x.id===tid);
     if(!t || !t.previos) return;
     const p = t.previos;
-    let html = '<div class="sect-previos"><h3>'+t.titulo+'</h3>';
-    if(p.curiosos && p.curiosos.length) html += '<p class="curioso">💡 <strong>¿Sabías que…?</strong> '+p.curiosos[Math.floor(rngFn()*p.curiosos.length)]+'</p>';
+    // Antes se armaba un solo bloque gigante por tema (título + las 4
+    // piezas pegadas, ~300px) -- con varios temas marcados, ese bloque no
+    // cabía dos veces completo en lo que quedaba de hoja y el relleno
+    // elástico tapaba el sobrante con una cuadrícula de Notas grande en
+    // vez de dejar fluir ahí la pieza del siguiente tema (el bug
+    // reportado). Ahora cada pieza (curioso/contexto/cotidiano/
+    // activación) es su propio bloque, igual que ya hace
+    // bloqueSesionInfo() con la lectura de la Sesión 2.
+    const piezas = [];
+    if(p.curiosos && p.curiosos.length) piezas.push('<p class="curioso">💡 <strong>¿Sabías que…?</strong> '+p.curiosos[Math.floor(rngFn()*p.curiosos.length)]+'</p>');
     if(p.contexto && p.contexto.length){
       const c = p.contexto[Math.floor(rngFn()*p.contexto.length)];
-      html += '<p class="contexto"><strong>Contexto '+c.amb+':</strong> '+c.t+'</p>';
+      piezas.push('<p class="contexto"><strong>Contexto '+c.amb+':</strong> '+c.t+'</p>');
     }
-    if(p.cotidianos && p.cotidianos.length) html += '<p>'+p.cotidianos[Math.floor(rngFn()*p.cotidianos.length)]+'</p>';
-    if(p.activacion && p.activacion.length) html += '<p class="activacion"><strong>Antes de empezar:</strong> '+p.activacion[Math.floor(rngFn()*p.activacion.length)]+'</p>';
-    html += '</div>';
-    out.push({html:html, esMultiple:false});
+    if(p.cotidianos && p.cotidianos.length) piezas.push('<p>'+p.cotidianos[Math.floor(rngFn()*p.cotidianos.length)]+'</p>');
+    if(p.activacion && p.activacion.length) piezas.push('<p class="activacion"><strong>Antes de empezar:</strong> '+p.activacion[Math.floor(rngFn()*p.activacion.length)]+'</p>');
+    if(!piezas.length) piezas.push('');
+    piezas.forEach(function(pieza, i){
+      const html = '<div class="sect-previos">'+(i===0?'<h3>'+t.titulo+'</h3>':'')+pieza+'</div>';
+      out.push({html:html, esMultiple:false});
+    });
   });
   return out;
 }
@@ -674,7 +695,12 @@ const TITULO_TIPODOC = {
 };
 function tituloDocumento(doc){
   let titulo = TITULO_TIPODOC[doc.clase] || 'Documento';
-  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica'){
+  // En guía/taller, listar los temas marcados es información útil para el
+  // estudiante (le dice qué va a practicar). En una evaluación, con varios
+  // temas marcados ese listado vuelve el título 2-3 líneas largas justo en
+  // la hoja con menos espacio de sobra (la primera, con el encabezado
+  // completo) -- el tema ya se ve en cada pregunta, así que aquí se omite.
+  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica' && doc.clase!=='evaluacion'){
     const temasData = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.TEMAS) || [];
     const nombres = (doc.F.temas||[]).map(id=>{ const t=temasData.find(x=>x.id===id); return t?t.titulo:id; }).join(' · ');
     if(nombres) titulo += ': '+nombres;
@@ -901,15 +927,13 @@ function llenarHoja(hoja){
 function construirTodas(F){
   const docs = [];
   const N = F.versiones || 1;
-  // La hoja de respuestas (burbujas) va una por versión de evaluación,
-  // justo después de esa versión -- igual principio que las sesiones:
-  // la guía sale una vez, la evaluación (y su hoja de respuestas) N veces.
+  // La hoja de respuestas (burbujas) ya viene incluida dentro de los
+  // bloques de cada versión de evaluación (ver construirVersion) -- no se
+  // agrega aquí como documento aparte para que pueda compartir página con
+  // el final de la Parte I y el inicio de la Parte II, en vez de abrir casi
+  // siempre una página nueva que queda medio vacía.
   function agregarVersionEval(Fversion, i, total){
-    const doc = construirVersion(Fversion, i, total);
-    docs.push(doc);
-    if(F.incluirHojaResp && doc.numSaberReal>0){
-      docs.push(construirHojaRespuestas(F, i, total, doc.numSaberReal));
-    }
+    docs.push(construirVersion(Fversion, i, total));
   }
   if(F.tipoDoc==='completa'){
     // la guía (sesiones 1-3) sale una sola vez; la evaluación sale N veces.
@@ -1128,8 +1152,15 @@ async function generar(){
     });
     // Último recurso: la(s) hoja(s) donde ya no quedó nada más que subir
     // (normalmente solo la última de cada documento) se rellena con la
-    // cuadrícula elástica / bloque de Notas.
-    Object.values(grupos).forEach(function(hs){ hs.forEach(llenarHoja); });
+    // cuadrícula elástica / bloque de Notas -- salvo la rúbrica, que es
+    // una tabla de referencia para calificar, no un ejercicio: no
+    // necesita espacio de cuadrícula en blanco debajo, y casi siempre le
+    // sobra la mayor parte de su única hoja.
+    Object.keys(grupos).forEach(function(g){
+      const doc = documentos[parseInt(g,10)];
+      if(doc && doc.clase === 'rubrica') return;
+      grupos[g].forEach(llenarHoja);
+    });
     // Renumerar "página X de Y" por documento: compactar puede haber
     // cambiado cuántas hojas tiene cada uno.
     Object.values(grupos).forEach(function(hs){
