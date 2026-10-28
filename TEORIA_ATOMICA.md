@@ -88,11 +88,27 @@ Hay dos temas nuevos en «2 · Tema(s)»: **Teoría atómica y estructura del á
   - **D Configuración electrónica**: 34 elementos (Z = 1–36, sin Cr ni Cu). Se pide la configuración completa y abreviada, el diagrama de orbitales, el periodo, el grupo, el bloque y los electrones de valencia.
 - **Evaluación**: 12 preguntas tipo Saber 11 por tema (la opción A del banco es la correcta y se baraja al imprimir) y 6 preguntas abiertas por tema (explicar un experimento o proceso, escribir partículas o configuraciones, e identificar partes con el código de colores).
 
-Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los ejercicios prácticos están en `assets/docente-app.js` (`ESPECIES_ATOMO`, `poolConfig`, `tarjetaParticulas` y `tarjetaConfig`). Los Laberintos y Crucigramas todavía no incluyen estos temas.
+Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los ejercicios prácticos están en `assets/docente-app.js` (`ESPECIES_ATOMO`, `poolConfig`, `tarjetaParticulas` y `tarjetaConfig`).
+
+### Laberintos (`assets/laberinto.js`)
+Hay un tipo de laberinto nuevo, **«Teoría atómica y configuración»**, con 4 grupos de preguntas que se pueden combinar:
+- **Partículas subatómicas**: ¿cuántos protones, neutrones o electrones tiene ³⁷Cl⁻?, o ¿qué especie tiene 12 p⁺, 12 n⁰ y 10 e⁻? Usa 37 isótopos e iones reales.
+- **Configuración electrónica**: de elemento a configuración abreviada y al revés (Z = 3–36, sin Cr ni Cu). Uno de los distractores es el error típico de poner el gas noble y repetir también sus electrones.
+- **Configuración y tabla**: periodo y grupo a partir del final de la configuración, y electrones de valencia.
+- **Modelos y reglas**: 25 preguntas cortas (Dalton, Thomson, Rutherford, Bohr, Chadwick, Millikan, Heisenberg, Aufbau, Pauli, Hund…).
+
+Funciona igual que los demás laberintos: ruta única verificada, versiones con semilla, modo Jugar y hoja de clave. Se probaron 270 laberintos (todas las combinaciones de grupos y los 3 tamaños) y todos pasaron la verificación.
+
+### Crucigramas (`assets/crucigrama.js`)
+Hay dos tipos de pista nuevos:
+- **Teoría atómica**: un glosario de 31 términos con una sola respuesta posible cada uno (NEUTRON, THOMSON, ORBITAL, HUND, ISOTOPOS…).
+- **Configuración → elemento**: «Elemento con configuración [Ne] 3s² 3p⁴» → AZUFRE, o «Elemento neutro cuya configuración termina en 4p⁵» → BROMO.
+
+Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos y el título cambia solo a «Crucigrama del átomo». Se probaron 60 crucigramas, todos verificados. La misma semilla siempre genera el mismo crucigrama.
 
 ## 7. Service worker
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`).
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v51` (`laberinto.js` y `crucigrama.js`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
 ## 8. Ideas pendientes (propuestas de diseño)
@@ -101,4 +117,3 @@ Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los eje
 - **Repaso espaciado**: una estación dominada que no se practica en 2 o 3 semanas se «oxida» y pide un repaso corto.
 - **Misión de la semana** puesta por la docente desde el Generador Docente.
 - **Diagnóstico de entrada** que sugiera por dónde empezar.
-- Agregar los temas de la región «El átomo» a los **Laberintos y Crucigramas** del Generador Docente.

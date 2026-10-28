@@ -4,6 +4,22 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (4) — El átomo en Laberintos y Crucigramas
+
+- **Laberintos: tipo nuevo «Teoría atómica y configuración»**. Tiene 4 grupos de preguntas que se pueden combinar:
+  - partículas subatómicas: ¿cuántos neutrones tiene ¹⁹F⁻?, o ¿qué especie tiene 13 p⁺, 14 n⁰ y 10 e⁻?;
+  - configuración electrónica: de elemento a configuración abreviada y al revés;
+  - configuración y tabla: periodo y grupo, y electrones de valencia;
+  - modelos y reglas: 25 preguntas cortas.
+
+  Mantiene la ruta única verificada, las versiones, el modo Jugar y la hoja de clave. Se probaron 270 laberintos y todos pasaron la verificación.
+- **Crucigramas: dos tipos de pista nuevos**:
+  - «Teoría atómica»: un glosario de 31 términos, como NEUTRON, THOMSON, ORBITAL o HUND.
+  - «Configuración → elemento»: por ejemplo, «[Ne] 3s² 3p⁴» → AZUFRE.
+
+  Si solo se marcan pistas del átomo, no hace falta elegir familias de compuestos y el título cambia a «Crucigrama del átomo». Se probaron 60 crucigramas y todos quedaron verificados.
+- `sw.js` pasó a `ionom-v51`.
+
 ## 28 de octubre (3) — Temas del átomo en el Generador Docente
 
 - **Dos temas nuevos en `docente.html`**: «Teoría atómica y estructura del átomo» y «Configuración electrónica». Cada uno tiene aprendizajes previos con contexto colombiano, lectura, esquema y ejemplo resuelto con el código de colores.

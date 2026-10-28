@@ -194,7 +194,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 #lab-app[data-mode="nom"] .lab-only:not(.lab-nom),
 #lab-app[data-mode="mol"] .lab-only:not(.lab-mol),
 #lab-app[data-mode="rx"] .lab-only:not(.lab-rx),
-#lab-app[data-mode="bal"] .lab-only:not(.lab-bal){display:none!important}
+#lab-app[data-mode="bal"] .lab-only:not(.lab-bal),
+#lab-app[data-mode="atomo"] .lab-only:not(.lab-atomo){display:none!important}
 /* acción secundaria (borde --nav): --nav es el único color de acción del
    sitio; «Imprimir» queda como la acción primaria */
 .lab-nuevo{min-height:44px;border-color:var(--nav)}
@@ -308,6 +309,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .lab-sheet .node .fo{font-size:26px;font-weight:700;line-height:1.15;color:#0d2d42}
 .lab-sheet .node .fo.nm{font-size:19px;font-family:var(--serif);font-style:italic}
 .lab-sheet .node .fo.eq{font-size:16px;line-height:1.3}
+/* notación nuclear ᴬ_Z X (laberinto «Teoría atómica»): A arriba y Z abajo */
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.5em;line-height:1.05;vertical-align:middle;margin-right:1px;font-weight:700}
 .lab-sheet .nw,.lab-card .nw{white-space:nowrap}
 .lab-sheet .node .ft{font-size:13px;line-height:1.15;color:#4f6d88}
 .lab-sheet .lf{font-family:var(--mono);font-weight:700}
@@ -652,6 +655,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="mol"><span><strong>Mol y masa molar</strong><br><small>Masa, moléculas, átomos, iones, gases</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="rx"><span><strong>Tipos de reacción</strong><br><small>Clasificar ecuaciones del banco</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="bal"><span><strong>Balanceo</strong><br><small>Elegir los coeficientes correctos</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="lab-mode" value="atomo"><span><strong>Teoría atómica y configuración</strong><br><small>Partículas, isótopos, iones, configuración, modelos</small></span></label>
       </div>
     </div>
 
@@ -691,6 +695,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
           </div>
         </div>
         <label class="chk-linea"><input type="checkbox" id="lab-color" checked> Colorear fórmulas con el método cromático de IonNom (catión · anión · hidróxido · oxoanión)</label>
+      </div>
+
+      <div class="lab-only lab-atomo">
+        <div class="lab-chks" id="lab-fs-atomo">
+          <label class="tema-chk"><input type="checkbox" value="part" checked><span><strong>Partículas subatómicas</strong><br><small>¿Cuántos neutrones tiene ³⁷Cl⁻? · ¿Qué especie tiene 12 p⁺, 12 n⁰, 10 e⁻?</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="cfg" checked><span><strong>Configuración electrónica</strong><br><small>Elemento → configuración abreviada y al revés (Z = 3–36)</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="tabla" checked><span><strong>Configuración y tabla</strong><br><small>Periodo y grupo, electrones de valencia</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="teo"><span><strong>Modelos y reglas</strong><br><small>Dalton, Thomson, Rutherford, Bohr · Aufbau, Pauli, Hund</small></span></label>
+        </div>
       </div>
 
       <div class="lab-only lab-mol">
@@ -785,12 +798,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
    <div id="cz-app">
     <div class="sect">
       <h2>1 · Tipos de pista</h2>
-      <p class="sect-hint">Solo nomenclatura inorgánica, con los compuestos del banco del Juego y del Generador. Las respuestas se escriben sin espacios ni tildes; la Ñ cuenta como letra.</p>
+      <p class="sect-hint">Nomenclatura inorgánica (compuestos del banco del Juego y del Generador) y región «El átomo» (teoría atómica y configuración electrónica). Las respuestas se escriben sin espacios ni tildes; la Ñ cuenta como letra. Si solo marcas pistas del átomo, no hace falta marcar familias de compuestos.</p>
       <div class="lab-chks" id="cz-tipos">
         <label class="tema-chk"><input type="checkbox" value="f2n" checked><span><strong>Fórmula → nombre</strong><br><small>«Nombra en Stock: FeCl₃» → CLORURODEHIERROIII</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="ion" checked><span><strong>Ion → nombre</strong><br><small>«Nombre del anión SO₄²⁻» → SULFATO · «Nombre tradicional del catión Fe³⁺» → FERRICO</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="comp" checked><span><strong>Completar el nombre</strong><br><small>«Completa (Tradicional, Fe₂O₃): Óxido ____» → FERRICO</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="func" checked><span><strong>Función química</strong><br><small>«Clasifica KMnO₄: sal ____ (binaria, oxigenada o ácida)» → OXIGENADA</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="ato"><span><strong>Teoría atómica</strong><br><small>«Partícula del núcleo sin carga eléctrica» → NEUTRON · «Descubrió el electrón…» → THOMSON</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="cfg"><span><strong>Configuración → elemento</strong><br><small>«Elemento con configuración [Ne] 3s² 3p⁴» → AZUFRE (Z = 3–36)</small></span></label>
       </div>
     </div>
     <div class="sect">
