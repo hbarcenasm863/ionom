@@ -55,7 +55,11 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 ## 28 de octubre — Guías, talleres y evaluaciones en pestañas separadas
 
 - **Por sugerencia de un docente**, la pestaña «📄 Guías, talleres y evaluaciones» de `docente.html` se dividió en tres pestañas propias, igual que Laberintos y Crucigramas: **📘 Guías** (4 sesiones + evaluación en hojas aparte), **✏️ Talleres** (solo ejercicios de práctica) y **📝 Evaluaciones** (tipo Saber 11 + abiertas).
-- Cada pestaña muestra solo las opciones que le aplican: en Talleres no aparece la sección de Evaluación y en Evaluaciones no aparece la de Trabajo práctico. Los números de las secciones se ajustan solos.
+- **Cada pestaña genera solo su documento**:
+  - **Guías** → guía de estudio: Sesión 1 (saberes previos), Sesión 2 (información) y Sesión 3 (trabajo práctico), **sin evaluación**. Sale una sola vez (sin versiones).
+  - **Talleres** → solo ejercicios de práctica, con el título «Ejercicios» y versiones opcionales.
+  - **Evaluaciones** → solo preguntas tipo Saber 11, hoja de respuestas, preguntas abiertas y rúbrica opcional, con versiones.
+- Cada pestaña muestra un recuadro que explica qué genera, solo las opciones que le aplican (los números de las secciones se ajustan solos) y un botón con su nombre («Generar guía», «Generar taller», «Generar evaluación»).
 - La página recuerda la última pestaña usada y se puede abrir directo con `docente.html#talleres` o `docente.html#evaluaciones`.
 
 ---

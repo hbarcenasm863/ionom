@@ -186,6 +186,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 #s-form [hidden]{display:none}
+.tipo-intro{background:var(--surf2);border-left:4px solid var(--nav);border-radius:var(--rs);padding:12px 14px;margin:0 0 18px;font-size:.88rem;line-height:1.45}
+.tipo-intro strong{display:block;font-size:1rem;margin-bottom:2px;color:var(--nav)}
 
 /* ══════════════ Laberintos (controles) ══════════════ */
 .lab-modos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
@@ -507,7 +509,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   </div>
 
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
-    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="completa">📘 Guías</button>
+    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="guia">📘 Guías</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-talleres" aria-controls="tab-guias" aria-selected="false" data-tab="talleres" data-panel="guias" data-tipo="taller">✏️ Talleres</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-evaluaciones" aria-controls="tab-guias" aria-selected="false" data-tab="evaluaciones" data-panel="guias" data-tipo="evaluacion">📝 Evaluaciones</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
@@ -519,10 +521,15 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <!-- ══════════════ FORMULARIO ══════════════ -->
   <div id="s-form" class="screen active">
 
+    <div class="tipo-intro" data-solo="guia"><strong>📘 Guía de estudio</strong> Sesión 1 (saberes previos), Sesión 2 (información del tema) y Sesión 3 (trabajo práctico). No incluye evaluación: ésta se arma en la pestaña «Evaluaciones».</div>
+    <div class="tipo-intro" data-solo="taller"><strong>✏️ Taller</strong> Solo ejercicios de práctica (nombrar, formular, completar tablas, cazar errores…), sin lecturas ni evaluación.</div>
+    <div class="tipo-intro" data-solo="evaluacion"><strong>📝 Evaluación</strong> Preguntas tipo Saber 11 con hoja de respuestas y preguntas abiertas, con rúbrica opcional. Sin clave impresa.</div>
+
     <div class="sect" id="sect-tipo-doc" hidden>
       <h2>1 · Documento</h2>
       <div class="tipo-doc-col">
-        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="completa" checked><span><strong>Guía completa</strong><br><small>4 sesiones + evaluación en hojas aparte</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="guia" checked><span><strong>Guía de estudio</strong><br><small>Sesiones de estudio + trabajo práctico, sin evaluación</small></span></label>
+        <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="completa"><span><strong>Guía completa</strong><br><small>4 sesiones + evaluación en hojas aparte</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="taller"><span><strong>Solo taller</strong><br><small>Ejercicios de práctica</small></span></label>
         <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="evaluacion"><span><strong>Solo evaluación</strong><br><small>Tipo Saber 11 + abiertas</small></span></label>
       </div>
@@ -552,7 +559,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
     </div>
 
-    <div class="sect" data-solo="completa taller">
+    <div class="sect" data-solo="guia completa taller">
       <h2>3 · Trabajo práctico</h2>
       <div class="field-row">
         <div class="field" style="max-width:220px">
@@ -597,9 +604,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
     <div class="sect">
       <h2>5 · Versiones (para evitar copia)</h2>
-      <div class="field-row">
+      <div class="field-row" data-solo="completa taller evaluacion">
         <div class="field"><label for="f-versiones">Número de versiones</label><input type="text" inputmode="numeric" id="f-versiones" value="1"></div>
       </div>
+      <p class="sect-hint" data-solo="taller">Cada versión del taller trae otra selección y otro orden de ejercicios, marcada «Versión X de N».</p>
+      <p class="sect-hint" data-solo="evaluacion">Cada versión trae distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
       <p class="sect-hint" data-solo="completa">Guía completa: las sesiones de estudio salen una sola vez y la evaluación (hojas aparte) sale en esa cantidad de versiones, cada una con distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
       <div class="field-row">
         <div class="field"><label for="f-variante">Código de variante</label><input type="text" id="f-variante" value="v1"></div>
@@ -624,7 +633,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     </div>
 
     <div class="sect">
-      <button class="btn-generar" id="btn-generar" onclick="DOCENTE.generar()">⚙️ Generar vista previa</button>
+      <button class="btn-generar" id="btn-generar" onclick="DOCENTE.generar()">⚙️ Generar <span id="btn-generar-tipo">vista previa</span></button>
       <div id="estado-bancos" style="margin-top:10px">Cargando bancos…</div>
     </div>
   </div>
@@ -928,6 +937,8 @@ document.getElementById('theme-btn').addEventListener('click',function(){
     });
     // si había una vista previa de otro tipo, volver al formulario
     if(tipoActual && tipoActual !== tipo && window.DOCENTE) DOCENTE.volverForm();
+    var rot = {guia:'guía', taller:'taller', evaluacion:'evaluación', completa:'guía completa'}[tipo];
+    var bt = document.getElementById('btn-generar-tipo'); if(bt && rot) bt.textContent = rot;
     tipoActual = tipo;
   }
   function mostrar(id){
