@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d4a73">
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
@@ -374,7 +375,10 @@ const MOLES_QUIZ=[
 ];
 
 let qi=0, score=0;
-const shuffled=[...MOLES_QUIZ].sort(()=>Math.random()-.5);
+// Mezcla uniforme (Fisher-Yates). sort(()=>Math.random()-.5) NO es aleatorio de verdad:
+// con 4 opciones deja la correcta mucho más en A y D (≈31-36 %) que en B y C (≈16-19 %).
+function mezclar(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+const shuffled=mezclar(MOLES_QUIZ);
 
 function updateQuizProgress(){
   const done=Math.min(qi,shuffled.length);
@@ -385,14 +389,14 @@ function updateQuizProgress(){
 function renderQ(){
   if(qi>=shuffled.length){
     updateQuizProgress();
-    document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong><br>Aciertos: '+score+' / '+shuffled.length+'. '+(score>=6?'¡Dominio excelente!':'Repasa las cadenas de factores y vuelve a intentarlo.')+'</div><button onclick="qi=0;score=0;shuffled.sort(()=>Math.random()-.5);renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
+    document.getElementById('quiz-area').innerHTML='<div class="ok-box"><strong>🎉 ¡Terminaste!</strong><br>Aciertos: '+score+' / '+shuffled.length+'. '+(score>=6?'¡Dominio excelente!':'Repasa las cadenas de factores y vuelve a intentarlo.')+'</div><button onclick="qi=0;score=0;shuffled.splice(0,shuffled.length,...mezclar(shuffled));renderQ()" style="margin-top:10px;padding:8px 18px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Volver a intentar</button>';
     return;
   }
   updateQuizProgress();
   const q=shuffled[qi];
   // Shuffle options maintaining answer tracking
   const indexed=q.opts.map((o,i)=>({o,correct:i===q.ans}));
-  const shuffOpts=indexed.sort(()=>Math.random()-.5);
+  const shuffOpts=mezclar(indexed);
   const correctLabel=shuffOpts.find(x=>x.correct).o;
   document.getElementById('quiz-area').innerHTML=
     '<p class="mq-q">Pregunta '+(qi+1)+' de '+shuffled.length+'<br>'+q.q+'</p>'

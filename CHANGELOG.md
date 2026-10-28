@@ -4,6 +4,22 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (10) — iPhone: el Juego no arrancaba o volvía a la portada; opciones bien mezcladas
+
+**Bloqueos en iOS**
+- **El Juego no arrancaba en iPhones con iOS anterior a 13.4.** Tres líneas usaban `?.` (encadenamiento opcional), que esos Safari no entienden. Por eso no cargaba nada del script del Juego: tocar un tema no hacía nada. Se reescribieron, y ahora todos los scripts del sitio se verifican como ES2018 (Safari de iOS 12).
+- **Almacenamiento bloqueado.** Con «Bloquear todas las cookies» o en modo privado, Safari lanza un error al usar `localStorage`, y eso podía detener la página. Todas las páginas traen ahora un reemplazo en memoria que se activa solo en ese caso.
+- **«Me sacó del juego a la portada».** iOS descarta la pestaña cuando el estudiante abre otra app (calculadora, WhatsApp) y, al volver, Safari recarga la página. Ahora la partida se guarda al empezar cada pregunta (`sessionStorage`). La portada muestra «⏸️ Tienes una partida sin terminar · Continuar / Descartar» con el tema, la pregunta y el puntaje.
+  - En Modo Estudiante se conservan el código y la sesión, así que el docente recibe una sola partida.
+  - Al continuar se repite la pregunta en la que iba, con el puntaje que tenía antes de responderla: no se puede sumar dos veces.
+- Cerrar «¿Cómo jugar?» ya no falla en los navegadores dentro de apps que no tienen voz.
+- Enlace Químico: las simulaciones usaban `ctx.roundRect`, que no existe en iOS 15 o anterior, y dejaban de dibujarse. Se agregó un reemplazo.
+
+**Posición de la respuesta correcta**
+- En el Juego la mezcla ya era uniforme. Medido en 344 preguntas de los 16 temas: A 29 %, B 21 %, C 30 % y D 21 %.
+- Los quizzes de Tipos de Reacción, Mol, Estequiometría y Balanceo Avanzado mezclaban con `sort(() => Math.random() - .5)`, que **no es aleatorio de verdad**: la correcta caía en A o D cerca del 31–36 % de las veces y en B o C solo 16–19 %. Ahora usan Fisher-Yates (25 % por letra). Lo mismo con el orden de los retos de Teoría Atómica.
+- `sw.js` pasó a `ionom-v57`.
+
 ## 28 de octubre (9) — Juego: temas en secuencia de complejidad
 
 - La portada del Juego muestra los 15 temas agrupados en los mismos 4 niveles del menú átomo y numerados del más sencillo al más complejo:

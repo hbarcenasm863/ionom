@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d4a73">
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
@@ -239,6 +240,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* ── GRID DE TEMAS ── */
 .group-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.resume-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;padding:12px 14px;border-radius:14px;background:var(--cat-b);border:2px solid var(--cat)}
+.resume-box .rb-txt{display:flex;flex-direction:column;gap:2px;font-size:.8rem;color:var(--tx2)}
+.resume-box .rb-txt strong{color:var(--tx);font-size:.88rem}
+.resume-box .rb-btns{display:flex;gap:8px}
+.resume-box button{min-height:42px;padding:8px 14px;border-radius:10px;font-weight:800;font-size:.84rem;cursor:pointer;font-family:inherit}
+.resume-box .rb-go{background:var(--cat);color:#fff;border:none}
+.resume-box .rb-no{background:none;border:1.5px solid var(--brd2);color:var(--tx2)}
 .niv-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--c)}
 .niv-head .nh-n{font-family:var(--mono);font-size:.68rem;font-weight:800;color:#fff;background:var(--c);padding:2px 8px;border-radius:100px}
 .niv-head .nh-t{font-weight:800;font-size:.95rem;color:var(--tx)}
@@ -597,6 +605,15 @@ html{font-size:var(--base-fs)}
 
   <!-- GLASS BODY -->
   <div class="p-body">
+
+    <!-- Partida sin terminar (iOS puede recargar la página al volver de otra app; ver _guardarPartida) -->
+    <div class="resume-box" id="resume-box" style="display:none">
+      <div class="rb-txt"><strong>⏸️ Tienes una partida sin terminar</strong><span id="resume-info"></span></div>
+      <div class="rb-btns">
+        <button type="button" class="rb-go" onclick="continuarPartida()">▶️ Continuar</button>
+        <button type="button" class="rb-no" onclick="descartarPartida()">Descartar</button>
+      </div>
+    </div>
 
     <!-- Selector de modo (iOS segment) -->
     <div class="mode-seg">
@@ -1842,6 +1859,7 @@ function startGame(group){
 
 function loadQuestion(){
   if(ST.idx>=ST.questions.length){endGame();return;}
+  _guardarPartida();
   if(ST.idx===0){
     armExitGuard();
     // sincroniza el indicador de racha con el ST.streak=0 de un juego nuevo
@@ -2512,7 +2530,7 @@ function checkDrag(){
   } else {
     document.querySelectorAll('.drag-slot').forEach((s,i)=>{
       s.classList.remove('ok','err');
-      s.classList.add(norm(ds.placed[i]?.word||'')===norm(ds.answers[i])?'ok':'err');
+      s.classList.add(norm((ds.placed[i]&&ds.placed[i].word)||'')===norm(ds.answers[i])?'ok':'err');
     });
     if(ST.attempts>=3){
       ds.locked=true;
@@ -2642,14 +2660,14 @@ function buildChainDistractors(q){
       }
     }
     REACT_CHAINS.filter(c=>c.type==='nm'&&c.nonmetal===q.nonmetal).forEach(c=>{
-      const alt=q.step==='A'?c.anhydride:q.step==='B'?c.acid:c.salts[0]?.formula;
+      const alt=q.step==='A'?c.anhydride:q.step==='B'?c.acid:(c.salts[0]&&c.salts[0].formula);
       if(alt&&alt!==correct) dists.push(alt);
     });
   }
   const unique=[...new Set(dists.filter(d=>d&&d!==q[q.step]))];
   if(unique.length<3){
     REACT_CHAINS.forEach(c=>{
-      const alt=c.type==='nm'?{A:c.anhydride,B:c.acid,C:c.salts[0]?.formula}[q.step]:{A:c.oxide,B:c.hydroxide,C:c.salts[0]?.formula}[q.step];
+      const alt=c.type==='nm'?{A:c.anhydride,B:c.acid,C:c.salts[0]&&c.salts[0].formula}[q.step]:{A:c.oxide,B:c.hydroxide,C:c.salts[0]&&c.salts[0].formula}[q.step];
       if(alt&&alt!==q[q.step]&&!unique.includes(alt)) unique.push(alt);
     });
   }
@@ -3072,6 +3090,7 @@ function scheduleNext(ms){
 function endGame(){
   stopTimer();
   _gameActive=false;
+  _borrarPartida();
   const pct=Math.round((ST.score/40)*100);
   const grade=((ST.score/40)*5).toFixed(2);
   let medal='🔰',level='Principiante';
@@ -3538,9 +3557,72 @@ function _doExit(){
   resetGame();
 }
 
+// ── Partida sin terminar (iOS) ──
+// iOS descarta las pestañas en segundo plano para liberar memoria: si el
+// estudiante abre la calculadora o WhatsApp a mitad de partida, al volver
+// Safari recarga juego.html y la partida desaparecía (volvía a la portada).
+// Al empezar cada pregunta se guarda una copia en sessionStorage (sobrevive
+// a la recarga en la misma pestaña, no a cerrarla) y la portada ofrece
+// continuar. Se guarda al EMPEZAR la pregunta, así que al continuar se
+// repite esa pregunta con el puntaje que había antes de responderla (no se
+// puede sumar dos veces). El código de sesión se conserva para que el
+// backend una el 'abandono' (enviado al pasar a segundo plano) con el 'fin'.
+const PARTIDA_KEY='ionom-partida';
+const PARTIDA_MAX_MS=3*60*60*1000;
+function _guardarPartida(){
+  try{
+    sessionStorage.setItem(PARTIDA_KEY, JSON.stringify({
+      t:Date.now(), ST:ST, mode:GAME_MODE, sesion:_sesionCodigo,
+      est: CODE_VERIFIED ? {code:STUDENT_CODE, name:STUDENT_NAME, course:STUDENT_COURSE} : null,
+      diff: (document.getElementById('difficulty-sel')||{}).value || 'normal'
+    }));
+  }catch(e){ /* sin almacenamiento: simplemente no se puede retomar */ }
+}
+function _borrarPartida(){
+  try{ sessionStorage.removeItem(PARTIDA_KEY); }catch(e){}
+  const rb=document.getElementById('resume-box'); if(rb) rb.style.display='none';
+}
+function _leerPartida(){
+  try{
+    const d=JSON.parse(sessionStorage.getItem(PARTIDA_KEY)||'null');
+    if(!d || !d.ST || !d.ST.questions || !d.ST.questions.length) return null;
+    if(Date.now()-d.t > PARTIDA_MAX_MS || d.ST.idx >= d.ST.questions.length){ _borrarPartida(); return null; }
+    return d;
+  }catch(e){ return null; }
+}
+function _ofrecerPartida(){
+  const d=_leerPartida(), rb=document.getElementById('resume-box');
+  if(!d || !rb) return;
+  const tema=(typeof GROUP_LABELS!=='undefined' && GROUP_LABELS[d.ST.group]) || d.ST.group;
+  document.getElementById('resume-info').textContent=tema+' · pregunta '+(d.ST.idx+1)+' de '+d.ST.questions.length+' · '+d.ST.score+' pts'+(d.est?' · '+d.est.name:'');
+  rb.style.display='flex';
+}
+function continuarPartida(){
+  const d=_leerPartida(); if(!d){ _borrarPartida(); return; }
+  setMode(d.mode==='student' && d.est ? 'student' : 'libre');
+  if(d.est){
+    STUDENT_CODE=d.est.code; STUDENT_NAME=d.est.name; STUDENT_COURSE=d.est.course; CODE_VERIFIED=true;
+    document.getElementById('login-panel').style.display='none';
+    document.getElementById('wi-name').textContent=STUDENT_NAME;
+    document.getElementById('wi-course').textContent='Curso '+STUDENT_COURSE+' · Código '+STUDENT_CODE;
+    document.getElementById('welcome-inline').style.display='block';
+  }
+  const sel=document.getElementById('difficulty-sel'); if(sel) sel.value=d.diff;
+  ST=d.ST; ST.answered=false; ST.dragSt=null;
+  _sesionCodigo=d.sesion||_sesionCodigo; _sessionSent=false;
+  document.getElementById('resume-box').style.display='none';
+  armExitGuard();
+  showScreen('s-game');
+  loadQuestion();
+  updateStats();
+}
+function descartarPartida(){ _borrarPartida(); }
+window.addEventListener('DOMContentLoaded', _ofrecerPartida);
+
 function resetGame(){
   stopTimer();
   _gameActive=false;
+  _borrarPartida();
   _stopProgressTracking();
   ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempts:0,dragSt:null,qtype:null,errors:[],answered:false,streak:0};
   // Keep student logged in for another round; just hide send-status
@@ -3586,7 +3668,9 @@ function speakHowToPlay() {
 
 function closeHowToPlay() {
   document.getElementById('howtoplay-overlay').style.display = 'none';
-  speechSynthesis.cancel();
+  // Algunos navegadores dentro de apps en iOS (WhatsApp, Instagram…) no traen
+  // speechSynthesis: sin esta guarda, cerrar el modal lanzaba un TypeError.
+  if (window.speechSynthesis) speechSynthesis.cancel();
 }
 
 // ── Dark/light theme toggle ──
@@ -3913,6 +3997,8 @@ window.openPTModal = openPTModal;
 window.closePTModal = closePTModal;
 window.showMiniTooltip = showMiniTooltip;
 window.resetGame = resetGame;
+window.continuarPartida = continuarPartida;
+window.descartarPartida = descartarPartida;
 window.checkMC = checkMC;
 window.scheduleNext = scheduleNext;
 window.checkOx = checkOx;
