@@ -1069,9 +1069,9 @@ function hoja(mz, c, o){
   return {el, W, H};
 }
 
-function tablaClave(mz){
+function tablaClave(mz, desde, hasta){
   let h = '<table class="lab-kt"><thead><tr><th>Casilla</th><th>Ejercicio</th><th>Respuesta correcta</th><th>Sigue a</th></tr></thead><tbody>';
-  mz.nodes.forEach(nd => {
+  mz.nodes.slice(desde || 0, hasta == null ? mz.nodes.length : hasta).forEach(nd => {
     const e = nd.edges.find(x => x.ok);
     const dest = e ? (e.to === mz.fin ? 'FIN' : String.fromCharCode(65 + e.to)) : '— (trampa: no hay salida)';
     h += '<tr class="' + (nd.onPath ? 'main' : '') + '"><td>' + nd.letter + (nd.onPath ? ' ★' : '') + '</td><td>' + nd.q.qh + ' ' + (nd.q.fo || '') + (nd.q.qh.includes('¿') && !nd.q.qh.includes('?') ? '?' : '') + '</td><td>' + nd.q.ans.h + '</td><td>' + dest + '</td></tr>';
@@ -1374,12 +1374,27 @@ function prepararImpresion(){
   if($('#lab-withkeys').checked){
     mzs.forEach((mz, i) => {
       const sh = hoja(mz, c, {key:true, label: 'Clave · código ' + c.seed + ' · versión ' + (i+1)});
-      const s = Math.min(640/sh.W, (PAG_H - 40)/sh.H);
+      const cab = extra => '<div class="kh"><img src="assets/logo-ionom-hoja.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b>' + extra + ' · código ' + esc(c.seed) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
       const pp = document.createElement('div'); pp.className = 'lab-pp keypage';
-      pp.innerHTML = '<div class="kh"><img src="assets/logo-ionom-hoja.png" alt="IonNom"><span><b>CLAVE — Versión ' + (i+1) + '</b> · código ' + esc(c.seed) + ' · Ruta: <b>' + textoRuta(mz) + '</b></span></div><div class="kb"></div>';
-      const kb = pp.querySelector('.kb'); kb.appendChild(envolver(sh, s));
-      const tw = document.createElement('div'); tw.className = 'kt-wrap'; tw.innerHTML = tablaClave(mz); kb.appendChild(tw);
+      // Hasta 4×4 (15 casillas) la tabla cabe al lado del laberinto. En 5×4
+      // y 5×5 no cabe: el laberinto va en su propia página y la tabla en la
+      // siguiente, repartida en dos columnas.
+      const aparte = mz.nodes.length > 15;
+      pp.innerHTML = cab('');
+      const kb = pp.querySelector('.kb');
+      if(!aparte){
+        kb.appendChild(envolver(sh, Math.min(640/sh.W, (PAG_H - 40)/sh.H)));
+        const tw = document.createElement('div'); tw.className = 'kt-wrap'; tw.innerHTML = tablaClave(mz); kb.appendChild(tw);
+        root.appendChild(pp);
+        return;
+      }
+      kb.classList.add('sola'); kb.appendChild(envolver(sh, Math.min(PAG_W/sh.W, (PAG_H - 44)/sh.H)));
       root.appendChild(pp);
+      const pt = document.createElement('div'); pt.className = 'lab-pp keypage';
+      pt.innerHTML = cab(' · tabla de respuestas');
+      const mitad = Math.ceil(mz.nodes.length / 2), kt = pt.querySelector('.kb');
+      [[0, mitad], [mitad, mz.nodes.length]].forEach(([a, b]) => { const tw = document.createElement('div'); tw.className = 'kt-wrap'; tw.innerHTML = tablaClave(mz, a, b); kt.appendChild(tw); });
+      root.appendChild(pt);
     });
   }
   // docente.html imprime sus guías en carta VERTICAL (@page global). Las

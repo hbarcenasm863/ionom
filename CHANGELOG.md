@@ -9,6 +9,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 - Nuevo selector **«Ejercicios hasta FIN»** junto al tamaño: el docente elige cuántas casillas resuelve el estudiante en la ruta correcta antes de llegar a FIN; las demás quedan como casillas trampa. «Automático» mantiene lo de antes (rutas largas).
 - El rango depende del tamaño, porque la ruta solo avanza hacia la derecha, hacia abajo o en diagonal: 3×3 → de 2 a 4 ejercicios; 4×3 → de 3 a 5; 4×4 → de 3 a 6.
 - El aviso de verificación ahora dice «✔ Ruta única verificada · N ejercicios hasta FIN».
+- **Tamaños nuevos 5×4 (19 casillas) y 5×5 (24 casillas)**, para rutas más largas: 5×4 → de 4 a 7 ejercicios hasta FIN; 5×5 → de 4 a 8. La hoja sigue cabiendo completa en una carta horizontal. En estos dos tamaños la clave impresa ocupa dos páginas: el laberinto con la ruta en verde y, aparte, la tabla de respuestas en dos columnas (al lado del laberinto no cabía y se cortaba).
 
 ---
 
