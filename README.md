@@ -6,7 +6,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 
 | Archivo | Módulo | Descripción |
 |---------|--------|-------------|
-| `index.html` | Portada | Mapa interactivo (táctil) de todos los módulos por regiones, con ruta recomendada y estaciones visitadas |
+| `index.html` | Portada | Menú en forma de átomo: el núcleo es el progreso, las capas n = 1–4 son los niveles temáticos y los electrones son los módulos |
 | `atomo.html` | Teoría Atómica | Línea del tiempo de los modelos atómicos, simuladores de Thomson, Rutherford y Bohr, constructor de átomos e iones y simulaciones PhET incrustadas |
 | `teoria.html` | Teoría | Referencia de reglas de nomenclatura (8 secciones con navegación de tarjetas) |
 | `funciones.html` | Funciones | Ejercicios interactivos por función inorgánica con ejemplos en contexto colombiano |

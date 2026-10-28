@@ -349,44 +349,65 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   border-top:1px solid var(--brd);
 }
 
-/* ===== MAPA DE IONNOM ===== */
-.mapa-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:var(--r);padding:18px 18px 16px;margin-bottom:28px;box-shadow:var(--sh)}
-.mapa-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
-.mapa-top .section-lbl{margin-bottom:4px}
-.mapa-prog{font-size:.8rem;color:var(--tx2);line-height:1.5}
-.mapa-prog strong{color:var(--nav)}
-.mapa-lista{font-size:.76rem;font-weight:700;color:var(--an-t);text-decoration:none;white-space:nowrap;padding:6px 0}
-.mapa-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.mapa-chips::-webkit-scrollbar{display:none}
-.mapa-chips button{flex-shrink:0;min-height:38px;padding:6px 12px;border-radius:100px;border:1.5px solid var(--brd2);background:var(--surf);color:var(--tx2);font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap}
-.mapa-chips button:hover,.mapa-chips button.on{border-color:var(--nav);background:var(--nav);color:#fff}
-.mapa-wrap{position:relative;height:min(62vh,540px);min-height:340px;border-radius:var(--rs);overflow:hidden;border:1.5px solid var(--brd);background:#eaf4fa}
-#mapa-svg{display:block;width:100%;height:100%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-#mapa-svg.drag{cursor:grabbing}
-#mapa-svg .st{cursor:pointer}
-#mapa-svg .st:focus{outline:none}
-#mapa-svg .st:focus .st-ring,#mapa-svg .st.sel .st-ring{stroke:var(--nav);stroke-width:5}
-#mapa-svg .st:hover .st-disc{filter:brightness(1.05)}
-#mapa-svg .pulse{animation:mapPulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes mapPulse{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:.15;transform:scale(1.35)}}
-@media(prefers-reduced-motion:reduce){#mapa-svg .pulse{animation:none}}
-.mapa-zoom{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px}
-.mapa-zoom button{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--brd2);background:rgba(255,255,255,.95);color:var(--nav);font:inherit;font-size:1.15rem;font-weight:800;cursor:pointer;box-shadow:var(--sh)}
-.mapa-hint{position:absolute;left:10px;top:10px;background:rgba(13,74,115,.88);color:#fff;font-size:.72rem;font-weight:700;padding:6px 10px;border-radius:100px;pointer-events:none;transition:opacity .4s}
-.mapa-hint.off{opacity:0}
-.mapa-info{position:absolute;left:10px;right:10px;bottom:10px;max-width:440px;background:#fff;border:2px solid var(--nav);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh2);animation:miIn .2s ease}
-@keyframes miIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.mi-close{position:absolute;top:6px;right:6px;width:36px;height:36px;border:none;background:none;font-size:1rem;cursor:pointer;color:var(--dimmer);border-radius:8px}
-.mi-row{display:flex;gap:10px;align-items:center;padding-right:30px}
-.mi-ico{font-size:1.9rem;line-height:1;flex-shrink:0}
-.mi-reg{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dimmer)}
-.mi-tit{font-family:var(--serif);font-size:1.12rem;font-weight:700;font-style:italic;color:var(--tx);line-height:1.2}
-.mi-desc{font-size:.8rem;color:var(--tx2);line-height:1.5;margin:6px 0 10px}
-.mi-acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.mi-go{display:inline-flex;align-items:center;min-height:42px;padding:8px 18px;border-radius:var(--rs);background:var(--nav);color:#fff;font-weight:800;font-size:.86rem;text-decoration:none}
-.mi-go:hover{filter:brightness(1.1)}
-.mi-st{font-size:.74rem;font-weight:700;color:var(--ok-t)}
-@media(max-width:640px){.mapa-card{padding:14px 10px 10px}}
+/* ===== MENÚ ÁTOMO ===== */
+.atomo-card{background:var(--surf);border:1.5px solid var(--brd);border-radius:var(--r);padding:18px;margin-bottom:28px;box-shadow:var(--sh)}
+.atomo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.atomo-top .section-lbl{margin-bottom:4px}
+.atomo-sub{font-size:.82rem;color:var(--tx2);line-height:1.5;max-width:60ch}
+.atomo-lista{font-size:.76rem;font-weight:700;color:var(--an-t);text-decoration:none;white-space:nowrap;padding:6px 0}
+.niveles{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none}
+.niveles::-webkit-scrollbar{display:none}
+.niveles button{flex-shrink:0;display:flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px;border-radius:100px;border:2px solid var(--brd2);background:var(--surf);color:var(--tx2);font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.niveles button .nn{font-family:var(--mono);font-weight:800}
+.niveles button .np{font-size:.68rem;opacity:.75}
+.niveles button.on{color:#fff}
+.atomo-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+@media(max-width:760px){.atomo-grid{grid-template-columns:1fr}}
+.atomo-view{position:relative;width:100%;max-width:440px;margin:0 auto;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,#f3f9fd 0%,#e6f1f8 62%,rgba(230,241,248,0) 72%)}
+#atomo-svg{display:block;width:100%;height:100%;overflow:visible}
+#atomo-svg .capa{cursor:pointer}
+#atomo-svg .capa-ring{fill:none;stroke-width:2.5;transition:stroke-width .2s,opacity .2s}
+#atomo-svg .capa-hit{fill:none;stroke:transparent;stroke-width:26}
+#atomo-svg .capa.on .capa-ring{stroke-width:5}
+#atomo-svg .dim{opacity:.32}
+#atomo-svg .ele{cursor:pointer;transition:opacity .2s}
+#atomo-svg .ele:focus{outline:none}
+#atomo-svg .ele:focus .ele-disc,#atomo-svg .ele.hl .ele-disc{stroke:var(--nav);stroke-width:5}
+#atomo-svg .nucleo{cursor:pointer}
+#atomo-svg .nucleo:focus{outline:none}
+#atomo-svg .nucleo:focus circle.nuc-bg{stroke:var(--gold);stroke-width:5}
+#atomo-svg .pulse{animation:atPulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes atPulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.15;transform:scale(1.45)}}
+@media(prefers-reduced-motion:reduce){#atomo-svg .pulse{animation:none}}
+.atomo-docente{position:absolute;right:0;bottom:2%;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:100px;background:var(--surf);border:1.5px solid var(--brd2);color:var(--tx2);font-size:.72rem;font-weight:700;text-decoration:none;box-shadow:var(--sh)}
+.atomo-docente:hover{border-color:var(--nav);color:var(--nav)}
+.nivel-panel{min-width:0}
+.nivel-head{border-left:5px solid;padding:4px 0 4px 12px;margin-bottom:12px}
+.nivel-n{font-family:var(--mono);font-size:.72rem;font-weight:800;letter-spacing:.06em}
+.nivel-tit{font-family:var(--serif);font-size:1.3rem;font-weight:700;font-style:italic;color:var(--tx);line-height:1.2;margin:2px 0 4px}
+.nivel-q{font-size:.8rem;color:var(--tx2);line-height:1.5}
+.nivel-q strong{color:var(--tx)}
+.nivel-bar{height:6px;border-radius:3px;background:var(--brd);overflow:hidden;margin-top:8px}
+.nivel-bar span{display:block;height:100%;border-radius:3px;transition:width .4s}
+.nivel-lst{display:flex;flex-direction:column;gap:8px}
+.nivel-st{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;min-height:56px;border:2px solid var(--brd);border-radius:var(--rs);background:var(--surf);text-decoration:none;color:var(--tx);transition:border-color .15s,transform .15s}
+.nivel-st:hover{transform:translateX(3px)}
+.nivel-st.hl{animation:stFlash 1.2s ease}
+@keyframes stFlash{0%,100%{box-shadow:none}30%{box-shadow:0 0 0 4px rgba(252,211,77,.8)}}
+.nivel-st .ic{font-size:1.5rem;line-height:1}
+.nivel-st .tt{font-weight:800;font-size:.9rem;line-height:1.25}
+.nivel-st .dd{font-size:.74rem;color:var(--tx2);line-height:1.4;margin-top:2px}
+.nivel-st .ss{font-size:.66rem;font-weight:800;white-space:nowrap;padding:3px 8px;border-radius:100px}
+.ss.vis{background:var(--ok-b);color:var(--ok-t)}
+.ss.sig{background:#fef3c7;color:#92400e}
+.ss.nue{background:var(--err-b);color:var(--err-t)}
+.ss.opc{background:var(--surf2);color:var(--dimmer)}
+.nuc-lvls{display:flex;flex-direction:column;gap:8px;margin:10px 0 14px}
+.nuc-lv{display:grid;grid-template-columns:120px 1fr 44px;gap:8px;align-items:center;font-size:.78rem;font-weight:700;color:var(--tx2);background:none;border:none;font-family:inherit;cursor:pointer;text-align:left;padding:2px 0}
+.nuc-lv .b{height:10px;border-radius:5px;background:var(--brd);overflow:hidden}
+.nuc-lv .b span{display:block;height:100%}
+.nuc-go{display:inline-flex;align-items:center;min-height:44px;padding:9px 18px;border-radius:var(--rs);background:var(--nav);color:#fff;font-weight:800;font-size:.86rem;text-decoration:none}
+@media(max-width:640px){.atomo-card{padding:14px 12px}}
 
 /* ===== MODULES GRID ===== */
 .mods-lbl{
@@ -662,36 +683,22 @@ html{font-size:var(--base-fs)}
   </div>
 </div>
 
-<!-- ===== MAPA DE IONNOM ===== -->
-<section class="mapa-card" aria-labelledby="mapa-tit">
-  <div class="mapa-top">
+<!-- ===== MENÚ ÁTOMO ===== -->
+<section class="atomo-card" aria-labelledby="atomo-tit">
+  <div class="atomo-top">
     <div>
-      <div class="section-lbl" id="mapa-tit">🗺️ Mapa de IonNom · tu recorrido por la química</div>
-      <div class="mapa-prog" id="mapa-prog"></div>
+      <div class="section-lbl" id="atomo-tit">⚛️ Tu átomo IonNom</div>
+      <p class="atomo-sub">Cada <strong>capa</strong> es un nivel de la química y cada <strong>electrón</strong>, un módulo. Empieza cerca del núcleo y sube de nivel como un electrón excitado. Toca una capa o un electrón.</p>
     </div>
-    <a class="mapa-lista" href="#modulos">Ver como lista ↓</a>
+    <a class="atomo-lista" href="#modulos">Ver como lista ↓</a>
   </div>
-  <div class="mapa-chips" id="mapa-chips" role="toolbar" aria-label="Ir a una región del mapa"></div>
-  <div class="mapa-wrap" id="mapa-wrap">
-    <svg id="mapa-svg" role="application" aria-label="Mapa interactivo de los módulos. Arrastra para moverte, pellizca o usa los botones para acercar y toca una estación para ver qué tiene." tabindex="-1"></svg>
-    <div class="mapa-zoom">
-      <button type="button" id="mz-in" aria-label="Acercar">+</button>
-      <button type="button" id="mz-out" aria-label="Alejar">−</button>
-      <button type="button" id="mz-all" aria-label="Ver todo el mapa" title="Ver todo">⤢</button>
+  <div class="niveles" id="niveles" role="tablist" aria-label="Niveles del átomo"></div>
+  <div class="atomo-grid">
+    <div class="atomo-view">
+      <svg id="atomo-svg" viewBox="-222 -222 444 444" aria-label="Menú en forma de átomo: el núcleo muestra tu progreso, las capas son los niveles y los electrones son los módulos."></svg>
+      <a class="atomo-docente" href="docente.html" title="Generador Docente">🗂️ Sala docente</a>
     </div>
-    <div class="mapa-hint" id="mapa-hint">👆 Arrastra para moverte · toca una estación</div>
-    <div class="mapa-info" id="mapa-info" hidden>
-      <button type="button" class="mi-close" id="mi-close" aria-label="Cerrar">✕</button>
-      <div class="mi-row">
-        <span class="mi-ico" id="mi-ico"></span>
-        <div style="min-width:0">
-          <div class="mi-reg" id="mi-reg"></div>
-          <div class="mi-tit" id="mi-tit"></div>
-        </div>
-      </div>
-      <div class="mi-desc" id="mi-desc"></div>
-      <div class="mi-acts"><a class="mi-go" id="mi-go" href="#">Entrar →</a><span class="mi-st" id="mi-st"></span></div>
-    </div>
+    <div class="nivel-panel" id="nivel-panel" aria-live="polite"></div>
   </div>
 </section>
 
@@ -1193,268 +1200,156 @@ window.addEventListener('appinstalled', () => {
 })();
 </script>
 <script>
-// ── Mapa de IonNom ──
-// Menú principal en forma de mapa: cada módulo es una "estación" dentro de
-// una región temática, unidas por la ruta recomendada. Se puede arrastrar,
-// pellizcar (celular) o usar los botones +/−. Tocar una estación abre una
-// ficha con el botón "Entrar" (así un arrastre nunca abre una página por
-// accidente). Las estaciones visitadas se marcan con ✓ a partir del registro
-// 'ionom-visitas' que guarda assets/ionom-ui.js en cada página.
+// ── Menú átomo ──
+// La portada presenta los módulos como un átomo de Bohr: el núcleo es el
+// progreso del estudiante, cada capa (n = 1…4) es una región temática en el
+// orden recomendado y cada electrón es un módulo. Tocar una capa o un
+// electrón abre el panel de ese nivel (con enlaces grandes, fáciles de tocar
+// en celular); el átomo nunca navega por sí solo. Los electrones visitados
+// se marcan con ✓ a partir del registro 'ionom-visitas' de assets/ionom-ui.js.
 (function(){
-  var svg=document.getElementById('mapa-svg'), wrap=document.getElementById('mapa-wrap');
-  if(!svg) return;
-  var NS='http://www.w3.org/2000/svg', WW=1200, WH=760;
-  var REG={
-    atomo:{n:'El átomo',e:'⚛️',c:'#0d9488',f:'#d5f3ef',x:190,y:255,rx:165,ry:185,rot:-8},
-    nom:{n:'Nomenclatura',e:'🏷️',c:'#0072B2',f:'#dbebf4',x:680,y:215,rx:335,ry:160,rot:4},
-    rx:{n:'Reacciones',e:'⚗️',c:'#b45309',f:'#fcf2db',x:860,y:515,rx:250,ry:125,rot:-6,lx:975,ly:440},
-    calc:{n:'Cálculos y redox',e:'🧮',c:'#7c3aed',f:'#efe9fd',x:390,y:585,rx:220,ry:140,rot:6,lx:265,ly:505},
-    doc:{n:'Sala docente',e:'🗂️',c:'#475569',f:'#e9edf2',x:1100,y:150,rx:78,ry:82,rot:0}
-  };
+  var svg=document.getElementById('atomo-svg'); if(!svg) return;
+  var NS='http://www.w3.org/2000/svg';
+  var NIV=[
+    {n:1,k:'atomo',t:'El átomo',e:'⚛️',c:'#0d9488',f:'#d5f3ef',r:64,q:'¿Cómo sabemos cómo es algo que nadie ha visto?'},
+    {n:2,k:'nom',t:'Nomenclatura',e:'🏷️',c:'#0072B2',f:'#dbebf4',r:110,q:'¿Cómo puede un nombre decir de qué está hecha una sustancia?'},
+    {n:3,k:'rx',t:'Reacciones',e:'⚗️',c:'#b45309',f:'#fcf2db',r:155,q:'¿Qué cambia y qué se conserva cuando las sustancias reaccionan?'},
+    {n:4,k:'calc',t:'Cálculos y redox',e:'🧮',c:'#7c3aed',f:'#efe9fd',r:198,q:'¿Cómo predecir cuánto producto se obtendrá de una reacción?'}
+  ];
   // r: orden en la ruta recomendada (null = desvío opcional)
   var ST=[
-    {id:'atomo.html',r:1,reg:'atomo',x:125,y:175,e:'🪐',t:'Teoría Atómica',d:'Modelos atómicos de Demócrito al cuántico, experimentos de Thomson, Rutherford y Bohr, y constructor de átomos.',nuevo:true},
-    {id:'tabla.html',r:2,reg:'atomo',x:260,y:345,e:'📊',t:'Tabla Periódica',d:'118 elementos interactivos: configuración electrónica, electronegatividad y estados de oxidación.'},
-    {id:'teoria.html',r:3,reg:'nom',x:445,y:225,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas (Tradicional, Stock e IUPAC) con el código de 4 colores.'},
-    {id:'guia.html',r:null,reg:'nom',x:420,y:95,e:'📘',t:'Guía descargable',d:'La guía completa de nomenclatura para imprimir o estudiar sin conexión.'},
-    {id:'funciones.html',r:4,reg:'nom',x:610,y:130,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso y compuestos colombianos reales.'},
-    {id:'juego.html',r:5,reg:'nom',x:780,y:215,e:'🎮',t:'Juego',d:'20 preguntas cronometradas, 13 tipos de pregunta y Modo Estudiante con registro de resultados.'},
-    {id:'nomenClash.html',r:6,reg:'nom',x:900,y:310,e:'⚔️',t:'NomenClash',d:'Duelo de cartas: combina iones, forma compuestos y derrota a la IA.'},
-    {id:'reacciones.html',r:7,reg:'rx',x:820,y:465,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización con quiz interactivo.'},
-    {id:'simulador.html',r:null,reg:'rx',x:1040,y:545,e:'🔬',t:'Simulador',d:'Predice productos de reacción y usa el laboratorio virtual de pH.'},
-    {id:'balanceo.html',r:8,reg:'rx',x:660,y:555,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo con 8 ejercicios de dificultad progresiva.'},
-    {id:'moles.html',r:9,reg:'calc',x:480,y:490,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M y factores de conversión, sin regla de tres.'},
-    {id:'estequiometria.html',r:10,reg:'calc',x:270,y:590,e:'🧮',t:'Estequiometría',d:'De la ecuación balanceada a los gramos: reactivo limitante y rendimiento.'},
-    {id:'balanceo-avanzado.html',r:11,reg:'calc',x:470,y:675,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones de óxido-reducción.'},
-    {id:'docente.html',r:null,reg:'doc',x:1100,y:165,e:'🗂️',t:'Generador Docente',d:'Guías, talleres, evaluaciones, laberintos y crucigramas imprimibles para la clase.',docente:true}
+    {id:'atomo.html',r:1,n:1,e:'🪐',t:'Teoría Atómica',d:'Modelos atómicos, experimentos de Thomson, Rutherford y Bohr, y constructor de átomos.',nuevo:true},
+    {id:'tabla.html',r:2,n:1,e:'📊',t:'Tabla Periódica',d:'118 elementos: configuración electrónica, electronegatividad y estados de oxidación.'},
+    {id:'teoria.html',r:3,n:2,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas con el código de 4 colores.'},
+    {id:'funciones.html',r:4,n:2,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso.'},
+    {id:'juego.html',r:5,n:2,e:'🎮',t:'Juego',d:'20 preguntas cronometradas y Modo Estudiante.'},
+    {id:'nomenClash.html',r:6,n:2,e:'⚔️',t:'NomenClash',d:'Duelo de cartas de iones contra la IA.'},
+    {id:'guia.html',r:null,n:2,e:'📘',t:'Guía descargable',d:'La guía completa para imprimir o estudiar sin conexión.'},
+    {id:'reacciones.html',r:7,n:3,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización.'},
+    {id:'balanceo.html',r:8,n:3,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo, paso a paso.'},
+    {id:'simulador.html',r:null,n:3,e:'🔬',t:'Simulador',d:'Predice productos de reacción y usa el laboratorio de pH.'},
+    {id:'moles.html',r:9,n:4,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M con factores de conversión.'},
+    {id:'estequiometria.html',r:10,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
+    {id:'balanceo-avanzado.html',r:11,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
   ];
-  var BRANCH=[['teoria.html','guia.html'],['reacciones.html','simulador.html']];
   var visitas={};
   try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}
-  var byId={}; ST.forEach(function(s){ byId[s.id]=s; });
   var route=ST.filter(function(s){return s.r;}).sort(function(a,b){return a.r-b.r;});
   var next=null; for(var i=0;i<route.length;i++){ if(!visitas[route[i].id]){ next=route[i]; break; } }
-
-  function el(tag,attrs,parent){
-    var n=document.createElementNS(NS,tag);
-    for(var k in attrs) n.setAttribute(k,attrs[k]);
-    if(parent) parent.appendChild(n);
-    return n;
-  }
-  // Curva suave que pasa por todos los puntos (Catmull-Rom → Bézier)
-  function smooth(pts){
-    var d='M'+pts[0].x+' '+pts[0].y;
-    for(var i=0;i<pts.length-1;i++){
-      var p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
-      d+=' C'+(p1.x+(p2.x-p0.x)/6).toFixed(1)+' '+(p1.y+(p2.y-p0.y)/6).toFixed(1)+' '+(p2.x-(p3.x-p1.x)/6).toFixed(1)+' '+(p2.y-(p3.y-p1.y)/6).toFixed(1)+' '+p2.x+' '+p2.y;
-    }
-    return d;
-  }
+  var hechos=route.filter(function(s){return visitas[s.id];}).length;
+  function deNivel(n){ return ST.filter(function(s){return s.n===n;}); }
+  function progNivel(n){ var l=deNivel(n).filter(function(s){return s.r;}); return [l.filter(function(s){return visitas[s.id];}).length,l.length]; }
+  function el(tag,attrs,parent){ var x=document.createElementNS(NS,tag); for(var k in attrs) x.setAttribute(k,attrs[k]); if(parent) parent.appendChild(x); return x; }
+  function txt(node,t){ node.textContent=t; return node; }
 
   // ── Dibujo ──
-  var defs=el('defs',{},svg);
-  var pat=el('pattern',{id:'mp-dots',width:28,height:28,patternUnits:'userSpaceOnUse'},defs);
-  el('circle',{cx:2,cy:2,r:1.4,fill:'#c5dceb'},pat);
-  var flt=el('filter',{id:'mp-sh',x:'-30%',y:'-30%',width:'160%',height:'160%'},defs);
-  el('feDropShadow',{dx:0,dy:3,stdDeviation:3,'flood-color':'#0d2d42','flood-opacity':.22},flt);
-  var world=el('g',{},svg);
-  el('rect',{x:-400,y:-400,width:WW+800,height:WH+800,fill:'url(#mp-dots)'},world);
-  Object.keys(REG).forEach(function(k){
-    var R=REG[k];
-    el('ellipse',{cx:R.x,cy:R.y,rx:R.rx,ry:R.ry,fill:R.f,stroke:R.c,'stroke-width':2.5,'stroke-dasharray':'10 8','stroke-opacity':.55,transform:'rotate('+R.rot+' '+R.x+' '+R.y+')'},world);
-    var lt=el('text',{x:R.lx||R.x,y:R.ly||R.y-R.ry+30,'text-anchor':'middle','font-size':k==='doc'?15:19,'font-weight':800,fill:R.c,'font-family':'Trebuchet MS, sans-serif','letter-spacing':'1.5'},world);
-    lt.textContent=R.e+' '+R.n.toUpperCase();
+  var capas={}, eles={}, eleList=[];
+  NIV.slice().reverse().forEach(function(N){
+    var g=el('g',{class:'capa',role:'button',tabindex:-1,'aria-label':'Nivel '+N.n+': '+N.t},svg);
+    el('circle',{r:N.r,class:'capa-hit'},g);
+    el('circle',{r:N.r,class:'capa-ring',stroke:N.c,'stroke-dasharray':N.n===1?'':'3 6'},g);
+    var lb=el('g',{transform:'translate(0 '+(-N.r)+')'},g);
+    el('rect',{x:-17,y:-9,width:34,height:18,rx:9,fill:N.c},lb);
+    txt(el('text',{y:4.5,'text-anchor':'middle','font-size':11,'font-weight':800,fill:'#fff','font-family':'Courier New, monospace'},lb),'n='+N.n);
+    g.addEventListener('click',function(e){ if(e.target.closest('.ele')) return; elegir(N.n); });
+    capas[N.n]=g;
   });
-  // ruta recomendada y desvíos
-  el('path',{d:smooth(route),fill:'none',stroke:'#fff','stroke-width':16,'stroke-linecap':'round'},world);
-  el('path',{d:smooth(route),fill:'none',stroke:'#d4a843','stroke-width':7,'stroke-linecap':'round','stroke-dasharray':'2 13'},world);
-  BRANCH.forEach(function(b){
-    var a=byId[b[0]], c=byId[b[1]];
-    el('path',{d:'M'+a.x+' '+a.y+' L'+c.x+' '+c.y,fill:'none',stroke:'#94a3b8','stroke-width':4,'stroke-linecap':'round','stroke-dasharray':'1 10'},world);
-  });
-  // bandera de meta
-  var fin=route[route.length-1];
-  var fl=el('g',{transform:'translate('+(fin.x+44)+' '+(fin.y-40)+')'},world);
-  el('line',{x1:0,y1:0,x2:0,y2:40,stroke:'#475569','stroke-width':3},fl);
-  el('path',{d:'M0 0 L26 7 L0 15 Z',fill:'#dc2626'},fl);
-
-  var nodes={};
-  ST.forEach(function(s){
-    var R=REG[s.reg], vis=!!visitas[s.id];
-    var g=el('g',{class:'st',transform:'translate('+s.x+' '+s.y+')',tabindex:0,role:'button','aria-label':s.t+(vis?' (visitado)':'')},world);
-    g.dataset.id=s.id;
-    if(next===s) el('circle',{r:46,fill:'none',stroke:'#d4a843','stroke-width':6,class:'pulse'},g);
-    el('circle',{r:36,fill:'#fff',stroke:R.c,'stroke-width':4,class:'st-ring',filter:'url(#mp-sh)'},g);
-    el('circle',{r:29,fill:R.f,class:'st-disc'},g);
-    var ic=el('text',{y:11,'text-anchor':'middle','font-size':30},g); ic.textContent=s.e;
-    if(s.r){
-      el('circle',{cx:-27,cy:-27,r:13,fill:R.c,stroke:'#fff','stroke-width':2.5},g);
-      var nt=el('text',{x:-27,y:-22.5,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#fff','font-family':'Trebuchet MS, sans-serif'},g); nt.textContent=s.r;
-    }
-    if(vis){
-      el('circle',{cx:27,cy:-27,r:13,fill:'#16a34a',stroke:'#fff','stroke-width':2.5},g);
-      var ck=el('text',{x:27,y:-22,'text-anchor':'middle','font-size':14,'font-weight':900,fill:'#fff'},g); ck.textContent='✓';
-    }else if(s.nuevo){
-      el('rect',{x:8,y:-44,width:52,height:20,rx:10,fill:'#dc2626',stroke:'#fff','stroke-width':2},g);
-      var nv=el('text',{x:34,y:-30,'text-anchor':'middle','font-size':11,'font-weight':800,fill:'#fff','font-family':'Trebuchet MS, sans-serif'},g); nv.textContent='NUEVO';
-    }
-    var lbl=s.t.length>22?s.t.replace(/ (y|de) /,' $1\n').split('\n'):[s.t];
-    var lw=Math.max.apply(null,lbl.map(function(l){return l.length;}))*7.4+18;
-    el('rect',{x:-lw/2,y:42,width:lw,height:8+lbl.length*16,rx:9,fill:'rgba(255,255,255,.94)',stroke:R.c,'stroke-opacity':.35},g);
-    lbl.forEach(function(l,j){
-      var tt=el('text',{y:56+j*16,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#0d2d42','font-family':'Trebuchet MS, sans-serif'},g); tt.textContent=l;
-    });
-    nodes[s.id]=g;
-  });
-
-  // ── Progreso ──
-  var hechos=route.filter(function(s){return visitas[s.id];}).length;
-  document.getElementById('mapa-prog').innerHTML='Has visitado <strong>'+hechos+' de '+route.length+'</strong> estaciones de la ruta'+(next?' · Siguiente parada sugerida: <strong>'+next.e+' '+next.t+'</strong>':' · <strong>¡Completaste el recorrido! 🏁</strong>');
-
-  // ── Vista: centro (cx,cy) y escala s (píxeles por unidad del mapa) ──
-  var V={cx:WW/2,cy:WH/2,s:1}, anim=null;
-  function size(){ var r=wrap.getBoundingClientRect(); return {w:r.width||1,h:r.height||1}; }
-  function fitAll(){ var z=size(); return Math.min(z.w/(WW+40),z.h/(WH+40)); }
-  function clamp(){
-    var z=size(), mn=fitAll()*0.95, mx=2.4;
-    V.s=Math.max(mn,Math.min(mx,V.s));
-    var hw=z.w/2/V.s, hh=z.h/2/V.s;
-    V.cx=hw*2>=WW?WW/2:Math.max(hw-20,Math.min(WW-hw+20,V.cx));
-    V.cy=hh*2>=WH?WH/2:Math.max(hh-20,Math.min(WH-hh+20,V.cy));
-  }
-  function apply(){
-    clamp();
-    var z=size();
-    svg.setAttribute('viewBox',[(V.cx-z.w/2/V.s).toFixed(2),(V.cy-z.h/2/V.s).toFixed(2),(z.w/V.s).toFixed(2),(z.h/V.s).toFixed(2)].join(' '));
-  }
-  function flyTo(cx,cy,s,ms){
-    if(anim) cancelAnimationFrame(anim);
-    var a={cx:V.cx,cy:V.cy,s:V.s}, t0=performance.now();
-    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) ms=0;
-    (function tick(now){
-      var p=ms?Math.min(1,(now-t0)/ms):1, e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
-      V.cx=a.cx+(cx-a.cx)*e; V.cy=a.cy+(cy-a.cy)*e; V.s=a.s+(s-a.s)*e; apply();
-      if(p<1) anim=requestAnimationFrame(tick); else anim=null;
-    })(t0);
-  }
-  function regionView(k){
-    var R=REG[k], z=size();
-    var s=Math.min(z.w/(R.rx*2+90),z.h/(R.ry*2+120));
-    flyTo(R.x,R.y+10,Math.min(s,1.6),450);
-  }
-  function verTodo(){ flyTo(WW/2,WH/2,fitAll(),450); }
-
-  // ── Chips de regiones ──
-  var chips=document.getElementById('mapa-chips');
-  var CH=[['todo','🌐 Todo el mapa']].concat(Object.keys(REG).map(function(k){return [k,REG[k].e+' '+REG[k].n];}));
-  CH.forEach(function(c){
-    var b=document.createElement('button'); b.type='button'; b.textContent=c[1];
-    b.addEventListener('click',function(){
-      chips.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});
-      cerrarInfo(); if(c[0]==='todo') verTodo(); else regionView(c[0]);
-    });
-    chips.appendChild(b);
-  });
-
-  // ── Ficha de la estación ──
-  var info=document.getElementById('mapa-info'), sel=null;
-  function abrirInfo(id){
-    var s=byId[id], R=REG[s.reg];
-    if(sel) sel.classList.remove('sel');
-    sel=nodes[id]; sel.classList.add('sel');
-    document.getElementById('mi-ico').textContent=s.e;
-    document.getElementById('mi-reg').textContent=R.e+' '+R.n+(s.r?' · Parada '+s.r+' de '+route.length:' · Desvío opcional');
-    document.getElementById('mi-reg').style.color=R.c;
-    document.getElementById('mi-tit').textContent=s.t;
-    document.getElementById('mi-desc').textContent=s.d;
-    var go=document.getElementById('mi-go'); go.href=s.id; go.style.background=R.c;
-    document.getElementById('mi-st').textContent=visitas[s.id]?'✓ Ya la visitaste':(next===s?'⭐ Siguiente parada sugerida':(s.nuevo?'🆕 Nuevo':''));
-    info.hidden=false;
-    // centra la estación dejando espacio para la ficha abajo
-    var z=size(), s2=Math.max(V.s,Math.min(1.1,z.w/520));
-    flyTo(s.x,s.y+z.h*0.18/s2,s2,380);
-  }
-  function cerrarInfo(){ info.hidden=true; if(sel){ sel.classList.remove('sel'); sel=null; } }
-  document.getElementById('mi-close').addEventListener('click',cerrarInfo);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!info.hidden) cerrarInfo(); });
-  Object.keys(nodes).forEach(function(id){
-    nodes[id].addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(sel===nodes[id]) location.href=id; else abrirInfo(id); }
+  // núcleo: protones y neutrones + progreso
+  var nuc=el('g',{class:'nucleo',role:'button',tabindex:0,'aria-label':'Núcleo: tu progreso, '+hechos+' de '+route.length+' estaciones'},svg);
+  el('circle',{r:34,fill:'#fff',stroke:'#dc2626','stroke-width':2.5,class:'nuc-bg'},nuc);
+  var NP=[[-10,-14,'p'],[8,-15,'n'],[-16,2,'n'],[0,-1,'p'],[16,1,'p'],[-6,14,'p'],[10,14,'n']];
+  NP.forEach(function(q){ el('circle',{cx:q[0],cy:q[1],r:8.5,fill:q[2]==='p'?'#ef4444':'#94a3b8',opacity:.28},nuc); });
+  txt(el('text',{y:2,'text-anchor':'middle','font-size':17,'font-weight':900,fill:'#0d2d42','font-family':'Trebuchet MS, sans-serif'},nuc),hechos+'/'+route.length);
+  txt(el('text',{y:16,'text-anchor':'middle','font-size':8.5,'font-weight':800,fill:'#4f6d88','letter-spacing':'.8','font-family':'Trebuchet MS, sans-serif'},nuc),'NÚCLEO');
+  nuc.addEventListener('click',function(){ elegir(0); });
+  nuc.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); elegir(0); } });
+  // electrones (módulos)
+  NIV.forEach(function(N){
+    var lst=deNivel(N.n);
+    lst.forEach(function(s,j){
+      var g=el('g',{class:'ele',role:'button',tabindex:0,'aria-label':s.t+(visitas[s.id]?' (visitado)':'')+', nivel '+N.n},svg);
+      if(next===s) el('circle',{r:27,fill:'none',stroke:'#d4a843','stroke-width':5,class:'pulse'},g);
+      el('circle',{r:20,fill:'#fff',stroke:N.c,'stroke-width':3,class:'ele-disc'},g);
+      txt(el('text',{y:7,'text-anchor':'middle','font-size':19},g),s.e);
+      if(visitas[s.id]){ el('circle',{cx:15,cy:-15,r:8,fill:'#16a34a',stroke:'#fff','stroke-width':2},g); txt(el('text',{x:15,y:-11.5,'text-anchor':'middle','font-size':10,'font-weight':900,fill:'#fff'},g),'✓'); }
+      else if(s.nuevo){ el('circle',{cx:15,cy:-15,r:8,fill:'#dc2626',stroke:'#fff','stroke-width':2},g); txt(el('text',{x:15,y:-11.5,'text-anchor':'middle','font-size':10,'font-weight':900,fill:'#fff'},g),'!'); }
+      var item={g:g,s:s,N:N,a0:-Math.PI/2+(j+.5)/lst.length*Math.PI*2+N.n*0.6};
+      function act(){ elegir(N.n,s.id); }
+      g.addEventListener('click',act);
+      g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } });
+      eles[s.id]=item; eleList.push(item);
     });
   });
 
-  // ── Arrastrar / pellizcar ──
-  var ptrs={}, moved=0, downSt=null, pinch=null;
-  function pts(){ return Object.keys(ptrs).map(function(k){return ptrs[k];}); }
-  var hint=document.getElementById('mapa-hint');
-  function ocultarHint(){ hint.classList.add('off'); }
-  setTimeout(ocultarHint,6000);
-  svg.addEventListener('pointerdown',function(e){
-    if(e.pointerType==='mouse'&&e.button!==0) return;
-    ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
-    try{ svg.setPointerCapture(e.pointerId); }catch(_){}
-    var n=pts().length;
-    if(n===1){ moved=0; var t=e.target.closest&&e.target.closest('.st'); downSt=t?t.dataset.id:null; }
-    else { downSt=null; pinch=null; }
-    if(anim){ cancelAnimationFrame(anim); anim=null; }
-    svg.classList.add('drag');
-  });
-  svg.addEventListener('pointermove',function(e){
-    var p=ptrs[e.pointerId]; if(!p) return;
-    var list=pts();
-    if(list.length===1){
-      var dx=e.clientX-p.x, dy=e.clientY-p.y;
-      moved+=Math.abs(dx)+Math.abs(dy);
-      V.cx-=dx/V.s; V.cy-=dy/V.s; p.x=e.clientX; p.y=e.clientY; apply();
-      if(moved>8) ocultarHint();
-    }else if(list.length===2){
-      p.x=e.clientX; p.y=e.clientY;
-      var a=list[0], b=list[1], d=Math.hypot(a.x-b.x,a.y-b.y), mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
-      var r=svg.getBoundingClientRect(), z=size();
-      if(pinch){
-        var wx=V.cx+(pinch.mx-r.left-z.w/2)/V.s, wy=V.cy+(pinch.my-r.top-z.h/2)/V.s;
-        V.s*=d/pinch.d; clamp();
-        V.cx=wx-(mx-r.left-z.w/2)/V.s; V.cy=wy-(my-r.top-z.h/2)/V.s; apply();
-      }
-      pinch={d:d,mx:mx,my:my}; moved=99; ocultarHint();
-    }
-  });
-  function up(e){
-    if(!ptrs[e.pointerId]) return;
-    delete ptrs[e.pointerId];
-    if(pts().length<2) pinch=null;
-    if(!pts().length){
-      svg.classList.remove('drag');
-      if(downSt&&moved<9&&e.type==='pointerup') abrirInfo(downSt);
-      downSt=null;
-    }
+  // ── Giro de los electrones (más rápido cerca del núcleo, como en Bohr) ──
+  var rot=0, pausa=false, last=performance.now();
+  var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function colocar(){
+    eleList.forEach(function(it){
+      var a=it.a0+rot/(it.N.n*it.N.n*0.5+0.5);
+      it.g.setAttribute('transform','translate('+(Math.cos(a)*it.N.r).toFixed(1)+' '+(Math.sin(a)*it.N.r).toFixed(1)+')');
+    });
   }
-  svg.addEventListener('pointerup',up);
-  svg.addEventListener('pointercancel',up);
-  // Rueda: solo acerca con Ctrl (o el gesto de pellizco del touchpad) para no
-  // secuestrar el desplazamiento normal de la página.
-  svg.addEventListener('wheel',function(e){
-    if(!e.ctrlKey&&!e.metaKey) return;
-    e.preventDefault();
-    var r=svg.getBoundingClientRect(), z=size();
-    var wx=V.cx+(e.clientX-r.left-z.w/2)/V.s, wy=V.cy+(e.clientY-r.top-z.h/2)/V.s;
-    V.s*=Math.exp(-e.deltaY*0.0025); clamp();
-    V.cx=wx-(e.clientX-r.left-z.w/2)/V.s; V.cy=wy-(e.clientY-r.top-z.h/2)/V.s; apply();
-  },{passive:false});
-  function zoomBy(f){ flyTo(V.cx,V.cy,V.s*f,250); }
-  document.getElementById('mz-in').addEventListener('click',function(){ zoomBy(1.35); });
-  document.getElementById('mz-out').addEventListener('click',function(){ zoomBy(1/1.35); });
-  document.getElementById('mz-all').addEventListener('click',function(){ cerrarInfo(); verTodo(); });
-  window.addEventListener('resize',apply);
+  function tick(now){
+    var dt=Math.min(0.1,(now-last)/1000); last=now;
+    if(!pausa&&!quieto&&!document.hidden){ rot+=dt*0.12; colocar(); }
+    requestAnimationFrame(tick);
+  }
+  colocar(); requestAnimationFrame(tick);
+  // Se detiene mientras el dedo o el ratón están sobre el átomo, para poder tocar con calma.
+  var vista=svg.parentNode;
+  vista.addEventListener('pointerenter',function(){ pausa=true; });
+  vista.addEventListener('pointerleave',function(){ pausa=false; });
+  vista.addEventListener('focusin',function(){ pausa=true; });
+  vista.addEventListener('focusout',function(){ pausa=false; });
 
-  // Vista inicial: en pantallas anchas, todo el mapa; en celular, la región
-  // de la siguiente parada sugerida (todo el mapa se vería demasiado pequeño).
-  var z0=size();
-  if(z0.w>=760){ V.s=fitAll(); apply(); }
-  else{
-    var foco=next||route[0], R0=REG[foco.reg];
-    V.s=Math.min(z0.w/(R0.rx*2+90),z0.h/(R0.ry*2+120),1.2); V.cx=R0.x; V.cy=R0.y+10; apply();
+  // ── Selector de niveles ──
+  var bar=document.getElementById('niveles');
+  var chips=[{n:0,h:'<span>⚛️ Núcleo</span><span class="np">'+hechos+'/'+route.length+'</span>',c:'#0d4a73'}].concat(NIV.map(function(N){
+    var p=progNivel(N.n);
+    return {n:N.n,h:'<span class="nn">n='+N.n+'</span><span>'+N.t+'</span><span class="np">'+p[0]+'/'+p[1]+'</span>',c:N.c};
+  }));
+  chips.forEach(function(c){
+    var b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab'); b.innerHTML=c.h; b.dataset.n=c.n; b.dataset.c=c.c;
+    b.addEventListener('click',function(){ elegir(c.n); });
+    bar.appendChild(b);
+  });
+
+  // ── Panel del nivel ──
+  var panel=document.getElementById('nivel-panel');
+  function estado(s){
+    if(visitas[s.id]) return '<span class="ss vis">✓ Visitado</span>';
+    if(next===s) return '<span class="ss sig">⭐ Siguiente</span>';
+    if(s.nuevo) return '<span class="ss nue">Nuevo</span>';
+    if(!s.r) return '<span class="ss opc">Opcional</span>';
+    return '';
   }
+  function elegir(n,resaltar){
+    bar.querySelectorAll('button').forEach(function(b){
+      var on=+b.dataset.n===n; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+      b.style.background=on?b.dataset.c:''; b.style.borderColor=on?b.dataset.c:'';
+    });
+    NIV.forEach(function(N){ capas[N.n].classList.toggle('on',N.n===n); capas[N.n].classList.toggle('dim',n!==0&&N.n!==n); });
+    eleList.forEach(function(it){ it.g.classList.toggle('dim',n!==0&&it.N.n!==n); it.g.classList.toggle('hl',it.s.id===resaltar); });
+    if(n===0){
+      panel.innerHTML='<div class="nivel-head" style="border-color:#0d4a73"><div class="nivel-n" style="color:#0d4a73">NÚCLEO</div><div class="nivel-tit">Tu progreso</div>'+
+        '<div class="nivel-q">Has visitado <strong>'+hechos+' de '+route.length+'</strong> estaciones de la ruta recomendada.</div></div>'+
+        '<div class="nuc-lvls">'+NIV.map(function(N){ var p=progNivel(N.n); return '<button type="button" class="nuc-lv" data-n="'+N.n+'"><span>n='+N.n+' · '+N.t+'</span><span class="b"><span style="width:'+(p[0]/p[1]*100)+'%;background:'+N.c+'"></span></span><span>'+p[0]+'/'+p[1]+'</span></button>'; }).join('')+'</div>'+
+        (next?'<a class="nuc-go" href="'+next.id+'">⭐ Siguiente parada: '+next.e+' '+next.t+' →</a>':'<div class="nivel-q"><strong>🏁 ¡Recorriste todo el átomo!</strong> Vuelve a las estaciones para repasar.</div>');
+      panel.querySelectorAll('.nuc-lv').forEach(function(b){ b.addEventListener('click',function(){ elegir(+b.dataset.n); }); });
+      return;
+    }
+    var N=NIV[n-1], p=progNivel(n);
+    panel.innerHTML='<div class="nivel-head" style="border-color:'+N.c+'"><div class="nivel-n" style="color:'+N.c+'">NIVEL n = '+n+' · '+N.e+'</div><div class="nivel-tit">'+N.t+'</div>'+
+      '<div class="nivel-q"><strong>Pregunta guía:</strong> '+N.q+'</div><div class="nivel-bar"><span style="width:'+(p[0]/p[1]*100)+'%;background:'+N.c+'"></span></div></div>'+
+      '<div class="nivel-lst">'+deNivel(n).map(function(s){
+        return '<a class="nivel-st'+(s.id===resaltar?' hl':'')+'" href="'+s.id+'" style="border-color:'+(s.id===resaltar?N.c:'')+'"><span class="ic">'+s.e+'</span><span><div class="tt">'+(s.r?s.r+'. ':'')+s.t+'</div><div class="dd">'+s.d+'</div></span><span>'+estado(s)+'</span></a>';
+      }).join('')+'</div>';
+    if(resaltar&&window.innerWidth<=760){
+      var a=panel.querySelector('.nivel-st.hl'); if(a) a.scrollIntoView({block:'nearest',behavior:'smooth'});
+    }
+  }
+  elegir(next?next.n:0);
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>
