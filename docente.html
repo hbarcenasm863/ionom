@@ -185,6 +185,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .doc-tab.active{color:var(--nav);border-bottom-color:var(--nav)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
+#s-form [hidden]{display:none}
 
 /* ══════════════ Laberintos (controles) ══════════════ */
 .lab-modos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
@@ -500,11 +501,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <div class="app">
   <div class="page-hdr no-print">
     <h1>🗂️ Generador para Docentes</h1>
-    <p>Arma guías, talleres, evaluaciones y laberintos imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
+    <p>Arma guías, talleres, evaluaciones, laberintos y crucigramas imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
   </div>
 
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
-    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias">📄 Guías, talleres y evaluaciones</button>
+    <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="completa">📘 Guías</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-talleres" aria-controls="tab-guias" aria-selected="false" data-tab="talleres" data-panel="guias" data-tipo="taller">✏️ Talleres</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-evaluaciones" aria-controls="tab-guias" aria-selected="false" data-tab="evaluaciones" data-panel="guias" data-tipo="evaluacion">📝 Evaluaciones</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-crucigramas" aria-controls="tab-crucigramas" aria-selected="false" data-tab="crucigramas">🔤 Crucigramas</button>
   </div>
@@ -514,7 +517,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   <!-- ══════════════ FORMULARIO ══════════════ -->
   <div id="s-form" class="screen active">
 
-    <div class="sect">
+    <div class="sect" id="sect-tipo-doc" hidden>
       <h2>1 · Documento</h2>
       <div class="tipo-doc-col">
         <label class="tipo-doc-opt"><input type="radio" name="tipoDoc" value="completa" checked><span><strong>Guía completa</strong><br><small>4 sesiones + evaluación en hojas aparte</small></span></label>
@@ -545,7 +548,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       </div>
     </div>
 
-    <div class="sect">
+    <div class="sect" data-solo="completa taller">
       <h2>3 · Trabajo práctico</h2>
       <div class="field-row">
         <div class="field" style="max-width:220px">
@@ -575,7 +578,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <p class="sect-hint">El total se reparte en ronda entre los tipos marcados (uno de cada hasta completarlo), respetando cuántos hay disponibles de cada uno.</p>
     </div>
 
-    <div class="sect">
+    <div class="sect" data-solo="completa evaluacion">
       <h2>4 · Evaluación</h2>
       <div class="field-row">
         <div class="field"><label for="f-saber">Preguntas tipo Saber 11</label><input type="text" inputmode="numeric" id="f-saber" value="6"></div>
@@ -591,7 +594,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div class="field-row">
         <div class="field"><label for="f-versiones">Número de versiones</label><input type="text" inputmode="numeric" id="f-versiones" value="1"></div>
       </div>
-      <p class="sect-hint">Guía completa: las sesiones de estudio salen una sola vez y la evaluación (hojas aparte) sale en esa cantidad de versiones, cada una con distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
+      <p class="sect-hint" data-solo="completa">Guía completa: las sesiones de estudio salen una sola vez y la evaluación (hojas aparte) sale en esa cantidad de versiones, cada una con distinto orden de preguntas y de opciones, marcada «Versión X de N».</p>
       <div class="field-row">
         <div class="field"><label for="f-variante">Código de variante</label><input type="text" id="f-variante" value="v1"></div>
       </div>
@@ -895,14 +898,45 @@ document.getElementById('theme-btn').addEventListener('click',function(){
   window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.addEventListener('DOMContentLoaded',apply);
 })();
-// Pestañas Guías | Laberintos (se recuerda la última; #laberintos abre directo esa)
+// Pestañas Guías | Talleres | Evaluaciones | Laberintos | Crucigramas (se
+// recuerda la última; #talleres, #laberintos, etc. abren directo esa).
+// Guías, Talleres y Evaluaciones comparten el mismo formulario (#tab-guias):
+// cada pestaña fija el tipoDoc (radio oculto) y muestra solo las secciones
+// que aplican a ese tipo (data-solo), renumerando los títulos visibles.
 (function(){
   var btns = document.querySelectorAll('.doc-tab');
+  var IDS = Array.prototype.map.call(btns, function(b){ return b.dataset.tab; });
+  var form = document.getElementById('s-form');
+  var tipoActual = null;
+  function aplicarTipo(tipo){
+    var radio = document.querySelector('input[name="tipoDoc"][value="' + tipo + '"]');
+    if(radio) radio.checked = true;
+    form.querySelectorAll('[data-solo]').forEach(function(el){
+      el.hidden = el.dataset.solo.split(' ').indexOf(tipo) < 0;
+    });
+    var n = 0;
+    form.querySelectorAll(':scope > .sect').forEach(function(sec){
+      var h = sec.querySelector('h2');
+      if(sec.hidden || !h) return;
+      h.textContent = h.textContent.replace(/^\d+ · /, (++n) + ' · ');
+    });
+    // si había una vista previa de otro tipo, volver al formulario
+    if(tipoActual && tipoActual !== tipo && window.DOCENTE) DOCENTE.volverForm();
+    tipoActual = tipo;
+  }
   function mostrar(id){
+    var panel = null;
     btns.forEach(function(b){
       var on = b.dataset.tab === id;
       b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
-      document.getElementById('tab-' + b.dataset.tab).classList.toggle('active', on);
+      if(on){
+        panel = b.dataset.panel || b.dataset.tab;
+        document.getElementById('tab-' + panel).setAttribute('aria-labelledby', b.id);
+        if(b.dataset.tipo) aplicarTipo(b.dataset.tipo);
+      }
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p){
+      p.classList.toggle('active', p.id === 'tab-' + panel);
     });
     try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
     if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
@@ -918,9 +952,9 @@ document.getElementById('theme-btn').addEventListener('click',function(){
       mostrar(btns[j].dataset.tab); btns[j].focus();
     });
   });
-  var ini = location.hash === '#laberintos' ? 'laberintos' : location.hash === '#crucigramas' ? 'crucigramas' : null;
-  if(!ini){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
-  if(ini === 'laberintos' || ini === 'crucigramas') mostrar(ini);
+  var ini = location.hash.slice(1);
+  if(IDS.indexOf(ini) < 0){ try{ ini = localStorage.getItem('ionom-docente-tab'); }catch(e){} }
+  mostrar(IDS.indexOf(ini) >= 0 ? ini : 'guias');
 })();
 document.querySelectorAll('.chk-tema').forEach(function(c){
   c.addEventListener('change', function(){ if(window.DOCENTE) DOCENTE.actualizarDisponibilidad(); });
