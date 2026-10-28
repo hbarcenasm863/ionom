@@ -749,13 +749,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
       <div class="field-row">
         <div class="field"><label for="lab-size">Tamaño</label>
           <select id="lab-size"><option value="3x3">3×3 · 8 casillas</option><option value="4x3" selected>4×3 · 11 casillas</option><option value="4x4">4×4 · 15 casillas</option></select></div>
+        <div class="field"><label for="lab-paradas">Ejercicios hasta FIN</label><select id="lab-paradas"></select></div>
         <div class="field"><label for="lab-title">Título</label><input type="text" id="lab-title" maxlength="40"></div>
       </div>
       <div class="field-row">
         <div class="field"><label for="lab-nver">Versiones paralelas (1 a 40)</label><input type="number" inputmode="numeric" id="lab-nver" value="4" min="1" max="40" step="1"></div>
         <div class="field"><label for="lab-vsel">Versión en pantalla</label><select id="lab-vsel"></select></div>
       </div>
-      <p class="sect-hint">Cada versión tiene ejercicios y ruta distintos, para evitar copia entre puestos vecinos.</p>
+      <p class="sect-hint">Cada versión tiene ejercicios y ruta distintos, para evitar copia entre puestos vecinos. «Ejercicios hasta FIN» son las casillas que el estudiante resuelve en la ruta correcta; el resto son casillas trampa. El rango depende del tamaño: la ruta solo avanza hacia la derecha, hacia abajo o en diagonal.</p>
       <details class="lab-adv">
         <summary>Volver a generar hojas de otro día</summary>
         <p class="sect-hint">Cada laberinto se arma al azar con todo el banco. Si necesitas reimprimir unas hojas anteriores (o su clave), escribe aquí el código que aparece en su hoja de clave.</p>

@@ -4,6 +4,14 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (12) — Laberintos: elegir cuántos ejercicios hay hasta FIN
+
+- Nuevo selector **«Ejercicios hasta FIN»** junto al tamaño: el docente elige cuántas casillas resuelve el estudiante en la ruta correcta antes de llegar a FIN; las demás quedan como casillas trampa. «Automático» mantiene lo de antes (rutas largas).
+- El rango depende del tamaño, porque la ruta solo avanza hacia la derecha, hacia abajo o en diagonal: 3×3 → de 2 a 4 ejercicios; 4×3 → de 3 a 5; 4×4 → de 3 a 6.
+- El aviso de verificación ahora dice «✔ Ruta única verificada · N ejercicios hasta FIN».
+
+---
+
 ## 28 de octubre (11) — Preguntas abiertas del Generador Docente
 
 - **20 preguntas abiertas por tema** (antes 3, o 6 en Átomo, Configuración electrónica y Enlace): 360 en total en los 18 temas, repartidas entre las de ecuación, nomenclatura e identificación de partes o cálculo. Ya se pueden pedir, por ejemplo, 10 abiertas de Balanceo + Masa molar, o 20 de un solo tema, sin que salgan menos de las pedidas ni repetidas.

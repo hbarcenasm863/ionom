@@ -854,7 +854,10 @@ function intentar(cfg, seed){
   const paths = [];
   (function dfs(u, p){ if(u === fin){ paths.push(p.slice()); return; } for(const e of out[u]){ p.push(e.to); dfs(e.to, p); p.pop(); } })(0, [0]);
   const maxE = (R-1) + (C-1);
-  let cand = paths.filter(p => p.length-1 >= maxE-1); if(!cand.length) cand = paths;
+  // cfg.paradas: ejercicios exactos en la ruta (casillas antes de FIN);
+  // 0 = automático (rutas largas, para que haya que resolver casi todo).
+  let cand = cfg.paradas ? paths.filter(p => p.length-1 === cfg.paradas) : paths.filter(p => p.length-1 >= maxE-1);
+  if(!cand.length) cand = paths;
   const path = pick(cand, r), onPath = new Set(path);
 
   let gen, grupos;
@@ -1092,7 +1095,8 @@ function getCfg(){
   const [C, R] = $('#lab-size').value.split('x').map(Number);
   const c = {mode, R, C, title: $('#lab-title').value.trim() || DEF[mode], seed: $('#lab-seed').value.trim().replace(/-\d+$/, '') || 'ionom',
     nver: Math.max(1, Math.min(MAX_VERSIONES, parseInt($('#lab-nver').value, 10) || 1)),
-    hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value};
+    hints: $('#lab-hints').checked, color: $('#lab-color').checked, nivel: $('#lab-nivel').value,
+    paradas: parseInt($('#lab-paradas').value, 10) || 0};
   if(mode === 'mol'){ c.types = $$('#lab-fs-mol input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de ejercicio.'; }
   if(mode === 'atomo'){ c.types = $$('#lab-fs-atomo input:checked').map(x => x.value); if(!c.types.length) c.vacio = 'Marca al menos un tipo de pregunta.'; }
   if(mode === 'nom'){
@@ -1104,6 +1108,18 @@ function getCfg(){
   }
   if(mode !== 'nom') c.color = false;
   return c;
+}
+
+// Rango de ejercicios en la ruta según el tamaño: con pasos a la derecha,
+// abajo o en diagonal, de A a FIN hay entre max(C,R)−1 y (C−1)+(R−1).
+function rangoParadas(C, R){ return [Math.max(C, R) - 1, (C - 1) + (R - 1)]; }
+function llenarParadas(){
+  const sel = $('#lab-paradas'), prev = sel.value;
+  const [C, R] = $('#lab-size').value.split('x').map(Number), [a, b] = rangoParadas(C, R);
+  let h = '<option value="0">Automático (' + (b - 1) + ' o ' + b + ')</option>';
+  for(let k = a; k <= b; k++) h += '<option value="' + k + '">' + k + ' ejercicios</option>';
+  sel.innerHTML = h;
+  sel.value = (+prev >= a && +prev <= b) ? prev : '0';
 }
 
 function contarFamilias(){
@@ -1135,7 +1151,7 @@ function render(){
   const w = document.createElement('div'); w.className = 'lab-scaled'; w.appendChild(sh.el); stage.appendChild(w);
   ajustar();
   const v = $('#lab-verif');
-  if(mz.verif && mz.verif.ok){ v.className = 'lab-verif ok'; v.textContent = '✔ Ruta única verificada · ' + mz.path.length + ' casillas en la ruta · ' + mz.verif.checks + ' salidas revisadas'; }
+  if(mz.verif && mz.verif.ok){ v.className = 'lab-verif ok'; v.textContent = '✔ Ruta única verificada · ' + (mz.path.length - 1) + ' ejercicios hasta FIN · ' + mz.verif.checks + ' salidas revisadas'; }
   else { v.className = 'lab-verif bad'; v.textContent = '⚠️ ' + ((mz.verif && mz.verif.errores[0]) || 'No se pudo verificar'); }
   if(vista === 'key') $('#lab-keybox').innerHTML = '<p class="lab-ruta"><b>Ruta correcta:</b> ' + textoRuta(mz) + ' &nbsp;·&nbsp; <span style="color:var(--dimmer)">código para volver a generar estas hojas: <b>' + esc(c.seed) + '</b></span></p>' + tablaClave(mz);
   $('#lab-routebox').style.display = vista === 'play' ? 'none' : '';
@@ -1413,9 +1429,10 @@ function cambiarModo(){
 function init(){
   if(!$('#lab-app')) return;
   $('#lab-seed').value = rndSeed();
-  llenarVersiones(); cambiarModo(); contarFamilias();
+  llenarVersiones(); llenarParadas(); cambiarModo(); contarFamilias();
   $$('input[name="lab-mode"]').forEach(x => x.addEventListener('change', () => { cambiarModo(); render(); }));
-  ['#lab-size','#lab-sys','#lab-hints','#lab-color','#lab-vsel','#lab-nivel'].forEach(s => $(s).addEventListener('change', render));
+  $('#lab-size').addEventListener('change', llenarParadas);
+  ['#lab-size','#lab-paradas','#lab-sys','#lab-hints','#lab-color','#lab-vsel','#lab-nivel'].forEach(s => $(s).addEventListener('change', render));
   let tmr = null;
   ['#lab-title','#lab-seed'].forEach(s => $(s).addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(render, 250); }));
   $$('#lab-fs-mol input, #lab-fs-forma input, #lab-fs-fam input, #lab-fs-atomo input').forEach(x => x.addEventListener('change', render));
