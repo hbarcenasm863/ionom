@@ -108,7 +108,7 @@ Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos
 
 ## 7. Service worker
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v51` (`laberinto.js` y `crucigrama.js`).
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
 ## 8. Ideas pendientes (propuestas de diseño)

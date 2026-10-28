@@ -18,7 +18,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
   - «Configuración → elemento»: por ejemplo, «[Ne] 3s² 3p⁴» → AZUFRE.
 
   Si solo se marcan pistas del átomo, no hace falta elegir familias de compuestos y el título cambia a «Crucigrama del átomo». Se probaron 60 crucigramas y todos quedaron verificados.
-- `sw.js` pasó a `ionom-v51`.
+- `sw.js` pasó a `ionom-v52`.
 
 ## 28 de octubre (3) — Temas del átomo en el Generador Docente
 
