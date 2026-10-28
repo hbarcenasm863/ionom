@@ -6,7 +6,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 
 | Archivo | Módulo | Descripción |
 |---------|--------|-------------|
-| `index.html` | Portada | Menú en forma de átomo: el núcleo es el progreso, las capas n = 1–4 son los niveles temáticos y los electrones son los módulos |
+| `index.html` | Portada | Química general de 10° y 11°: los 4 niveles, el menú en forma de átomo (el núcleo es el progreso, las capas n = 1–4 son los niveles y los electrones son los módulos), los módulos agrupados por nivel y el código de 4 colores de nomenclatura |
 | `atomo.html` | Teoría Atómica | Línea del tiempo de los modelos atómicos, simuladores de Thomson, Rutherford y Bohr, constructor de átomos e iones y simulaciones PhET incrustadas |
 | `configuracion.html` | Configuración Electrónica | Aufbau, Pauli y Hund, diagrama de Moeller, configurador de los 118 elementos e iones, práctica de llenar orbitales y repaso generado |
 | `enlace.html` | Enlace Químico | Iónico, covalente y metálico: símbolos y estructuras de Lewis paso a paso, calculadora y reto de ΔEN, 4 simuladores y laboratorio virtual |

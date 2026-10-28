@@ -5,8 +5,8 @@
    Compartido por las 14 páginas vía <script src="assets/ionom-ui.js">:
      - arriba (≤640px): solo el logo (el menú hamburguesa de escritorio
        queda oculto -- la barra de abajo lo reemplaza);
-     - abajo: barra fija con ícono + texto (Inicio, Principios, Funciones,
-       Juego, Tabla). "Más" abre una hoja con el resto de los módulos, el
+     - abajo: barra fija con ícono + texto (Inicio, Átomo, Principios,
+       Juego, Tabla): una entrada por nivel más el Juego, que abarca todos. "Más" abre una hoja con el resto de los módulos, el
        tema claro/oscuro y el control de tamaño de letra (que así deja de
        competir por espacio en la barra superior).
    En PC no cambia nada -- el menú hamburguesa de siempre sigue ahí.
@@ -43,15 +43,15 @@
   };
   var ITEMS=[
     {href:'index.html',ico:ICO.inicio,txt:'Inicio'},
+    {href:'atomo.html',ico:ICO.atomo,txt:'Átomo'},
     {href:'teoria.html',ico:ICO.principios,txt:'Principios'},
-    {href:'funciones.html',ico:ICO.funciones,txt:'Funciones'},
     {href:'juego.html',ico:ICO.juego,txt:'Juego'},
     {href:'tabla.html',ico:ICO.tabla,txt:'Tabla'}
   ];
   var MAS=[
-    {href:'atomo.html',ico:ICO.atomo,txt:'Teoría Atómica'},
     {href:'configuracion.html',ico:ICO.configuracion,txt:'Configuración Electrónica'},
     {href:'enlace.html',ico:ICO.enlace,txt:'Enlace Químico'},
+    {href:'funciones.html',ico:ICO.funciones,txt:'Funciones Inorgánicas'},
     {href:'guia.html',ico:ICO.guia,txt:'Guía descargable'},
     {href:'reacciones.html',ico:ICO.reaccion,txt:'Tipos de Reacción'},
     {href:'balanceo.html',ico:ICO.balanceo,txt:'Balanceo'},

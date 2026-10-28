@@ -89,14 +89,24 @@ Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puent
 
 ## 4. Menú átomo (`index.html`)
 
-- **Núcleo**: progreso «X/13» sobre la ruta recomendada. Al tocarlo aparece el avance por nivel y el botón «Siguiente parada».
+- **Núcleo**: progreso «X/12» sobre la ruta recomendada. Al tocarlo aparece el avance por nivel y el botón «Siguiente parada».
 - **Capas** (cada una con su *pregunta guía*):
   - n = 1 El átomo (Teoría Atómica, Configuración, Tabla, Enlace Químico)
-  - n = 2 Nomenclatura (Principios, Funciones, Juego, NomenClash y la Guía como opcional)
+  - n = 2 Nomenclatura (Principios, Funciones, NomenClash y la Guía como opcional)
   - n = 3 Reacciones (Tipos, Balanceo y el Simulador como opcional)
   - n = 4 Cálculos y redox (Mol, Estequiometría, Balanceo avanzado)
 - **Electrones**: giran despacio, se detienen al poner el dedo encima y respetan «reducir movimiento». Tocar uno abre el panel del nivel; el átomo nunca navega solo.
-- La lista de tarjetas sigue debajo («Ver como lista ↓»).
+- **El Juego no es una estación**, porque tiene preguntas de todos los niveles. Tiene un acceso «🎮 Juego» junto al átomo, y cada panel de nivel termina con «🎮 Practica este nivel en el Juego». Esos enlaces van a `juego.html?g=<grupo>` (por ejemplo `?g=enlace`), que resalta el tema en la portada del Juego sin arrancar la partida, porque en Modo Estudiante primero hay que validar el código.
+- La lista de tarjetas sigue debajo («Ver como lista ↓»), agrupada por nivel (n = 1–4 y «Practica y enseña»), con el número de parada en cada tarjeta.
+
+### Portada (reestructurada)
+IonNom ya no es solo nomenclatura, así que la portada presenta toda la química del sitio:
+1. **Hero**: «Química general · Grados 10° y 11°». Muestra los 4 niveles como tarjetas: cada una abre su capa en el menú átomo. El botón principal cambia según el progreso: «Empezar por Teoría Atómica», «⭐ Siguiente parada: …» o «🏁 Repasar el átomo». También tiene el botón «🎮 Jugar».
+2. **Menú átomo**: la navegación principal.
+3. **Todos los módulos, por nivel**.
+4. **Nivel 2 · Nomenclatura: el código de 4 colores**. Reúne el ejemplo Fe₂(SO₄)₃, las 4 partes, la lectura de un nombre y los compuestos cotidianos, que antes estaban en el hero y en la parte de arriba.
+
+El modal de bienvenida, la narración, el título, la descripción y `manifest.json` hablan ahora de química general. La barra inferior del celular (`assets/ionom-ui.js`) quedó así: Inicio, Átomo, Principios, Juego y Tabla. Funciones pasó a «Más».
 
 **Agregar una página nueva al menú**: añadir una entrada en el arreglo `ST` del script «Menú átomo» de `index.html`. Por ejemplo: `{id:'pagina.html', r:4, n:2, e:'🧪', t:'Título', d:'Descripción'}`. `r` es la parada en la ruta (`null` = opcional) y `n` es la capa. Luego hay que renumerar las `r` siguientes. Además hay que agregar el enlace al menú lateral de todas las páginas, a `MAS` en `assets/ionom-ui.js` y a `ASSETS_TO_CACHE` en `sw.js`, y subir `CACHE_NAME`.
 
@@ -155,7 +165,7 @@ Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos
 
 ## 7. Service worker
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`) → `v53` (`enlace.html` e `ionom-ui.js`) → `v54` (simulaciones nuevas de `enlace.html`) → `v55` (`BANCO_ENLACE` en `banco.js` y el tema de enlace en `docente-datos.js` y `docente-app.js`).
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`) → `v53` (`enlace.html` e `ionom-ui.js`) → `v54` (simulaciones nuevas de `enlace.html`) → `v55` (`BANCO_ENLACE` en `banco.js` y el tema de enlace en `docente-datos.js` y `docente-app.js`) → `v56` (portada reestructurada, `manifest.json` e `ionom-ui.js`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
 ## 8. Ideas pendientes (propuestas de diseño)

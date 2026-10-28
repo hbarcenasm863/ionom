@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (8) — Portada para toda la química y menú átomo actualizado
+
+IonNom ya no es solo nomenclatura, así que la portada se reorganizó:
+- **Hero nuevo**: «Del átomo a la reacción, paso a paso». Muestra los 4 niveles como tarjetas que abren su capa del átomo. El botón principal dice la siguiente parada del estudiante, y hay un acceso directo al Juego.
+- **El menú átomo sube** justo debajo del hero. Es la navegación principal.
+- **El Juego ya no es una estación de nomenclatura**: tiene preguntas de todos los niveles. Queda junto al átomo («🎮 Juego»), y cada nivel tiene «🎮 Practica este nivel en el Juego» con sus temas. Por ejemplo, el nivel 1 enlaza a teoría atómica, tabla periódica y enlace químico, y cada enlace resalta ese tema en el Juego. La ruta quedó de 12 paradas.
+- **Módulos agrupados por nivel** (n = 1 a n = 4, y «Practica y enseña»), con el número de parada.
+- **El código de 4 colores** pasó a su propia sección del nivel 2, con el ejemplo Fe₂(SO₄)₃, las 4 partes, la lectura de un nombre y los compuestos cotidianos.
+- El modal de bienvenida, la narración, el título de la página, la descripción y `manifest.json` hablan de química general.
+- Barra inferior del celular: Inicio, Átomo, Principios, Juego y Tabla.
+- Juego: «¿Cómo jugar?» y la portada del Juego ya no dicen «elige un grupo funcional», sino «elige un tema».
+- `sw.js` pasó a `ionom-v56`.
+
 ## 28 de octubre (7) — Enlace químico en el Juego y en el Generador Docente
 
 - **Juego: tema nuevo «Enlace químico»** (🧲), en Modo Libre y en Modo Estudiante. Tiene 47 preguntas con explicación sobre octeto y Lewis, enlace iónico, covalente, electronegatividad y polaridad, enlace metálico y propiedades. Cada partida toma 20 sin repetir, y cada pregunta muestra su subtema.
