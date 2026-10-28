@@ -239,6 +239,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 
 /* ── GRID DE TEMAS ── */
 .group-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.niv-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--c)}
+.niv-head .nh-n{font-family:var(--mono);font-size:.68rem;font-weight:800;color:#fff;background:var(--c);padding:2px 8px;border-radius:100px}
+.niv-head .nh-t{font-weight:800;font-size:.95rem;color:var(--tx)}
+.niv-head .nh-d{font-size:.72rem;color:var(--tx2);flex-basis:100%}
+.group-btn{position:relative}
+.gb-step{position:absolute;top:6px;left:8px;font-family:var(--mono);font-size:.62rem;font-weight:800;color:var(--dimmer)}
+.group-btn.repaso{border-style:dashed}
 @media(max-width:580px){.group-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:360px){.group-grid{grid-template-columns:1fr}}
 
@@ -578,10 +585,10 @@ html{font-size:var(--base-fs)}
   <div class="p-hero">
     <div class="p-hero-orb">⚗️</div>
     <div class="p-title">Ion<em>Nom</em></div>
-    <div class="p-subtitle">Química Inorgánica · Modo Juego</div>
+    <div class="p-subtitle">Química · Modo Juego</div>
     <div class="p-stats">
       <div class="p-stat"><span>🎯</span> 20 preguntas</div>
-      <div class="p-stat"><span>📚</span> 14 temas</div>
+      <div class="p-stat"><span>📚</span> 15 temas</div>
       <div class="p-stat"><span>⏱</span> 60 s / pregunta</div>
       <div class="p-stat"><span>🏆</span> Certificado al final</div>
     </div>
@@ -648,114 +655,139 @@ html{font-size:var(--base-fs)}
       </select>
     </div>
 
-    <!-- Grid de temas -->
-    <div class="p-section-lbl" style="margin-top:18px">Elige un tema</div>
+    <div class="p-section-lbl" style="margin-top:18px">Elige un tema · ordenados de menor a mayor complejidad</div>
+    <!-- Temas del Juego en secuencia de complejidad: los mismos 4 niveles del
+         menú átomo de la portada (n = 1 → 4) y, dentro de cada nivel, del tema
+         más sencillo al más complejo. El número de cada tema es su orden. -->
+    <div class="niv-head" style="--c:#0d9488"><span class="nh-n">n = 1</span><span class="nh-t">⚛️ El átomo</span><span class="nh-d">Empieza aquí: de qué está hecha la materia y por qué se une.</span></div>
     <div class="group-grid">
 
-      <button class="group-btn full" onclick="pickGroup('all')">
-        <div class="gb-icon-wrap gic-all">🔬</div>
-        <div class="gb-txt">
-          <span class="gb-name">Todos los grupos</span>
-          <span class="gb-sub">Mezcla de los grupos de nomenclatura · ideal para repaso general</span>
-        </div>
+      <button class="group-btn" onclick="pickGroup('atomo')">
+        <span class="gb-step">1</span>
+        <div class="gb-icon-wrap gic-elem">🪐</div>
+        <span class="gb-name">Teoría atómica y configuración</span>
+        <span class="gb-sub">Modelos, isótopos, iones y configuración</span>
       </button>
 
+      <button class="group-btn" onclick="pickGroup('elemento')">
+        <span class="gb-step">2</span>
+        <div class="gb-icon-wrap gic-elem">⚛️</div>
+        <span class="gb-name">Tabla periódica</span>
+        <span class="gb-sub">Símbolos, grupos y configuración</span>
+      </button>
+
+      <button class="group-btn" onclick="pickGroup('enlace')">
+        <span class="gb-step">3</span>
+        <div class="gb-icon-wrap gic-elem">🧲</div>
+        <span class="gb-name">Enlace químico</span>
+        <span class="gb-sub">Lewis, ΔEN, iónico, covalente y metálico</span>
+      </button>
+
+    </div>
+
+    <div class="niv-head" style="--c:#0072B2"><span class="nh-n">n = 2</span><span class="nh-t">🏷️ Nomenclatura</span><span class="nh-d">De los compuestos binarios a los cuaternarios.</span></div>
+    <div class="group-grid">
+
       <button class="group-btn" onclick="pickGroup('ox-anh')">
+        <span class="gb-step">4</span>
         <div class="gb-icon-wrap gic-ox">💨</div>
         <span class="gb-name">Óxidos y Anhídridos</span>
-        <span class="gb-sub">Básicos + ácidos</span>
+        <span class="gb-sub">Binarios · básicos + ácidos</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('hidru')">
+        <span class="gb-step">5</span>
         <div class="gb-icon-wrap gic-hid">⚗️</div>
         <span class="gb-name">Hidruros</span>
-        <span class="gb-sub">Metal + H⁻</span>
+        <span class="gb-sub">Binarios · metal + H⁻</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('ac-hid')">
+        <span class="gb-step">6</span>
         <div class="gb-icon-wrap gic-ahid">🧪</div>
         <span class="gb-name">Ácidos hídricos</span>
-        <span class="gb-sub">Sin oxígeno</span>
-      </button>
-
-      <button class="group-btn" onclick="pickGroup('base')">
-        <div class="gb-icon-wrap gic-base">🟣</div>
-        <span class="gb-name">Bases</span>
-        <span class="gb-sub">Hidróxidos</span>
-      </button>
-
-      <button class="group-btn" onclick="pickGroup('ac-ox')">
-        <div class="gb-icon-wrap gic-aox">⚡</div>
-        <span class="gb-name">Ácidos oxácidos</span>
-        <span class="gb-sub">Con oxoanión</span>
+        <span class="gb-sub">Binarios · HX sin oxígeno</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-bin')">
+        <span class="gb-step">7</span>
         <div class="gb-icon-wrap gic-sbin">🔵</div>
         <span class="gb-name">Sales binarias</span>
-        <span class="gb-sub">Metal + halógeno</span>
+        <span class="gb-sub">Binarios · metal + no metal</span>
+      </button>
+
+      <button class="group-btn" onclick="pickGroup('base')">
+        <span class="gb-step">8</span>
+        <div class="gb-icon-wrap gic-base">🟣</div>
+        <span class="gb-name">Bases</span>
+        <span class="gb-sub">Ternarios · metal + OH⁻</span>
+      </button>
+
+      <button class="group-btn" onclick="pickGroup('ac-ox')">
+        <span class="gb-step">9</span>
+        <div class="gb-icon-wrap gic-aox">⚡</div>
+        <span class="gb-name">Ácidos oxácidos</span>
+        <span class="gb-sub">Ternarios · H + oxoanión</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-ox')">
+        <span class="gb-step">10</span>
         <div class="gb-icon-wrap gic-sox">🟠</div>
         <span class="gb-name">Sales oxigenadas</span>
-        <span class="gb-sub">Con oxoanión</span>
+        <span class="gb-sub">Ternarios · metal + oxoanión</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-ac')">
+        <span class="gb-step">11</span>
         <div class="gb-icon-wrap gic-sac">🧪</div>
         <span class="gb-name">Sales ácidas</span>
-        <span class="gb-sub">bi-, hidrogeno-</span>
+        <span class="gb-sub">Cuaternarios · bi-, hidrogeno-</span>
       </button>
 
+      <button class="group-btn full repaso" onclick="pickGroup('all')">
+        <div class="gb-icon-wrap gic-all">🔬</div>
+        <div class="gb-txt">
+          <span class="gb-name">Repaso: todos los grupos</span>
+          <span class="gb-sub">Mezcla de los 8 grupos, con algunas preguntas de tabla periódica y cadena de reactividad · para cuando ya los practicaste por separado</span>
+        </div>
+      </button>
+
+    </div>
+
+    <div class="niv-head" style="--c:#b45309"><span class="nh-n">n = 3</span><span class="nh-t">⚗️ Reacciones</span><span class="nh-d">Qué cambia cuando las sustancias reaccionan.</span></div>
+    <div class="group-grid">
+
       <button class="group-btn" onclick="pickGroup('reaccion')">
+        <span class="gb-step">12</span>
         <div class="gb-icon-wrap gic-rx">🔁</div>
         <span class="gb-name">Tipos de reacción</span>
         <span class="gb-sub">Síntesis, combustión…</span>
       </button>
 
-      <button class="group-btn" onclick="pickGroup('balanceo')">
-        <div class="gb-icon-wrap gic-bal">⚖️</div>
-        <span class="gb-name">Balanceo</span>
-        <span class="gb-sub">Coeficientes</span>
+      <button class="group-btn" onclick="pickGroup('reactividad')">
+        <span class="gb-step">13</span>
+        <div class="gb-icon-wrap gic-reac">🔗</div>
+        <span class="gb-name">Cadena de reactividad</span>
+        <span class="gb-sub">Óxido → base → sal</span>
       </button>
 
+      <button class="group-btn" onclick="pickGroup('balanceo')">
+        <span class="gb-step">14</span>
+        <div class="gb-icon-wrap gic-bal">⚖️</div>
+        <span class="gb-name">Balanceo</span>
+        <span class="gb-sub">Coeficientes por tanteo</span>
+      </button>
+
+    </div>
+
+    <div class="niv-head" style="--c:#7c3aed"><span class="nh-n">n = 4</span><span class="nh-t">🧮 Cálculos</span><span class="nh-d">Cuánto hay y cuánto se produce.</span></div>
+    <div class="group-grid">
+
       <button class="group-btn" onclick="pickGroup('mol-masa')">
+        <span class="gb-step">15</span>
         <div class="gb-icon-wrap gic-mol">🔢</div>
         <span class="gb-name">Mol y masa molar</span>
         <span class="gb-sub">n = m / M</span>
-      </button>
-
-      <button class="group-btn full" onclick="pickGroup('atomo')">
-        <div class="gb-icon-wrap gic-elem">🪐</div>
-        <div class="gb-txt">
-          <span class="gb-name">Teoría atómica y configuración</span>
-          <span class="gb-sub">Modelos atómicos, isótopos, iones, Moeller, Hund y Pauli</span>
-        </div>
-      </button>
-
-      <button class="group-btn full" onclick="pickGroup('elemento')">
-        <div class="gb-icon-wrap gic-elem">⚛️</div>
-        <div class="gb-txt">
-          <span class="gb-name">Tabla periódica</span>
-          <span class="gb-sub">Símbolos, nombres, configuración electrónica</span>
-        </div>
-      </button>
-
-      <button class="group-btn full" onclick="pickGroup('enlace')">
-        <div class="gb-icon-wrap gic-elem">🧲</div>
-        <div class="gb-txt">
-          <span class="gb-name">Enlace químico</span>
-          <span class="gb-sub">Octeto, Lewis, iónico, covalente, polaridad (ΔEN) y metálico</span>
-        </div>
-      </button>
-
-      <button class="group-btn full" onclick="pickGroup('reactividad')">
-        <div class="gb-icon-wrap gic-reac">🔗</div>
-        <div class="gb-txt">
-          <span class="gb-name">Cadena de reactividad</span>
-          <span class="gb-sub">Óxido → Base → Sal · recorre la cadena completa</span>
-        </div>
       </button>
 
     </div><!-- /group-grid -->

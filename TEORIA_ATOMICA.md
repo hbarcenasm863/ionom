@@ -99,6 +99,15 @@ Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puent
 - **El Juego no es una estación**, porque tiene preguntas de todos los niveles. Tiene un acceso «🎮 Juego» junto al átomo, y cada panel de nivel termina con «🎮 Practica este nivel en el Juego». Esos enlaces van a `juego.html?g=<grupo>` (por ejemplo `?g=enlace`), que resalta el tema en la portada del Juego sin arrancar la partida, porque en Modo Estudiante primero hay que validar el código.
 - La lista de tarjetas sigue debajo («Ver como lista ↓»), agrupada por nivel (n = 1–4 y «Practica y enseña»), con el número de parada en cada tarjeta.
 
+### Juego en secuencia de complejidad
+La portada de `juego.html` agrupa los 15 temas en los mismos 4 niveles (`.niv-head`) y los numera del más sencillo al más complejo (`.gb-step`):
+- **n = 1**: átomo → tabla → enlace.
+- **n = 2**: binarios → ternarios → cuaternarios, con «Repaso: todos los grupos» al final.
+- **n = 3**: reacción → reactividad → balanceo.
+- **n = 4**: mol.
+
+**Para agregar un tema**, se pone su botón en el nivel que le corresponde y se renumeran los `gb-step`.
+
 ### Portada (reestructurada)
 IonNom ya no es solo nomenclatura, así que la portada presenta toda la química del sitio:
 1. **Hero**: «Química general · Grados 10° y 11°». Muestra los 4 niveles como tarjetas: cada una abre su capa en el menú átomo. El botón principal cambia según el progreso: «Empezar por Teoría Atómica», «⭐ Siguiente parada: …» o «🏁 Repasar el átomo». También tiene el botón «🎮 Jugar».

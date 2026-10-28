@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (9) — Juego: temas en secuencia de complejidad
+
+- La portada del Juego muestra los 15 temas agrupados en los mismos 4 niveles del menú átomo y numerados del más sencillo al más complejo:
+  - **n = 1 El átomo**: teoría atómica → tabla periódica → enlace químico.
+  - **n = 2 Nomenclatura**: primero los binarios (óxidos, hidruros, ácidos hídricos, sales binarias), luego los ternarios (bases, oxácidos, sales oxigenadas) y al final los cuaternarios (sales ácidas). «Todos los grupos» pasó al final como **Repaso**.
+  - **n = 3 Reacciones**: tipos de reacción → cadena de reactividad → balanceo.
+  - **n = 4 Cálculos**: mol y masa molar.
+- El encabezado del Juego dice «Química · Modo Juego» y «15 temas».
+- Los accesos «Practica este nivel» de la portada siguen el mismo orden.
+
 ## 28 de octubre (8) — Portada para toda la química y menú átomo actualizado
 
 IonNom ya no es solo nomenclatura, así que la portada se reorganizó:
