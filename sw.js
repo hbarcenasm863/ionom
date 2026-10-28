@@ -1,7 +1,8 @@
-const CACHE_NAME = 'ionom-v47';
+const CACHE_NAME = 'ionom-v48';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
+  '/ionom/atomo.html',
   '/ionom/teoria.html',
   '/ionom/funciones.html',
   '/ionom/juego.html',

@@ -6,7 +6,8 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 
 | Archivo | Módulo | Descripción |
 |---------|--------|-------------|
-| `index.html` | Portada | Menú de entrada al proyecto |
+| `index.html` | Portada | Mapa interactivo (táctil) de todos los módulos por regiones, con ruta recomendada y estaciones visitadas |
+| `atomo.html` | Teoría Atómica | Línea del tiempo de los modelos atómicos, simuladores de Thomson, Rutherford y Bohr, constructor de átomos e iones y simulaciones PhET incrustadas |
 | `teoria.html` | Teoría | Referencia de reglas de nomenclatura (8 secciones con navegación de tarjetas) |
 | `funciones.html` | Funciones | Ejercicios interactivos por función inorgánica con ejemplos en contexto colombiano |
 | `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) |

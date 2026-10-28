@@ -4,6 +4,26 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre — Teoría Atómica y mapa interactivo en la portada
+
+- **Nueva página `atomo.html` — 🪐 Teoría Atómica**, con 5 pestañas:
+  - **🕰️ Historia**: línea del tiempo deslizable (Demócrito, Dalton, Thomson, Rutherford, Bohr y modelo cuántico). Cada modelo explica qué propuso, en qué evidencia se apoyó y qué no podía explicar. Desde Thomson, Rutherford y Bohr hay un botón directo a su experimento.
+  - **🧪 Experimentos**: tres simuladores propios que funcionan sin conexión.
+    - *Rayos catódicos (Thomson)*: voltaje de las placas, campo del imán, voltaje de aceleración y metal del cátodo. El haz se calcula con la física real (e/m = 1,76 × 10¹¹ C/kg). Incluye el reto de equilibrar el haz para medir v = E/B. Cambiar el metal no cambia nada, porque los electrones son iguales en todos los átomos.
+    - *Lámina de oro (Rutherford)*: el estudiante elige el modelo de átomo (budín de Thomson o núcleo de Rutherford) y dispara partículas alfa. En los dos modelos la carga es la misma; solo cambia cómo está repartida. Con Thomson ninguna partícula rebota y con el núcleo algunas sí. Hay conteo por ángulo y un aviso de que el núcleo está dibujado mucho más grande que el real.
+    - *Espectro del hidrógeno (Bohr)*: se mueve el electrón entre los niveles n = 1 a 6 y se ve el fotón absorbido o emitido, con su longitud de onda calculada con la ecuación de Rydberg. Las líneas visibles (656, 486, 434 y 410 nm) aparecen en el espectro; las UV e IR se cuentan aparte. El «tubo de descarga» va armando el espectro solo.
+    - Cada experimento empieza con una **predicción** del estudiante antes de manipular.
+  - **🧱 Constructor de átomos**: protones, neutrones y electrones (Z = 1–20). Muestra el elemento, A, Z, la carga, si es catión o anión, si el núcleo es estable o radiactivo (isótopos estables reales) y la configuración electrónica. Trae 13 retos (Na⁺, ³⁵Cl⁻, O²⁻, carbono-14, partícula α…) con retroalimentación sobre qué partícula falla.
+  - **🌐 PhET**: se incrustan en la página tres simulaciones de la Universidad de Colorado en español: *Construir un átomo*, *Dispersión de Rutherford* e *Isótopos y masa atómica*. Se cargan solo al tocar «Cargar aquí», porque necesitan internet. También hay un botón de pantalla completa y se da el crédito de la licencia CC BY 4.0.
+  - **✅ Repaso**: 10 preguntas sobre modelos atómicos, isótopos e iones, con explicación.
+- **Portada: nuevo «Mapa de IonNom»** en lugar del recuadro «Ruta recomendada». Los módulos son estaciones dentro de 5 regiones (El átomo, Nomenclatura, Reacciones, Cálculos y redox, Sala docente), unidas por la ruta recomendada numerada (1 a 11) y algunos desvíos opcionales (Guía, Simulador).
+  - Se mueve arrastrando con el dedo, se acerca pellizcando o con los botones + / − / ⤢, y hay botones para saltar a cada región.
+  - Al tocar una estación se abre una ficha con el botón «Entrar», así que arrastrar el mapa nunca abre una página por accidente.
+  - Las estaciones ya visitadas se marcan con ✓ y la siguiente parada sugerida tiene un anillo dorado. El progreso aparece arriba («Has visitado X de 11»).
+  - La lista de tarjetas de módulos sigue debajo («Ver como lista ↓») e incluye la nueva tarjeta de Teoría Atómica.
+- `assets/ionom-ui.js` guarda en el navegador qué páginas visitó el estudiante (`ionom-visitas`, solo en su equipo y sin enviarse a ningún lado). También agrega «Teoría Atómica» a la hoja «Más» de la barra inferior del celular. El menú lateral de las 15 páginas tiene el nuevo enlace.
+- `sw.js`: `atomo.html` se agregó a la caché y `CACHE_NAME` pasó de `ionom-v47` a `ionom-v48` (cambió `ionom-ui.js`, que se sirve cache-first).
+
 ## 26 de octubre — Laberintos químicos en el Generador Docente
 
 - **Nueva pestaña «🧭 Laberintos»** en `docente.html` (la pestaña «📄 Guías, talleres y evaluaciones» queda igual que antes). Cuatro tipos de laberinto: nomenclatura inorgánica, mol y masa molar, tipos de reacción y balanceo.
