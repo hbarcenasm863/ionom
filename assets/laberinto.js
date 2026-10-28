@@ -881,6 +881,9 @@ function hoja(mz, c, o){
   }
   // Pie en dos franjas que no se cruzan: «Ruta seguida» + marca/licencia
   // arriba y, debajo, los datos (N_A, masas atómicas) o la leyenda de colores.
+  // Clave: leyenda de colores. La ruta correcta va en VERDE (antes en rojo,
+  // que en una hoja de examen se lee como «incorrecto»).
+  if(o.key) data = '<span class="sley"><b>Clave</b> · <span class="sv">━ verde</span>: ruta correcta · <span class="sn">┅ punteado naranja</span>: respuesta correcta de una casilla trampa (no lleva a FIN)</span>' + (data ? '<br>' + data : '');
   const lineasData = !data ? 0 : (data.indexOf('<br>') >= 0 ? 2 : 1);
   const largo = c.mode === 'nom' || c.mode === 'bal';
   // GX amplio: el rótulo de una flecha horizontal no debe tapar su punta
@@ -932,7 +935,7 @@ function hoja(mz, c, o){
     +   '<div class="sver">' + esc(o.label || '') + '</div>'
     + '</div>'
     + '<div class="sform"><span>Nombre: <i class="w-nom"></i></span><span>Curso: <i class="w-cur"></i></span><span>Fecha: <i class="w-fec"></i></span></div>'
-    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs>' + marcador(mk, '#5b7389') + marcador(mk + '-r', '#dc2626') + marcador(mk + '-g', '#16a34a') + '</defs>' + lines + '</svg>'
+    + '<svg class="lines" width="' + W + '" height="' + H + '"><defs>' + marcador(mk, '#5b7389') + marcador(mk + '-r', '#15803d') + marcador(mk + '-g', '#16a34a') + '</defs>' + lines + '</svg>'
     + nodes + labels
     + '<div class="sfoot" style="top:' + (H - G.BOT + 8) + 'px"><div class="fields">Ruta seguida: <i></i></div><div class="smark">Ion<b>Nom</b> · Nombra con precisión<span class="slic">© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span></div></div>'
     + (data ? '<div class="sdata" style="top:' + (H - G.BOT + 52) + 'px">' + data + '</div>' : '');
@@ -1016,7 +1019,7 @@ function render(){
   $('#lab-restart2').style.display = vista === 'play' ? '' : 'none';
   if(vista === 'play') pintarJuego();
   else $('#lab-status').textContent = vista === 'key'
-    ? 'Clave: la ruta correcta va en rojo; las salidas punteadas naranja son la respuesta correcta de las casillas trampa (llevan a otra trampa, nunca a FIN).'
+    ? 'Clave: la ruta correcta va en verde; las salidas punteadas naranja son la respuesta correcta de las casillas trampa (llevan a otra trampa, nunca a FIN).'
     : 'Hoja del estudiante. Imprímela o proyéctala; con «Jugar» se resuelve en pantalla.';
 }
 
