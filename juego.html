@@ -550,6 +550,7 @@ html{font-size:var(--base-fs)}
   <nav class="drawer-links">
     <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
     <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
@@ -720,6 +721,14 @@ html{font-size:var(--base-fs)}
         <div class="gb-icon-wrap gic-mol">🔢</div>
         <span class="gb-name">Mol y masa molar</span>
         <span class="gb-sub">n = m / M</span>
+      </button>
+
+      <button class="group-btn full" onclick="pickGroup('atomo')">
+        <div class="gb-icon-wrap gic-elem">🪐</div>
+        <div class="gb-txt">
+          <span class="gb-name">Teoría atómica y configuración</span>
+          <span class="gb-sub">Modelos atómicos, isótopos, iones, Moeller, Hund y Pauli</span>
+        </div>
       </button>
 
       <button class="group-btn full" onclick="pickGroup('elemento')">
@@ -1610,7 +1619,8 @@ function timeOut(){
   const inp=document.getElementById('q-input');if(inp){inp.disabled=true;}
   const oxa=document.querySelectorAll('.oxa-inp');oxa.forEach(i=>i.disabled=true);
   if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
-  if(q.isElement) showElFeedback('err','⏱ Tiempo agotado.',q);
+  if(q.isAtom) showElFeedback('err','⏱ Tiempo agotado. La respuesta era: '+q.ok,q);
+  else if(q.isElement) showElFeedback('err','⏱ Tiempo agotado.',q);
   else showFeedback('err','⏱ Tiempo agotado. La respuesta era:',q);
   scheduleNext(3500);
   updateStats();
@@ -1714,6 +1724,15 @@ function startGame(group){
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
+  // ── Teoría atómica y configuración: banco BANCO_ATOMO (banco.js) ──
+  if(group==='atomo'){
+    const pool=(typeof BANCO_ATOMO!=='undefined')?BANCO_ATOMO:[];
+    if(!pool.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
+    ST.questions=buildQuestionQueue(pool,20).map(a=>({...a,isAtom:true,qtype:'atom-mc',group:'atomo',formula:a.id,trad:[a.ok],stock:[],sist:[],hint:''}));
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
+    sendProgress('inicio'); _startProgressTracking();
+    showScreen('s-game');loadQuestion();return;
+  }
   if(group==='reactividad'){
     // Deduplicate by chain+salt+step key; 18 chains × salts × 3 steps >> 20
     const seen=new Set();
@@ -1792,7 +1811,7 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','el-metal':'Tabla — Metal / No metal / Metaloide','el-block':'Tabla — Bloque s/p/d/f','el-valence':'Tabla — Electrones de valencia','el-property':'Tabla — Propiedades periódicas','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
+  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','el-metal':'Tabla — Metal / No metal / Metaloide','el-block':'Tabla — Bloque s/p/d/f','el-valence':'Tabla — Electrones de valencia','el-property':'Tabla — Propiedades periódicas','atom-mc':'Teoría atómica y configuración','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   ST.answered=false;
@@ -1813,6 +1832,7 @@ function loadQuestion(){
     if(['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-metal','el-block','el-valence'].includes(q.qtype)) renderElMC(q);
     else if(['el-config2val','el-config2el'].includes(q.qtype)) renderElConfig(q);
     else if(q.qtype==='el-property') renderElProperty(q);
+    else if(q.qtype==='atom-mc') renderAtomMC(q);
     else if(q.qtype==='mc') renderMC(q);
     else if(q.qtype==='write-any'||q.qtype==='write-stock'||q.qtype==='write-sist') renderWrite(q);
     else if(q.qtype==='ox-state') renderOx(q);
@@ -2035,6 +2055,23 @@ function renderElProperty(q){
   }catch(e){console.error('renderElProperty error:',e);renderMC_fallback(q);}
 }
 
+// ── Teoría atómica y configuración (BANCO_ATOMO) ──
+// Mismo flujo de opción múltiple que las preguntas de la tabla periódica:
+// checkElMC() califica (3 intentos) y showElFeedback() muestra la explicación.
+const ATOM_TEMA={modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructura del átomo',config:'🧬 Configuración electrónica'};
+function renderAtomMC(q){
+  try{
+    document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${ATOM_TEMA[q.tema]||'🪐 Teoría atómica'}</span>`;
+    document.getElementById('q-prompt').textContent=q.q;
+    const options=shuffle([q.ok,...q.d]);
+    const mc=document.getElementById('q-mc-opts');
+    mc.dataset.elCorrect=q.ok;
+    mc.innerHTML=options.map(o=>`<button class="mc-opt">${o}</button>`).join('');
+    mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkElMC(btn)));
+    document.getElementById('area-mc').style.display='';
+  }catch(e){console.error('renderAtomMC error:',e);renderMC_fallback(q);}
+}
+
 function renderMC_fallback(q){
   document.getElementById('q-prompt').textContent='Error al cargar la pregunta. Avanza a la siguiente.';
   document.getElementById('area-mc').style.display='';
@@ -2059,7 +2096,8 @@ function checkElMC(el){
       el.classList.add('wrong');
       document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('correct');});
       if(ST.attempts>=3){
-        if(!ST.errors.find(e=>e.formula===q.formula&&e.group==='elemento')) ST.errors.push({group:'elemento',formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
+        const grp=q.isAtom?'atomo':'elemento';
+        if(!ST.errors.find(e=>e.formula===q.formula&&e.group===grp)) ST.errors.push({group:grp,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
         showElFeedback('err','✗ La respuesta correcta era: '+correct,q);
         scheduleNext(3000);
       } else {
@@ -2080,7 +2118,9 @@ function checkElMC(el){
 
 function showElFeedback(type,msg,q){
   let html=`<strong>${msg}</strong>`;
-  if(q&&q.isElement){
+  if(q&&q.isAtom){
+    html+=`<div class="fb-alts">${q.x||''}</div>`;
+  } else if(q&&q.isElement){
     if(q.qtype==='el-property'){
       const a=ELEMENTS[q.za], b=ELEMENTS[q.zb];
       const detalle = q.prop==='en'
@@ -3003,9 +3043,9 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
@@ -3123,7 +3163,7 @@ function _tsColombia(){
 function _qtypeBucket(qtype){
   if (qtype === 'drag') return 'drag';
   if (qtype === 'write-any' || qtype === 'write-stock' || qtype === 'write-sist') return 'write';
-  if (qtype === 'mc' || qtype === 'classify-rx' || (qtype && qtype.indexOf('el-') === 0)) return 'mc';
+  if (qtype === 'mc' || qtype === 'classify-rx' || qtype === 'atom-mc' || (qtype && qtype.indexOf('el-') === 0)) return 'mc';
   // ox-state, ox-assign, invert, balance, react-chain, balance-eq, mol-calc:
   // tareas de identificar/asignar/calcular un valor, no de elegir ni arrastrar.
   return 'id';

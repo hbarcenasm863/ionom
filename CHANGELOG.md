@@ -4,6 +4,22 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (2) — Configuración Electrónica y tema nuevo en el Juego
+
+- **Nueva página `configuracion.html` — 🧬 Configuración Electrónica**, la segunda parada del nivel n = 1, entre Teoría Atómica y Tabla Periódica. Tiene 5 pestañas:
+  - **Conceptos**: de Bohr a los orbitales, las reglas de Aufbau, Pauli y Hund, la configuración abreviada, las excepciones y los iones.
+  - **Diagrama de Moeller** interactivo.
+  - **Configurador** de los 118 elementos e iones: configuración completa y abreviada, diagrama de orbitales, periodo, grupo, bloque, valencia y números cuánticos.
+  - **Llena los orbitales**: el estudiante ubica los electrones en las casillas.
+  - **Repaso** con preguntas generadas al azar.
+- Los datos salen de la tabla periódica del sitio. Se verificó por script que los 118 elementos coinciden con `tabla.html` en configuración, periodo y grupo.
+- **Juego: tema nuevo «Teoría atómica y configuración»**, con un banco de **49 preguntas** (`BANCO_ATOMO` en `banco.js`): 19 de modelos atómicos, 11 de estructura del átomo e iones y 19 de configuración electrónica. Cada pregunta trae su explicación. Funciona en Modo Libre y en Modo Estudiante, y se registra como «Teoría atómica y configuración electrónica».
+- `ionom-analytics.gs`: el tema nuevo se agregó a `TEMAS_PRINCIPALES`. **Requiere volver a implementar a mano el Apps Script** para que tenga columna propia en «Estadísticas». Sin eso, igual se registra en «Eficacia por tema».
+- **Menú átomo**: la nueva estación 🧬 queda en la capa n = 1 y la ruta pasa a tener 12 paradas. Hay una tarjeta nueva en la lista de módulos y el enlace aparece en el menú lateral de todas las páginas y en «Más» del celular.
+- `atomo.html`: la siguiente parada es ahora Configuración Electrónica, y el constructor de átomos enlaza al configurador.
+- `sw.js`: `configuracion.html` se agregó a la caché y `CACHE_NAME` pasó a `ionom-v49` (cambiaron `banco.js` y `ionom-ui.js`).
+- Documentación completa de la región en `TEORIA_ATOMICA.md`.
+
 ## 28 de octubre — Teoría Atómica y menú en forma de átomo en la portada
 
 - **Nueva página `atomo.html` — 🪐 Teoría Atómica**, con 5 pestañas:

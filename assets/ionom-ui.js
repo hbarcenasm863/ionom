@@ -37,6 +37,7 @@
     nomenclash:SVG+'<path d="M5 3 13 11"/><path d="M5 3H3v2l9 9"/><path d="M12 14l6 6"/><path d="M15 17l3-3"/><path d="M19 3 11 11"/><path d="M19 3h2v2l-9 9"/><path d="M9 14 3 20"/></svg>',
     simulador:SVG+'<path d="M9 2.5h3"/><path d="M10.5 2.5V8l-4 7.5a2 2 0 0 0 1.8 3h5.4a2 2 0 0 0 1.8-3l-4-7.5"/><path d="M4 21.5h11"/><circle cx="18" cy="18" r="3.2"/><path d="M19.8 19.8l1.7 1.7"/></svg>',
     atomo:SVG+'<circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="5.5" stroke-dasharray="2 2.5"/><circle cx="12" cy="12" r="9.5"/><circle cx="21.5" cy="12" r="1.4" fill="currentColor"/></svg>',
+    configuracion:SVG+'<rect x="3" y="14" width="5" height="6" rx="1"/><rect x="9.5" y="9" width="5" height="6" rx="1"/><rect x="16" y="4" width="5" height="6" rx="1"/><path d="M5.5 16.2v1.8M11 11.2v1.8M13 13v-1.8M18.5 6.2v1.8"/></svg>',
     docente:SVG+'<path d="M14 2.5H6.5a1.5 1.5 0 0 0-1.5 1.5v16a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 2.5V8h5.5"/><path d="M8.5 12.5h7M8.5 16h7M8.5 19h4"/></svg>'
   };
   var ITEMS=[
@@ -48,6 +49,7 @@
   ];
   var MAS=[
     {href:'atomo.html',ico:ICO.atomo,txt:'Teoría Atómica'},
+    {href:'configuracion.html',ico:ICO.configuracion,txt:'Configuración Electrónica'},
     {href:'guia.html',ico:ICO.guia,txt:'Guía descargable'},
     {href:'reacciones.html',ico:ICO.reaccion,txt:'Tipos de Reacción'},
     {href:'balanceo.html',ico:ICO.balanceo,txt:'Balanceo'},

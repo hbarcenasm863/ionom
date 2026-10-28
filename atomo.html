@@ -235,6 +235,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
   <nav class="drawer-links">
     <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
     <a href="atomo.html" class="active"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
@@ -417,6 +418,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
             <div class="ro"><div class="k">Carga neta</div><div class="v" id="r-c">0</div></div>
           </div>
           <div class="config" id="r-config">Configuración electrónica: —</div>
+          <a href="configuracion.html#configurador" style="font-size:.78rem;font-weight:700;color:var(--an-t);text-decoration:none;display:inline-block;margin-top:6px">🧬 Ver orbitales, Moeller y Hund en Configuración Electrónica →</a>
           <div class="btn-row"><button class="btn ghost" id="b-reset">↺ Vaciar</button></div>
         </div>
       </div>
@@ -451,7 +453,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
   </section>
 
   <footer>
-    <a href="tabla.html">Siguiente parada: Tabla Periódica →</a> &nbsp;|&nbsp; <a href="index.html">← Mapa de IonNom</a><br><br>
+    <a href="configuracion.html">Siguiente parada: Configuración Electrónica →</a> &nbsp;|&nbsp; <a href="index.html">← Mapa de IonNom</a><br><br>
     <a href="index.html">IonNom</a> · Química para Colombia<br><br>
     <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;"></p>
   </footer>
@@ -1172,7 +1174,7 @@ setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una r�
     $('q-fill').style.width=(qi/QS.length*100)+'%';
     $('q-label').textContent=qi+' de '+QS.length+' respondidas';
     if(qi>=QS.length){
-      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+QS.length+'.</strong> '+(score>=8?'¡Excelente! Ya puedes seguir a la Tabla Periódica.':'Repasa la línea del tiempo y repite los experimentos.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="tabla.html">Ir a la Tabla Periódica →</a></div>';
+      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+QS.length+'.</strong> '+(score>=8?'¡Excelente! Ya puedes seguir a la Configuración Electrónica.':'Repasa la línea del tiempo y repite los experimentos.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="configuracion.html">Ir a Configuración Electrónica →</a></div>';
       $('q-again').addEventListener('click',start);
       return;
     }

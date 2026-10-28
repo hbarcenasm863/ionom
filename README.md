@@ -8,9 +8,10 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 |---------|--------|-------------|
 | `index.html` | Portada | Menú en forma de átomo: el núcleo es el progreso, las capas n = 1–4 son los niveles temáticos y los electrones son los módulos |
 | `atomo.html` | Teoría Atómica | Línea del tiempo de los modelos atómicos, simuladores de Thomson, Rutherford y Bohr, constructor de átomos e iones y simulaciones PhET incrustadas |
+| `configuracion.html` | Configuración Electrónica | Aufbau, Pauli y Hund, diagrama de Moeller, configurador de los 118 elementos e iones, práctica de llenar orbitales y repaso generado |
 | `teoria.html` | Teoría | Referencia de reglas de nomenclatura (8 secciones con navegación de tarjetas) |
 | `funciones.html` | Funciones | Ejercicios interactivos por función inorgánica con ejemplos en contexto colombiano |
-| `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) |
+| `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) · incluye el tema «Teoría atómica y configuración» |
 | `nomenClash.html` | NomenClash | Juego de cartas por turnos, competencia entre estudiantes (con oponentes IA) |
 | `generador.html` | Generador | Generador de talleres para imprimir o proyectar en clase |
 | `simulador.html` | Simulador | Simulador de reacciones y de pH |
@@ -20,8 +21,10 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `balanceo.html` | Balanceo | Balanceo de ecuaciones por tanteo |
 | `balanceo-avanzado.html` | Balanceo avanzado | Balanceo algebraico y por óxido-reducción |
 | `estequiometria.html` | Estequiometría | Cálculos estequiométricos con cadena de factores de conversión |
-| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) |
+| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) |
 | `ionom-analytics.gs` | Registro | Google Apps Script para registrar resultados del Modo Estudiante en Google Sheets |
+
+Detalle de la región «El átomo» (teoría atómica, configuración electrónica, menú átomo y tema del Juego): ver [`TEORIA_ATOMICA.md`](TEORIA_ATOMICA.md).
 
 ## Funciones inorgánicas cubiertas
 
