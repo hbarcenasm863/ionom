@@ -562,9 +562,8 @@ function construirVersion(F, numVersion, totalVersiones){
   const usados = new Set();
 
   const bloques = [];
-  // 'guia' es un tipoDoc interno (solo lo usa construirTodas) para la pasada
-  // de lectura+práctica de una "Guía completa", separada de la(s) pasada(s)
-  // de evaluación -- no es un valor que el formulario produzca directamente.
+  // 'guia' = lectura+práctica sin evaluación: lo produce la pestaña «Guías»
+  // y también construirTodas para la primera pasada de una "Guía completa".
   const incluyeLectura = F.tipoDoc==='completa' || F.tipoDoc==='guia';
   const incluyeGuia = incluyeLectura || F.tipoDoc==='taller';
   const incluyeEval = F.tipoDoc==='completa' || F.tipoDoc==='evaluacion';
@@ -576,7 +575,7 @@ function construirVersion(F, numVersion, totalVersiones){
   if(incluyeGuia){
     const practicaBloques = armarBloquesPractica(F, rngEj, usados);
     if(practicaBloques.length){
-      bloques.push({html:'<h2 class="sec-tit">Sesión 3 · Trabajo práctico</h2>', esTitulo:true});
+      bloques.push({html:'<h2 class="sec-tit">'+(incluyeLectura ? 'Sesión 3 · Trabajo práctico' : 'Ejercicios')+'</h2>', esTitulo:true});
       bloques.push.apply(bloques, practicaBloques);
     }
   }
@@ -754,7 +753,7 @@ const CUADRO = 18.9;
 // — Versión 2 de 3"), igual idea que ChromaNom: identifica de un vistazo qué
 // hoja es y cuál versión, sin tener que ir a buscar el pie de página.
 const TITULO_TIPODOC = {
-  completa:'Guía completa', guia:'Guía completa', taller:'Taller de ejercicios',
+  completa:'Guía completa', guia:'Guía de estudio', taller:'Taller de ejercicios',
   evaluacion:'Evaluación', 'hoja-respuestas':'Hoja de respuestas', rubrica:'Rúbrica de evaluación'
 };
 function tituloDocumento(doc){
@@ -990,7 +989,8 @@ function llenarHoja(hoja){
 /* ───────────────────────── 8. Orquestación ───────────────────────── */
 function construirTodas(F){
   const docs = [];
-  const N = F.versiones || 1;
+  // la guía de estudio sale una sola vez (las versiones son para taller/evaluación)
+  const N = F.tipoDoc==='guia' ? 1 : (F.versiones || 1);
   // La hoja de respuestas (burbujas) ya viene incluida dentro de los
   // bloques de cada versión de evaluación (ver construirVersion) -- no se
   // agrega aquí como documento aparte para que pueda compartir página con
