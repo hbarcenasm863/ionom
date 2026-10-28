@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (7) — Enlace químico en el Juego y en el Generador Docente
+
+- **Juego: tema nuevo «Enlace químico»** (🧲), en Modo Libre y en Modo Estudiante. Tiene 47 preguntas con explicación sobre octeto y Lewis, enlace iónico, covalente, electronegatividad y polaridad, enlace metálico y propiedades. Cada partida toma 20 sin repetir, y cada pregunta muestra su subtema.
+- **Generador Docente: tema «Enlace químico»**, con:
+  - aprendizajes previos con contexto colombiano (la sal de Zipaquirá, el cobre de las redes eléctricas);
+  - lectura, esquema y ejemplo resuelto Na–Cl;
+  - un tipo de ejercicio nuevo, **D Tipo de enlace (ΔEN)**, con 28 parejas de elementos;
+  - 12 preguntas tipo Saber 11 y 6 abiertas.
+- La pantalla final del Modo Libre decía «Dominas este grupo de nomenclatura» también en los temas que no son de nomenclatura; ahora dice «Dominas este tema».
+- `ionom-analytics.gs`: «Enlace químico» se agregó a `TEMAS_PRINCIPALES`. **Hay que copiarlo a Apps Script y crear una nueva versión de la implementación.**
+- `sw.js` pasó a `ionom-v55` (cambiaron `banco.js`, `docente-datos.js` y `docente-app.js`).
+
 ## 28 de octubre (6) — Enlace Químico: simulaciones nuevas
 
 `enlace.html` deja de ser una copia de EnlaceLab. Las animaciones y simulaciones se rehicieron con el estilo de los simuladores de Teoría Atómica (lienzos oscuros, táctiles y animados):

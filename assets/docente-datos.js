@@ -6,7 +6,7 @@
    sal-bin, sal-ox, sal-ac, mol-masa, reaccion, balanceo), elemento/
    reactividad (de ELEMENTS/REACT_CHAINS en juego.html), estequiometria y
    la región «El átomo»: atomo (teoría atómica y estructura del átomo) y
-   config-e (configuración electrónica).
+   config-e (configuración electrónica), y enlace (enlace químico).
    Expone window.DOCENTE_DATOS = {TEMAS, SABER, ABIERTAS}.
    ════════════════════════════════════════════════════════════════════════ */
 window.DOCENTE_DATOS = {
@@ -747,6 +747,50 @@ TEMAS: [
       ['[Ar]','an','núcleo de gas noble: los primeros 18 electrones (1s² 2s² 2p⁶ 3s² 3p⁶)'],
       ['4s²','cat','el 4s se llena antes que el 3d (Moeller); n = 4 → periodo 4, 2 electrones de valencia'],
       ['3d⁶','ox','el último electrón entra en un subnivel d → bloque d (metal de transición); 18 + 2 + 6 = 26 electrones']
+    ]
+  }
+},
+{
+  id: 'enlace',
+  titulo: 'Enlace químico',
+  gen: [], jue: 'enlace', rxn: [],
+  previos: {
+    curiosos: [
+      'El enlace triple del nitrógeno (N≡N) es tan fuerte que el 78 % del aire es N₂ y casi no reacciona. Para convertirlo en abono, la industria necesita unos 450 °C y presiones 200 veces mayores que la del aire.',
+      'La sal de cocina funde a 801 °C, pero la parafina de una vela funde a unos 55 °C. Los dos son sólidos blancos: la diferencia está en cómo están unidas sus partículas.'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'En Zipaquirá y Nemocón se explota la sal desde la época muisca. La sal de roca es cloruro de sodio, un compuesto iónico que forma cristales con forma de cubo.'},
+      {amb:'Local', t:'Las redes eléctricas de las casas usan alambre de cobre porque el enlace metálico deja electrones libres que conducen la corriente, mientras que el plástico que lo recubre (covalente) no conduce.'}
+    ],
+    cotidianos: [
+      'El agua y el aceite no se mezclan porque las moléculas de agua son polares y las del aceite son apolares: "lo semejante disuelve a lo semejante".'
+    ],
+    activacion: [
+      'La sal, el azúcar y un clavo de hierro son sólidos. ¿Qué pruebas sencillas harías en casa para saber si sus partículas están unidas de la misma manera?'
+    ]
+  },
+  info: {
+    lectura: [
+      'Los átomos se unen para quedar más estables. Según la <strong>regla del octeto</strong>, ganan, pierden o comparten electrones hasta tener 8 en su último nivel, como un gas noble (el hidrógeno se completa con 2). Los <strong>símbolos de Lewis</strong> muestran los electrones de valencia como puntos alrededor del símbolo.',
+      'La <strong>electronegatividad</strong> (EN) mide la fuerza con que un átomo atrae los electrones de un enlace; el flúor es el más electronegativo (3,98). Entre un metal y un no metal con ΔEN ≥ 1,7 hay <strong>enlace iónico</strong>: el metal cede electrones y se forman cationes y aniones que se atraen en una red cristalina. Entre no metales hay <strong>enlace covalente</strong>: comparten pares de electrones. Si ΔEN &lt; 0,4 es <strong>apolar</strong>; si es mayor, <strong>polar</strong>, con cargas parciales δ+ y δ−.',
+      'En el <strong>enlace metálico</strong> los cationes quedan fijos en una red y los electrones de valencia se mueven libres, como un "mar de electrones". El tipo de enlace explica las propiedades: los iónicos funden alto y conducen solo disueltos o fundidos; los metales conducen en estado sólido y son maleables; las sustancias moleculares funden bajo y no conducen. Los sólidos covalentes de red, como el cuarzo, funden muy alto sin ser iónicos.'
+    ],
+    esquema: {
+      raiz: 'Enlace químico',
+      ramas: [
+        {t:'Iónico', items:['metal + no metal', 'ΔEN ≥ 1,7', 'transferencia de e⁻', 'red de iones: frágil, conduce disuelto']},
+        {t:'Covalente', items:['no metal + no metal', 'pares compartidos', 'apolar ΔEN < 0,4 · polar', 'moléculas: funde bajo']},
+        {t:'Metálico', items:['metal + metal', 'mar de electrones', 'conduce en sólido', 'maleable y dúctil']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: 'Na–Cl:  ΔEN = |3,16 − 0,93| = 2,23',
+    partes: [
+      ['Na → Na⁺ + e⁻','cat','metal: cede su único electrón de valencia y queda como el neón'],
+      ['Cl + e⁻ → Cl⁻','an','no metal: gana el electrón y completa su octeto, como el argón'],
+      ['ΔEN 2,23 ≥ 1,7','ox','metal + no metal con ΔEN alta: enlace iónico; fórmula NaCl (cargas +1 y −1)']
     ]
   }
 }
@@ -1830,7 +1874,19 @@ SABER: [
 {tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones caben como máximo en el nivel n = 3?', o:['18','8','9','32']},
 {tema:'config-e', c:'ind', k:'CTS', ctx:'En la pólvora de fin de año, las sales de estroncio dan color rojo y las de bario color verde. En el laboratorio, el ensayo a la llama permite identificar metales por su color.', q:'¿Por qué cada elemento emite colores característicos al calentarse?', o:['Porque sus electrones excitados regresan a niveles más bajos emitiendo energías exactas, propias de cada elemento','Porque cada metal tiene un color de piel distinto','Porque el calor cambia el número de protones del núcleo','Porque los neutrones se liberan como luz']},
 {tema:'config-e', c:'exp', k:'Q', ctx:'', q:'El último electrón de un elemento entra en un subnivel d. ¿A qué bloque de la tabla pertenece y qué tipo de elemento es?', o:['Bloque d: metal de transición','Bloque s: metal alcalino','Bloque p: no metal','Bloque f: lantánido']},
-{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones desapareados tiene el fósforo ([Ne] 3s² 3p³)?', o:['3','1','5','0']}
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones desapareados tiene el fósforo ([Ne] 3s² 3p³)?', o:['3','1','5','0']},
+{tema:'enlace', c:'uso', k:'Q', ctx:'', q:'¿Qué ocurre con los electrones cuando el sodio y el cloro forman cloruro de sodio?', o:['El sodio cede un electrón al cloro y se forman los iones Na⁺ y Cl⁻','El sodio y el cloro comparten un par de electrones','El cloro cede un electrón al sodio','Los dos átomos pierden un electrón cada uno']},
+{tema:'enlace', c:'uso', k:'Q', ctx:'Electronegatividades de Pauling: H = 2,20; Cl = 3,16.', q:'¿Qué tipo de enlace hay en el HCl?', o:['Covalente polar, porque ΔEN = 0,96','Covalente apolar, porque los dos son no metales','Iónico, porque el cloro es muy electronegativo','Metálico, porque el hidrógeno está en el grupo 1']},
+{tema:'enlace', c:'uso', k:'Q', ctx:'', q:'¿Cuál es la fórmula del compuesto iónico que forman el aluminio (Al³⁺) y el oxígeno (O²⁻)?', o:['Al₂O₃','AlO','Al₃O₂','AlO₃']},
+{tema:'enlace', c:'exp', k:'Q', ctx:'', q:'Los enlaces C=O del CO₂ son polares, pero la molécula es apolar. ¿Por qué?', o:['Porque la molécula es lineal y los dos dipolos se cancelan','Porque el carbono es más electronegativo que el oxígeno','Porque los enlaces dobles nunca son polares','Porque el CO₂ es un compuesto iónico']},
+{tema:'enlace', c:'exp', k:'Q', ctx:'', q:'¿Por qué un trozo de cobre se aplana al martillarlo, mientras que un cristal de sal se rompe?', o:['En el metal las capas se deslizan y el mar de electrones las mantiene unidas; en la sal quedan iones de igual carga enfrentados y se repelen','El cobre es más blando porque tiene enlaces covalentes','La sal tiene un mar de electrones que se rompe con el golpe','El cobre absorbe el golpe porque sus moléculas son grandes']},
+{tema:'enlace', c:'ind', k:'Q', ctx:'En el laboratorio se ensayaron tres sólidos blancos. El sólido X funde a 801 °C y solo conduce disuelto en agua. El sólido Y funde a 186 °C, se disuelve y la disolución no conduce. El sólido Z funde a 55 °C, no se disuelve en agua y no conduce.', q:'¿Qué conclusión es correcta?', o:['X es iónico; Y y Z son covalentes moleculares','X es metálico; Y es iónico; Z es covalente','Los tres son iónicos porque son sólidos blancos','Y es iónico porque se disuelve en agua']},
+{tema:'enlace', c:'ind', k:'Q', ctx:'Un estudiante conecta un bombillo a una pila y a dos electrodos metidos en distintas muestras. Con un alambre de cobre sólido el bombillo enciende; con sal sólida no enciende; con sal disuelta en agua sí enciende.', q:'¿Qué explica estos resultados?', o:['El cobre tiene electrones libres; la sal tiene iones que solo se mueven cuando está disuelta','La sal sólida no tiene iones y el agua se los aporta','El cobre tiene iones libres y la sal tiene electrones libres','El agua es la única sustancia que conduce en los tres casos']},
+{tema:'enlace', c:'uso', k:'Q', ctx:'', q:'En la estructura de Lewis del agua (H₂O), ¿cuántos pares de electrones libres tiene el oxígeno?', o:['2','0','1','4']},
+{tema:'enlace', c:'exp', k:'Q', ctx:'', q:'¿Por qué el ion Na⁺ es más pequeño que el átomo de sodio?', o:['Porque al perder su electrón de valencia pierde todo el nivel 3','Porque gana un protón','Porque el electrón que gana comprime la nube','Porque los cationes siempre tienen menos neutrones']},
+{tema:'enlace', c:'uso', k:'Q', ctx:'Electronegatividades: C = 2,55; H = 2,20; O = 3,44; F = 3,98.', q:'¿Cuál de estos enlaces es covalente apolar?', o:['C–H (ΔEN = 0,35)','O–H (ΔEN = 1,24)','C–O (ΔEN = 0,89)','C–F (ΔEN = 1,43)']},
+{tema:'enlace', c:'ind', k:'CTS', ctx:'En Zipaquirá se extrae sal de roca (NaCl). Para limpiarla, se disuelve en agua, se filtra y luego se evapora el agua.', q:'¿Por qué la sal se disuelve en agua y no en aceite?', o:['Porque el agua es polar y atrae a los iones Na⁺ y Cl⁻; el aceite es apolar','Porque el aceite es iónico y repele a la sal','Porque la sal es una sustancia apolar','Porque el agua rompe los núcleos de los iones']},
+{tema:'enlace', c:'exp', k:'Q', ctx:'', q:'El cuarzo (SiO₂) no conduce la electricidad y funde a unos 1700 °C. ¿Cómo se explica su altísimo punto de fusión?', o:['Es un sólido covalente de red: para fundirlo hay que romper enlaces covalentes','Es un compuesto iónico como la sal','Tiene un mar de electrones muy fuerte','Sus moléculas son muy pesadas']}
 
 ],
 
@@ -1898,7 +1954,13 @@ ABIERTAS: [
 {tema:'config-e', t:'nom', q:'Escribe la configuración electrónica completa y abreviada, y dibuja el diagrama de orbitales del último subnivel. Indica su periodo, grupo y electrones de valencia.', f:'S (Z = 16)'},
 {tema:'config-e', t:'nom', q:'Escribe la configuración abreviada del átomo neutro y del ion. Explica de qué subnivel salen los electrones que pierde.', f:'Fe²⁺ (Z = 26)'},
 {tema:'config-e', t:'mdec', q:'En esta configuración abreviada, identifica el núcleo de gas noble y los electrones de valencia. ¿Qué elemento es? ¿En qué periodo, grupo y bloque está?', partes:[['[Ne]','an'],['3s²','cat'],['3p⁵','ox']]},
-{tema:'config-e', t:'mdec', q:'En esta configuración abreviada, cuenta el total de electrones e identifica el elemento. ¿Cuántos electrones de valencia tiene y cuántos están desapareados?', partes:[['[Ar]','an'],['4s²','cat'],['3d¹⁰','ox'],['4p²','oh']]}
+{tema:'config-e', t:'mdec', q:'En esta configuración abreviada, cuenta el total de electrones e identifica el elemento. ¿Cuántos electrones de valencia tiene y cuántos están desapareados?', partes:[['[Ar]','an'],['4s²','cat'],['3d¹⁰','ox'],['4p²','oh']]},
+{tema:'enlace', t:'rx', q:'Explica, con símbolos de Lewis, cómo se forma el óxido de magnesio a partir de Mg (grupo 2) y O (grupo 16). Indica qué átomo cede electrones, cuántos, qué iones se forman y por qué la fórmula es MgO.'},
+{tema:'enlace', t:'rx', q:'Diseña un procedimiento con una pila, un bombillo, agua y un mechero para decidir si un sólido blanco desconocido es iónico, covalente molecular o metálico. Explica qué resultado esperas en cada caso.'},
+{tema:'enlace', t:'nom', q:'Dibuja la estructura de Lewis de la siguiente molécula. Indica cuántos pares enlazantes y libres tiene, si sus enlaces son polares y si la molécula es polar (EN: N = 3,04; H = 2,20).', f:'NH₃'},
+{tema:'enlace', t:'nom', q:'Calcula la ΔEN de cada enlace y clasifícalo como covalente apolar, covalente polar o iónico (EN: K = 0,82; Br = 2,96; S = 2,58; O = 3,44; Cl = 3,16).', f:'KBr · SO₂ · Cl₂'},
+{tema:'enlace', t:'mdec', q:'Identifica las partes de este compuesto iónico, la carga de cada ion y cuántos electrones cedió o ganó cada átomo para formarlo.', f:'CaCl₂', partes:[['Ca²⁺','cat'],['Cl⁻','an']]},
+{tema:'enlace', t:'mdec', q:'En la molécula de agua, marca qué átomo queda con carga parcial δ− y cuál con δ+. Explica por qué la molécula es polar aunque tenga dos enlaces iguales.', f:'H₂O', partes:[['O δ−','an'],['H δ+','cat']]}
 
 ]
 

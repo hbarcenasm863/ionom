@@ -11,7 +11,7 @@ Documento de referencia de lo construido en octubre de 2026 para la primera regi
 | Teoría Atómica | `atomo.html` | Línea del tiempo de los modelos atómicos, 3 simuladores (Thomson, Rutherford, Bohr), constructor de átomos e iones, simulaciones PhET incrustadas y repaso |
 | Configuración Electrónica | `configuracion.html` | Conceptos (Aufbau, Pauli, Hund), diagrama de Moeller interactivo, configurador de los 118 elementos e iones, práctica «Llena los orbitales» y repaso generado |
 | Menú átomo | `index.html` | Portada en forma de átomo de Bohr: núcleo = progreso, capas n = 1–4 = niveles temáticos, electrones = módulos |
-| Tema del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (49 preguntas) |
+| Temas del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (49 preguntas) y grupo «Enlace químico» con `BANCO_ENLACE` (47 preguntas) |
 | Registro de visitas | `assets/ionom-ui.js` | Guarda en el navegador (`ionom-visitas`) qué páginas visitó el estudiante, para marcar ✓ en el menú átomo |
 
 Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración Electrónica → Tabla Periódica → Enlace Químico**.
@@ -109,8 +109,15 @@ Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puent
 - **Para agregar preguntas**: añadir objetos a `BANCO_ATOMO` y **subir `CACHE_NAME` en `sw.js`** en el mismo commit (`banco.js` se sirve cache-first; ver `CLAUDE.md`).
 - El tema se registra en Google Sheets como «Teoría atómica y configuración electrónica».
 
+### Tema «Enlace químico»
+- Botón `pickGroup('enlace')` en la portada de `juego.html`, debajo de «Tabla periódica».
+- Banco: `BANCO_ENLACE` al final de `banco.js`, con **47 preguntas** y el mismo formato que `BANCO_ATOMO`: 10 de octeto y Lewis, 10 de enlace iónico, 6 de enlace covalente (incluida la curva de energía), 10 de electronegatividad y polaridad, 4 de enlace metálico y 7 de propiedades y laboratorio.
+- Las ΔEN usan las electronegatividades de `tabla.html` y la misma regla de `enlace.html`.
+- Comparte el código de `atomo` (`isAtom`, `renderAtomMC`, `checkElMC`) con su propio tipo de pregunta, `enlace-mc`, que se cuenta como «mc» en el registro. El encabezado de cada pregunta muestra su subtema (🔵 Octeto y Lewis, ➕➖ Iónico…).
+- Se registra en Google Sheets como «Enlace químico».
+
 ### ⚠️ Paso manual pendiente (Apps Script)
-Se agregó «Teoría atómica y configuración electrónica» a `TEMAS_PRINCIPALES` en `ionom-analytics.gs`, para que tenga columna propia en «Estadísticas». Ese cambio **no llega a producción solo**: hay que copiar el archivo al editor de script.google.com y luego ir a Implementar → Administrar implementaciones → Editar → Nueva versión. Mientras no se haga, las partidas de este tema se guardan igual y aparecen en «Eficacia por tema», que agrega temas nuevos dinámicamente.
+Se agregaron «Teoría atómica y configuración electrónica» y «Enlace químico» a `TEMAS_PRINCIPALES` en `ionom-analytics.gs`, para que tenga columna propia en «Estadísticas». Ese cambio **no llega a producción solo**: hay que copiar el archivo al editor de script.google.com y luego ir a Implementar → Administrar implementaciones → Editar → Nueva versión. Mientras no se haga, las partidas de este tema se guardan igual y aparecen en «Eficacia por tema», que agrega temas nuevos dinámicamente.
 
 ## 6. Generador Docente (`docente.html`)
 
@@ -123,6 +130,12 @@ Hay dos temas nuevos en «2 · Tema(s)»: **Teoría atómica y estructura del á
 - **Evaluación**: 12 preguntas tipo Saber 11 por tema (la opción A del banco es la correcta y se baraja al imprimir) y 6 preguntas abiertas por tema (explicar un experimento o proceso, escribir partículas o configuraciones, e identificar partes con el código de colores).
 
 Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los ejercicios prácticos están en `assets/docente-app.js` (`ESPECIES_ATOMO`, `poolConfig`, `tarjetaParticulas` y `tarjetaConfig`).
+
+**Tema «Enlace químico» (`enlace`)**, con la misma estructura:
+- **Sesión 1**: el N≡N del aire y los abonos, sal frente a parafina, la sal de Zipaquirá y Nemocón, el cobre y el plástico de los cables, agua y aceite.
+- **Sesión 2**: lectura (octeto, Lewis, electronegatividad, iónico, covalente polar/apolar, metálico y propiedades), esquema de los tres enlaces y ejemplo resuelto Na–Cl con ΔEN = 2,23.
+- **D Tipo de enlace (ΔEN)**: 28 parejas de elementos con su EN (10 iónicas, 9 polares, 6 apolares y 3 metálicas). Se evitan los casos dudosos cerca de los límites, como N–O o H–F. Se pide metal o no metal, ΔEN, tipo de enlace con justificación, y la representación con la fórmula (`PARES_ENLACE` y `tarjetaEnlace`).
+- **Evaluación**: 12 preguntas tipo Saber 11 (incluidos un laboratorio de tres sólidos blancos, el bombillo con cobre, sal y salmuera, y la sal de Zipaquirá) y 6 abiertas (formación del MgO, diseño de un ensayo, Lewis del NH₃, ΔEN de KBr, SO₂ y Cl₂, CaCl₂ y H₂O con el código de colores).
 
 ### Laberintos (`assets/laberinto.js`)
 Hay un tipo de laberinto nuevo, **«Teoría atómica y configuración»**, con 4 grupos de preguntas que se pueden combinar:
@@ -142,7 +155,7 @@ Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos
 
 ## 7. Service worker
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`) → `v53` (`enlace.html` e `ionom-ui.js`).
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`) → `v53` (`enlace.html` e `ionom-ui.js`) → `v54` (simulaciones nuevas de `enlace.html`) → `v55` (`BANCO_ENLACE` en `banco.js` y el tema de enlace en `docente-datos.js` y `docente-app.js`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
 ## 8. Ideas pendientes (propuestas de diseño)

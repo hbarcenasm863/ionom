@@ -174,6 +174,7 @@ function contarDisponiblesTema(id){
   else if(id==='estequiometria') nEj = poolPorGrupo(['balanceo']).length;
   else if(id==='atomo') nEj = ESPECIES_ATOMO.length;
   else if(id==='config-e') nEj = poolConfig().length;
+  else if(id==='enlace') nEj = PARES_ENLACE.length;
   else nEj = poolPorGrupo([id]).length;
   const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
   const nSaber = saber.filter(q=>q.tema===id).length;
@@ -184,13 +185,13 @@ function contarDisponiblesTema(id){
 // mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
 // este momento -- se recalcula cada vez que cambia la selección de temas,
 // igual que los "(N disponibles)" de ChromaNom.
-const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e'];
+const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace'];
 // Mapa tema→tipo de ejercicio "D" que le corresponde. Se usa para
 // auto-marcar el tipo de ejercicio apenas se marca su tema (ver
 // actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
 // "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
 // Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
-const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':'d-config'};
+const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':'d-config', enlace:'d-enlace'};
 
 // Región «El átomo» (atomo / config-e): no viven en banco.js.
 // ESPECIES_ATOMO: isótopos e iones reales [Z, A, carga] para el ejercicio
@@ -209,6 +210,17 @@ function poolConfig(){
   for(let z=1; z<=36; z++) if(z!==24 && z!==29 && B.ELEMENTS && B.ELEMENTS[z]) out.push(z);
   return out;
 }
+// enlace: parejas de elementos [símbolo, EN, símbolo, EN] con la EN de
+// Pauling de tabla.html. Se evitan los casos dudosos cerca de los límites
+// (ΔEN ≈ 0,4 o ≈ 1,7, como N–O o H–F) para que la clasificación sea única.
+const PARES_ENLACE = [
+  ['Na',0.93,'Cl',3.16],['K',0.82,'Br',2.96],['Li',0.98,'F',3.98],['Mg',1.31,'O',3.44],['Ca',1.00,'Cl',3.16],
+  ['Na',0.93,'O',3.44],['K',0.82,'Cl',3.16],['Ca',1.00,'O',3.44],['Mg',1.31,'F',3.98],['Ca',1.00,'F',3.98],
+  ['H',2.20,'Cl',3.16],['H',2.20,'O',3.44],['N',3.04,'H',2.20],['C',2.55,'O',3.44],['C',2.55,'Cl',3.16],
+  ['P',2.19,'Cl',3.16],['H',2.20,'Br',2.96],['S',2.58,'O',3.44],['C',2.55,'F',3.98],
+  ['Cl',3.16,'Cl',3.16],['O',3.44,'O',3.44],['N',3.04,'N',3.04],['H',2.20,'H',2.20],['C',2.55,'H',2.20],['C',2.55,'S',2.58],
+  ['Cu',1.90,'Cu',1.90],['Fe',1.83,'Fe',1.83],['Al',1.61,'Al',1.61]
+];
 function contarDisponiblesTipo(temasMarcados){
   const gruposCompuestos = temasMarcados.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
@@ -220,7 +232,8 @@ function contarDisponiblesTipo(temasMarcados){
     'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0,
     'd-estequiometria': temasMarcados.includes('estequiometria') ? poolPorGrupo(['balanceo']).length : 0,
     'd-atomo': temasMarcados.includes('atomo') ? ESPECIES_ATOMO.length : 0,
-    'd-config': temasMarcados.includes('config-e') ? poolConfig().length : 0
+    'd-config': temasMarcados.includes('config-e') ? poolConfig().length : 0,
+    'd-enlace': temasMarcados.includes('enlace') ? PARES_ENLACE.length : 0
   };
 }
 
@@ -258,6 +271,7 @@ const TIPO_ROTULO = {
   'd-molmasa':'Mol y masa molar',
   'd-atomo':'Partículas subatómicas',
   'd-config':'Configuración electrónica',
+  'd-enlace':'Tipo de enlace (ΔEN)',
   'x-errores':'Cazar errores',
   'ox-estado':'Estado de oxidación'
 };
@@ -402,6 +416,19 @@ function tarjetaConfig(z, numero){
     +'</div>';
 }
 
+// Tipo de enlace: con las EN dadas, calcular ΔEN, clasificar y representar.
+function tarjetaEnlace(par, numero){
+  const en = x => x.toFixed(2).replace('.', ',');
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:70px;margin:0 6px 0 4px">&nbsp;</span>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.9rem;margin:4px 0 6px">Enlace entre <strong style="font-family:var(--mono)">'+par[0]+'</strong> (EN = '+en(par[1])+') y <strong style="font-family:var(--mono)">'+par[2]+'</strong> (EN = '+en(par[3])+'):</p>'
+    +'<p style="font-size:.84rem;margin:4px 0">a) ¿Metal o no metal?'+linea+'y'+linea+' ΔEN ='+linea+'</p>'
+    +'<p style="font-size:.84rem;margin:6px 0 4px">b) Tipo de enlace (iónico, covalente polar, covalente apolar o metálico) y por qué:</p><div class="cuad" style="height:37.8px"></div>'
+    +'<p style="font-size:.84rem;margin:6px 0 4px">c) Representa el enlace (Lewis, transferencia de electrones o mar de electrones) y escribe la fórmula:</p><div class="cuad" style="height:75.6px"></div>'
+    +'</div>';
+}
+
 function tarjetaError(e, numero){
   return '<div class="exercise-card" style="border-left:4px solid var(--err)">'
     +'<div class="ex-num">Ejercicio '+numero+'</div>'
@@ -483,6 +510,12 @@ function armarBloquesPractica(F, rngFn, usados){
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>String(x)).forEach(z=>{
         usados.add('cfg-'+z);
         bloques.push({html:tarjetaConfig(z, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-enlace'){
+      let pool = PARES_ENLACE.filter(e => !usados.has('enl-'+e.join('|')));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.join('|')).forEach(e=>{
+        usados.add('enl-'+e.join('|'));
+        bloques.push({html:tarjetaEnlace(e, numero++), esMultiple:false});
       });
     } else if(tipo==='x-errores'){
       const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));

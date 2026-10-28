@@ -122,6 +122,7 @@ const TEMAS_PRINCIPALES = [
   'Sales ácidas',
   'Tabla periódica y configuración electrónica',
   'Teoría atómica y configuración electrónica',
+  'Enlace químico',
   'Tipos de reacción',
   'Balanceo de ecuaciones',
   'Mol y masa molar',

@@ -12,7 +12,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `enlace.html` | Enlace Químico | Iónico, covalente y metálico: símbolos y estructuras de Lewis paso a paso, calculadora y reto de ΔEN, 4 simuladores y laboratorio virtual |
 | `teoria.html` | Teoría | Referencia de reglas de nomenclatura (8 secciones con navegación de tarjetas) |
 | `funciones.html` | Funciones | Ejercicios interactivos por función inorgánica con ejemplos en contexto colombiano |
-| `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) · incluye el tema «Teoría atómica y configuración» |
+| `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) · incluye los temas «Teoría atómica y configuración» y «Enlace químico» |
 | `nomenClash.html` | NomenClash | Juego de cartas por turnos, competencia entre estudiantes (con oponentes IA) |
 | `generador.html` | Generador | Generador de talleres para imprimir o proyectar en clase |
 | `simulador.html` | Simulador | Simulador de reacciones y de pH |
@@ -22,7 +22,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `balanceo.html` | Balanceo | Balanceo de ecuaciones por tanteo |
 | `balanceo-avanzado.html` | Balanceo avanzado | Balanceo algebraico y por óxido-reducción |
 | `estequiometria.html` | Estequiometría | Cálculos estequiométricos con cadena de factores de conversión |
-| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) |
+| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) + `BANCO_ENLACE` (47 preguntas de enlace químico) |
 | `ionom-analytics.gs` | Registro | Google Apps Script para registrar resultados del Modo Estudiante en Google Sheets |
 
 Detalle de la región «El átomo» (teoría atómica, configuración electrónica, menú átomo y tema del Juego): ver [`TEORIA_ATOMICA.md`](TEORIA_ATOMICA.md).
