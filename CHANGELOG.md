@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (3) — Temas del átomo en el Generador Docente
+
+- **Dos temas nuevos en `docente.html`**: «Teoría atómica y estructura del átomo» y «Configuración electrónica». Cada uno tiene aprendizajes previos con contexto colombiano, lectura, esquema y ejemplo resuelto con el código de colores.
+- **Ejercicios prácticos nuevos** que se marcan solos al elegir el tema:
+  - **D Partículas subatómicas**: 37 isótopos e iones reales; se completan protones, neutrones, electrones y tipo de especie.
+  - **D Configuración electrónica**: 34 elementos; se piden la configuración completa y abreviada, el diagrama de orbitales, el periodo, el grupo, el bloque y la valencia.
+- **Evaluación**: 24 preguntas tipo Saber 11 nuevas (12 por tema) y 12 preguntas abiertas (6 por tema).
+- Se probaron una guía completa y una evaluación generadas solo con estos temas: sin errores y con la paginación correcta.
+- La tarjeta del Generador Docente en la portada ahora dice «17 temas». `sw.js` pasó a `ionom-v50`.
+
 ## 28 de octubre (2) — Configuración Electrónica y tema nuevo en el Juego
 
 - **Nueva página `configuracion.html` — 🧬 Configuración Electrónica**, la segunda parada del nivel n = 1, entre Teoría Atómica y Tabla Periódica. Tiene 5 pestañas:

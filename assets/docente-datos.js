@@ -2,10 +2,11 @@
    docente-datos.js — SOLO CONTENIDO (TEMAS, SABER, ABIERTAS) de
    docente.html. La lógica vive en assets/docente-app.js.
 
-   14 de 14 temas completos: los 10 grupos de banco.js (ox-bas, anhid,
-   hidru, ac-hid, base, ac-ox, sal-bin, sal-ox, sal-ac, mol-masa) más
-   reaccion y balanceo (también de banco.js) y elemento/reactividad (de
-   ELEMENTS/REACT_CHAINS en juego.html).
+   Los grupos de banco.js (ox-bas, anhid, hidru, ac-hid, base, ac-ox,
+   sal-bin, sal-ox, sal-ac, mol-masa, reaccion, balanceo), elemento/
+   reactividad (de ELEMENTS/REACT_CHAINS en juego.html), estequiometria y
+   la región «El átomo»: atomo (teoría atómica y estructura del átomo) y
+   config-e (configuración electrónica).
    Expone window.DOCENTE_DATOS = {TEMAS, SABER, ABIERTAS}.
    ════════════════════════════════════════════════════════════════════════ */
 window.DOCENTE_DATOS = {
@@ -660,7 +661,96 @@ TEMAS: [
       ['× 133.341 g/mol','an','paso 3: moles de lo pedido a gramos de lo pedido = 133.3 g AlCl₃']
     ]
   }
+},
+{
+  id: 'atomo',
+  titulo: 'Teoría atómica y estructura del átomo',
+  gen: [], jue: 'atomo', rxn: [],
+  previos: {
+    curiosos: [
+      'Si el núcleo de un átomo fuera del tamaño de una canica puesta en el centro del estadio El Campín, los electrones estarían dando vueltas por las graderías: casi todo el átomo es espacio vacío.',
+      'Rutherford dijo que ver rebotar una partícula alfa en una lámina de oro "fue como disparar un proyectil de artillería contra una hoja de papel de seda y que el proyectil regresara".'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'Colombia tiene un reactor nuclear de investigación, el IAN-R1, en Bogotá, operado por el Servicio Geológico Colombiano. Allí se trabaja con isótopos, átomos del mismo elemento con distinto número de neutrones.'},
+      {amb:'Local', t:'Los arqueólogos que estudian restos de las culturas muisca y tairona usan el carbono-14, un isótopo radiactivo del carbono, para calcular cuántos años tienen.'}
+    ],
+    cotidianos: [
+      'Los avisos luminosos de "neón" de los negocios brillan con un color fijo porque los electrones del gas solo pueden saltar entre ciertos niveles de energía, como propuso Bohr.'
+    ],
+    activacion: [
+      'Nadie ha visto un átomo a simple vista. ¿Cómo crees que los científicos pudieron saber que tiene un núcleo y electrones? ¿Qué tipo de experimento harías tú para "ver" algo invisible?'
+    ]
+  },
+  info: {
+    lectura: [
+      'Los <strong>modelos atómicos</strong> cambiaron cada vez que un experimento mostró algo que el modelo anterior no podía explicar. <strong>Dalton</strong> (1808) imaginó átomos indivisibles. <strong>Thomson</strong> (1897) descubrió el <strong>electrón</strong> con el tubo de rayos catódicos y propuso el "budín de pasas": una esfera positiva con electrones incrustados.',
+      'En el <strong>experimento de la lámina de oro</strong>, casi todas las partículas alfa atravesaron la lámina, pero unas pocas rebotaron. <strong>Rutherford</strong> (1911) concluyó que el átomo es casi todo espacio vacío, con un <strong>núcleo</strong> diminuto, denso y positivo. <strong>Bohr</strong> (1913) ubicó a los electrones en <strong>niveles de energía</strong> fijos, y el <strong>modelo mecánico-cuántico</strong> actual los describe con <strong>orbitales</strong>, regiones de probabilidad.',
+      'El átomo tiene <strong>protones</strong> (p⁺) y <strong>neutrones</strong> (n⁰) en el núcleo, y <strong>electrones</strong> (e⁻) alrededor. El <strong>número atómico Z</strong> es el número de protones e identifica al elemento. El <strong>número de masa A</strong> es protones + neutrones. Los <strong>isótopos</strong> tienen el mismo Z pero distinto número de neutrones. Un <strong>ion</strong> se forma cuando el átomo gana electrones (anión, −) o los pierde (catión, +).'
+    ],
+    esquema: {
+      raiz: 'Teoría atómica',
+      ramas: [
+        {t:'Modelos', items:['Dalton: esfera indivisible', 'Thomson: budín de pasas (electrón)', 'Rutherford: núcleo + vacío', 'Bohr: niveles de energía', 'Cuántico: orbitales']},
+        {t:'Partículas', items:['protón (+) en el núcleo', 'neutrón (0) en el núcleo', 'electrón (−) fuera del núcleo']},
+        {t:'Fórmulas clave', items:['Z = protones', 'A = protones + neutrones', 'carga = protones − electrones']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: '²³Na⁺  (Z = 11)',
+    partes: [
+      ['11 p⁺','cat','protones = Z = 11: por eso es sodio'],
+      ['12 n⁰','oh','neutrones = A − Z = 23 − 11 = 12'],
+      ['10 e⁻','an','electrones = 11 − 1 = 10: es un catión que perdió un electrón']
+    ]
+  }
+},
+{
+  id: 'config-e',
+  titulo: 'Configuración electrónica',
+  gen: [], jue: 'atomo', rxn: [],
+  previos: {
+    curiosos: [
+      'Cada elemento emite una "huella de colores" propia cuando se calienta, como un código de barras. Así se descubrió el helio en el Sol antes de encontrarlo en la Tierra.',
+      'El cromo y el cobre "rompen" la regla de llenado de electrones: prefieren tener el subnivel d a la mitad o completamente lleno porque así son más estables.'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'Los colores de la pólvora de las fiestas de fin de año en Colombia salen de los electrones excitados de distintos elementos: el estroncio da rojo, el bario verde, el sodio amarillo y el cobre azul verdoso.'},
+      {amb:'Local', t:'En el laboratorio del colegio, el "ensayo a la llama" permite identificar un metal por el color que toma la llama del mechero, gracias a los saltos de sus electrones entre niveles.'}
+    ],
+    cotidianos: [
+      'Cuando subes a un bus, nadie se sienta al lado de otra persona mientras haya puestos dobles vacíos. Los electrones hacen lo mismo en los orbitales: es la regla de Hund.'
+    ],
+    activacion: [
+      'Si un nivel de energía puede tener muchos electrones, ¿crees que todos tienen exactamente la misma energía? ¿Cómo decidirías en qué orden se van llenando los lugares disponibles?'
+    ]
+  },
+  info: {
+    lectura: [
+      'Los electrones se organizan en <strong>niveles</strong> (n = 1, 2, 3…), cada nivel en <strong>subniveles</strong> (s, p, d, f) y cada subnivel en <strong>orbitales</strong>. En cada orbital caben máximo 2 electrones, así que s admite 2, p admite 6, d admite 10 y f admite 14. Un nivel completo tiene capacidad para 2n² electrones.',
+      'Para escribir la configuración se siguen tres reglas. La de <strong>Aufbau</strong> dice que primero se llenan los subniveles de menor energía, en el orden del <strong>diagrama de Moeller</strong>: 1s 2s 2p 3s 3p <strong>4s 3d</strong> 4p 5s 4d 5p 6s 4f 5d 6p 7s 5f 6d 7p. La de <strong>Pauli</strong> dice que en un orbital caben máximo 2 electrones, con espines opuestos (↑↓). La de <strong>Hund</strong> dice que en un subnivel primero va un electrón en cada orbital y luego se aparean.',
+      'La configuración explica la tabla periódica. El <strong>periodo</strong> es el nivel más alto ocupado. El <strong>bloque</strong> (s, p, d, f) es el subnivel donde entra el último electrón. Los <strong>electrones de valencia</strong> son los del último nivel. La <strong>configuración abreviada</strong> reemplaza la parte interna por el gas noble anterior: Na = [Ne] 3s¹. Los cationes pierden primero los electrones del nivel más alto: Fe²⁺ = [Ar] 3d⁶.'
+    ],
+    esquema: {
+      raiz: 'Configuración electrónica',
+      ramas: [
+        {t:'Capacidad', items:['s: 2', 'p: 6', 'd: 10', 'f: 14', 'nivel: 2n²']},
+        {t:'Reglas', items:['Aufbau (orden de Moeller)', 'Pauli (máx. 2 e⁻ por orbital, ↑↓)', 'Hund (uno por orbital antes de aparear)']},
+        {t:'Lo que indica', items:['periodo = nivel más alto', 'bloque = subnivel del último e⁻', 'valencia = e⁻ del último nivel']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: '₂₆Fe = [Ar] 4s² 3d⁶',
+    partes: [
+      ['[Ar]','an','núcleo de gas noble: los primeros 18 electrones (1s² 2s² 2p⁶ 3s² 3p⁶)'],
+      ['4s²','cat','el 4s se llena antes que el 3d (Moeller); n = 4 → periodo 4, 2 electrones de valencia'],
+      ['3d⁶','ox','el último electrón entra en un subnivel d → bloque d (metal de transición); 18 + 2 + 6 = 26 electrones']
+    ]
+  }
 }
+
 ],
 
 SABER: [
@@ -1716,7 +1806,32 @@ SABER: [
 {tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Por qué NO se puede calcular estequiometría con una ecuación química que todavía no está balanceada?', o:['Porque los coeficientes sin balancear no reflejan la proporción real de átomos que reaccionan','Porque las fórmulas cambiarían de un lado a otro de la ecuación','Porque las masas molares solo existen para ecuaciones balanceadas','Porque una ecuación sin balancear no tiene reactivos ni productos']},
 {tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'En el problema "a partir de 16 g de CH₄ (MM=16.043), ¿cuántos gramos de H₂O se producen?", ¿cuántos moles de CH₄ hay, aproximadamente, antes de aplicar la razón molar?', o:['≈0.997 mol','≈16 mol','≈1.6 mol','≈0.5 mol']},
 {tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Qué parte de la ecuación química NUNCA cambia al resolver un problema de estequiometría, sin importar los gramos que se den?', o:['Los coeficientes de la ecuación ya balanceada','La masa molar de cada especie','La cantidad de gramos del dato','El resultado final en gramos']},
-{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Cuál de estas secuencias de conversión es la correcta para ir de "gramos del reactivo A" a "gramos del producto B"?', o:['gramos A → moles A → moles B → gramos B','gramos A → gramos B directamente','moles A → gramos A → gramos B','gramos A → moles B → gramos A → gramos B']}
+{tema:'estequiometria', c:'conc', k:'Q', ctx:'', q:'¿Cuál de estas secuencias de conversión es la correcta para ir de "gramos del reactivo A" a "gramos del producto B"?', o:['gramos A → moles A → moles B → gramos B','gramos A → gramos B directamente','moles A → gramos A → gramos B','gramos A → moles B → gramos A → gramos B']},
+{tema:'atomo', c:'uso', k:'Q', ctx:'', q:'¿Qué indica el número atómico (Z) de un elemento?', o:['El número de protones de su núcleo','El número de neutrones de su núcleo','La suma de protones y neutrones','El número de niveles de energía que tiene']},
+{tema:'atomo', c:'exp', k:'Q', ctx:'En el tubo de rayos catódicos de Thomson, el haz invisible que sale del cátodo se desvía hacia la placa con carga positiva.', q:'¿Qué se puede concluir sobre las partículas que forman el haz?', o:['Tienen carga negativa','Tienen carga positiva','No tienen carga eléctrica','Son ondas de luz sin masa']},
+{tema:'atomo', c:'ind', k:'Q', ctx:'En el experimento de Geiger y Marsden se dispararon partículas alfa contra una lámina de oro muy delgada. Casi todas la atravesaron sin desviarse, pero aproximadamente 1 de cada 8000 rebotó.', q:'¿Qué conclusión explica AMBOS resultados?', o:['El átomo es casi todo espacio vacío, con un núcleo pequeño, denso y positivo','El átomo es una esfera maciza de carga positiva repartida','Los electrones son más pesados que las partículas alfa','La lámina de oro tenía agujeros visibles']},
+{tema:'atomo', c:'exp', k:'Q', ctx:'', q:'¿Qué idea del modelo de Dalton quedó descartada con el descubrimiento del electrón?', o:['Que el átomo es indivisible','Que la masa se conserva en las reacciones','Que los compuestos tienen proporciones fijas','Que los elementos están formados por átomos']},
+{tema:'atomo', c:'uso', k:'Q', ctx:'', q:'Un ion tiene 16 protones, 16 neutrones y 18 electrones. ¿Cuál es?', o:['S²⁻ (azufre-32)','S²⁺ (azufre-32)','Ar (argón-34)','O²⁻ (oxígeno-16)']},
+{tema:'atomo', c:'uso', k:'Q', ctx:'', q:'¿Cuántos neutrones tiene el isótopo cloro-37 (Z = 17)?', o:['20','17','37','54']},
+{tema:'atomo', c:'ind', k:'CTS', ctx:'Los arqueólogos usan el carbono-14 para fechar restos de las culturas muisca y tairona. El carbono más abundante en la naturaleza es el carbono-12.', q:'¿En qué se diferencian un átomo de carbono-14 y uno de carbono-12?', o:['En el número de neutrones (8 y 6)','En el número de protones (14 y 12)','En el número de electrones del átomo neutro','En que el carbono-14 no es carbono']},
+{tema:'atomo', c:'exp', k:'Q', ctx:'Según el modelo de Bohr, el electrón del hidrógeno solo puede ocupar ciertos niveles de energía.', q:'¿Qué ocurre cuando el electrón pasa de un nivel alto (n = 3) a uno más bajo (n = 2)?', o:['Emite un fotón con una energía definida (luz de un color específico)','Absorbe un fotón de cualquier energía','Cae al núcleo y el átomo desaparece','Se convierte en un protón']},
+{tema:'atomo', c:'uso', k:'Q', ctx:'', q:'¿Qué describe un orbital en el modelo mecánico-cuántico actual?', o:['Una región del espacio donde es muy probable encontrar al electrón','La trayectoria circular exacta que sigue el electrón','El lugar del núcleo donde están los neutrones','La energía total del átomo']},
+{tema:'atomo', c:'exp', k:'Q', ctx:'', q:'¿Por qué la masa atómica del cloro en la tabla periódica es 35,45 y no un número entero?', o:['Porque es el promedio ponderado de la masa de sus isótopos naturales','Porque el cloro tiene medio neutrón en su núcleo','Porque incluye la masa de los electrones ganados al formar iones','Porque los instrumentos no pueden medir masas exactas']},
+{tema:'atomo', c:'ind', k:'Q', ctx:'Thomson repitió su experimento cambiando el metal del cátodo (cobre, hierro, aluminio) y el haz se desvió exactamente igual en todos los casos.', q:'¿Qué indica este resultado?', o:['Que el electrón es una partícula que está en todos los átomos','Que cada metal tiene un tipo distinto de electrón','Que el metal del cátodo no emite partículas','Que los rayos catódicos tienen carga positiva']},
+{tema:'atomo', c:'uso', k:'Q', ctx:'', q:'¿Cuál es el orden histórico correcto de los modelos atómicos?', o:['Dalton → Thomson → Rutherford → Bohr','Thomson → Dalton → Bohr → Rutherford','Rutherford → Dalton → Thomson → Bohr','Dalton → Bohr → Rutherford → Thomson']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuál es la configuración electrónica del oxígeno (Z = 8)?', o:['1s² 2s² 2p⁴','1s² 2s² 2p⁶','1s² 2p⁶','1s² 2s⁴ 2p²']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'Según el diagrama de Moeller, ¿qué subnivel se llena justo después del 3p?', o:['4s','3d','4p','3f']},
+{tema:'config-e', c:'exp', k:'Q', ctx:'Un estudiante dibujó así los 3 electrones del subnivel 2p del nitrógeno: [↑↓] [↑] [  ].', q:'¿Qué regla incumplió?', o:['La regla de Hund: primero debe ir un electrón en cada orbital','El principio de Pauli: en un orbital no caben 2 electrones','El principio de Aufbau: el 2p se llena antes que el 2s','Ninguna: el diagrama es correcto']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Qué elemento tiene la configuración abreviada [Ne] 3s² 3p⁵?', o:['Cloro (Z = 17)','Azufre (Z = 16)','Argón (Z = 18)','Flúor (Z = 9)']},
+{tema:'config-e', c:'exp', k:'Q', ctx:'', q:'Un elemento neutro termina su configuración en 4p³. ¿Cuál es su periodo y su grupo?', o:['Periodo 4, grupo 15','Periodo 3, grupo 15','Periodo 4, grupo 3','Periodo 4, grupo 13']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones de valencia tiene el azufre, cuya configuración es [Ne] 3s² 3p⁴?', o:['6','4','2','16']},
+{tema:'config-e', c:'exp', k:'Q', ctx:'La configuración esperada del cromo (Z = 24) por la regla de Moeller es [Ar] 4s² 3d⁴, pero la real es [Ar] 4s¹ 3d⁵.', q:'¿Cómo se explica esta excepción?', o:['Un subnivel d semilleno (d⁵) es especialmente estable','El 4s tiene más energía que el 4p','El cromo pierde un electrón al formarse','Los electrones del cromo no cumplen el principio de Pauli']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'El hierro (Z = 26) tiene la configuración [Ar] 4s² 3d⁶.', q:'¿Cuál es la configuración del ion Fe²⁺?', o:['[Ar] 3d⁶','[Ar] 4s² 3d⁴','[Ar] 4s² 3d⁸','[Ar] 4s¹ 3d⁵']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones caben como máximo en el nivel n = 3?', o:['18','8','9','32']},
+{tema:'config-e', c:'ind', k:'CTS', ctx:'En la pólvora de fin de año, las sales de estroncio dan color rojo y las de bario color verde. En el laboratorio, el ensayo a la llama permite identificar metales por su color.', q:'¿Por qué cada elemento emite colores característicos al calentarse?', o:['Porque sus electrones excitados regresan a niveles más bajos emitiendo energías exactas, propias de cada elemento','Porque cada metal tiene un color de piel distinto','Porque el calor cambia el número de protones del núcleo','Porque los neutrones se liberan como luz']},
+{tema:'config-e', c:'exp', k:'Q', ctx:'', q:'El último electrón de un elemento entra en un subnivel d. ¿A qué bloque de la tabla pertenece y qué tipo de elemento es?', o:['Bloque d: metal de transición','Bloque s: metal alcalino','Bloque p: no metal','Bloque f: lantánido']},
+{tema:'config-e', c:'uso', k:'Q', ctx:'', q:'¿Cuántos electrones desapareados tiene el fósforo ([Ne] 3s² 3p³)?', o:['3','1','5','0']}
+
 ],
 
 ABIERTAS: [
@@ -1771,7 +1886,20 @@ ABIERTAS: [
 ,
 {tema:'estequiometria', t:'rx', q:'Para la ecuación balanceada 2Mg + O₂ → 2MgO, calcula cuántos gramos de MgO se producen a partir de 12.15 g de Mg (MM Mg=24.305, MM MgO=40.304). Muestra los 3 pasos de la cadena de conversión (gramos→moles del dato, moles del dato→moles de lo pedido, moles de lo pedido→gramos de lo pedido).'},
 {tema:'estequiometria', t:'nom', q:'Para la ecuación balanceada Zn + 2HCl → ZnCl₂ + H₂, calcula cuántos gramos de H₂ se producen a partir de 13.08 g de Zn (MM Zn=65.38, MM H₂=2.016), y nombra el producto sólido (ZnCl₂) en nomenclatura Tradicional y Stock.'},
-{tema:'estequiometria', t:'mdec', q:'Para la ecuación balanceada 4Al + 3O₂ → 2Al₂O₃, calcula cuántos gramos de Al₂O₃ se producen a partir de 54.0 g de Al (MM Al=26.982, MM Al₂O₃=101.961), e identifica las partes del producto Al₂O₃ (catión y anión) indicando la carga de cada uno.', f:'Al₂O₃', partes:[['Al³⁺','cat'],['O²⁻','an']]}
+{tema:'estequiometria', t:'mdec', q:'Para la ecuación balanceada 4Al + 3O₂ → 2Al₂O₃, calcula cuántos gramos de Al₂O₃ se producen a partir de 54.0 g de Al (MM Al=26.982, MM Al₂O₃=101.961), e identifica las partes del producto Al₂O₃ (catión y anión) indicando la carga de cada uno.', f:'Al₂O₃', partes:[['Al³⁺','cat'],['O²⁻','an']]},
+{tema:'atomo', t:'rx', q:'Describe el experimento de la lámina de oro de Rutherford: qué se disparó, contra qué, qué se observó y qué concluyó sobre la estructura del átomo. Explica por qué el modelo de Thomson no podía explicar esos resultados.'},
+{tema:'atomo', t:'rx', q:'Explica cómo el tubo de rayos catódicos permitió a Thomson descubrir el electrón. ¿Qué observación indicó que las partículas tienen carga negativa y por qué cambiar el metal del cátodo fue importante?'},
+{tema:'atomo', t:'nom', q:'Indica el número de protones, neutrones y electrones de la siguiente especie, y si es átomo neutro, catión o anión (Z del cloro = 17).', f:'³⁷Cl⁻'},
+{tema:'atomo', t:'nom', q:'Indica el número de protones, neutrones y electrones de la siguiente especie, y explica qué le ocurrió al átomo para formarla (Z del hierro = 26).', f:'⁵⁶Fe³⁺'},
+{tema:'atomo', t:'mdec', q:'Una especie química tiene las partículas indicadas. Escribe su símbolo con número de masa y carga, y di si es un átomo neutro, un catión o un anión.', partes:[['26 p⁺','cat'],['30 n⁰','oh'],['23 e⁻','an']]},
+{tema:'atomo', t:'mdec', q:'Una especie química tiene las partículas indicadas. Escribe su símbolo con número de masa y carga, y explica cuántos electrones ganó o perdió respecto al átomo neutro.', partes:[['8 p⁺','cat'],['8 n⁰','oh'],['10 e⁻','an']]},
+{tema:'config-e', t:'rx', q:'Usando el diagrama de Moeller, explica por qué el subnivel 4s se llena antes que el 3d. Luego escribe el orden de llenado desde 1s hasta 4p.'},
+{tema:'config-e', t:'rx', q:'El cromo (Z = 24) y el cobre (Z = 29) son excepciones a la regla de Moeller. Escribe la configuración que predice la regla y la configuración real de cada uno, y explica por qué ocurre la excepción.'},
+{tema:'config-e', t:'nom', q:'Escribe la configuración electrónica completa y abreviada, y dibuja el diagrama de orbitales del último subnivel. Indica su periodo, grupo y electrones de valencia.', f:'S (Z = 16)'},
+{tema:'config-e', t:'nom', q:'Escribe la configuración abreviada del átomo neutro y del ion. Explica de qué subnivel salen los electrones que pierde.', f:'Fe²⁺ (Z = 26)'},
+{tema:'config-e', t:'mdec', q:'En esta configuración abreviada, identifica el núcleo de gas noble y los electrones de valencia. ¿Qué elemento es? ¿En qué periodo, grupo y bloque está?', partes:[['[Ne]','an'],['3s²','cat'],['3p⁵','ox']]},
+{tema:'config-e', t:'mdec', q:'En esta configuración abreviada, cuenta el total de electrones e identifica el elemento. ¿Cuántos electrones de valencia tiene y cuántos están desapareados?', partes:[['[Ar]','an'],['4s²','cat'],['3d¹⁰','ox'],['4p²','oh']]}
+
 ]
 
 };

@@ -78,15 +78,27 @@ Cinco pestañas (`#conceptos`, `#moeller`, `#configurador`, `#orbitales`, `#repa
 ### ⚠️ Paso manual pendiente (Apps Script)
 Se agregó «Teoría atómica y configuración electrónica» a `TEMAS_PRINCIPALES` en `ionom-analytics.gs`, para que tenga columna propia en «Estadísticas». Ese cambio **no llega a producción solo**: hay que copiar el archivo al editor de script.google.com y luego ir a Implementar → Administrar implementaciones → Editar → Nueva versión. Mientras no se haga, las partidas de este tema se guardan igual y aparecen en «Eficacia por tema», que agrega temas nuevos dinámicamente.
 
-## 6. Service worker
+## 6. Generador Docente (`docente.html`)
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`).
+Hay dos temas nuevos en «2 · Tema(s)»: **Teoría atómica y estructura del átomo** (`atomo`) y **Configuración electrónica** (`config-e`). Cada uno incluye:
+- **Sesión 1 (aprendizajes previos)**: datos curiosos, contexto nacional y local (el reactor IAN-R1, el carbono-14 en arqueología muisca y tairona, la pólvora de fin de año, el ensayo a la llama), ejemplos cotidianos y una pregunta de activación.
+- **Sesión 2 (información)**: lectura, esquema y ejemplo resuelto con el código de colores (²³Na⁺ con sus partículas; ₂₆Fe = [Ar] 4s² 3d⁶).
+- **Trabajo práctico**: dos tipos de ejercicio nuevos que se marcan solos al elegir el tema:
+  - **D Partículas subatómicas**: 37 isótopos e iones reales en notación ᴬ_Z X con carga, con una tabla de protones, neutrones, electrones y tipo de especie.
+  - **D Configuración electrónica**: 34 elementos (Z = 1–36, sin Cr ni Cu). Se pide la configuración completa y abreviada, el diagrama de orbitales, el periodo, el grupo, el bloque y los electrones de valencia.
+- **Evaluación**: 12 preguntas tipo Saber 11 por tema (la opción A del banco es la correcta y se baraja al imprimir) y 6 preguntas abiertas por tema (explicar un experimento o proceso, escribir partículas o configuraciones, e identificar partes con el código de colores).
+
+Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los ejercicios prácticos están en `assets/docente-app.js` (`ESPECIES_ATOMO`, `poolConfig`, `tarjetaParticulas` y `tarjetaConfig`). Los Laberintos y Crucigramas todavía no incluyen estos temas.
+
+## 7. Service worker
+
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
-## 7. Ideas pendientes (propuestas de diseño)
+## 8. Ideas pendientes (propuestas de diseño)
 
 - **Estados de dominio** en el menú átomo (explorado → practicado → dominado) según los quizzes y el Juego, en vez de solo «visitado».
 - **Repaso espaciado**: una estación dominada que no se practica en 2 o 3 semanas se «oxida» y pide un repaso corto.
 - **Misión de la semana** puesta por la docente desde el Generador Docente.
 - **Diagnóstico de entrada** que sugiera por dónde empezar.
-- Agregar los temas de la región «El átomo» al **Generador Docente** (guías y evaluaciones imprimibles).
+- Agregar los temas de la región «El átomo» a los **Laberintos y Crucigramas** del Generador Docente.
