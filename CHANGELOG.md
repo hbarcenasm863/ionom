@@ -42,6 +42,14 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 - `assets/ionom-ui.js` guarda en el navegador qué páginas visitó el estudiante (`ionom-visitas`, solo en su equipo y sin enviarse a ningún lado). También agrega «Teoría Atómica» a la hoja «Más» de la barra inferior del celular. El menú lateral de las 15 páginas tiene el nuevo enlace.
 - `sw.js`: `atomo.html` se agregó a la caché y `CACHE_NAME` pasó de `ionom-v47` a `ionom-v48` (cambió `ionom-ui.js`, que se sirve cache-first).
 
+## 28 de octubre — Guías, talleres y evaluaciones en pestañas separadas
+
+- **Por sugerencia de un docente**, la pestaña «📄 Guías, talleres y evaluaciones» de `docente.html` se dividió en tres pestañas propias, igual que Laberintos y Crucigramas: **📘 Guías** (4 sesiones + evaluación en hojas aparte), **✏️ Talleres** (solo ejercicios de práctica) y **📝 Evaluaciones** (tipo Saber 11 + abiertas).
+- Cada pestaña muestra solo las opciones que le aplican: en Talleres no aparece la sección de Evaluación y en Evaluaciones no aparece la de Trabajo práctico. Los números de las secciones se ajustan solos.
+- La página recuerda la última pestaña usada y se puede abrir directo con `docente.html#talleres` o `docente.html#evaluaciones`.
+
+---
+
 ## 26 de octubre — Laberintos químicos en el Generador Docente
 
 - **Nueva pestaña «🧭 Laberintos»** en `docente.html` (la pestaña «📄 Guías, talleres y evaluaciones» queda igual que antes). Cuatro tipos de laberinto: nomenclatura inorgánica, mol y masa molar, tipos de reacción y balanceo.
