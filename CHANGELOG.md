@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (5) — Nueva página: Enlace Químico
+
+- **`enlace.html` — 🔗 Enlace Químico**, la cuarta parada del nivel n = 1 (después de la Tabla Periódica). Retoma «EnlaceLab» con el diseño de IonNom. Tiene 6 pestañas:
+  - **Conceptos**: regla del octeto, símbolos de Lewis de Z = 1–20 que se pueden tocar, los tres tipos de enlace con sus propiedades, y molécula vs. unidad fórmula.
+  - **Lewis**: estructuras paso a paso de H₂O, NH₃, CH₄, HCl, CO₂, N₂ y NaCl, contando los electrones en cada paso.
+  - **ΔEN**: calculadora con las electronegatividades de la tabla del sitio y un reto de 10 parejas.
+  - **Simuladores**: transferencia de electrones en 9 compuestos iónicos (con la fórmula por cruce de cargas), curva de energía del enlace H–H, O=O y N≡N con datos reales, mar de electrones (pila y calor) y maleable vs. frágil.
+  - **Laboratorio virtual**: 8 muestras y 6 ensayos para deducir el tipo de enlace; incluye casos trampa como el azúcar y el cuarzo.
+  - **Repaso**: 10 preguntas.
+- **Química corregida respecto a EnlaceLab**: la clasificación por ΔEN ahora es coherente (H–S, H–F y HCl estaban mal o contradictorios), «todos los iónicos son solubles» pasó a «muchos», y se agregaron los sólidos covalentes de red.
+- **Menú átomo**: la estación 🔗 está en la capa n = 1 y la ruta tiene 13 paradas. Hay una tarjeta nueva en la lista y el enlace aparece en el menú lateral de todas las páginas y en «Más» del celular.
+- `sw.js` pasó a `ionom-v53`.
+
 ## 28 de octubre (4) — El átomo en Laberintos y Crucigramas
 
 - **Laberintos: tipo nuevo «Teoría atómica y configuración»**. Tiene 4 grupos de preguntas que se pueden combinar:

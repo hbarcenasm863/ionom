@@ -14,7 +14,7 @@ Documento de referencia de lo construido en octubre de 2026 para la primera regi
 | Tema del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (49 preguntas) |
 | Registro de visitas | `assets/ionom-ui.js` | Guarda en el navegador (`ionom-visitas`) qué páginas visitó el estudiante, para marcar ✓ en el menú átomo |
 
-Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración Electrónica → Tabla Periódica**.
+Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración Electrónica → Tabla Periódica → Enlace Químico**.
 
 ---
 
@@ -53,11 +53,37 @@ Cinco pestañas (`#conceptos`, `#moeller`, `#configurador`, `#orbitales`, `#repa
 - Convención de números cuánticos: los orbitales se llenan de mₗ = −l a +l, primero con espín ↑ (mₛ = +½). Está escrita en la página porque algunos textos usan la convención contraria.
 - Electrones de valencia: los del último nivel (n = periodo), igual que `elValenceCount` del Juego. El Pd (4d¹⁰, sin 5s) da 0 y la página lo explica.
 
+## 3b. `enlace.html` — Enlace Químico
+
+Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puente hacia la nomenclatura. Retoma las ideas de «EnlaceLab» con el diseño de IonNom y la química corregida. Tiene 6 pestañas (`#conceptos`, `#lewis`, `#en`, `#simuladores`, `#laboratorio`, `#repaso`):
+
+1. **Conceptos**: la regla del octeto; los símbolos de Lewis de Z = 1–20, que se pueden tocar y dicen si el elemento gana, pierde o comparte electrones; los tres tipos de enlace con sus propiedades; la advertencia sobre los casos intermedios (AlCl₃, BeCl₂, HF), y la diferencia entre molécula y unidad fórmula.
+2. **Lewis**: estructuras paso a paso de H₂O, NH₃, CH₄, HCl, CO₂, N₂ y NaCl. En cada paso se cuentan los electrones disponibles, usados y restantes. Incluye cargas parciales δ+/δ−, geometría y polaridad de la molécula.
+3. **ΔEN**: calculadora con las electronegatividades de Pauling de `tabla.html` y un reto de 10 parejas. La clasificación usa dos ideas juntas:
+   - metal + metal → metálico;
+   - no metal + no metal → apolar (ΔEN < 0,4) o polar;
+   - metal + no metal → iónico si ΔEN ≥ 1,7; si no, covalente polar con carácter iónico parcial.
+
+   El reto solo usa parejas lejos de los límites, para que no haya casos dudosos.
+4. **Simuladores**:
+   - **Transferencia de electrones**: 9 compuestos iónicos (NaCl, KBr, LiF, MgO, CaCl₂, Na₂O, AlF₃, Al₂O₃, Mg₃N₂). Muestra el cruce de cargas que lleva a la fórmula, y que el catión queda más pequeño y el anión más grande.
+   - **Curva de energía potencial**: modelo de Morse con datos reales de H₂, O₂ y N₂ (longitud y energía de enlace).
+   - **Mar de electrones**: normal, conectado a una pila y calentado.
+   - **Maleable vs. frágil**: metal frente a cristal iónico al golpearlos.
+5. **Laboratorio**: 8 muestras (NaCl, CaCl₂, cobre, aluminio, azúcar, parafina, agua y cuarzo) con 6 ensayos. Se puede elegir una muestra o pedir una misteriosa. El azúcar y el cuarzo son los casos que obligan a razonar con la conductividad de la disolución o del fundido.
+6. **Repaso**: 10 preguntas al azar de un banco de 13.
+
+**Correcciones respecto a EnlaceLab**:
+- H–S (ΔEN 0,38) estaba marcado como polar y H–F (1,78) como polar a pesar de la regla de 1,7. Ahora la regla es coherente y explica la excepción del HF.
+- El HCl (ΔEN 0,96) estaba como «polar fuerte» en una tarjeta y «polar leve» en la escala. Ahora es covalente polar.
+- «Solubilidad alta» para todos los iónicos se cambió a «muchos se disuelven».
+- Se agregó el caso de los sólidos covalentes de red (cuarzo), que funden muy alto sin ser iónicos.
+
 ## 4. Menú átomo (`index.html`)
 
-- **Núcleo**: progreso «X/12» sobre la ruta recomendada. Al tocarlo aparece el avance por nivel y el botón «Siguiente parada».
+- **Núcleo**: progreso «X/13» sobre la ruta recomendada. Al tocarlo aparece el avance por nivel y el botón «Siguiente parada».
 - **Capas** (cada una con su *pregunta guía*):
-  - n = 1 El átomo (Teoría Atómica, Configuración, Tabla)
+  - n = 1 El átomo (Teoría Atómica, Configuración, Tabla, Enlace Químico)
   - n = 2 Nomenclatura (Principios, Funciones, Juego, NomenClash y la Guía como opcional)
   - n = 3 Reacciones (Tipos, Balanceo y el Simulador como opcional)
   - n = 4 Cálculos y redox (Mol, Estequiometría, Balanceo avanzado)
@@ -108,7 +134,7 @@ Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos
 
 ## 7. Service worker
 
-- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`).
+- `CACHE_NAME`: `ionom-v47` → `v48` (Teoría Atómica y menú) → `v49` (Configuración, `banco.js` y `ionom-ui.js`) → `v50` (Generador Docente: `docente-datos.js` y `docente-app.js`) → `v52` (`laberinto.js` y `crucigrama.js`; `main` ya había usado `v51`) → `v53` (`enlace.html` e `ionom-ui.js`).
 - `atomo.html` y `configuracion.html` están en `ASSETS_TO_CACHE`, así que funcionan sin conexión. Las PhET son la única parte que necesita internet.
 
 ## 8. Ideas pendientes (propuestas de diseño)

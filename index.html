@@ -590,6 +590,7 @@ html{font-size:var(--base-fs)}
     <a href="index.html" class="active"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
     <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
     <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
@@ -734,6 +735,23 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="mod-bottom">
       <div class="mod-chips"><span class="mc">↙️ Moeller</span><span class="mc">🔧 118 elementos</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card teal" href="enlace.html">
+    <div class="mod-top">
+      <span class="mod-icon">🔗</span>
+      <div class="mod-paso">Región 1 · El átomo</div>
+      <div class="mod-title">Enlace Químico</div>
+      <div class="mod-subtitle">Aprenderás: enlace iónico, covalente y metálico, Lewis y ΔEN</div>
+      <div class="mod-desc">Estructuras de Lewis paso a paso, calculadora de electronegatividad, 4 simuladores y laboratorio virtual para deducir el tipo de enlace.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">✏️ Lewis</span><span class="mc">⚖️ ΔEN</span><span class="mc">🔬 Laboratorio</span></div>
       <div class="mod-meta">
         <span class="mod-badge basico">Nuevo</span>
         <span class="mod-arrow">→</span>
@@ -1239,17 +1257,18 @@ window.addEventListener('appinstalled', () => {
     {id:'atomo.html',r:1,n:1,e:'🪐',t:'Teoría Atómica',d:'Modelos atómicos, experimentos de Thomson, Rutherford y Bohr, y constructor de átomos.',nuevo:true},
     {id:'configuracion.html',r:2,n:1,e:'🧬',t:'Configuración Electrónica',d:'Aufbau, Pauli y Hund, diagrama de Moeller, configurador de cualquier elemento o ion y práctica de orbitales.',nuevo:true},
     {id:'tabla.html',r:3,n:1,e:'📊',t:'Tabla Periódica',d:'118 elementos: configuración electrónica, electronegatividad y estados de oxidación.'},
-    {id:'teoria.html',r:4,n:2,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas con el código de 4 colores.'},
-    {id:'funciones.html',r:5,n:2,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso.'},
-    {id:'juego.html',r:6,n:2,e:'🎮',t:'Juego',d:'20 preguntas cronometradas y Modo Estudiante.'},
-    {id:'nomenClash.html',r:7,n:2,e:'⚔️',t:'NomenClash',d:'Duelo de cartas de iones contra la IA.'},
+    {id:'enlace.html',r:4,n:1,e:'🔗',t:'Enlace Químico',d:'Iónico, covalente y metálico: estructuras de Lewis, ΔEN, simuladores y laboratorio virtual.',nuevo:true},
+    {id:'teoria.html',r:5,n:2,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas con el código de 4 colores.'},
+    {id:'funciones.html',r:6,n:2,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso.'},
+    {id:'juego.html',r:7,n:2,e:'🎮',t:'Juego',d:'20 preguntas cronometradas y Modo Estudiante.'},
+    {id:'nomenClash.html',r:8,n:2,e:'⚔️',t:'NomenClash',d:'Duelo de cartas de iones contra la IA.'},
     {id:'guia.html',r:null,n:2,e:'📘',t:'Guía descargable',d:'La guía completa para imprimir o estudiar sin conexión.'},
-    {id:'reacciones.html',r:8,n:3,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización.'},
-    {id:'balanceo.html',r:9,n:3,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo, paso a paso.'},
+    {id:'reacciones.html',r:9,n:3,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización.'},
+    {id:'balanceo.html',r:10,n:3,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo, paso a paso.'},
     {id:'simulador.html',r:null,n:3,e:'🔬',t:'Simulador',d:'Predice productos de reacción y usa el laboratorio de pH.'},
-    {id:'moles.html',r:10,n:4,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M con factores de conversión.'},
-    {id:'estequiometria.html',r:11,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
-    {id:'balanceo-avanzado.html',r:12,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
+    {id:'moles.html',r:11,n:4,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M con factores de conversión.'},
+    {id:'estequiometria.html',r:12,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
+    {id:'balanceo-avanzado.html',r:13,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
   ];
   var visitas={};
   try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}
