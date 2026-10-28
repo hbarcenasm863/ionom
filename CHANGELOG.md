@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 28 de octubre (6) — Enlace Químico: simulaciones nuevas
+
+`enlace.html` deja de ser una copia de EnlaceLab. Las animaciones y simulaciones se rehicieron con el estilo de los simuladores de Teoría Atómica (lienzos oscuros, táctiles y animados):
+
+- **Lewis animado**: cada electrón conserva el color de su átomo y se desliza a los enlaces y pares libres; en el NaCl se ve saltar el electrón del Na al Cl. Se puede ver con puntos o con rayas.
+- **Del átomo al cristal**: 7 compuestos iónicos en 5 fases (átomos → transferencia → iones → atracción → red). El estudiante arrastra los electrones con el dedo o usa el modo automático; la red final resalta la unidad fórmula.
+- **Nube compartida**: se acercan dos átomos (H₂, Cl₂, O₂, N₂), las nubes se suman y una curva de Morse con datos reales sigue la energía. Con «Soltar», la molécula vibra.
+- **Polaridad**: un deslizador de ΔEN transforma la nube de apolar a polar a iónica, con δ+/δ− y la flecha del dipolo.
+- **Mar de electrones**: 4 modos (normal, pila con bombillo, calor con termómetro y golpe).
+- **Maleable vs. frágil**: el golpe se ve en cámara lenta.
+- **Laboratorio animado**: cada ensayo tiene su escena (mechero y termómetro, circuito con bombillo, iones que viajan a los electrodos, vaso con agua y martillo).
+- `sw.js` pasó a `ionom-v54`.
+
 ## 28 de octubre (5) — Nueva página: Enlace Químico
 
 - **`enlace.html` — 🔗 Enlace Químico**, la cuarta parada del nivel n = 1 (después de la Tabla Periódica). Retoma «EnlaceLab» con el diseño de IonNom. Tiene 6 pestañas:

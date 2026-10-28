@@ -58,19 +58,27 @@ Cinco pestañas (`#conceptos`, `#moeller`, `#configurador`, `#orbitales`, `#repa
 Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puente hacia la nomenclatura. Retoma las ideas de «EnlaceLab» con el diseño de IonNom y la química corregida. Tiene 6 pestañas (`#conceptos`, `#lewis`, `#en`, `#simuladores`, `#laboratorio`, `#repaso`):
 
 1. **Conceptos**: la regla del octeto; los símbolos de Lewis de Z = 1–20, que se pueden tocar y dicen si el elemento gana, pierde o comparte electrones; los tres tipos de enlace con sus propiedades; la advertencia sobre los casos intermedios (AlCl₃, BeCl₂, HF), y la diferencia entre molécula y unidad fórmula.
-2. **Lewis**: estructuras paso a paso de H₂O, NH₃, CH₄, HCl, CO₂, N₂ y NaCl. En cada paso se cuentan los electrones disponibles, usados y restantes. Incluye cargas parciales δ+/δ−, geometría y polaridad de la molécula.
+2. **Lewis animado**: estructuras paso a paso de H₂O, NH₃, CH₄, HCl, CO₂, N₂ y NaCl en un lienzo. Cada electrón conserva el color del átomo de donde viene y se desliza a su lugar: primero los átomos separados, luego los pares de enlace, los pares libres que salen de la «bandeja» y, en el NaCl, el electrón que salta del Na al Cl. Se puede ver con puntos o con rayas. En cada paso se cuentan los electrones disponibles, usados y restantes. Incluye cargas parciales δ+/δ−, geometría y polaridad de la molécula.
 3. **ΔEN**: calculadora con las electronegatividades de Pauling de `tabla.html` y un reto de 10 parejas. La clasificación usa dos ideas juntas:
    - metal + metal → metálico;
    - no metal + no metal → apolar (ΔEN < 0,4) o polar;
    - metal + no metal → iónico si ΔEN ≥ 1,7; si no, covalente polar con carácter iónico parcial.
 
    El reto solo usa parejas lejos de los límites, para que no haya casos dudosos.
-4. **Simuladores**:
-   - **Transferencia de electrones**: 9 compuestos iónicos (NaCl, KBr, LiF, MgO, CaCl₂, Na₂O, AlF₃, Al₂O₃, Mg₃N₂). Muestra el cruce de cargas que lleva a la fórmula, y que el catión queda más pequeño y el anión más grande.
-   - **Curva de energía potencial**: modelo de Morse con datos reales de H₂, O₂ y N₂ (longitud y energía de enlace).
-   - **Mar de electrones**: normal, conectado a una pila y calentado.
-   - **Maleable vs. frágil**: metal frente a cristal iónico al golpearlos.
-5. **Laboratorio**: 8 muestras (NaCl, CaCl₂, cobre, aluminio, azúcar, parafina, agua y cuarzo) con 6 ensayos. Se puede elegir una muestra o pedir una misteriosa. El azúcar y el cuarzo son los casos que obligan a razonar con la conductividad de la disolución o del fundido.
+4. **Simuladores** (lienzos oscuros, animados y táctiles):
+   - **Del átomo al cristal**: NaCl, LiF, KCl, MgO, CaCl₂, MgF₂ y Na₂O en 5 fases: átomos (modelo de Bohr), transferencia, iones, atracción y red cristalina. El estudiante arrastra con el dedo los electrones de valencia del metal a los huecos punteados del no metal, o usa el modo automático. El catión se encoge y pierde su capa externa, el anión crece, los iones se atraen con un destello de energía y al final se arma la red 2D con la unidad fórmula resaltada.
+   - **Nube compartida (covalente)**: H₂, Cl₂, O₂ y N₂. Se arrastra un átomo hacia el otro: las nubes se suman, los electrones compartidos pasan de girar en su átomo a recorrer ambos núcleos, y una curva de Morse con datos reales sigue la distancia y la energía. Con «Soltar» la molécula vibra alrededor de la longitud de enlace.
+   - **Polaridad**: un deslizador de ΔEN de 0 a 3,3 transforma la nube de apolar (verde) a polar (azul/rojo) y a iónica (corchetes, ≥ 1,7). El par compartido se corre, aparecen δ+/δ− y la flecha del dipolo. Hay ejemplos rápidos (H₂, HCl, HF, NaCl…).
+   - **Mar de electrones**: red de cationes con 70 electrones con estela, en 4 modos: normal, con pila (bombillo y corriente), calentando un extremo (vibración por colores y termómetro en el lado frío) y golpe (las capas se deslizan sin romperse).
+   - **Maleable vs. frágil**: el mismo golpe en cámara lenta a un metal, que se deforma, y a un cristal iónico, que al enfrentar cargas iguales se repele y se fractura.
+5. **Laboratorio animado**: 8 muestras (NaCl, CaCl₂, cobre, aluminio, azúcar, parafina, agua y cuarzo) con 6 ensayos, y cada ensayo tiene su escena:
+   - aspecto con brillos;
+   - mechero y termómetro que sube hasta el punto de fusión (o se queda corto);
+   - circuito con pila, electrones en los cables y un bombillo que brilla según la conductividad; en disolución los iones viajan a los electrodos y las moléculas de azúcar no;
+   - vaso con agua donde la muestra se disuelve, flota o se hunde;
+   - martillo que parte, aplana, marca o rebota.
+
+   Se puede elegir una muestra o pedir una misteriosa. El azúcar y el cuarzo son los casos que obligan a razonar con la conductividad de la disolución o del fundido.
 6. **Repaso**: 10 preguntas al azar de un banco de 13.
 
 **Correcciones respecto a EnlaceLab**:
