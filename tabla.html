@@ -421,6 +421,83 @@ html{font-size:var(--base-fs)}
 .tl-count{font-size:.8rem;color:var(--dimmer);font-weight:700}
 @media(max-width:480px){.tl-head svg{width:68px;height:68px}}
 
+
+/* ── LABORATORIO DE CADA ÉPOCA ── */
+#lab-title span{color:var(--an-t)}
+.lab-intro{font-size:.88rem;color:var(--tx2);line-height:1.65;margin-bottom:12px}
+.lab-h{font-size:.74rem!important;font-weight:800;color:var(--dimmer)!important;margin:12px 0 6px!important;text-transform:uppercase;letter-spacing:.06em}
+.lab-out{margin-top:10px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:12px 16px;font-size:.86rem;color:var(--tx2);line-height:1.6}
+.lab-out:empty{display:none}
+.lab-out ul{margin:6px 0 6px 20px}
+.lab-out li{font-size:.84rem;margin-bottom:3px}
+.lab-out strong{color:var(--tx)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{min-height:38px;padding:6px 12px;border:2px solid var(--brd2);border-radius:999px;background:var(--surf);color:var(--tx);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--an)}
+.chip.pick{background:var(--an-b);border-color:var(--an);color:var(--an-t)}
+.chip.good{background:var(--ok-b);border-color:var(--ok);color:var(--ok-t)}
+.chip.miss{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
+.chip.bad{background:var(--surf);border-color:var(--err);color:var(--err-t);text-decoration:line-through}
+.chip.fine{opacity:.55}
+.chip.part{background:var(--warn-b);border-color:var(--warn);color:var(--warn-t)}
+.chip:disabled{cursor:default}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 18px;margin:10px 0 4px}
+.ctrl{margin:8px 0}
+.ctrl label{display:flex;justify-content:space-between;font-size:.8rem;font-weight:700;color:var(--tx2);margin-bottom:4px;gap:8px}
+.ctrl label output{font-family:var(--mono);color:var(--nav);white-space:nowrap}
+.ctrl input[type=range]{width:100%;accent-color:var(--nav);min-height:32px}
+/* Newlands */
+.nl-grid{display:grid;grid-template-columns:4.6em repeat(7,minmax(0,1fr));gap:4px;max-width:560px}
+.nl-note{text-align:center;font-size:.72rem;font-weight:800;color:var(--nav)}
+.nl-oct{font-size:.62rem;font-weight:700;color:var(--dimmer);display:flex;align-items:center}
+.nl-el{min-height:40px;border:1.5px solid var(--brd2);border-radius:6px;background:var(--surf2);color:var(--tx);font:inherit;font-size:.78rem;font-weight:800;cursor:pointer;padding:2px}
+.nl-el.ok{background:var(--ok-b);border-color:var(--ok);color:var(--ok-t)}
+.nl-el.no{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
+.nl-el.sel{outline:3px solid var(--gold);outline-offset:1px}
+/* Mendeléiev */
+.md-grid{display:grid;grid-template-columns:repeat(3,minmax(0,110px));gap:6px}
+.md-c{border:1.5px solid var(--brd2);border-radius:8px;background:var(--surf2);padding:6px;display:flex;flex-direction:column;align-items:center;font-size:.7rem;color:var(--tx2);line-height:1.3}
+.md-c b{font-size:1.05rem;color:var(--tx)}
+.md-c.nb{background:var(--an-b);border-color:var(--an)}
+.md-c.gap{border:2px dashed var(--warn);background:var(--warn-b);color:var(--warn-t)}
+.md-c.gap b{color:var(--warn-t);font-size:1.3rem}
+.md-cols{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0}
+.md-cols>div{display:flex;flex-direction:column;gap:4px;width:min(100%,210px)}
+.md-ch{font-size:.68rem;font-weight:800;color:var(--dimmer);text-transform:uppercase;letter-spacing:.04em}
+.md-s{border:1.5px solid var(--brd2);border-radius:8px;background:var(--surf2);padding:6px 10px;font-weight:800;font-size:.9rem;color:var(--tx);transition:background .3s}
+.md-s.slot{display:flex;flex-direction:column}
+.md-s small{font-weight:600;font-size:.7rem;color:var(--tx2)}
+.md-s.ok{background:var(--ok-b);border-color:var(--ok)}
+.md-s.no{background:var(--err-b);border-color:var(--err)}
+.md-t{border-collapse:collapse;width:100%;font-size:.8rem;margin-bottom:8px}
+.md-t th,.md-t td{border:1px solid var(--brd);padding:5px 8px;text-align:left}
+.md-t th{background:var(--surf);font-size:.72rem;color:var(--dimmer)}
+/* Ramsay */
+.rm-flasks{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:6px 0 10px}
+.rm-f{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.72rem;color:var(--tx2);width:100px}
+.rm-f b{font-size:.74rem;color:var(--tx);margin-top:6px}
+.rm-b{width:60px;height:80px;border:2.5px solid #64748b;border-radius:8px 8px 22px 22px;position:relative;overflow:hidden;background:var(--surf)}
+.rm-b::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--h,60%);background:linear-gradient(0deg,#93c5fd,#dbeafe)}
+.rm-b.mix::after{background:linear-gradient(0deg,#a78bfa 0,#a78bfa var(--ar,0%),#93c5fd var(--ar,0%),#dbeafe)}
+/* Seaborg */
+.sb-wrap{position:relative;padding-left:78px;max-width:520px}
+.sb-lab{position:absolute;left:0;width:72px;height:20%;display:flex;align-items:center;font-size:.64rem;font-weight:800;color:var(--dimmer);line-height:1.1}
+.sb-grid{position:relative;aspect-ratio:8/5;z-index:0}
+.sb-c{position:absolute;width:12.5%;height:20%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:var(--tx)}
+.sb-c::before{content:"";position:absolute;inset:2px;border:1.5px solid var(--brd2);border-radius:6px;background:var(--surf2);z-index:-1}
+.sb-c.mv{transition:left .9s cubic-bezier(.4,0,.2,1),top .9s cubic-bezier(.4,0,.2,1);color:var(--blk-f-t)}
+.sb-c.mv::before{background:var(--blk-f-b);border-color:var(--blk-f)}
+.sb-c.mv.q{color:var(--dimmer)}
+.sb-c.mv.q::before{background:var(--surf);border-style:dashed;border-color:var(--brd2)}
+/* IUPAC */
+.iu-card{display:flex;gap:14px;align-items:center;background:var(--surf2);border:2px solid var(--brd);border-radius:var(--r);padding:12px 16px;margin:6px 0 10px}
+.iu-sym{width:70px;height:70px;flex-shrink:0;border-radius:10px;background:var(--nav);color:#fff;font-size:1.6rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+.iu-name{font-family:var(--serif);font-size:1.3rem;font-weight:700;font-style:italic;color:var(--tx)}
+.iu-dig{font-family:var(--mono);font-size:.74rem;color:var(--tx2);margin:2px 0}
+.iu-dig span{white-space:nowrap}
+.iu-of{font-size:.8rem;color:var(--tx2)}
+.tl-foot{padding:0 18px 16px}
+
 /* ── MINI TABLA (organización y propiedades) ── */
 .mini-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
 .mini{display:grid;grid-template-columns:1.6em repeat(18,minmax(0,1fr));gap:2px;min-width:520px;max-width:900px;container-type:inline-size}
@@ -615,6 +692,11 @@ html{font-size:var(--base-fs)}
         <button class="btn ghost" id="tl-prev">← Anterior</button>
         <span class="tl-count" id="tl-count"></span>
         <button class="btn ghost" id="tl-next">Siguiente →</button>
+      </div>
+      <div class="sect" id="tl-lab" style="margin-top:16px;scroll-margin-top:110px">
+        <h2 id="lab-title">🎮 Laboratorio de la época</h2>
+        <p class="lab-intro" id="lab-intro"></p>
+        <div id="lab-body"></div>
       </div>
       <div class="info-box" style="margin-top:16px">💡 <strong>Idea clave:</strong> primero se ordenó por <strong>masa atómica</strong> (Mendeléiev, 1869) y funcionó casi siempre. Las pocas parejas que quedaban «al revés» (Ar–K, Co–Ni, Te–I) se arreglaron cuando Moseley mostró en 1913 que el orden verdadero es el <strong>número atómico Z</strong>: la cantidad de protones del núcleo.</div>
     </div>
@@ -1442,10 +1524,13 @@ var tlIdx=0;
       '<h4 class="evid">🔍 Evidencia o ejemplo</h4><p>'+m.evid+'</p>'+
       '<h4 class="lim">'+(m.last?'🔭 ¿Y ahora?':'⚠️ ¿Qué le faltaba?')+'</h4><p>'+m.lim+'</p>'+
       (m.col?'<h4 class="col">🇨🇴 Conexión con Colombia</h4><p>'+m.col+'</p>':'')+
-      '</div></article>';
+      '</div><div class="tl-foot"><button class="btn" data-lab="'+i+'">🎮 Pruébalo</button></div></article>';
   }).join('');
   years.querySelectorAll('.tl-year').forEach(function(b){
     b.addEventListener('click',function(){ goTl(+b.getAttribute('data-i')); });
+  });
+  track.querySelectorAll('[data-lab]').forEach(function(b){
+    b.addEventListener('click',function(){ var i=+b.getAttribute('data-lab'); goTl(i); $('tl-lab').scrollIntoView({behavior:'smooth',block:'start'}); });
   });
   $('tl-prev').addEventListener('click',function(){ goTl(Math.max(0,tlIdx-1)); });
   $('tl-next').addEventListener('click',function(){ goTl(Math.min(HITOS.length-1,tlIdx+1)); });
@@ -1466,6 +1551,7 @@ function markTl(i){
   $('tl-prev').disabled=i===0; $('tl-next').disabled=i===HITOS.length-1;
   var yb=$('tl-years').children[i];
   if(yb&&yb.scrollIntoView&&visible(yb)) yb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  renderLab(i);
 }
 function goTl(i){
   var track=$('tl-track'), c=track.children[i];
@@ -1473,6 +1559,403 @@ function goTl(i){
   markTl(i);
 }
 markTl(0);
+
+/* ════════════════ Laboratorio de cada época ════════════════
+   Debajo de la línea del tiempo: una actividad interactiva por modelo.
+   Sigue a la tarjeta activa; cada lab devuelve una función de limpieza
+   (para detener animaciones o sonidos al cambiar de tarjeta). */
+var labIdx=-1, labStop=null;
+function renderLab(i){
+  if(!window.__LABS||labIdx===i) return;
+  if(labStop){ try{ labStop(); }catch(e){} labStop=null; }
+  labIdx=i;
+  var m=HITOS[i], L=window.__LABS[i];
+  $('lab-title').innerHTML='🎮 Laboratorio de la época · <span>'+m.who+' ('+m.y+')</span>';
+  $('lab-intro').innerHTML=L.intro;
+  var body=$('lab-body');
+  body.innerHTML='';
+  labStop=L.run(body)||null;
+}
+function esc(n,d){ return n.toFixed(d).replace('.',','); }
+
+window.__LABS=[
+/* ── 0 · Lavoisier: ¿siguen siendo elementos? ── */
+{intro:'Esta es la lista de las <strong>33 sustancias simples</strong> de Lavoisier, en sus cuatro categorías y con los nombres de la época. Toca las que crees que <strong>hoy NO son elementos</strong> y luego pulsa «Revisar».',
+ run:function(box){
+  var CATS=[
+    ['Gases y fluidos',[['Luz',0,'No es materia: es radiación electromagnética.'],['Calórico',0,'Se creía que el calor era un fluido. Hoy sabemos que el calor es energía que se transfiere.'],['Oxígeno',1],['Ázoe',1,'Es el nitrógeno (N). «Ázoe» significa «sin vida».'],['Hidrógeno',1]]],
+    ['No metales',[['Azufre',1],['Fósforo',1],['Carbono',1],['Radical muriático',2,'En parte: corresponde al cloro, pero Lavoisier no lo había aislado; creía que estaba unido al oxígeno dentro del ácido muriático (HCl). Davy demostró en 1810 que el cloro es un elemento.'],['Radical fluórico',2,'En parte: corresponde al flúor, que no se aisló hasta 1886 (Moissan).'],['Radical borácico',2,'En parte: corresponde al boro, que se aisló en 1808.']]],
+    ['Metales',[['Antimonio',1],['Plata',1],['Arsénico',1],['Bismuto',1],['Cobalto',1],['Cobre',1],['Estaño',1],['Hierro',1],['Manganeso',1],['Mercurio',1],['Molibdeno',1],['Níquel',1],['Oro',1],['Platino',1,'¡El platino del Chocó!'],['Plomo',1],['Tungsteno',1,'Wolframio, aislado por los hermanos Elhuyar en 1783.'],['Zinc',1]]],
+    ['Tierras',[['Cal',0,'Es un óxido: CaO (óxido de calcio).'],['Magnesia',0,'Es un óxido: MgO.'],['Barita',0,'Es un óxido: BaO.'],['Alúmina',0,'Es un óxido: Al₂O₃.'],['Sílice',0,'Es un óxido: SiO₂ (la arena).']]]
+  ];
+  box.innerHTML=CATS.map(function(c,ci){
+    return '<h3 class="lab-h">'+c[0]+'</h3><div class="chips">'+c[1].map(function(s,si){
+      return '<button class="chip" data-c="'+ci+'" data-s="'+si+'">'+s[0]+'</button>';
+    }).join('')+'</div>';
+  }).join('')+'<div class="btn-row"><button class="btn" id="lv-check">Revisar</button><button class="btn ghost" id="lv-reset">↺ Reiniciar</button></div><div class="lab-out" id="lv-out" aria-live="polite"></div>';
+  var chips=box.querySelectorAll('.chip');
+  chips.forEach(function(b){ b.addEventListener('click',function(){ if(!b.disabled) b.classList.toggle('pick'); }); });
+  $('lv-check').addEventListener('click',function(){
+    var ok=0, notes=[], parts=[];
+    chips.forEach(function(b){
+      var s=CATS[+b.dataset.c][1][+b.dataset.s], pick=b.classList.contains('pick');
+      b.disabled=true;
+      if(s[1]===2){ b.classList.add('part'); parts.push('<li><strong>'+s[0]+':</strong> '+s[2]+'</li>'); return; }
+      var noEl=s[1]===0;
+      b.classList.add(noEl?(pick?'good':'miss'):(pick?'bad':'fine'));
+      if(noEl===pick) ok++;
+      if(noEl) notes.push('<li><strong>'+s[0]+':</strong> '+s[2]+'</li>');
+    });
+    $('lv-out').innerHTML='<strong>Acertaste '+ok+' de 30</strong> (los tres «radicales» no cuentan). Las 7 que hoy <strong>no</strong> son elementos (en verde las que encontraste, en rojo claro las que se te pasaron):<ul>'+notes.join('')+'</ul>Los tres «radicales», en amarillo, eran elementos que todavía no se habían aislado:<ul>'+parts.join('')+'</ul>Las otras <strong>23 sí son elementos</strong>: para 1789 fue una lista muy buena. Su definición (lo que no se puede descomponer) era correcta; le faltaban técnicas, como la electrólisis (Davy, 1807–1808), para descomponer las «tierras».';
+  });
+  $('lv-reset').addEventListener('click',function(){ labIdx=-1; renderLab(0); });
+ }},
+
+/* ── 1 · Döbereiner: predice el elemento del medio ── */
+{intro:'Elige una tríada. Con las masas de los extremos, <strong>predice la masa del elemento del medio</strong>, como hizo Döbereiner, y compara con el valor real.',
+ run:function(box){
+  var TR=[['Li',6.94,'Na',22.99,'K',39.10,'Metales alcalinos: blandos, reaccionan con agua.'],
+          ['Ca',40.08,'Sr',87.62,'Ba',137.33,'Alcalinotérreos.'],
+          ['Cl',35.45,'Br',79.90,'I',126.90,'Halógenos: forman sales con los metales.'],
+          ['S',32.06,'Se',78.97,'Te',127.60,'Anfígenos.'],
+          ['N',14.01,'P',30.97,'As',74.92,'¿Y esta? El N, el P y el As sí se parecen…']];
+  var cur=0;
+  box.innerHTML='<div class="seg" id="db-pick">'+TR.map(function(t,i){ return '<button data-i="'+i+'"'+(i===0?' class="on"':'')+'>'+t[0]+' · ? · '+t[4]+'</button>'; }).join('')+'</div>'+
+    '<svg id="db-line" viewBox="0 0 320 70" style="width:100%;max-width:560px;display:block"></svg>'+
+    '<div class="ctrl"><label>Tu predicción para el elemento del medio <output id="db-v"></output></label><input type="range" id="db-r" min="0" max="140" step="0.1"></div>'+
+    '<div class="btn-row"><button class="btn ghost" id="db-avg">🧮 Ver el promedio</button><button class="btn" id="db-rev">Revelar el valor real</button></div><div class="lab-out" id="db-out" aria-live="polite"></div>';
+  function draw(showReal){
+    var t=TR[cur], v=+$('db-r').value, max=t[5]*1.08;
+    function x(m){ return 14+m/max*292; }
+    var s='<line x1="14" y1="38" x2="306" y2="38" stroke="#94a3b8" stroke-width="2"/>';
+    [[t[0],t[1]],[t[4],t[5]]].forEach(function(p){ s+='<circle cx="'+x(p[1])+'" cy="38" r="8" fill="#dc2626"/><text x="'+x(p[1])+'" y="22" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d">'+p[0]+'</text><text x="'+x(p[1])+'" y="62" text-anchor="middle" font-size="9" fill="#475569">'+esc(p[1],2)+'</text>'; });
+    s+='<circle cx="'+x(v)+'" cy="38" r="7" fill="#fcd34d" stroke="#0d4a73" stroke-width="2"/><text x="'+x(v)+'" y="22" text-anchor="middle" font-size="10" font-weight="800" fill="#0d4a73">tú</text>';
+    if(showReal) s+='<circle cx="'+x(t[3])+'" cy="38" r="6" fill="#16a34a"/><text x="'+x(t[3])+'" y="62" text-anchor="middle" font-size="9" font-weight="800" fill="#15803d">'+t[2]+' '+esc(t[3],2)+'</text>';
+    $('db-line').innerHTML=s;
+    $('db-v').textContent=esc(v,1);
+  }
+  function load(i){
+    cur=i; var t=TR[i];
+    $('db-r').min=Math.floor(t[1]); $('db-r').max=Math.ceil(t[5]); $('db-r').value=((t[1]+t[5])/2*0.6+t[1]*0.4).toFixed(1);
+    $('db-out').innerHTML=''; draw(false);
+  }
+  box.querySelectorAll('#db-pick button').forEach(function(b){ b.addEventListener('click',function(){
+    box.querySelectorAll('#db-pick button').forEach(function(x){ x.classList.toggle('on',x===b); }); load(+b.dataset.i); }); });
+  $('db-r').addEventListener('input',function(){ draw(false); });
+  $('db-avg').addEventListener('click',function(){ var t=TR[cur], a=(t[1]+t[5])/2; $('db-r').value=a.toFixed(1); draw(false);
+    $('db-out').innerHTML='Promedio: ('+esc(t[1],2)+' + '+esc(t[5],2)+') ÷ 2 = <strong>'+esc(a,2)+'</strong>.'; });
+  $('db-rev').addEventListener('click',function(){
+    var t=TR[cur], v=+$('db-r').value, a=(t[1]+t[5])/2, err=Math.abs(a-t[3])/t[3]*100, tuErr=Math.abs(v-t[3])/t[3]*100;
+    draw(true);
+    $('db-out').innerHTML='Masa real del <strong>'+t[2]+': '+esc(t[3],2)+'</strong>. Tu predicción se alejó un '+esc(tuErr,1)+' %; el promedio, un '+esc(err,1)+' %. '+
+      (err<3?'✅ <strong>¡La tríada funciona!</strong> '+t[6]:'❌ <strong>Aquí la regla falla</strong>: el promedio da '+esc(a,1)+'. '+t[6]+' pero las masas no siguen el patrón. Por eso las tríadas no sirvieron para ordenar todos los elementos.');
+  });
+  load(0);
+ }},
+
+/* ── 2 · Chancourtois: el tornillo telúrico ── */
+{intro:'Chancourtois enrolló los elementos en una hélice sobre un cilindro con <strong>16 unidades de masa por vuelta</strong>. Mira el cilindro girar y toca un elemento: se marcan los que quedan <strong>en la misma vertical</strong>.',
+ run:function(box){
+  var EL=[['H',1],['Li',7],['Be',9],['B',11],['C',12],['N',14],['O',16],['F',19],['Na',23],['Mg',24],['Al',27],['Si',28],['P',31],['S',32],['Cl',35],['K',39],['Ca',40]];
+  var sel=null, rot=0, view='3d', raf=null, playing=true;
+  box.innerHTML='<div class="seg" id="ch-view"><button class="on" data-v="3d">🌀 Cilindro (gira)</button><button data-v="flat">📜 Desenrollado</button></div>'+
+    '<svg id="ch-svg" viewBox="0 0 320 300" style="width:100%;max-width:440px;display:block;margin:0 auto;touch-action:manipulation"></svg>'+
+    '<div class="btn-row" style="justify-content:center"><button class="btn ghost" id="ch-play">⏸ Pausar giro</button></div><div class="lab-out" id="ch-out" aria-live="polite">👆 Toca un elemento.</div>';
+  var svg=$('ch-svg');
+  function col(m){ return m%16; }
+  function draw(){
+    var s='', R=90, cx=160, top=30, k=4.6;
+    if(view==='3d'){
+      s+='<ellipse cx="'+cx+'" cy="'+top+'" rx="'+R+'" ry="14" fill="none" stroke="#cbd5e1" stroke-width="1.5"/><ellipse cx="'+cx+'" cy="'+(top+16*k*2.7)+'" rx="'+R+'" ry="14" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>'+
+         '<line x1="'+(cx-R)+'" y1="'+top+'" x2="'+(cx-R)+'" y2="'+(top+16*k*2.7)+'" stroke="#cbd5e1" stroke-width="1.5"/><line x1="'+(cx+R)+'" y1="'+top+'" x2="'+(cx+R)+'" y2="'+(top+16*k*2.7)+'" stroke="#cbd5e1" stroke-width="1.5"/>';
+      // hélice
+      var back='', front='';
+      for(var m=0;m<43;m+=0.25){
+        var th=2*Math.PI*m/16+rot, x=cx+R*Math.sin(th), y=top+m*k+14*Math.cos(th)*0, d=Math.cos(th);
+        var seg='<circle cx="'+x.toFixed(1)+'" cy="'+(top+m*k).toFixed(1)+'" r="1" fill="'+(d>0?'#0891b2':'#bae6fd')+'"/>';
+        if(d>0) front+=seg; else back+=seg;
+      }
+      s+=back;
+      if(sel!=null){ var thS=2*Math.PI*col(sel)/16+rot; if(Math.cos(thS)>0){ var xs=cx+R*Math.sin(thS); s+='<line x1="'+xs+'" y1="'+top+'" x2="'+xs+'" y2="'+(top+43*k)+'" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5 4"/>'; } }
+      s+=front;
+      var pts=EL.map(function(e){ var th=2*Math.PI*e[1]/16+rot; return {e:e,x:cx+R*Math.sin(th),y:top+e[1]*k,d:Math.cos(th)}; }).sort(function(a,b){ return a.d-b.d; });
+      pts.forEach(function(p){
+        var on=sel!=null&&col(p.e[1])===col(sel), op=p.d>0?1:.3;
+        s+='<g data-m="'+p.e[1]+'" style="cursor:pointer" opacity="'+op+'"><circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(10+3*p.d).toFixed(1)+'" fill="'+(on?'#fcd34d':'#fee2e2')+'" stroke="'+(on?'#0d4a73':'#dc2626')+'" stroke-width="2"/><text x="'+p.x.toFixed(1)+'" y="'+(p.y+4).toFixed(1)+'" text-anchor="middle" font-size="10" font-weight="800" fill="#1f2937">'+p.e[0]+'</text></g>';
+      });
+    }else{
+      var W=18.5, x0=12, y0=24, H=78;
+      for(var c=0;c<=16;c++) s+='<line x1="'+(x0+c*W)+'" y1="'+y0+'" x2="'+(x0+c*W)+'" y2="'+(y0+3*H)+'" stroke="#e2e8f0"/>';
+      for(var r=0;r<3;r++) s+='<line x1="'+x0+'" y1="'+(y0+r*H)+'" x2="'+(x0+16*W)+'" y2="'+(y0+(r+1)*H)+'" stroke="#0891b2" stroke-width="2.5"/>';
+      s+='<text x="'+(x0+8*W)+'" y="14" text-anchor="middle" font-size="9" fill="#475569">una vuelta del cilindro = 16 unidades de masa</text>';
+      if(sel!=null){ var xs2=x0+col(sel)*W; s+='<line x1="'+xs2+'" y1="'+y0+'" x2="'+xs2+'" y2="'+(y0+3*H)+'" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5 4"/>'; }
+      EL.forEach(function(e){
+        var x=x0+col(e[1])*W, y=y0+e[1]/16*H, on=sel!=null&&col(e[1])===col(sel);
+        s+='<g data-m="'+e[1]+'" style="cursor:pointer"><circle cx="'+x+'" cy="'+y+'" r="10" fill="'+(on?'#fcd34d':'#fee2e2')+'" stroke="'+(on?'#0d4a73':'#dc2626')+'" stroke-width="2"/><text x="'+x+'" y="'+(y+3.5)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#1f2937">'+e[0]+'</text></g>';
+      });
+    }
+    svg.setAttribute('viewBox',view==='3d'?'0 0 320 250':'0 0 320 270');
+    svg.innerHTML=s;
+  }
+  svg.addEventListener('click',function(ev){
+    var g=ev.target.closest&&ev.target.closest('g[data-m]'); if(!g) return;
+    sel=+g.getAttribute('data-m');
+    var same=EL.filter(function(e){ return col(e[1])===col(sel); });
+    var near=EL.filter(function(e){ return Math.abs(col(e[1])-col(sel))===1; });
+    var name=EL.filter(function(e){ return e[1]===sel; })[0][0];
+    $('ch-out').innerHTML='<strong>'+name+'</strong> (masa '+sel+') queda en la posición '+col(sel)+' de la vuelta. En su misma vertical: <strong>'+same.map(function(e){return e[0]+' ('+e[1]+')';}).join(', ')+'</strong>. '+
+      (same.length>1?'Las masas se diferencian en 16 o 32: ¡por eso coinciden! '+({7:'Li, Na y K son metales alcalinos.',0:'O y S son de la misma familia.',3:'F y Cl son halógenos.',11:'B y Al están en el mismo grupo.',12:'C y Si están en el mismo grupo.',8:'Mg y Ca son alcalinotérreos.'}[col(sel)]||''):'Queda solo en su vertical: su «familiar» cayó en una columna vecina'+(near.length?' ('+near.map(function(e){return e[0];}).join(', ')+')':'')+'. La regla de 16 no funciona para todos.');
+    draw();
+  });
+  box.querySelectorAll('#ch-view button').forEach(function(b){ b.addEventListener('click',function(){
+    view=b.dataset.v; box.querySelectorAll('#ch-view button').forEach(function(x){ x.classList.toggle('on',x===b); });
+    $('ch-play').style.display=view==='3d'?'':'none'; draw(); }); });
+  $('ch-play').addEventListener('click',function(){ playing=!playing; this.textContent=playing?'⏸ Pausar giro':'▶ Girar'; });
+  var last=0;
+  function loop(t){
+    raf=requestAnimationFrame(loop);
+    if(!playing||view!=='3d'||t-last<50) return;
+    last=t; rot+=0.03;
+    // al seleccionar, se detiene cuando la vertical queda al frente
+    if(sel!=null){ var th=(2*Math.PI*col(sel)/16+rot)%(2*Math.PI); if(Math.abs(Math.sin(th))<0.03&&Math.cos(th)>0){ playing=false; $('ch-play').textContent='▶ Girar'; } }
+    draw();
+  }
+  draw(); raf=requestAnimationFrame(loop);
+  return function(){ cancelAnimationFrame(raf); };
+ }},
+
+/* ── 3 · Newlands: las octavas que suenan ── */
+{intro:'Newlands escribió los elementos en filas de siete, como las notas de la escala. Toca un elemento: <strong>suena su nota</strong> y se resaltan los que tienen la misma. ¿Son de verdad una familia?',
+ run:function(box){
+  var NOTAS=['Do','Re','Mi','Fa','Sol','La','Si'], FREQ=[262,294,330,349,392,440,494];
+  // Orden de Newlands (1865). g = grupo actual, para juzgar si «encaja».
+  var FILAS=[[['H',1],['Li',1],['Be',2],['B',13],['C',14],['N',15],['O',16]],
+             [['F',17],['Na',1],['Mg',2],['Al',13],['Si',14],['P',15],['S',16]],
+             [['Cl',17],['K',1],['Ca',2],['Cr',6],['Ti',4],['Mn',7],['Fe',8]],
+             [['Co·Ni',9],['Cu',11],['Zn',12],['Y',3],['In',13],['As',15],['Se',16]],
+             [['Br',17],['Rb',1],['Sr',2],['Ce·La',3],['Zr',4],['Di·Mo',6],['Ro·Ru',8]]];
+  box.innerHTML='<div class="nl-grid" id="nl-grid">'+'<div></div>'+NOTAS.map(function(n){ return '<div class="nl-note">'+n+'</div>'; }).join('')+
+    FILAS.map(function(f,r){ return '<div class="nl-oct">Octava '+(r+1)+'</div>'+f.map(function(e,c){ return '<button class="nl-el" data-r="'+r+'" data-c="'+c+'">'+e[0]+'</button>'; }).join(''); }).join('')+'</div>'+
+    '<div class="btn-row"><button class="btn ghost" id="nl-scale">🎵 Tocar las primeras octavas</button></div><div class="lab-out" id="nl-out" aria-live="polite">👆 Toca un elemento.</div>'+
+    '<p style="font-size:.74rem;color:var(--dimmer);margin-top:6px">«Di» es el didimio, que Newlands creía un elemento: resultó ser una mezcla de praseodimio y neodimio. Donde puso dos símbolos juntos (Co·Ni), metió dos elementos en una casilla.</p>';
+  var ctx=null, timers=[];
+  function tone(f,when){
+    try{
+      ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+      var o=ctx.createOscillator(), g=ctx.createGain(), t=ctx.currentTime+(when||0);
+      o.type='triangle'; o.frequency.value=f; o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.25,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.45);
+      o.start(t); o.stop(t+0.5);
+    }catch(e){}
+  }
+  var btns=box.querySelectorAll('.nl-el');
+  function pick(r,c){
+    var ref=FILAS[1][c][1];  // la segunda octava define la «familia» de la columna
+    btns.forEach(function(b){
+      var br=+b.dataset.r, bc=+b.dataset.c;
+      b.classList.remove('hl','ok','no');
+      if(bc===c) b.classList.add(FILAS[br][bc][1]===ref?'ok':'no');
+      b.classList.toggle('sel',br===r&&bc===c);
+    });
+    var col=FILAS.map(function(f){ return f[c]; });
+    var bien=col.filter(function(e){ return e[1]===ref; }).map(function(e){ return e[0]; });
+    var mal=col.filter(function(e){ return e[1]!==ref; }).map(function(e){ return e[0]; });
+    $('nl-out').innerHTML='Nota <strong>'+NOTAS[c]+'</strong>. ✅ Sí son familia: <strong>'+bien.join(', ')+'</strong>. '+(mal.length?'❌ No encajan: <strong>'+mal.join(', ')+'</strong>. ':'')+
+      'Fíjate: las dos primeras octavas funcionan casi perfecto, pero desde la tercera (después del calcio) aparecen intrusos, como el Fe debajo del O y el S. Faltaban elementos por descubrir y Newlands no dejó huecos.';
+  }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ var r=+b.dataset.r, c=+b.dataset.c; tone(FREQ[c]*(r>=2?2:1)); pick(r,c); }); });
+  $('nl-scale').addEventListener('click',function(){
+    var k=0;
+    for(var r=0;r<2;r++) for(var c=0;c<7;c++) (function(r,c,k){
+      tone(FREQ[c]*(r?2:1),k*0.32);
+      timers.push(setTimeout(function(){ btns.forEach(function(b){ b.classList.toggle('sel',+b.dataset.r===r&&+b.dataset.c===c); }); },k*320));
+    })(r,c,k++);
+    tone(FREQ[0]*4,k*0.32);
+    timers.push(setTimeout(function(){ pick(2,0); $('nl-out').innerHTML='🎵 Do-re-mi-fa-sol-la-si… y el octavo vuelve a ser Do: <strong>F</strong> y <strong>Cl</strong> caen en la misma nota y son halógenos. '+$('nl-out').innerHTML; },k*320));
+  });
+  return function(){ timers.forEach(clearTimeout); if(ctx&&ctx.close) ctx.close(); };
+ }},
+
+/* ── 4 · Mendeléiev: predice el eka-silicio y ordena Te/I ── */
+{intro:'Dos retos de Mendeléiev. <strong>1)</strong> Predice el elemento que falta debajo del silicio a partir de sus vecinos. <strong>2)</strong> Decide si el teluro y el yodo deben ir por orden de masa o por propiedades.',
+ run:function(box){
+  var V=[['Al','27,0','2,70'],['Si','28,1','2,33'],['P','31,0','1,82'],['Ga','69,7','5,91'],null,['As','74,9','5,73'],['In','114,8','7,31'],['Sn','118,7','7,29'],['Sb','121,8','6,69']];
+  box.innerHTML='<h3 class="lab-h">Reto 1 · El hueco debajo del silicio (1871)</h3>'+
+    '<div class="md-grid">'+V.map(function(c){ return c?'<div class="md-c'+((c[0]==='Si'||c[0]==='Sn'||c[0]==='Ga'||c[0]==='As')?' nb':'')+'"><b>'+c[0]+'</b><span>masa '+c[1]+'</span><span>ρ '+c[2]+'</span></div>':'<div class="md-c gap"><b>?</b><span>eka-silicio</span></div>'; }).join('')+'</div>'+
+    '<p style="font-size:.78rem;color:var(--dimmer);margin:4px 0 8px">ρ = densidad en g/cm³. Los cuatro vecinos directos (arriba, abajo, izquierda y derecha) están marcados.</p>'+
+    '<div class="ctrls"><div class="ctrl"><label>Masa atómica predicha <output id="md-mo"></output></label><input type="range" id="md-m" min="50" max="100" step="0.5" value="60"></div>'+
+    '<div class="ctrl"><label>Densidad predicha (g/cm³) <output id="md-do"></output></label><input type="range" id="md-d" min="1" max="9" step="0.05" value="3"></div></div>'+
+    '<div class="btn-row"><button class="btn ghost" id="md-avg">🧮 Usar el truco de Mendeléiev</button><button class="btn" id="md-rev">⛏️ Descubrir el germanio (1886)</button></div><div class="lab-out" id="md-out" aria-live="polite"></div>'+
+    '<h3 class="lab-h" style="margin-top:18px">Reto 2 · ¿Masa o propiedades?</h3>'+
+    '<p style="font-size:.84rem;color:var(--tx2)">Si se ordena estrictamente por masa, el yodo (126,9) va antes que el teluro (127,6). Así quedarían:</p>'+
+    '<div class="md-cols"><div><div class="md-ch">Grupo del O y S</div><div class="md-s">O</div><div class="md-s">S</div><div class="md-s">Se</div><div class="md-s slot" id="md-a"></div></div>'+
+    '<div><div class="md-ch">Grupo del F y Cl</div><div class="md-s">F</div><div class="md-s">Cl</div><div class="md-s">Br</div><div class="md-s slot" id="md-b"></div></div></div>'+
+    '<div class="btn-row"><button class="btn" id="md-swap">⇄ Intercambiarlos</button></div><div class="lab-out" id="md-out2" aria-live="polite"></div>';
+  var TE='<b>Te</b><small>127,6 · forma H₂Te y TeO₂, como el S</small>', IO='<b>I</b><small>126,9 · forma HI y NaI, como el Cl</small>';
+  var swapped=false;
+  function put(){ $('md-a').innerHTML=swapped?TE:IO; $('md-b').innerHTML=swapped?IO:TE;
+    $('md-a').className='md-s slot '+(swapped?'ok':'no'); $('md-b').className='md-s slot '+(swapped?'ok':'no');
+    $('md-out2').innerHTML=swapped?'✅ <strong>Así lo hizo Mendeléiev</strong>: puso al Te con el O, S y Se, y al I con los halógenos, aunque eso rompiera el orden de masas. Pensó que la masa del Te estaba mal medida; en realidad el orden correcto lo da el número atómico (Te = 52, I = 53), como mostró Moseley en 1913.':'❌ Por orden de masa, el yodo queda con el oxígeno y el azufre, y el teluro con los halógenos. ¡Pero sus propiedades dicen lo contrario! ¿Qué harías?'; }
+  $('md-swap').addEventListener('click',function(){ swapped=!swapped; put(); });
+  put();
+  function upd(){ $('md-mo').textContent=esc(+$('md-m').value,1); $('md-do').textContent=esc(+$('md-d').value,2); }
+  $('md-m').addEventListener('input',upd); $('md-d').addEventListener('input',upd);
+  $('md-avg').addEventListener('click',function(){
+    $('md-m').value=72.85; $('md-d').value=5.30; upd();
+    $('md-out').innerHTML='Masa ≈ (Si 28,1 + Sn 118,7 + Ga 69,7 + As 74,9) ÷ 4 = <strong>72,9</strong>. Densidad ≈ (2,33 + 7,29 + 5,91 + 5,73) ÷ 4 = <strong>5,3 g/cm³</strong>. Mendeléiev publicó: masa ≈ 72 y densidad ≈ 5,5.';
+  });
+  $('md-rev').addEventListener('click',function(){
+    var m=+$('md-m').value, d=+$('md-d').value, em=Math.abs(m-72.63)/72.63*100, ed=Math.abs(d-5.32)/5.32*100;
+    $('md-out').innerHTML='<table class="md-t"><tr><th></th><th>Tú</th><th>Mendeléiev (1871)</th><th>Germanio real (1886)</th></tr>'+
+      '<tr><th>Masa atómica</th><td>'+esc(m,1)+'</td><td>72</td><td>72,6</td></tr>'+
+      '<tr><th>Densidad (g/cm³)</th><td>'+esc(d,2)+'</td><td>5,5</td><td>5,32</td></tr>'+
+      '<tr><th>Fórmula del óxido</th><td>—</td><td>EsO₂</td><td>GeO₂</td></tr>'+
+      '<tr><th>Cloruro</th><td>—</td><td>EsCl₄, líquido, hierve a menos de 100 °C</td><td>GeCl₄, hierve a 86 °C</td></tr></table>'+
+      (em<3&&ed<6?'🎯 <strong>¡Predicción de científico!</strong> Te alejaste menos del 3 % en masa.':'Tu error: '+esc(em,1)+' % en masa y '+esc(ed,1)+' % en densidad. Prueba el truco de promediar vecinos.')+
+      ' Cuando Clemens Winkler descubrió el germanio y vio que coincidía, casi todos los químicos aceptaron la tabla de Mendeléiev.';
+  });
+  upd();
+ }},
+
+/* ── 5 · Ramsay: el nitrógeno que pesaba de más ── */
+{intro:'Lord Rayleigh notó que un litro de «nitrógeno» sacado del aire pesaba un poco más que uno obtenido de compuestos químicos. ¿Cuánto gas desconocido (argón, 1,784 g/L) habría que mezclar para explicar la diferencia?',
+ run:function(box){
+  var NQ=1.2505, NA=1.2572, AR=1.7837;
+  box.innerHTML='<div class="rm-flasks"><div class="rm-f"><div class="rm-b" style="--h:62%"></div><b>Nitrógeno químico</b><span>1,2505 g/L</span></div>'+
+    '<div class="rm-f"><div class="rm-b" style="--h:63%"></div><b>«Nitrógeno» del aire</b><span>1,2572 g/L</span></div>'+
+    '<div class="rm-f"><div class="rm-b mix" id="rm-mb"></div><b>Tu mezcla</b><span id="rm-mv"></span></div></div>'+
+    '<div class="ctrl"><label>Porcentaje de argón mezclado con el nitrógeno <output id="rm-po"></output></label><input type="range" id="rm-p" min="0" max="3" step="0.02" value="0"></div>'+
+    '<div class="lab-out" id="rm-out" aria-live="polite">Mueve el control hasta que tu mezcla pese lo mismo que el «nitrógeno» del aire.</div>'+
+    '<div id="rm-gases" style="display:none"><h3 class="lab-h">La familia nueva: toca cada gas</h3><div class="chips" id="rm-chips"></div><div class="lab-out" id="rm-out2"></div></div>';
+  var GASES=[['He','Helio','1868 en el Sol; 1895 en la Tierra','del griego <em>helios</em>, «sol»: se vio primero en el espectro del Sol'],['Ne','Neón','1898','«nuevo»: hoy brilla rojo-naranja en los avisos luminosos'],['Ar','Argón','1894','«perezoso»: no reacciona con nada'],['Kr','Kriptón','1898','«oculto»: estaba escondido en el aire líquido'],['Xe','Xenón','1898','«extraño»: solo hay 0,000009 % en el aire'],['Rn','Radón','1900','radiactivo; se forma a partir del radio']];
+  var shown=false;
+  function upd(){
+    var p=+$('rm-p').value, rho=(1-p/100)*NQ+p/100*AR;
+    $('rm-po').textContent=esc(p,2)+' %'; $('rm-mv').textContent=esc(rho,4)+' g/L';
+    $('rm-mb').style.setProperty('--h',(62+(rho-NQ)/(NA-NQ)*1)+'%');
+    $('rm-mb').style.setProperty('--ar',Math.min(100,p/3*100)+'%');
+    var diff=rho-NA;
+    if(Math.abs(diff)<0.0004){
+      $('rm-out').innerHTML='🎯 <strong>¡Coincide!</strong> Con ≈ '+esc(p,1)+' % de argón la mezcla pesa 1,2572 g/L. Rayleigh y Ramsay quitaron todo el nitrógeno del aire y quedó un gas que no reaccionaba con nada: el <strong>argón</strong> (1894). Hoy sabemos que el aire tiene 0,93 % de argón.';
+      if(!shown){ shown=true; $('rm-gases').style.display=''; }
+    }else $('rm-out').innerHTML=diff<0?'Tu mezcla todavía es más liviana que el «nitrógeno» del aire. Agrega más argón.':'Te pasaste: tu mezcla quedó más pesada.';
+  }
+  $('rm-p').addEventListener('input',upd);
+  $('rm-chips').innerHTML=GASES.map(function(g,i){ return '<button class="chip" data-i="'+i+'">'+g[0]+' · '+g[1]+'</button>'; }).join('');
+  box.querySelectorAll('#rm-chips .chip').forEach(function(b){ b.addEventListener('click',function(){
+    var g=GASES[+b.dataset.i];
+    box.querySelectorAll('#rm-chips .chip').forEach(function(x){ x.classList.toggle('pick',x===b); });
+    $('rm-out2').innerHTML='<strong>'+g[1]+' ('+g[0]+')</strong>, descubierto en '+g[2]+'. Su nombre significa '+g[3]+'. No cabían en ningún grupo de Mendeléiev: Ramsay les abrió una <strong>columna nueva</strong>, el grupo 18.'; }); });
+  upd();
+ }},
+
+/* ── 6 · Moseley: rayos X y número atómico ── */
+{intro:'Moseley midió la frecuencia (f) de los rayos X de cada elemento. Al graficar √f, cada elemento sube <strong>un escalón igual</strong>: un protón más. Cambia el orden de los elementos y busca dónde falta uno.',
+ run:function(box){
+  var A=[['Ca',20,40.08],['Sc',21,44.96],['Ti',22,47.87],['V',23,50.94],['Cr',24,52.00],['Mn',25,54.94],['Fe',26,55.85],['Co',27,58.93],['Ni',28,58.69],['Cu',29,63.55],['Zn',30,65.38]];
+  var B=[['Sr',38],['Y',39],['Zr',40],['Nb',41],['Mo',42],['Ru',44],['Rh',45],['Pd',46],['Ag',47]];
+  var mode='masa', set='A', found=false;
+  box.innerHTML='<div class="seg" id="ms-set"><button class="on" data-s="A">Ca a Zn</button><button data-s="B">Sr a Ag (lo conocido en 1913)</button></div>'+
+    '<div class="seg" id="ms-ord"><button class="on" data-o="masa">Ordenar por masa atómica</button><button data-o="z">Ordenar por número atómico</button></div>'+
+    '<svg id="ms-svg" viewBox="0 0 340 220" style="width:100%;max-width:560px;display:block"></svg><div class="lab-out" id="ms-out" aria-live="polite"></div>';
+  function draw(){
+    var pts, s='', x0=34, y0=190, w=290, h=160;
+    if(set==='A'){ pts=A.slice().sort(mode==='masa'?function(a,b){return a[2]-b[2];}:function(a,b){return a[1]-b[1];}); }
+    else pts=B.slice();
+    var zmin=pts.reduce(function(m,p){return Math.min(m,p[1]);},99), zmax=pts.reduce(function(m,p){return Math.max(m,p[1]);},0);
+    function X(i){ return x0+i*(w/(pts.length-1)); }
+    function Y(z){ return y0-((z-1)-(zmin-1))/((zmax-1)-(zmin-1))*h; }   // √f ∝ (Z − 1)
+    s+='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+w+6)+'" y2="'+y0+'" stroke="#334155"/><line x1="'+x0+'" y1="'+y0+'" x2="'+x0+'" y2="20" stroke="#334155"/>'+
+       '<text x="10" y="110" font-size="10" font-weight="700" fill="#475569" transform="rotate(-90 10 110)">√f de los rayos X</text>'+
+       '<text x="'+(x0+w/2)+'" y="214" text-anchor="middle" font-size="10" font-weight="700" fill="#475569">'+(set==='B'?'posición en la lista de 1913':(mode==='masa'?'posición por masa atómica':'posición por número atómico'))+'</text>';
+    for(var zz=zmin;zz<=zmax;zz++) s+='<line x1="'+x0+'" y1="'+Y(zz).toFixed(1)+'" x2="'+(x0+w)+'" y2="'+Y(zz).toFixed(1)+'" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="'+(x0-4)+'" y="'+(Y(zz)+3).toFixed(1)+'" text-anchor="end" font-size="7" fill="#94a3b8">'+zz+'</text>';
+    var path='';
+    pts.forEach(function(p,i){ path+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(p[1]).toFixed(1); });
+    s+='<path d="'+path+'" fill="none" stroke="#2563eb" stroke-width="2"/>';
+    if(set==='B') pts.forEach(function(p,i){ if(i) s+='<rect class="ms-hit" data-i="'+i+'" x="'+(X(i-1)+3)+'" y="20" width="'+(X(i)-X(i-1)-6)+'" height="'+(y0-20)+'" fill="'+(found&&p[1]-pts[i-1][1]>1?'rgba(252,211,77,.45)':'transparent')+'" style="cursor:pointer"/>'; });
+    pts.forEach(function(p,i){
+      var bad=set==='A'&&mode==='masa'&&(p[0]==='Co'||p[0]==='Ni');
+      s+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="5" fill="'+(bad?'#dc2626':'#0d4a73')+'" pointer-events="none"/><text x="'+X(i).toFixed(1)+'" y="'+(Y(p[1])-9).toFixed(1)+'" text-anchor="middle" font-size="9.5" font-weight="800" fill="'+(bad?'#b91c1c':'#1f2937')+'" pointer-events="none">'+p[0]+'</text>';
+    });
+    $('ms-svg').innerHTML=s;
+    $('ms-ord').style.display=set==='A'?'':'none';
+    if(set==='A') $('ms-out').innerHTML=mode==='masa'?'❌ Por masa, el níquel (58,69) va antes que el cobalto (58,93) y la línea <strong>baja</strong> en un punto (rojo). ¿Qué pasa si los ordenas por número atómico?':'✅ Por número atómico, la línea es <strong>recta</strong>: cada elemento sube un escalón igual. El Co (Z = 27) va antes que el Ni (Z = 28), justo como en la tabla de Mendeléiev. Z es el número de protones del núcleo.';
+    else if(!found) $('ms-out').innerHTML='Estos eran los elementos conocidos en 1913. Los escalones deberían ser iguales… <strong>toca el tramo donde falta un elemento</strong>.';
+    if(set==='B') $('ms-svg').querySelectorAll('.ms-hit').forEach(function(r){ r.addEventListener('click',function(){
+      var i=+r.dataset.i;
+      if(pts[i][1]-pts[i-1][1]>1){ found=true; draw(); $('ms-out').innerHTML='🎯 <strong>¡Lo encontraste!</strong> Entre el Mo (42) y el Ru (44) el escalón es doble: falta el <strong>elemento 43</strong>. Es el tecnecio, que se obtuvo en 1937: el primer elemento fabricado artificialmente. Así Moseley predijo los elementos 43, 61, 72 y 75.'; }
+      else $('ms-out').innerHTML='Ese escalón es normal (un protón de diferencia). Busca uno el doble de alto.';
+    }); });
+  }
+  box.querySelectorAll('#ms-set button').forEach(function(b){ b.addEventListener('click',function(){ set=b.dataset.s; box.querySelectorAll('#ms-set button').forEach(function(x){ x.classList.toggle('on',x===b); }); draw(); }); });
+  box.querySelectorAll('#ms-ord button').forEach(function(b){ b.addEventListener('click',function(){ mode=b.dataset.o; box.querySelectorAll('#ms-ord button').forEach(function(x){ x.classList.toggle('on',x===b); }); draw(); }); });
+  draw();
+ }},
+
+/* ── 7 · Seaborg: mover los actínidos ── */
+{intro:'Antes de 1945, el torio, el protactinio y el uranio se dibujaban debajo del Hf, Ta y W, y se buscaban los siguientes elementos debajo del Re, Os, Ir y Pt. Pulsa el botón para aplicar la idea de Seaborg.',
+ run:function(box){
+  // [símbolo, columna antes, fila antes, columna después, fila después]
+  var CELLS=[['La',0,0,0,0],['Hf',1,0,1,0],['Ta',2,0,2,0],['W',3,0,3,0],['Re',4,0,4,0],['Os',5,0,5,0],['Ir',6,0,6,0],['Pt',7,0,7,0],
+    ['Ac',0,1,0,1],
+    ['Ce',1,3,1,3],['Pr',2,3,2,3],['Nd',3,3,3,3],['Pm',4,3,4,3],['Sm',5,3,5,3],['Eu',6,3,6,3],['Gd',7,3,7,3]];
+  var MOV=[['Th',1,1,1,4],['Pa',2,1,2,4],['U',3,1,3,4],['Np',4,1,4,4],['Pu',5,1,5,4],['Am',6,1,6,4],['Cm',7,1,7,4]];
+  var after=false;
+  box.innerHTML='<div class="sb-wrap"><div class="sb-lab" style="top:0">Periodo 6</div><div class="sb-lab" style="top:20%">Periodo 7</div><div class="sb-lab" style="top:60%">Lantánidos</div><div class="sb-lab" style="top:80%">Actínidos</div><div class="sb-grid" id="sb-grid"></div></div>'+
+    '<div class="btn-row"><button class="btn" id="sb-go">✨ Aplicar la idea de Seaborg</button></div><div class="lab-out" id="sb-out" aria-live="polite"></div>';
+  var g=$('sb-grid');
+  g.innerHTML=CELLS.map(function(c){ return '<div class="sb-c" style="left:'+(c[1]*12.5)+'%;top:'+(c[2]*20)+'%">'+c[0]+'</div>'; }).join('')+
+    MOV.map(function(c,i){ return '<div class="sb-c mv" data-i="'+i+'">'+c[0]+'</div>'; }).join('');
+  function place(){
+    g.querySelectorAll('.sb-c.mv').forEach(function(d){
+      var c=MOV[+d.dataset.i];
+      d.style.left=((after?c[3]:c[1])*12.5)+'%'; d.style.top=((after?c[4]:c[2])*20)+'%';
+      d.classList.toggle('q',!after&&+d.dataset.i>=3);
+    });
+    $('sb-go').textContent=after?'↺ Volver a la tabla de antes':'✨ Aplicar la idea de Seaborg';
+    $('sb-out').innerHTML=after?'✅ <strong>Después de Seaborg:</strong> desde el actinio empieza una serie nueva que llena orbitales <strong>5f</strong>, igual que los lantánidos llenan los 4f. El americio se parece al europio y el curio al gadolinio, que están justo encima. Buscándolos con la química de los lantánidos, su equipo los encontró en 1944. Así quedó la tabla que usas hoy.':
+      '❌ <strong>Antes de Seaborg:</strong> el U se ponía en el grupo del W porque los dos forman óxidos como UO₃ y WO₃. Con esa idea, los elementos 95 y 96 (en gris) deberían comportarse como el iridio y el platino… pero los experimentos para encontrarlos así fallaban.';
+  }
+  $('sb-go').addEventListener('click',function(){ after=!after; place(); });
+  place();
+ }},
+
+/* ── 8 · IUPAC: nombres provisionales ── */
+{intro:'Mientras un elemento nuevo no tiene nombre oficial, la IUPAC le da uno <strong>provisional</strong> con raíces de números. Escribe un número atómico y mira cómo se llamaría. Luego conoce el origen de los cuatro nombres de 2016.',
+ run:function(box){
+  var R=['nil','un','bi','tri','cuad','pent','hex','sept','oct','enn'];
+  function nombre(z){
+    var d=String(z).split('').map(Number), n=d.map(function(x){ return R[x]; }).join('');
+    n=n.replace(/nnn/g,'nn')+'io';
+    n=n.replace(/iio$/,'io');   // bi + io → bio, tri + io → trio
+    var sym=d.map(function(x){ return R[x][0]; }).join('');
+    return {n:n,s:sym.charAt(0).toUpperCase()+sym.slice(1)};
+  }
+  var NUEVOS=[[113,'Nh','Nihonio','<em>Nihon</em>, «Japón» en japonés. Lo obtuvo el instituto RIKEN: es el primer elemento descubierto en Asia.'],
+    [115,'Mc','Moscovio','la región de <strong>Moscú</strong>, donde está el laboratorio de Dubná (Rusia).'],
+    [117,'Ts','Teneso','el estado de <strong>Tennessee</strong> (EE. UU.), sede de laboratorios que aportaron el material para fabricarlo.'],
+    [118,'Og','Oganesón','<strong>Yuri Oganessian</strong>, físico ruso-armenio. Es el segundo elemento con el nombre de una persona viva (el primero fue el seaborgio).']];
+  box.innerHTML='<div class="ctrls"><div class="ctrl"><label>Número atómico <output id="iu-zo"></output></label><input type="range" id="iu-z" min="100" max="130" step="1" value="119"></div></div>'+
+    '<div class="iu-card" id="iu-card"></div>'+
+    '<h3 class="lab-h">Los cuatro nombres oficiales de 2016</h3><div class="chips" id="iu-chips">'+NUEVOS.map(function(e,i){ return '<button class="chip" data-i="'+i+'">'+e[1]+' · '+e[0]+'</button>'; }).join('')+'</div><div class="lab-out" id="iu-out">👆 Toca uno para saber de dónde viene su nombre.</div>';
+  function upd(){
+    var z=+$('iu-z').value, r=nombre(z), dig=String(z).split('').map(function(x){ return '<span>'+x+' → '+R[+x]+'</span>'; }).join(' + ');
+    var of=NUEVOS.filter(function(e){ return e[0]===z; })[0];
+    $('iu-zo').textContent=z;
+    $('iu-card').innerHTML='<div class="iu-sym">'+r.s+'</div><div><div class="iu-name">'+r.n+'</div><div class="iu-dig">'+dig+' + io</div>'+
+      (of?'<div class="iu-of">Nombre oficial desde 2016: <strong>'+of[2]+' ('+of[1]+')</strong></div>':(z>118?'<div class="iu-of">Aún no se ha obtenido: ¡sería del periodo 8!</div>':(z>=104?'<div class="iu-of">Ya tiene nombre oficial: <strong>'+ELEMENTS[z].name+' ('+ELEMENTS[z].sym+')</strong></div>':'<div class="iu-of">Ya tiene nombre oficial: <strong>'+ELEMENTS[z].name+' ('+ELEMENTS[z].sym+')</strong>. El sistema provisional se usa desde 1978 para Z mayor que 100.</div>')))+'</div>';
+  }
+  $('iu-z').addEventListener('input',upd);
+  box.querySelectorAll('#iu-chips .chip').forEach(function(b){ b.addEventListener('click',function(){
+    var e=NUEVOS[+b.dataset.i];
+    box.querySelectorAll('#iu-chips .chip').forEach(function(x){ x.classList.toggle('pick',x===b); });
+    $('iu-z').value=e[0]; upd();
+    $('iu-out').innerHTML='<strong>'+e[2]+' ('+e[1]+', Z = '+e[0]+')</strong>: su nombre viene de '+e[3]+' Antes se llamaba <em>'+nombre(e[0]).n+'</em>.';
+  }); });
+  upd();
+ }}
+];
+renderLab(0);
 
 /* ════════════════ Mini tabla (compartida) ════════════════ */
 var ROMANO={1:'IA',2:'IIA',3:'IIIB',4:'IVB',5:'VB',6:'VIB',7:'VIIB',8:'VIIIB',9:'VIIIB',10:'VIIIB',11:'IB',12:'IIB',13:'IIIA',14:'IVA',15:'VA',16:'VIA',17:'VIIA',18:'VIIIA'};

@@ -59,6 +59,16 @@ Además de la tabla interactiva, tiene pestañas teóricas (`#tabla`, `#historia
 
 1. **📊 Tabla**: la tabla de 118 elementos de siempre (vistas por familias, metales/no metales y bloques, ficha de cada elemento).
 2. **🕰️ Historia**: línea del tiempo deslizable con el mismo formato de `atomo.html`: Lavoisier (1789), Döbereiner (1829), Chancourtois (1862), Newlands (1865), Mendeléiev (1869, con Meyer), Ramsay (1898), Moseley (1913), Seaborg (1945) e IUPAC (2016). Cada tarjeta tiene *¿Qué propuso?*, *Evidencia o ejemplo* y *¿Qué le faltaba?*; la de Lavoisier trae la conexión con Colombia (platino del Chocó, Elhuyar en Mariquita).
+   Debajo de las tarjetas hay un **Laboratorio de la época** que sigue a la tarjeta activa (el botón «🎮 Pruébalo» de cada tarjeta lleva a él):
+   - *Lavoisier*: marcar cuáles de sus 33 sustancias simples hoy no son elementos (luz, calórico y las 5 «tierras», que son óxidos; los 3 «radicales» cuentan como «en parte»).
+   - *Döbereiner*: predecir con un control la masa del elemento del medio en 4 tríadas reales y en una que falla (N–P–As).
+   - *Chancourtois*: cilindro 3D que gira (o desenrollado) con 16 unidades de masa por vuelta; al tocar un elemento se marcan los de su misma vertical.
+   - *Newlands*: tabla de octavas de 1865 que suena (Web Audio); cada columna marca qué elementos sí son familia y cuáles no.
+   - *Mendeléiev*: predecir masa y densidad del eka-silicio promediando vecinos y compararlo con el germanio; e intercambiar Te/I (masa contra propiedades).
+   - *Ramsay*: ajustar el % de argón para igualar la densidad del «nitrógeno» del aire (1,2572 g/L); luego aparecen los gases nobles con el origen de sus nombres.
+   - *Moseley*: gráfica de √f; ordenar Ca–Zn por masa o por Z (Co/Ni), y encontrar el hueco del elemento 43 en la serie Sr–Ag conocida en 1913.
+   - *Seaborg*: animación que mueve Th–Cm desde debajo de Hf–Pt a la fila de los actínidos.
+   - *IUPAC*: generador de nombres provisionales (un, bi, tri…; ununennio, unbinilio) y el origen de Nh, Mc, Ts y Og.
 3. **🧭 Grupos, periodos y bloques**: explicación de periodos y grupos, explorador (mini tabla tocable que resalta el periodo, el grupo o el bloque del elemento y explica por qué), equivalencia entre la numeración IUPAC 1–18 y la tradicional A/B, familias, bloques s/p/d/f, cómo ubicar un elemento con su configuración, y metales/no metales/metaloides.
 4. **📈 Propiedades periódicas**: por qué hay tendencias (niveles y carga nuclear efectiva); tarjetas con diagrama de flechas de radio atómico, energía de ionización, afinidad electrónica, electronegatividad y carácter metálico; **mapa de calor** con datos reales (radio calculado de Clementi en pm, primera energía de ionización en kJ/mol y electronegatividad de Pauling de `ELEMENTS`) donde se tocan dos elementos para compararlos; y las excepciones (Be/B, N/O…).
 5. **✅ Repaso**: 10 preguntas: 6 de un banco fijo de 16 (historia y organización) más 3 comparaciones generadas al azar (solo pares del mismo periodo o grupo en los que el dato real sigue la tendencia, para no caer en excepciones) y 1 de ubicar un elemento por su configuración.
