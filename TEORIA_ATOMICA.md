@@ -53,6 +53,16 @@ Cinco pestañas (`#conceptos`, `#moeller`, `#configurador`, `#orbitales`, `#repa
 - Convención de números cuánticos: los orbitales se llenan de mₗ = −l a +l, primero con espín ↑ (mₛ = +½). Está escrita en la página porque algunos textos usan la convención contraria.
 - Electrones de valencia: los del último nivel (n = periodo), igual que `elValenceCount` del Juego. El Pd (4d¹⁰, sin 5s) da 0 y la página lo explica.
 
+## 3a. `tabla.html` — Tabla Periódica
+
+Además de la tabla interactiva, tiene pestañas teóricas (`#tabla`, `#historia`, `#organizacion`, `#propiedades`, `#repaso`):
+
+1. **📊 Tabla**: la tabla de 118 elementos de siempre (vistas por familias, metales/no metales y bloques, ficha de cada elemento).
+2. **🕰️ Historia**: línea del tiempo deslizable con el mismo formato de `atomo.html`: Lavoisier (1789), Döbereiner (1829), Chancourtois (1862), Newlands (1865), Mendeléiev (1869, con Meyer), Ramsay (1898), Moseley (1913), Seaborg (1945) e IUPAC (2016). Cada tarjeta tiene *¿Qué propuso?*, *Evidencia o ejemplo* y *¿Qué le faltaba?*; la de Lavoisier trae la conexión con Colombia (platino del Chocó, Elhuyar en Mariquita).
+3. **🧭 Grupos, periodos y bloques**: explicación de periodos y grupos, explorador (mini tabla tocable que resalta el periodo, el grupo o el bloque del elemento y explica por qué), equivalencia entre la numeración IUPAC 1–18 y la tradicional A/B, familias, bloques s/p/d/f, cómo ubicar un elemento con su configuración, y metales/no metales/metaloides.
+4. **📈 Propiedades periódicas**: por qué hay tendencias (niveles y carga nuclear efectiva); tarjetas con diagrama de flechas de radio atómico, energía de ionización, afinidad electrónica, electronegatividad y carácter metálico; **mapa de calor** con datos reales (radio calculado de Clementi en pm, primera energía de ionización en kJ/mol y electronegatividad de Pauling de `ELEMENTS`) donde se tocan dos elementos para compararlos; y las excepciones (Be/B, N/O…).
+5. **✅ Repaso**: 10 preguntas: 6 de un banco fijo de 16 (historia y organización) más 3 comparaciones generadas al azar (solo pares del mismo periodo o grupo en los que el dato real sigue la tendencia, para no caer en excepciones) y 1 de ubicar un elemento por su configuración.
+
 ## 3b. `enlace.html` — Enlace Químico
 
 Es la cuarta parada del nivel n = 1, después de la Tabla Periódica, y el puente hacia la nomenclatura. Retoma las ideas de «EnlaceLab» con el diseño de IonNom y la química corregida. Tiene 6 pestañas (`#conceptos`, `#lewis`, `#en`, `#simuladores`, `#laboratorio`, `#repaso`):

@@ -356,6 +356,141 @@ html{font-size:var(--base-fs)}
 .font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
 .font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:inherit}
 .font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ═══════════ PESTAÑAS (mismo patrón que atomo.html) ═══════════ */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;margin-bottom:18px;position:sticky;top:48px;z-index:100;background:var(--bg);border-bottom:2px solid var(--brd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;min-height:44px;border:2px solid var(--brd);border-radius:100px;background:var(--surf);color:var(--tx2);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab:hover{border-color:var(--an)}
+.tab.on{background:var(--nav);border-color:var(--nav);color:#fff}
+@media(max-width:640px){.tabs{top:52px}}
+.panel{display:none}
+.panel.on{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-wrap{max-width:1000px}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:22px 24px;margin-bottom:18px;box-shadow:var(--sh)}
+.sect h2{font-size:1.12rem;font-weight:800;color:var(--tx);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.8rem;font-weight:800;color:var(--dimmer);margin:16px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul{margin-left:20px;margin-bottom:10px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.6;margin-bottom:4px}
+.sect strong{color:var(--tx)}
+@media(max-width:640px){.sect{padding:18px 16px}}
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 16px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--nav);color:#fff;font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:var(--surf);color:var(--nav)}
+.btn.ghost:hover{background:var(--an-b);filter:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.seg button{min-height:40px;border:2px solid var(--brd2);border-radius:999px;background:var(--surf);color:var(--tx2);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;padding:6px 14px}
+.seg button.on{background:var(--nav);border-color:var(--nav);color:#fff}
+
+/* ── LÍNEA DEL TIEMPO ── */
+.tl-years{display:flex;align-items:center;gap:0;margin:4px 0 14px;overflow-x:auto;scrollbar-width:none;padding:4px 2px}
+.tl-years::-webkit-scrollbar{display:none}
+.tl-year{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font:inherit;color:var(--dimmer);padding:4px 6px;min-width:64px;position:relative}
+.tl-year::before{content:"";position:absolute;top:13px;left:0;right:0;height:3px;background:var(--brd)}
+.tl-year:first-child::before{left:50%}
+.tl-year:last-child::before{right:50%}
+.tl-dot{width:22px;height:22px;border-radius:50%;background:var(--surf);border:3px solid var(--brd2);position:relative;z-index:1;transition:all .2s}
+.tl-year .yl{font-size:.7rem;font-weight:800;font-family:var(--mono)}
+.tl-year .yn{font-size:.66rem;font-weight:600;white-space:nowrap}
+.tl-year.on{color:var(--nav)}
+.tl-year.on .tl-dot{background:var(--gold);border-color:var(--nav);transform:scale(1.2)}
+.tl-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.tl-card{flex:0 0 min(88%,620px);scroll-snap-align:center;background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.tl-head{display:flex;gap:14px;align-items:center;padding:16px 18px;background:var(--surf2);border-bottom:1px solid var(--brd)}
+.tl-head svg{width:96px;height:96px;flex-shrink:0}
+.tl-when{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--an-t);background:var(--an-b);padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:4px}
+.tl-who{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;line-height:1.2}
+.tl-nick{font-size:.78rem;color:var(--dimmer);font-weight:600}
+.tl-body{padding:12px 18px 16px;flex:1}
+.tl-body h4{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin:10px 0 4px}
+.tl-body h4.prop{color:var(--an-t)}
+.tl-body h4.evid{color:var(--ox-t)}
+.tl-body h4.lim{color:var(--err-t)}
+.tl-body h4.col{color:var(--cat-t)}
+.tl-body p,.tl-body li{font-size:.84rem;color:var(--tx2);line-height:1.6}
+.tl-body ul{margin-left:18px}
+.tl-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tl-count{font-size:.8rem;color:var(--dimmer);font-weight:700}
+@media(max-width:480px){.tl-head svg{width:68px;height:68px}}
+
+/* ── MINI TABLA (organización y propiedades) ── */
+.mini-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+.mini{display:grid;grid-template-columns:1.6em repeat(18,minmax(0,1fr));gap:2px;min-width:520px;max-width:900px;container-type:inline-size}
+.mini .mh{font-size:.6rem;font-weight:800;color:var(--dimmer);text-align:center;align-self:end;line-height:1.1;padding-bottom:2px}
+.mini .mh small{display:block;font-weight:600;font-size:.52rem}
+.mini .mp{font-size:.66rem;font-weight:800;color:var(--dimmer);display:flex;align-items:center;justify-content:center}
+.mini .mt{aspect-ratio:1/1;border-radius:4px;border:1.5px solid var(--brd2);background:var(--surf2);color:var(--tx2);font:inherit;font-weight:800;font-size:clamp(.55rem,2.2cqw,.9rem);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:0;line-height:1;transition:transform .1s,opacity .15s}
+.mini .mt:hover{transform:scale(1.12);position:relative;z-index:2}
+.mini .mt small{font-size:.62em;font-weight:600;opacity:.85;margin-top:1px}
+.mini .mt.dim{opacity:.28}
+.mini .mt.hl{background:var(--gold);border-color:var(--nav);color:#1b2430}
+.mini .mt.sel{outline:3px solid var(--nav);outline-offset:1px;position:relative;z-index:3}
+.mini .mt.nodata{background:transparent;border-style:dashed;color:var(--dimmer);cursor:default}
+.mini .mt.blk-s{background:var(--blk-s-b);border-color:var(--blk-s);color:var(--blk-s-t)}
+.mini .mt.blk-p{background:var(--blk-p-b);border-color:var(--blk-p);color:var(--blk-p-t)}
+.mini .mt.blk-d{background:var(--blk-d-b);border-color:var(--blk-d);color:var(--blk-d-t)}
+.mini .mt.blk-f{background:var(--blk-f-b);border-color:var(--blk-f);color:var(--blk-f-t)}
+.mini .mgap{grid-column:1/-1;height:8px}
+.mini .mflab{grid-column:1/4;font-size:.56rem;font-weight:700;color:var(--dimmer);display:flex;align-items:center;justify-content:flex-end;padding-right:4px;text-align:right;line-height:1.1}
+.mini-info{margin-top:12px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:12px 16px;font-size:.86rem;color:var(--tx2);line-height:1.6;min-height:64px}
+.mini-info strong{color:var(--tx)}
+.mini-info .cfg{font-family:var(--mono);font-weight:700;color:var(--an-t);background:var(--an-b);padding:1px 6px;border-radius:6px}
+
+/* Tabla de equivalencias de grupos */
+.gtab-wrap{overflow-x:auto;margin:8px 0 12px}
+.gtab{border-collapse:collapse;font-size:.78rem;min-width:620px;width:100%}
+.gtab th,.gtab td{border:1px solid var(--brd);padding:5px 4px;text-align:center}
+.gtab th{background:var(--surf2);color:var(--dimmer);font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;text-align:left;padding-left:8px;white-space:nowrap}
+.gtab td.s{background:var(--blk-s-b);color:var(--blk-s-t);font-weight:700}
+.gtab td.p{background:var(--blk-p-b);color:var(--blk-p-t);font-weight:700}
+.gtab td.d{background:var(--blk-d-b);color:var(--blk-d-t);font-weight:700}
+
+/* Bloques */
+.blk-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.blk-card{border-radius:var(--rs);padding:12px 14px;border:2px solid;font-size:.82rem;line-height:1.55}
+.blk-card b{display:block;font-size:.95rem;margin-bottom:2px}
+.blk-card code{font-family:var(--mono);font-weight:700}
+.blk-card.s{background:var(--blk-s-b);border-color:var(--blk-s);color:var(--blk-s-t)}
+.blk-card.p{background:var(--blk-p-b);border-color:var(--blk-p);color:var(--blk-p-t)}
+.blk-card.d{background:var(--blk-d-b);border-color:var(--blk-d);color:var(--blk-d-t)}
+.blk-card.f{background:var(--blk-f-b);border-color:var(--blk-f);color:var(--blk-f-t)}
+.steps{counter-reset:st;list-style:none;margin:8px 0 10px!important;padding:0}
+.steps li{counter-increment:st;position:relative;padding-left:34px!important;margin-bottom:8px}
+.steps li::before{content:counter(st);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--nav);color:#fff;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ── PROPIEDADES PERIÓDICAS ── */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px}
+.prop-card{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.prop-card h3{font-size:1rem;font-weight:800;color:var(--tx);margin:0}
+.prop-card .def{font-size:.82rem;color:var(--tx2);line-height:1.55}
+.prop-card svg{width:100%;max-width:260px;height:auto;margin:4px auto;display:block}
+.prop-card .tr{font-size:.8rem;line-height:1.5;color:var(--tx2)}
+.prop-card .tr b{color:var(--tx)}
+.prop-card .why{font-size:.78rem;color:var(--an-t);background:var(--an-b);border-radius:8px;padding:8px 10px;line-height:1.5}
+.trend-svg text{font-family:var(--sans);font-weight:700}
+.heat-legend{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--dimmer);font-weight:700;margin-top:8px;flex-wrap:wrap}
+.heat-bar{height:12px;width:180px;max-width:50vw;border-radius:6px;border:1px solid var(--brd2)}
+
+/* ── QUIZ ── */
+.mq-q{font-size:.92rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+@media(max-width:560px){.mq-opts{grid-template-columns:1fr}}
+.mq-btn{padding:10px 12px;min-height:48px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font:inherit;font-size:.86rem;cursor:pointer;text-align:left;font-weight:600;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.84rem;min-height:20px;color:var(--tx);margin-top:8px;line-height:1.55}
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--ox));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
 </style>
 <link rel="stylesheet" href="assets/ionom.css">
 </head>
@@ -412,7 +547,18 @@ html{font-size:var(--base-fs)}
       <button onclick="document.getElementById('calc-bg').classList.add('open')" style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:var(--ok-b);border:2px solid var(--ok);color:var(--ok-t);border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='var(--ok)';this.style.color='#fff'" onmouseout="this.style.background='var(--ok-b)';this.style.color='var(--ok-t)'">🧮 Calculadora</button>
     </div>
   </div>
-  <p class="page-subtitle">118 elementos — toca cualquier elemento para escuchar su información en voz</p>
+  <p class="page-subtitle">118 elementos, la historia de la tabla, cómo se organiza y cómo cambian sus propiedades</p>
+
+  <div class="tabs" role="tablist" aria-label="Secciones de Tabla Periódica">
+    <button class="tab on" role="tab" data-tab="tabla" aria-selected="true">📊 Tabla</button>
+    <button class="tab" role="tab" data-tab="historia" aria-selected="false">🕰️ Historia</button>
+    <button class="tab" role="tab" data-tab="organizacion" aria-selected="false">🧭 Grupos, periodos y bloques</button>
+    <button class="tab" role="tab" data-tab="propiedades" aria-selected="false">📈 Propiedades periódicas</button>
+    <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
+  </div>
+
+  <!-- ═══════════ TABLA ═══════════ -->
+  <section class="panel on" id="p-tabla" role="tabpanel">
 
   <!-- ── PRETRAIN BOX: qué información tiene cada celda ── -->
   <div class="pretrain-box" role="note" aria-label="Orientación: información en cada celda">
@@ -457,6 +603,144 @@ html{font-size:var(--base-fs)}
       <div class="legend-item"><div class="legend-dot ld-mn-metalloid"></div>Metaloide</div>
     </div>
   </div>
+  </section>
+
+  <!-- ═══════════ HISTORIA ═══════════ -->
+  <section class="panel" id="p-historia" role="tabpanel">
+    <div class="panel-wrap">
+      <p style="font-size:.88rem;color:var(--tx2);margin-bottom:8px;max-width:70ch">La tabla periódica no la inventó una sola persona: tardó casi dos siglos en tomar la forma que usas hoy. Cada científico ordenó los elementos que se conocían en su época, y cada orden falló en algo que el siguiente corrigió. Desliza las tarjetas o toca los años.</p>
+      <div class="tl-years" id="tl-years"></div>
+      <div class="tl-track" id="tl-track"></div>
+      <div class="tl-nav">
+        <button class="btn ghost" id="tl-prev">← Anterior</button>
+        <span class="tl-count" id="tl-count"></span>
+        <button class="btn ghost" id="tl-next">Siguiente →</button>
+      </div>
+      <div class="info-box" style="margin-top:16px">💡 <strong>Idea clave:</strong> primero se ordenó por <strong>masa atómica</strong> (Mendeléiev, 1869) y funcionó casi siempre. Las pocas parejas que quedaban «al revés» (Ar–K, Co–Ni, Te–I) se arreglaron cuando Moseley mostró en 1913 que el orden verdadero es el <strong>número atómico Z</strong>: la cantidad de protones del núcleo.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ORGANIZACIÓN ═══════════ -->
+  <section class="panel" id="p-organizacion" role="tabpanel">
+    <div class="panel-wrap">
+      <div class="sect">
+        <h2>🧭 Periodos y grupos</h2>
+        <p>La tabla ordena los elementos por <strong>número atómico (Z)</strong> creciente, de izquierda a derecha y de arriba abajo. Esa cuadrícula tiene dos direcciones, y cada una significa algo:</p>
+        <ul>
+          <li><strong>Periodos (filas horizontales, 1 a 7):</strong> el número del periodo es el número de <strong>niveles de energía</strong> que ocupan los electrones del átomo. El sodio (periodo 3) tiene electrones en los niveles 1, 2 y 3. Los periodos tienen 2, 8, 8, 18, 18, 32 y 32 elementos.</li>
+          <li><strong>Grupos (columnas verticales, 1 a 18):</strong> los elementos de un mismo grupo tienen la misma cantidad de <strong>electrones de valencia</strong> (los del último nivel), y por eso reaccionan de forma parecida. Por eso a los grupos también se les llama <strong>familias</strong>.</li>
+        </ul>
+        <h3>Explora: toca un elemento</h3>
+        <div class="seg" id="org-mode" role="group" aria-label="Qué resaltar">
+          <button class="on" data-m="periodo">↔️ Su periodo</button>
+          <button data-m="grupo">↕️ Su grupo</button>
+          <button data-m="bloque">🔲 Su bloque</button>
+        </div>
+        <div class="mini-scroll"><div class="mini" id="org-mini"></div></div>
+        <div class="mini-info" id="org-info" aria-live="polite">👆 Toca cualquier elemento para ver en qué periodo, grupo o bloque está y por qué.</div>
+      </div>
+
+      <div class="sect">
+        <h2>🔢 Dos formas de numerar los grupos</h2>
+        <p>En muchos textos escolares de Colombia se usa todavía la numeración tradicional con números romanos y las letras <strong>A</strong> (elementos representativos) y <strong>B</strong> (metales de transición). La IUPAC recomienda numerar del <strong>1 al 18</strong>. Las dos son correctas; conviene saber pasar de una a otra:</p>
+        <div class="gtab-wrap"><table class="gtab">
+          <tr><th>IUPAC</th><td class="s">1</td><td class="s">2</td><td class="d">3</td><td class="d">4</td><td class="d">5</td><td class="d">6</td><td class="d">7</td><td class="d">8</td><td class="d">9</td><td class="d">10</td><td class="d">11</td><td class="d">12</td><td class="p">13</td><td class="p">14</td><td class="p">15</td><td class="p">16</td><td class="p">17</td><td class="p">18</td></tr>
+          <tr><th>Tradicional</th><td class="s">IA</td><td class="s">IIA</td><td class="d">IIIB</td><td class="d">IVB</td><td class="d">VB</td><td class="d">VIB</td><td class="d">VIIB</td><td class="d" colspan="3">VIIIB</td><td class="d">IB</td><td class="d">IIB</td><td class="p">IIIA</td><td class="p">IVA</td><td class="p">VA</td><td class="p">VIA</td><td class="p">VIIA</td><td class="p">VIIIA</td></tr>
+        </table></div>
+        <p><strong>Truco:</strong> en los grupos A, el número romano es igual a los electrones de valencia (VIA → 6 electrones de valencia). En la numeración IUPAC, a los grupos 13 a 18 se les resta 10 (grupo 16 → 6 electrones de valencia).</p>
+        <h3>Familias con nombre propio</h3>
+        <ul>
+          <li><strong>Grupo 1 (IA) — Metales alcalinos:</strong> Li, Na, K, Rb, Cs, Fr. Muy reactivos; pierden 1 electrón (forman iones +1). El hidrógeno está en esta columna, pero no es un metal alcalino.</li>
+          <li><strong>Grupo 2 (IIA) — Alcalinotérreos:</strong> Be, Mg, Ca, Sr, Ba, Ra. Pierden 2 electrones (+2).</li>
+          <li><strong>Grupo 13 (IIIA) — Térreos o boroides</strong>; <strong>grupo 14 (IVA) — Carbonoides</strong>; <strong>grupo 15 (VA) — Nitrogenoides</strong>.</li>
+          <li><strong>Grupo 16 (VIA) — Anfígenos o calcógenos:</strong> O, S, Se, Te… Tienden a ganar 2 electrones (−2).</li>
+          <li><strong>Grupo 17 (VIIA) — Halógenos:</strong> F, Cl, Br, I, At. Ganan 1 electrón (−1); forman sales con los metales.</li>
+          <li><strong>Grupo 18 (VIIIA) — Gases nobles:</strong> He, Ne, Ar, Kr, Xe, Rn. Tienen el nivel externo lleno y casi no reaccionan.</li>
+          <li><strong>Grupos 3 a 12 (B) — Metales de transición</strong>; <strong>lantánidos y actínidos</strong> — metales de transición interna (las dos filas de abajo).</li>
+        </ul>
+      </div>
+
+      <div class="sect">
+        <h2>🔲 Bloques s, p, d y f</h2>
+        <p>La forma de la tabla no es un capricho: sale de la <a href="configuracion.html" style="color:var(--an-t);font-weight:700">configuración electrónica</a>. El <strong>bloque</strong> de un elemento es el tipo de subnivel donde entra su <strong>último electrón</strong> (el electrón diferencial). Como un subnivel s admite 2 electrones, el bloque s tiene 2 columnas; el p admite 6 y tiene 6 columnas; el d, 10, y el f, 14.</p>
+        <div class="blk-cards">
+          <div class="blk-card s"><b>Bloque s · 2 columnas</b>Grupos 1 y 2, más el helio. Terminan en <code>ns¹</code> o <code>ns²</code>.</div>
+          <div class="blk-card p"><b>Bloque p · 6 columnas</b>Grupos 13 a 18. Terminan en <code>ns² np¹</code> a <code>ns² np⁶</code>.</div>
+          <div class="blk-card d"><b>Bloque d · 10 columnas</b>Grupos 3 a 12 (transición). Llenan <code>(n−1)d¹</code> a <code>(n−1)d¹⁰</code>.</div>
+          <div class="blk-card f"><b>Bloque f · 14 columnas</b>Lantánidos y actínidos (transición interna). Llenan <code>(n−2)f</code>.</div>
+        </div>
+        <p style="font-size:.8rem;color:var(--dimmer)">En el explorador de arriba, el modo «🔲 Su bloque» colorea toda la tabla con estos cuatro colores. Elementos representativos = bloques s y p.</p>
+        <h3>Ubicar un elemento a partir de su configuración</h3>
+        <ol class="steps">
+          <li><strong>Periodo</strong> = el mayor nivel <em>n</em> que aparece en la configuración.</li>
+          <li><strong>Bloque</strong> = la letra del último subnivel que se llenó (s, p, d o f).</li>
+          <li><strong>Grupo</strong>: en el bloque s, los electrones de <em>ns</em> (1 o 2); en el bloque p, 12 + los electrones de <em>np</em>; en el bloque d, 2 + los electrones de <em>(n−1)d</em>.</li>
+        </ol>
+        <div class="info-box"><strong>Ejemplo 1 — Azufre:</strong> 1s² 2s² 2p⁶ <strong>3s² 3p⁴</strong> → mayor nivel 3 → <strong>periodo 3</strong>; termina en p → <strong>bloque p</strong>; 2 + 4 = 6 electrones de valencia → <strong>grupo 16 (VIA)</strong>.</div>
+        <div class="info-box"><strong>Ejemplo 2 — Hierro:</strong> [Ar] <strong>4s² 3d⁶</strong> → mayor nivel 4 → <strong>periodo 4</strong>; termina en d → <strong>bloque d</strong>; 2 + 6 = 8 → <strong>grupo 8 (VIIIB)</strong>.</div>
+      </div>
+
+      <div class="sect">
+        <h2>⚙️ Metales, no metales y metaloides</h2>
+        <p>Una línea en forma de <strong>escalera</strong>, que baja desde el boro (B) hasta el astato (At), separa los <strong>metales</strong> (a la izquierda, casi el 80 % de los elementos) de los <strong>no metales</strong> (a la derecha, más el hidrógeno). Los elementos pegados a la escalera —B, Si, Ge, As, Sb y Te; algunos textos incluyen también el Po— son <strong>metaloides</strong>: tienen propiedades intermedias, y por eso el silicio y el germanio son semiconductores (chips, paneles solares).</p>
+        <p>Puedes verlo en color en la pestaña <a href="#tabla" data-go="tabla" style="color:var(--an-t);font-weight:700">📊 Tabla</a> con la vista «⚙️ Metales / No metales».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PROPIEDADES PERIÓDICAS ═══════════ -->
+  <section class="panel" id="p-propiedades" role="tabpanel">
+    <div class="panel-wrap">
+      <div class="sect">
+        <h2>📈 ¿Por qué hay tendencias?</h2>
+        <p>Las propiedades de los elementos <strong>cambian de forma regular</strong> al recorrer un periodo o un grupo. Casi todo se explica con dos ideas:</p>
+        <ul>
+          <li><strong>Al bajar en un grupo ↓</strong> se agrega un <strong>nivel de energía</strong> nuevo. Los electrones externos quedan más lejos del núcleo y los electrones internos los «tapan» (efecto pantalla o apantallamiento). El núcleo los atrae <strong>menos</strong>.</li>
+          <li><strong>Al avanzar en un periodo →</strong> el número de niveles no cambia, pero cada elemento tiene <strong>un protón más</strong>. Los electrones nuevos entran al mismo nivel y casi no se tapan entre sí, así que la carga que sienten (la <strong>carga nuclear efectiva</strong>) aumenta. El núcleo los atrae <strong>más</strong>.</li>
+        </ul>
+        <div class="info-box">🧲 <strong>Resumen:</strong> abajo y a la izquierda (Cs, Fr) los electrones externos están <strong>flojos</strong>; arriba y a la derecha (F, O, N) están <strong>bien sujetos</strong>. Cada propiedad periódica es una forma de medir esto.</div>
+      </div>
+
+      <div class="prop-grid" id="prop-grid"></div>
+
+      <div class="sect">
+        <h2>🌡️ Mapa de calor: compruébalo con datos reales</h2>
+        <p>Elige una propiedad. Cada casilla se colorea según su valor: <strong>más oscuro = valor más alto</strong>. Toca un elemento para ver su valor y luego toca otro para <strong>compararlos</strong>.</p>
+        <div class="seg" id="heat-mode" role="group" aria-label="Propiedad a mostrar">
+          <button class="on" data-p="radio">⭕ Radio atómico</button>
+          <button data-p="ei">⚡ Energía de ionización</button>
+          <button data-p="en">🧲 Electronegatividad</button>
+        </div>
+        <div class="mini-scroll"><div class="mini" id="heat-mini"></div></div>
+        <div class="heat-legend" id="heat-legend"></div>
+        <div class="mini-info" id="heat-info" aria-live="polite">👆 Toca un elemento.</div>
+        <p style="font-size:.74rem;color:var(--dimmer);margin-top:10px">Datos de los periodos 1 a 6 (sin lantánidos). Radio atómico calculado (Clementi y Raimondi, 1967) en picómetros (1 pm = 10⁻¹² m); primera energía de ionización en kJ/mol; electronegatividad en la escala de Pauling. Las casillas punteadas no tienen dato (por ejemplo, la electronegatividad del He, Ne y Ar no está definida porque casi no forman enlaces).</p>
+      </div>
+
+      <div class="sect">
+        <h2>⚠️ Las tendencias tienen excepciones</h2>
+        <ul>
+          <li><strong>Energía de ionización:</strong> el Be (900 kJ/mol) supera al B (801), y el N (1402) supera al O (1314). El B pierde un electrón 2p que está solo, y el O pierde uno de un orbital con dos electrones que se repelen; el Be (2s lleno) y el N (2p semilleno, un electrón por orbital) son más estables. Lo mismo pasa con Mg/Al y P/S.</li>
+          <li><strong>Metales de transición:</strong> a lo largo del bloque d las propiedades cambian poco, porque los electrones nuevos entran a un nivel interno (n−1)d.</li>
+          <li><strong>Gases nobles:</strong> tienen la energía de ionización más alta de su periodo, pero casi no forman enlaces, así que en muchas tablas no se les asigna electronegatividad.</li>
+        </ul>
+        <p>Las reglas de las flechas sirven para comparar elementos del <strong>mismo periodo</strong> o del <strong>mismo grupo</strong>. Si dos elementos están en diagonal (por ejemplo, Li y Mg), la regla no siempre decide cuál es mayor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ REPASO ═══════════ -->
+  <section class="panel" id="p-repaso" role="tabpanel">
+    <div class="panel-wrap">
+      <div class="sect">
+        <h2>✅ Repaso: la tabla periódica</h2>
+        <p style="font-size:.8rem;color:var(--dimmer)">10 preguntas: historia, organización y propiedades periódicas. Las comparaciones cambian cada vez que repites.</p>
+        <div class="progress-bar"><div class="progress-fill" id="q-fill"></div></div>
+        <div class="progress-label" id="q-label"></div>
+        <div id="q-box"></div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ═══ TABLA INTRO MODAL (MAYER) ═══ -->
@@ -1062,6 +1346,462 @@ if (!localStorage.getItem('ionom_tabla_visited')) {
   window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
   window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script>
+/* ═══════════════════════════════════════════
+   Pestañas teóricas: Historia, Organización, Propiedades periódicas y Repaso.
+   Usa ELEMENTS y blockOf() del script principal.
+   ═══════════════════════════════════════════ */
+(function(){
+'use strict';
+function $(id){ return document.getElementById(id); }
+function visible(el){ return el && el.offsetParent!==null; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+/* ════════════════ Pestañas ════════════════ */
+var TABS=['tabla','historia','organizacion','propiedades','repaso'];
+function showTab(name,push){
+  if(TABS.indexOf(name)<0) name='tabla';
+  document.querySelectorAll('.tabs .tab').forEach(function(b){
+    var on=b.getAttribute('data-tab')===name;
+    b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+  });
+  TABS.forEach(function(t){ $('p-'+t).classList.toggle('on',t===name); });
+  if(push!==false){ try{ history.replaceState(null,'','#'+name); }catch(e){} }
+  if(name==='historia') markTl(tlIdx);
+}
+document.querySelectorAll('.tabs .tab').forEach(function(b){
+  b.addEventListener('click',function(){ showTab(b.getAttribute('data-tab')); });
+});
+document.querySelectorAll('[data-go]').forEach(function(a){
+  a.addEventListener('click',function(e){ e.preventDefault(); showTab(a.getAttribute('data-go')); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+
+/* ════════════════ Línea del tiempo ════════════════ */
+var HITOS=[
+  {y:'1789',short:'Lavoisier',who:'Antoine Lavoisier',nick:'La primera lista de elementos',
+   svg:'<rect x="22" y="10" width="56" height="80" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="2"/><g stroke="#92400e" stroke-width="3" stroke-linecap="round"><line x1="32" y1="26" x2="68" y2="26"/><line x1="32" y1="38" x2="62" y2="38"/><line x1="32" y1="50" x2="66" y2="50"/><line x1="32" y1="62" x2="58" y2="62"/><line x1="32" y1="74" x2="64" y2="74"/></g>',
+   prop:'En su <em>Tratado elemental de química</em> definió el elemento como una <strong>sustancia que no se puede descomponer</strong> en otras más simples y publicó una lista de <strong>33 «sustancias simples»</strong>, separadas en gases, no metales, metales y «tierras».',
+   evid:'La lista ya traía oxígeno, hidrógeno, nitrógeno, azufre, fósforo, carbono y 17 metales, entre ellos el platino.',
+   lim:'Incluyó como elementos a la <strong>luz</strong> y al <strong>calórico</strong> (el «fluido del calor»), y las «tierras» (cal, sílice, alúmina) resultaron ser óxidos. Además, era solo una lista: no buscaba ningún patrón.',
+   col:'El <strong>platino</strong> de la lista llegó a Europa desde el <strong>Chocó</strong>: lo describió Antonio de Ulloa en 1748. Y Juan José Elhuyar, que aisló el <strong>wolframio</strong> en 1783 con su hermano Fausto, se fue después a dirigir las minas de plata de Mariquita (Tolima) y murió en Bogotá en 1796.'},
+  {y:'1829',short:'Döbereiner',who:'Johann W. Döbereiner',nick:'Las tríadas',
+   svg:'<g font-family="sans-serif" font-weight="800" text-anchor="middle"><circle cx="20" cy="50" r="15" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/><circle cx="50" cy="50" r="15" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/><circle cx="80" cy="50" r="15" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/><text x="20" y="55" font-size="13" fill="#7f1d1d">Li</text><text x="50" y="55" font-size="13" fill="#7f1d1d">Na</text><text x="80" y="55" font-size="13" fill="#7f1d1d">K</text><path d="M20 30 Q50 6 80 30" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4 3"/><text x="50" y="86" font-size="11" fill="#475569">promedio</text></g>',
+   prop:'Encontró grupos de <strong>tres elementos parecidos</strong> (tríadas) en los que la masa atómica del elemento del medio es aproximadamente el <strong>promedio</strong> de las otras dos. Fue la primera vez que alguien relacionó las propiedades con la masa atómica.',
+   evid:'Li (6,9), Na (23,0), K (39,1): (6,9 + 39,1) ÷ 2 = <strong>23,0</strong>. También Ca–Sr–Ba y Cl–Br–I.',
+   lim:'Solo encontró unas pocas tríadas; la mayoría de los elementos no encajaba en ninguna.'},
+  {y:'1862',short:'Chancourtois',who:'A. Béguyer de Chancourtois',nick:'El tornillo telúrico',
+   svg:'<ellipse cx="50" cy="16" rx="26" ry="8" fill="none" stroke="#64748b" stroke-width="2"/><line x1="24" y1="16" x2="24" y2="84" stroke="#64748b" stroke-width="2"/><line x1="76" y1="16" x2="76" y2="84" stroke="#64748b" stroke-width="2"/><ellipse cx="50" cy="84" rx="26" ry="8" fill="none" stroke="#64748b" stroke-width="2"/><path d="M24 24 L76 36 M24 40 L76 52 M24 56 L76 68 M24 72 L76 84" stroke="#0891b2" stroke-width="3"/><g fill="#dc2626"><circle cx="40" cy="27.7" r="3.5"/><circle cx="40" cy="43.7" r="3.5"/><circle cx="40" cy="59.7" r="3.5"/><circle cx="40" cy="75.7" r="3.5"/></g>',
+   prop:'Escribió los elementos en orden de masa atómica sobre una <strong>hélice enrollada en un cilindro</strong>. Los elementos parecidos quedaban uno debajo de otro, en la misma línea vertical.',
+   evid:'Fue la primera vez que se vio la <strong>periodicidad</strong>: las propiedades se repiten cada cierto número de elementos.',
+   lim:'Era geólogo, usó términos de geología y la revista publicó su artículo <strong>sin el dibujo</strong>. Casi nadie lo entendió.'},
+  {y:'1865',short:'Newlands',who:'John Newlands',nick:'La ley de las octavas',
+   svg:'<g stroke="#334155" stroke-width="1.5"><rect x="8" y="22" width="12" height="56" fill="#fff"/><rect x="20" y="22" width="12" height="56" fill="#fff"/><rect x="32" y="22" width="12" height="56" fill="#fff"/><rect x="44" y="22" width="12" height="56" fill="#fff"/><rect x="56" y="22" width="12" height="56" fill="#fff"/><rect x="68" y="22" width="12" height="56" fill="#fff"/><rect x="80" y="22" width="12" height="56" fill="#fff"/></g><g fill="#1e293b"><rect x="16" y="22" width="8" height="32"/><rect x="28" y="22" width="8" height="32"/><rect x="52" y="22" width="8" height="32"/><rect x="64" y="22" width="8" height="32"/><rect x="76" y="22" width="8" height="32"/></g><circle cx="14" cy="70" r="4" fill="#dc2626"/><circle cx="86" cy="70" r="4" fill="#dc2626"/>',
+   prop:'Ordenó los elementos por masa atómica y notó que <strong>cada octavo elemento se parece al primero</strong>, como las notas de la escala musical (do, re, mi… y otra vez do).',
+   evid:'Li, Be, B, C, N, O, F y el octavo, Na, se parece al Li. (Los gases nobles aún no se conocían.)',
+   lim:'Funcionaba solo hasta el calcio; después falla. Además puso dos elementos en una misma casilla. En la Sociedad Química de Londres se burlaron: le preguntaron si había probado ordenarlos alfabéticamente. Años después (1887) le dieron la medalla Davy.'},
+  {y:'1869',short:'Mendeléiev',who:'Dmitri Mendeléiev',nick:'La tabla que predice',
+   svg:'<g stroke="#1e3a8a" stroke-width="1.5" fill="#dbeafe"><rect x="10" y="14" width="18" height="18"/><rect x="30" y="14" width="18" height="18"/><rect x="50" y="14" width="18" height="18"/><rect x="70" y="14" width="18" height="18"/><rect x="10" y="34" width="18" height="18"/><rect x="30" y="34" width="18" height="18"/><rect x="70" y="34" width="18" height="18"/><rect x="10" y="54" width="18" height="18"/><rect x="50" y="54" width="18" height="18"/><rect x="70" y="54" width="18" height="18"/></g><g fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-dasharray="3 2"><rect x="50" y="34" width="18" height="18"/><rect x="30" y="54" width="18" height="18"/></g><g font-family="sans-serif" font-weight="900" font-size="14" fill="#b45309" text-anchor="middle"><text x="59" y="48">?</text><text x="39" y="68">?</text></g>',
+   prop:'Ordenó los <strong>63 elementos conocidos</strong> por masa atómica, pero puso juntos a los de propiedades parecidas aunque eso rompiera el orden. Se atrevió a <strong>dejar huecos</strong> para elementos aún no descubiertos y a predecir sus propiedades. Casi al mismo tiempo (1870), Lothar Meyer llegó a una tabla parecida estudiando el volumen de los átomos.',
+   evid:'Predijo el «eka-silicio»: masa ≈ 72 y densidad ≈ 5,5 g/cm³. En 1886 se descubrió el <strong>germanio</strong>: masa 72,6 y densidad 5,3 g/cm³. También acertó con el galio (1875) y el escandio (1879).',
+   lim:'No sabía <strong>por qué</strong> funcionaba. Tuvo que poner al teluro (127,6) antes que al yodo (126,9), en contra del orden de masas, y no tenía lugar para los gases nobles.'},
+  {y:'1898',short:'Ramsay',who:'William Ramsay',nick:'Una columna nueva: los gases nobles',
+   svg:'<g stroke="#94a3b8" stroke-width="1.5" fill="#f1f5f9"><rect x="10" y="14" width="16" height="16"/><rect x="28" y="14" width="16" height="16"/><rect x="46" y="14" width="16" height="16"/><rect x="10" y="32" width="16" height="16"/><rect x="28" y="32" width="16" height="16"/><rect x="46" y="32" width="16" height="16"/><rect x="10" y="50" width="16" height="16"/><rect x="28" y="50" width="16" height="16"/><rect x="46" y="50" width="16" height="16"/><rect x="10" y="68" width="16" height="16"/><rect x="28" y="68" width="16" height="16"/><rect x="46" y="68" width="16" height="16"/></g><g stroke="#6366f1" stroke-width="2" fill="#e0e7ff"><rect x="70" y="14" width="18" height="16"/><rect x="70" y="32" width="18" height="16"/><rect x="70" y="50" width="18" height="16"/><rect x="70" y="68" width="18" height="16"/></g><g font-family="sans-serif" font-weight="800" font-size="8" fill="#312e81" text-anchor="middle"><text x="79" y="25">He</text><text x="79" y="43">Ne</text><text x="79" y="61">Ar</text><text x="79" y="79">Kr</text></g>',
+   prop:'Con Lord Rayleigh descubrió el <strong>argón</strong> (1894); luego encontró el helio en la Tierra (1895) y, con Morris Travers, el neón, el kriptón y el xenón (1898). Como no reaccionaban con nada, propuso agregarlos como una <strong>columna completa nueva</strong> (hoy el grupo 18).',
+   evid:'El nitrógeno sacado del aire pesaba un poco más que el obtenido de compuestos químicos: el «sobrante» era argón. Cada gas se identificó por su <strong>espectro de luz</strong>.',
+   lim:'El argón (39,9) pesa más que el potasio (39,1), pero tenía que ir antes. Otra vez el orden por masa fallaba. Ramsay ganó el Premio Nobel en 1904.'},
+  {y:'1913',short:'Moseley',who:'Henry Moseley',nick:'El número atómico',
+   svg:'<line x1="14" y1="86" x2="90" y2="86" stroke="#334155" stroke-width="2"/><line x1="14" y1="86" x2="14" y2="10" stroke="#334155" stroke-width="2"/><line x1="18" y1="80" x2="86" y2="16" stroke="#2563eb" stroke-width="2.5"/><g fill="#dc2626"><circle cx="26" cy="72.5" r="3.5"/><circle cx="38" cy="61.2" r="3.5"/><circle cx="50" cy="49.9" r="3.5"/><circle cx="62" cy="38.6" r="3.5"/><circle cx="74" cy="27.3" r="3.5"/></g><g font-family="sans-serif" font-weight="800" font-size="10" fill="#475569"><text x="80" y="97">Z</text><text x="0" y="16">√f</text></g>',
+   prop:'Midió los <strong>rayos X</strong> que emite cada elemento y encontró que su frecuencia crece en <strong>escalones iguales</strong> de un elemento al siguiente. Cada escalón corresponde a un protón más en el núcleo: así nació el <strong>número atómico (Z)</strong>.',
+   evid:'Con Z, las parejas «al revés» (Ar–K, Co–Ni, Te–I) quedaron en el orden correcto, y aparecieron los huecos de los elementos 43, 61, 72 y 75, descubiertos después. Es la <strong>ley periódica moderna</strong>: las propiedades se repiten según el número atómico.',
+   lim:'Explicaba el <em>orden</em>, pero no <em>por qué</em> se repiten las propiedades. Eso llegó en los años 1920 con la <a href="configuracion.html" style="color:inherit;font-weight:700">configuración electrónica</a>: los elementos de un grupo tienen los mismos electrones de valencia. Moseley murió en la Primera Guerra Mundial, a los 27 años.'},
+  {y:'1945',short:'Seaborg',who:'Glenn T. Seaborg',nick:'Los actínidos, fila aparte',
+   svg:'<g stroke="#94a3b8" stroke-width="1.2" fill="#f1f5f9"><rect x="6" y="10" width="88" height="44" rx="3"/></g><g stroke="#94a3b8" stroke-width="1"><line x1="6" y1="21" x2="94" y2="21"/><line x1="6" y1="32" x2="94" y2="32"/><line x1="6" y1="43" x2="94" y2="43"/></g><g stroke="#92400e" stroke-width="1.5" fill="#fef3c7"><rect x="16" y="64" width="72" height="11"/></g><g stroke="#7c3aed" stroke-width="2" fill="#ede9fe"><rect x="16" y="79" width="72" height="11"/></g><g font-family="sans-serif" font-weight="800" font-size="7.5" text-anchor="middle"><text x="52" y="72" fill="#451a03">lantánidos</text><text x="52" y="87" fill="#4c1d95">actínidos</text></g>',
+   prop:'Propuso que los elementos desde el actinio forman una <strong>serie nueva</strong>, los <strong>actínidos</strong>, que llenan orbitales 5f, y que debían ir en una fila aparte debajo de los lantánidos. Así quedó la forma actual de la tabla.',
+   evid:'Con esa idea encontró dónde buscar y descubrió, con su equipo, el americio y el curio (1944–1945), y luego otros elementos. Recibió el Premio Nobel en 1951; el <strong>seaborgio</strong> (Sg, 106) lleva su nombre.',
+   lim:'Los elementos más pesados que el uranio son <strong>sintéticos</strong>: se fabrican en aceleradores y muchos duran solo fracciones de segundo.'},
+  {y:'2016',short:'IUPAC',who:'IUPAC',nick:'El periodo 7, completo',
+   svg:'<g fill="#e0e7ff" stroke="#6366f1" stroke-width="1"><rect x="6" y="12" width="9" height="9"/><rect x="85" y="12" width="9" height="9"/></g><g fill="#dbeafe" stroke="#94a3b8" stroke-width=".8"><rect x="6" y="23" width="18" height="9"/><rect x="58" y="23" width="36" height="9"/><rect x="6" y="34" width="18" height="9"/><rect x="58" y="34" width="36" height="9"/><rect x="6" y="45" width="88" height="9"/><rect x="6" y="56" width="88" height="9"/><rect x="6" y="67" width="88" height="9"/><rect x="6" y="78" width="58" height="9"/></g><g fill="#fcd34d" stroke="#b45309" stroke-width="1.2"><rect x="64" y="78" width="7.5" height="9"/><rect x="71.5" y="78" width="7.5" height="9"/><rect x="79" y="78" width="7.5" height="9"/><rect x="86.5" y="78" width="7.5" height="9"/></g>',
+   prop:'La IUPAC aprobó los nombres de los cuatro últimos elementos: <strong>nihonio</strong> (Nh, 113), <strong>moscovio</strong> (Mc, 115), <strong>teneso</strong> (Ts, 117) y <strong>oganesón</strong> (Og, 118). Con ellos, la tabla tiene 118 elementos y el periodo 7 queda completo.',
+   evid:'Se obtuvieron en laboratorios de Japón, Rusia y Estados Unidos, haciendo chocar núcleos en aceleradores; de algunos se han producido solo unos pocos átomos.',
+   lim:'Hoy se busca el elemento 119, que abriría el <strong>periodo 8</strong>. En 2019, a los 150 años de la tabla de Mendeléiev, la UNESCO celebró el Año Internacional de la Tabla Periódica.',
+   last:true}
+];
+var tlIdx=0;
+(function buildTimeline(){
+  var years=$('tl-years'), track=$('tl-track');
+  years.innerHTML=HITOS.map(function(m,i){
+    return '<button class="tl-year" data-i="'+i+'" aria-label="'+m.who+', '+m.y+'"><span class="tl-dot"></span><span class="yl">'+m.y+'</span><span class="yn">'+m.short+'</span></button>';
+  }).join('');
+  track.innerHTML=HITOS.map(function(m,i){
+    return '<article class="tl-card" data-i="'+i+'">'+
+      '<div class="tl-head"><svg viewBox="0 0 100 100" aria-hidden="true">'+m.svg+'</svg><div><span class="tl-when">'+m.y+'</span><div class="tl-who">'+m.who+'</div><div class="tl-nick">'+m.nick+'</div></div></div>'+
+      '<div class="tl-body"><h4 class="prop">💡 ¿Qué propuso?</h4><p>'+m.prop+'</p>'+
+      '<h4 class="evid">🔍 Evidencia o ejemplo</h4><p>'+m.evid+'</p>'+
+      '<h4 class="lim">'+(m.last?'🔭 ¿Y ahora?':'⚠️ ¿Qué le faltaba?')+'</h4><p>'+m.lim+'</p>'+
+      (m.col?'<h4 class="col">🇨🇴 Conexión con Colombia</h4><p>'+m.col+'</p>':'')+
+      '</div></article>';
+  }).join('');
+  years.querySelectorAll('.tl-year').forEach(function(b){
+    b.addEventListener('click',function(){ goTl(+b.getAttribute('data-i')); });
+  });
+  $('tl-prev').addEventListener('click',function(){ goTl(Math.max(0,tlIdx-1)); });
+  $('tl-next').addEventListener('click',function(){ goTl(Math.min(HITOS.length-1,tlIdx+1)); });
+  var t=null;
+  track.addEventListener('scroll',function(){
+    clearTimeout(t);
+    t=setTimeout(function(){
+      var cards=track.querySelectorAll('.tl-card'), mid=track.scrollLeft+track.clientWidth/2, best=0, bd=1e9;
+      cards.forEach(function(c,i){ var cm=c.offsetLeft+c.offsetWidth/2; var d=Math.abs(cm-mid); if(d<bd){bd=d;best=i;} });
+      markTl(best);
+    },80);
+  });
+})();
+function markTl(i){
+  tlIdx=i;
+  $('tl-years').querySelectorAll('.tl-year').forEach(function(b,j){ b.classList.toggle('on',j===i); });
+  $('tl-count').textContent=(i+1)+' de '+HITOS.length;
+  $('tl-prev').disabled=i===0; $('tl-next').disabled=i===HITOS.length-1;
+  var yb=$('tl-years').children[i];
+  if(yb&&yb.scrollIntoView&&visible(yb)) yb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+}
+function goTl(i){
+  var track=$('tl-track'), c=track.children[i];
+  if(c) track.scrollTo({left:c.offsetLeft-(track.clientWidth-c.offsetWidth)/2,behavior:'smooth'});
+  markTl(i);
+}
+markTl(0);
+
+/* ════════════════ Mini tabla (compartida) ════════════════ */
+var ROMANO={1:'IA',2:'IIA',3:'IIIB',4:'IVB',5:'VB',6:'VIB',7:'VIIB',8:'VIIIB',9:'VIIIB',10:'VIIIB',11:'IB',12:'IIB',13:'IIIA',14:'IVA',15:'VA',16:'VIA',17:'VIIA',18:'VIIIA'};
+var FAMILIA={1:'metales alcalinos',2:'alcalinotérreos',13:'térreos o boroides',14:'carbonoides',15:'nitrogenoides',16:'anfígenos o calcógenos',17:'halógenos',18:'gases nobles'};
+function isF(el){ return el.type==='lanthanide'||el.type==='actinide'; }
+// Lantánidos/actínidos que van en las filas de abajo (sin número de grupo real).
+function inFRow(z){ return (z>=58&&z<=71)||(z>=90&&z<=103); }
+function blk(el){ return blockOf(el).slice(4); }  // 's' | 'p' | 'd' | 'f'
+
+// Construye la mini tabla en `box`. opts.maxPeriod limita las filas;
+// opts.fRows añade lantánidos y actínidos; opts.onTap(z, btn) al tocar.
+function buildMini(box,opts){
+  var html='<div></div>';
+  for(var g=1;g<=18;g++) html+='<div class="mh">'+g+'<small>'+ROMANO[g]+'</small></div>';
+  var maxP=opts.maxPeriod||7;
+  for(var p=1;p<=maxP;p++){
+    html+='<div class="mp" style="grid-row:'+(p+1)+';grid-column:1">'+p+'</div>';
+  }
+  Object.keys(ELEMENTS).forEach(function(k){
+    var z=+k, el=ELEMENTS[z];
+    if(inFRow(z)||el.period>maxP) return;
+    html+='<button class="mt" data-z="'+z+'" style="grid-row:'+(el.period+1)+';grid-column:'+(el.group+1)+'" aria-label="'+el.name+'">'+el.sym+'</button>';
+  });
+  if(opts.fRows){
+    var r=maxP+2;
+    html+='<div class="mgap" style="grid-row:'+r+'"></div>';
+    html+='<div class="mflab" style="grid-row:'+(r+1)+'">Lantánidos</div><div class="mflab" style="grid-row:'+(r+2)+'">Actínidos</div>';
+    for(var i=0;i<14;i++){
+      [58+i,90+i].forEach(function(z,j){
+        var el=ELEMENTS[z];
+        html+='<button class="mt" data-z="'+z+'" style="grid-row:'+(r+1+j)+';grid-column:'+(i+5)+'" aria-label="'+el.name+'">'+el.sym+'</button>';
+      });
+    }
+  }
+  box.innerHTML=html;
+  box.querySelectorAll('.mt').forEach(function(b){
+    b.addEventListener('click',function(){ opts.onTap(+b.getAttribute('data-z'),b); });
+  });
+}
+
+/* ════════════════ Organización: periodo / grupo / bloque ════════════════ */
+(function(){
+  var box=$('org-mini'), info=$('org-info'), mode='periodo', selZ=null;
+  buildMini(box,{fRows:true,onTap:function(z){ selZ=z; paint(); }});
+  function valenceElectrons(el){
+    if(el.sym==='He') return 2;
+    if(el.group<=2) return el.group;
+    if(el.group>=13) return el.group-10;
+    return null;
+  }
+  function paint(){
+    var sel=selZ?ELEMENTS[selZ]:null;
+    box.querySelectorAll('.mt').forEach(function(b){
+      var z=+b.getAttribute('data-z'), el=ELEMENTS[z];
+      b.className='mt';
+      if(mode==='bloque') b.classList.add('blk-'+blk(el));
+      if(sel){
+        var same=false;
+        if(mode==='periodo') same=el.period===sel.period;
+        else if(mode==='grupo') same=isF(sel)?(isF(el)&&el.period===sel.period):(!inFRow(z)&&el.group===sel.group);
+        else same=blk(el)===blk(sel);
+        if(mode==='bloque'){ if(!same) b.classList.add('dim'); }
+        else if(same) b.classList.add('hl');
+      }
+      if(z===selZ) b.classList.add('sel');
+    });
+    if(!sel){ info.innerHTML='👆 Toca cualquier elemento para ver en qué periodo, grupo o bloque está y por qué.'; return; }
+    var cfg='<span class="cfg">'+sel.valence+'</span>';
+    var head='<strong>'+sel.name+' ('+sel.sym+', Z = '+selZ+')</strong> · termina en '+cfg+'<br>';
+    var txt='';
+    if(mode==='periodo'){
+      var n={1:2,2:8,3:8,4:18,5:18,6:32,7:32}[sel.period];
+      txt='Está en el <strong>periodo '+sel.period+'</strong>: sus electrones ocupan <strong>'+sel.period+' nivel'+(sel.period>1?'es':'')+' de energía</strong>, y el más externo es n = '+sel.period+'. Todos los elementos resaltados tienen su capa de valencia en ese mismo nivel. Este periodo tiene '+n+' elementos'+(sel.period>=6?' (incluidos los de la fila de abajo).':'.');
+    }else if(mode==='grupo'){
+      if(isF(sel)&&sel.sym!=='La'&&sel.sym!=='Ac'){
+        txt='Es un <strong>'+(sel.type==='lanthanide'?'lantánido':'actínido')+'</strong>: va en las filas de abajo y <strong>no tiene número de grupo</strong> propio. Se separan para que la tabla no sea demasiado ancha; en realidad caben entre los grupos 3 y 4 del periodo '+sel.period+'.';
+      }else if(sel.sym==='H'){
+        txt='El hidrógeno está en el <strong>grupo 1 (IA)</strong> porque tiene <strong>1 electrón de valencia</strong> (1s¹), pero es un no metal: <strong>no</strong> es un metal alcalino. Es un caso especial.';
+      }else if(sel.sym==='He'){
+        txt='El helio está en el <strong>grupo 18 (VIIIA)</strong>, con los gases nobles, porque su nivel externo está <strong>lleno</strong> (1s²), aunque solo tiene 2 electrones de valencia y pertenece al bloque s.';
+      }else{
+        var ve=valenceElectrons(sel);
+        if(ve!==null){
+          txt='Está en el <strong>grupo '+sel.group+' ('+ROMANO[sel.group]+')</strong>, la familia de los <strong>'+FAMILIA[sel.group]+'</strong>. Tiene <strong>'+ve+' '+(ve>1?'electrones':'electrón')+' de valencia</strong>, igual que todos los resaltados: por eso reaccionan de forma parecida.';
+        }else{
+          txt='Está en el <strong>grupo '+sel.group+' ('+ROMANO[sel.group]+')</strong>, un grupo de <strong>metales de transición</strong>. Aquí el número del grupo es la suma de los electrones de ns y (n−1)d ('+sel.group+').';
+        }
+      }
+    }else{
+      var b=blk(sel);
+      var why={s:'su último electrón entra en un orbital <strong>s</strong>',p:'su último electrón entra en un orbital <strong>p</strong>',d:'va llenando orbitales <strong>d</strong> del nivel anterior (n−1)',f:'va llenando orbitales <strong>f</strong> (n−2)'}[b];
+      txt='Pertenece al <strong>bloque '+b+'</strong>: '+why+'. Fíjate en que el ancho de cada bloque es el número de electrones que caben en ese subnivel: s = 2, p = 6, d = 10, f = 14.';
+      if(sel.sym==='He') txt+=' El helio es la excepción visual: es del bloque s, pero se dibuja sobre el grupo 18.';
+    }
+    info.innerHTML=head+txt+' <button class="btn ghost" style="min-height:34px;padding:4px 12px;margin-top:8px;font-size:.78rem" id="org-ficha">Ver ficha completa</button>';
+    $('org-ficha').addEventListener('click',function(){ showEl(selZ); });
+  }
+  document.querySelectorAll('#org-mode button').forEach(function(b){
+    b.addEventListener('click',function(){
+      mode=b.getAttribute('data-m');
+      document.querySelectorAll('#org-mode button').forEach(function(x){ x.classList.toggle('on',x===b); });
+      paint();
+    });
+  });
+  paint();
+})();
+
+/* ════════════════ Propiedades periódicas ════════════════ */
+// Radio atómico calculado (Clementi y Raimondi, 1967), en pm.
+var RADIO={H:53,He:31,Li:167,Be:112,B:87,C:67,N:56,O:48,F:42,Ne:38,Na:190,Mg:145,Al:118,Si:111,P:98,S:88,Cl:79,Ar:71,
+  K:243,Ca:194,Sc:184,Ti:176,V:171,Cr:166,Mn:161,Fe:156,Co:152,Ni:149,Cu:145,Zn:142,Ga:136,Ge:125,As:114,Se:103,Br:94,Kr:88,
+  Rb:265,Sr:219,Y:212,Zr:206,Nb:198,Mo:190,Tc:183,Ru:178,Rh:173,Pd:169,Ag:165,Cd:161,In:156,Sn:145,Sb:133,Te:123,I:115,Xe:108,
+  Cs:298,Ba:253,Hf:208,Ta:200,W:193,Re:188,Os:185,Ir:180,Pt:177,Au:174,Hg:171,Tl:156,Pb:154,Bi:143,Po:135,At:127,Rn:120};
+// Primera energía de ionización, en kJ/mol.
+var EI={H:1312,He:2372,Li:520,Be:900,B:801,C:1086,N:1402,O:1314,F:1681,Ne:2081,Na:496,Mg:738,Al:578,Si:787,P:1012,S:1000,Cl:1251,Ar:1521,
+  K:419,Ca:590,Sc:633,Ti:659,V:651,Cr:653,Mn:717,Fe:762,Co:760,Ni:737,Cu:745,Zn:906,Ga:579,Ge:762,As:947,Se:941,Br:1140,Kr:1351,
+  Rb:403,Sr:550,Y:600,Zr:640,Nb:652,Mo:684,Tc:702,Ru:710,Rh:720,Pd:804,Ag:731,Cd:868,In:558,Sn:709,Sb:834,Te:869,I:1008,Xe:1170,
+  Cs:376,Ba:503,La:538,Hf:659,Ta:761,W:770,Re:760,Os:840,Ir:880,Pt:870,Au:890,Hg:1007,Tl:589,Pb:716,Bi:703,Po:812,At:899,Rn:1037};
+var PROPS={
+  radio:{nombre:'radio atómico',u:'pm',get:function(el){ return RADIO[el.sym]; },mas:'más grande',menos:'más pequeño'},
+  ei:{nombre:'energía de ionización',u:'kJ/mol',get:function(el){ return EI[el.sym]; },mas:'mayor',menos:'menor'},
+  en:{nombre:'electronegatividad',u:'',get:function(el){ return el.en; },mas:'mayor',menos:'menor'}
+};
+function fmtVal(p,v){ return p==='en'?v.toFixed(2).replace('.',','):String(v); }
+
+// Diagrama de tendencia: flecha horizontal (periodo) y vertical (grupo)
+// apuntando hacia donde AUMENTA la propiedad, y estrella donde es máxima.
+function trendSvg(right,up){
+  var c='#0d4a73', s='#d97706';
+  var cells='';
+  for(var r=0;r<4;r++) for(var k=0;k<7;k++) cells+='<rect x="'+(62+k*24)+'" y="'+(40+r*22)+'" width="21" height="19" rx="3" fill="#e2e8f0"/>';
+  var hx1=right?66:226, hx2=right?226:66;
+  var vy1=up?122:40, vy2=up?40:122;
+  var starX=right?218:70, starY=up?50:116;
+  return '<svg class="trend-svg" viewBox="0 0 260 150" role="img" aria-label="Aumenta hacia la '+(right?'derecha':'izquierda')+' en el periodo y hacia '+(up?'arriba':'abajo')+' en el grupo">'+
+    '<defs><marker id="ah'+(right?1:0)+(up?1:0)+'" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="'+c+'"/></marker></defs>'+
+    cells+
+    '<line x1="'+hx1+'" y1="22" x2="'+hx2+'" y2="22" stroke="'+c+'" stroke-width="4" marker-end="url(#ah'+(right?1:0)+(up?1:0)+')"/>'+
+    '<text x="146" y="14" text-anchor="middle" font-size="11" fill="'+c+'">aumenta en el periodo</text>'+
+    '<line x1="40" y1="'+vy1+'" x2="40" y2="'+vy2+'" stroke="'+c+'" stroke-width="4" marker-end="url(#ah'+(right?1:0)+(up?1:0)+')"/>'+
+    '<text x="22" y="81" text-anchor="middle" font-size="11" fill="'+c+'" transform="rotate(-90 22 81)">aumenta en el grupo</text>'+
+    '<text x="'+starX+'" y="'+(starY+5)+'" text-anchor="middle" font-size="16" fill="'+s+'">★</text>'+
+    '</svg>';
+}
+(function buildPropCards(){
+  var CARDS=[
+    {t:'⭕ Radio atómico',d:'Distancia desde el núcleo hasta los electrones más externos; mide el <strong>tamaño</strong> del átomo.',r:false,u:false,
+     per:'<b>En el periodo →</b> disminuye: Na (190 pm) es más grande que Cl (79 pm).',gru:'<b>En el grupo ↓</b> aumenta: Li (167 pm) es más pequeño que Cs (298 pm).',
+     why:'Más protones con el mismo número de niveles «encogen» el átomo; más niveles lo agrandan. El más grande: <strong>Cs/Fr</strong> (abajo a la izquierda).'},
+    {t:'⚡ Energía de ionización',d:'Energía necesaria para <strong>quitarle</strong> el electrón más externo a un átomo en estado gaseoso: X(g) → X⁺(g) + e⁻.',r:true,u:true,
+     per:'<b>En el periodo →</b> aumenta: Na (496 kJ/mol) &lt; Ar (1521 kJ/mol).',gru:'<b>En el grupo ↓</b> disminuye: Li (520) &gt; K (419) &gt; Cs (376).',
+     why:'Un electrón lejano y apantallado se quita fácil. Por eso los metales alcalinos forman iones +1 tan fácilmente. La mayor: <strong>He</strong>.'},
+    {t:'🎯 Afinidad electrónica',d:'Energía que se <strong>libera</strong> cuando un átomo gaseoso <strong>gana</strong> un electrón: X(g) + e⁻ → X⁻(g).',r:true,u:true,
+     per:'<b>En el periodo →</b> en general aumenta: los halógenos son los que más energía liberan al ganar un electrón (Cl: 349 kJ/mol).',gru:'<b>En el grupo ↓</b> en general disminuye, con varias excepciones (el F libera menos que el Cl).',
+     why:'Es la tendencia con más excepciones. Los gases nobles y los grupos 2 y 15 casi no aceptan electrones.'},
+    {t:'🧲 Electronegatividad',d:'Capacidad de un átomo para <strong>atraer los electrones de un enlace</strong> hacia sí. Se mide en la escala de Pauling (0,7 a 4,0).',r:true,u:true,
+     per:'<b>En el periodo →</b> aumenta: Na (0,93) &lt; Cl (3,16).',gru:'<b>En el grupo ↓</b> disminuye: F (3,98) &gt; Cl (3,16) &gt; Br (2,96) &gt; I (2,66).',
+     why:'El más electronegativo es el <strong>flúor</strong>; el menos, el cesio y el francio. La diferencia de electronegatividad decide el tipo de <a href="enlace.html" style="color:inherit;font-weight:700">enlace químico</a>.'},
+    {t:'🔩 Carácter metálico',d:'Tendencia a <strong>perder electrones</strong> y formar cationes: brillo, buena conducción, maleabilidad.',r:false,u:false,
+     per:'<b>En el periodo →</b> disminuye: Na es un metal, Si un metaloide y Cl un no metal.',gru:'<b>En el grupo ↓</b> aumenta: en el grupo 14, C es no metal, Si y Ge metaloides, y Sn y Pb metales.',
+     why:'Va al revés de la energía de ionización: el que suelta fácil sus electrones es más metálico. El <strong>carácter no metálico</strong> sigue la tendencia contraria.'}
+  ];
+  $('prop-grid').innerHTML=CARDS.map(function(c){
+    return '<div class="prop-card"><h3>'+c.t+'</h3><div class="def">'+c.d+'</div>'+trendSvg(c.r,c.u)+
+      '<div class="tr">'+c.per+'</div><div class="tr">'+c.gru+'</div><div class="why">'+c.why+'</div></div>';
+  }).join('');
+})();
+
+/* Mapa de calor */
+(function(){
+  var box=$('heat-mini'), info=$('heat-info'), prop='radio', prevZ=null, selZ=null;
+  buildMini(box,{maxPeriod:6,onTap:tap});
+  function range(){
+    var vals=[];
+    Object.keys(ELEMENTS).forEach(function(k){ var el=ELEMENTS[k]; if(el.period<=6&&!inFRow(+k)){ var v=PROPS[prop].get(el); if(v!=null) vals.push(v); } });
+    return {min:Math.min.apply(null,vals),max:Math.max.apply(null,vals)};
+  }
+  function color(t){ return 'hsl(205,75%,'+Math.round(93-t*65)+'%)'; }
+  function paint(){
+    var R=range();
+    box.querySelectorAll('.mt').forEach(function(b){
+      var z=+b.getAttribute('data-z'), el=ELEMENTS[z], v=PROPS[prop].get(el);
+      b.className='mt'; b.style.background=''; b.style.color=''; b.style.borderColor='';
+      if(v==null){ b.classList.add('nodata'); b.disabled=true; b.innerHTML=el.sym; return; }
+      b.disabled=false;
+      var t=(v-R.min)/(R.max-R.min);
+      b.style.background=color(t); b.style.borderColor=color(Math.min(1,t+.15)); b.style.color=t>.5?'#fff':'#0b2236';
+      b.innerHTML=el.sym+'<small>'+fmtVal(prop,v)+'</small>';
+      if(z===selZ) b.classList.add('sel');
+    });
+    $('heat-legend').innerHTML='<span>'+fmtVal(prop,R.min)+'</span><span class="heat-bar" style="background:linear-gradient(90deg,'+color(0)+','+color(.5)+','+color(1)+')"></span><span>'+fmtVal(prop,R.max)+(PROPS[prop].u?' '+PROPS[prop].u:'')+'</span>';
+  }
+  function frase(p,mayor){ return (mayor?'mayor ':'menor ')+PROPS[p].nombre; }
+  function why(a,b,p){
+    // a y b: elementos; explica la tendencia si están en el mismo periodo o grupo.
+    if(a.period===b.period&&a.group!==b.group){
+      var der=a.group>b.group?a:b, izq=der===a?b:a;
+      return 'Están en el <strong>mismo periodo ('+a.period+')</strong>: el '+der.sym+' tiene más protones con el mismo número de niveles, así que atrae más a sus electrones y se espera que tenga <strong>'+frase(p,p!=='radio')+'</strong> que el '+izq.sym+'.';
+    }
+    if(a.group===b.group&&a.period!==b.period){
+      var abajo=a.period>b.period?a:b, arriba=abajo===a?b:a;
+      return 'Están en el <strong>mismo grupo ('+a.group+')</strong>: el '+abajo.sym+' tiene más niveles de energía y sus electrones externos están más lejos y más apantallados, así que se espera que tenga <strong>'+frase(p,p==='radio')+'</strong> que el '+arriba.sym+'.';
+    }
+    return 'No están en el mismo periodo ni en el mismo grupo, así que las flechas no bastan para predecir cuál es mayor: hay que mirar el dato.';
+  }
+  function tap(z){
+    if(selZ!==z){ prevZ=selZ; selZ=z; }
+    var el=ELEMENTS[z], P=PROPS[prop], v=P.get(el);
+    var s='<strong>'+el.name+' ('+el.sym+')</strong> · periodo '+el.period+', grupo '+el.group+' · '+P.nombre+': <strong>'+fmtVal(prop,v)+(P.u?' '+P.u:'')+'</strong>';
+    if(prevZ){
+      var o=ELEMENTS[prevZ], w=P.get(o);
+      if(w!=null){
+        var cmp=v===w?'tiene la misma '+P.nombre+' que':'tiene <strong>'+frase(prop,v>w)+'</strong> que';
+        if(prop==='radio') cmp=v===w?'tiene el mismo radio atómico que':'tiene <strong>'+frase(prop,v>w)+'</strong> que';
+        s+='<br>Comparado con el '+o.sym+' ('+fmtVal(prop,w)+'): el '+el.sym+' '+cmp+' el '+o.sym+'. '+why(el,o,prop);
+      }
+    }
+    info.innerHTML=s;
+    paint();
+  }
+  document.querySelectorAll('#heat-mode button').forEach(function(b){
+    b.addEventListener('click',function(){
+      prop=b.getAttribute('data-p');
+      document.querySelectorAll('#heat-mode button').forEach(function(x){ x.classList.toggle('on',x===b); });
+      if(selZ&&PROPS[prop].get(ELEMENTS[selZ])==null){ selZ=null; prevZ=null; }
+      if(selZ){ var z=selZ; prevZ=null; selZ=null; tap(z); } else { info.innerHTML='👆 Toca un elemento.'; paint(); }
+    });
+  });
+  paint();
+})();
+
+/* ════════════════ Repaso ════════════════ */
+(function(){
+  var FIJAS=[
+    {q:'¿Qué criterio usó Mendeléiev para ordenar los elementos en 1869?',o:['La masa atómica (y las propiedades químicas)','El número atómico','El número de neutrones','El orden alfabético'],x:'Ordenó por masa atómica, pero priorizó poner juntos a los elementos de propiedades parecidas. El número atómico llegó en 1913 con Moseley.'},
+    {q:'¿Por qué Mendeléiev dejó casillas vacías en su tabla?',o:['Porque predijo elementos que aún no se habían descubierto','Porque no le alcanzó el papel','Porque eran gases nobles','Porque esos elementos eran radiactivos'],x:'Predijo el eka-aluminio (galio), el eka-boro (escandio) y el eka-silicio (germanio), y sus predicciones resultaron casi exactas.'},
+    {q:'Moseley (1913) mostró que el orden correcto de la tabla lo da…',o:['el número atómico (protones)','la masa atómica','la densidad','el número de electrones de valencia'],x:'Con los rayos X de cada elemento, Moseley encontró que Z aumenta de uno en uno. Eso puso en su lugar parejas como Te–I y Ar–K.'},
+    {q:'En la tríada de Döbereiner Li (6,9), Na (¿?), K (39,1), ¿qué masa se predice para el Na?',o:['≈ 23,0','≈ 46,0','≈ 32,2','≈ 6,9'],x:'Es el promedio de los extremos: (6,9 + 39,1) ÷ 2 = 23,0. El valor real es 22,99.'},
+    {q:'«Cada octavo elemento se parece al primero, como las notas musicales.» ¿Quién lo propuso?',o:['Newlands','Döbereiner','Lavoisier','Seaborg'],x:'Es la ley de las octavas de John Newlands (1865). Solo funcionaba hasta el calcio.'},
+    {q:'¿Qué agregó Ramsay a la tabla periódica a finales del siglo XIX?',o:['Una columna completa: los gases nobles','Los lantánidos','El número atómico','Los metales de transición'],x:'Descubrió el argón, el neón, el kriptón y el xenón, que no reaccionaban, y los ubicó en un grupo nuevo (hoy el 18).'},
+    {q:'Lavoisier incluyó en su lista de 1789 algo que hoy NO es un elemento. ¿Qué?',o:['La luz y el calórico','El oxígeno','El platino','El azufre'],x:'Los consideraba «sustancias simples», pero la luz y el calor no son materia. Las «tierras» que incluyó resultaron ser óxidos.'},
+    {q:'¿Qué indica el número del periodo de un elemento?',o:['El número de niveles de energía ocupados','El número de electrones de valencia','El número de neutrones','La carga de su ion'],x:'El periodo coincide con el nivel n más alto de la configuración. El grupo, en cambio, se relaciona con los electrones de valencia.'},
+    {q:'¿Por qué los elementos de un mismo grupo tienen propiedades químicas parecidas?',o:['Tienen el mismo número de electrones de valencia','Tienen la misma masa','Tienen el mismo número de niveles','Tienen el mismo número de neutrones'],x:'Las reacciones dependen de los electrones externos. Por ejemplo, todos los del grupo 1 tienen 1 electrón de valencia y forman iones +1.'},
+    {q:'El grupo 17 en la numeración tradicional es el ___ y su familia se llama ___.',o:['VIIA · halógenos','VIIB · halógenos','VIIA · anfígenos','VIIIA · gases nobles'],x:'Grupo 17 = VIIA: halógenos (F, Cl, Br, I, At), con 7 electrones de valencia.'},
+    {q:'Los grupos 8, 9 y 10 (IUPAC) corresponden en la numeración tradicional a…',o:['VIIIB','VIIIA','VIIB','IB'],x:'Los tres comparten el nombre VIIIB (por ejemplo, Fe, Co y Ni).'},
+    {q:'¿Qué elementos forman el bloque d?',o:['Los metales de transición (grupos 3 a 12)','Los grupos 1 y 2','Los grupos 13 a 18','Los lantánidos y actínidos'],x:'El bloque d tiene 10 columnas porque un subnivel d admite 10 electrones.'},
+    {q:'¿Por qué el radio atómico disminuye de izquierda a derecha en un periodo?',o:['Aumenta la carga nuclear y los electrones siguen en el mismo nivel','Se agregan niveles de energía','Disminuye el número de protones','Los electrones se repelen más'],x:'Cada elemento tiene un protón más, pero los electrones nuevos van al mismo nivel: el núcleo los atrae más y el átomo se encoge.'},
+    {q:'¿Cuál es el elemento más electronegativo?',o:['Flúor','Cesio','Oxígeno','Helio'],x:'El flúor (3,98) está arriba a la derecha, sin contar los gases nobles: es el que más atrae los electrones de un enlace.'},
+    {q:'¿En qué zona de la tabla está el mayor carácter metálico?',o:['Abajo a la izquierda','Arriba a la derecha','Arriba a la izquierda','En el centro'],x:'El carácter metálico aumenta hacia abajo y hacia la izquierda: Cs y Fr son los más metálicos.'},
+    {q:'¿Qué propuso Glenn Seaborg en 1945?',o:['Ubicar los actínidos en una fila aparte, debajo de los lantánidos','Ordenar por número atómico','La ley de las octavas','Agregar los gases nobles'],x:'Su idea dio a la tabla su forma actual y le ayudó a descubrir el americio y el curio.'}
+  ];
+  // Pares del mismo periodo o grupo (representativos) donde el dato real sigue
+  // la tendencia; así la pregunta nunca cae en una excepción (Be/B, N/O…).
+  var REPR=Object.keys(ELEMENTS).map(Number).filter(function(z){
+    var el=ELEMENTS[z]; return el.period>=2&&el.period<=6&&(el.group<=2||el.group>=13);
+  });
+  function genComparacion(){
+    for(var tries=0;tries<200;tries++){
+      var p=pick(['radio','ei','en']), P=PROPS[p];
+      var a=ELEMENTS[pick(REPR)], b=ELEMENTS[pick(REPR)];
+      if(a===b) continue;
+      var samePer=a.period===b.period, sameGr=a.group===b.group;
+      if(!samePer&&!sameGr) continue;
+      var va=P.get(a), vb=P.get(b);
+      if(va==null||vb==null||va===vb) continue;
+      if(p==='en'&&(a.group===18||b.group===18)) continue;  // los gases nobles casi no forman enlaces
+      // Tendencia: el de la derecha o el de arriba tiene mayor EI/EN y menor radio.
+      var aWins=samePer?(a.group>b.group):(a.period<b.period);
+      if(p==='radio') aWins=!aWins;
+      if(aWins!==(va>vb)) continue;
+      var gan=va>vb?a:b, otro=gan===a?b:a;
+      var pal=p==='radio'?'mayor radio atómico':(p==='ei'?'mayor energía de ionización':'mayor electronegatividad');
+      return {q:'Sin mirar los datos: ¿cuál tiene <strong>'+pal+'</strong>, el '+a.name.toLowerCase()+' ('+a.sym+') o el '+b.name.toLowerCase()+' ('+b.sym+')?',
+        o:[gan.name+' ('+gan.sym+')',otro.name+' ('+otro.sym+')'],
+        x:why2(a,b,p)+' Datos: '+a.sym+' = '+fmtVal(p,va)+', '+b.sym+' = '+fmtVal(p,vb)+(P.u?' '+P.u:'')+'.'};
+    }
+    return null;
+  }
+  function why2(a,b,p){
+    if(a.period===b.period) return 'Están en el mismo periodo ('+a.period+'); hacia la derecha hay más carga nuclear con los mismos niveles, así que el radio disminuye y la energía de ionización y la electronegatividad aumentan.';
+    return 'Están en el mismo grupo ('+a.group+'); hacia abajo se agregan niveles, así que el radio aumenta y la energía de ionización y la electronegatividad disminuyen.';
+  }
+  function genUbicar(){
+    var z=pick(REPR), el=ELEMENTS[z];
+    var ok='Periodo '+el.period+', grupo '+el.group+' ('+ROMANO[el.group]+')';
+    var opts=[ok], cand=[];
+    var gs=[el.group-1,el.group+1,el.group<=2?el.group+12:el.group-12,el.group<=2?el.group:el.group-10];
+    gs.forEach(function(g){ if(g>=1&&g<=18&&g!==el.group) cand.push('Periodo '+el.period+', grupo '+g+' ('+ROMANO[g]+')'); });
+    [el.period-1,el.period+1].forEach(function(p){ if(p>=1&&p<=7) cand.push('Periodo '+p+', grupo '+el.group+' ('+ROMANO[el.group]+')'); });
+    shuffle(cand).forEach(function(c){ if(opts.length<4&&opts.indexOf(c)<0) opts.push(c); });
+    var ve=el.group<=2?el.group:el.group-10;
+    return {q:'La configuración de un elemento termina en <strong>'+el.valence+'</strong>. ¿Dónde está en la tabla?',o:opts,
+      x:'El mayor nivel es '+el.period+' → periodo '+el.period+'. Tiene '+ve+' '+(ve>1?'electrones':'electrón')+' de valencia en el bloque '+blk(el)+' → grupo '+el.group+' ('+ROMANO[el.group]+'). Es el '+el.name.toLowerCase()+' ('+el.sym+').'};
+  }
+  var QS=[], qi=0, score=0;
+  function start(){
+    QS=shuffle(FIJAS.slice()).slice(0,6);
+    for(var i=0;i<3;i++){ var c=genComparacion(); if(c) QS.push(c); }
+    QS.push(genUbicar());
+    QS=shuffle(QS); qi=0; score=0; render();
+  }
+  function render(){
+    var box=$('q-box'), N=QS.length;
+    $('q-fill').style.width=(qi/N*100)+'%';
+    $('q-label').textContent=qi+' de '+N+' respondidas';
+    if(qi>=N){
+      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+N+'.</strong> '+(score>=8?'¡Excelente! Ya puedes seguir al Enlace Químico.':'Repasa la historia, la organización y las flechas de las propiedades periódicas, y vuelve a intentarlo.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="enlace.html">Ir a Enlace Químico →</a></div>';
+      $('q-again').addEventListener('click',start);
+      return;
+    }
+    var Q=QS[qi], opts=shuffle(Q.o.map(function(t,i){return {t:t,ok:i===0};}));
+    box.innerHTML='<div class="mq-q">'+(qi+1)+'. '+Q.q+'</div><div class="mq-opts">'+opts.map(function(o,i){return '<button class="mq-btn" data-i="'+i+'">'+o.t+'</button>';}).join('')+'</div><div class="mq-fb" id="q-fb"></div><button class="btn" id="q-next" style="display:none;margin-top:10px">Siguiente →</button>';
+    box.querySelectorAll('.mq-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var o=opts[+b.getAttribute('data-i')];
+        box.querySelectorAll('.mq-btn').forEach(function(x,i){ x.disabled=true; if(opts[i].ok) x.classList.add('mq-correct'); });
+        if(!o.ok) b.classList.add('mq-wrong'); else score++;
+        $('q-fb').innerHTML=(o.ok?'<span style="color:var(--ok-t)">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t)">✗ No es así.</span> ')+Q.x;
+        $('q-next').style.display='inline-flex';
+      });
+    });
+    $('q-next').addEventListener('click',function(){ qi++; render(); });
+  }
+  start();
+})();
+
+/* Abrir la pestaña indicada en la URL (tabla.html#propiedades, etc.) */
+var h=(location.hash||'').replace('#','');
+if(h) showTab(h,false);
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>
