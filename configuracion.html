@@ -395,8 +395,8 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
       <div class="qn-k" style="margin-top:10px">Subniveles ocupados · toca uno para resaltarlo</div>
       <div class="v3d-chips" id="v3d-chips"></div>
       <div class="qn-txt v3d-info" id="v3d-info" aria-live="polite"></div>
-      <div class="v3d-leg"><span><i style="background:#ef4444"></i>orbitales s (esferas)</span><span><i style="background:#8b5cf6"></i>orbitales p (dos lóbulos)</span><span><i style="background:#14b8a6"></i>orbitales d (cuatro lóbulos)</span><span><i style="background:#2563eb"></i>electrones (Bohr)</span></div>
-      <p style="font-size:.74rem;color:var(--dimmer);margin-top:6px">Los tamaños son esquemáticos: crecen con n, pero no están a escala. Los orbitales llenos y semillenos se dibujan igual; el número de electrones de cada uno aparece al tocar el subnivel. Hasta el xenón (Z = 54), sin orbitales f.</p>
+      <div class="v3d-leg"><span><i style="background:#ef4444"></i>orbitales s (esferas)</span><span><i style="background:#8b5cf6"></i>orbitales p (dos lóbulos)</span><span><i style="background:#14b8a6"></i>orbitales d (cuatro lóbulos)</span><span><i style="background:#2563eb"></i>electrones (Bohr)</span><span><i style="background:#dc2626"></i>protones</span><span><i style="background:#eab308"></i>neutrones</span></div>
+      <p style="font-size:.74rem;color:var(--dimmer);margin-top:6px">Los tamaños son esquemáticos: crecen con n, pero no están a escala (el núcleo real es unas 100 000 veces más pequeño que el átomo). El núcleo muestra el isótopo más común de cada elemento. Los orbitales llenos y semillenos se dibujan igual; el número de electrones de cada uno aparece al tocar el subnivel. Hasta el xenón (Z = 54), sin orbitales f.</p>
     </div>
 
     <div class="sect">
@@ -813,9 +813,9 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   var ZMAX=54, LETRA='spdf';
   var RGB={s:[239,68,68],p:[139,92,246],d:[20,184,166]}, ALFA={s:.17,p:.46,d:.42};
   var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var V0={yaw:-0.75,pitch:0.4,zoom:1}, cam={yaw:V0.yaw,pitch:V0.pitch,zoom:1};
+  var V0={yaw:-0.75,pitch:0.55,zoom:1}, cam={yaw:V0.yaw,pitch:V0.pitch,zoom:1};
   var st={z:8,vista:'ambos',giro:!quieto,ejes:true,val:false,sel:null};
-  var malla=null, cfg=null, fase=0, ultimoToque=0, sucio=true;
+  var nMax=2, malla=null, cfg=null, fase=0, ultimoToque=0, sucio=true;
   var rB=function(n){ return 26*n; };   // radio de la órbita de Bohr del nivel n
 
   /* ── geometría ── */
@@ -854,6 +854,7 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   function armar(){
     cfg=neutral(st.z);
     var subs=lista(cfg,'llenado'), vis=st.val?capaValencia(cfg):subs;
+    nMax=Math.max.apply(null,subs.map(nOf));
     var M=nuevaMalla();
     vis.forEach(function(s){ ocupados(s,cfg[s]).forEach(function(ml){ orbital(M,nOf(s),lOf(s),ml,s); }); });
     M.v=new Float32Array(M.v); malla=M;
@@ -868,7 +869,8 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
     var dpr=Math.min(2,window.devicePixelRatio||1), W=Math.round(w*dpr);
     if(cv.width!==W){ cv.width=W; cv.height=W; sucio=true; }
     var ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
-    return {ctx:ctx,w:w,k:w/330*cam.zoom,cx:w/2,cy:w/2};
+    // la escala se ajusta al nivel más externo del elemento (las dos vistas iguales)
+    return {ctx:ctx,w:w,k:w/(2.7*rB(nMax)+40)*cam.zoom,cx:w/2,cy:w/2};
   }
   var cy_,sy_,cp_,sp_;
   function preparar(){ cy_=Math.cos(cam.yaw); sy_=Math.sin(cam.yaw); cp_=Math.cos(cam.pitch); sp_=Math.sin(cam.pitch); }
@@ -899,7 +901,7 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
     var P=ajustar(cvO); if(!P||!malla) return;
     var ctx=P.ctx, M=malla, n=M.v.length/3, o=[0,0,0], s=[0,0];
     ctx.clearRect(0,0,P.w,P.w);
-    ejes(P,ctx,150);
+    ejes(P,ctx,rB(nMax)*1.25);
     for(var i=0;i<n;i++){ rot(M.v[3*i],M.v[3*i+1],M.v[3*i+2],o); M.X[i]=o[0]; M.Y[i]=o[1]; M.Z[i]=o[2]; pr(P,s,o[0],o[1],o[2]); M.SX[i]=s[0]; M.SY[i]=s[1]; }
     var T=M.t, nt=T.length;
     for(i=0;i<nt;i++){ M.orden[i]=i; M.prof[i]=M.Z[T[i][0]]+M.Z[T[i][1]]+M.Z[T[i][2]]; }
@@ -919,17 +921,27 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   }
 
   /* ── Bohr ── */
-  var INC=[[.35,0],[1.15,.9],[.75,2.0],[1.4,2.9],[.95,4.0]];
-  function puntoOrbita(n,th,o){
-    var R=rB(n), x=R*Math.cos(th), y=R*Math.sin(th), z=0, a=INC[n-1][0], b=INC[n-1][1];
-    var y2=y*Math.cos(a)-z*Math.sin(a), z2=y*Math.sin(a)+z*Math.cos(a);
-    o[0]=x*Math.cos(b)-y2*Math.sin(b); o[1]=x*Math.sin(b)+y2*Math.cos(b); o[2]=z2; return o;
+  // Bohr: órbitas circulares concéntricas en un mismo plano (el plano xy),
+  // como en su modelo de 1913; al girar se ve que es un disco plano.
+  function puntoOrbita(n,th,o){ var R=rB(n); o[0]=R*Math.cos(th); o[1]=R*Math.sin(th); o[2]=0; return o; }
+  // Núcleo: Z protones y N neutrones del isótopo más común (A), en un cúmulo 3D.
+  var A_COMUN=[1,4,7,9,11,12,14,16,19,20,23,24,27,28,31,32,35,40,39,40,45,48,51,52,55,56,59,58,63,64,69,74,75,80,79,84,85,88,89,90,93,98,98,102,103,106,107,114,115,120,121,130,127,132];
+  var nucleones=[];
+  function armarNucleo(z){
+    var A=A_COMUN[z-1], rb=3.1, R=rb*1.05*Math.cbrt(A), out=[];
+    for(var i=0;i<A;i++){
+      var y=1-2*(i+.5)/A, r=Math.sqrt(1-y*y), th=i*2.39996, d=A===1?0:R*Math.cbrt((i+.5)/A)*.92+rb*.3;
+      // protones y neutrones repartidos de forma pareja
+      var esP=Math.floor((i+1)*z/A)-Math.floor(i*z/A)===1;
+      out.push([d*r*Math.cos(th),d*r*Math.sin(th),d*y,esP]);
+    }
+    nucleones=out; return {A:A,N:A-z};
   }
   function dibujarBohr(){
     var P=ajustar(cvB); if(!P||!cfg) return;
     var ctx=P.ctx, niveles=porNivel(cfg), prim=[], o=[0,0,0], A=[0,0], Bq=[0,0], v=[0,0,0];
     ctx.clearRect(0,0,P.w,P.w);
-    ejes(P,ctx,150);
+    ejes(P,ctx,rB(nMax)*1.25);
     var nmax=Math.max.apply(null,Object.keys(niveles).map(Number)), selN=st.sel?nOf(st.sel):0;
     Object.keys(niveles).forEach(function(k){
       var n=+k, apagado=(st.val&&n!==nmax)||(selN&&n!==selN), resal=selN===n;
@@ -942,23 +954,29 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
       var ne=niveles[k], vel=1/(n*n*.5+.5);
       for(var e=0;e<ne;e++){
         puntoOrbita(n,fase*vel*2.4+e/ne*2*Math.PI+n*.6,v); rot(v[0],v[1],v[2],o); var p=pr(P,A,o[0],o[1],o[2]);
-        prim.push({z:o[2],t:'e',a:[A[0],A[1]],r:4.6*p*P.k,off:apagado});
+        prim.push({z:o[2],t:'e',a:[A[0],A[1]],r:5.2*p*P.k,off:apagado});
       }
-      // rótulo n = … en el punto más alto de la órbita
+      // rótulo n = … en el punto de la órbita más a la derecha (así no se encima con los demás)
       var mejor=null;
-      for(i=0;i<24;i++){ puntoOrbita(n,i/24*2*Math.PI,v); rot(v[0],v[1],v[2],o); pr(P,A,o[0],o[1],o[2]); if(!mejor||A[1]<mejor[1]) mejor=[A[0],A[1]]; }
+      for(i=0;i<36;i++){ puntoOrbita(n,i/36*2*Math.PI,v); rot(v[0],v[1],v[2],o); pr(P,A,o[0],o[1],o[2]); if(!mejor||A[0]>mejor[0]) mejor=[A[0]+16,A[1]+10]; }
       prim.push({z:-9999,t:'l',a:mejor,txt:'n = '+n,off:apagado,res:resal});
     });
-    prim.push({z:0,t:'n'});
+    nucleones.forEach(function(q){ rot(q[0],q[1],q[2],o); var p=pr(P,A,o[0],o[1],o[2]); prim.push({z:o[2],t:'n',a:[A[0],A[1]],r:3.3*p*P.k,p:q[3]}); });
     prim.sort(function(a,b){ return a.z-b.z; });
     prim.forEach(function(q){
       ctx.globalAlpha=q.off?.18:1;
-      if(q.t==='s'){ ctx.strokeStyle=q.res?'#d97706':'#64748b'; ctx.lineWidth=q.res?3:1.6; ctx.beginPath(); ctx.moveTo(q.a[0],q.a[1]); ctx.lineTo(q.b[0],q.b[1]); ctx.stroke(); }
-      else if(q.t==='e'){ var g=ctx.createRadialGradient(q.a[0]-q.r*.3,q.a[1]-q.r*.3,q.r*.1,q.a[0],q.a[1],q.r); g.addColorStop(0,'#bfdbfe'); g.addColorStop(1,'#1d4ed8'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(q.a[0],q.a[1],q.r,0,2*Math.PI); ctx.fill(); }
-      else if(q.t==='n'){ ctx.globalAlpha=1; nucleo(P,ctx,8*P.k); }
+      if(q.t==='s'){ ctx.strokeStyle=q.res?'#d97706':'#38bdf8'; ctx.lineWidth=q.res?3.5:2.2; ctx.beginPath(); ctx.moveTo(q.a[0],q.a[1]); ctx.lineTo(q.b[0],q.b[1]); ctx.stroke(); }
+      else if(q.t==='e'||q.t==='n'){
+        var c0=q.t==='e'?'#bfdbfe':q.p?'#fecaca':'#fef9c3', c1=q.t==='e'?'#1d4ed8':q.p?'#dc2626':'#eab308';
+        if(q.t==='n') ctx.globalAlpha=1;
+        var g=ctx.createRadialGradient(q.a[0]-q.r*.35,q.a[1]-q.r*.35,q.r*.1,q.a[0],q.a[1],q.r); g.addColorStop(0,c0); g.addColorStop(1,c1);
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(q.a[0],q.a[1],q.r,0,2*Math.PI); ctx.fill();
+      }
     });
     // rótulos encima de todo
-    prim.forEach(function(q){ if(q.t!=='l') return; ctx.globalAlpha=q.off?.3:1; ctx.font='800 11px sans-serif'; ctx.textAlign='center'; ctx.fillStyle=q.res?'#b45309':'#334155'; ctx.fillText(q.txt,q.a[0],q.a[1]-6); });
+    prim.forEach(function(q){ if(q.t!=='l') return; ctx.globalAlpha=q.off?.3:1; ctx.font='800 11px sans-serif'; ctx.textAlign='center';
+      var w=ctx.measureText(q.txt).width+8; ctx.fillStyle='rgba(255,255,255,.85)'; ctx.fillRect(q.a[0]-w/2,q.a[1]-17,w,15);
+      ctx.fillStyle=q.res?'#b45309':'#334155'; ctx.fillText(q.txt,q.a[0],q.a[1]-6); });
     ctx.globalAlpha=1; ctx.textAlign='start';
   }
 
@@ -966,7 +984,8 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   function textos(){
     var niveles=porNivel(cfg), ks=Object.keys(niveles).map(Number).sort(), subs=lista(cfg,'llenado');
     var el=EL[st.z-1], nOrb=subs.reduce(function(a,s){ return a+Math.min(cfg[s],2*lOf(s)+1); },0);
-    $('v3d-cb').innerHTML='<strong>'+el[1]+'</strong>: '+ks.length+' órbita'+(ks.length>1?'s':'')+' circular'+(ks.length>1?'es':'')+' · '+ks.map(function(n){ return niveles[n]; }).join(' + ')+' electrones. Bohr no distingue subniveles.';
+    var nuc=armarNucleo(st.z);
+    $('v3d-cb').innerHTML='<strong>'+el[1]+'</strong>: núcleo con <span style="color:#dc2626;font-weight:800">'+st.z+' p⁺</span> y <span style="color:#a16207;font-weight:800">'+nuc.N+' n⁰</span> (A = '+nuc.A+') · '+ks.length+' órbita'+(ks.length>1?'s':'')+' en un mismo plano con '+ks.map(function(n){ return niveles[n]; }).join(' + ')+' electrones. Bohr no distingue subniveles.';
     $('v3d-co').innerHTML='<span style="font-family:var(--mono);font-weight:700">'+txtCfg(cfg,'llenado')+'</span> · '+nOrb+' orbitales ocupados'+(st.val?' (se muestra la capa de valencia)':'');
     $('v3d-chips').innerHTML=subs.map(function(s){ return '<button class="'+s[1]+(st.sel===s?' on':'')+'" data-s="'+s+'">'+s+sup(cfg[s])+'</button>'; }).join('');
     $('v3d-chips').querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ st.sel=st.sel===b.dataset.s?null:b.dataset.s; textos(); sucio=true; }); });
