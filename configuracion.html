@@ -101,6 +101,40 @@ html{font-size:var(--base-fs)}
 .rule p{font-size:.82rem!important;margin-bottom:6px!important}
 .rule .demo{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end;margin-top:6px}
 .rule .demo .lb{font-size:.7rem;font-weight:700;color:var(--dimmer);width:100%}
+/* números cuánticos */
+.qn-tbl td{text-align:left;font-size:.82rem}
+.qn-tbl td.m,.tbl td.m{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.qn-pickers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 16px;margin:8px 0 14px}
+.qn-k{font-size:.72rem;font-weight:800;letter-spacing:.02em;color:var(--dimmer);margin-bottom:4px}
+.qn-opts{display:flex;flex-wrap:wrap;gap:5px}
+.qn-opts button{min-width:44px;min-height:40px;padding:4px 10px;border:2px solid var(--brd2);border-radius:10px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.86rem;font-weight:700;cursor:pointer}
+.qn-opts button:hover{border-color:var(--an)}
+.qn-opts button.on{background:var(--nav);border-color:var(--nav);color:#fff}
+.qn-opts button small{display:block;font-family:var(--sans);font-size:.6rem;font-weight:600;opacity:.8}
+.qn-view{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:640px){.qn-view{grid-template-columns:1fr}.qn-view svg{max-width:220px;margin:0 auto}}
+.qn-view svg{width:100%;display:block;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--r)}
+.qn-name{font-family:var(--serif);font-size:1.5rem;font-weight:700;font-style:italic;color:var(--tx)}
+.qn-set{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--an-t);margin:2px 0 6px}
+.qn-txt{font-size:.86rem;color:var(--tx2);line-height:1.6}
+.qn-txt strong{color:var(--tx)}
+.box.qhl{background:var(--gold);border-color:var(--nav)}
+.qn-big{font-family:var(--mono);font-size:1.5rem;font-weight:800;color:var(--tx);background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 16px;display:inline-block;margin:4px 0}
+.qn-big small{display:block;font-family:var(--sans);font-size:.7rem;font-weight:600;color:var(--dimmer)}
+.qn-score{font-size:.8rem;font-weight:700;color:var(--dimmer)}
+.qn-inline{font-family:var(--mono);font-weight:800;background:var(--surf);padding:1px 6px;border-radius:6px}
+.qf-diagram{display:flex;flex-direction:column;gap:10px;margin:10px 0;overflow-x:auto;padding-bottom:4px}
+.qf-row{display:flex;gap:10px 14px;align-items:flex-end;flex-wrap:wrap}
+.qf-row .rl{font-size:.66rem;font-weight:800;color:var(--dimmer);width:36px;flex-shrink:0;padding-bottom:20px}
+.qf-box{display:flex;width:44px;height:40px;border:2px solid var(--tx2);margin-left:-2px;background:var(--surf)}
+.qf-box:first-child{margin-left:0}
+.qf-box button{flex:1;border:none;background:none;font-size:1rem;font-weight:900;color:var(--dimmer);cursor:pointer;padding:0;font-family:var(--sans)}
+.qf-box button:hover{background:var(--an-b);color:var(--tx)}
+.qf-box button.ok{background:var(--ok-b);color:var(--ok-t)}
+.qf-box button.bad{background:var(--err-b);color:var(--err-t)}
+.qf-ml{display:flex}
+.qf-ml span{width:44px;margin-left:-2px;text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--dimmer)}
+.qf-ml span:first-child{margin-left:0}
 .ok-t{color:var(--ok-t);font-weight:800}.err-t{color:var(--err-t);font-weight:800}
 /* bloques s p d f */
 :root{--bs:#E69F00;--bs-b:#fcf2db;--bp:#0072B2;--bp-b:#dbebf4;--bd:#009E73;--bd-b:#dbf1eb;--bf:#CC79A7;--bf-b:#f8ecf3}
@@ -230,6 +264,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 
   <div class="tabs" role="tablist" aria-label="Secciones de Configuración Electrónica">
     <button class="tab on" role="tab" data-tab="conceptos" aria-selected="true">📚 Conceptos</button>
+    <button class="tab" role="tab" data-tab="cuanticos" aria-selected="false">🔢 Números cuánticos</button>
     <button class="tab" role="tab" data-tab="moeller" aria-selected="false">↙️ Diagrama de Moeller</button>
     <button class="tab" role="tab" data-tab="configurador" aria-selected="false">🔧 Configurador</button>
     <button class="tab" role="tab" data-tab="orbitales" aria-selected="false">✍️ Llena los orbitales</button>
@@ -283,7 +318,85 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
       <p>Algunos elementos "prefieren" tener un subnivel d <strong>lleno</strong> (d¹⁰) o <strong>semilleno</strong> (d⁵), porque es más estable. Por eso el cromo es [Ar] 4s¹ 3d⁵ (no 4s² 3d⁴) y el cobre es [Ar] 4s¹ 3d¹⁰ (no 4s² 3d⁹). El configurador te avisa cuando un elemento es una excepción.</p>
       <h3>Iones</h3>
       <p>Un <strong>anión</strong> gana electrones: se agregan siguiendo el orden de Moeller (Cl⁻: [Ne] 3s² 3p⁶). Un <strong>catión</strong> pierde electrones del <strong>nivel más alto</strong> primero: el hierro pierde los 4s antes que los 3d (Fe²⁺: [Ar] 3d⁶).</p>
-      <div class="btn-row"><button class="btn" onclick="irTab('moeller')">Siguiente: diagrama de Moeller →</button></div>
+      <div class="btn-row"><button class="btn" onclick="irTab('cuanticos')">Siguiente: números cuánticos →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ NÚMEROS CUÁNTICOS ═══════════ -->
+  <section class="panel" id="p-cuanticos" role="tabpanel">
+    <div class="sect">
+      <h2>🔢 La «dirección» de cada electrón</h2>
+      <p>En el modelo mecánico-cuántico, cada electrón de un átomo queda descrito por <strong>cuatro números cuánticos</strong>. Juntos funcionan como una dirección: así como una dirección dice el piso, el apartamento, la habitación y la cama de una persona, los números cuánticos dicen el <strong>nivel</strong>, el <strong>subnivel</strong>, el <strong>orbital</strong> y el <strong>espín</strong> del electrón.</p>
+      <div class="tbl-wrap"><table class="tbl qn-tbl">
+        <tr><th>Número cuántico</th><th>Símbolo</th><th>Valores permitidos</th><th>¿Qué indica?</th><th>En la «dirección»</th></tr>
+        <tr><td><strong>Principal</strong></td><td class="m">n</td><td class="m">1, 2, 3, 4…</td><td>El <strong>nivel de energía</strong> y el tamaño del orbital: a mayor n, más lejos del núcleo y más energía.</td><td>🏢 El piso</td></tr>
+        <tr><td><strong>Secundario</strong> o azimutal</td><td class="m">l</td><td class="m">0 hasta n − 1</td><td>El <strong>subnivel</strong> y la <strong>forma</strong> del orbital: l = 0 → s, 1 → p, 2 → d, 3 → f.</td><td>🚪 El tipo de apartamento</td></tr>
+        <tr><td><strong>Magnético</strong></td><td class="m">m<sub>l</sub></td><td class="m">−l … 0 … +l</td><td>La <strong>orientación</strong> del orbital en el espacio. Hay 2l + 1 valores, es decir, 2l + 1 orbitales en el subnivel.</td><td>🛏️ La habitación</td></tr>
+        <tr><td><strong>De espín</strong></td><td class="m">m<sub>s</sub></td><td class="m">+½ o −½</td><td>El <strong>giro</strong> del electrón (↑ o ↓). En un orbital caben dos electrones con espín opuesto.</td><td>↕️ La cama de arriba o la de abajo</td></tr>
+      </table></div>
+      <div class="info-box">🔗 <strong>Pauli, otra vez:</strong> dos electrones de un mismo átomo <strong>no pueden tener los cuatro números cuánticos iguales</strong>. Si comparten n, l y m<sub>l</sub> (el mismo orbital), deben diferir en m<sub>s</sub>. Por eso en cada orbital caben solo 2 electrones.</div>
+      <h3>¿Cuántos caben en cada nivel?</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>n</th><th>Valores de l</th><th>Subniveles</th><th>Orbitales (n²)</th><th>Electrones (2n²)</th></tr>
+        <tr><td>1</td><td class="m">0</td><td>1s</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td class="m">0, 1</td><td>2s 2p</td><td>1 + 3 = 4</td><td>8</td></tr>
+        <tr><td>3</td><td class="m">0, 1, 2</td><td>3s 3p 3d</td><td>1 + 3 + 5 = 9</td><td>18</td></tr>
+        <tr><td>4</td><td class="m">0, 1, 2, 3</td><td>4s 4p 4d 4f</td><td>1 + 3 + 5 + 7 = 16</td><td>32</td></tr>
+      </table></div>
+      <p style="font-size:.8rem;color:var(--dimmer)">Por eso no existe un «2d» ni un «1p»: en n = 2, l solo puede ser 0 o 1.</p>
+    </div>
+
+    <div class="sect">
+      <h2>🔭 Explorador: arma un electrón</h2>
+      <p>Elige los cuatro números. Solo se muestran los valores <strong>permitidos</strong>: fíjate en cómo cambian las opciones de l al cambiar n, y las de m<sub>l</sub> al cambiar l.</p>
+      <div class="qn-pickers">
+        <div><div class="qn-k">n · nivel</div><div class="qn-opts" id="qx-n"></div></div>
+        <div><div class="qn-k">l · subnivel</div><div class="qn-opts" id="qx-l"></div></div>
+        <div><div class="qn-k">m<sub>l</sub> · orientación</div><div class="qn-opts" id="qx-ml"></div></div>
+        <div><div class="qn-k">m<sub>s</sub> · espín</div><div class="qn-opts" id="qx-ms"></div></div>
+      </div>
+      <div class="qn-view">
+        <svg id="qx-svg" viewBox="-110 -110 220 220" aria-label="Forma del orbital"></svg>
+        <div>
+          <div class="qn-name" id="qx-name"></div>
+          <div class="qn-set" id="qx-set"></div>
+          <div class="qn-txt" id="qx-txt"></div>
+          <div class="qn-k" style="margin-top:10px">El nivel n completo · tu electrón resaltado</div>
+          <div class="orb-wrap" id="qx-boxes"></div>
+        </div>
+      </div>
+      <p style="font-size:.74rem;color:var(--dimmer);margin-top:6px">Los dibujos son esquemáticos: muestran la forma típica de cada tipo de orbital y que cada valor de m<sub>l</sub> es una orientación distinta. Los dos colores de los lóbulos indican la fase de la onda, no cargas. Los orbitales de mayor n tienen la misma forma, pero son más grandes.</p>
+    </div>
+
+    <div class="sect">
+      <h2>🧐 ¿Es posible este electrón?</h2>
+      <p>Te mostramos un conjunto de cuatro números cuánticos (n, l, m<sub>l</sub>, m<sub>s</sub>). Decide si un electrón podría tenerlos.</p>
+      <div class="qn-big" id="qv-set"></div>
+      <div class="btn-row"><button class="btn" id="qv-si">✅ Es posible</button><button class="btn ghost" id="qv-no">❌ No es posible</button><span class="qn-score" id="qv-score"></span></div>
+      <div class="fb" id="qv-fb" aria-live="polite"></div>
+      <button class="btn ghost" id="qv-next" style="display:none">Otro conjunto →</button>
+    </div>
+
+    <div class="sect">
+      <h2>🎯 Encuentra el electrón</h2>
+      <p>Toca la flecha que corresponde a los números cuánticos que se piden. En cada casilla, <strong>↑ es m<sub>s</sub> = +½</strong> y <strong>↓ es m<sub>s</sub> = −½</strong>; las casillas de un subnivel van de m<sub>l</sub> = −l (izquierda) a m<sub>l</sub> = +l (derecha).</p>
+      <div class="qn-big" id="qf-set"></div>
+      <div class="qf-diagram" id="qf-diagram"></div>
+      <div class="fb" id="qf-fb" aria-live="polite"></div>
+      <div class="btn-row"><button class="btn ghost" id="qf-next" style="display:none">Otro electrón →</button><span class="qn-score" id="qf-score"></span></div>
+    </div>
+
+    <div class="sect">
+      <h2>🧪 Del elemento a los números cuánticos</h2>
+      <p>En los ejercicios suelen preguntar los números cuánticos del <strong>electrón diferencial</strong>: el último que entra según el orden de llenado. Se hace en tres pasos:</p>
+      <ol>
+        <li>Escribe la configuración y mira el <strong>último subnivel</strong>: ahí salen <strong>n</strong> y <strong>l</strong>.</li>
+        <li>Dibuja las casillas de ese subnivel (de −l a +l) y reparte los electrones con la <strong>regla de Hund</strong>: primero uno ↑ en cada casilla y luego los ↓.</li>
+        <li>La casilla del último electrón da <strong>m<sub>l</sub></strong>, y su flecha da <strong>m<sub>s</sub></strong>.</li>
+      </ol>
+      <div class="info-box"><strong>Ejemplo — Cloro (Z = 17):</strong> 1s² 2s² 2p⁶ 3s² <strong>3p⁵</strong> → n = 3, l = 1. Casillas de 3p (m<sub>l</sub> = −1, 0, +1): <span class="qn-inline">↑↓ ↑↓ ↑</span>. El quinto electrón es el segundo ↓, en la casilla m<sub>l</sub> = 0. <strong>Resultado: (3, 1, 0, −½).</strong></div>
+      <p style="font-size:.8rem;color:var(--dimmer)">Usamos la convención de llenar de m<sub>l</sub> = −l a +l y empezar con ↑ (+½). Algunos textos usan la contraria (de +l a −l, o empezando con −½); si tu profesor usa otra, el resultado cambia solo en los signos.</p>
+      <div class="btn-row"><button class="btn" onclick="irTab('moeller')">Siguiente: diagrama de Moeller →</button><button class="btn ghost" onclick="irTab('configurador')">🔧 Prueba con cualquier elemento en el Configurador</button></div>
     </div>
   </section>
 
@@ -473,7 +586,7 @@ function cargaStr(q){ return q===0?'':(Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':'�
 function norm(t){ return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim(); }
 
 /* ════════════════ Pestañas ════════════════ */
-var TABS=['conceptos','moeller','configurador','orbitales','repaso'];
+var TABS=['conceptos','cuanticos','moeller','configurador','orbitales','repaso'];
 function showTab(name,push){
   if(TABS.indexOf(name)<0) name='conceptos';
   document.querySelectorAll('.tabs .tab').forEach(function(b){
@@ -490,6 +603,153 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   for(var i=0;i<n;i++) h+='<span class="box" style="width:22px;height:24px"></span>';
   d.innerHTML=h+'</div>';
 });
+
+/* ════════════════ Números cuánticos ════════════════ */
+(function(){
+  var LET=['s','p','d','f'], NOMBRE={s:'esférico',p:'de dos lóbulos (pesa o «maní»)',d:'de cuatro lóbulos (trébol), salvo uno',f:'de varios lóbulos'};
+  function sgn(x){ return x>0?'+'+x:String(x).replace('-','−'); }
+  function msTxt(v){ return v>0?'+½':'−½'; }
+  function setTxt(n,l,ml,ms){ return '('+n+', '+l+', '+sgn(ml)+', '+msTxt(ms)+')'; }
+
+  // Dibujo esquemático del orbital (l, ml), con tamaño según n.
+  function lobe(ang,d,w,col){
+    var r=ang*Math.PI/180, cx=Math.cos(r)*d, cy=-Math.sin(r)*d;
+    return '<ellipse cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" rx="'+d.toFixed(1)+'" ry="'+(d*w).toFixed(1)+'" transform="rotate('+(-ang)+' '+cx.toFixed(1)+' '+cy.toFixed(1)+')" fill="'+col+'" fill-opacity=".55" stroke="'+col+'" stroke-width="1.5"/>';
+  }
+  function orbSVG(n,l,ml){
+    var A='#2563eb', B='#E69F00', k=0.62+0.1*n, s='';
+    s+='<g stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"><line x1="-100" y1="0" x2="100" y2="0"/><line x1="0" y1="-100" x2="0" y2="100"/><line x1="-62" y1="52" x2="62" y2="-52"/></g>'+
+       '<g font-size="10" font-weight="700" fill="#64748b" font-family="sans-serif"><text x="92" y="-5">x</text><text x="5" y="-94">z</text><text x="58" y="-56">y</text></g>';
+    if(l===0){
+      for(var i=n;i>=1;i--) s+='<circle r="'+(30*k*i/n+8).toFixed(1)+'" fill="'+(i%2?A:B)+'" fill-opacity="'+(i===n?.45:.25)+'" stroke="'+(i%2?A:B)+'" stroke-width="1.2"/>';
+    }else if(l===1){
+      var ang={'-1':0,'0':90,'1':40}[ml], w={'-1':.42,'0':.42,'1':.36}[ml];
+      s+=lobe(ang,42*k,w,A)+lobe(ang+180,42*k,w,B);
+    }else if(l===2){
+      if(ml===0){ s+=lobe(90,42*k,.4,A)+lobe(270,42*k,.4,A)+'<ellipse rx="'+(30*k).toFixed(1)+'" ry="'+(9*k).toFixed(1)+'" fill="'+B+'" fill-opacity=".55" stroke="'+B+'" stroke-width="1.5"/>'; }
+      else{
+        var base={'-2':45,'-1':65,'1':115,'2':0}[ml], ww=Math.abs(ml)===1?.33:.38;
+        for(var q=0;q<4;q++) s+=lobe(base+q*90,36*k,ww,q%2?B:A);
+      }
+    }else{
+      var nl=Math.abs(ml)===3?6:(ml===0?2:8);
+      if(ml===0){ s+=lobe(90,40*k,.32,A)+lobe(270,40*k,.32,B)+'<ellipse cy="-14" rx="'+(26*k).toFixed(1)+'" ry="'+(7*k).toFixed(1)+'" fill="'+B+'" fill-opacity=".5" stroke="'+B+'"/><ellipse cy="14" rx="'+(26*k).toFixed(1)+'" ry="'+(7*k).toFixed(1)+'" fill="'+A+'" fill-opacity=".5" stroke="'+A+'"/>'; }
+      else for(var j=0;j<nl;j++) s+=lobe(ml*12+j*360/nl,(nl===8?32:36)*k,nl===8?.26:.3,j%2?B:A);
+    }
+    s+='<circle r="3.5" fill="#dc2626"/>';
+    return s;
+  }
+  function boxesHTML(n,l,ml,ms){
+    var h='';
+    for(var L=0;L<n&&L<4;L++){
+      var b='';
+      for(var m=-L;m<=L;m++){
+        var on=L===l&&m===ml;
+        b+='<span class="box'+(on?' qhl':'')+'" title="m_l = '+m+'">'+(on?(ms>0?'↑':'↓'):'')+'</span>';
+      }
+      h+='<div class="sub '+LET[L]+'"><div class="boxes">'+b+'</div><span class="lbl">'+n+LET[L]+'</span></div>';
+    }
+    return h;
+  }
+
+  /* Explorador */
+  var X={n:3,l:1,ml:0,ms:1};
+  function opts(id,vals,cur,lab,key){
+    $(id).innerHTML=vals.map(function(v){ return '<button data-v="'+v+'"'+(v===cur?' class="on"':'')+'>'+lab(v)+'</button>'; }).join('');
+    $(id).querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ X[key]=+b.getAttribute('data-v'); fix(); draw(); }); });
+  }
+  function rng(a,b){ var r=[]; for(var i=a;i<=b;i++) r.push(i); return r; }
+  function fix(){ if(X.l>X.n-1) X.l=X.n-1; if(Math.abs(X.ml)>X.l) X.ml=0; }
+  function draw(){
+    opts('qx-n',[1,2,3,4],X.n,function(v){ return v; },'n');
+    opts('qx-l',rng(0,Math.min(3,X.n-1)),X.l,function(v){ return v+'<small>'+LET[v]+'</small>'; },'l');
+    opts('qx-ml',rng(-X.l,X.l),X.ml,sgn,'ml');
+    opts('qx-ms',[1,-1],X.ms,function(v){ return (v>0?'↑ +½':'↓ −½'); },'ms');
+    var sub=LET[X.l], norb=2*X.l+1;
+    $('qx-svg').innerHTML=orbSVG(X.n,X.l,X.ml);
+    $('qx-name').textContent='Orbital '+X.n+sub;
+    $('qx-set').textContent='(n, l, mₗ, mₛ) = '+setTxt(X.n,X.l,X.ml,X.ms);
+    $('qx-txt').innerHTML='<strong>n = '+X.n+'</strong>: nivel '+X.n+', que admite l de 0 a '+(X.n-1)+' ('+rng(0,Math.min(3,X.n-1)).map(function(v){return X.n+LET[v];}).join(', ')+'); en total '+(X.n*X.n)+' orbitales y '+(2*X.n*X.n)+' electrones.<br>'+
+      '<strong>l = '+X.l+'</strong>: subnivel <strong>'+sub+'</strong>, de forma '+NOMBRE[sub]+'. Tiene '+norb+' orbital'+(norb>1?'es':'')+' (m<sub>l</sub> = '+rng(-X.l,X.l).map(sgn).join(', ')+') y caben '+(2*norb)+' electrones.<br>'+
+      '<strong>m<sub>l</sub> = '+sgn(X.ml)+'</strong>: '+(X.l===0?'el único orbital s (una esfera no tiene orientación).':'una de las '+norb+' orientaciones posibles.')+'<br>'+
+      '<strong>m<sub>s</sub> = '+msTxt(X.ms)+'</strong>: espín '+(X.ms>0?'↑':'↓')+'. El otro electrón de este orbital tendría '+msTxt(-X.ms)+'.';
+    $('qx-boxes').innerHTML=boxesHTML(X.n,X.l,X.ml,X.ms);
+  }
+  draw();
+
+  /* ¿Es posible? */
+  var V=null, vOk=0, vTot=0;
+  function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+  function nuevoV(){
+    var n=rnd(1,5), l=rnd(0,n-1), ml=rnd(-l,l), ms=Math.random()<.5?.5:-.5, err=null;
+    if(Math.random()<.55){
+      var t=rnd(0,3);
+      if(t===0){ l=n+rnd(0,1); ml=rnd(-Math.min(l,3),Math.min(l,3)); err='l debe ser menor que n: con n = '+n+', l solo puede valer de 0 a '+(n-1)+'.'+(l===n&&l<=3?' (Por eso no existe el '+n+LET[l]+'.)':''); }
+      else if(t===1&&l<3){ ml=(Math.random()<.5?-1:1)*(l+1); err='|m<sub>l</sub>| no puede ser mayor que l: con l = '+l+', m<sub>l</sub> va de '+sgn(-l)+' a '+sgn(l)+'.'; }
+      else if(t===2){ ms=Math.random()<.5?1:0; err='m<sub>s</sub> solo puede ser +½ o −½.'; }
+      else { n=0; l=0; ml=0; err='n empieza en 1: no existe el nivel 0.'; }
+    }
+    V={n:n,l:l,ml:ml,ms:ms,err:err};
+    var msS=ms===.5?'+½':ms===-.5?'−½':(ms===1?'+1':'0');
+    $('qv-set').innerHTML='('+n+', '+l+', '+sgn(ml)+', '+msS+')<small>(n, l, m<sub>l</sub>, m<sub>s</sub>)</small>';
+    $('qv-fb').innerHTML=''; $('qv-next').style.display='none';
+    $('qv-si').disabled=false; $('qv-no').disabled=false;
+  }
+  function respV(diceSi){
+    var ok=(V.err===null)===diceSi; vTot++; if(ok) vOk++;
+    $('qv-si').disabled=true; $('qv-no').disabled=true;
+    $('qv-fb').innerHTML=(ok?'<span class="ok-t">✓ ¡Correcto!</span> ':'<span class="err-t">✗ No.</span> ')+
+      (V.err?'No es posible: '+V.err:'Sí es posible: es un electrón en un orbital <strong>'+V.n+LET[V.l]+'</strong> (l = '+V.l+' < n = '+V.n+', y |m<sub>l</sub>| ≤ l).');
+    $('qv-score').textContent=vOk+' de '+vTot;
+    $('qv-next').style.display='inline-flex';
+  }
+  $('qv-si').addEventListener('click',function(){ respV(true); });
+  $('qv-no').addEventListener('click',function(){ respV(false); });
+  $('qv-next').addEventListener('click',nuevoV);
+  nuevoV();
+
+  /* Encuentra el electrón */
+  var SUBS=[[1,0],[2,0],[2,1],[3,0],[3,1],[3,2],[4,0],[4,1],[4,2]], T=null, fOk=0, fTot=0, done=false;
+  function buildF(){
+    var rows={};
+    SUBS.forEach(function(s){ (rows[s[0]]=rows[s[0]]||[]).push(s[1]); });
+    $('qf-diagram').innerHTML=Object.keys(rows).map(function(n){
+      return '<div class="qf-row"><span class="rl">n = '+n+'</span>'+rows[n].map(function(l){
+        var b='', m='';
+        for(var ml=-l;ml<=l;ml++){
+          b+='<span class="qf-box"><button data-k="'+n+','+l+','+ml+',1" aria-label="'+n+LET[l]+' m_l '+ml+' espín +½">↑</button><button data-k="'+n+','+l+','+ml+',-1" aria-label="'+n+LET[l]+' m_l '+ml+' espín −½">↓</button></span>';
+          m+='<span>'+sgn(ml)+'</span>';
+        }
+        return '<div class="sub '+LET[l]+'"><div class="qf-ml">'+m+'</div><div class="boxes">'+b+'</div><span class="lbl">'+n+LET[l]+'</span></div>';
+      }).join('')+'</div>';
+    }).join('');
+    $('qf-diagram').querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ tapF(b); }); });
+  }
+  function nuevoF(){
+    var s=SUBS[Math.floor(Math.random()*SUBS.length)];
+    T={n:s[0],l:s[1],ml:rnd(-s[1],s[1]),ms:Math.random()<.5?1:-1}; done=false;
+    $('qf-set').innerHTML=setTxt(T.n,T.l,T.ml,T.ms)+'<small>(n, l, m<sub>l</sub>, m<sub>s</sub>)</small>';
+    $('qf-diagram').querySelectorAll('button').forEach(function(b){ b.className=''; });
+    $('qf-fb').innerHTML=''; $('qf-next').style.display='none';
+  }
+  function tapF(b){
+    if(done) return;
+    var k=b.getAttribute('data-k').split(',').map(Number), ok=k[0]===T.n&&k[1]===T.l&&k[2]===T.ml&&k[3]===T.ms;
+    done=true; fTot++; if(ok) fOk++;
+    b.className=ok?'ok':'bad';
+    if(!ok) $('qf-diagram').querySelector('[data-k="'+T.n+','+T.l+','+T.ml+','+T.ms+'"]').className='ok';
+    var pista=[];
+    if(k[0]!==T.n) pista.push('n = '+T.n+' es el nivel (la fila)');
+    if(k[0]===T.n&&k[1]!==T.l) pista.push('l = '+T.l+' es el subnivel '+LET[T.l]);
+    if(k[0]===T.n&&k[1]===T.l&&k[2]!==T.ml) pista.push('m<sub>l</sub> = '+sgn(T.ml)+' es la casilla (contando de −l a +l)');
+    if(k[0]===T.n&&k[1]===T.l&&k[2]===T.ml&&k[3]!==T.ms) pista.push('m<sub>s</sub> = '+msTxt(T.ms)+' es la flecha '+(T.ms>0?'↑':'↓'));
+    $('qf-fb').innerHTML=ok?'<span class="ok-t">✓ ¡Correcto!</span> Subnivel <strong>'+T.n+LET[T.l]+'</strong>, casilla m<sub>l</sub> = '+sgn(T.ml)+', flecha '+(T.ms>0?'↑':'↓')+'.':'<span class="err-t">✗ No es esa.</span> Fíjate: '+pista.join('; ')+'. La correcta quedó en verde.';
+    $('qf-score').textContent=fOk+' de '+fTot;
+    $('qf-next').style.display='inline-flex';
+  }
+  $('qf-next').addEventListener('click',nuevoF);
+  buildF(); nuevoF();
+})();
 
 /* ════════════════ Diagrama de Moeller ════════════════ */
 (function(){
@@ -726,6 +986,15 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
       return {q:'¿Cuántos electrones <strong>desapareados</strong> tiene el '+EL[z-1][1]+' ('+EL[z-1][0]+') en su estado fundamental?',ok:String(u),d:d,
         x:'Con la regla de Hund: '+txtCfg(o,'llenado').split(' ').slice(-2).join(' ')+' → '+u+' electrón(es) sin pareja.'};
     },
+    qnval:function(){
+      var L='spdf';
+      function f(n,l,ml,ms){ return '('+n+', '+l+', '+(ml>0?'+':'')+String(ml).replace('-','−')+', '+ms+')'; }
+      var n=2+Math.floor(Math.random()*3), l=Math.floor(Math.random()*n), ml=Math.floor(Math.random()*(2*l+1))-l, ms=Math.random()<.5?'+½':'−½';
+      var ok=f(n,l,ml,ms);
+      var d=[f(n,n,0,ms),f(n,l,l+1,ms),f(n,l,ml,'+1'),f(0,0,0,ms),f(n-1,n-1+1,0,ms)].filter(function(x){ return x!==ok; });
+      return {q:'¿Cuál de estos conjuntos de números cuánticos (n, l, m<sub>l</sub>, m<sub>s</sub>) es <strong>posible</strong>?',ok:ok,d:d,mono:true,
+        x:ok+' es un electrón en un orbital '+n+L[l]+'. Reglas: l va de 0 a n − 1; m<sub>l</sub> va de −l a +l; m<sub>s</sub> solo es +½ o −½; n empieza en 1.'};
+    },
     qn:function(){
       var z=rnd(rango(1,36,function(z){return !EXC[z];})), o=neutral(z), qn=numCuant(o);
       function f(n,l,ml,ms){ return '('+n+', '+l+', '+(ml>0?'+':'')+ml+', '+ms+')'; }
@@ -735,7 +1004,7 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
         x:qn.s+': n = '+qn.n+', l = '+qn.l+' ('+qn.s[1]+'). Llenando de −l a +l, primero ↑: m<sub>l</sub> = '+qn.ml+', m<sub>s</sub> = '+qn.ms+'.'};
     }
   };
-  var TIPOS=['full','abr','val','bloque','pergr','ion','desap','qn','full','ion'];
+  var TIPOS=['full','abr','val','bloque','pergr','ion','desap','qn','qnval','ion'];
   var qs=[], qi=0, score=0;
   function build(t){
     for(var k=0;k<20;k++){

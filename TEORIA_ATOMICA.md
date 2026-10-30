@@ -33,18 +33,23 @@ Cinco pestañas (se puede enlazar directo con `atomo.html#experimentos`, `#const
 
 ## 3. `configuracion.html` — Configuración Electrónica
 
-Cinco pestañas (`#conceptos`, `#moeller`, `#configurador`, `#orbitales`, `#repaso`):
+Seis pestañas (`#conceptos`, `#cuanticos`, `#moeller`, `#configurador`, `#orbitales`, `#repaso`):
 
 1. **📚 Conceptos**: el puente con Bohr, la tabla de subniveles (s, p, d, f), capacidad 2n², las tres reglas con ejemplos visuales, qué dice la configuración (periodo, bloque, grupo, valencia), la configuración abreviada, las excepciones y los iones.
-2. **↙️ Moeller**: diagrama de las diagonales que se llena electrón por electrón, o con el botón «Animar». Cuando el elemento es una excepción, la página muestra la configuración real.
-3. **🔧 Configurador**: tabla periódica tocable (coloreada por bloque) o buscador, y carga de 3− a 3+. Muestra:
+2. **🔢 Números cuánticos**: tabla de n, l, mₗ y mₛ (valores permitidos, qué indica cada uno y la analogía de la «dirección»: piso, apartamento, habitación, cama), Pauli con los cuatro números, y orbitales y electrones por nivel (n², 2n²). Tiene tres actividades:
+   - *Explorador*: se eligen n, l, mₗ y mₛ (solo aparecen los valores permitidos); dibuja la forma esquemática del orbital (s, p, d, f, con lóbulos en dos colores de fase) y las casillas del nivel con el electrón resaltado.
+   - *¿Es posible este electrón?*: conjuntos al azar (≈55 % imposibles: l ≥ n, |mₗ| > l, mₛ distinto de ±½, n = 0) que se juzgan con la regla que fallan.
+   - *Encuentra el electrón*: diagrama de casillas de 1s a 4d con ↑/↓ tocables; hay que tocar la flecha de los números pedidos.
+   Termina con el método para el electrón diferencial (ejemplo del Cl: (3, 1, 0, −½)) y la convención usada.
+3. **↙️ Moeller**: diagrama de las diagonales que se llena electrón por electrón, o con el botón «Animar». Cuando el elemento es una excepción, la página muestra la configuración real.
+4. **🔧 Configurador**: tabla periódica tocable (coloreada por bloque) o buscador, y carga de 3− a 3+. Muestra:
    - configuración completa (por orden de llenado o por niveles) y abreviada;
    - diagrama de orbitales con la regla de Hund;
    - periodo, grupo, bloque, electrones de valencia, electrones desapareados y electrones por nivel;
    - números cuánticos del electrón diferencial;
    - avisos sobre excepciones y cationes de transición.
-4. **✍️ Llena los orbitales**: el estudiante toca las casillas (↑, ↑↓, vacía) para un elemento al azar con Z ≤ 36. La retroalimentación dice qué subnivel falla y si se viola la regla de Hund.
-5. **✅ Repaso**: 10 preguntas **generadas al azar** de 8 tipos: configuración completa, elemento a partir de la configuración abreviada, valencia, bloque, periodo y grupo, iones, desapareados y números cuánticos.
+5. **✍️ Llena los orbitales**: el estudiante toca las casillas (↑, ↑↓, vacía) para un elemento al azar con Z ≤ 36. La retroalimentación dice qué subnivel falla y si se viola la regla de Hund.
+6. **✅ Repaso**: 10 preguntas **generadas al azar** de 9 tipos: configuración completa, elemento a partir de la configuración abreviada, valencia, bloque, periodo y grupo, iones, desapareados, números cuánticos del electrón diferencial y conjuntos de números cuánticos posibles.
 
 ### Datos y verificación
 - Los 118 elementos (símbolo, nombre, periodo y grupo) se copiaron de `ELEMENTS` en `tabla.html`.
