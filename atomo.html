@@ -192,6 +192,54 @@ html{font-size:var(--base-fs)}
 .phet-ph{text-align:center;padding:20px;font-size:.84rem;color:var(--dimmer)}
 .phet-ph .big{font-size:2.6rem;display:block;margin-bottom:6px}
 
+/* ── A, Z y n ── */
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.55em;line-height:1.05;vertical-align:middle;margin-right:2px;font-family:var(--mono)}
+.azn-not{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}
+.azn-fig{position:relative;width:150px;height:130px;flex-shrink:0;background:var(--surf2);border:2px solid var(--brd);border-radius:var(--r)}
+.azn-fig span{position:absolute;font-family:var(--mono);font-weight:800}
+.azn-x{font-family:var(--serif)!important;font-size:3.4rem;left:56px;top:28px;color:var(--tx)}
+.azn-a{left:20px;top:18px;font-size:1.3rem;color:#2563eb}
+.azn-z{left:20px;bottom:18px;font-size:1.3rem;color:#dc2626}
+.azn-q{right:10px;top:16px;font-size:.85rem;color:#a16207}
+.azn-leg{list-style:none;margin:0!important;padding:0;flex:1;min-width:220px}
+.azn-leg li{margin-bottom:6px!important}
+.azn-leg b{font-family:var(--mono)}
+.azn-leg .ca{color:#2563eb}.azn-leg .cz{color:#dc2626}.azn-leg .cq{color:#a16207}
+.azn-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:10px 0}
+.azn-form>div{background:var(--an-b);border:1.5px solid var(--an);border-radius:var(--rs);padding:10px 12px}
+.azn-form b{display:block;font-family:var(--mono);font-size:1.05rem;color:var(--an-t)}
+.azn-form span{font-size:.78rem;color:var(--tx2)}
+.azn-tres>div{background:var(--surf2);border-color:var(--brd2)}
+.azn-tres b{font-family:var(--sans);color:var(--tx)}
+.azn-ej{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:8px 0}
+.azn-card{border:2px solid var(--brd);border-radius:var(--r);padding:12px 14px;background:var(--surf)}
+.azn-card p{font-size:.82rem!important;margin:6px 0 0!important;line-height:1.6!important;font-family:var(--mono)}
+.azn-esp{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--nav)}
+.azn-esp sup{font-family:var(--mono);font-size:.5em;color:var(--an-t)}
+.azn-wrap{overflow-x:auto;margin:8px 0}
+.azn-tab{border-collapse:collapse;width:100%;min-width:560px;font-size:.86rem}
+.azn-tab th{background:var(--an-b);color:var(--an-t);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;padding:8px 6px;border:1px solid var(--brd)}
+.azn-tab td{border:1px solid var(--brd);padding:6px;text-align:center;font-family:var(--mono);font-weight:700;color:var(--tx)}
+.azn-tab td.esp{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--nav);white-space:nowrap}
+.azn-tab td.esp small{display:block;font-family:var(--sans);font-size:.66rem;font-weight:600;color:var(--dimmer)}
+.azn-tab input{width:56px;min-height:38px;border:2px solid var(--brd2);border-radius:8px;text-align:center;font:inherit;font-family:var(--mono);font-weight:700;background:var(--surf);color:var(--tx)}
+.azn-tab input.ok{border-color:var(--ok);background:var(--ok-b);color:var(--ok-t)}
+.azn-tab input.bad{border-color:var(--err);background:var(--err-b);color:var(--err-t)}
+.azn-score{font-size:.84rem;font-weight:700;color:var(--dimmer)}
+.azn-fb{font-size:.84rem;color:var(--tx2);line-height:1.6;margin-top:6px}
+.azn-fb ul{margin:4px 0 0 18px}
+.azn-par{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--r);padding:14px;margin:8px 0}
+.azn-par .azn-esp{font-size:2.4rem}
+.azn-par .vs{font-weight:800;color:var(--dimmer)}
+#iso-ops .btn.ok{background:var(--ok-b);border-color:var(--ok);color:var(--ok-t)}
+#iso-ops .btn.bad{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
+.azn-mp{background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:12px 16px;font-size:.88rem;line-height:1.7;margin-top:8px}
+.azn-mp .big{font-family:var(--mono);font-size:1.4rem;font-weight:800;color:var(--nav)}
+.mp-bar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:6px 0;border:1px solid var(--brd2)}
+.mp-bar span{display:block;height:100%}
+#mp-ctrl .ctrl{margin:8px 0}
+#mp-pick .btn.on{background:var(--nav);color:#fff}
+
 /* ── QUIZ ── */
 .mq-q{font-size:.92rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
 .mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
@@ -265,6 +313,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
     <button class="tab on" role="tab" data-tab="historia" aria-selected="true">🕰️ Historia</button>
     <button class="tab" role="tab" data-tab="experimentos" aria-selected="false">🧪 Experimentos</button>
     <button class="tab" role="tab" data-tab="constructor" aria-selected="false">🧱 Constructor</button>
+    <button class="tab" role="tab" data-tab="calculos" aria-selected="false">🧮 A, Z y n</button>
     <button class="tab" role="tab" data-tab="phet" aria-selected="false">🌐 PhET</button>
     <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
   </div>
@@ -430,7 +479,75 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
         <div class="btn-row" style="margin:0"><button class="btn" id="reto-check">Comprobar</button><button class="btn ghost" id="reto-next">Otro reto →</button></div>
         <div class="reto-fb" id="reto-fb"></div>
       </div>
-      <div class="info-box" style="margin-top:14px"><strong>Recuerda:</strong> Z = número de protones · A = protones + neutrones · carga = protones − electrones. Si el átomo pierde electrones queda como <strong>catión</strong> (+); si gana, como <strong>anión</strong> (−).</div>
+      <div class="info-box" style="margin-top:14px"><strong>Recuerda:</strong> Z = número de protones · A = protones + neutrones · carga = protones − electrones. Si el átomo pierde electrones queda como <strong>catión</strong> (+); si gana, como <strong>anión</strong> (−). Practica estos cálculos en la pestaña <a href="#calculos" onclick="event.preventDefault();showTabGlobal('calculos')" style="color:inherit;font-weight:800">🧮 A, Z y n</a>.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A, Z y n ═══════════ -->
+  <section class="panel" id="p-calculos" role="tabpanel">
+    <div class="sect">
+      <h2>🧮 Los números que identifican a un átomo</h2>
+      <p>Cada átomo o ion se escribe con su <strong>símbolo</strong> y tres números a su alrededor. Con ellos se calcula cuántos protones, neutrones y electrones tiene.</p>
+      <div class="azn-not">
+        <div class="azn-fig" aria-label="Notación: A arriba a la izquierda, Z abajo a la izquierda, carga arriba a la derecha">
+          <span class="azn-a">A</span><span class="azn-z">Z</span><span class="azn-x">X</span><span class="azn-q">carga</span>
+        </div>
+        <ul class="azn-leg">
+          <li><b class="ca">A</b> · <strong>número de masa</strong>: protones + neutrones (los nucleones).</li>
+          <li><b class="cz">Z</b> · <strong>número atómico</strong>: protones. Define el elemento: Z = 6 siempre es carbono.</li>
+          <li><b class="cx">X</b> · <strong>símbolo</strong> del elemento.</li>
+          <li><b class="cq">carga</b> · se escribe solo si es un ion: 2+ (perdió 2 e⁻) o 1− (ganó 1 e⁻).</li>
+        </ul>
+      </div>
+      <div class="azn-form">
+        <div><b>Z = p⁺</b><span>los protones son el número atómico</span></div>
+        <div><b>A = p⁺ + n⁰</b><span>la masa la ponen protones y neutrones</span></div>
+        <div><b>n⁰ = A − Z</b><span>los neutrones se despejan</span></div>
+        <div><b>e⁻ = Z − carga</b><span>neutro: e⁻ = Z · catión: menos e⁻ · anión: más e⁻</span></div>
+      </div>
+      <h3>Ejemplos resueltos</h3>
+      <div class="azn-ej">
+        <div class="azn-card"><div class="azn-esp"><span class="nuc"><span>35</span><span>17</span></span>Cl</div>
+          <p>Átomo neutro de cloro.<br>p⁺ = Z = <b>17</b><br>n⁰ = A − Z = 35 − 17 = <b>18</b><br>e⁻ = Z − 0 = <b>17</b></p></div>
+        <div class="azn-card"><div class="azn-esp"><span class="nuc"><span>56</span><span>26</span></span>Fe<sup>3+</sup></div>
+          <p>Catión hierro (III): perdió 3 electrones.<br>p⁺ = <b>26</b><br>n⁰ = 56 − 26 = <b>30</b><br>e⁻ = 26 − (+3) = <b>23</b></p></div>
+        <div class="azn-card"><div class="azn-esp"><span class="nuc"><span>16</span><span>8</span></span>O<sup>2−</sup></div>
+          <p>Anión óxido: ganó 2 electrones.<br>p⁺ = <b>8</b><br>n⁰ = 16 − 8 = <b>8</b><br>e⁻ = 8 − (−2) = <b>10</b></p></div>
+      </div>
+      <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir A con Z (A siempre es el mayor, salvo en el hidrógeno-1, donde A = Z = 1); restar la carga al revés (un catión tiene <strong>menos</strong> electrones que protones); y pensar que la carga cambia los protones o los neutrones (solo cambian los electrones).</div>
+    </div>
+
+    <div class="sect">
+      <h2>✍️ Completa la tabla</h2>
+      <p>Cada fila trae algunos datos; escribe los que faltan. En la carga escribe, por ejemplo, <code>2+</code>, <code>1-</code> o <code>0</code>; en el símbolo, el del elemento (Fe, Cl…). Las especies son isótopos e iones reales.</p>
+      <div class="azn-wrap"><table class="azn-tab" id="azn-tab"></table></div>
+      <div class="btn-row"><button class="btn" id="azn-check">Comprobar</button><button class="btn ghost" id="azn-new">🔄 Nueva tabla</button><span class="azn-score" id="azn-score"></span></div>
+      <div class="azn-fb" id="azn-fb" aria-live="polite"></div>
+    </div>
+
+    <div class="sect">
+      <h2>🔁 Isótopos, isóbaros e isótonos</h2>
+      <div class="azn-form azn-tres">
+        <div><b>Isótopos</b><span>mismo <strong>Z</strong> (mismo elemento), distinto A: ¹²C y ¹⁴C</span></div>
+        <div><b>Isóbaros</b><span>mismo <strong>A</strong>, distinto Z: ¹⁴C y ¹⁴N</span></div>
+        <div><b>Isótonos</b><span>mismo número de <strong>neutrones</strong>, distinto Z y A: ¹³C y ¹⁴N (7 n⁰)</span></div>
+      </div>
+      <p style="font-size:.84rem">Truco para recordarlo: isóto<strong>p</strong>os = mismos <strong>p</strong>rotones; isó<strong>b</strong>aros = misma masa (del griego <em>barys</em>, «pesado»); isóto<strong>n</strong>os = mismos <strong>n</strong>eutrones.</p>
+      <h3>¿Qué relación tienen?</h3>
+      <div class="azn-par" id="iso-par"></div>
+      <div class="btn-row" id="iso-ops"><button class="btn ghost" data-r="isotopos">Isótopos</button><button class="btn ghost" data-r="isobaros">Isóbaros</button><button class="btn ghost" data-r="isotonos">Isótonos</button><button class="btn ghost" data-r="ninguno">Ninguna</button></div>
+      <div class="azn-fb" id="iso-fb" aria-live="polite"></div>
+      <div class="btn-row"><button class="btn" id="iso-next" style="display:none">Otra pareja →</button><span class="azn-score" id="iso-score"></span></div>
+    </div>
+
+    <div class="sect">
+      <h2>⚖️ Masa atómica promedio</h2>
+      <p>Si los átomos de un elemento tienen distintas masas (isótopos), ¿por qué la tabla periódica da un solo valor, y con decimales? Porque es un <strong>promedio ponderado</strong>: cada isótopo pesa según su <strong>abundancia</strong> en la naturaleza.</p>
+      <div class="info-box" style="font-family:var(--mono);font-weight:700">masa promedio = (masa₁ × %₁ + masa₂ × %₂ + …) ÷ 100</div>
+      <div class="btn-row" id="mp-pick"></div>
+      <div id="mp-ctrl"></div>
+      <div class="azn-mp" id="mp-out"></div>
+      <p style="font-size:.74rem;color:var(--dimmer)">Masas isotópicas en unidades de masa atómica (u) y abundancias naturales (IUPAC). Mueve el control para ver qué pasaría si las abundancias fueran otras.</p>
     </div>
   </section>
 
@@ -493,7 +610,7 @@ function setupCanvas(cv,W,H){
 function visible(el){ return el && el.offsetParent!==null; }
 
 /* ════════════════ Pestañas ════════════════ */
-var TABS=['historia','experimentos','constructor','phet','repaso'];
+var TABS=['historia','experimentos','constructor','calculos','phet','repaso'];
 var refitters=[];
 function showTab(name,push){
   if(TABS.indexOf(name)<0) name='historia';
@@ -517,6 +634,7 @@ function showSim(name){
 document.querySelectorAll('.sim-pick .tab').forEach(function(b){
   b.addEventListener('click',function(){ showSim(b.getAttribute('data-sim')); });
 });
+window.showTabGlobal=function(t){ showTab(t); window.scrollTo({top:0,behavior:'smooth'}); };
 window.irExperimento=function(sim){ showTab('experimentos'); showSim(sim); window.scrollTo({top:0,behavior:'smooth'}); };
 
 /* ════════════════ Línea del tiempo ════════════════ */
@@ -1029,6 +1147,153 @@ setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una r�
   requestAnimationFrame(loop);
 })();
 
+/* ════════════════ A, Z y n ════════════════ */
+(function(){
+  var NOM={1:['H','hidrógeno'],2:['He','helio'],3:['Li','litio'],4:['Be','berilio'],5:['B','boro'],6:['C','carbono'],7:['N','nitrógeno'],8:['O','oxígeno'],9:['F','flúor'],10:['Ne','neón'],
+    11:['Na','sodio'],12:['Mg','magnesio'],13:['Al','aluminio'],14:['Si','silicio'],15:['P','fósforo'],16:['S','azufre'],17:['Cl','cloro'],18:['Ar','argón'],19:['K','potasio'],20:['Ca','calcio'],
+    26:['Fe','hierro'],27:['Co','cobalto'],28:['Ni','níquel'],29:['Cu','cobre'],30:['Zn','zinc'],35:['Br','bromo'],47:['Ag','plata'],53:['I','yodo'],79:['Au','oro'],82:['Pb','plomo'],92:['U','uranio']};
+  // Núclidos reales [Z, A] (estables o conocidos en clase, como ³H, ¹⁴C, ²³⁵U).
+  var NUC=[[1,1],[1,2],[1,3],[2,3],[2,4],[3,6],[3,7],[4,9],[5,10],[5,11],[6,12],[6,13],[6,14],[7,14],[7,15],[8,16],[8,17],[8,18],[9,19],[10,20],[10,22],
+    [11,23],[12,24],[12,25],[12,26],[13,27],[14,28],[14,30],[15,31],[16,32],[16,34],[17,35],[17,37],[18,36],[18,40],[19,39],[19,40],[19,41],[20,40],[20,44],
+    [26,54],[26,56],[27,59],[28,58],[28,60],[29,63],[29,65],[30,64],[35,79],[35,81],[47,107],[53,127],[79,197],[82,206],[82,208],[92,235],[92,238]];
+  // Cargas de los iones comunes de cada elemento (0 = átomo neutro).
+  var CARGAS={1:[0,1,-1],3:[0,1],4:[0,2],7:[0,-3],8:[0,-2],9:[0,-1],11:[0,1],12:[0,2],13:[0,3],15:[0,-3],16:[0,-2],17:[0,-1],19:[0,1],20:[0,2],
+    26:[0,2,3],27:[0,2,3],28:[0,2],29:[0,1,2],30:[0,2],35:[0,-1],47:[0,1],53:[0,-1],79:[0,1,3],82:[0,2,4]};
+  function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  var SUPD={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function cargaTxt(q){ return q===0?'0':Math.abs(q)+(q>0?'+':'−'); }
+  function cargaSup(q){ return q===0?'':'<sup>'+(Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':'−')+'</sup>'; }
+  function notacion(z,a,q){ return '<span class="nuc"><span>'+a+'</span><span>'+z+'</span></span>'+NOM[z][0]+cargaSup(q); }
+  function leerCarga(t){
+    t=String(t).replace(/\s/g,'').replace(/[−–]/g,'-'); if(t==='0') return 0;
+    var m=t.match(/^([+-]?)(\d*)([+-]?)$/); if(!m||(!m[1]&&!m[3])||(m[1]&&m[3])) return null;
+    var n=m[2]===''?1:+m[2]; return (m[1]||m[3])==='-'?-n:n;
+  }
+
+  /* ── Completa la tabla ── */
+  var COLS=[['esp','Especie'],['Z','Z'],['A','A'],['p','p⁺'],['n','n⁰'],['e','e⁻'],['q','Carga']];
+  // qué se oculta según el tipo de fila
+  var TIPOS=[
+    {da:'notación', ocultos:['Z','A','p','n','e','q'], muestra:'not'},
+    {da:'elemento, A y carga', ocultos:['Z','p','n','e'], muestra:'nom'},
+    {da:'partículas', ocultos:['esp','Z','A','q'], muestra:'part'},
+    {da:'Z y neutrones', ocultos:['esp','A','p','e'], muestra:'zn'}
+  ];
+  var filas=[];
+  function nuevaTabla(){
+    var usados={}; filas=[];
+    var tipos=shuffle([0,1,2,3,0,1]).slice(0,5);
+    tipos.forEach(function(t){
+      var nz, q, g=0;
+      do{ nz=rnd(NUC); q=rnd(CARGAS[nz[0]]||[0]); g++; }while((usados[nz.join()+q]||!NOM[nz[0]])&&g<50);
+      usados[nz.join()+q]=1;
+      if(TIPOS[t].muestra==='zn') q=0;
+      var z=nz[0], a=nz[1];
+      filas.push({t:t,v:{esp:NOM[z][0],Z:z,A:a,p:z,n:a-z,e:z-q,q:q}});
+    });
+    var h='<tr>'+COLS.map(function(c){ return '<th>'+c[1]+'</th>'; }).join('')+'</tr>';
+    filas.forEach(function(f,i){
+      var T=TIPOS[f.t], v=f.v;
+      h+='<tr>'+COLS.map(function(c){
+        var k=c[0], oculto=T.ocultos.indexOf(k)>=0;
+        if(k==='esp'){
+          if(oculto) return '<td><input data-f="'+i+'" data-k="esp" aria-label="Símbolo de la fila '+(i+1)+'" maxlength="2" style="width:52px"></td>';
+          return '<td class="esp">'+(T.muestra==='nom'?v.esp+cargaSup(v.q)+'<small>'+NOM[v.Z][1]+'-'+v.A+'</small>':notacion(v.Z,v.A,v.q))+'</td>';
+        }
+        if(oculto) return '<td><input data-f="'+i+'" data-k="'+k+'" inputmode="'+(k==='q'?'text':'numeric')+'" aria-label="'+c[1]+' de la fila '+(i+1)+'"></td>';
+        return '<td>'+(k==='q'?cargaTxt(v.q):v[k])+'</td>';
+      }).join('')+'</tr>';
+    });
+    $('azn-tab').innerHTML=h; $('azn-fb').innerHTML=''; $('azn-score').textContent='';
+  }
+  function comprobar(){
+    var ok=0, tot=0, notas=[];
+    document.querySelectorAll('#azn-tab input').forEach(function(inp){
+      var f=filas[+inp.dataset.f], k=inp.dataset.k, v=f.v, bien;
+      if(k==='esp') bien=inp.value.trim().toLowerCase()===v.esp.toLowerCase();
+      else if(k==='q') bien=leerCarga(inp.value)===v.q;
+      else bien=inp.value.trim()!==''&&+inp.value===v[k];
+      inp.classList.toggle('ok',bien); inp.classList.toggle('bad',!bien); tot++; if(bien) ok++;
+    });
+    filas.forEach(function(f,i){
+      var v=f.v, pasos=[];
+      if(TIPOS[f.t].muestra==='part'){ pasos.push('Z = p⁺ = '+v.p+' → '+NOM[v.Z][1]+' ('+v.esp+')','A = p⁺ + n⁰ = '+v.p+' + '+v.n+' = '+v.A,'carga = p⁺ − e⁻ = '+v.p+' − '+v.e+' = '+cargaTxt(v.q)); }
+      else if(TIPOS[f.t].muestra==='zn'){ pasos.push('Z = '+v.Z+' → '+NOM[v.Z][1]+' ('+v.esp+')','A = Z + n⁰ = '+v.Z+' + '+v.n+' = '+v.A,'neutro: e⁻ = p⁺ = '+v.Z); }
+      else { if(TIPOS[f.t].muestra==='not') pasos.push('en la notación se leen Z = '+v.Z+', A = '+v.A+' y carga = '+cargaTxt(v.q)); pasos.push('p⁺ = Z = '+v.Z+(TIPOS[f.t].muestra==='nom'?' (el '+NOM[v.Z][1]+' tiene Z = '+v.Z+')':''),'n⁰ = A − Z = '+v.A+' − '+v.Z+' = '+v.n,'e⁻ = Z − carga = '+v.Z+' − ('+(v.q>0?'+':'')+String(v.q).replace('-','−')+') = '+v.e); }
+      notas.push('<li><strong>Fila '+(i+1)+':</strong> '+pasos.join(' · ')+'</li>');
+    });
+    $('azn-score').textContent=ok+' de '+tot+' correctas';
+    $('azn-fb').innerHTML=(ok===tot?'🎉 <strong>¡Todo correcto!</strong> ':'Revisa las casillas en rojo. ')+'Así se calcula cada fila:<ul>'+notas.join('')+'</ul>';
+  }
+  $('azn-check').addEventListener('click',comprobar);
+  $('azn-new').addEventListener('click',nuevaTabla);
+  $('azn-tab').addEventListener('keydown',function(e){ if(e.key==='Enter') comprobar(); });
+  nuevaTabla();
+
+  /* ── Isótopos, isóbaros, isótonos ── */
+  function relacion(a,b){ if(a[0]===b[0]) return 'isotopos'; if(a[1]===b[1]) return 'isobaros'; if(a[1]-a[0]===b[1]-b[0]) return 'isotonos'; return 'ninguno'; }
+  var PARES={isotopos:[],isobaros:[],isotonos:[],ninguno:[]};
+  for(var i=0;i<NUC.length;i++) for(var j=i+1;j<NUC.length;j++) PARES[relacion(NUC[i],NUC[j])].push([NUC[i],NUC[j]]);
+  var NOMREL={isotopos:'isótopos',isobaros:'isóbaros',isotonos:'isótonos',ninguno:'ninguna de las tres'};
+  var par=null, isoOk=0, isoTot=0;
+  function nuevoPar(){
+    var r=rnd(['isotopos','isobaros','isotonos','ninguno']); par=shuffle(rnd(PARES[r]).slice());
+    $('iso-par').innerHTML=par.map(function(x){ return '<div class="azn-esp">'+notacion(x[0],x[1],0)+'</div>'; }).join('<span class="vs">y</span>');
+    document.querySelectorAll('#iso-ops .btn').forEach(function(b){ b.disabled=false; b.classList.remove('ok','bad'); });
+    $('iso-fb').innerHTML=''; $('iso-next').style.display='none';
+  }
+  document.querySelectorAll('#iso-ops .btn').forEach(function(b){ b.addEventListener('click',function(){
+    var r=relacion(par[0],par[1]), bien=b.dataset.r===r, a=par[0], c=par[1];
+    isoTot++; if(bien) isoOk++;
+    document.querySelectorAll('#iso-ops .btn').forEach(function(x){ x.disabled=true; if(x.dataset.r===r) x.classList.add('ok'); });
+    if(!bien) b.classList.add('bad');
+    function d(x){ return NOM[x[0]][0]+'-'+x[1]+': Z = '+x[0]+', A = '+x[1]+', n⁰ = '+(x[1]-x[0]); }
+    $('iso-fb').innerHTML=(bien?'<span style="color:var(--ok-t);font-weight:800">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t);font-weight:800">✗ No.</span> ')+
+      'Son <strong>'+NOMREL[r]+'</strong>. '+d(a)+' · '+d(c)+'.';
+    $('iso-score').textContent=isoOk+' de '+isoTot; $('iso-next').style.display='inline-flex';
+  }); });
+  $('iso-next').addEventListener('click',nuevoPar);
+  nuevoPar();
+
+  /* ── Masa atómica promedio ── */
+  var MP=[
+    {s:'Cl',n:'Cloro',tabla:35.45,iso:[[35,34.969,75.76],[37,36.966,24.24]]},
+    {s:'B',n:'Boro',tabla:10.81,iso:[[10,10.013,19.9],[11,11.009,80.1]]},
+    {s:'Cu',n:'Cobre',tabla:63.55,iso:[[63,62.930,69.15],[65,64.928,30.85]]},
+    {s:'Br',n:'Bromo',tabla:79.90,iso:[[79,78.918,50.69],[81,80.916,49.31]]},
+    {s:'Li',n:'Litio',tabla:6.94,iso:[[6,6.015,7.59],[7,7.016,92.41]]},
+    {s:'Mg',n:'Magnesio',tabla:24.31,iso:[[24,23.985,78.99],[25,24.986,10.00],[26,25.983,11.01]]}
+  ];
+  var COL=['#2563eb','#f59e0b','#16a34a'], mp=null, ab=[];
+  function fmt(x,d){ return x.toFixed(d).replace('.',','); }
+  function pintarMP(){
+    var tot=0, suma=0; ab.forEach(function(a,i){ tot+=a; suma+=mp.iso[i][1]*a; });
+    var m=suma/100;
+    var real=mp.iso.every(function(x,i){ return Math.abs(x[2]-ab[i])<.01; });
+    $('mp-out').innerHTML='<div class="mp-bar">'+mp.iso.map(function(x,i){ return '<span style="width:'+ab[i]+'%;background:'+COL[i]+'" title="'+mp.s+'-'+x[0]+'"></span>'; }).join('')+'</div>'+
+      mp.iso.map(function(x,i){ return '<span style="color:'+COL[i]+';font-weight:800">■</span> '+mp.s+'-'+x[0]+': '+fmt(x[1],3)+' u × '+fmt(ab[i],2)+' %'; }).join('<br>')+
+      '<br>masa promedio = ('+mp.iso.map(function(x,i){ return fmt(x[1],3)+' × '+fmt(ab[i],2); }).join(' + ')+') ÷ 100 = <span class="big">'+fmt(m,2)+' u</span>'+
+      '<br>'+(real?'✅ Con las abundancias reales coincide con la tabla periódica: <strong>'+fmt(mp.tabla,2)+' u</strong>. Fíjate en que el promedio queda más cerca del isótopo más abundante.':'Con las abundancias reales daría <strong>'+fmt(mp.tabla,2)+' u</strong> (el valor de la tabla periódica).');
+  }
+  function elegirMP(k){
+    mp=MP[k]; ab=mp.iso.map(function(x){ return x[2]; });
+    document.querySelectorAll('#mp-pick .btn').forEach(function(b,i){ b.classList.toggle('on',i===k); });
+    var h='';
+    if(mp.iso.length===2) h='<div class="ctrl"><label>Abundancia de '+mp.s+'-'+mp.iso[0][0]+' (el resto es '+mp.s+'-'+mp.iso[1][0]+') <output id="mp-o"></output></label><input type="range" id="mp-r" min="0" max="100" step="0.01" value="'+ab[0]+'"></div>';
+    else h='<p style="font-size:.8rem;color:var(--dimmer)">Con tres isótopos, las abundancias se dejan fijas (las reales).</p>';
+    h+='<button class="btn ghost" id="mp-real" style="min-height:36px;padding:4px 12px;font-size:.78rem">↺ Abundancias reales</button>';
+    $('mp-ctrl').innerHTML=h;
+    if($('mp-r')) $('mp-r').addEventListener('input',function(){ ab[0]=+this.value; ab[1]=Math.round((100-ab[0])*100)/100; $('mp-o').textContent=fmt(ab[0],2)+' %'; pintarMP(); });
+    if($('mp-o')) $('mp-o').textContent=fmt(ab[0],2)+' %';
+    $('mp-real').addEventListener('click',function(){ elegirMP(k); });
+    pintarMP();
+  }
+  $('mp-pick').innerHTML=MP.map(function(m,i){ return '<button class="btn ghost" style="min-height:38px;padding:4px 14px">'+m.n+' ('+m.s+')</button>'; }).join('');
+  document.querySelectorAll('#mp-pick .btn').forEach(function(b,i){ b.addEventListener('click',function(){ elegirMP(i); }); });
+  elegirMP(0);
+})();
+
 /* ════════════════ Constructor de átomos ════════════════ */
 (function(){
   var EL=[null,
@@ -1166,6 +1431,8 @@ setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una r�
     {q:'Según Bohr, ¿qué ocurre cuando un electrón pasa del nivel n = 3 al nivel n = 2?',o:['Emite un fotón de energía definida','Absorbe un fotón','Cae al núcleo','Se convierte en protón'],a:0,x:'Bajar de nivel libera la diferencia de energía como un fotón (en este caso, luz roja de 656 nm).'},
     {q:'¿Qué describe un orbital en el modelo mecánico-cuántico?',o:['Una región donde es probable encontrar al electrón','Una órbita circular exacta','La posición fija del electrón','El tamaño del núcleo'],a:0,x:'En el modelo actual no hay trayectorias: solo probabilidades de encontrar al electrón.'},
     {q:'Un ion tiene 12 protones, 12 neutrones y 10 electrones. ¿Cuál es?',o:['Mg²⁺ (A = 24)','Mg²⁻ (A = 24)','Ne (A = 22)','C²⁺ (A = 12)'],a:0,x:'Z = 12 → magnesio; A = 12 + 12 = 24; carga = 12 − 10 = +2.'},
+    {q:'¿Cuántos neutrones tiene el átomo <span class="nuc"><span>39</span><span>19</span></span>K?',o:['20','19','39','58'],a:0,x:'n⁰ = A − Z = 39 − 19 = 20.'},
+    {q:'¿Cuántos electrones tiene el ion <span class="nuc"><span>32</span><span>16</span></span>S<sup>2−</sup>?',o:['18','16','14','32'],a:0,x:'Es un anión: ganó 2 electrones. e⁻ = Z − carga = 16 − (−2) = 18.'},
     {q:'El carbono-12 y el carbono-14 se diferencian en el número de…',o:['neutrones','protones','electrones','orbitales'],a:0,x:'Son isótopos: mismo número de protones (6) pero distinto número de neutrones (6 y 8).'},
     {q:'¿Quién descubrió el neutrón y en qué año?',o:['Chadwick, 1932','Rutherford, 1911','Thomson, 1897','Bohr, 1913'],a:0,x:'James Chadwick lo descubrió en 1932, completando la imagen del núcleo (protones + neutrones).'}
   ];
@@ -1177,7 +1444,7 @@ setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una r�
     $('q-fill').style.width=(qi/QS.length*100)+'%';
     $('q-label').textContent=qi+' de '+QS.length+' respondidas';
     if(qi>=QS.length){
-      box.innerHTML='<div class="'+(score>=8?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+QS.length+'.</strong> '+(score>=8?'¡Excelente! Ya puedes seguir a la Configuración Electrónica.':'Repasa la línea del tiempo y repite los experimentos.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="configuracion.html">Ir a Configuración Electrónica →</a></div>';
+      box.innerHTML='<div class="'+(score>=Math.ceil(QS.length*.8)?'ok-box':'warn-box')+'"><strong>Resultado: '+score+' de '+QS.length+'.</strong> '+(score>=Math.ceil(QS.length*.8)?'¡Excelente! Ya puedes seguir a la Configuración Electrónica.':'Repasa la línea del tiempo y repite los experimentos.')+'</div><div class="btn-row"><button class="btn" id="q-again">↺ Intentar de nuevo</button><a class="btn ghost" href="configuracion.html">Ir a Configuración Electrónica →</a></div>';
       $('q-again').addEventListener('click',start);
       return;
     }

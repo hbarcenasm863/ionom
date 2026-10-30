@@ -20,7 +20,7 @@ Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración 
 
 ## 2. `atomo.html` — Teoría Atómica
 
-Cinco pestañas (se puede enlazar directo con `atomo.html#experimentos`, `#constructor`, `#phet`, `#repaso`):
+Seis pestañas (se puede enlazar directo con `atomo.html#experimentos`, `#constructor`, `#calculos`, `#phet`, `#repaso`):
 
 1. **🕰️ Historia**: tarjetas deslizables de Demócrito, Dalton, Thomson, Rutherford, Bohr y el modelo cuántico. Cada una tiene *¿Qué propuso?*, *Evidencia* y *¿Qué no podía explicar?*. La idea es que cada modelo cae ante un experimento.
 2. **🧪 Experimentos** (funcionan sin internet). Cada uno empieza pidiendo una **predicción** al estudiante:
@@ -28,8 +28,13 @@ Cinco pestañas (se puede enlazar directo con `atomo.html#experimentos`, `#const
    - *Lámina de oro (Rutherford)*: se elige el modelo (Thomson o núcleo). Los dos modelos tienen la **misma carga**; solo cambia cómo está repartida, y por eso solo el núcleo produce rebotes. El núcleo se dibuja mucho más grande que el real y la página lo advierte (en el experimento real rebotaba ≈ 1 de cada 8000 partículas).
    - *Espectro del hidrógeno (Bohr)*: niveles n = 1–6, fotones con λ calculada por Rydberg y líneas visibles de Balmer (656, 486, 434 y 410 nm).
 3. **🧱 Constructor**: protones, neutrones y electrones (Z = 1–20). Muestra el elemento, A, Z, la carga, si el isótopo es estable y la configuración. Trae 13 retos.
-4. **🌐 PhET**: *Construir un átomo*, *Dispersión de Rutherford* e *Isótopos y masa atómica*, de la Universidad de Colorado, en español. Se cargan solo al tocar el botón porque necesitan internet. Tienen licencia CC BY 4.0 y el crédito aparece en la página.
-5. **✅ Repaso**: 10 preguntas con explicación.
+4. **🧮 A, Z y n** (`atomo.html#calculos`): la notación ᴬ_Z X^carga explicada, las fórmulas (Z = p⁺, A = p⁺ + n⁰, n⁰ = A − Z, e⁻ = Z − carga), tres ejemplos resueltos (³⁵Cl, ⁵⁶Fe³⁺, ¹⁶O²⁻) y errores frecuentes. Actividades:
+   - *Completa la tabla*: 5 filas al azar con núclidos reales (`NUC`) y sus iones comunes (`CARGAS`); cada fila da datos distintos (notación; elemento, A y carga; partículas; Z y neutrones). Se revisa casilla por casilla (la carga acepta 2+, +2, 1-, −1 o 0) y explica el cálculo de cada fila.
+   - *Isótopos, isóbaros e isótonos*: definiciones y parejas reales al azar; la relación se calcula a partir de Z y A, con las cuatro respuestas igual de probables.
+   - *Masa atómica promedio*: Cl, B, Cu, Br, Li y Mg con masas isotópicas y abundancias IUPAC; en los de dos isótopos, un control mueve la abundancia y recalcula el promedio ponderado.
+   El Repaso suma 2 preguntas (neutrones del ³⁹K y electrones del ³²S²⁻).
+5. **🌐 PhET**: *Construir un átomo*, *Dispersión de Rutherford* e *Isótopos y masa atómica*, de la Universidad de Colorado, en español. Se cargan solo al tocar el botón porque necesitan internet. Tienen licencia CC BY 4.0 y el crédito aparece en la página.
+6. **✅ Repaso**: 12 preguntas con explicación.
 
 ## 3. `configuracion.html` — Configuración Electrónica
 
