@@ -221,6 +221,52 @@ const GLOSARIO_AT = [
   ['SEMILLENO', 'El cromo prefiere un subnivel d ____ (d⁵), por eso es una excepción'],
   ['HIDRÓGENO', 'Único elemento cuyo espectro explicó con exactitud el modelo de Bohr']
 ];
+// Tabla periódica: historia, organización y propiedades periódicas.
+const GLOSARIO_TP = [
+  ['MENDELÉIEV', 'Ordenó los elementos por masa atómica en 1869 y dejó huecos para los que faltaban por descubrir'],
+  ['MOSELEY', 'Demostró en 1913 que el orden correcto de la tabla lo da el número atómico'],
+  ['DÖBEREINER', 'Agrupó elementos parecidos de tres en tres (1829)'],
+  ['NEWLANDS', 'Propuso la ley de las octavas (1865)'],
+  ['LAVOISIER', 'Publicó en 1789 la primera lista de 33 «sustancias simples»'],
+  ['RAMSAY', 'Descubrió el argón y agregó a la tabla la columna de los gases nobles'],
+  ['SEABORG', 'Ubicó los actínidos en una fila aparte, debajo de los lantánidos (1945)'],
+  ['CHANCOURTOIS', 'Geólogo que ordenó los elementos en un «tornillo telúrico» (1862)'],
+  ['TRÍADAS', 'Grupos de tres elementos parecidos en los que la masa del medio es el promedio de las otras dos'],
+  ['OCTAVAS', 'Ley de las ____: cada octavo elemento se parece al primero, como en la escala musical'],
+  ['GERMANIO', 'Elemento descubierto en 1886 que confirmó la predicción del «eka-silicio»'],
+  ['FAMILIA', 'Otro nombre de un grupo de la tabla periódica'],
+  ['HALÓGENOS', 'Familia del grupo 17 (VIIA): flúor, cloro, bromo, yodo y astato'],
+  ['ALCALINOS', 'Metales del grupo 1 (IA), muy reactivos, que forman iones +1'],
+  ['ALCALINOTÉRREOS', 'Metales del grupo 2 (IIA), que forman iones +2'],
+  ['METALOIDES', 'Elementos de propiedades intermedias junto a la «escalera», como el Si y el Ge'],
+  ['TRANSICIÓN', 'Metales de ____: grupos 3 a 12, bloque d'],
+  ['LANTÁNIDOS', 'Serie del bloque f que llena los orbitales 4f'],
+  ['ACTÍNIDOS', 'Serie del bloque f que llena los orbitales 5f'],
+  ['IONIZACIÓN', 'Energía de ____: la necesaria para quitarle un electrón a un átomo gaseoso'],
+  ['AFINIDAD', '____ electrónica: energía que se libera cuando un átomo gaseoso gana un electrón'],
+  ['ELECTRONEGATIVIDAD', 'Capacidad de un átomo para atraer hacia sí los electrones de un enlace'],
+  ['FLÚOR', 'El elemento más electronegativo de la tabla periódica'],
+  ['APANTALLAMIENTO', 'Efecto por el que los electrones internos «tapan» la atracción del núcleo sobre los externos'],
+  ['BLOQUE', 'Zona de la tabla (s, p, d o f) según el subnivel donde entra el último electrón']
+];
+// Números cuánticos.
+const GLOSARIO_QN = [
+  ['PRINCIPAL', 'Número cuántico (n) que indica el nivel de energía'],
+  ['SECUNDARIO', 'Número cuántico (l) que indica el subnivel y la forma del orbital'],
+  ['AZIMUTAL', 'Otro nombre del número cuántico secundario'],
+  ['MAGNÉTICO', 'Número cuántico (mₗ) que indica la orientación del orbital'],
+  ['ESPÍN', 'Número cuántico (mₛ) que solo puede valer +½ o −½'],
+  ['ORIENTACIÓN', 'Lo que indica el número cuántico magnético'],
+  ['ESFÉRICA', 'Forma de los orbitales s'],
+  ['LÓBULOS', 'Un orbital p tiene dos ____'],
+  ['SUBNIVEL', 'Lo que indica el número cuántico l: s, p, d o f'],
+  ['CUATRO', 'Cantidad de números cuánticos que describen a un electrón'],
+  ['SIETE', 'Número de orbitales de un subnivel f'],
+  ['NUEVE', 'Número de orbitales del nivel n = 3'],
+  ['EXCLUSIÓN', 'Principio de ____ de Pauli: dos electrones de un átomo no pueden tener los cuatro números cuánticos iguales'],
+  ['SCHRÖDINGER', 'Escribió la ecuación de onda que describe los orbitales (1926)'],
+  ['DIFERENCIAL', 'Electrón ____: el último que entra según el orden de llenado']
+];
 // Configuración → elemento (Z = 3–36, sin las excepciones Cr y Cu).
 const EL_CZ = ['','hidrógeno','helio','litio','berilio','boro','carbono','nitrógeno','oxígeno','flúor','neón','sodio','magnesio','aluminio','silicio','fósforo','azufre','cloro','argón',
   'potasio','calcio','escandio','titanio','vanadio','cromo','manganeso','hierro','cobalto','níquel','cobre','zinc','galio','germanio','arsénico','selenio','bromo','kriptón'];
@@ -229,7 +275,8 @@ const ORD_CZ = ['1s','2s','2p','3s','3p','4s','3d','4p'], CAP_CZ = {s:2, p:6, d:
 function madCz(z){ const o = []; let e = z; for(const s of ORD_CZ){ if(!e) break; const k = Math.min(e, CAP_CZ[s[1]]); o.push(s + sup(k)); e -= k; } return o; }
 function abrCz(z){ const core = [18,10,2].find(g => g < z); return '[' + SIM_CZ[core] + '] ' + madCz(z).slice(madCz(core).length).join(' '); }
 function pistasAtomo(tipo, r){
-  if(tipo === 'ato') return GLOSARIO_AT.map(([w, p]) => ({tipo:'ato', clave:'g:' + palabra(w), respuesta: palabra(w), solucion: w.toLowerCase(), pista: p}));
+  const GLOS = {ato: GLOSARIO_AT, tab: GLOSARIO_TP, qn: GLOSARIO_QN}[tipo];
+  if(GLOS) return GLOS.map(([w, p]) => ({tipo, clave:'g:' + palabra(w), respuesta: palabra(w), solucion: w.toLowerCase(), pista: p}));
   const out = [];
   for(let z = 3; z <= 36; z++){
     if(z === 24 || z === 29 || [10,18,36].includes(z)) continue;
@@ -254,7 +301,7 @@ function candidatos(cfg, r){
   };
   const colas = {};
   cfg.tipos.forEach(t => {
-    if(t === 'ato' || t === 'cfg'){ colas[t] = shuffle(pistasAtomo(t, r), r); return; }
+    if(t === 'ato' || t === 'cfg' || t === 'tab' || t === 'qn'){ colas[t] = shuffle(pistasAtomo(t, r), r); return; }
     if(t === 'ion'){
       // solo iones que aparecen en las familias elegidas
       const syms = new Set(); comp.forEach(c => { const p = partes(c.formula); if(p){ syms.add('a:' + p.an + '|' + p.qAn); syms.add('k:' + p.cat + '|' + p.qCat); if(p.cat === 'NH4') syms.add('k:NH4'); } });

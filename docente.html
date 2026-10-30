@@ -590,6 +590,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-estequiometria"><span><strong>D</strong> Estequiometría<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-atomo"><span><strong>D</strong> Partículas subatómicas<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-config"><span><strong>D</strong> Configuración electrónica<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-cuanticos"><span><strong>D</strong> Números cuánticos<br><small class="ej-disp"></small></span></label>
+        <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-tabla"><span><strong>D</strong> Ubicación y propiedades periódicas<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="d-enlace"><span><strong>D</strong> Tipo de enlace (ΔEN)<br><small class="ej-disp"></small></span></label>
         <label class="ej-row"><input type="checkbox" class="chk-tipo-ej" data-tipo="x-errores" checked><span><strong>X</strong> Cazar errores<br><small class="ej-disp"></small></span></label>
       </div>
@@ -717,6 +719,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
           <label class="tema-chk"><input type="checkbox" value="cfg" checked><span><strong>Configuración electrónica</strong><br><small>Elemento → configuración abreviada y al revés (Z = 3–36)</small></span></label>
           <label class="tema-chk"><input type="checkbox" value="tabla" checked><span><strong>Configuración y tabla</strong><br><small>Periodo y grupo, electrones de valencia</small></span></label>
           <label class="tema-chk"><input type="checkbox" value="teo"><span><strong>Modelos y reglas</strong><br><small>Dalton, Thomson, Rutherford, Bohr · Aufbau, Pauli, Hund</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="cuant"><span><strong>Números cuánticos</strong><br><small>Último electrón del Cl → (3, 1, 0, −½) · ¿Qué conjunto es posible? · (4, 2, −1, +½) → 4d</small></span></label>
+          <label class="tema-chk"><input type="checkbox" value="tp"><span><strong>Tabla periódica: historia y propiedades</strong><br><small>Döbereiner, Mendeléiev, Moseley · ¿Cuál tiene mayor radio del periodo 3?</small></span></label>
         </div>
       </div>
 
@@ -821,6 +825,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <label class="tema-chk"><input type="checkbox" value="func" checked><span><strong>Función química</strong><br><small>«Clasifica KMnO₄: sal ____ (binaria, oxigenada o ácida)» → OXIGENADA</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="ato"><span><strong>Teoría atómica</strong><br><small>«Partícula del núcleo sin carga eléctrica» → NEUTRON · «Descubrió el electrón…» → THOMSON</small></span></label>
         <label class="tema-chk"><input type="checkbox" value="cfg"><span><strong>Configuración → elemento</strong><br><small>«Elemento con configuración [Ne] 3s² 3p⁴» → AZUFRE (Z = 3–36)</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="tab"><span><strong>Tabla periódica</strong><br><small>«Ordenó por masa atómica en 1869 y dejó huecos» → MENDELEIEV · «Energía de ____» → IONIZACION</small></span></label>
+        <label class="tema-chk"><input type="checkbox" value="qn"><span><strong>Números cuánticos</strong><br><small>«Número cuántico (mₗ) que indica la orientación del orbital» → MAGNETICO</small></span></label>
       </div>
     </div>
     <div class="sect">

@@ -164,8 +164,7 @@ function poolPorGrupo(grupos){
 // viven en BANCO, se cuentan aparte desde ELEMENTS/REACT_CHAINS.
 function contarDisponiblesTema(id){
   let nEj = 0;
-  if(id==='elemento') nEj = B.ELEMENTS ? Object.keys(B.ELEMENTS).length : 0;
-  else if(id==='reactividad') nEj = (B.REACT_CHAINS||[]).length;
+  if(id==='reactividad') nEj = (B.REACT_CHAINS||[]).length;
   // 'estequiometria' no es un group real de BANCO (no existe tal valor) --
   // sus ejercicios reutilizan las ecuaciones ya balanceadas del group
   // 'balanceo' (ver tarjetaEstequiometria). Sin este caso especial,
@@ -173,7 +172,8 @@ function contarDisponiblesTema(id){
   // Sección 2 mostraba "0 ejercicios" aunque sí hubiera 50 disponibles.
   else if(id==='estequiometria') nEj = poolPorGrupo(['balanceo']).length;
   else if(id==='atomo') nEj = ESPECIES_ATOMO.length;
-  else if(id==='config-e') nEj = poolConfig().length;
+  else if(id==='config-e') nEj = poolConfig().length * 2; // configuración + números cuánticos
+  else if(id==='elemento') nEj = PARES_TABLA.length;
   else if(id==='enlace') nEj = PARES_ENLACE.length;
   else nEj = poolPorGrupo([id]).length;
   const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
@@ -191,7 +191,7 @@ const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','react
 // actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
 // "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
 // Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
-const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':'d-config', enlace:'d-enlace'};
+const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':['d-config','d-cuanticos'], enlace:'d-enlace', elemento:'d-tabla'};
 
 // Región «El átomo» (atomo / config-e): no viven en banco.js.
 // ESPECIES_ATOMO: isótopos e iones reales [Z, A, carga] para el ejercicio
@@ -221,6 +221,15 @@ const PARES_ENLACE = [
   ['Cl',3.16,'Cl',3.16],['O',3.44,'O',3.44],['N',3.04,'N',3.04],['H',2.20,'H',2.20],['C',2.55,'H',2.20],['C',2.55,'S',2.58],
   ['Cu',1.90,'Cu',1.90],['Fe',1.83,'Fe',1.83],['Al',1.61,'Al',1.61]
 ];
+// elemento (tabla periódica): parejas [Z, Z] del mismo periodo o del mismo
+// grupo, elementos representativos, para comparar radio, energía de
+// ionización y electronegatividad. Se dejaron fuera las parejas donde el
+// dato real rompe la tendencia (Be/B, N/O, Mg/Al, P/S, Al/Ga) y los gases
+// nobles, para que la comparación tenga una sola respuesta.
+const PARES_TABLA = [
+  [3,9],[11,17],[19,35],[37,53],[12,16],[13,17],[20,34],[11,15],[6,9],[14,17],[3,6],[19,33],[12,17],[11,14],[4,8],
+  [3,19],[11,55],[9,53],[17,35],[8,16],[12,38],[4,20],[7,15],[6,14],[35,53],[16,34],[5,13]
+];
 function contarDisponiblesTipo(temasMarcados){
   const gruposCompuestos = temasMarcados.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
@@ -233,6 +242,8 @@ function contarDisponiblesTipo(temasMarcados){
     'd-estequiometria': temasMarcados.includes('estequiometria') ? poolPorGrupo(['balanceo']).length : 0,
     'd-atomo': temasMarcados.includes('atomo') ? ESPECIES_ATOMO.length : 0,
     'd-config': temasMarcados.includes('config-e') ? poolConfig().length : 0,
+    'd-cuanticos': temasMarcados.includes('config-e') ? poolConfig().length : 0,
+    'd-tabla': temasMarcados.includes('elemento') ? PARES_TABLA.length : 0,
     'd-enlace': temasMarcados.includes('enlace') ? PARES_ENLACE.length : 0
   };
 }
@@ -271,6 +282,8 @@ const TIPO_ROTULO = {
   'd-molmasa':'Mol y masa molar',
   'd-atomo':'Partículas subatómicas',
   'd-config':'Configuración electrónica',
+  'd-cuanticos':'Números cuánticos',
+  'd-tabla':'Ubicación y propiedades periódicas',
   'd-enlace':'Tipo de enlace (ΔEN)',
   'x-errores':'Cazar errores',
   'ox-estado':'Estado de oxidación'
@@ -416,6 +429,43 @@ function tarjetaConfig(z, numero){
     +'</div>';
 }
 
+// Números cuánticos: electrón diferencial de un elemento (Z = 1–36, sin
+// excepciones) y un conjunto (n, l, mₗ, mₛ) para juzgar si es posible.
+function tarjetaCuanticos(z, rngFn, numero){
+  const el = (B.ELEMENTS||{})[z] || {sym:'?', name:'?'};
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:46px;margin:0 6px 0 4px">&nbsp;</span>';
+  const r = () => rngFn();
+  const n = 1 + Math.floor(r()*4);
+  let l = Math.floor(r()*n), ml = Math.floor(r()*(2*l+1)) - l, ms = r() < .5 ? '+½' : '−½';
+  const malo = Math.floor(r()*4);   // 0: válido · 1: l ≥ n · 2: |mₗ| > l · 3: mₛ imposible
+  if(malo === 1){ l = n; ml = 0; }
+  else if(malo === 2){ ml = (r() < .5 ? -1 : 1) * (l + 1); }
+  else if(malo === 3){ ms = '+1'; }
+  const fmt = x => x > 0 ? '+' + x : String(x).replace('-', '−');
+  const conjunto = '('+n+', '+l+', '+fmt(ml)+', '+ms+')';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.9rem;margin:4px 0 6px">Para el último electrón (electrón diferencial) del <strong>'+el.name+' ('+el.sym+', Z = '+z+')</strong>:</p>'
+    +'<p style="font-size:.84rem;margin:4px 0">a) Configuración electrónica y casillas del último subnivel (llena de mₗ = −l a +l, empezando con ↑):</p><div class="cuad" style="height:37.8px"></div>'
+    +'<p style="font-size:.84rem;margin:8px 0 0">b) n ='+linea+'l ='+linea+'mₗ ='+linea+'mₛ ='+linea+'</p>'
+    +'<p style="font-size:.84rem;margin:8px 0 4px">c) ¿Es posible el conjunto <strong style="font-family:var(--mono)">'+conjunto+'</strong>? Si lo es, ¿en qué subnivel está ese electrón? Si no, ¿qué regla incumple?</p><div class="cuad" style="height:37.8px"></div>'
+    +'</div>';
+}
+// Tabla periódica: ubicar un elemento y compararlo con otro del mismo
+// periodo o grupo (radio, energía de ionización, electronegatividad).
+function tarjetaTabla(par, numero){
+  const E = B.ELEMENTS||{}, a = E[par[0]] || {sym:'?', name:'?'}, b = E[par[1]] || {sym:'?', name:'?'};
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:56px;margin:0 6px 0 4px">&nbsp;</span>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.9rem;margin:4px 0 6px">Para el <strong>'+a.name+' ('+a.sym+', Z = '+par[0]+')</strong>:</p>'
+    +'<p style="font-size:.84rem;margin:4px 0">a) Configuración abreviada:</p><div class="cuad" style="height:18.9px"></div>'
+    +'<p style="font-size:.84rem;margin:8px 0 0">b) Periodo'+linea+'Grupo IUPAC'+linea+'Grupo A/B'+linea+'Bloque'+linea+'</p>'
+    +'<p style="font-size:.84rem;margin:8px 0 0">c) ¿Metal, no metal o metaloide?<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:150px;margin:0 6px 0 4px">&nbsp;</span></p>'
+    +'<p style="font-size:.84rem;margin:8px 0 4px">d) Compáralo con el <strong>'+b.name+' ('+b.sym+', Z = '+par[1]+')</strong>: ¿cuál tiene mayor radio atómico, mayor energía de ionización y mayor electronegatividad? Justifica con su posición en la tabla.</p><div class="cuad" style="height:56.7px"></div>'
+    +'</div>';
+}
+
 // Tipo de enlace: con las EN dadas, calcular ΔEN, clasificar y representar.
 function tarjetaEnlace(par, numero){
   const en = x => x.toFixed(2).replace('.', ',');
@@ -510,6 +560,18 @@ function armarBloquesPractica(F, rngFn, usados){
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>String(x)).forEach(z=>{
         usados.add('cfg-'+z);
         bloques.push({html:tarjetaConfig(z, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-cuanticos'){
+      let pool = poolConfig().filter(z => !usados.has('qn-'+z));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>String(x)).forEach(z=>{
+        usados.add('qn-'+z);
+        bloques.push({html:tarjetaCuanticos(z, rngFn, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-tabla'){
+      let pool = PARES_TABLA.filter(p => !usados.has('tp-'+p.join('|')));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.join('|')).forEach(p=>{
+        usados.add('tp-'+p.join('|'));
+        bloques.push({html:tarjetaTabla(p, numero++), esMultiple:false});
       });
     } else if(tipo==='d-enlace'){
       let pool = PARES_ENLACE.filter(e => !usados.has('enl-'+e.join('|')));
@@ -1104,10 +1166,10 @@ function actualizarDisponibilidad(){
   const temasMarcados = Array.from(document.querySelectorAll('.chk-tema:checked')).map(c=>c.value);
   const disponiblesTipo = okBancos ? contarDisponiblesTipo(temasMarcados) : {};
   temasMarcados.forEach(function(tema){
-    const tipo = TEMA_A_TIPO_D[tema];
-    if(!tipo) return;
-    const chk = document.querySelector('.chk-tipo-ej[data-tipo="'+tipo+'"]');
-    if(chk && !chk.checked && (disponiblesTipo[tipo]||0) > 0) chk.checked = true;
+    [].concat(TEMA_A_TIPO_D[tema]||[]).forEach(function(tipo){
+      const chk = document.querySelector('.chk-tipo-ej[data-tipo="'+tipo+'"]');
+      if(chk && !chk.checked && (disponiblesTipo[tipo]||0) > 0) chk.checked = true;
+    });
   });
   document.querySelectorAll('.ej-row').forEach(function(row){
     const inp = row.querySelector('.chk-tipo-ej');

@@ -798,7 +798,115 @@ GA.teo = (r) => {
   return {key:'teo' + t[0], fs:[], qh: t[0] + (t[0].startsWith('¿') ? '?' : ''), fo: '', ft:'',
     ans: tL(t[2]), cands: t[3].map(tL), more: rr => tL(pick(t[3], rr)), acepta: lab => lab.k === 'T:' + t[2]};
 };
-const ATG = {part:['part','ident'], cfg:['cfg','cfg2el'], tabla:['pg','val'], teo:['teo']};
+// Números cuánticos (n, l, mₗ, mₛ). Convención de configuracion.html:
+// las casillas se llenan de mₗ = −l a +l, primero con ↑ (+½).
+const LET_QN = 'spdf';
+const fmtMl = x => x > 0 ? '+' + x : String(x).replace('-', '−');
+const qnTxt = (n, l, ml, ms) => '(' + n + ', ' + l + ', ' + fmtMl(ml) + ', ' + (ms > 0 ? '+½' : '−½') + ')';
+const qnValido = (n, l, ml, ms) => n >= 1 && l >= 0 && l < n && Math.abs(ml) <= l && (ms === 1 || ms === -1);
+function qnUltimo(z){
+  const m = madAt(z), [s, k] = m[m.length-1], l = LET_QN.indexOf(s[1]), o = 2*l + 1;
+  return k <= o ? [+s[0], l, -l + k - 1, 1] : [+s[0], l, -l + (k - o - 1), -1];
+}
+GA.qn = (r) => {
+  const z = pick(Z_CFG, r), [n, l, ml, ms] = qnUltimo(z), qL = (a, b, c, d) => qnValido(a, b, c, d) ? L(qnTxt(a, b, c, d), 'Q:' + [a,b,c,d].join('|')) : null;
+  return {key:'qn' + z, fs:[], qh:'Números cuánticos del último electrón del', fo: EL_AT[z][1] + ' (' + finAt(z) + ')', foc:'nm', ft:'(mₗ de −l a +l, primero ↑)',
+    ans: qL(n, l, ml, ms), cands: [qL(n, l, ml, -ms), qL(n, l, ml + 1, ms), qL(n, l, ml - 1, ms), qL(n - 1, l, ml, ms), qL(n + 1, l, ml, ms), qL(n, l - 1, 0, ms), qL(n, l + 1, 0, ms)].filter(Boolean),
+    more: rr => qL(n, l, pick([-l, 0, l], rr), pick([1, -1], rr)) || qL(n + 1, l, ml, -ms), acepta: lab => lab.k === 'Q:' + [n,l,ml,ms].join('|')};
+};
+GA.qnval = (r) => {
+  const n = 1 + Math.floor(r()*4), l = Math.floor(r()*n), ml = Math.floor(r()*(2*l+1)) - l, ms = pick([1, -1], r);
+  const vL = (a, b, c, d) => L('(' + a + ', ' + b + ', ' + fmtMl(c) + ', ' + (d === 1 ? '+½' : d === -1 ? '−½' : (d > 0 ? '+' : '') + d) + ')', 'QV:' + [a,b,c,d].join('|'), {qn:[a,b,c,d]});
+  const malo = rr => { const a = 1 + Math.floor(rr()*4), t = Math.floor(rr()*3);
+    if(t === 0) return vL(a, a + Math.floor(rr()*2), 0, pick([1,-1], rr));
+    if(t === 1){ const b = Math.floor(rr()*a); return vL(a, b, (b + 1) * pick([1,-1], rr), pick([1,-1], rr)); }
+    return vL(a, Math.floor(rr()*a), 0, pick([0, 1.5, 2], rr) === 1.5 ? 2 : 0); };
+  const cands = []; for(let i = 0; i < 8; i++) cands.push(malo(r));
+  return {key:'qnval' + [n,l,ml,ms].join(''), fs:[], qh:'¿Cuál conjunto (n, l, mₗ, mₛ) es posible', fo:'', ft:'',
+    ans: vL(n, l, ml, ms), cands, more: malo, acepta: lab => lab.qn && qnValido(...lab.qn)};
+};
+GA.qnorb = (r) => {
+  const n = 1 + Math.floor(r()*4), l = Math.floor(r()*n), ml = Math.floor(r()*(2*l+1)) - l, ms = pick([1, -1], r);
+  const oL = (a, b) => a >= 1 && b >= 0 && b < a && b <= 3 ? L(a + LET_QN[b], 'O:' + a + LET_QN[b]) : null;
+  return {key:'qnorb' + [n,l,ml,ms].join(''), fs:[], qh:'¿En qué subnivel está el electrón', fo: qnTxt(n, l, ml, ms), foc:'eq', ft:'',
+    ans: oL(n, l), cands: [oL(n, l - 1), oL(n, l + 1), oL(n + 1, l), oL(n - 1, l), oL(n + 1, l + 1), oL(l + 1, l)].filter(x => x && x.k !== 'O:' + n + LET_QN[l]),
+    more: rr => oL(1 + Math.floor(rr()*4) + 1, Math.floor(rr()*3)), acepta: lab => lab.k === 'O:' + n + LET_QN[l]};
+};
+const TEO_QN = [
+  ['¿Qué número cuántico indica el nivel de energía', 'Principal (n)', ['Secundario (l)','Magnético (mₗ)','Espín (mₛ)']],
+  ['¿Qué número cuántico indica la forma del orbital', 'Secundario (l)', ['Principal (n)','Magnético (mₗ)','Espín (mₛ)']],
+  ['¿Qué número cuántico indica la orientación del orbital', 'Magnético (mₗ)', ['Principal (n)','Secundario (l)','Espín (mₛ)']],
+  ['¿Qué número cuántico solo vale +½ o −½', 'Espín (mₛ)', ['Principal (n)','Secundario (l)','Magnético (mₗ)']],
+  ['Si n = 3, los valores de l son…', '0, 1 y 2', ['1, 2 y 3','0, 1, 2 y 3','Solo 3']],
+  ['Si l = 1, los valores de mₗ son…', '−1, 0 y +1', ['0 y 1','−2 a +2','Solo +1']],
+  ['¿Cuántos orbitales hay en el nivel n = 2', '4', ['2','8','3']],
+  ['¿Cuántos orbitales tiene un subnivel d', '5', ['3','7','10']],
+  ['¿Qué forma tienen los orbitales s', 'Esférica', ['Dos lóbulos','Trébol','Anillo']],
+  ['Dos e⁻ de un átomo no pueden tener los 4 números iguales: principio de…', 'Pauli', ['Hund','Aufbau','Heisenberg']]
+];
+GA.qnteo = (r) => {
+  const t = pick(TEO_QN, r), tL = x => L(x, 'T:' + x);
+  return {key:'qnteo' + t[0], fs:[], qh: t[0] + (t[0].startsWith('¿') ? '?' : ''), fo:'', ft:'',
+    ans: tL(t[1]), cands: t[2].map(tL), more: rr => tL(pick(t[2], rr)), acepta: lab => lab.k === 'T:' + t[1]};
+};
+// Tabla periódica: historia, organización y propiedades periódicas.
+const NOM_TP = {Li:'Litio',Be:'Berilio',B:'Boro',C:'Carbono',N:'Nitrógeno',O:'Oxígeno',F:'Flúor',Na:'Sodio',Mg:'Magnesio',Al:'Aluminio',Si:'Silicio',P:'Fósforo',S:'Azufre',Cl:'Cloro',
+  K:'Potasio',Ca:'Calcio',Ga:'Galio',Ge:'Germanio',As:'Arsénico',Se:'Selenio',Br:'Bromo',Rb:'Rubidio',Sr:'Estroncio',Sb:'Antimonio',Te:'Teluro',I:'Yodo',Cs:'Cesio',Ba:'Bario'};
+// Filas y columnas de elementos representativos, en orden (izquierda→derecha
+// o arriba→abajo). En todas, el extremo de cada propiedad coincide con la
+// tendencia y con los datos reales (radio de Clementi, 1.ª energía de
+// ionización y electronegatividad de Pauling); se dejó fuera el grupo 14
+// (el Si tiene menor EN que el Ge y el Sn) y los gases nobles.
+const LINEAS_TP = [
+  ['periodo 2', 'p', ['Li','Be','B','C','N','O','F']],
+  ['periodo 3', 'p', ['Na','Mg','Al','Si','P','S','Cl']],
+  ['periodo 4', 'p', ['K','Ca','Ga','Ge','As','Se','Br']],
+  ['grupo 1', 'g', ['Li','Na','K','Rb','Cs']],
+  ['grupo 2', 'g', ['Be','Mg','Ca','Sr','Ba']],
+  ['grupo 15', 'g', ['N','P','As','Sb']],
+  ['grupo 16', 'g', ['O','S','Se','Te']],
+  ['grupo 17', 'g', ['F','Cl','Br','I']]
+];
+// [texto, en un periodo gana el último (true) o el primero (false)]; en un
+// grupo es al revés (las propiedades que crecen hacia la derecha decrecen hacia abajo).
+const PROPS_TP = [['el mayor radio atómico', false], ['el menor radio atómico', true], ['la mayor energía de ionización', true], ['la menor energía de ionización', false],
+  ['la mayor electronegatividad', true], ['la menor electronegatividad', false], ['el mayor carácter metálico', false]];
+GA.tpprop = (r) => {
+  const [nom, tipo, els] = pick(LINEAS_TP, r), [txt, ultimoEnPeriodo] = pick(PROPS_TP, r);
+  const gana = (tipo === 'p') === ultimoEnPeriodo ? els[els.length-1] : els[0];
+  const eL = s => L(NOM_TP[s] + ' (' + s + ')', 'E:' + s);
+  return {key:'tpprop' + nom + txt, fs:[], qh:'Del ' + nom + ' (' + els.join(', ') + '), ¿cuál tiene ' + txt + '?', fo:'', ft:'',
+    ans: eL(gana), cands: els.filter(s => s !== gana).map(eL), more: rr => eL(pick(els, rr)), acepta: lab => lab.k === 'E:' + gana};
+};
+const TEO_TP = [
+  ['¿Quién agrupó los elementos en tríadas', 'Döbereiner', ['Newlands','Mendeléiev','Moseley']],
+  ['¿Quién propuso la ley de las octavas', 'Newlands', ['Döbereiner','Chancourtois','Mendeléiev']],
+  ['¿Quién ordenó por masa y dejó huecos (1869)', 'Mendeléiev', ['Newlands','Moseley','Lavoisier']],
+  ['¿Quién ordenó por número atómico (1913)', 'Moseley', ['Mendeléiev','Bohr','Seaborg']],
+  ['¿Quién agregó la columna de los gases nobles', 'Ramsay', ['Seaborg','Moseley','Newlands']],
+  ['¿Quién separó los actínidos en otra fila (1945)', 'Seaborg', ['Ramsay','Moseley','Mendeléiev']],
+  ['¿Quién propuso el tornillo telúrico', 'Chancourtois', ['Newlands','Döbereiner','Moseley']],
+  ['¿Quién publicó la lista de 33 sustancias simples (1789)', 'Lavoisier', ['Dalton','Mendeléiev','Döbereiner']],
+  ['El germanio confirmó la predicción del…', 'Eka-silicio', ['Eka-aluminio','Eka-boro','Eka-yodo']],
+  ['Hoy la tabla periódica se ordena por…', 'Número atómico', ['Masa atómica','Densidad','Electronegatividad']],
+  ['Las filas horizontales de la tabla se llaman…', 'Periodos', ['Grupos','Bloques','Familias']],
+  ['El grupo 17 es la familia de los…', 'Halógenos', ['Alcalinos','Anfígenos','Gases nobles']],
+  ['El grupo 2 es la familia de los…', 'Alcalinotérreos', ['Alcalinos','Térreos','Halógenos']],
+  ['El grupo 16 (IUPAC) en la numeración A/B es el…', 'VIA', ['VIB','IVA','VIIA']],
+  ['Los grupos 8, 9 y 10 (IUPAC) en la numeración A/B son el…', 'VIIIB', ['VIIIA','VIIB','IB']],
+  ['¿Cuántas columnas tiene el bloque d', '10', ['6','14','2']],
+  ['¿Cuántas columnas tiene el bloque p', '6', ['2','10','8']],
+  ['¿Cuál es el elemento más electronegativo', 'Flúor', ['Cesio','Oxígeno','Cloro']],
+  ['Al bajar en un grupo, el radio atómico…', 'Aumenta', ['Disminuye','No cambia','Se hace cero']],
+  ['Al bajar en un grupo, la energía de ionización…', 'Disminuye', ['Aumenta','No cambia','Se duplica']],
+  ['El silicio y el germanio son…', 'Metaloides', ['Metales alcalinos','Halógenos','Gases nobles']]
+];
+GA.tphist = (r) => {
+  const t = pick(TEO_TP, r), tL = x => L(x, 'T:' + x);
+  return {key:'tphist' + t[0], fs:[], qh: t[0] + (t[0].startsWith('¿') ? '?' : ''), fo:'', ft:'',
+    ans: tL(t[1]), cands: t[2].map(tL), more: rr => tL(pick(t[2], rr)), acepta: lab => lab.k === 'T:' + t[1]};
+};
+const ATG = {part:['part','ident'], cfg:['cfg','cfg2el'], tabla:['pg','val'], teo:['teo'], cuant:['qn','qnval','qnorb','qnteo'], tp:['tpprop','tphist']};
 
 /* ───────────────────────── 7. Construcción del laberinto ───────────────────────── */
 function poolDe(cfg, necesarios){

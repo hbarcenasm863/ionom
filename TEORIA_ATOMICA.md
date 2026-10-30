@@ -175,6 +175,15 @@ Hay dos temas nuevos en «2 · Tema(s)»: **Teoría atómica y estructura del á
 
 Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los ejercicios prácticos están en `assets/docente-app.js` (`ESPECIES_ATOMO`, `poolConfig`, `tarjetaParticulas` y `tarjetaConfig`).
 
+**Tabla periódica (`elemento`) y números cuánticos (`config-e`)**, agregados con las pestañas nuevas de `tabla.html` y `configuracion.html`:
+- **Sesión 2**: la lectura y el esquema de «Tabla periódica» suman la historia (Lavoisier → Seaborg), la numeración IUPAC/tradicional, los bloques y las propiedades periódicas; los de «Configuración electrónica» suman los cuatro números cuánticos.
+- **Trabajo práctico**: dos tipos nuevos que se marcan solos al elegir el tema:
+  - **D Ubicación y propiedades periódicas** (`PARES_TABLA`, `tarjetaTabla`): 27 parejas de elementos representativos del mismo periodo o grupo. Se pide configuración abreviada, periodo, grupo IUPAC y A/B, bloque y tipo de elemento, y comparar radio, energía de ionización y electronegatividad. Se excluyeron las parejas que rompen la tendencia (Be/B, N/O, Mg/Al, P/S, Al/Ga) y los gases nobles.
+  - **D Números cuánticos** (`tarjetaCuanticos`): los 34 elementos de `poolConfig`. Se piden la configuración, las casillas y (n, l, mₗ, mₛ) del electrón diferencial, y juzgar un conjunto al azar (válido o con l ≥ n, |mₗ| > l o mₛ imposible).
+- **Evaluación**: 31 preguntas tipo Saber de historia, organización y propiedades (`c:'hist'`, `'org'`, `'prop'`) y 11 de números cuánticos (`c:'qn'`); 15 abiertas de tabla y 8 de números cuánticos (rx, nom y mdec).
+- **Laberintos** (modo «Teoría atómica y configuración»): tipo **Números cuánticos** (`GA.qn`, `qnval`, `qnorb`, `qnteo`) y tipo **Tabla periódica: historia y propiedades** (`GA.tpprop` con `LINEAS_TP`, filas y columnas donde el extremo de cada propiedad coincide con los datos reales, sin el grupo 14 ni gases nobles; y `GA.tphist` con `TEO_TP`).
+- **Crucigramas**: pistas **Tabla periódica** (`GLOSARIO_TP`, 25 palabras) y **Números cuánticos** (`GLOSARIO_QN`, 15 palabras).
+
 **Tema «Enlace químico» (`enlace`)**, con la misma estructura:
 - **Sesión 1**: el N≡N del aire y los abonos, sal frente a parafina, la sal de Zipaquirá y Nemocón, el cobre y el plástico de los cables, agua y aceite.
 - **Sesión 2**: lectura (octeto, Lewis, electronegatividad, iónico, covalente polar/apolar, metálico y propiedades), esquema de los tres enlaces y ejemplo resuelto Na–Cl con ΔEN = 2,23.
