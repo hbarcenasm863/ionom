@@ -101,6 +101,31 @@ html{font-size:var(--base-fs)}
 .rule p{font-size:.82rem!important;margin-bottom:6px!important}
 .rule .demo{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end;margin-top:6px}
 .rule .demo .lb{font-size:.7rem;font-weight:700;color:var(--dimmer);width:100%}
+/* visor 3D Bohr / orbitales */
+.v3d-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:8px 0}
+.v3d-el{display:flex;gap:6px;align-items:center}
+.v3d-el .btn{min-width:44px;padding:6px 10px;font-size:1.1rem}
+.v3d-el select{min-height:44px;border:2px solid var(--brd);border-radius:8px;padding:6px 10px;font:inherit;font-size:.9rem;font-weight:700;background:var(--surf);color:var(--tx);max-width:62vw}
+.v3d-opts{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:.82rem;color:var(--tx2);margin-bottom:10px}
+.v3d-opts label{display:flex;gap:6px;align-items:center;cursor:pointer;min-height:32px}
+.v3d-opts .v3d-reset{min-height:36px;padding:4px 12px;font-size:.78rem;margin-left:auto}
+.v3d-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.v3d-grid.uno{grid-template-columns:1fr}
+.v3d-grid.uno .v3d-fig{max-width:560px;margin:0 auto;width:100%}
+@media(max-width:700px){.v3d-grid{grid-template-columns:1fr}}
+.v3d-fig{margin:0;background:radial-gradient(circle at 50% 45%,#ffffff 0,#eef3f8 70%);border:1.5px solid var(--brd);border-radius:var(--r);overflow:hidden;position:relative}
+.v3d-fig[hidden]{display:none}
+.v3d-fig figcaption{position:absolute;top:8px;left:10px;font-size:.74rem;font-weight:800;color:#0d2d42;background:rgba(255,255,255,.85);padding:2px 8px;border-radius:100px;pointer-events:none}
+.v3d-fig canvas{display:block;width:100%;aspect-ratio:1/1;touch-action:none;cursor:grab}
+.v3d-fig canvas:active{cursor:grabbing}
+.v3d-cap{font-size:.78rem;color:#334155;padding:8px 12px;border-top:1px solid #dbe3ec;background:rgba(255,255,255,.75);line-height:1.5;min-height:3em}
+.v3d-chips{display:flex;flex-wrap:wrap;gap:6px}
+.v3d-chips button{min-height:38px;padding:4px 12px;border:2px solid var(--brd2);border-radius:999px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.84rem;font-weight:700;cursor:pointer}
+.v3d-chips button.s{border-color:#fca5a5}.v3d-chips button.p{border-color:#c4b5fd}.v3d-chips button.d{border-color:#5eead4}
+.v3d-chips button.on{background:var(--nav);border-color:var(--nav);color:#fff}
+.v3d-info{margin-top:8px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 14px}
+.v3d-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.74rem;color:var(--tx2);margin-top:10px}
+.v3d-leg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 /* números cuánticos */
 .qn-tbl td{text-align:left;font-size:.82rem}
 .qn-tbl td.m,.tbl td.m{font-family:var(--mono);font-weight:700;white-space:nowrap}
@@ -344,6 +369,34 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
         <tr><td>4</td><td class="m">0, 1, 2, 3</td><td>4s 4p 4d 4f</td><td>1 + 3 + 5 + 7 = 16</td><td>32</td></tr>
       </table></div>
       <p style="font-size:.8rem;color:var(--dimmer)">Por eso no existe un «2d» ni un «1p»: en n = 2, l solo puede ser 0 o 1.</p>
+    </div>
+
+    <div class="sect" id="v3d-sect">
+      <h2>🌐 El mismo átomo, dos modelos: Bohr y orbitales en 3D</h2>
+      <p>Elige un elemento y compara cómo lo dibuja cada modelo. En el de <strong>Bohr</strong>, los electrones giran en órbitas circulares, una por nivel n. En el <strong>modelo cuántico</strong>, ocupan <strong>orbitales</strong>: regiones donde es probable encontrarlos, con formas que dependen de l y orientaciones que dependen de m<sub>l</sub>. <strong>Arrastra para girar</strong> (los dos giran juntos), usa la rueda o pellizca para acercar, y toca un subnivel para resaltarlo.</p>
+      <div class="v3d-bar">
+        <div class="v3d-el">
+          <button class="btn ghost" id="v3d-prev" aria-label="Elemento anterior">−</button>
+          <select id="v3d-z" aria-label="Elemento"></select>
+          <button class="btn ghost" id="v3d-next" aria-label="Elemento siguiente">+</button>
+        </div>
+        <div class="seg" id="v3d-vista" role="group" aria-label="Vista"><button class="on" data-v="ambos">Comparar</button><button data-v="bohr">Solo Bohr</button><button data-v="orb">Solo orbitales</button></div>
+      </div>
+      <div class="v3d-opts">
+        <label><input type="checkbox" id="v3d-giro" checked> Girar solo</label>
+        <label><input type="checkbox" id="v3d-ejes" checked> Ejes x, y, z</label>
+        <label><input type="checkbox" id="v3d-val"> Solo la capa de valencia</label>
+        <button class="btn ghost v3d-reset" id="v3d-reset">↺ Reiniciar vista</button>
+      </div>
+      <div class="v3d-grid" id="v3d-grid">
+        <figure class="v3d-fig" id="v3d-fb"><figcaption>⚛️ Modelo de Bohr (1913)</figcaption><canvas id="v3d-bohr" aria-label="Modelo de Bohr en 3D"></canvas><div class="v3d-cap" id="v3d-cb"></div></figure>
+        <figure class="v3d-fig" id="v3d-fo"><figcaption>☁️ Modelo cuántico (orbitales)</figcaption><canvas id="v3d-orb" aria-label="Orbitales atómicos en 3D"></canvas><div class="v3d-cap" id="v3d-co"></div></figure>
+      </div>
+      <div class="qn-k" style="margin-top:10px">Subniveles ocupados · toca uno para resaltarlo</div>
+      <div class="v3d-chips" id="v3d-chips"></div>
+      <div class="qn-txt v3d-info" id="v3d-info" aria-live="polite"></div>
+      <div class="v3d-leg"><span><i style="background:#ef4444"></i>orbitales s (esferas)</span><span><i style="background:#8b5cf6"></i>orbitales p (dos lóbulos)</span><span><i style="background:#14b8a6"></i>orbitales d (cuatro lóbulos)</span><span><i style="background:#2563eb"></i>electrones (Bohr)</span></div>
+      <p style="font-size:.74rem;color:var(--dimmer);margin-top:6px">Los tamaños son esquemáticos: crecen con n, pero no están a escala. Los orbitales llenos y semillenos se dibujan igual; el número de electrones de cada uno aparece al tocar el subnivel. Hasta el xenón (Z = 54), sin orbitales f.</p>
     </div>
 
     <div class="sect">
@@ -749,6 +802,237 @@ document.querySelectorAll('.orb-demo').forEach(function(d){
   }
   $('qf-next').addEventListener('click',nuevoF);
   buildF(); nuevoF();
+})();
+
+/* ════════════════ Visor 3D: Bohr y orbitales ════════════════
+   Motor propio en canvas 2D (sin librerías, funciona sin internet): mallas
+   de triángulos ordenadas por profundidad. Coordenadas químicas (x, y, z),
+   con z vertical en pantalla. Las dos vistas comparten la misma cámara. */
+(function(){
+  var cvB=$('v3d-bohr'), cvO=$('v3d-orb'); if(!cvB||!cvO) return;
+  var ZMAX=54, LETRA='spdf';
+  var RGB={s:[239,68,68],p:[139,92,246],d:[20,184,166]}, ALFA={s:.17,p:.46,d:.42};
+  var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var V0={yaw:-0.75,pitch:0.4,zoom:1}, cam={yaw:V0.yaw,pitch:V0.pitch,zoom:1};
+  var st={z:8,vista:'ambos',giro:!quieto,ejes:true,val:false,sel:null};
+  var malla=null, cfg=null, fase=0, ultimoToque=0, sucio=true;
+  var rB=function(n){ return 26*n; };   // radio de la órbita de Bohr del nivel n
+
+  /* ── geometría ── */
+  function norm(v){ var m=Math.hypot(v[0],v[1],v[2])||1; return [v[0]/m,v[1]/m,v[2]/m]; }
+  function base(d){ var a=Math.abs(d[2])<.9?[0,0,1]:[1,0,0], u=norm([d[1]*a[2]-d[2]*a[1],d[2]*a[0]-d[0]*a[2],d[0]*a[1]-d[1]*a[0]]); return [u,[d[1]*u[2]-d[2]*u[1],d[2]*u[0]-d[0]*u[2],d[0]*u[1]-d[1]*u[0]]]; }
+  function nuevaMalla(){ return {v:[],t:[]}; }
+  // superficie de revolución: anillos i (0..nU) de nV puntos
+  function cuadricula(M,nU,nV,f,info){
+    var o=M.v.length/3;
+    for(var i=0;i<=nU;i++) for(var j=0;j<nV;j++){ var p=f(i/nU,j/nV*2*Math.PI); M.v.push(p[0],p[1],p[2]); }
+    for(i=0;i<nU;i++) for(j=0;j<nV;j++){
+      var a=o+i*nV+j, b=o+i*nV+(j+1)%nV, c=a+nV, e=b+nV;
+      M.t.push([a,c,b,info],[b,c,e,info]);
+    }
+  }
+  function esfera(M,R,info){ cuadricula(M,9,16,function(u,th){ var ph=u*Math.PI; return [R*Math.sin(ph)*Math.cos(th),R*Math.sin(ph)*Math.sin(th),R*Math.cos(ph)]; },info); }
+  function lobulo(M,d,L,w,info){
+    d=norm(d); var B=base(d), u=B[0], v=B[1];
+    cuadricula(M,9,10,function(t,th){ var r=w*L*Math.sin(Math.PI*t)*Math.pow(t,.25), c=L*t;
+      return [d[0]*c+r*(Math.cos(th)*u[0]+Math.sin(th)*v[0]), d[1]*c+r*(Math.cos(th)*u[1]+Math.sin(th)*v[1]), d[2]*c+r*(Math.cos(th)*u[2]+Math.sin(th)*v[2])]; },info);
+  }
+  function anillo(M,R,r,info){ cuadricula(M,18,7,function(u,th){ var a=u*2*Math.PI; return [(R+r*Math.cos(th))*Math.cos(a),(R+r*Math.cos(th))*Math.sin(a),r*Math.sin(th)]; },info); }
+  // orientaciones según mₗ (las mismas del explorador de arriba)
+  var PDIR={'-1':[1,0,0],'0':[0,0,1],'1':[0,1,0]};
+  var DLOB={'-2':[[1,1,0],[-1,1,0],[-1,-1,0],[1,-1,0]],'-1':[[1,0,1],[-1,0,1],[-1,0,-1],[1,0,-1]],'1':[[0,1,1],[0,-1,1],[0,-1,-1],[0,1,-1]],'2':[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0]]};
+  function orbital(M,n,l,ml,key){
+    var info={k:key,c:LETRA[l]}, R=rB(n);
+    if(l===0) esfera(M,R*.72,info);
+    else if(l===1){ var d=PDIR[ml]; lobulo(M,d,R*.95,.36,info); lobulo(M,[-d[0],-d[1],-d[2]],R*.95,.36,info); }
+    else if(ml===0){ lobulo(M,[0,0,1],R*.9,.32,info); lobulo(M,[0,0,-1],R*.9,.32,info); anillo(M,R*.34,R*.1,info); }
+    else DLOB[ml].forEach(function(d){ lobulo(M,d,R*.82,.3,info); });
+  }
+  function ocupados(s,c){ var m=2*lOf(s)+1, r=[]; for(var i=0;i<Math.min(c,m);i++) r.push(-lOf(s)+i); return r; }
+  function capaValencia(o){ var l=lista(o,'llenado'), nmax=Math.max.apply(null,l.map(nOf)), u=l[l.length-1];
+    return l.filter(function(s){ return nOf(s)===nmax||(s===u&&s[1]==='d'); }); }
+  function armar(){
+    cfg=neutral(st.z);
+    var subs=lista(cfg,'llenado'), vis=st.val?capaValencia(cfg):subs;
+    var M=nuevaMalla();
+    vis.forEach(function(s){ ocupados(s,cfg[s]).forEach(function(ml){ orbital(M,nOf(s),lOf(s),ml,s); }); });
+    M.v=new Float32Array(M.v); malla=M;
+    var n=M.v.length/3; malla.X=new Float32Array(n); malla.Y=new Float32Array(n); malla.Z=new Float32Array(n); malla.SX=new Float32Array(n); malla.SY=new Float32Array(n);
+    malla.orden=new Uint32Array(M.t.length); malla.prof=new Float32Array(M.t.length);
+    sucio=true;
+  }
+
+  /* ── cámara ── */
+  function ajustar(cv){
+    var w=cv.clientWidth; if(!w) return null;
+    var dpr=Math.min(2,window.devicePixelRatio||1), W=Math.round(w*dpr);
+    if(cv.width!==W){ cv.width=W; cv.height=W; sucio=true; }
+    var ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+    return {ctx:ctx,w:w,k:w/330*cam.zoom,cx:w/2,cy:w/2};
+  }
+  var cy_,sy_,cp_,sp_;
+  function preparar(){ cy_=Math.cos(cam.yaw); sy_=Math.sin(cam.yaw); cp_=Math.cos(cam.pitch); sp_=Math.sin(cam.pitch); }
+  // (x, y, z) químico → vista: X derecha, Y arriba, Z hacia el observador
+  function rot(x,y,z,o){ var X=x*cy_+y*sy_, D=-x*sy_+y*cy_; o[0]=X; o[1]=z*cp_-D*sp_; o[2]=z*sp_+D*cp_; return o; }
+  var F=700, tmp=[0,0,0];
+  function pr(P,o,X,Y,Z){ var p=F/(F-Z); o[0]=P.cx+X*p*P.k; o[1]=P.cy-Y*p*P.k; return p; }
+
+  function ejes(P,ctx,L){
+    if(!st.ejes) return;
+    [[[1,0,0],'x','#f97316'],[[0,1,0],'y','#2563eb'],[[0,0,1],'z','#16a34a']].forEach(function(e){
+      var a=rot(-e[0][0]*L,-e[0][1]*L,-e[0][2]*L,[0,0,0]), b=rot(e[0][0]*L,e[0][1]*L,e[0][2]*L,[0,0,0]), A=[0,0], Bp=[0,0];
+      pr(P,A,a[0],a[1],a[2]); pr(P,Bp,b[0],b[1],b[2]);
+      ctx.strokeStyle=e[2]; ctx.globalAlpha=.75; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(Bp[0],Bp[1]); ctx.stroke();
+      ctx.globalAlpha=1; ctx.fillStyle=e[2]; ctx.font='800 12px sans-serif'; ctx.fillText(e[1],Bp[0]+4,Bp[1]-4);
+    });
+  }
+  function nucleo(P,ctx,r){
+    var c=[P.cx,P.cy], g=ctx.createRadialGradient(c[0]-r*.35,c[1]-r*.35,r*.1,c[0],c[1],r);
+    g.addColorStop(0,'#fecaca'); g.addColorStop(.5,'#ef4444'); g.addColorStop(1,'#991b1b');
+    ctx.globalAlpha=1; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(c[0],c[1],r,0,2*Math.PI); ctx.fill();
+  }
+
+  /* ── orbitales ── */
+  var cacheColor={};
+  function color(c,b,a){ var k=c+b+'|'+a; if(!cacheColor[k]){ var q=RGB[c], f=.45+.55*b/6; cacheColor[k]='rgba('+Math.round(q[0]*f+40*(1-f))+','+Math.round(q[1]*f+40*(1-f))+','+Math.round(q[2]*f+60*(1-f))+','+a+')'; } return cacheColor[k]; }
+  function dibujarOrb(){
+    var P=ajustar(cvO); if(!P||!malla) return;
+    var ctx=P.ctx, M=malla, n=M.v.length/3, o=[0,0,0], s=[0,0];
+    ctx.clearRect(0,0,P.w,P.w);
+    ejes(P,ctx,150);
+    for(var i=0;i<n;i++){ rot(M.v[3*i],M.v[3*i+1],M.v[3*i+2],o); M.X[i]=o[0]; M.Y[i]=o[1]; M.Z[i]=o[2]; pr(P,s,o[0],o[1],o[2]); M.SX[i]=s[0]; M.SY[i]=s[1]; }
+    var T=M.t, nt=T.length;
+    for(i=0;i<nt;i++){ M.orden[i]=i; M.prof[i]=M.Z[T[i][0]]+M.Z[T[i][1]]+M.Z[T[i][2]]; }
+    var ord=Array.prototype.slice.call(M.orden).sort(function(a,b){ return M.prof[a]-M.prof[b]; });
+    var nuc=false;
+    for(var q=0;q<nt;q++){
+      var t=T[ord[q]], a=t[0], b=t[1], c=t[2], inf=t[3];
+      if(!nuc&&M.prof[ord[q]]>0){ nucleo(P,ctx,6*P.k); nuc=true; }
+      var ux=M.X[b]-M.X[a], uy=M.Y[b]-M.Y[a], uz=M.Z[b]-M.Z[a], vx=M.X[c]-M.X[a], vy=M.Y[c]-M.Y[a], vz=M.Z[c]-M.Z[a];
+      var nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx, nl=Math.hypot(nx,ny,nz); if(!nl) continue;
+      var br=Math.round(6*Math.min(1,Math.abs(nz/nl)*.8+Math.max(0,ny/nl)*.3));
+      var al=ALFA[inf.c]*(st.sel&&st.sel!==inf.k?.22:1);
+      ctx.fillStyle=color(inf.c,br,al.toFixed(2));
+      ctx.beginPath(); ctx.moveTo(M.SX[a],M.SY[a]); ctx.lineTo(M.SX[b],M.SY[b]); ctx.lineTo(M.SX[c],M.SY[c]); ctx.closePath(); ctx.fill();
+    }
+    if(!nuc) nucleo(P,ctx,6*P.k);
+  }
+
+  /* ── Bohr ── */
+  var INC=[[.35,0],[1.15,.9],[.75,2.0],[1.4,2.9],[.95,4.0]];
+  function puntoOrbita(n,th,o){
+    var R=rB(n), x=R*Math.cos(th), y=R*Math.sin(th), z=0, a=INC[n-1][0], b=INC[n-1][1];
+    var y2=y*Math.cos(a)-z*Math.sin(a), z2=y*Math.sin(a)+z*Math.cos(a);
+    o[0]=x*Math.cos(b)-y2*Math.sin(b); o[1]=x*Math.sin(b)+y2*Math.cos(b); o[2]=z2; return o;
+  }
+  function dibujarBohr(){
+    var P=ajustar(cvB); if(!P||!cfg) return;
+    var ctx=P.ctx, niveles=porNivel(cfg), prim=[], o=[0,0,0], A=[0,0], Bq=[0,0], v=[0,0,0];
+    ctx.clearRect(0,0,P.w,P.w);
+    ejes(P,ctx,150);
+    var nmax=Math.max.apply(null,Object.keys(niveles).map(Number)), selN=st.sel?nOf(st.sel):0;
+    Object.keys(niveles).forEach(function(k){
+      var n=+k, apagado=(st.val&&n!==nmax)||(selN&&n!==selN), resal=selN===n;
+      var SEG=72;
+      for(var i=0;i<SEG;i++){
+        puntoOrbita(n,i/SEG*2*Math.PI,v); rot(v[0],v[1],v[2],o); pr(P,A,o[0],o[1],o[2]); var z1=o[2];
+        puntoOrbita(n,(i+1)/SEG*2*Math.PI,v); rot(v[0],v[1],v[2],o); pr(P,Bq,o[0],o[1],o[2]);
+        prim.push({z:(z1+o[2])/2,t:'s',a:[A[0],A[1]],b:[Bq[0],Bq[1]],res:resal,off:apagado});
+      }
+      var ne=niveles[k], vel=1/(n*n*.5+.5);
+      for(var e=0;e<ne;e++){
+        puntoOrbita(n,fase*vel*2.4+e/ne*2*Math.PI+n*.6,v); rot(v[0],v[1],v[2],o); var p=pr(P,A,o[0],o[1],o[2]);
+        prim.push({z:o[2],t:'e',a:[A[0],A[1]],r:4.6*p*P.k,off:apagado});
+      }
+      // rótulo n = … en el punto más alto de la órbita
+      var mejor=null;
+      for(i=0;i<24;i++){ puntoOrbita(n,i/24*2*Math.PI,v); rot(v[0],v[1],v[2],o); pr(P,A,o[0],o[1],o[2]); if(!mejor||A[1]<mejor[1]) mejor=[A[0],A[1]]; }
+      prim.push({z:-9999,t:'l',a:mejor,txt:'n = '+n,off:apagado,res:resal});
+    });
+    prim.push({z:0,t:'n'});
+    prim.sort(function(a,b){ return a.z-b.z; });
+    prim.forEach(function(q){
+      ctx.globalAlpha=q.off?.18:1;
+      if(q.t==='s'){ ctx.strokeStyle=q.res?'#d97706':'#64748b'; ctx.lineWidth=q.res?3:1.6; ctx.beginPath(); ctx.moveTo(q.a[0],q.a[1]); ctx.lineTo(q.b[0],q.b[1]); ctx.stroke(); }
+      else if(q.t==='e'){ var g=ctx.createRadialGradient(q.a[0]-q.r*.3,q.a[1]-q.r*.3,q.r*.1,q.a[0],q.a[1],q.r); g.addColorStop(0,'#bfdbfe'); g.addColorStop(1,'#1d4ed8'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(q.a[0],q.a[1],q.r,0,2*Math.PI); ctx.fill(); }
+      else if(q.t==='n'){ ctx.globalAlpha=1; nucleo(P,ctx,8*P.k); }
+    });
+    // rótulos encima de todo
+    prim.forEach(function(q){ if(q.t!=='l') return; ctx.globalAlpha=q.off?.3:1; ctx.font='800 11px sans-serif'; ctx.textAlign='center'; ctx.fillStyle=q.res?'#b45309':'#334155'; ctx.fillText(q.txt,q.a[0],q.a[1]-6); });
+    ctx.globalAlpha=1; ctx.textAlign='start';
+  }
+
+  /* ── textos ── */
+  function textos(){
+    var niveles=porNivel(cfg), ks=Object.keys(niveles).map(Number).sort(), subs=lista(cfg,'llenado');
+    var el=EL[st.z-1], nOrb=subs.reduce(function(a,s){ return a+Math.min(cfg[s],2*lOf(s)+1); },0);
+    $('v3d-cb').innerHTML='<strong>'+el[1]+'</strong>: '+ks.length+' órbita'+(ks.length>1?'s':'')+' circular'+(ks.length>1?'es':'')+' · '+ks.map(function(n){ return niveles[n]; }).join(' + ')+' electrones. Bohr no distingue subniveles.';
+    $('v3d-co').innerHTML='<span style="font-family:var(--mono);font-weight:700">'+txtCfg(cfg,'llenado')+'</span> · '+nOrb+' orbitales ocupados'+(st.val?' (se muestra la capa de valencia)':'');
+    $('v3d-chips').innerHTML=subs.map(function(s){ return '<button class="'+s[1]+(st.sel===s?' on':'')+'" data-s="'+s+'">'+s+sup(cfg[s])+'</button>'; }).join('');
+    $('v3d-chips').querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ st.sel=st.sel===b.dataset.s?null:b.dataset.s; textos(); sucio=true; }); });
+    var info;
+    if(st.sel){
+      var s=st.sel, l=lOf(s), m=2*l+1, c=cfg[s], cj=cajas(s,c);
+      var mls=[]; for(var i=-l;i<=l;i++) mls.push(i>0?'+'+i:String(i).replace('-','−'));
+      info='<strong>'+s+sup(c)+'</strong>: n = '+nOf(s)+', l = '+l+' ('+s[1]+'). Tiene '+m+' orbital'+(m>1?'es':'')+' (m<sub>l</sub> = '+mls.join(', ')+'); casillas: <span class="qn-inline">'+cj.map(function(x){ return x===2?'↑↓':x===1?'↑':'·'; }).join(' ')+'</span>, es decir, '+c+' '+(c>1?'electrones':'electrón')+' en '+Math.min(c,m)+' orbital'+(Math.min(c,m)>1?'es':'')+'. '+
+        'En el modelo de Bohr, estos electrones giran en la órbita n = '+nOf(s)+(subs.filter(function(x){ return nOf(x)===nOf(s)&&x!==s; }).length?', revueltos con los de '+subs.filter(function(x){ return nOf(x)===nOf(s)&&x!==s; }).join(' y ')+': Bohr no puede distinguirlos.':'.');
+    }else info='💡 <strong>Diferencia clave:</strong> Bohr dibuja trayectorias exactas (círculos). El modelo cuántico dice que no se puede conocer la trayectoria del electrón: solo la región donde es probable encontrarlo. Toca un subnivel para ver sus números cuánticos.';
+    $('v3d-info').innerHTML=info;
+  }
+
+  /* ── controles ── */
+  var sel=$('v3d-z');
+  sel.innerHTML=EL.slice(0,ZMAX).map(function(e,i){ return '<option value="'+(i+1)+'">'+(i+1)+' · '+e[1]+' ('+e[0]+')</option>'; }).join('');
+  function ponerZ(z){ st.z=Math.max(1,Math.min(ZMAX,z)); sel.value=st.z; st.sel=null; armar(); textos(); }
+  sel.addEventListener('change',function(){ ponerZ(+sel.value); });
+  $('v3d-prev').addEventListener('click',function(){ ponerZ(st.z-1); });
+  $('v3d-next').addEventListener('click',function(){ ponerZ(st.z+1); });
+  $('v3d-giro').checked=st.giro;
+  $('v3d-giro').addEventListener('change',function(){ st.giro=this.checked; });
+  $('v3d-ejes').addEventListener('change',function(){ st.ejes=this.checked; sucio=true; });
+  $('v3d-val').addEventListener('change',function(){ st.val=this.checked; armar(); textos(); });
+  $('v3d-reset').addEventListener('click',function(){ cam.yaw=V0.yaw; cam.pitch=V0.pitch; cam.zoom=1; sucio=true; });
+  document.querySelectorAll('#v3d-vista button').forEach(function(b){ b.addEventListener('click',function(){
+    st.vista=b.dataset.v; document.querySelectorAll('#v3d-vista button').forEach(function(x){ x.classList.toggle('on',x===b); });
+    $('v3d-fb').hidden=st.vista==='orb'; $('v3d-fo').hidden=st.vista==='bohr'; $('v3d-grid').classList.toggle('uno',st.vista!=='ambos'); sucio=true;
+  }); });
+  // arrastrar para girar, pellizcar o rueda para acercar
+  [cvB,cvO].forEach(function(cv){
+    var ptr={}, dist0=0, zoom0=1;
+    cv.addEventListener('pointerdown',function(e){ cv.setPointerCapture(e.pointerId); ptr[e.pointerId]=[e.clientX,e.clientY]; ultimoToque=performance.now();
+      var ks=Object.keys(ptr); if(ks.length===2){ var a=ptr[ks[0]], b=ptr[ks[1]]; dist0=Math.hypot(a[0]-b[0],a[1]-b[1]); zoom0=cam.zoom; } });
+    cv.addEventListener('pointermove',function(e){ if(!ptr[e.pointerId]) return; var ks=Object.keys(ptr), p=ptr[e.pointerId];
+      if(ks.length===1){ cam.yaw+=(e.clientX-p[0])*.01; cam.pitch=Math.max(-1.5,Math.min(1.5,cam.pitch+(e.clientY-p[1])*.01)); }
+      ptr[e.pointerId]=[e.clientX,e.clientY];
+      if(ks.length===2){ var a=ptr[ks[0]], b=ptr[ks[1]], d=Math.hypot(a[0]-b[0],a[1]-b[1]); if(dist0) cam.zoom=Math.max(.5,Math.min(2.6,zoom0*d/dist0)); }
+      ultimoToque=performance.now(); sucio=true; });
+    function fin(e){ delete ptr[e.pointerId]; dist0=0; }
+    cv.addEventListener('pointerup',fin); cv.addEventListener('pointercancel',fin);
+    cv.addEventListener('wheel',function(e){ e.preventDefault(); cam.zoom=Math.max(.5,Math.min(2.6,cam.zoom*(e.deltaY<0?1.1:1/1.1))); sucio=true; },{passive:false});
+    cv.addEventListener('dblclick',function(){ cam.yaw=V0.yaw; cam.pitch=V0.pitch; cam.zoom=1; sucio=true; });
+  });
+
+  /* ── animación: solo con la pestaña y la sección a la vista ── */
+  var visible=false, last=performance.now();
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){ visible=es[0].isIntersecting; }).observe($('v3d-sect'));
+  else visible=true;
+  function tick(now){
+    var dt=Math.min(.1,(now-last)/1000); last=now;
+    if(visible&&!document.hidden&&$('p-cuanticos').classList.contains('on')){
+      if(!quieto) fase+=dt;
+      if(st.giro&&now-ultimoToque>2500){ cam.yaw+=dt*.35; sucio=true; }
+      preparar();
+      if(st.vista!=='orb') dibujarBohr();
+      if(st.vista!=='bohr'&&sucio) dibujarOrb();
+      sucio=false;
+    }
+    requestAnimationFrame(tick);
+  }
+  ponerZ(st.z);
+  requestAnimationFrame(tick);
+  // al abrir la pestaña, el canvas pasa de ancho 0 a su tamaño real
+  window.addEventListener('resize',function(){ sucio=true; });
+  document.querySelectorAll('.tabs .tab').forEach(function(b){ b.addEventListener('click',function(){ sucio=true; }); });
 })();
 
 /* ════════════════ Diagrama de Moeller ════════════════ */
