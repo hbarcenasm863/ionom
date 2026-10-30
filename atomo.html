@@ -192,6 +192,36 @@ html{font-size:var(--base-fs)}
 .phet-ph{text-align:center;padding:20px;font-size:.84rem;color:var(--dimmer)}
 .phet-ph .big{font-size:2.6rem;display:block;margin-bottom:6px}
 
+/* neutro, catión, anión */
+.ion-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.ion-card{border:2px solid;border-radius:var(--r);padding:12px 14px}
+.ion-card p{font-size:.82rem!important;margin:6px 0!important;line-height:1.55!important}
+.ion-card.neu{border-color:var(--brd2);background:var(--surf2)}
+.ion-card.cat{border-color:var(--cat);background:var(--cat-b)}
+.ion-card.an{border-color:var(--an);background:var(--an-b)}
+.ion-t{font-weight:800;font-size:1rem;color:var(--tx)}
+.ion-r{font-family:var(--mono);font-weight:800;font-size:.86rem;margin-top:2px}
+.ion-card.cat .ion-r{color:var(--cat-t)}.ion-card.an .ion-r{color:var(--an-t)}
+.ion-ej{font-family:var(--mono);font-size:.78rem;color:var(--tx2);background:var(--surf);border-radius:8px;padding:6px 8px;line-height:1.6}
+.ion-sim{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:center;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--r);padding:14px;margin:8px 0}
+@media(max-width:640px){.ion-sim{grid-template-columns:1fr}}
+#ion-el .btn{min-height:38px;padding:4px 12px;font-size:.8rem}
+#ion-el .btn.on{background:var(--nav);color:#fff}
+.ion-bar{display:grid;grid-template-columns:28px 1fr 34px;gap:8px;align-items:center;margin-top:10px;font-family:var(--mono);font-weight:800}
+.ion-bar .tr{height:18px;background:var(--surf);border:1.5px solid var(--brd2);border-radius:9px;overflow:hidden}
+.ion-bar .fl{height:100%;transition:width .3s}
+.ion-bar .fl.p{background:#dc2626}.ion-bar .fl.e{background:#2563eb}
+.ion-res{text-align:center}
+.ion-res .azn-esp{font-size:3rem}
+.ion-res .tipo{display:inline-block;font-weight:800;font-size:.9rem;padding:4px 14px;border-radius:100px;margin:4px 0}
+.ion-res .tipo.neu{background:var(--surf);border:2px solid var(--brd2)}
+.ion-res .tipo.cat{background:var(--cat-b);border:2px solid var(--cat);color:var(--cat-t)}
+.ion-res .tipo.an{background:var(--an-b);border:2px solid var(--an);color:var(--an-t)}
+.ion-res p{font-size:.82rem!important;margin:4px 0!important}
+.ion-q{text-align:center;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--r);padding:12px;margin:8px 0;font-size:.95rem}
+.ion-q .azn-esp{font-size:2.4rem}
+#ionq-ops .btn.ok{background:var(--ok-b);border-color:var(--ok);color:var(--ok-t)}
+#ionq-ops .btn.bad{background:var(--err-b);border-color:var(--err);color:var(--err-t)}
 /* ── A, Z y n ── */
 .nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.55em;line-height:1.05;vertical-align:middle;margin-right:2px;font-family:var(--mono)}
 .azn-not{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}
@@ -313,7 +343,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
     <button class="tab on" role="tab" data-tab="historia" aria-selected="true">🕰️ Historia</button>
     <button class="tab" role="tab" data-tab="experimentos" aria-selected="false">🧪 Experimentos</button>
     <button class="tab" role="tab" data-tab="constructor" aria-selected="false">🧱 Constructor</button>
-    <button class="tab" role="tab" data-tab="calculos" aria-selected="false">🧮 A, Z y n</button>
+    <button class="tab" role="tab" data-tab="calculos" aria-selected="false">🧮 A, Z, n e iones</button>
     <button class="tab" role="tab" data-tab="phet" aria-selected="false">🌐 PhET</button>
     <button class="tab" role="tab" data-tab="repaso" aria-selected="false">✅ Repaso</button>
   </div>
@@ -479,7 +509,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
         <div class="btn-row" style="margin:0"><button class="btn" id="reto-check">Comprobar</button><button class="btn ghost" id="reto-next">Otro reto →</button></div>
         <div class="reto-fb" id="reto-fb"></div>
       </div>
-      <div class="info-box" style="margin-top:14px"><strong>Recuerda:</strong> Z = número de protones · A = protones + neutrones · carga = protones − electrones. Si el átomo pierde electrones queda como <strong>catión</strong> (+); si gana, como <strong>anión</strong> (−). Practica estos cálculos en la pestaña <a href="#calculos" onclick="event.preventDefault();showTabGlobal('calculos')" style="color:inherit;font-weight:800">🧮 A, Z y n</a>.</div>
+      <div class="info-box" style="margin-top:14px"><strong>Recuerda:</strong> Z = número de protones · A = protones + neutrones · carga = protones − electrones. Si el átomo pierde electrones queda como <strong>catión</strong> (+); si gana, como <strong>anión</strong> (−). Practica estos cálculos en la pestaña <a href="#calculos" onclick="event.preventDefault();showTabGlobal('calculos')" style="color:inherit;font-weight:800">🧮 A, Z, n e iones</a>.</div>
     </div>
   </section>
 
@@ -515,6 +545,42 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
           <p>Anión óxido: ganó 2 electrones.<br>p⁺ = <b>8</b><br>n⁰ = 16 − 8 = <b>8</b><br>e⁻ = 8 − (−2) = <b>10</b></p></div>
       </div>
       <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir A con Z (A siempre es el mayor, salvo en el hidrógeno-1, donde A = Z = 1); restar la carga al revés (un catión tiene <strong>menos</strong> electrones que protones); y pensar que la carga cambia los protones o los neutrones (solo cambian los electrones).</div>
+    </div>
+
+    <div class="sect">
+      <h2>⚖️ Átomo neutro, catión y anión</h2>
+      <p>El número de <strong>protones</strong> (Z) de un elemento nunca cambia en una reacción química: lo que cambia es el número de <strong>electrones</strong>. Comparar protones (cargas +) con electrones (cargas −) dice qué tipo de especie es:</p>
+      <div class="ion-cards">
+        <div class="ion-card neu"><div class="ion-t">⚪ Átomo neutro</div><div class="ion-r">p⁺ = e⁻ · carga 0</div>
+          <p>Tiene la <strong>misma cantidad</strong> de protones y electrones: las cargas se cancelan.</p><div class="ion-ej">Na: 11 p⁺ y 11 e⁻<br>Cl: 17 p⁺ y 17 e⁻</div></div>
+        <div class="ion-card cat"><div class="ion-t">➕ Catión</div><div class="ion-r">p⁺ &gt; e⁻ · carga positiva</div>
+          <p>Ion que <strong>perdió electrones</strong>: le sobran cargas positivas. Los forman sobre todo los <strong>metales</strong>.</p><div class="ion-ej">Na⁺: 11 p⁺ y 10 e⁻ (perdió 1)<br>Ca²⁺: 20 p⁺ y 18 e⁻ (perdió 2)</div></div>
+        <div class="ion-card an"><div class="ion-t">➖ Anión</div><div class="ion-r">p⁺ &lt; e⁻ · carga negativa</div>
+          <p>Ion que <strong>ganó electrones</strong>: le sobran cargas negativas. Los forman sobre todo los <strong>no metales</strong>.</p><div class="ion-ej">Cl⁻: 17 p⁺ y 18 e⁻ (ganó 1)<br>O²⁻: 8 p⁺ y 10 e⁻ (ganó 2)</div></div>
+      </div>
+      <div class="info-box">💡 <strong>¿Por qué «perder» da carga positiva?</strong> Porque el electrón es negativo: si se va uno, queda un protón sin pareja y la carga sube a +1. Si llega uno de más, la carga baja a −1. Un ion es un átomo (o grupo de átomos) con carga eléctrica.</div>
+      <ul>
+        <li><strong>Metales</strong> (grupos 1, 2, 13 y transición): tienen pocos electrones de valencia y les resulta más fácil <strong>perderlos</strong> → cationes. Se nombran «catión sodio», «ion calcio» o, si el metal tiene varias cargas, «ion hierro (III)» o «ion férrico».</li>
+        <li><strong>No metales</strong> (grupos 15, 16 y 17): les faltan pocos electrones para completar 8 y tienden a <strong>ganarlos</strong> → aniones. Su nombre termina en <strong>-uro</strong> (cloruro, sulfuro, nitruro), salvo el óxido (O²⁻).</li>
+        <li>Al formar el ion, muchos elementos quedan con la configuración de un <strong>gas noble</strong>: Na⁺ y F⁻ tienen 10 electrones, como el neón.</li>
+      </ul>
+
+      <h3>Balanza de cargas: quita o agrega electrones</h3>
+      <div class="ion-sim">
+        <div class="ion-ctl">
+          <div class="btn-row" id="ion-el" style="margin:0 0 8px"></div>
+          <div class="btn-row" style="margin:0"><button class="btn ghost" id="ion-menos">➖ Quitar e⁻</button><button class="btn ghost" id="ion-mas">➕ Agregar e⁻</button><button class="btn ghost" id="ion-cero">↺ Neutro</button></div>
+          <div class="ion-bar"><span class="lb">p⁺</span><div class="tr"><div class="fl p" id="ion-bp"></div></div><b id="ion-np"></b></div>
+          <div class="ion-bar"><span class="lb">e⁻</span><div class="tr"><div class="fl e" id="ion-be"></div></div><b id="ion-ne"></b></div>
+        </div>
+        <div class="ion-res" id="ion-res"></div>
+      </div>
+
+      <h3>¿Neutro, catión o anión?</h3>
+      <div class="ion-q" id="ionq-q"></div>
+      <div class="btn-row" id="ionq-ops"><button class="btn ghost" data-r="neutro">⚪ Átomo neutro</button><button class="btn ghost" data-r="cation">➕ Catión</button><button class="btn ghost" data-r="anion">➖ Anión</button></div>
+      <div class="azn-fb" id="ionq-fb" aria-live="polite"></div>
+      <div class="btn-row"><button class="btn" id="ionq-next" style="display:none">Otra →</button><span class="azn-score" id="ionq-score"></span></div>
     </div>
 
     <div class="sect">
@@ -1226,6 +1292,52 @@ setupPredict('ru-predict','no','Con el modelo de Thomson elegido, dispara una r�
     $('azn-score').textContent=ok+' de '+tot+' correctas';
     $('azn-fb').innerHTML=(ok===tot?'🎉 <strong>¡Todo correcto!</strong> ':'Revisa las casillas en rojo. ')+'Así se calcula cada fila:<ul>'+notas.join('')+'</ul>';
   }
+  /* ── Átomo neutro, catión y anión ── */
+  var ION_EL=[[11,23,'metal'],[12,24,'metal'],[13,27,'metal'],[26,56,'metal'],[8,16,'no metal'],[17,35,'no metal'],[7,14,'no metal'],[16,32,'no metal']];
+  var ionK=0, ionE=11;
+  var GAS={2:'helio',10:'neón',18:'argón',36:'kriptón'};
+  function pl(n,s,p){ return n+' '+(n===1?s:p); }
+  function pintarIon(){
+    var z=ION_EL[ionK][0], a=ION_EL[ionK][1], q=z-ionE, mx=Math.max(z,ionE,1)+2;
+    $('ion-bp').style.width=(z/mx*100)+'%'; $('ion-be').style.width=(ionE/mx*100)+'%';
+    $('ion-np').textContent=z; $('ion-ne').textContent=ionE;
+    var tipo=q===0?['neu','⚪ Átomo neutro']:q>0?['cat','➕ Catión']:['an','➖ Anión'];
+    var txt=q===0?'Protones y electrones iguales: carga 0.':q>0?'Perdió '+pl(q,'electrón','electrones')+': hay '+pl(q,'protón','protones')+' sin pareja → carga '+cargaTxt(q)+'.':'Ganó '+pl(-q,'electrón','electrones')+': sobran '+pl(-q,'carga negativa','cargas negativas')+' → carga '+cargaTxt(q)+'.';
+    var tipico=ION_EL[ionK][2]==='metal'?'Como es un metal, en la naturaleza suele formar cationes.':'Como es un no metal, en la naturaleza suele formar aniones.';
+    var gas=GAS[ionE]&&q!==0?' Con '+ionE+' electrones tiene los mismos que el '+GAS[ionE]+'.':'';
+    $('ion-res').innerHTML='<div class="azn-esp">'+notacion(z,a,q)+'</div><span class="tipo '+tipo[0]+'">'+tipo[1]+'</span><p>'+txt+gas+'</p><p style="color:var(--dimmer)">'+tipico+'</p>';
+    $('ion-menos').disabled=ionE===0; $('ion-mas').disabled=ionE>=z+4;
+  }
+  $('ion-el').innerHTML=ION_EL.map(function(x,i){ return '<button class="btn ghost'+(i===0?' on':'')+'" data-i="'+i+'">'+NOM[x[0]][0]+' · '+NOM[x[0]][1]+'</button>'; }).join('');
+  document.querySelectorAll('#ion-el .btn').forEach(function(b){ b.addEventListener('click',function(){
+    ionK=+b.dataset.i; ionE=ION_EL[ionK][0];
+    document.querySelectorAll('#ion-el .btn').forEach(function(x){ x.classList.toggle('on',x===b); }); pintarIon(); }); });
+  $('ion-menos').addEventListener('click',function(){ if(ionE>0){ ionE--; pintarIon(); } });
+  $('ion-mas').addEventListener('click',function(){ ionE++; pintarIon(); });
+  $('ion-cero').addEventListener('click',function(){ ionE=ION_EL[ionK][0]; pintarIon(); });
+  pintarIon();
+
+  var ionQ=null, ionOk=0, ionTot=0;
+  function nuevaIonQ(){
+    var r=rnd(['neutro','cation','anion']), nz, q, g=0;
+    do{ nz=rnd(NUC); var cs=CARGAS[nz[0]]||[0]; q=rnd(cs); g++; }while(g<80&&((r==='neutro')!==(q===0)||(r==='cation'&&q<=0)||(r==='anion'&&q>=0)));
+    var z=nz[0], e=z-q, modo=rnd(['not','part']);
+    ionQ={r:q===0?'neutro':q>0?'cation':'anion',z:z,a:nz[1],q:q,e:e};
+    $('ionq-q').innerHTML=modo==='not'?'<div class="azn-esp">'+notacion(z,nz[1],q)+'</div>':'Una especie de <strong>'+NOM[z][1]+'</strong> con <strong>'+z+' protones</strong> y <strong>'+e+' electrones</strong>.';
+    document.querySelectorAll('#ionq-ops .btn').forEach(function(b){ b.disabled=false; b.classList.remove('ok','bad'); });
+    $('ionq-fb').innerHTML=''; $('ionq-next').style.display='none';
+  }
+  document.querySelectorAll('#ionq-ops .btn').forEach(function(b){ b.addEventListener('click',function(){
+    var bien=b.dataset.r===ionQ.r, v=ionQ; ionTot++; if(bien) ionOk++;
+    document.querySelectorAll('#ionq-ops .btn').forEach(function(x){ x.disabled=true; if(x.dataset.r===v.r) x.classList.add('ok'); });
+    if(!bien) b.classList.add('bad');
+    var exp=v.q===0?'p⁺ = e⁻ = '+v.z+': es un átomo neutro.':v.q>0?v.z+' p⁺ y '+v.e+' e⁻: hay más protones, perdió '+pl(v.q,'electrón','electrones')+' → catión '+NOM[v.z][0]+'<sup>'+cargaTxt(v.q).replace('1+','+')+'</sup>.':v.z+' p⁺ y '+v.e+' e⁻: hay más electrones, ganó '+pl(-v.q,'electrón','electrones')+' → anión '+NOM[v.z][0]+'<sup>'+cargaTxt(v.q).replace('1−','−')+'</sup>.';
+    $('ionq-fb').innerHTML=(bien?'<span style="color:var(--ok-t);font-weight:800">✓ ¡Correcto!</span> ':'<span style="color:var(--err-t);font-weight:800">✗ No.</span> ')+exp;
+    $('ionq-score').textContent=ionOk+' de '+ionTot; $('ionq-next').style.display='inline-flex';
+  }); });
+  $('ionq-next').addEventListener('click',nuevaIonQ);
+  nuevaIonQ();
+
   $('azn-check').addEventListener('click',comprobar);
   $('azn-new').addEventListener('click',nuevaTabla);
   $('azn-tab').addEventListener('keydown',function(e){ if(e.key==='Enter') comprobar(); });
