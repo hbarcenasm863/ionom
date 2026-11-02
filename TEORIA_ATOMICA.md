@@ -11,7 +11,7 @@ Documento de referencia de lo construido en octubre de 2026 para la primera regi
 | Teoría Atómica | `atomo.html` | Línea del tiempo de los modelos atómicos, 3 simuladores (Thomson, Rutherford, Bohr), constructor de átomos e iones, simulaciones PhET incrustadas y repaso |
 | Configuración Electrónica | `configuracion.html` | Conceptos (Aufbau, Pauli, Hund), diagrama de Moeller interactivo, configurador de los 118 elementos e iones, práctica «Llena los orbitales» y repaso generado |
 | Menú átomo | `index.html` | Portada en forma de átomo de Bohr: núcleo = progreso, capas n = 1–4 = niveles temáticos, electrones = módulos |
-| Temas del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (49 preguntas) y grupo «Enlace químico» con `BANCO_ENLACE` (47 preguntas) |
+| Temas del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (112 preguntas: 49 originales + 21 de tabla periódica, 21 de números cuánticos y Bohr frente a orbitales, y 21 de A, Z, neutrones e iones; temas `tabla`, `cuanticos` e `iones` en `ATOM_TEMA` de juego.html) y grupo «Enlace químico» con `BANCO_ENLACE` (47 preguntas) |
 | Registro de visitas | `assets/ionom-ui.js` | Guarda en el navegador (`ionom-visitas`) qué páginas visitó el estudiante, para marcar ✓ en el menú átomo |
 
 Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración Electrónica → Tabla Periódica → Enlace Químico**.
@@ -187,7 +187,7 @@ Los datos están en `assets/docente-datos.js` (TEMAS, SABER y ABIERTAS). Los eje
 - **Trabajo práctico**: dos tipos nuevos que se marcan solos al elegir el tema:
   - **D Ubicación y propiedades periódicas** (`PARES_TABLA`, `tarjetaTabla`): 27 parejas de elementos representativos del mismo periodo o grupo. Se pide configuración abreviada, periodo, grupo IUPAC y A/B, bloque y tipo de elemento, y comparar radio, energía de ionización y electronegatividad. Se excluyeron las parejas que rompen la tendencia (Be/B, N/O, Mg/Al, P/S, Al/Ga) y los gases nobles.
   - **D Números cuánticos** (`tarjetaCuanticos`): los 34 elementos de `poolConfig`. Se piden la configuración, las casillas y (n, l, mₗ, mₛ) del electrón diferencial, y juzgar un conjunto al azar (válido o con l ≥ n, |mₗ| > l o mₛ imposible).
-- **Evaluación**: 31 preguntas tipo Saber de historia, organización y propiedades (`c:'hist'`, `'org'`, `'prop'`) y 11 de números cuánticos (`c:'qn'`); 15 abiertas de tabla y 8 de números cuánticos (rx, nom y mdec).
+- **Evaluación**: preguntas nuevas tipo Saber y abiertas (rx, nom y mdec): tabla periódica 31 (`c:'hist'`, `'org'`, `'prop'`) y 21 abiertas; números cuánticos y Bohr frente a orbitales 21 (`c:'qn'`) y 21 abiertas; A, Z, n, iones, isótopos/isóbaros/isótonos y masa promedio (tema `atomo`) 20 (`c:'azn'`, `'ion'`, `'iso'`, `'mprom'`) y 20 abiertas.
 - **Laberintos** (modo «Teoría atómica y configuración»): tipo **Números cuánticos** (`GA.qn`, `qnval`, `qnorb`, `qnteo`) y tipo **Tabla periódica: historia y propiedades** (`GA.tpprop` con `LINEAS_TP`, filas y columnas donde el extremo de cada propiedad coincide con los datos reales, sin el grupo 14 ni gases nobles; y `GA.tphist` con `TEO_TP`).
 - **Crucigramas**: pistas **Tabla periódica** (`GLOSARIO_TP`, 25 palabras) y **Números cuánticos** (`GLOSARIO_QN`, 15 palabras).
 
