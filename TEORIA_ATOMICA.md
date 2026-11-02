@@ -11,7 +11,7 @@ Documento de referencia de lo construido en octubre de 2026 para la primera regi
 | Teoría Atómica | `atomo.html` | Línea del tiempo de los modelos atómicos, 3 simuladores (Thomson, Rutherford, Bohr), constructor de átomos e iones, simulaciones PhET incrustadas y repaso |
 | Configuración Electrónica | `configuracion.html` | Conceptos (Aufbau, Pauli, Hund), diagrama de Moeller interactivo, configurador de los 118 elementos e iones, práctica «Llena los orbitales» y repaso generado |
 | Menú átomo | `index.html` | Portada en forma de átomo de Bohr: núcleo = progreso, capas n = 1–4 = niveles temáticos, electrones = módulos |
-| Temas del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (112 preguntas: 49 originales + 21 de tabla periódica, 21 de números cuánticos y Bohr frente a orbitales, y 21 de A, Z, neutrones e iones; temas `tabla`, `cuanticos` e `iones` en `ATOM_TEMA` de juego.html) y grupo «Enlace químico» con `BANCO_ENLACE` (47 preguntas) |
+| Temas del Juego | `juego.html` + `banco.js` | Grupo «Teoría atómica y configuración» con el banco `BANCO_ATOMO` (132 preguntas: 49 originales + 21 de tabla periódica, 21 de números cuánticos y Bohr frente a orbitales, 21 de A, Z, neutrones e iones, y 20 interactivas; temas `tabla`, `cuanticos` e `iones` en `ATOM_TEMA` de juego.html) y grupo «Enlace químico» con `BANCO_ENLACE` (47 preguntas) |
 | Registro de visitas | `assets/ionom-ui.js` | Guarda en el navegador (`ionom-visitas`) qué páginas visitó el estudiante, para marcar ✓ en el menú átomo |
 
 Orden recomendado dentro del nivel n = 1: **Teoría Atómica → Configuración Electrónica → Tabla Periódica → Enlace Químico**.
@@ -224,3 +224,12 @@ Si solo se marcan pistas del átomo, no hace falta marcar familias de compuestos
 - **Repaso espaciado**: una estación dominada que no se practica en 2 o 3 semanas se «oxida» y pide un repaso corto.
 - **Misión de la semana** puesta por la docente desde el Generador Docente.
 - **Diagnóstico de entrada** que sugiera por dónde empezar.
+
+
+## 7. Juego: formatos interactivos y ampliación del banco (noviembre de 2026)
+
+- **Formatos nuevos** para `BANCO_ATOMO` y `BANCO_ENLACE` (campo `tipo`; sin `tipo` es opción múltiple): `completar` (arrastrar palabras a los `____`, con distractores `d`), `escribir` (respuesta corta, con `alt`), `calcular` (número con `tol` y `unidad`, acepta coma decimal), `ordenar` (`items` en el orden correcto) y `relacionar` (`pares`). Los dibuja `renderAtomX` en `#area-atomx` y los califica `atomxRevisar` con la misma regla de 3 intentos y puntos; `respuestaTexto` arma la respuesta que se muestra. Tienen 90 s (120 s los de calcular) y cada partida trae al menos 6 interactivas.
+- **Teoría atómica**: +20 interactivas (132 en total; +15 a 19 % por tema). **Enlace químico**: +18 interactivas (65 en total; 3 más por tema).
+- **Nomenclatura y otros grupos de `BANCO`** (783 entradas): óxidos básicos +8, anhídridos +4, hidruros +6, hidróxidos +7, sales binarias +20, oxisales +15, sales ácidas +8, reacciones +14, balanceo +11 (verificado: balanceadas y con coeficientes mínimos), mol y masa molar +9 (masas con la misma tabla del banco). Los ácidos hidrácidos (10) y oxácidos (51) no crecieron: ya estaban todos los de uso escolar y el banco excluye a propósito las formas meta-, piro- y orto-.
+- **Cadenas de reactividad** (`REACT_CHAINS` en juego.html): 18 → 21 (Sr²⁺, Ni²⁺ y Cl⁺⁵).
+- `getOxidationStates` devuelve `null` para NH₄NO₃/NH₄NO₂ (el N tiene dos estados distintos), así que esas sales no generan «Asignar estados de oxidación».

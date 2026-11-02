@@ -392,6 +392,24 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 .drag-slot.ok::after{content:' \2713';font-weight:900}
 .drag-slot.err::after{content:' \2717';font-weight:900}
 .drag-bank{display:flex;flex-wrap:wrap;gap:8px}
+/* formatos interactivos de átomo y enlace */
+.ax-hint{font-size:.78rem;color:var(--dimmer);margin-bottom:8px}
+.ax-frase{display:block;font-size:.95rem;line-height:2.5;color:var(--tx);padding:10px 14px;background:var(--bg);border:2px dashed var(--brd);border-radius:var(--rs);margin-bottom:14px}
+.ax-frase .drag-slot{display:inline-flex;min-width:80px;height:32px;vertical-align:middle;margin:0 4px;font-family:var(--sans)}
+.ax-orden{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.ax-orden .drag-slot{justify-content:flex-start;width:100%;font-family:var(--sans)}
+.ax-orden .drag-slot b{margin-right:6px;color:var(--an-t)}
+.ax-rel{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.ax-rel-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px;align-items:center;font-size:.86rem;font-weight:700}
+@media(max-width:480px){.ax-rel-row{grid-template-columns:1fr}}
+.ax-rel-row select{min-height:42px;border:2px solid var(--brd);border-radius:8px;padding:6px 8px;font:inherit;font-size:.84rem;background:var(--surf);color:var(--tx)}
+.ax-rel-row select.ok,.ax-write .write-input.ok{border-color:var(--ok);background:var(--ok-b)}
+.ax-rel-row select.err,.ax-write .write-input.err{border-color:var(--err);background:var(--err-b)}
+.ax-write{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.ax-write .write-input{flex:1;margin:0}
+.ax-uni{font-family:var(--mono);font-weight:800;color:var(--tx2)}
+.drag-chip.used{opacity:.35;pointer-events:none}
+
 .drag-chip{padding:8px 14px;border-radius:8px;border:2px solid var(--brd);background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;user-select:none}
 .drag-chip:hover{border-color:var(--cat);background:var(--cat-b);color:var(--cat-t)}
 .drag-chip.sel{border-color:var(--an);background:var(--an-b);color:var(--an-t);transform:scale(1.05)}
@@ -894,6 +912,7 @@ html{font-size:var(--base-fs)}
           <span style="font-size:.75rem;color:var(--dimmer)">Usa +2, −2, etc. La suma total debe ser 0.</span>
         </div>
       </div>
+      <div id="area-atomx" style="display:none"></div>
       <div id="area-classify" style="display:none"></div>
       <div id="area-balance" style="display:none"></div>
       <div id="area-mol" style="display:none"></div>
@@ -1454,6 +1473,8 @@ const REACT_CHAINS=[
   {metal:'Fe',eo:'+3',oxide:'Fe₂O₃',hydroxide:'Fe(OH)₃',salts:[{acid:'HCl',formula:'FeCl₃'},{acid:'H₂SO₄',formula:'Fe₂(SO₄)₃'},{acid:'HNO₃',formula:'Fe(NO₃)₃'},{acid:'HClO₄',formula:'Fe(ClO₄)₃'}]},
   {metal:'Cu',eo:'+2',oxide:'CuO',hydroxide:'Cu(OH)₂',salts:[{acid:'HCl',formula:'CuCl₂'},{acid:'H₂SO₄',formula:'CuSO₄'},{acid:'HNO₃',formula:'Cu(NO₃)₂'},{acid:'HClO₄',formula:'Cu(ClO₄)₂'}]},
   {metal:'Zn',eo:'+2',oxide:'ZnO',hydroxide:'Zn(OH)₂',salts:[{acid:'HCl',formula:'ZnCl₂'},{acid:'H₂SO₄',formula:'ZnSO₄'},{acid:'HNO₃',formula:'Zn(NO₃)₂'},{acid:'HClO₄',formula:'Zn(ClO₄)₂'}]},
+  {metal:'Sr',eo:'+2',oxide:'SrO',hydroxide:'Sr(OH)₂',salts:[{acid:'HCl',formula:'SrCl₂'},{acid:'H₂SO₄',formula:'SrSO₄'},{acid:'HNO₃',formula:'Sr(NO₃)₂'},{acid:'HClO₄',formula:'Sr(ClO₄)₂'}]},
+  {metal:'Ni',eo:'+2',oxide:'NiO',hydroxide:'Ni(OH)₂',salts:[{acid:'HCl',formula:'NiCl₂'},{acid:'H₂SO₄',formula:'NiSO₄'},{acid:'HNO₃',formula:'Ni(NO₃)₂'},{acid:'HClO₄',formula:'Ni(ClO₄)₂'}]},
   // No-metales: No metal + O²⁻ → Anhídrido (A) → + H₂O → Ácido oxácido (B) → + Base → Sal (C) + H₂O
   {type:'nm',nonmetal:'S',eo:'+4',anhydride:'SO₂',acid:'H₂SO₃',acidName:'ácido sulfuroso',salts:[{base:'NaOH',formula:'Na₂SO₃'},{base:'KOH',formula:'K₂SO₃'},{base:'Ca(OH)₂',formula:'CaSO₃'},{base:'Al(OH)₃',formula:'Al₂(SO₃)₃'}]},
   {type:'nm',nonmetal:'S',eo:'+6',anhydride:'SO₃',acid:'H₂SO₄',acidName:'ácido sulfúrico',salts:[{base:'NaOH',formula:'Na₂SO₄'},{base:'KOH',formula:'K₂SO₄'},{base:'Ca(OH)₂',formula:'CaSO₄'},{base:'Al(OH)₃',formula:'Al₂(SO₄)₃'}]},
@@ -1461,6 +1482,7 @@ const REACT_CHAINS=[
   {type:'nm',nonmetal:'N',eo:'+5',anhydride:'N₂O₅',acid:'HNO₃',acidName:'ácido nítrico',salts:[{base:'NaOH',formula:'NaNO₃'},{base:'KOH',formula:'KNO₃'},{base:'Ca(OH)₂',formula:'Ca(NO₃)₂'},{base:'Ba(OH)₂',formula:'Ba(NO₃)₂'}]},
   {type:'nm',nonmetal:'P',eo:'+5',anhydride:'P₂O₅',acid:'H₃PO₄',acidName:'ácido fosfórico',salts:[{base:'NaOH',formula:'Na₃PO₄'},{base:'KOH',formula:'K₃PO₄'},{base:'Ca(OH)₂',formula:'Ca₃(PO₄)₂'},{base:'Al(OH)₃',formula:'AlPO₄'}]},
   {type:'nm',nonmetal:'C',eo:'+4',anhydride:'CO₂',acid:'H₂CO₃',acidName:'ácido carbónico',salts:[{base:'NaOH',formula:'Na₂CO₃'},{base:'KOH',formula:'K₂CO₃'},{base:'Ca(OH)₂',formula:'CaCO₃'},{base:'Ba(OH)₂',formula:'BaCO₃'}]},
+  {type:'nm',nonmetal:'Cl',eo:'+5',anhydride:'Cl₂O₅',acid:'HClO₃',acidName:'ácido clórico',salts:[{base:'NaOH',formula:'NaClO₃'},{base:'KOH',formula:'KClO₃'},{base:'Ca(OH)₂',formula:'Ca(ClO₃)₂'},{base:'Ba(OH)₂',formula:'Ba(ClO₃)₂'}]},
   {type:'nm',nonmetal:'Cl',eo:'+7',anhydride:'Cl₂O₇',acid:'HClO₄',acidName:'ácido perclórico',salts:[{base:'NaOH',formula:'NaClO₄'},{base:'KOH',formula:'KClO₄'},{base:'Ca(OH)₂',formula:'Ca(ClO₄)₂'},{base:'Ba(OH)₂',formula:'Ba(ClO₄)₂'}]},
 ];
 
@@ -1651,7 +1673,12 @@ function makeElPropertyQuestion(){
 let TIMER_ID=null;
 const TIMER_BY_TYPE={'mol-calc':180,'balance-eq':120,'classify-rx':90};
 const TIMER_TOTAL=60;
-function timerFor(qtype){return TIMER_BY_TYPE[qtype]||TIMER_TOTAL;}
+function timerFor(qtype){
+  // los formatos interactivos de átomo y enlace necesitan más tiempo que la opción múltiple
+  const q=ST.questions&&ST.questions[ST.idx];
+  if(q&&q.isAtom&&q.tipo&&q.tipo!=='mc') return q.tipo==='calcular'?120:90;
+  return TIMER_BY_TYPE[qtype]||TIMER_TOTAL;
+}
 function startTimer(){
   stopTimer();
   const total=timerFor(ST.qtype);
@@ -1681,7 +1708,7 @@ function timeOut(){
   const inp=document.getElementById('q-input');if(inp){inp.disabled=true;}
   const oxa=document.querySelectorAll('.oxa-inp');oxa.forEach(i=>i.disabled=true);
   if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
-  if(q.isAtom) showElFeedback('err','⏱ Tiempo agotado. La respuesta era: '+q.ok,q);
+  if(q.isAtom){ if(ST.ax) ST.ax.locked=true; document.querySelectorAll('#area-atomx button,#area-atomx input,#area-atomx select').forEach(el=>el.disabled=true); showElFeedback('err','⏱ Tiempo agotado. La respuesta era: '+respuestaTexto(q),q); }
   else if(q.isElement) showElFeedback('err','⏱ Tiempo agotado.',q);
   else showFeedback('err','⏱ Tiempo agotado. La respuesta era:',q);
   scheduleNext(3500);
@@ -1793,7 +1820,12 @@ function startGame(group){
     const pool=banco||[];
     if(!pool.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
     const qtype=group==='atomo'?'atom-mc':'enlace-mc';
-    ST.questions=buildQuestionQueue(pool,20).map(a=>({...a,isAtom:true,qtype,group,formula:a.id,trad:[a.ok],stock:[],sist:[],hint:''}));
+    // Al menos 6 preguntas interactivas (arrastrar, ordenar, relacionar, calcular,
+    // escribir) por partida, si el banco las tiene; el resto, opción múltiple.
+    const inter=pool.filter(a=>a.tipo&&a.tipo!=='mc'), mcs=pool.filter(a=>!a.tipo||a.tipo==='mc');
+    const nInter=Math.min(inter.length,6);
+    const elegidas=(inter.length&&mcs.length>=20-nInter)?shuffle([...shuffle(inter).slice(0,nInter),...shuffle(mcs).slice(0,20-nInter)]):buildQuestionQueue(pool,20);
+    ST.questions=elegidas.map(a=>({...a,isAtom:true,qtype,group,formula:a.id,trad:[respuestaTexto(a)],stock:[],sist:[],hint:''}));
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
@@ -1886,7 +1918,7 @@ function loadQuestion(){
   document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=false);
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol','area-atomx'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   // Red de seguridad: un error inesperado al renderizar (dato de compuesto
   // incompleto, tipo de pregunta mal asignado, etc.) ya no debe congelar la
   // partida completa —sin esto, una excepción aquí dejaba la pantalla sin
@@ -2129,6 +2161,7 @@ const ATOM_TEMA={modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructu
 function renderAtomMC(q){
   try{
     document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${ATOM_TEMA[q.tema]||(q.group==='enlace'?'🧲 Enlace químico':'🪐 Teoría atómica')}</span>`;
+    if(q.tipo&&q.tipo!=='mc'){ renderAtomX(q); return; }
     document.getElementById('q-prompt').textContent=q.q;
     const options=shuffle([q.ok,...q.d]);
     const mc=document.getElementById('q-mc-opts');
@@ -2137,6 +2170,138 @@ function renderAtomMC(q){
     mc.querySelectorAll('.mc-opt').forEach(btn=>btn.addEventListener('click',()=>checkElMC(btn)));
     document.getElementById('area-mc').style.display='';
   }catch(e){console.error('renderAtomMC error:',e);renderMC_fallback(q);}
+}
+
+// ── Formatos interactivos de BANCO_ATOMO / BANCO_ENLACE (campo «tipo») ──
+// mc (por defecto) · completar (arrastrar palabras a los espacios ____) ·
+// escribir (respuesta corta) · calcular (número con tolerancia) ·
+// ordenar (poner en orden) · relacionar (emparejar). Misma regla de 3
+// intentos y puntos que la opción múltiple; la explicación «x» se muestra
+// al final.
+const ATOMX_LABEL={completar:'Completar arrastrando',escribir:'Escribir la respuesta',calcular:'Calcular',ordenar:'Ordenar',relacionar:'Relacionar'};
+function respuestaTexto(q){
+  if(!q.tipo||q.tipo==='mc'||q.tipo==='escribir') return q.ok;
+  if(q.tipo==='calcular') return String(q.ok).replace('.',',')+(q.unidad?' '+q.unidad:'');
+  if(q.tipo==='completar') return [].concat(q.ok).join(' · ');
+  if(q.tipo==='ordenar') return q.items.join(' → ');
+  if(q.tipo==='relacionar') return q.pares.map(p=>p[0]+' → '+p[1]).join(' · ');
+  return String(q.ok);
+}
+function escAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function normResp(s){ return norm(String(s)).replace(/[.,;:¡!¿?]/g,'').replace(/\s+/g,' ').trim(); }
+function leerNumero(s){ s=String(s).trim().replace(/\s/g,'').replace(',','.').replace(/[−–]/g,'-'); return s===''||isNaN(+s)?null:+s; }
+function renderAtomX(q){
+  const area=document.getElementById('area-atomx');
+  area.style.display='';
+  document.getElementById('q-meta').textContent+=' · '+(ATOMX_LABEL[q.tipo]||'');
+  const prompt=document.getElementById('q-prompt');
+  ST.ax={tipo:q.tipo,locked:false};
+  if(q.tipo==='completar'){
+    const oks=[].concat(q.ok), partes=q.q.split('____');
+    prompt.textContent='Toca las palabras para completar la frase.';
+    let html='<div class="ax-frase">';
+    partes.forEach((p,i)=>{ html+='<span>'+p+'</span>'; if(i<oks.length) html+='<span class="drag-slot ax-slot" data-i="'+i+'">···</span>'; });
+    html+='</div><div class="drag-bank">'+shuffle(oks.concat(q.d||[])).map((w,i)=>'<button class="drag-chip ax-chip" data-w="'+escAttr(w)+'">'+w+'</button>').join('')+'</div>';
+    area.innerHTML=html;
+    ST.ax.placed=new Array(oks.length).fill(null); ST.ax.oks=oks;
+    area.querySelectorAll('.ax-chip').forEach(ch=>ch.addEventListener('click',()=>{
+      if(ST.ax.locked||ch.classList.contains('used')) return;
+      const i=ST.ax.placed.findIndex(v=>v===null); if(i<0) return;
+      ST.ax.placed[i]=ch; ch.classList.add('used');
+      const sl=area.querySelector('.ax-slot[data-i="'+i+'"]'); sl.textContent=ch.dataset.w; sl.classList.add('filled');
+      if(ST.ax.placed.every(v=>v)) atomxRevisar();
+    }));
+    area.querySelectorAll('.ax-slot').forEach(sl=>sl.addEventListener('click',()=>{
+      if(ST.ax.locked) return; const i=+sl.dataset.i, ch=ST.ax.placed[i]; if(!ch) return;
+      ch.classList.remove('used'); ST.ax.placed[i]=null; sl.textContent='···'; sl.classList.remove('filled','ok','err');
+    }));
+  } else if(q.tipo==='ordenar'){
+    prompt.textContent=q.q;
+    area.innerHTML='<div class="ax-hint">Toca los elementos en el orden correcto. Toca una casilla llena para quitarla.</div><div class="ax-orden">'+q.items.map((_,i)=>'<span class="drag-slot ax-slot" data-i="'+i+'"><b>'+(i+1)+'.</b> ···</span>').join('')+'</div><div class="drag-bank">'+shuffle(q.items.slice()).map(w=>'<button class="drag-chip ax-chip" data-w="'+escAttr(w)+'">'+w+'</button>').join('')+'</div>';
+    ST.ax.placed=new Array(q.items.length).fill(null);
+    area.querySelectorAll('.ax-chip').forEach(ch=>ch.addEventListener('click',()=>{
+      if(ST.ax.locked||ch.classList.contains('used')) return;
+      const i=ST.ax.placed.findIndex(v=>v===null); if(i<0) return;
+      ST.ax.placed[i]=ch; ch.classList.add('used');
+      const sl=area.querySelector('.ax-slot[data-i="'+i+'"]'); sl.innerHTML='<b>'+(i+1)+'.</b> '+ch.dataset.w; sl.classList.add('filled');
+      if(ST.ax.placed.every(v=>v)) atomxRevisar();
+    }));
+    area.querySelectorAll('.ax-slot').forEach(sl=>sl.addEventListener('click',()=>{
+      if(ST.ax.locked) return; const i=+sl.dataset.i, ch=ST.ax.placed[i]; if(!ch) return;
+      ch.classList.remove('used'); ST.ax.placed[i]=null; sl.innerHTML='<b>'+(i+1)+'.</b> ···'; sl.classList.remove('filled','ok','err');
+    }));
+  } else if(q.tipo==='relacionar'){
+    prompt.textContent=q.q;
+    const ders=shuffle(q.pares.map(p=>p[1]));
+    area.innerHTML='<div class="ax-rel">'+q.pares.map((p,i)=>'<label class="ax-rel-row"><span>'+p[0]+'</span><select data-i="'+i+'"><option value="">Elige…</option>'+ders.map(d=>'<option>'+d+'</option>').join('')+'</select></label>').join('')+'</div><button class="btn-submit" id="ax-ok">Comprobar →</button>';
+    document.getElementById('ax-ok').addEventListener('click',atomxRevisar);
+  } else {
+    prompt.textContent=q.q;
+    const num=q.tipo==='calcular';
+    area.innerHTML='<div class="ax-write"><input id="ax-inp" class="write-input" type="text" '+(num?'inputmode="decimal" ':'')+'autocomplete="off" placeholder="'+(num?'Escribe el número':'Escribe tu respuesta')+'…">'+(num&&q.unidad?'<span class="ax-uni">'+q.unidad+'</span>':'')+'</div><button class="btn-submit" id="ax-ok">Comprobar →</button>';
+    const inp=document.getElementById('ax-inp');
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter') atomxRevisar(); });
+    document.getElementById('ax-ok').addEventListener('click',atomxRevisar);
+    setTimeout(()=>{ try{inp.focus({preventScroll:true});}catch(e){} },50);
+  }
+}
+function atomxRevisar(){
+  if(ST.answered||!ST.ax||ST.ax.locked) return;
+  const q=ST.questions[ST.idx], area=document.getElementById('area-atomx');
+  let ok=false;
+  if(q.tipo==='completar'){
+    const res=ST.ax.placed.map((ch,i)=>ch&&normResp(ch.dataset.w)===normResp(ST.ax.oks[i]));
+    ok=res.every(Boolean);
+    area.querySelectorAll('.ax-slot').forEach((sl,i)=>{ sl.classList.remove('ok','err'); sl.classList.add(res[i]?'ok':'err'); });
+  } else if(q.tipo==='ordenar'){
+    const res=ST.ax.placed.map((ch,i)=>ch&&ch.dataset.w===q.items[i]);
+    ok=res.every(Boolean);
+    area.querySelectorAll('.ax-slot').forEach((sl,i)=>{ sl.classList.remove('ok','err'); sl.classList.add(res[i]?'ok':'err'); });
+  } else if(q.tipo==='relacionar'){
+    const sels=[...area.querySelectorAll('select')];
+    if(sels.some(s=>!s.value)){ showElFeedback('err','Relaciona todos los elementos antes de comprobar.',null); return; }
+    const res=sels.map((s,i)=>s.value===q.pares[i][1]);
+    ok=res.every(Boolean);
+    sels.forEach((s,i)=>{ s.classList.remove('ok','err'); s.classList.add(res[i]?'ok':'err'); });
+  } else if(q.tipo==='calcular'){
+    const inp=document.getElementById('ax-inp'), v=leerNumero(inp.value);
+    if(v===null){ showElFeedback('err','Escribe un número (puedes usar coma decimal).',null); return; }
+    ok=Math.abs(v-q.ok)<=(q.tol!=null?q.tol:Math.max(0.01,Math.abs(q.ok)*0.01));
+    inp.classList.remove('ok','err'); inp.classList.add(ok?'ok':'err');
+  } else {
+    const inp=document.getElementById('ax-inp'), v=normResp(inp.value);
+    if(!v){ showElFeedback('err','Escribe tu respuesta.',null); return; }
+    ok=[q.ok].concat(q.alt||[]).some(a=>normResp(a)===v);
+    inp.classList.remove('ok','err'); inp.classList.add(ok?'ok':'err');
+  }
+  ST.attempts++; ST.totalAttempts++;
+  if(ok){
+    ST.ax.locked=true;
+    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    ST.score+=pts; ST.correct++;
+    showElFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    atomxBloquear(); scheduleNext(2600);
+  } else if(ST.attempts>=3){
+    ST.ax.locked=true;
+    if(!ST.errors.find(e=>e.formula===q.formula&&e.group===q.group)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
+    showElFeedback('err','✗ La respuesta correcta era: '+respuestaTexto(q),q);
+    atomxBloquear(); scheduleNext(4200);
+  } else {
+    showElFeedback('err',`✗ Intento ${ST.attempts} de 3 — revisa lo marcado en rojo e intenta de nuevo.`,null);
+    // en arrastrar/ordenar se liberan solo las casillas equivocadas
+    if(q.tipo==='completar'||q.tipo==='ordenar'){
+      setTimeout(()=>{ if(!ST.ax||ST.ax.locked) return;
+        area.querySelectorAll('.ax-slot.err').forEach(sl=>{ const i=+sl.dataset.i, ch=ST.ax.placed[i]; if(ch){ ch.classList.remove('used'); ST.ax.placed[i]=null; }
+          sl.classList.remove('filled','err'); sl.innerHTML=q.tipo==='ordenar'?'<b>'+(i+1)+'.</b> ···':'···'; });
+      },1200);
+    }
+  }
+  updateStats();
+}
+function atomxBloquear(){
+  const area=document.getElementById('area-atomx');
+  area.querySelectorAll('button,input,select').forEach(el=>{ el.disabled=true; });
+  area.querySelectorAll('.drag-chip,.drag-slot').forEach(el=>{ el.style.pointerEvents='none'; });
 }
 
 function renderMC_fallback(q){
@@ -2379,6 +2544,9 @@ function parseFormula(f){
 function getOxidationStates(q){
   const raw=parseFormula(q.formula);
   if(!raw||raw.length<2) return null;
+  // NH₄NO₃, NH₄NO₂: el N tiene dos estados distintos (−3 en el amonio y +5/+3
+  // en el anión); el cálculo de abajo daría un promedio que no existe.
+  if(/NH₄/.test(q.formula)&&/NO[₂₃]/.test(q.formula)) return null;
   const gr=q.group;
   const elems={};raw.forEach(({elem,n})=>{elems[elem]=n;});
   const states={};
