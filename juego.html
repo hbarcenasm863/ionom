@@ -615,8 +615,10 @@ html{font-size:var(--base-fs)}
       </div>
     </div>
 
-    <!-- Selector de modo (iOS segment) -->
-    <div class="mode-seg">
+    <!-- Selector de modo (iOS segment) — OCULTO: este año solo se usa Modo
+         Libre (sin analíticas). Para reactivar Modo Estudiante, quitar
+         style="display:none" aquí y en el paso ④ del modal "Cómo jugar". -->
+    <div class="mode-seg" style="display:none">
       <button class="mode-tab act" id="tab-libre" onclick="setMode('libre')">
         <span class="mt-icon">🎮</span>
         Modo Libre
@@ -834,7 +836,7 @@ html{font-size:var(--base-fs)}
         <span style="font-size:1.3rem;flex-shrink:0">③</span>
         <div><div style="font-size:.82rem;font-weight:700;margin-bottom:2px;color:var(--tx)">Tienes 60 segundos por pregunta</div><div style="font-size:.74rem;color:var(--tx2)">¡Mira el cronómetro! Cada respuesta correcta suma puntos y ganas medallas al final.</div></div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--surf2);border-radius:10px;border:1px solid var(--brd)">
+      <div style="display:none;align-items:flex-start;gap:10px;padding:10px;background:var(--surf2);border-radius:10px;border:1px solid var(--brd)">
         <span style="font-size:1.3rem;flex-shrink:0">④</span>
         <div><div style="font-size:.82rem;font-weight:700;margin-bottom:2px;color:var(--tx)">Modo Estudiante</div><div style="font-size:.74rem;color:var(--tx2)">Ingresa tu código para que tu profesor reciba tus resultados automáticamente.</div></div>
       </div>
@@ -3599,8 +3601,9 @@ function _ofrecerPartida(){
 }
 function continuarPartida(){
   const d=_leerPartida(); if(!d){ _borrarPartida(); return; }
-  setMode(d.mode==='student' && d.est ? 'student' : 'libre');
-  if(d.est){
+  // Modo Estudiante oculto este año: toda partida guardada se reanuda en Libre.
+  setMode('libre');
+  if(false && d.est){
     STUDENT_CODE=d.est.code; STUDENT_NAME=d.est.name; STUDENT_COURSE=d.est.course; CODE_VERIFIED=true;
     document.getElementById('login-panel').style.display='none';
     document.getElementById('wi-name').textContent=STUDENT_NAME;
