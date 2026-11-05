@@ -896,7 +896,7 @@ TEMAS: [
   gen: [], jue: 'industria', rxn: [],
   previos: {
     curiosos: [
-      'Calcinar una tonelada de caliza para hacer cemento libera 440 kg de CO₂ solo por la reacción química.',
+      'Calcinar una tonelada de carbonato de calcio puro para hacer cemento libera 440 kg de CO₂ solo por la reacción química.',
       'Casi la mitad de la comida del mundo se produce con fertilizantes hechos con el amoníaco del proceso Haber, que combina el nitrógeno del aire con hidrógeno.'
     ],
     contexto: [

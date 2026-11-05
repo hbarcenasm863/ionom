@@ -4,6 +4,33 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre — Aprendizajes priorizados de la SED para 10.°: pH, química en la industria y modelos con datos
+
+El docente envió la *Priorización de aprendizajes para ciencias naturales y educación ambiental — Media* (SED Bogotá, 2025). Para 10.° faltaban sobre todo el pH en el cuerpo, los alimentos y el territorio (10q-ind1, 10q-ind3, 10q-exp4), la estequiometría de procesos industriales (10q-uso3, con 10q-ind2 y 10q-uso2) y las tres evidencias de construcción del conocimiento (teorías, leyes, modelos y datos del territorio). Se hicieron tres páginas con los principios de Mayer: palabras clave al inicio, una meta por sección, ejemplos resueltos que se muestran paso a paso, figuras con sus etiquetas, laboratorios donde se predice antes de ver el resultado, botón «Escuchar» y práctica con el banco del Juego.
+
+**Páginas nuevas**
+- **`ph.html` · Ácidos, bases y pH:** Arrhenius y Brønsted-Lowry con clasificador; escala de pH interactiva con [H⁺], [OH⁻] y sustancias de la casa; «¿cuántas veces más ácido?»; fuertes y débiles; diseño de un experimento controlado con repollo morado; tres estudios de caso (antiácidos, gaseosas y caries, «dieta alcalina»); suelos ácidos y encalado, lluvia ácida y acidificación del mar.
+- **`industria.html` · Química en la industria:** conservación de la masa y de la carga con clasificador; cinco procesos colombianos (cemento, amoníaco, potabilización, acero y cloro-soda); reactivo limitante con datos propios; pureza y rendimiento con una planta virtual; experimento con cáscara de huevo y vinagre para calcular el % de CaCO₃.
+- **`modelos.html` · Teorías, leyes, modelos y datos:** diferencias entre hipótesis, ley, teoría y modelo con clasificador; laboratorio virtual de la ley de Boyle (hipótesis, tabla, gráficas V contra P y P contra 1/V, constante y predicción); modelo lineal del punto de ebullición del agua según la altitud de nueve ciudades, con interpolación y extrapolación, y referencia a los datos históricos del IDEAM.
+- Archivos compartidos: `assets/sed10.css` y `assets/sed10.js`.
+
+**Juego** (`banco.js`): tres bancos nuevos con formatos interactivos: **BANCO_PH** (32), **BANCO_INDUSTRIA** (26) y **BANCO_MODELOS** (25). Tres temas nuevos en la portada del Juego (18 en total, renumerados): «Modelos, leyes y datos» (n = 1), «Ácidos, bases y pH» (n = 3) y «Química en la industria» (n = 4).
+
+**Generador Docente:** tres temas nuevos con aprendizajes previos, lectura, mapa y ejemplo resuelto; 20 preguntas abiertas por tema; preguntas tipo Saber tomadas del banco del Juego (20 a 26 por tema); y un tipo de ejercicio nuevo, «D · Preguntas y problemas (modelos, pH, industria)», para el trabajo práctico.
+
+**Navegación:** los tres módulos aparecen en el menú de todas las páginas, en la hoja «Más» del celular y en la portada (tarjetas y menú átomo, como ampliaciones de los niveles 1, 3 y 4).
+
+**Auditoría pedagógica y química**
+- Un script revisó el balance de átomos y carga de todas las ecuaciones: solo aparecen «mal» las que lo están a propósito (distractores o ejemplos para corregir).
+- La respuesta correcta era la opción más larga en muchas preguntas; se equilibraron las opciones (quedó en 33 % de las preguntas, frente a 40–51 % en los bancos de átomo y enlace).
+- Valores de pH, masas molares, cálculos industriales y el modelo de ebullición revisados; «caliza» se corrigió a «carbonato de calcio puro» donde se calculan los 440 kg de CO₂ por tonelada.
+- Probado con Playwright en PC y en iPhone 13: sin errores, sin desbordes, todos los clasificadores, calculadoras y prácticas funcionan, el Juego arma partidas de los tres temas y el docente genera guías con trabajo práctico.
+- `sw.js` pasó a `ionom-v72` (cambió `banco.js` y hay archivos nuevos).
+
+**Pendiente:** temas del MEN que la SED no prioriza (soluciones, cinética, equilibrio, termoquímica, química nuclear). No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 28 de octubre (12) — Laberintos: elegir cuántos ejercicios hay hasta FIN
 
 - Nuevo selector **«Ejercicios hasta FIN»** junto al tamaño: el docente elige cuántas casillas resuelve el estudiante en la ruta correcta antes de llegar a FIN; las demás quedan como casillas trampa. «Automático» mantiene lo de antes (rutas largas).
