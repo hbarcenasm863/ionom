@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (2) — Simulaciones en canvas que se mueven
+
+El docente pidió que todo fuera muy interactivo, con simulaciones y modelos en canvas que se puedan mover. Nuevo `assets/sim10.js` con tres simulaciones animadas, cada una con controles, botón de pausa y una pregunta para predecir antes de mirar (se ajustan a la pantalla del celular, se manejan con el dedo y se detienen solas cuando no se ven):
+
+- **`ph.html` · Gotas en un vaso de agua:** se agregan gotas de HCl (ácido fuerte), vinagre (ácido débil) o NaOH (base fuerte) y se ven las partículas moverse. El HCl se ioniza por completo; el ácido acético casi no (equilibrio); cuando un H₃O⁺ choca con un OH⁻ se forma agua (neutralización). Un pH-metro muestra el pH y el agua cambia de color como con el indicador de repollo. Con una gota de cada uno: HCl ≈ pH 3,3, vinagre ≈ pH 4, HCl + NaOH → pH 7.
+- **`industria.html` · El reactor de Haber:** se eligen las moléculas de N₂ y H₂, se predice el limitante y se ve la reacción molécula por molécula (cada N₂ toma 3 H₂ y forma 2 NH₃). Al final compara con el cálculo 2 × mín(N₂, H₂ ÷ 3) y con la predicción del estudiante. Verificado: 4 N₂ + 9 H₂ → 6 NH₃ y sobra 1 N₂; 3 N₂ + 12 H₂ → 6 NH₃ y sobran 3 H₂.
+- **`modelos.html` · La ley de Boyle sale de los choques:** gas en un cilindro con émbolo que se arrastra y control de temperatura. La presión se **mide** con los choques contra las paredes (no con la fórmula) y se pueden registrar puntos en una gráfica P–V junto a la curva de Boyle. Verificado: 50 mL → 1,0 atm; 25 mL → 2,1 atm; 100 mL → 0,5 atm.
+
+`assets/sed10.css` tiene los estilos de las simulaciones. `sw.js` pasó a `ionom-v73` (archivo nuevo en caché). No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 5 de noviembre — Aprendizajes priorizados de la SED para 10.°: pH, química en la industria y modelos con datos
 
 El docente envió la *Priorización de aprendizajes para ciencias naturales y educación ambiental — Media* (SED Bogotá, 2025). Para 10.° faltaban sobre todo el pH en el cuerpo, los alimentos y el territorio (10q-ind1, 10q-ind3, 10q-exp4), la estequiometría de procesos industriales (10q-uso3, con 10q-ind2 y 10q-uso2) y las tres evidencias de construcción del conocimiento (teorías, leyes, modelos y datos del territorio). Se hicieron tres páginas con los principios de Mayer: palabras clave al inicio, una meta por sección, ejemplos resueltos que se muestran paso a paso, figuras con sus etiquetas, laboratorios donde se predice antes de ver el resultado, botón «Escuchar» y práctica con el banco del Juego.

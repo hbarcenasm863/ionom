@@ -227,6 +227,14 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="sect">
+    <h2>🔬 Simulación: la ley de Boyle sale de los choques <button class="tts-btn" onclick="speakText(this)" data-text="Este cilindro tiene un gas formado por partículas que se mueven y chocan con las paredes. La presión se mide contando esos choques. Mueve el émbolo, cambia la temperatura y registra puntos: así la teoría cinético molecular explica la ley de Boyle.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás explicar con partículas por qué la presión aumenta al reducir el volumen o al calentar el gas.</div>
+    <p class="sim-pregunta">si reduces el volumen a la mitad, ¿qué le pasará al número de choques contra las paredes y a la presión?</p>
+    <div class="sim" data-sim="cilindro"></div>
+    <div class="key">🔑 Aquí se ve la relación entre <strong>teoría</strong> y <strong>ley</strong>: el modelo de partículas (teoría cinético-molecular) <em>produce</em> los datos que cumplen la ley de Boyle.</div>
+  </div>
+
+  <div class="sect">
     <h2>Un modelo para tu territorio: el agua no hierve igual en todo Colombia <button class="tts-btn" onclick="speakText(this)" data-text="En Cartagena el agua hierve a cien grados, pero en Bogotá hierve más o menos a noventa y uno. Con los datos de varias ciudades vas a construir un modelo matemático, usarlo para predecir el punto de ebullición en otros lugares y decidir cuándo esa predicción es confiable.">🔊 Escuchar</button></h2>
     <div class="meta">Construye un modelo lineal con datos de ciudades, úsalo para predecir y compara la predicción con una medida.</div>
     <p>Un líquido hierve cuando su presión de vapor iguala la presión del aire. Con la altura hay menos aire encima y la presión baja, así que el agua hierve a menor temperatura. La tabla muestra la altitud de varias ciudades y el punto de ebullición del agua calculado con la presión atmosférica típica de esa altura.</p>
@@ -335,6 +343,7 @@ var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.do
 </script>
 <script src="banco.js"></script>
 <script src="assets/sed10.js"></script>
+<script src="assets/sim10.js"></script>
 <script>
 (function(){
 'use strict';

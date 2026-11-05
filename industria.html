@@ -242,6 +242,14 @@ html{font-size:var(--base-fs)}
   </div>
 
   <div class="sect">
+    <h2>🔬 Simulación: el reactor de Haber <button class="tts-btn" onclick="speakText(this)" data-text="Elige cuántas moléculas de nitrógeno y de hidrógeno entran al reactor, predice cuál se acabará primero y mira la reacción molécula por molécula.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás reconocer el reactivo limitante viendo las moléculas y comprobarlo con la razón molar.</div>
+    <p class="sim-pregunta">con 4 N₂ y 9 H₂, ¿cuál se acabará primero? ¿Cuántos NH₃ se formarán?</p>
+    <div class="sim" data-sim="haber"></div>
+    
+  </div>
+
+  <div class="sect">
     <h2>Pureza y rendimiento: la fábrica real <button class="tts-btn" onclick="speakText(this)" data-text="Las materias primas traen impurezas y ningún proceso aprovecha el cien por ciento de los reactivos. Por eso, en la industria, siempre se corrige el cálculo por la pureza y por el rendimiento. Usa la planta virtual para ver cómo cambia la producción.">🔊 Escuchar</button></h2>
     <div class="meta">Al terminar podrás calcular cuánto producto real sale de una materia prima impura en un proceso con un rendimiento dado.</div>
     <div class="pasos">
@@ -375,6 +383,7 @@ var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.do
 </script>
 <script src="banco.js"></script>
 <script src="assets/sed10.js"></script>
+<script src="assets/sim10.js"></script>
 <script>
 (function(){
 'use strict';

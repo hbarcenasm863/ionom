@@ -73,3 +73,16 @@
 .prac-q .fb.show{display:block}
 .prac-q .fb.ok{background:var(--ok-b);color:var(--tx2)}.prac-q .fb.fail{background:var(--err-b);color:var(--tx2)}
 @media print{.site-nav,.nav-drawer,#bnav,.menu-float-btn,#tts-float-btn,#toc-fab{display:none!important}}
+
+/* Simulaciones en canvas (assets/sim10.js) */
+.sim{margin:12px 0;border:1.5px solid var(--brd);border-radius:var(--r);background:var(--surf);padding:10px;overflow:hidden}
+.sim-cv{display:block;margin:0 auto;border-radius:10px;touch-action:none;max-width:100%}
+.sim-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:8px 2px 0}
+.sim-ctl select{min-height:44px;border:1.5px solid var(--brd);border-radius:var(--rs);padding:6px 10px;font-family:inherit;background:var(--surf);color:var(--tx)}
+.sim-rng{display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:700;color:var(--tx2)}
+.sim-rng input{width:190px;max-width:50vw}
+.sim-rng b{font-family:var(--mono);color:var(--an-t);min-width:6.5em}
+.sim-msg{margin-top:8px;font-size:.86rem;line-height:1.6;color:var(--tx2);background:var(--surf2);border-radius:var(--rs);padding:9px 12px}
+.sim-pregunta{font-size:.88rem;font-weight:700;color:var(--tx);margin:4px 0 6px}
+.sim-pregunta::before{content:'🤔 Predice: '}
+@media(max-width:520px){.sim-rng{flex-wrap:wrap;max-width:100%}.sim-rng input{width:100%;max-width:100%;flex:1 1 160px}.sim-rng b{min-width:0}}

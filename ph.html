@@ -233,6 +233,14 @@ html{font-size:var(--base-fs)}
     <div class="warn-box">⚠️ Los valores de pH de las sustancias de esta página son <strong>típicos</strong>: cambian según la marca, la madurez de la fruta o la persona. Mídelos tú con papel indicador o con el indicador de repollo morado del <a href="simulador.html">Simulador</a>.</div>
   </div>
 
+  <div class="sect">
+    <h2>🔬 Simulación: gotas en un vaso de agua <button class="tts-btn" onclick="speakText(this)" data-text="Agrega gotas de ácido o de base al vaso y observa qué pasa con las partículas. Fíjate en la diferencia entre el ácido clorhídrico, que es fuerte, y el vinagre, que es débil, y en lo que ocurre cuando un ion hidronio se encuentra con un ion hidróxido.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás explicar con partículas qué es un ácido fuerte, uno débil y una neutralización.</div>
+    <p class="sim-pregunta">si agregas una gota de HCl y otra de vinagre con la misma cantidad de moléculas, ¿cuál bajará más el pH? ¿Qué pasará si después agregas NaOH?</p>
+    <div class="sim" data-sim="vasoPH"></div>
+    
+  </div>
+
   <!-- ── FUERTES Y DÉBILES ── -->
   <div class="sect">
     <h2>Fuertes y débiles: no es lo mismo que concentrado <button class="tts-btn" onclick="speakText(this)" data-text="Un ácido fuerte se separa en iones casi por completo cuando está en agua. Un ácido débil solo se separa un poquito. Por eso, a la misma concentración, el ácido clorhídrico tiene un pH mucho más bajo que el vinagre.">🔊 Escuchar</button></h2>
@@ -395,6 +403,7 @@ var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.do
 </script>
 <script src="banco.js"></script>
 <script src="assets/sed10.js"></script>
+<script src="assets/sim10.js"></script>
 <script>
 (function(){
 'use strict';
