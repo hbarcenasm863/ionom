@@ -555,6 +555,25 @@ html{font-size:var(--base-fs)}
 .font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
 .font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:inherit}
 .font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* Ahorcado */
+.ah-wrap{display:flex;gap:12px;align-items:flex-start;margin:6px 0 10px}
+.ah-svg{width:150px;height:auto;flex:0 0 auto;background:#f8fafc;border-radius:12px}
+.ah-info{flex:1 1 200px;min-width:0}
+.ah-fallos{font-size:.85rem;color:var(--tx2,#475569);margin-bottom:6px}
+.ah-pistas{margin:0 0 8px;padding:0;list-style:none;font-size:.92rem;line-height:1.4}
+.ah-pistas li{margin-bottom:4px}
+.ah-pista-btn{border:1.5px solid #d4a843;background:#fff8e6;color:#7a5a00;border-radius:10px;padding:7px 12px;font-weight:700;cursor:pointer;font-size:.88rem}
+.ah-palabra{display:flex;flex-wrap:wrap;gap:6px 5px;justify-content:center;margin:8px 0 14px}
+.ah-l{width:1.6em;height:1.9em;border-bottom:3px solid #0d4a73;display:inline-flex;align-items:flex-end;justify-content:center;font:800 1.25rem/1.2 var(--mono,monospace);color:#0d2d42}
+.ah-l.ah-falto{color:#dc2626}
+.ah-esp{width:1.2em}
+.ah-teclado{display:grid;grid-template-columns:repeat(9,1fr);gap:5px}
+.ah-k{min-height:40px;border:1.5px solid #cbd5e1;border-radius:9px;background:#fff;font-weight:800;font-size:1rem;cursor:pointer;color:#0d2d42}
+.ah-k:disabled{cursor:default}
+.ah-k.ah-si{background:#dcfce7;border-color:#16a34a;color:#166534}
+.ah-k.ah-no{background:#fee2e2;border-color:#fca5a5;color:#991b1b;opacity:.7}
+@media (max-width:420px){.ah-svg{width:84px}.ah-pistas{font-size:.85rem}.ah-l{width:1.3em;font-size:1.05rem}.ah-k{min-height:38px;font-size:.92rem}}
 </style>
 <link rel="stylesheet" href="assets/ionom.css">
 </head>
@@ -862,6 +881,12 @@ html{font-size:var(--base-fs)}
         <span class="gb-name">Soluciones</span>
         <span class="gb-sub">Disolución, solubilidad, concentración y dilución</span>
       </button>
+      <button class="group-btn" onclick="pickGroup('ahorcado')">
+        <span class="gb-step">20</span>
+        <div class="gb-icon-wrap gic-mol">🪢</div>
+        <span class="gb-name">Ahorcado</span>
+        <span class="gb-sub">Adivina la palabra con 3 pistas</span>
+      </button>
       <button class="group-btn" onclick="pickGroup('cazar')">
         <span class="gb-step">20</span>
         <div class="gb-icon-wrap gic-mol">🔎</div>
@@ -958,6 +983,7 @@ html{font-size:var(--base-fs)}
       <div id="area-classify" style="display:none"></div>
       <div id="area-balance" style="display:none"></div>
       <div id="area-mol" style="display:none"></div>
+      <div id="area-ahorcado" style="display:none"></div>
       <div id="area-react" style="display:none">
         <div id="react-chain-diagram"></div>
         <div id="react-mc-opts" class="mc-opts"></div>
@@ -1713,7 +1739,7 @@ function makeElPropertyQuestion(){
 
 // ── Timer ──
 let TIMER_ID=null;
-const TIMER_BY_TYPE={'mol-calc':180,'balance-eq':120,'classify-rx':90};
+const TIMER_BY_TYPE={'ahorcado':180,'mol-calc':180,'balance-eq':120,'classify-rx':90};
 const TIMER_TOTAL=60;
 function timerFor(qtype){
   // los formatos interactivos de átomo y enlace necesitan más tiempo que la opción múltiple
@@ -1745,6 +1771,7 @@ function stopTimer(){
 }
 function timeOut(){
   const q=ST.questions[ST.idx];
+  if(q&&q.qtype==='ahorcado'){ terminarAhorcado(false,'⏱ Tiempo agotado.'); return; }
   ST.totalAttempts++;
   document.querySelectorAll('.mc-opt,.drag-chip,.drag-slot').forEach(el=>{el.disabled=true;el.style.pointerEvents='none';});
   const inp=document.getElementById('q-input');if(inp){inp.disabled=true;}
@@ -1860,6 +1887,14 @@ function startGame(group){
   // Ácidos y bases, procesos industriales y modelos/datos (aprendizajes
   // priorizados de la SED para 10.°) usan el mismo formato: BANCO_PH,
   // BANCO_INDUSTRIA y BANCO_MODELOS, también en banco.js.
+  if(group==='ahorcado'){
+    if(typeof BANCO_AHORCADO==='undefined'||!BANCO_AHORCADO.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
+    ST.questions=shuffle(BANCO_AHORCADO).slice(0,20).map((w,i)=>({qtype:'ahorcado',group:'ahorcado',palabra:w[0],temaOrigen:w[1],pistas:w.slice(2,5),
+      formula:'ahorcado-'+w[0],trad:[w[0]],stock:[],sist:[],hint:''}));
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
+    sendProgress('inicio'); _startProgressTracking();
+    showScreen('s-game');loadQuestion();return;
+  }
   if(group==='cazar'){
     const qs=preguntasCazar(null,20);
     if(!qs.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
@@ -1978,7 +2013,7 @@ function loadQuestion(){
   document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=false);
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol','area-atomx'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol','area-atomx','area-ahorcado'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   // Red de seguridad: un error inesperado al renderizar (dato de compuesto
   // incompleto, tipo de pregunta mal asignado, etc.) ya no debe congelar la
   // partida completa —sin esto, una excepción aquí dejaba la pantalla sin
@@ -2002,6 +2037,7 @@ function loadQuestion(){
     else if(q.qtype==='classify-rx') renderClassifyRx(q);
     else if(q.qtype==='balance-eq') renderBalanceEq(q);
     else if(q.qtype==='mol-calc') renderMolCalc(q);
+    else if(q.qtype==='ahorcado') renderAhorcado(q);
   } catch(err) {
     console.error('Error renderizando la pregunta, se salta a la siguiente:', err, q);
     renderMC_fallback(q);
@@ -3358,9 +3394,9 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
+const GROUP_LABELS={all:'Todos los grupos',ahorcado:'Ahorcado',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'ahorcado':'Empieza por las vocales y por las letras más comunes (S, R, N, L, C). Pide la segunda pista antes de arriesgar: la tercera te deja solo 1 punto.','cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
@@ -4086,6 +4122,91 @@ function showBalanceAnswer(){
   scheduleNext(0);
 }
 
+
+/* ── Ahorcado con 3 pistas ─────────────────────────────────────────────
+   Se ve la pista 1; el estudiante puede pedir la 2 y la 3 (la más
+   reveladora). 6 fallos completan el muñeco. Puntaje: 2 puntos si adivina
+   con 1 o 2 pistas, 1 punto si usó las 3. Las tildes no cuentan: la A
+   descubre también la Á (la Ñ sí es una letra aparte). */
+const AH_MAX_FALLOS=6;
+let AH=null;
+function ahBase(ch){ return ch==='Ñ'?'Ñ':ch.normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function ahDibujo(f){
+  const p=[
+    '<circle cx="120" cy="52" r="14"/>',
+    '<line x1="120" y1="66" x2="120" y2="112"/>',
+    '<line x1="120" y1="78" x2="100" y2="98"/>',
+    '<line x1="120" y1="78" x2="140" y2="98"/>',
+    '<line x1="120" y1="112" x2="104" y2="140"/>',
+    '<line x1="120" y1="112" x2="136" y2="140"/>'];
+  return '<svg viewBox="0 0 180 160" class="ah-svg" role="img" aria-label="Fallos: '+f+' de '+AH_MAX_FALLOS+'">'
+    +'<g stroke="#64748b" stroke-width="4" stroke-linecap="round" fill="none"><line x1="20" y1="152" x2="100" y2="152"/><line x1="50" y1="152" x2="50" y2="12"/><line x1="50" y1="12" x2="120" y2="12"/><line x1="120" y1="12" x2="120" y2="38"/></g>'
+    +'<g stroke="#dc2626" stroke-width="4" stroke-linecap="round" fill="none">'+p.slice(0,f).join('')+'</g></svg>';
+}
+function ahPintar(){
+  const area=document.getElementById('area-ahorcado'); if(!area||!AH) return;
+  const letras=[...AH.palabra];
+  const hueco=letras.map(ch=>{
+    if(ch===' ') return '<span class="ah-esp"></span>';
+    if(!/[A-ZÁÉÍÓÚÜÑ]/.test(ch)) return '<span class="ah-l ah-v">'+ch+'</span>';
+    const ok=AH.usadas.has(ahBase(ch))||AH.fin;
+    return '<span class="ah-l'+(ok?' ah-v':'')+(AH.fin&&!AH.usadas.has(ahBase(ch))?' ah-falto':'')+'">'+(ok?ch:'')+'</span>';
+  }).join('');
+  const pistas=AH.pistas.slice(0,AH.nPistas).map((t,i)=>'<li><b>Pista '+(i+1)+':</b> '+t+'</li>').join('');
+  const teclas='ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('').map(l=>{
+    const u=AH.usadas.has(l), en=AH.base.includes(l);
+    return '<button type="button" class="ah-k'+(u?(en?' ah-si':' ah-no'):'')+'" data-l="'+l+'"'+(u||AH.fin?' disabled':'')+'>'+l+'</button>';
+  }).join('');
+  area.innerHTML='<div class="ah-wrap">'+ahDibujo(AH.fallos)
+    +'<div class="ah-info"><div class="ah-fallos">Fallos: <b>'+AH.fallos+'</b> de '+AH_MAX_FALLOS+'</div><ul class="ah-pistas">'+pistas+'</ul>'
+    +(AH.nPistas<3&&!AH.fin?'<button type="button" class="ah-pista-btn">💡 Ver la pista '+(AH.nPistas+1)+' de 3'+(AH.nPistas===2?' (vale 1 punto menos)':'')+'</button>':'')+'</div></div>'
+    +'<div class="ah-palabra" aria-label="Palabra de '+letras.filter(c=>c!==' ').length+' letras">'+hueco+'</div>'
+    +'<div class="ah-teclado">'+teclas+'</div>';
+  area.querySelectorAll('.ah-k').forEach(b=>b.addEventListener('click',()=>ahLetra(b.dataset.l)));
+  const pb=area.querySelector('.ah-pista-btn'); if(pb) pb.addEventListener('click',()=>{ if(AH&&!AH.fin&&AH.nPistas<3){AH.nPistas++;ahPintar();} });
+}
+function renderAhorcado(q){
+  document.getElementById('q-meta').textContent='Pregunta '+(ST.idx+1)+' de 20 · Ahorcado';
+  document.getElementById('q-formula').innerHTML='<span class="el-name-lg" style="font-size:1rem">🪢 Ahorcado</span>';
+  document.getElementById('q-prompt').textContent='Adivina la palabra letra por letra. Tienes '+AH_MAX_FALLOS+' fallos y hasta 3 pistas.';
+  const palabra=q.palabra.toUpperCase();
+  AH={palabra, base:[...palabra].map(ahBase).join(''), pistas:q.pistas, nPistas:1, fallos:0, usadas:new Set(), fin:false};
+  const area=document.getElementById('area-ahorcado'); area.style.display='';
+  ahPintar();
+}
+function ahLetra(l){
+  if(!AH||AH.fin||ST.answered||AH.usadas.has(l)) return;
+  AH.usadas.add(l);
+  if(!AH.base.includes(l)) AH.fallos++;
+  const completa=[...AH.palabra].every(ch=>!/[A-ZÁÉÍÓÚÜÑ]/.test(ch)||AH.usadas.has(ahBase(ch)));
+  if(completa) return terminarAhorcado(true);
+  if(AH.fallos>=AH_MAX_FALLOS) return terminarAhorcado(false,'✗ Se completó el muñeco.');
+  ahPintar();
+}
+function terminarAhorcado(gano,msg){
+  if(!AH||AH.fin) return;
+  AH.fin=true;
+  const q=ST.questions[ST.idx];
+  if(gano){
+    const pts=AH.nPistas<=2?2:1;
+    ST.score+=pts; ST.correct++;
+    msg='✓ ¡La adivinaste! +'+pts+(pts===1?' punto (usaste las 3 pistas)':' puntos');
+  } else if(!ST.errors.find(e=>e.formula===q.formula)){
+    ST.errors.push({group:q.group,formula:q.formula,name:q.palabra,qtype:ST.qtype});
+  }
+  ST.totalAttempts++; updateStats();
+  ahPintar();
+  const fb=document.getElementById('feedback');
+  fb.className='feedback '+(gano?'ok':'err')+' show';
+  fb.innerHTML='<strong>'+msg+'</strong><div class="fb-why">La palabra era <b>'+q.palabra+'</b>. '+q.pistas[2]+'</div>';
+  scheduleNext(0);
+}
+document.addEventListener('keydown',function(e){
+  if(!AH||AH.fin||ST.qtype!=='ahorcado'||e.ctrlKey||e.metaKey||e.altKey) return;
+  const t=e.target; if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA')) return;
+  const k=(e.key||'').toUpperCase();
+  if(/^[A-ZÑ]$/.test(k)){ e.preventDefault(); ahLetra(k); }
+});
 function renderMolCalc(q){
   document.getElementById('q-meta').textContent = 'Pregunta '+(ST.idx+1)+' de 20 · Mol y masa molar';
   document.getElementById('q-formula').textContent = q.formula;

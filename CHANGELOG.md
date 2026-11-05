@@ -4,6 +4,27 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (8) — Ahorcado con 3 pistas en el Juego
+
+Los estudiantes pidieron un tipo de juego especial: el ahorcado con 3 pistas.
+
+**Grupo nuevo «🪢 Ahorcado» (`juego.html`).**
+- Cada partida tiene 20 palabras al azar de un banco de 89 palabras clave del sitio (`BANCO_AHORCADO` en `banco.js`). Cubre el átomo, la configuración, la tabla periódica, el enlace, la nomenclatura, las reacciones, el pH, el mol, la industria, los gases, las soluciones y los modelos.
+- **Pistas:** al empezar se ve la pista 1, que es general. El estudiante puede pedir la 2 y la 3, que es la más reveladora. Todas las pistas usan solo lo que explican las páginas del sitio.
+- **Fallos y puntaje:** con 6 fallos se completa el muñeco. Si adivina con 1 o 2 pistas gana 2 puntos; si usó las 3, gana 1 punto. Al final se muestra la palabra.
+- **Teclado:** en pantalla, con la Ñ. En el computador también funciona el teclado físico. Las tildes no cuentan: la A descubre también la Á.
+- **Tiempo:** 3 minutos por palabra.
+- **Modo Estudiante:** funciona como cualquier otro grupo. El puntaje, las rachas y el reporte al docente se registran igual, y las palabras falladas quedan en el repaso de errores.
+
+**Verificación.** Se probó con Playwright en un celular de 390 px:
+- se ganó una palabra con las 3 pistas usando el teclado físico, y dio 1 punto;
+- se perdió otra con los botones en pantalla, y no sumó puntos;
+- no hubo desbordes ni errores en consola.
+
+`sw.js` pasa a `ionom-v78` porque cambió `banco.js`.
+
+---
+
 ## 5 de noviembre (7) — Cazar errores en el Juego y en todos los documentos del generador
 
 El docente pidió que los ejercicios del generador cubrieran todos los tipos de documento y que el Juego tuviera cazadores de errores.

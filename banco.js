@@ -4395,3 +4395,633 @@ const BANCO_CAZAR={
 ]
 ]
 };
+
+/* ── Ahorcado con 3 pistas (Juego) ──
+   [palabra, tema, pista 1 (general), pista 2, pista 3 (la más reveladora)].
+   Palabras clave de las páginas del sitio; las pistas usan solo lo que allí
+   se explica. Las tildes no cuentan al adivinar (la A descubre también la Á). */
+const BANCO_AHORCADO=[
+[
+"PROTÓN",
+"atomo",
+"Partícula del núcleo con carga positiva.",
+"Su número define de qué elemento es el átomo.",
+"Su número es Z, el número atómico."
+],
+[
+"NEUTRÓN",
+"atomo",
+"Partícula del núcleo sin carga eléctrica.",
+"Su número se calcula como A − Z.",
+"Los isótopos de un elemento tienen distinto número de esta partícula."
+],
+[
+"ELECTRÓN",
+"atomo",
+"Partícula con carga negativa.",
+"Thomson la descubrió con el tubo de rayos catódicos.",
+"En un átomo neutro hay tantos como protones."
+],
+[
+"ISÓTOPO",
+"atomo",
+"Átomos del mismo elemento con distinta masa.",
+"Tienen el mismo Z y distinto A.",
+"El carbono-12 y el carbono-14 son un ejemplo."
+],
+[
+"NÚCLEO",
+"atomo",
+"Centro del átomo, muy pequeño y denso.",
+"Rutherford lo descubrió con la lámina de oro.",
+"Allí están los protones y los neutrones."
+],
+[
+"CATIÓN",
+"atomo",
+"Ion con carga positiva.",
+"Se forma cuando un átomo pierde electrones.",
+"El Na⁺ es un ejemplo."
+],
+[
+"ANIÓN",
+"atomo",
+"Ion con carga negativa.",
+"Se forma cuando un átomo gana electrones.",
+"El Cl⁻ es un ejemplo."
+],
+[
+"RUTHERFORD",
+"atomo",
+"Científico del experimento de la lámina de oro.",
+"Propuso un átomo con un núcleo pequeño y denso.",
+"Su modelo reemplazó al de Thomson."
+],
+[
+"BOHR",
+"atomo",
+"Propuso que los electrones giran en niveles de energía.",
+"Su modelo explica la luz que emite el hidrógeno.",
+"Científico danés; su apellido tiene 4 letras."
+],
+[
+"ORBITAL",
+"config-e",
+"Región donde es más probable encontrar un electrón.",
+"Le caben como máximo 2 electrones.",
+"Los hay de tipo s, p, d y f."
+],
+[
+"AUFBAU",
+"config-e",
+"Principio de llenado de los orbitales.",
+"Los electrones ocupan primero los de menor energía.",
+"Principio de ___ (palabra alemana)."
+],
+[
+"HUND",
+"config-e",
+"Regla para orbitales de igual energía.",
+"Primero va un electrón en cada orbital, con el mismo espín.",
+"Regla de ___: apellido de 4 letras."
+],
+[
+"PAULI",
+"config-e",
+"Principio: dos electrones no pueden tener los 4 números cuánticos iguales.",
+"Por eso un orbital tiene como máximo 2 electrones.",
+"Principio de exclusión de ___."
+],
+[
+"ESPÍN",
+"config-e",
+"Número cuántico con valores +½ y −½.",
+"Se dibuja con las flechas ↑ y ↓.",
+"Es el cuarto número cuántico."
+],
+[
+"VALENCIA",
+"config-e",
+"Electrones del último nivel de energía.",
+"Son los que forman los enlaces.",
+"El sodio tiene 1 electrón de ___."
+],
+[
+"MOELLER",
+"config-e",
+"Diagrama de flechas diagonales para llenar los subniveles.",
+"Muestra que el 4s se llena antes que el 3d.",
+"Diagrama de ___."
+],
+[
+"PERIODO",
+"elemento",
+"Fila horizontal de la tabla periódica.",
+"En la tabla hay 7.",
+"Su número indica el último nivel de energía ocupado."
+],
+[
+"GRUPO",
+"elemento",
+"Columna de la tabla periódica.",
+"Sus elementos tienen propiedades parecidas.",
+"En la tabla actual hay 18."
+],
+[
+"HALÓGENOS",
+"elemento",
+"Elementos del grupo 17.",
+"Flúor, cloro, bromo y yodo.",
+"Con los metales forman sales, como el NaCl."
+],
+[
+"ALCALINOS",
+"elemento",
+"Elementos del grupo 1, sin contar el hidrógeno.",
+"Litio, sodio, potasio…",
+"Metales muy reactivos con el agua."
+],
+[
+"METALOIDE",
+"elemento",
+"Elemento con propiedades entre las de un metal y un no metal.",
+"El silicio de los chips es uno.",
+"Está junto a la «escalera» de la tabla."
+],
+[
+"ELECTRONEGATIVIDAD",
+"elemento",
+"Capacidad de un átomo para atraer los electrones de un enlace.",
+"La escala más usada es la de Pauling.",
+"El flúor es el que la tiene mayor."
+],
+[
+"MENDELÉIEV",
+"elemento",
+"Ordenó los elementos en una tabla en 1869.",
+"Dejó huecos para elementos que aún no se conocían.",
+"Químico ruso."
+],
+[
+"IÓNICO",
+"enlace",
+"Enlace entre un metal y un no metal.",
+"Su ΔEN es de 1,7 o más.",
+"Hay transferencia de electrones, como en el NaCl."
+],
+[
+"COVALENTE",
+"enlace",
+"Enlace en el que se comparten electrones.",
+"Se da entre no metales.",
+"Puede ser polar o apolar."
+],
+[
+"METÁLICO",
+"enlace",
+"Enlace con un «mar de electrones».",
+"Explica que los metales conduzcan la electricidad.",
+"Es el enlace del cobre de los cables."
+],
+[
+"OCTETO",
+"enlace",
+"Regla de los 8 electrones.",
+"Los átomos ganan, pierden o comparten electrones para cumplirla.",
+"Los gases nobles ya la cumplen."
+],
+[
+"LEWIS",
+"enlace",
+"Estructuras que dibujan con puntos los electrones de valencia.",
+"Muestran los pares enlazantes y los pares libres.",
+"Estructuras de ___."
+],
+[
+"POLAR",
+"enlace",
+"Enlace covalente en el que un átomo atrae más los electrones.",
+"Su ΔEN está entre 0,4 y 1,7.",
+"El enlace H−Cl es un ejemplo."
+],
+[
+"ÓXIDO",
+"ox-bas",
+"Compuesto de un elemento con oxígeno.",
+"Puede ser básico (con un metal) o ácido (con un no metal).",
+"El Fe₂O₃ es el ___ férrico."
+],
+[
+"ANHÍDRIDO",
+"anhid",
+"Nombre tradicional del óxido de un no metal.",
+"Con agua forma un oxácido.",
+"El SO₃ es el ___ sulfúrico."
+],
+[
+"HIDRÓXIDO",
+"base",
+"Base formada por un metal y el grupo OH⁻.",
+"Se forma cuando un óxido básico reacciona con agua.",
+"El NaOH es el ___ de sodio."
+],
+[
+"HIDRURO",
+"hidru",
+"Compuesto de un metal con hidrógeno.",
+"El H va al final de la fórmula.",
+"El NaH es el ___ de sodio."
+],
+[
+"OXÁCIDO",
+"ac-ox",
+"Ácido formado por hidrógeno, un no metal y oxígeno.",
+"Se forma con un anhídrido y agua.",
+"El H₂SO₄ es uno."
+],
+[
+"HIDRÁCIDO",
+"ac-hid",
+"Ácido de hidrógeno y un no metal, sin oxígeno.",
+"En agua se nombra con el sufijo -hídrico.",
+"El HCl disuelto en agua es uno."
+],
+[
+"STOCK",
+"ox-bas",
+"Sistema de nomenclatura que usa números romanos.",
+"El número romano es el estado de oxidación del metal.",
+"«Óxido de hierro (III)» es un nombre ___."
+],
+[
+"SISTEMÁTICA",
+"ox-bas",
+"Nomenclatura que usa los prefijos mono-, di-, tri-…",
+"Los prefijos dicen cuántos átomos hay de cada elemento.",
+"«Trióxido de dihierro» es un nombre en nomenclatura ___."
+],
+[
+"TRADICIONAL",
+"ox-bas",
+"Nomenclatura que usa los sufijos -oso e -ico.",
+"El sufijo -oso es para el estado de oxidación menor.",
+"«Óxido férrico» es un nombre en nomenclatura ___."
+],
+[
+"OXISAL",
+"sal-ox",
+"Sal que tiene oxígeno.",
+"Se forma con un oxácido y una base.",
+"El CaCO₃ de la caliza es una."
+],
+[
+"SÍNTESIS",
+"reaccion",
+"Dos sustancias se unen en una sola.",
+"A + B → AB.",
+"2 H₂ + O₂ → 2 H₂O es de este tipo."
+],
+[
+"DESCOMPOSICIÓN",
+"reaccion",
+"Una sustancia se separa en dos o más.",
+"AB → A + B.",
+"La calcinación de la caliza es de este tipo."
+],
+[
+"COMBUSTIÓN",
+"reaccion",
+"Reacción de un combustible con oxígeno.",
+"Si es completa produce CO₂ y H₂O.",
+"Quemar el gas de la estufa es una."
+],
+[
+"NEUTRALIZACIÓN",
+"reaccion",
+"Ácido + base → sal + agua.",
+"En el fondo es H⁺ + OH⁻ → H₂O.",
+"HCl + NaOH → NaCl + H₂O es una."
+],
+[
+"PRECIPITADO",
+"reaccion",
+"Sólido que aparece al mezclar dos soluciones.",
+"En la potabilización del agua atrapa la suciedad.",
+"Se marca con una flecha hacia abajo, ↓."
+],
+[
+"COEFICIENTE",
+"balanceo",
+"Número que va delante de una fórmula en una ecuación.",
+"Se cambia para balancear; el subíndice, nunca.",
+"En 2 H₂O, el 2 es el ___."
+],
+[
+"CATALIZADOR",
+"industria",
+"Sustancia que acelera una reacción sin gastarse.",
+"Se escribe sobre la flecha de la ecuación.",
+"En el proceso Haber es de hierro."
+],
+[
+"OXIDACIÓN",
+"industria",
+"Pérdida de electrones.",
+"El número de oxidación aumenta.",
+"En el alto horno, el C del CO pasa de +2 a +4: sufre una ___."
+],
+[
+"REDUCCIÓN",
+"industria",
+"Ganancia de electrones.",
+"El número de oxidación disminuye.",
+"En el alto horno, el Fe pasa de +3 a 0: sufre una ___."
+],
+[
+"ÁCIDO",
+"acidobase",
+"Según Arrhenius, libera H⁺ en el agua.",
+"Su pH es menor que 7.",
+"El limón y el vinagre lo son."
+],
+[
+"BASE",
+"acidobase",
+"Según Brønsted-Lowry, acepta un H⁺.",
+"Su pH es mayor que 7.",
+"La leche de magnesia es una."
+],
+[
+"INDICADOR",
+"acidobase",
+"Sustancia que cambia de color según el pH.",
+"El agua del repollo morado es uno natural.",
+"Se pone rojo en ácido y verde en base."
+],
+[
+"AMORTIGUADOR",
+"acidobase",
+"Mantiene el pH casi constante.",
+"En la sangre es el par H₂CO₃ / HCO₃⁻.",
+"Gracias a él la comida no cambia el pH de la sangre."
+],
+[
+"HIDRONIO",
+"acidobase",
+"Ion H₃O⁺.",
+"Se forma cuando el agua acepta un H⁺.",
+"Ion ___."
+],
+[
+"ANFÓTERO",
+"acidobase",
+"Sustancia que puede actuar como ácido o como base.",
+"El agua es el ejemplo más común.",
+"Con el HCl actúa como base y con el NH₃ como ácido."
+],
+[
+"ENCALADO",
+"acidobase",
+"Agregar cal al suelo para subir su pH.",
+"Se usa en los suelos ácidos de la Orinoquía.",
+"CaCO₃ + 2 H⁺ → Ca²⁺ + H₂O + CO₂."
+],
+[
+"PEPSINA",
+"acidobase",
+"Enzima del estómago que digiere las proteínas.",
+"Necesita el pH ácido del jugo gástrico.",
+"La activa el HCl del estómago."
+],
+[
+"ACIDIFICACIÓN",
+"acidobase",
+"Le pasa al mar cuando absorbe CO₂.",
+"Su pH bajó de unos 8,2 a unos 8,1.",
+"Les dificulta a los corales formar su esqueleto."
+],
+[
+"MOL",
+"mol-masa",
+"Unidad de cantidad de sustancia.",
+"Tiene 6,022 × 10²³ partículas.",
+"n = m ÷ M."
+],
+[
+"AVOGADRO",
+"mol-masa",
+"Su número es 6,022 × 10²³.",
+"También tiene una ley: volúmenes iguales de gases, igual número de moléculas.",
+"Número de ___."
+],
+[
+"MASA MOLAR",
+"mol-masa",
+"Masa de un mol de una sustancia.",
+"Se mide en g/mol.",
+"Para el H₂O es de unos 18 g/mol."
+],
+[
+"LIMITANTE",
+"estequiometria",
+"Reactivo que se acaba primero.",
+"Decide cuánto producto se forma.",
+"Reactivo ___."
+],
+[
+"RENDIMIENTO",
+"industria",
+"Masa real ÷ masa teórica × 100.",
+"Se expresa en porcentaje.",
+"Si es 95 %, se perdió una parte del producto."
+],
+[
+"PUREZA",
+"industria",
+"Porcentaje de sustancia útil en una materia prima.",
+"Una caliza puede tener 90 % de CaCO₃.",
+"Se corrige multiplicando la masa por ese porcentaje."
+],
+[
+"AMONÍACO",
+"industria",
+"Producto del proceso Haber.",
+"N₂ + 3 H₂ → 2 NH₃.",
+"Con él se fabrican fertilizantes para el campo."
+],
+[
+"CALCINACIÓN",
+"industria",
+"Calentar la caliza a unos 900 °C.",
+"CaCO₃ → CaO + CO₂.",
+"Así se obtiene la cal viva para el cemento."
+],
+[
+"ELECTRÓLISIS",
+"industria",
+"Separar sustancias con corriente eléctrica.",
+"De la salmuera salen NaOH, Cl₂ y H₂.",
+"Proceso cloro-soda con la sal de Zipaquirá."
+],
+[
+"ESTEQUIOMETRÍA",
+"estequiometria",
+"Cálculo de las cantidades en una reacción.",
+"Usa la razón molar de la ecuación balanceada.",
+"Se resuelve con cadenas de factores de conversión."
+],
+[
+"PRESIÓN",
+"gases",
+"Resulta de los choques de las partículas contra las paredes.",
+"Se mide en atm, mmHg o kPa.",
+"En Bogotá es de unos 0,74 atm."
+],
+[
+"KELVIN",
+"gases",
+"Escala de temperatura absoluta.",
+"K = °C + 273.",
+"En ella el cero absoluto vale 0."
+],
+[
+"BOYLE",
+"gases",
+"Ley: a temperatura constante, P × V es constante.",
+"La presión y el volumen son inversamente proporcionales.",
+"Ley de ___ (1662)."
+],
+[
+"CHARLES",
+"gases",
+"Ley: a presión constante, V/T es constante.",
+"Por ella un globo que se deja al sol se infla.",
+"Ley de ___ (1787)."
+],
+[
+"DALTON",
+"gases",
+"Ley de las presiones parciales.",
+"P total = P₁ + P₂ + …",
+"Explica por qué en el páramo te cansas más."
+],
+[
+"CERO ABSOLUTO",
+"gases",
+"Equivale a −273 °C.",
+"Ahí llega a V = 0 la recta de la ley de Charles.",
+"Es 0 K."
+],
+[
+"GAS IDEAL",
+"gases",
+"Modelo de partículas muy pequeñas que no se atraen.",
+"Cumple PV = nRT.",
+"Los gases reales se le parecen a bajas presiones."
+],
+[
+"SOLUTO",
+"soluciones",
+"Sustancia que se disuelve.",
+"Suele estar en menor cantidad.",
+"En el suero fisiológico es el NaCl."
+],
+[
+"SOLVENTE",
+"soluciones",
+"Sustancia que disuelve.",
+"Suele estar en mayor cantidad.",
+"El agua es el más común."
+],
+[
+"SATURADA",
+"soluciones",
+"Solución que ya no admite más soluto.",
+"Su punto está sobre la curva de solubilidad.",
+"Lo que sobra se queda en el fondo."
+],
+[
+"SOLUBILIDAD",
+"soluciones",
+"Máxima cantidad de soluto que se puede disolver.",
+"Se mide en gramos por 100 g de agua.",
+"La del KNO₃ aumenta mucho con la temperatura."
+],
+[
+"MOLARIDAD",
+"soluciones",
+"Moles de soluto por litro de solución.",
+"Se escribe con la letra M.",
+"El HCl 0,1 M del laboratorio usa esta unidad."
+],
+[
+"MOLALIDAD",
+"soluciones",
+"Moles de soluto por kilogramo de solvente.",
+"Se escribe con la letra m minúscula.",
+"No cambia con la temperatura."
+],
+[
+"DILUCIÓN",
+"soluciones",
+"Agregar solvente para bajar la concentración.",
+"C₁V₁ = C₂V₂.",
+"Los moles de soluto no cambian."
+],
+[
+"HIDRATACIÓN",
+"soluciones",
+"Capa de moléculas de agua alrededor de un ion.",
+"El O del agua mira hacia el Na⁺.",
+"Mantiene separados los iones disueltos."
+],
+[
+"CRISTALIZACIÓN",
+"soluciones",
+"Formación de cristales al enfriar una solución saturada.",
+"Sirve para purificar sustancias.",
+"Al enfriar KNO₃ de 60 °C a 20 °C aparecen 48,4 g de cristales."
+],
+[
+"HIPÓTESIS",
+"modelos",
+"Predicción que se puede poner a prueba.",
+"«Si caliento el globo, se inflará más.»",
+"Es el primer paso del laboratorio de Boyle."
+],
+[
+"TEORÍA",
+"modelos",
+"Explica por qué ocurre algo, con muchas evidencias.",
+"La cinético-molecular es una.",
+"No es «una idea sin pruebas»."
+],
+[
+"LEY",
+"modelos",
+"Describe lo que ocurre siempre en ciertas condiciones.",
+"P × V = constante es una.",
+"Dice qué pasa, pero no por qué."
+],
+[
+"MODELO",
+"modelos",
+"Representación que explica y predice.",
+"Las bolitas que rebotan en la jeringa son uno.",
+"El dibujo del átomo de Bohr es uno."
+],
+[
+"EXTRAPOLAR",
+"modelos",
+"Predecir fuera del rango de los datos.",
+"Es más arriesgado que interpolar.",
+"Usar datos de 0 a 3000 m para predecir en un nevado."
+],
+[
+"INTERPOLAR",
+"modelos",
+"Predecir dentro del rango de los datos.",
+"Es más confiable que extrapolar.",
+"Lo contrario de extrapolar."
+]
+];
