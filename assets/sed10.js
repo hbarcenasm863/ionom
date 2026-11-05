@@ -56,7 +56,26 @@ function practica(box,banco,n,titulo,juego){
       if(+card.dataset.mal>=2)$$('.opt',card).forEach(function(x){x.disabled=true;if(x.textContent===q.ok)x.classList.add('si');});}
     sc();};
 }
+/* Problemas al azar con verificación. gens = {clave:{t:'nombre', g:function()
+   → {q:'enunciado', r:número, u:'unidad', sol:'solución paso a paso', tol}}} */
+function problemas(box,gens,titulo){
+  if(typeof box==='string')box=document.getElementById(box);if(!box)return;
+  var claves=Object.keys(gens),k=claves[0],p=null,bien=0,hechos=0;
+  box.classList.add('calc');
+  box.innerHTML='<div class="pasos-h">'+(titulo||'Problemas al azar')+'</div><div class="seg" role="group">'+claves.map(function(c,i){return '<button type="button" data-k="'+c+'"'+(i?'':' class="on"')+'>'+gens[c].t+'</button>';}).join('')+'</div>'+
+    '<div class="calc-out pb-q" aria-live="polite"></div><div class="calc-row"><label>Tu respuesta:</label><input class="pb-r" inputmode="decimal"><span class="pb-u"></span><button type="button" class="btn-s prim pb-ok">Revisar</button><button type="button" class="btn-s pb-ver">Ver la solución</button><button type="button" class="btn-s pb-otro">🔀 Otro problema</button></div><div class="calc-out pb-out" aria-live="polite">Resuelve en tu cuaderno y escribe el resultado.</div>';
+  var q=box.querySelector('.pb-q'),r=box.querySelector('.pb-r'),u=box.querySelector('.pb-u'),o=box.querySelector('.pb-out');
+  function nuevo(){p=gens[k].g();q.innerHTML=p.q;u.textContent=p.u||'';r.value='';o.className='calc-out pb-out';o.innerHTML='Resuelve en tu cuaderno y escribe el resultado.'+(hechos?' · Correctos: '+bien+' de '+hechos:'');}
+  box.querySelector('.seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;k=b.dataset.k;$$('.seg button',box).forEach(function(x){x.classList.toggle('on',x===b);});nuevo();});
+  box.querySelector('.pb-otro').addEventListener('click',nuevo);
+  box.querySelector('.pb-ver').addEventListener('click',function(){o.className='calc-out pb-out';o.innerHTML='<b>Solución:</b> '+p.sol;});
+  function revisar(){var v=parseFloat(String(r.value).replace(/\s/g,'').replace(',','.'));if(isNaN(v)){o.className='calc-out pb-out fail';o.innerHTML='Escribe un número (puedes usar coma decimal).';return;}
+    var tol=p.tol!=null?p.tol:0.02,ok=Math.abs(v-p.r)<=Math.max(Math.abs(p.r)*tol,1e-9);hechos++;if(ok)bien++;
+    o.className='calc-out pb-out '+(ok?'ok':'fail');o.innerHTML=(ok?'✅ <b>¡Correcto!</b> ':'🔎 <b>Todavía no.</b> Revisa las unidades y los pasos. ')+(ok?p.sol:'')+' · Correctos: '+bien+' de '+hechos;}
+  box.querySelector('.pb-ok').addEventListener('click',revisar);r.addEventListener('keydown',function(e){if(e.key==='Enter')revisar();});
+  nuevo();
+}
 function iniciar(){glosario();pasos();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
-window.SED10={clasificador:clasificador,practica:practica};
+window.SED10={clasificador:clasificador,practica:practica,problemas:problemas};
 })();

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Soluciones y concentración</title>
+<meta name="description" content="Cómo se disuelve una sustancia (hidratación, iones y moléculas), solubilidad y curvas de solubilidad, unidades de concentración (%m/m, %m/v, %v/v, ppm, M, m, X, N) y dilución, con simulaciones.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="gases.html"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
+    <a href="soluciones.html" class="active"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🧂 Soluciones: cómo se disuelve una sustancia y cuánto hay disuelto</h1>
+    <p>El suero fisiológico, el alcohol antiséptico, el agua potable con cloro y el café son soluciones. Aquí ves, partícula por partícula, cómo el agua desarma un cristal de sal, por qué el aceite no se disuelve, qué significa que una solución esté saturada, y aprendes a calcular y preparar concentraciones en todas las unidades. Grado 10.</p>
+  </div>
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
+  <div class="sect">
+    <h2>Palabras clave de esta página <button class="tts-btn" onclick="speakText(this)" data-text="Antes de empezar, aprende las palabras clave de las soluciones. Toca cada tarjeta para ver su significado.">🔊 Escuchar</button></h2>
+    <div class="glos">
+      <button type="button"><b>Solución</b><span class="hint">Toca para ver</span><span class="def">Mezcla homogénea: no se distinguen sus componentes, ni con microscopio.</span></button>
+      <button type="button"><b>Soluto</b><span class="hint">Toca para ver</span><span class="def">Lo que se disuelve, casi siempre en menor cantidad (la sal en el agua salada).</span></button>
+      <button type="button"><b>Solvente</b><span class="hint">Toca para ver</span><span class="def">Lo que disuelve, casi siempre en mayor cantidad. El agua es el «solvente universal».</span></button>
+      <button type="button"><b>Hidratación</b><span class="hint">Toca para ver</span><span class="def">Las moléculas de agua rodean a cada partícula de soluto y la separan de las demás.</span></button>
+      <button type="button"><b>Solubilidad</b><span class="hint">Toca para ver</span><span class="def">Máxima cantidad de soluto que se disuelve en 100 g de agua a una temperatura dada.</span></button>
+      <button type="button"><b>Saturada</b><span class="hint">Toca para ver</span><span class="def">Tiene disuelto el máximo posible: lo que se agregue de más se queda en el fondo.</span></button>
+      <button type="button"><b>Concentración</b><span class="hint">Toca para ver</span><span class="def">Cuánto soluto hay en cierta cantidad de solución (o de solvente).</span></button>
+      <button type="button"><b>Dilución</b><span class="hint">Toca para ver</span><span class="def">Agregar solvente: baja la concentración, pero la cantidad de soluto no cambia.</span></button>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>🔬 Simulación: el proceso de disolución, partícula por partícula <button class="tts-btn" onclick="speakText(this)" data-text="Mira cómo las moléculas de agua, que son polares, se acercan al cristal. El lado negativo del agua, el oxígeno, mira hacia los iones positivos, y el lado positivo, los hidrógenos, hacia los negativos. Cuando varias moléculas rodean un ion del borde, lo arrancan del cristal. Compara con el azúcar y con el aceite.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás explicar con partículas cómo se disuelve una sal, por qué el aceite no se disuelve y por qué la solución de sal conduce la electricidad y la de azúcar no.</div>
+    <p class="sim-pregunta">¿qué crees que se disolverá más rápido: la sal en agua fría o en agua caliente y agitada? ¿El azúcar disuelto conducirá la electricidad como la sal?</p>
+    <div class="sim" data-sim="disolucion"></div>
+    <div class="pasos">
+      <div class="pasos-h">El proceso de disolución de la sal, en cuatro pasos</div>
+      <ol>
+        <li><strong>El agua es polar.</strong> En cada molécula de H₂O el oxígeno tiene carga parcial negativa (δ−) y los hidrógenos, positiva (δ+).</li>
+        <li><strong>Las moléculas se orientan.</strong> El O del agua mira hacia el Na⁺ y los H hacia el Cl⁻: son atracciones ion-dipolo.</li>
+        <li><strong>El agua arranca los iones del borde.</strong> Cuando varias moléculas de agua rodean un ion, su atracción vence a la del cristal: el ion se separa (<strong>disociación</strong>).</li>
+        <li><strong>Cada ion queda hidratado.</strong> Una «capa» de agua lo rodea y lo mantiene separado: <span class="eq">NaCl(s) → Na⁺(ac) + Cl⁻(ac)</span>. Los iones libres conducen la electricidad.</li>
+      </ol>
+    </div>
+    <div class="info-box">⚡ <strong>Factores que aceleran la disolución:</strong> temperatura más alta (las partículas se mueven más), agitar (lleva agua «nueva» al cristal) y moler el soluto (más superficie de contacto). Ojo: acelerar no es lo mismo que disolver más; cuánto se disuelve lo decide la <strong>solubilidad</strong>.</div>
+  </div>
+
+  <div class="sect">
+    <h2>Solubilidad: ¿cuánto se puede disolver? <button class="tts-btn" onclick="speakText(this)" data-text="Cada sustancia tiene un límite de cuánto se disuelve en cien gramos de agua, y ese límite cambia con la temperatura. Escoge una sal, la temperatura y la cantidad que agregas, y la gráfica te dice si la solución queda insaturada, saturada o con sólido en el fondo.">🔊 Escuchar</button></h2>
+    <div class="meta">Lee una curva de solubilidad para decidir si una solución está insaturada o saturada, y cuánto cristaliza al enfriarla.</div>
+    <div class="duo">
+      <div class="plot"><svg id="sol-svg" viewBox="0 0 340 240" role="img" aria-label="Curvas de solubilidad de NaCl, KCl y KNO₃ entre 0 y 100 °C"></svg></div>
+      <div class="calc">
+        <div class="calc-row"><label for="so-s">Sal:</label><select id="so-s"><option value="KNO3">KNO₃ (nitrato de potasio)</option><option value="KCl">KCl (cloruro de potasio)</option><option value="NaCl">NaCl (sal de cocina)</option></select></div>
+        <div class="calc-row"><label for="so-t">Temperatura:</label><input type="range" id="so-t" min="0" max="100" value="60"><span class="eq" id="so-tv"></span></div>
+        <div class="calc-row"><label for="so-m">Agregas a 100 g de agua:</label><input type="range" id="so-m" min="0" max="250" value="80"><span class="eq" id="so-mv"></span></div>
+        <div class="calc-row"><label for="so-e">Luego enfrías a:</label><input type="range" id="so-e" min="0" max="100" value="20"><span class="eq" id="so-ev"></span></div>
+        <div class="calc-out" id="so-out" aria-live="polite"></div>
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:var(--dimmer)">Datos de solubilidad en g por 100 g de agua (tablas de referencia, redondeados).</p>
+  </div>
+
+  <div class="sect">
+    <h2>Las unidades de concentración <button class="tts-btn" onclick="speakText(this)" data-text="Hay varias formas de decir cuánto soluto hay. Las porcentuales comparan masas o volúmenes; las partes por millón sirven para cantidades muy pequeñas, como el cloro del agua; y la molaridad, la molalidad y la fracción molar usan moles. Mira un ejemplo de cada una.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás escoger la unidad correcta y calcular cualquier concentración.</div>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Unidad</th><th>Fórmula</th><th>Ejemplo en Colombia</th></tr></thead>
+      <tbody>
+        <tr><td><strong>% m/m</strong></td><td>g de soluto ÷ g de solución × 100</td><td>Un dulce de leche con 50 % m/m de azúcar</td></tr>
+        <tr><td><strong>% m/v</strong></td><td>g de soluto ÷ mL de solución × 100</td><td>Suero fisiológico: NaCl al 0,9 % m/v (0,9 g en 100 mL)</td></tr>
+        <tr><td><strong>% v/v</strong></td><td>mL de soluto ÷ mL de solución × 100</td><td>Alcohol antiséptico al 70 % v/v; el aguardiente tiene unos 29 % v/v («29 grados»)</td></tr>
+        <tr><td><strong>ppm</strong></td><td>mg de soluto ÷ L de solución (en agua) o mg ÷ kg</td><td>Cloro residual del agua potable: de 0,3 a 2,0 mg/L (Resolución 2115 de 2007)</td></tr>
+        <tr><td><strong>Molaridad (M)</strong></td><td>moles de soluto ÷ L de solución</td><td>HCl 0,1 M del laboratorio del colegio</td></tr>
+        <tr><td><strong>Molalidad (m)</strong></td><td>moles de soluto ÷ kg de solvente</td><td>No cambia con la temperatura: se usa para puntos de ebullición y congelación</td></tr>
+        <tr><td><strong>Fracción molar (X)</strong></td><td>moles de un componente ÷ moles totales</td><td>Aire: X(O₂) ≈ 0,21 (es la misma idea de la ley de Dalton)</td></tr>
+        <tr><td><strong>Normalidad (N)</strong></td><td>equivalentes ÷ L = M × (H⁺ u OH⁻ que aporta)</td><td>H₂SO₄ 1 M = 2 N (aporta 2 H⁺)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: ¿cuántos gramos de NaCl se necesitan para 500 mL de suero fisiológico (0,9 % m/v)? ¿Cuál es su molaridad?</div>
+      <ol>
+        <li><strong>Usa la definición.</strong> 0,9 % m/v significa 0,9 g de NaCl por cada 100 mL de solución.</li>
+        <li><strong>Escala al volumen pedido.</strong> 500 mL × (0,9 g / 100 mL) = <strong>4,5 g de NaCl</strong>.</li>
+        <li><strong>Pasa a moles.</strong> NaCl = 23 + 35,5 = 58,5 g/mol → 4,5 g ÷ 58,5 g/mol = 0,0769 mol.</li>
+        <li><strong>Molaridad.</strong> M = 0,0769 mol ÷ 0,500 L = <strong>0,154 M</strong>. Es la concentración de sales que tiene tu sangre: por eso se usa en hospitales.</li>
+      </ol>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: ¿cuánto cloro hay en un tanque de 1000 L de agua potable con 1,5 ppm?</div>
+      <ol>
+        <li><strong>Usa la definición.</strong> 1,5 ppm en agua = 1,5 mg de cloro por cada litro.</li>
+        <li><strong>Multiplica.</strong> 1000 L × 1,5 mg/L = 1500 mg = <strong>1,5 g</strong> de cloro en todo el tanque.</li>
+        <li><strong>Interpreta.</strong> Es muy poco (una parte por cada millón), pero basta para matar las bacterias. Más de 2,0 ppm le da mal sabor y puede ser dañino.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>🔬 Simulación: prepara una solución y dilúyela <button class="tts-btn" onclick="speakText(this)" data-text="Prepara una solución de sulfato de cobre, que es azul. Cambia los gramos de soluto y el volumen de la solución y observa cómo cambia el color y la concentración. Después agrega agua para diluir: los puntos, que representan el soluto, siguen siendo los mismos, pero se reparten en más volumen.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás preparar una solución de molaridad dada y explicar por qué C₁V₁ = C₂V₂ en una dilución.</div>
+    <p class="sim-pregunta">si una solución de CuSO₄ 0,4 M se diluye hasta el doble de su volumen, ¿cuál será su nueva concentración? ¿Cambiará la cantidad de soluto?</p>
+    <div class="sim" data-sim="preparar"></div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto (dilución): ¿cómo preparo 250 mL de HCl 0,1 M a partir de HCl 2 M?</div>
+      <ol>
+        <li><strong>Idea clave.</strong> Al diluir, los moles de soluto no cambian: C₁ × V₁ = C₂ × V₂.</li>
+        <li><strong>Despeja.</strong> V₁ = C₂ × V₂ ÷ C₁ = 0,1 M × 250 mL ÷ 2 M = <strong>12,5 mL</strong>.</li>
+        <li><strong>Procedimiento.</strong> Se miden 12,5 mL del ácido concentrado y se completan con agua hasta 250 mL en un balón aforado. ⚠️ Siempre <strong>el ácido sobre el agua</strong>, nunca al revés, porque se libera calor.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Problemas de concentración al azar <button class="tts-btn" onclick="speakText(this)" data-text="Escoge una unidad y resuelve. Cada problema trae números nuevos y puedes ver la solución completa.">🔊 Escuchar</button></h2>
+    <div class="meta">Practica cada unidad hasta que te salgan bien tres seguidos.</div>
+    <div id="pb-sol"></div>
+  </div>
+
+  <div class="sect quiz-sect" id="practica">
+    <h2>✅ Practica — Soluciones <button class="tts-btn" onclick="speakText(this)" data-text="Ocho preguntas al azar del banco del Juego sobre disolución, solubilidad y concentración.">🔊 Escuchar</button></h2>
+    <div id="prac-so"></div>
+  </div>
+
+  <footer>
+    <a href="juego.html?g=soluciones">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function pickVoice(){
+    const v=window.speechSynthesis.getVoices();
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
+}
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="banco.js"></script>
+<script src="assets/sed10.js"></script>
+<script src="assets/sim10.js"></script>
+<script>
+(function(){
+'use strict';
+function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
+function r2(v,d){var f=Math.pow(10,d);return Math.round(v*f)/f;}
+function al(a){return a[Math.floor(Math.random()*a.length)];}
+if(window.SED10&&typeof BANCO_SOLUCIONES!=='undefined')SED10.practica('prac-so',BANCO_SOLUCIONES,8,'Practica: soluciones','soluciones');
+/* Curvas de solubilidad (g / 100 g de agua) */
+var SOL={NaCl:{c:'#16a34a',d:[[0,35.7],[20,35.9],[40,36.4],[60,37.1],[80,38],[100,39.2]]},KCl:{c:'#2563eb',d:[[0,28],[20,34.2],[40,40.1],[60,45.8],[80,51.3],[100,56.3]]},KNO3:{c:'#dc2626',d:[[0,13.3],[20,31.6],[40,63.9],[60,110],[80,169],[100,246]]}};
+function s(k,T){var d=SOL[k].d;for(var i=1;i<d.length;i++)if(T<=d[i][0]){var a=d[i-1],b=d[i];return a[1]+(b[1]-a[1])*(T-a[0])/(b[0]-a[0]);}return d[d.length-1][1];}
+var NS='http://www.w3.org/2000/svg';function el(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);if(p)p.appendChild(x);return x;}
+function tx(p,x,y,t,a){var e=el('text',Object.assign({x:x,y:y,'font-size':10,fill:'#334155'},a||{}),p);e.textContent=t;return e;}
+function curvas(){var svg=document.getElementById('sol-svg');svg.innerHTML='';var X=function(T){return 40+T/100*285;},Y=function(g){return 210-g/250*190;};
+  el('line',{x1:40,y1:210,x2:325,y2:210,stroke:'#64748b'},svg);el('line',{x1:40,y1:20,x2:40,y2:210,stroke:'#64748b'},svg);
+  [0,50,100,150,200,250].forEach(function(g){tx(svg,34,Y(g)+3,String(g),{'text-anchor':'end'});el('line',{x1:40,y1:Y(g),x2:325,y2:Y(g),stroke:'#eef2f7'},svg);});
+  [0,20,40,60,80,100].forEach(function(T){tx(svg,X(T),224,String(T),{'text-anchor':'middle'});});
+  tx(svg,182,237,'Temperatura (°C)',{'text-anchor':'middle','font-weight':700});tx(svg,12,115,'g / 100 g de agua',{transform:'rotate(-90 12 115)','text-anchor':'middle','font-weight':700});
+  Object.keys(SOL).forEach(function(k){var pts=[];for(var T=0;T<=100;T+=5)pts.push(X(T)+','+Y(s(k,T)));el('polyline',{points:pts.join(' '),fill:'none',stroke:SOL[k].c,'stroke-width':2.5},svg);
+    tx(svg,X(100)-4,Y(s(k,100))-5,k.replace('3','₃'),{'text-anchor':'end',fill:SOL[k].c,'font-weight':800});});
+  var k=document.getElementById('so-s').value,T=+document.getElementById('so-t').value,m=+document.getElementById('so-m').value,Te=+document.getElementById('so-e').value;
+  el('circle',{cx:X(T),cy:Y(Math.min(250,m)),r:6,fill:'#f59e0b',stroke:'#fff','stroke-width':2},svg);
+  el('line',{x1:X(Te),y1:20,x2:X(Te),y2:210,stroke:'#7c3aed','stroke-dasharray':'3 3'},svg);
+  document.getElementById('so-tv').textContent=T+' °C';document.getElementById('so-mv').textContent=m+' g';document.getElementById('so-ev').textContent=Te+' °C';
+  var sT=s(k,T),sE=s(k,Te),dis=Math.min(m,sT),fondo=m-dis,o=document.getElementById('so-out');
+  var t1=m<sT-0.5?'A '+T+' °C se disuelven hasta <b>'+coma(sT,1)+' g</b>: con '+m+' g la solución queda <b>insaturada</b> (punto bajo la curva).':Math.abs(m-sT)<=0.5?'Justo en la curva: solución <b>saturada</b>.':'A '+T+' °C solo se disuelven <b>'+coma(sT,1)+' g</b>: la solución queda <b>saturada</b> y <b>'+coma(fondo,1)+' g</b> se quedan en el fondo sin disolver (punto sobre la curva).';
+  var t2=Te<T?(dis>sE?' Al enfriar a '+Te+' °C solo caben '+coma(sE,1)+' g: <b>cristalizan '+coma(dis-sE,1)+' g</b>. Así se purifican sustancias (cristalización).':' Al enfriar a '+Te+' °C caben '+coma(sE,1)+' g: no cristaliza nada.'):'';
+  o.innerHTML=t1+t2+(k==='NaCl'?' La solubilidad de la sal casi no cambia con la temperatura: por eso la sal de Manaure se obtiene <b>evaporando</b> el agua de mar, no enfriándola.':'');}
+['so-s','so-t','so-m','so-e'].forEach(function(id){document.getElementById(id).addEventListener('input',curvas);});curvas();
+/* Problemas */
+var SUS=[['NaCl',58.5],['NaOH',40],['KCl',74.6],['glucosa, C₆H₁₂O₆',180],['CuSO₄',159.6]];
+SED10.problemas('pb-sol',{
+ mm:{t:'% m/m',g:function(){var s1=al([5,10,12,15,20,25]),sv=al([45,90,100,135,180,200]);var p=s1/(s1+sv)*100;return {q:'Se disuelven <b>'+s1+' g</b> de azúcar en <b>'+sv+' g</b> de agua. ¿Cuál es el % m/m?',r:r2(p,3),u:'%',sol:'Masa de solución = '+s1+' + '+sv+' = '+(s1+sv)+' g. % m/m = '+s1+' ÷ '+(s1+sv)+' × 100 = <b>'+coma(r2(p,2))+' %</b>. (Ojo: se divide entre la solución, no entre el agua.)'};}},
+ mv:{t:'% m/v',g:function(){var s1=al([0.9,2,4.5,5,9,12]),V=al([100,250,500,1000]);var p=s1/V*100;return {q:'Se disuelven <b>'+coma(s1)+' g</b> de NaCl y se completa hasta <b>'+V+' mL</b> de solución. ¿Cuál es el % m/v?',r:r2(p,4),u:'%',sol:'% m/v = '+coma(s1)+' g ÷ '+V+' mL × 100 = <b>'+coma(r2(p,3))+' %</b>.'};}},
+ vv:{t:'% v/v',g:function(){var a=al([35,70,140,210]),V=al([100,200,250,300]);var p=a/V*100;return {q:'Se mezclan <b>'+a+' mL</b> de etanol con agua hasta completar <b>'+V+' mL</b>. ¿Cuál es el % v/v?',r:r2(p,3),u:'%',sol:'% v/v = '+a+' ÷ '+V+' × 100 = <b>'+coma(r2(p,2))+' %</b>.'};}},
+ ppm:{t:'ppm',g:function(){var mg=al([0.6,1.2,3,5,15]),V=al([2,4,5,10]);var p=mg/V;return {q:'En <b>'+V+' L</b> de agua hay <b>'+coma(mg)+' mg</b> de cloro. ¿Cuántas ppm tiene? ¿Cumple la norma colombiana (0,3 a 2,0 ppm)?',r:r2(p,4),u:'ppm',sol:'ppm = mg ÷ L = '+coma(mg)+' ÷ '+V+' = <b>'+coma(r2(p,3))+' ppm</b>: '+(p>=0.3&&p<=2?'sí cumple.':'no cumple la norma.')};}},
+ M:{t:'Molaridad',g:function(){var q=al(SUS),m=al([2,4,5.85,10,20,29.25]),V=al([100,200,250,500]);var n=m/q[1],M=n/(V/1000);return {q:'Se disuelven <b>'+coma(m)+' g de '+q[0]+'</b> ('+coma(q[1])+' g/mol) en agua hasta <b>'+V+' mL</b> de solución. ¿Cuál es la molaridad?',r:r2(M,4),u:'M',tol:0.02,sol:'n = '+coma(m)+' ÷ '+coma(q[1])+' = '+coma(r2(n,4))+' mol; V = '+coma(V/1000,3)+' L. M = n ÷ V = <b>'+coma(r2(M,3))+' mol/L</b>.'};}},
+ g:{t:'Gramos para preparar',g:function(){var q=al(SUS),M=al([0.1,0.2,0.25,0.5,1]),V=al([100,250,500,1000]);var g=M*V/1000*q[1];return {q:'¿Cuántos gramos de <b>'+q[0]+'</b> ('+coma(q[1])+' g/mol) necesitas para preparar <b>'+V+' mL</b> de solución <b>'+coma(M)+' M</b>?',r:r2(g,3),u:'g',tol:0.02,sol:'n = M × V = '+coma(M)+' × '+coma(V/1000,3)+' = '+coma(r2(M*V/1000,4))+' mol. Masa = n × M = '+coma(r2(M*V/1000,4))+' × '+coma(q[1])+' = <b>'+coma(r2(g,2))+' g</b>.'};}},
+ m:{t:'Molalidad',g:function(){var q=al(SUS),m=al([5.85,11.7,18,20,36]),kg=al([0.1,0.2,0.25,0.5]);var n=m/q[1],mol=n/kg;return {q:'Se disuelven <b>'+coma(m)+' g de '+q[0]+'</b> ('+coma(q[1])+' g/mol) en <b>'+coma(kg*1000,0)+' g de agua</b>. ¿Cuál es la molalidad?',r:r2(mol,4),u:'mol/kg',tol:0.02,sol:'n = '+coma(r2(n,4))+' mol; solvente = '+coma(kg)+' kg. m = n ÷ kg de solvente = <b>'+coma(r2(mol,3))+' mol/kg</b>.'};}},
+ X:{t:'Fracción molar',g:function(){var m=al([18,36,46,92]),w=al([90,180,360]);var n1=m/46,n2=w/18,X=n1/(n1+n2);return {q:'Se mezclan <b>'+m+' g de etanol</b> (46 g/mol) con <b>'+w+' g de agua</b> (18 g/mol). ¿Cuál es la fracción molar del etanol?',r:r2(X,4),u:'',tol:0.02,sol:'n(etanol) = '+coma(r2(n1,3))+' mol; n(agua) = '+coma(r2(n2,2))+' mol. X = '+coma(r2(n1,3))+' ÷ '+coma(r2(n1+n2,3))+' = <b>'+coma(r2(X,3))+'</b> (sin unidades).'};}},
+ dil:{t:'Dilución',g:function(){var C1=al([1,2,6,0.5]),V2=al([100,250,500,1000]),C2=al([0.05,0.1,0.2,0.25]);if(C2>=C1)C2=C1/4;var V1=C2*V2/C1;return {q:'¿Cuántos mL de una solución <b>'+coma(C1)+' M</b> necesitas para preparar <b>'+V2+' mL</b> de solución <b>'+coma(C2)+' M</b>?',r:r2(V1,3),u:'mL',tol:0.02,sol:'C₁V₁ = C₂V₂ → V₁ = '+coma(C2)+' × '+V2+' ÷ '+coma(C1)+' = <b>'+coma(r2(V1,2))+' mL</b>, y se completa con agua hasta '+V2+' mL.'};}},
+ N:{t:'Normalidad',g:function(){var q=al([['HCl',1],['H₂SO₄',2],['NaOH',1],['Ca(OH)₂',2],['H₃PO₄',3]]),M=al([0.1,0.2,0.5,1]);var N=M*q[1];return {q:'¿Cuál es la normalidad de una solución <b>'+coma(M)+' M de '+q[0]+'</b>?',r:r2(N,4),u:'N',sol:'El '+q[0]+' aporta '+q[1]+' '+(/OH/.test(q[0])?'OH⁻':'H⁺')+' por fórmula: N = M × '+q[1]+' = <b>'+coma(r2(N,2))+' N</b>.'};}}
+},'Problemas de concentración al azar');
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

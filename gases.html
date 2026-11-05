@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Leyes de los gases</title>
+<meta name="description" content="Presión, volumen, temperatura y moles; leyes de Boyle, Charles, Gay-Lussac, Avogadro, ley combinada, gas ideal y Dalton, con un laboratorio de gases en movimiento.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="gases.html" class="active"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
+    <a href="soluciones.html"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🎈 Leyes de los gases: un laboratorio de partículas en movimiento</h1>
+    <p>Por qué un paquete de papas sellado en la costa llega inflado a Bogotá, por qué no se calienta un aerosol y por qué en el páramo te cansas más rápido. Aquí manipulas un gas de verdad (simulado): cambias su volumen, su temperatura y su cantidad, mides la presión con los choques de sus partículas y descubres las leyes. Grado 10.</p>
+  </div>
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
+  <div class="sect">
+    <h2>Palabras clave de esta página <button class="tts-btn" onclick="speakText(this)" data-text="Antes de empezar, repasa las cuatro variables de un gas: presión, volumen, temperatura y cantidad de sustancia. Toca cada tarjeta para ver qué significa.">🔊 Escuchar</button></h2>
+    <div class="glos">
+      <button type="button"><b>Presión (P)</b><span class="hint">Toca para ver</span><span class="def">Fuerza de los choques de las partículas contra las paredes, por unidad de área. 1 atm = 760 mmHg = 101,3 kPa.</span></button>
+      <button type="button"><b>Volumen (V)</b><span class="hint">Toca para ver</span><span class="def">Espacio que ocupa el gas: todo el recipiente. Se mide en L o mL.</span></button>
+      <button type="button"><b>Temperatura absoluta (T)</b><span class="hint">Toca para ver</span><span class="def">Se mide en kelvin: K = °C + 273. En las leyes de los gases SIEMPRE se usa en K.</span></button>
+      <button type="button"><b>Cantidad (n)</b><span class="hint">Toca para ver</span><span class="def">Número de moles del gas.</span></button>
+      <button type="button"><b>Cero absoluto</b><span class="hint">Toca para ver</span><span class="def">0 K = −273 °C: la temperatura más baja posible, donde las partículas casi no se moverían.</span></button>
+      <button type="button"><b>Gas ideal</b><span class="hint">Toca para ver</span><span class="def">Modelo de partículas muy pequeñas que no se atraen. Los gases reales se parecen a él a presiones bajas.</span></button>
+      <button type="button"><b>R</b><span class="hint">Toca para ver</span><span class="def">Constante de los gases: 0,082 atm·L/(mol·K).</span></button>
+      <button type="button"><b>Presión parcial</b><span class="hint">Toca para ver</span><span class="def">La presión que haría cada gas de una mezcla si estuviera solo en el recipiente.</span></button>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Las variables y sus unidades <button class="tts-btn" onclick="speakText(this)" data-text="Antes de usar cualquier ley de los gases hay que tener las unidades correctas. La temperatura siempre en kelvin, y la presión y el volumen en las mismas unidades en los dos estados.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás convertir presiones entre atm, mmHg y kPa, y temperaturas de °C a K.</div>
+    <div class="duo">
+      <div>
+        <table class="tbl"><thead><tr><th>Variable</th><th>Unidades</th><th>Equivalencias</th></tr></thead><tbody>
+          <tr><td>Presión</td><td>atm, mmHg, kPa</td><td>1 atm = 760 mmHg = 101,3 kPa</td></tr>
+          <tr><td>Volumen</td><td>L, mL, m³</td><td>1 L = 1000 mL; 1 m³ = 1000 L</td></tr>
+          <tr><td>Temperatura</td><td>K</td><td>K = °C + 273</td></tr>
+          <tr><td>Cantidad</td><td>mol</td><td>n = masa ÷ masa molar</td></tr>
+        </tbody></table>
+        <div class="info-box">🇨🇴 La presión atmosférica cambia con la altura: en Cartagena es cerca de <strong>1 atm</strong> (760 mmHg) y en Bogotá, a 2600 m, solo cerca de <strong>0,74 atm</strong> (unos 560 mmHg).</div>
+      </div>
+      <div class="calc">
+        <div class="calc-row"><label for="cv-v">Convierte:</label><input id="cv-v" inputmode="decimal" value="560"><select id="cv-u"><option value="mmHg">mmHg</option><option value="atm">atm</option><option value="kPa">kPa</option><option value="C">°C</option><option value="K">K</option></select></div>
+        <div class="calc-out" id="cv-out" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="warn-box">⚠️ <strong>Error frecuente:</strong> usar °C en las leyes de los gases. Si el gas pasa de 10 °C a 20 °C, su temperatura absoluta NO se duplica: pasa de 283 K a 293 K (solo un 3,5 % más).</div>
+  </div>
+
+  <div class="sect">
+    <h2>🔬 Laboratorio de gases: descubre las leyes <button class="tts-btn" onclick="speakText(this)" data-text="Este es el laboratorio principal. Escoge una ley. En cada una, algunas variables quedan fijas y tú cambias otra. La presión se mide contando los choques de las partículas contra las paredes, como un manómetro. Registra puntos y mira qué forma tiene la gráfica.">🔊 Escuchar</button></h2>
+    <div class="meta">Escoge una ley, cambia una variable a la vez, registra puntos y compara la gráfica con la ley.</div>
+    <p class="sim-pregunta">en el modo Charles, si calientas el gas de 273 K a 546 K (el doble), ¿qué le pasará al volumen? ¿Y si lo haces en el modo Gay-Lussac, con el émbolo fijo?</p>
+    <div class="sim" data-sim="gases"></div>
+    <div class="info-box">🧪 <strong>Cómo leer el laboratorio:</strong> la «P medida» sale de los choques reales de las partículas (por eso fluctúa un poco); «P = nRT/V» es la que predice la ecuación. Si el modelo de partículas es bueno, las dos coinciden y PV/nT queda cerca de R = 0,082.</div>
+  </div>
+
+  <div class="sect">
+    <h2>Las leyes, una por una <button class="tts-btn" onclick="speakText(this)" data-text="Cada ley relaciona dos variables cuando las otras se mantienen constantes. Todas salen de la misma ecuación del gas ideal: P por V igual a n por R por T.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás escoger qué ley usar según qué variables cambian y cuáles se mantienen.</div>
+    <div class="proc">
+      <div class="card"><span class="tipo">n y T constantes</span><h4>Boyle (1662)</h4><span class="eq">P₁V₁ = P₂V₂</span><p>Inversamente proporcionales: si V baja a la mitad, P se duplica.</p><p>🤿 Un buzo que sube rápido: el aire de sus pulmones se expande al bajar la presión.</p></div>
+      <div class="card"><span class="tipo">n y P constantes</span><h4>Charles (1787)</h4><span class="eq">V₁/T₁ = V₂/T₂</span><p>Directamente proporcionales (con T en K).</p><p>🎈 Un globo que se deja al sol se infla; en la nevera se arruga.</p></div>
+      <div class="card"><span class="tipo">n y V constantes</span><h4>Gay-Lussac (1802)</h4><span class="eq">P₁/T₁ = P₂/T₂</span><p>La presión sube con la temperatura absoluta.</p><p>⚠️ Por eso un aerosol no se acerca al fuego y las llantas se revisan en frío.</p></div>
+      <div class="card"><span class="tipo">P y T constantes</span><h4>Avogadro (1811)</h4><span class="eq">V₁/n₁ = V₂/n₂</span><p>Volúmenes iguales de gases distintos tienen el mismo número de moléculas. A 0 °C y 1 atm, 1 mol ocupa 22,4 L.</p></div>
+      <div class="card"><span class="tipo">n constante</span><h4>Ley combinada</h4><span class="eq">P₁V₁/T₁ = P₂V₂/T₂</span><p>Cuando cambian P, V y T al mismo tiempo.</p><p>🥔 El paquete de papas que viaja de la costa a Bogotá.</p></div>
+      <div class="card"><span class="tipo">Una sola ecuación</span><h4>Gas ideal</h4><span class="eq">PV = nRT</span><p>R = 0,082 atm·L/(mol·K). De ella salen todas las demás.</p></div>
+      <div class="card"><span class="tipo">Mezclas</span><h4>Dalton (1801)</h4><span class="eq">P total = P₁ + P₂ + …</span><p>Cada gas aporta una presión parcial proporcional a sus moles: Pᵢ = Xᵢ × P total.</p></div>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto (ley combinada): el paquete de papas que viaja de Cartagena a Bogotá</div>
+      <ol>
+        <li><strong>Datos.</strong> En Cartagena el paquete tiene 2,0 L de aire a 1,00 atm y 27 °C. En Bogotá: 0,74 atm y 14 °C. ¿Qué volumen tendría el aire?</li>
+        <li><strong>Pasa a kelvin.</strong> T₁ = 27 + 273 = 300 K; T₂ = 14 + 273 = 287 K.</li>
+        <li><strong>Despeja V₂.</strong> V₂ = P₁ × V₁ × T₂ ÷ (T₁ × P₂).</li>
+        <li><strong>Reemplaza.</strong> V₂ = 1,00 × 2,0 × 287 ÷ (300 × 0,74) ≈ <strong>2,6 L</strong>.</li>
+        <li><strong>Interpreta.</strong> El aire quiere ocupar un 30 % más de volumen: por eso el paquete llega <strong>inflado</strong>. Aunque en Bogotá hace más frío, manda la menor presión.</li>
+      </ol>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto (gas ideal): ¿cuánto aire hay en tu salón de clase en Bogotá?</div>
+      <ol>
+        <li><strong>Datos.</strong> Salón de 8 m × 6 m × 3 m = 144 m³ = 144 000 L; P = 0,74 atm; T = 15 °C = 288 K.</li>
+        <li><strong>Despeja n.</strong> n = PV ÷ RT.</li>
+        <li><strong>Reemplaza.</strong> n = 0,74 × 144 000 ÷ (0,082 × 288) ≈ <strong>4500 mol</strong> de aire.</li>
+        <li><strong>A masa.</strong> El aire tiene una masa molar promedio de unos 29 g/mol: 4500 × 29 ≈ 130 000 g = <strong>unos 130 kg</strong> de aire. ¡Más que dos estudiantes juntos!</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Dalton en la montaña: ¿por qué te cansas más en el páramo? <button class="tts-btn" onclick="speakText(this)" data-text="El aire siempre tiene cerca de veintiuno por ciento de oxígeno, a cualquier altura. Pero como la presión total baja con la altura, la presión parcial del oxígeno también baja, y en cada respiración entra menos oxígeno.">🔊 Escuchar</button></h2>
+    <div class="meta">Usa la ley de Dalton para calcular la presión parcial del oxígeno en distintos lugares de Colombia.</div>
+    <div class="calc">
+      <div class="calc-row"><label for="dl-l">Lugar:</label><select id="dl-l"><option value="1">Cartagena (0 m) · 1,00 atm</option><option value="0.85">Medellín (1500 m) · 0,85 atm</option><option value="0.74" selected>Bogotá (2600 m) · 0,74 atm</option><option value="0.62">Nevado del Ruiz, refugio (4000 m) · 0,62 atm</option></select></div>
+      <div class="calc-out" id="dl-out" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Problemas al azar con verificación <button class="tts-btn" onclick="speakText(this)" data-text="Escoge una ley y resuelve el problema en tu cuaderno. Si te equivocas, puedes ver la solución paso a paso. Cada vez que pidas otro problema, los números cambian.">🔊 Escuchar</button></h2>
+    <div class="meta">Resuelve, revisa y pide otro: cada problema trae números nuevos.</div>
+    <div id="pb-gases"></div>
+  </div>
+
+  <div class="sect quiz-sect" id="practica">
+    <h2>✅ Practica — Leyes de los gases <button class="tts-btn" onclick="speakText(this)" data-text="Ocho preguntas al azar del banco del Juego sobre las leyes de los gases.">🔊 Escuchar</button></h2>
+    <div id="prac-ga"></div>
+  </div>
+
+  <footer>
+    <a href="juego.html?g=gases">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function pickVoice(){
+    const v=window.speechSynthesis.getVoices();
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
+}
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="banco.js"></script>
+<script src="assets/sed10.js"></script>
+<script src="assets/sim10.js"></script>
+<script>
+(function(){
+'use strict';
+function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
+function r2(v,d){var f=Math.pow(10,d);return Math.round(v*f)/f;}
+function al(a){return a[Math.floor(Math.random()*a.length)];}
+if(window.SED10&&typeof BANCO_GASES!=='undefined')SED10.practica('prac-ga',BANCO_GASES,8,'Practica: leyes de los gases','gases');
+/* Conversor */
+function conv(){var v=parseFloat(String(document.getElementById('cv-v').value).replace(',','.')),u=document.getElementById('cv-u').value,o=document.getElementById('cv-out');
+  if(isNaN(v)){o.innerHTML='Escribe un número.';return;}
+  if(u==='C'){o.innerHTML=coma(v)+' °C = '+coma(v,0)+' + 273 = <b>'+coma(v+273,0)+' K</b>'+(v+273<0?' ⚠️ ¡Imposible: está por debajo del cero absoluto!':'');return;}
+  if(u==='K'){o.innerHTML=coma(v)+' K = '+coma(v,0)+' − 273 = <b>'+coma(v-273,0)+' °C</b>'+(v<0?' ⚠️ No existen temperaturas en kelvin negativas.':'');return;}
+  var atm=u==='atm'?v:u==='mmHg'?v/760:v/101.325;o.innerHTML='<b>'+coma(atm,3)+' atm</b> = <b>'+coma(atm*760,0)+' mmHg</b> = <b>'+coma(atm*101.325,1)+' kPa</b>';}
+['cv-v','cv-u'].forEach(function(id){document.getElementById(id).addEventListener('input',conv);});conv();
+/* Dalton */
+function dal(){var P=+document.getElementById('dl-l').value,pO=0.21*P;document.getElementById('dl-out').innerHTML='P(O₂) = 0,21 × '+coma(P,2)+' atm = <b>'+coma(pO,3)+' atm</b> ('+Math.round(pO*760)+' mmHg). '+(P<1?'Es un <b>'+Math.round((1-P)*100)+' % menos</b> oxígeno por respiración que al nivel del mar: el corazón y los pulmones tienen que trabajar más (soroche o mal de altura). Con días de adaptación el cuerpo produce más glóbulos rojos.':'Es la presión de oxígeno de referencia, al nivel del mar.');}
+document.getElementById('dl-l').addEventListener('change',dal);dal();
+/* Problemas */
+var R=0.082;
+SED10.problemas('pb-gases',{
+ boyle:{t:'Boyle',g:function(){var P1=al([1,1.5,2,0.8]),V1=al([2,4,5,6,10]),P2=al([0.5,2.5,3,4]);var V2=P1*V1/P2;return {q:'Un gas ocupa <b>'+coma(V1)+' L</b> a <b>'+coma(P1)+' atm</b>. ¿Qué volumen ocupa a <b>'+coma(P2)+' atm</b>, a la misma temperatura?',r:r2(V2,3),u:'L',sol:'P₁V₁ = P₂V₂ → V₂ = '+coma(P1)+' × '+coma(V1)+' ÷ '+coma(P2)+' = <b>'+coma(r2(V2,2))+' L</b>.'};}},
+ charles:{t:'Charles',g:function(){var V1=al([1,2,3,5]),C1=al([0,20,27,10]),C2=al([100,77,127,-20]);var T1=C1+273,T2=C2+273,V2=V1*T2/T1;return {q:'Un globo tiene <b>'+coma(V1)+' L</b> a <b>'+C1+' °C</b>. ¿Qué volumen tendrá a <b>'+C2+' °C</b>, a presión constante?',r:r2(V2,3),u:'L',sol:'T₁ = '+T1+' K, T₂ = '+T2+' K. V₂ = V₁ × T₂ ÷ T₁ = '+coma(V1)+' × '+T2+' ÷ '+T1+' = <b>'+coma(r2(V2,2))+' L</b>. (Si usas °C el resultado sale mal.)'};}},
+ gay:{t:'Gay-Lussac',g:function(){var P1=al([2,2.2,1.5,3]),C1=al([17,20,27]),C2=al([57,77,127,227]);var T1=C1+273,T2=C2+273,P2=P1*T2/T1;return {q:'Una llanta tiene <b>'+coma(P1)+' atm</b> a <b>'+C1+' °C</b>. Después de un viaje largo está a <b>'+C2+' °C</b>. ¿Cuál es su presión, si el volumen no cambia?',r:r2(P2,3),u:'atm',sol:'P₂ = P₁ × T₂ ÷ T₁ = '+coma(P1)+' × '+T2+' ÷ '+T1+' = <b>'+coma(r2(P2,2))+' atm</b>.'};}},
+ comb:{t:'Combinada',g:function(){var P1=1,V1=al([2,3,4]),C1=al([25,27,30]),P2=0.74,C2=al([10,14,15]);var T1=C1+273,T2=C2+273,V2=P1*V1*T2/(T1*P2);return {q:'Un globo con <b>'+coma(V1)+' L</b> de aire a <b>1,00 atm</b> y <b>'+C1+' °C</b> (Barranquilla) viaja a Bogotá: <b>0,74 atm</b> y <b>'+C2+' °C</b>. ¿Qué volumen tendrá?',r:r2(V2,3),u:'L',sol:'V₂ = P₁V₁T₂ ÷ (T₁P₂) = 1,00 × '+coma(V1)+' × '+T2+' ÷ ('+T1+' × 0,74) = <b>'+coma(r2(V2,2))+' L</b>.'};}},
+ idealn:{t:'Gas ideal (n)',g:function(){var V=al([5,10,20,24.6]),P=al([1,2,0.74,1.5]),C=al([0,25,27,15]);var T=C+273,n=P*V/(R*T);return {q:'¿Cuántos moles de gas hay en un recipiente de <b>'+coma(V)+' L</b> a <b>'+coma(P)+' atm</b> y <b>'+C+' °C</b>? (R = 0,082 atm·L/(mol·K))',r:r2(n,4),u:'mol',tol:0.03,sol:'n = PV ÷ RT = '+coma(P)+' × '+coma(V)+' ÷ (0,082 × '+T+') = <b>'+coma(r2(n,3))+' mol</b>.'};}},
+ idealv:{t:'Gas ideal (V)',g:function(){var g=al([['CO₂',44],['O₂',32],['N₂',28],['CH₄',16]]),m=al([8,11,16,22,32,44]),C=al([0,25,27]),P=al([1,0.74,2]);var T=C+273,n=m/g[1],V=n*R*T/P;return {q:'¿Qué volumen ocupan <b>'+m+' g de '+g[0]+'</b> ('+g[1]+' g/mol) a <b>'+coma(P)+' atm</b> y <b>'+C+' °C</b>?',r:r2(V,3),u:'L',tol:0.03,sol:'n = '+m+' ÷ '+g[1]+' = '+coma(r2(n,3))+' mol. V = nRT ÷ P = '+coma(r2(n,3))+' × 0,082 × '+T+' ÷ '+coma(P)+' = <b>'+coma(r2(V,2))+' L</b>.'};}},
+ dalton:{t:'Dalton',g:function(){var a=al([1,2,3]),b=al([1,2,4]),Pt=al([1,2,3,0.74]);var X=a/(a+b),Pa=X*Pt;return {q:'Una mezcla tiene <b>'+a+' mol de N₂</b> y <b>'+b+' mol de O₂</b> a una presión total de <b>'+coma(Pt)+' atm</b>. ¿Cuál es la presión parcial del N₂?',r:r2(Pa,4),u:'atm',tol:0.02,sol:'X(N₂) = '+a+' ÷ '+(a+b)+' = '+coma(r2(X,3))+'. P(N₂) = X × P total = '+coma(r2(X,3))+' × '+coma(Pt)+' = <b>'+coma(r2(Pa,3))+' atm</b>.'};}}
+},'Problemas de gases al azar');
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

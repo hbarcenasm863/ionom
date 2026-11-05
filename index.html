@@ -630,6 +630,8 @@ html{font-size:var(--base-fs)}
     <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
     <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
     <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="gases.html"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
+    <a href="soluciones.html"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
         <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
         <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
     <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
@@ -687,6 +689,41 @@ html{font-size:var(--base-fs)}
     </div>
     <div class="mod-bottom">
       <div class="mod-chips"><span class="mc">🧱 Cemento</span><span class="mc">🌾 Haber</span><span class="mc">🥚 Experimento</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+
+  <a class="mod-card teal" href="gases.html">
+    <div class="mod-top">
+      <span class="mod-icon">🎈</span>
+      <div class="mod-paso">Ampliación · n = 4</div>
+      <div class="mod-title">Leyes de los Gases</div>
+      <div class="mod-subtitle">Aprenderás: Boyle, Charles, Gay-Lussac, Avogadro, ley combinada, gas ideal y Dalton</div>
+      <div class="mod-desc">Laboratorio de gases en movimiento: la presión se mide con los choques de las partículas y cada ley se descubre registrando datos.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🎈 Boyle</span><span class="mc">🔥 Charles</span><span class="mc">🫁 Dalton</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="mod-card azul" href="soluciones.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧂</span>
+      <div class="mod-paso">Ampliación · n = 4</div>
+      <div class="mod-title">Soluciones y Concentración</div>
+      <div class="mod-subtitle">Aprenderás: cómo se disuelve una sustancia, solubilidad y todas las unidades de concentración</div>
+      <div class="mod-desc">Simulación del proceso de disolución, curvas de solubilidad, preparación y dilución de soluciones y problemas al azar.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">💧 Disolución</span><span class="mc">📈 Solubilidad</span><span class="mc">🧪 Molaridad</span></div>
       <div class="mod-meta">
         <span class="mod-badge basico">Nuevo</span>
         <span class="mod-arrow">→</span>
@@ -1375,6 +1412,8 @@ window.addEventListener('appinstalled', () => {
     {id:'estequiometria.html',r:11,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
     {id:'balanceo-avanzado.html',r:12,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'},
     {id:'industria.html',r:null,n:4,e:'🏭',t:'Química en la Industria',d:'Masa y carga, limitante, pureza y rendimiento en procesos industriales colombianos.',nuevo:true},
+    {id:'gases.html',r:null,n:4,e:'🎈',t:'Leyes de los Gases',d:'Boyle, Charles, Gay-Lussac, Avogadro, gas ideal y Dalton con un laboratorio de partículas.',nuevo:true},
+    {id:'soluciones.html',r:null,n:4,e:'🧂',t:'Soluciones y Concentración',d:'Disolución animada, solubilidad, %, ppm, M, m, X, N y dilución.',nuevo:true}
   ];
   // El Juego no es una estación: tiene preguntas de todos los niveles. Cada
   // panel de nivel enlaza a sus temas con juego.html?g=<grupo>, que resalta
@@ -1383,7 +1422,7 @@ window.addEventListener('appinstalled', () => {
     1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico'],['modelos','🔭 Modelos y datos']],
     2:[['ox-anh','💨 Óxidos'],['sal-bin','🔵 Sales binarias'],['ac-ox','⚡ Ácidos oxácidos'],['sal-ox','🟠 Sales oxigenadas'],['all','🔬 Repaso: todos']],
     3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo'],['acidobase','🧪 Ácidos y bases']],
-    4:[['mol-masa','🔢 Mol y masa molar'],['industria','🏭 Industria']]
+    4:[['mol-masa','🔢 Mol y masa molar'],['industria','🏭 Industria'],['gases','🎈 Gases'],['soluciones','🧂 Soluciones']]
   };
   var visitas={};
   try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}

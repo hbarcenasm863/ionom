@@ -933,8 +933,68 @@ TEMAS: [
       ['9 kmol × 56 = 504 kg CaO','an','paso 3: masa teórica; si salen 480 kg, el rendimiento es 95,2 %']
     ]
   }
+},
+{
+  id: 'gases',
+  titulo: 'Leyes de los gases',
+  gen: [], jue: 'gases', rxn: [],
+  previos: {
+    curiosos: ['Un paquete de papas sellado en la costa llega inflado a Bogotá: afuera la presión es de solo 0,74 atm.','En Bogotá cada respiración trae cerca de un 26 % menos oxígeno que en Cartagena, porque la presión parcial del O₂ es menor.'],
+    contexto: [{amb:'Local', t:'La olla a presión cocina los fríjoles más rápido en Bogotá porque al aumentar la presión el agua hierve a más de 100 °C.'},{amb:'Nacional', t:'Los globos meteorológicos que lanza el IDEAM se expanden al subir porque la presión del aire disminuye con la altura.'}],
+    cotidianos: ['Un aerosol que no debe acercarse al fuego, una llanta que se revisa en frío y un globo que se infla al sol son ejemplos diarios de las leyes de los gases.'],
+    activacion: ['¿Por qué crees que una jeringa tapada es difícil de empujar? ¿Qué le pasa a un globo si lo metes a la nevera? ¿Por qué te cansas más en el páramo?']
+  },
+  info: {
+    lectura: [
+      'Un gas se describe con cuatro variables: presión (P, en atm, mmHg o kPa), volumen (V, en L), temperatura absoluta (T, en K = °C + 273) y cantidad (n, en mol). Según la teoría cinético-molecular, la presión es el efecto de los choques de las partículas contra las paredes.',
+      '<strong>Boyle</strong> (n y T constantes): P₁V₁ = P₂V₂. <strong>Charles</strong> (n y P constantes): V₁/T₁ = V₂/T₂. <strong>Gay-Lussac</strong> (n y V constantes): P₁/T₁ = P₂/T₂. <strong>Avogadro</strong> (P y T constantes): V₁/n₁ = V₂/n₂. <strong>Combinada</strong>: P₁V₁/T₁ = P₂V₂/T₂.',
+      'Todas salen de la ecuación del <strong>gas ideal</strong>: PV = nRT, con R = 0,082 atm·L/(mol·K). A 0 °C y 1 atm, 1 mol ocupa 22,4 L. En una mezcla, la presión total es la suma de las presiones parciales (<strong>Dalton</strong>): Pᵢ = Xᵢ × P total.'
+    ],
+    esquema: { raiz: 'Leyes de los gases', ramas: [
+      {t:'Variables', items:['P (atm)','V (L)','T (K)','n (mol)']},
+      {t:'Leyes', items:['Boyle: P₁V₁ = P₂V₂','Charles: V/T','Gay-Lussac: P/T','Avogadro: V/n']},
+      {t:'Ecuaciones', items:['Combinada','PV = nRT','Dalton: suma de presiones']} ] }
+  },
+  ejemplo: {
+    f: 'P₁V₁/T₁ = P₂V₂/T₂  (2,0 L; 1,00 atm; 300 K → 0,74 atm; 287 K)',
+    partes: [
+      ['T en kelvin','cat','27 °C = 300 K y 14 °C = 287 K'],
+      ['V₂ = P₁V₁T₂ ÷ (T₁P₂)','ox','se despeja el volumen nuevo'],
+      ['V₂ ≈ 2,6 L','an','el paquete de papas llega inflado a Bogotá']
+    ]
+  }
+},
+{
+  id: 'soluciones',
+  titulo: 'Soluciones y concentración',
+  gen: [], jue: 'soluciones', rxn: [],
+  previos: {
+    curiosos: ['El suero fisiológico tiene 0,9 g de sal por cada 100 mL: la misma concentración de sales de tu sangre.','El agua potable en Colombia debe tener entre 0,3 y 2,0 mg de cloro por litro: menos de una gota en un tanque grande.'],
+    contexto: [{amb:'Nacional', t:'En Manaure (La Guajira) la sal se obtiene evaporando el agua de mar con el sol y el viento hasta que la solución se satura y cristaliza.'},{amb:'Local', t:'El alcohol antiséptico de la casa tiene 70 % v/v de etanol y el vinagre, entre 4 y 5 % de ácido acético.'}],
+    cotidianos: ['Endulzar un café, preparar un jugo con sobre, mezclar el suero de rehidratación o diluir un limpiador son preparaciones de soluciones.'],
+    activacion: ['¿Por qué el azúcar se disuelve más rápido en café caliente? ¿Hay un límite de cuánta sal se puede disolver en un vaso de agua? ¿Qué significa «alcohol al 70 %»?']
+  },
+  info: {
+    lectura: [
+      'Una <strong>solución</strong> es una mezcla homogénea de un <strong>soluto</strong> (lo que se disuelve) y un <strong>solvente</strong> (lo que disuelve). Al disolverse una sal, las moléculas de agua (polares) rodean los iones: el O (δ−) hacia los cationes y los H (δ+) hacia los aniones; los iones se separan y quedan hidratados, y la solución conduce la electricidad. El azúcar se disuelve en moléculas y no conduce; el aceite, apolar, no se disuelve.',
+      'La <strong>solubilidad</strong> es lo máximo que se disuelve en 100 g de agua a una temperatura. Una solución es <strong>insaturada</strong>, <strong>saturada</strong> o <strong>sobresaturada</strong>. Las curvas de solubilidad muestran cómo cambia con la temperatura.',
+      'Unidades: % m/m = g soluto ÷ g solución × 100; % m/v = g ÷ mL × 100; % v/v; ppm = mg/L; <strong>molaridad</strong> M = mol ÷ L de solución; <strong>molalidad</strong> m = mol ÷ kg de solvente; fracción molar X; normalidad N = M × equivalentes. Al <strong>diluir</strong>, los moles no cambian: C₁V₁ = C₂V₂.'
+    ],
+    esquema: { raiz: 'Soluciones', ramas: [
+      {t:'Disolución', items:['Hidratación de iones','Factores: T, agitación, superficie']},
+      {t:'Solubilidad', items:['Insaturada / saturada','Curvas de solubilidad']},
+      {t:'Concentración', items:['% m/m, % m/v, % v/v, ppm','M, m, X, N']},
+      {t:'Dilución', items:['C₁V₁ = C₂V₂']} ] }
+  },
+  ejemplo: {
+    f: '500 mL de NaCl al 0,9 % m/v → ¿g y molaridad?',
+    partes: [
+      ['500 mL × 0,9 g/100 mL = 4,5 g','cat','gramos de soluto a partir del % m/v'],
+      ['4,5 g ÷ 58,5 g/mol = 0,0769 mol','ox','gramos a moles'],
+      ['0,0769 mol ÷ 0,500 L = 0,154 M','an','molaridad del suero fisiológico']
+    ]
+  }
 }
-
 ],
 
 SABER: [
@@ -2593,7 +2653,48 @@ ABIERTAS: [
 {tema:'industria', t:'mdec', q:'Comprueba si la ecuación cumple la conservación de la masa y de la carga; si no, corrígela.', f:'Al + Cu²⁺ → Al³⁺ + Cu'},
 {tema:'industria', t:'mdec', q:'Explica por qué un rendimiento mayor que 100 % indica un error experimental y menciona dos errores que podrían causarlo.'},
 {tema:'industria', t:'mdec', q:'Relaciona cada proceso industrial con su tipo de reacción y escribe su ecuación: cemento, amoníaco, potabilización del agua, acero y cloro-soda.'},
-{tema:'industria', t:'mdec', q:'Explica qué cambia más la producción real de una fábrica: bajar la pureza de la materia prima del 90 % al 80 % o bajar el rendimiento del 95 % al 85 %. Justifica con un cálculo.'}
+{tema:'industria', t:'mdec', q:'Explica qué cambia más la producción real de una fábrica: bajar la pureza de la materia prima del 90 % al 80 % o bajar el rendimiento del 95 % al 85 %. Justifica con un cálculo.'},
+{tema:'gases', t:'rx', q:'Explica con la teoría cinético-molecular por qué la presión de un gas aumenta cuando se reduce su volumen a temperatura constante.'},
+{tema:'gases', t:'rx', q:'Explica por qué en las leyes de los gases la temperatura debe estar en kelvin. Da un ejemplo de un cálculo que sale mal si se usa °C.'},
+{tema:'gases', t:'rx', q:'¿Por qué un aerosol no debe acercarse al fuego? Explica con la ley de Gay-Lussac.'},
+{tema:'gases', t:'rx', q:'Explica qué es el cero absoluto y cómo se puede encontrar a partir de la gráfica de volumen contra temperatura de la ley de Charles.'},
+{tema:'gases', t:'rx', q:'Explica con la ley de Dalton por qué una persona que llega a Bogotá desde la costa se cansa más al subir escaleras.'},
+{tema:'gases', t:'rx', q:'Explica por qué la olla a presión cocina más rápido los alimentos, en especial en ciudades altas como Bogotá.'},
+{tema:'gases', t:'rx', q:'¿En qué condiciones un gas real se parece a un gas ideal? Explica qué supone el modelo del gas ideal.'},
+{tema:'gases', t:'nom', q:'Un gas ocupa 12 L a 1 atm. Calcula su volumen a 3 atm y a 0,5 atm, a temperatura constante.'},
+{tema:'gases', t:'nom', q:'Un globo tiene 2,5 L a 17 °C. ¿Qué volumen tendrá a 57 °C, a presión constante?'},
+{tema:'gases', t:'nom', q:'Una llanta tiene 2,1 atm a 15 °C. Después de un viaje está a 45 °C. ¿Cuál es su presión, si el volumen no cambia?'},
+{tema:'gases', t:'nom', q:'Un globo con 3,0 L a 1,00 atm y 30 °C sube hasta un lugar donde la presión es 0,60 atm y la temperatura −10 °C. Calcula su nuevo volumen.'},
+{tema:'gases', t:'nom', q:'¿Cuántos moles de aire hay en un salón de 7 m × 5 m × 3 m en Bogotá (0,74 atm y 15 °C)? ¿Cuál es su masa, si el aire tiene 29 g/mol?'},
+{tema:'gases', t:'nom', q:'Calcula el volumen que ocupan 88 g de CO₂ (44 g/mol) a 1 atm y 27 °C.'},
+{tema:'gases', t:'nom', q:'Una mezcla tiene 2 mol de N₂ y 1 mol de O₂ a 1,5 atm. Calcula la fracción molar y la presión parcial de cada gas.'},
+{tema:'gases', t:'mdec', q:'En cada situación, indica qué variables cambian, cuáles se mantienen constantes y qué ley se aplica.', partes:[['Una jeringa tapada que se empuja','cat'],['Un globo que se deja al sol','ox'],['Una olla a presión cerrada que se calienta','an'],['Un globo que se infla soplando','oh']]},
+{tema:'gases', t:'mdec', q:'Con los datos de un experimento (T en °C; V en L): (0; 22,4), (50; 26,5), (100; 30,6), (150; 34,7), grafica V contra T y prolonga la recta. ¿A qué temperatura llega a V = 0?'},
+{tema:'gases', t:'mdec', q:'Diseña un experimento con una jeringa y un manómetro para comprobar la ley de Boyle. Indica las variables independiente, dependiente y controladas.'},
+{tema:'gases', t:'mdec', q:'Explica qué representa cada letra en PV = nRT, en qué unidades se mide y cómo se obtienen de ella las leyes de Boyle, Charles y Gay-Lussac.'},
+{tema:'gases', t:'mdec', q:'Un estudiante calculó V₂ con la ley de Charles usando 20 °C y 40 °C y obtuvo el doble del volumen inicial. Encuentra su error y corrígelo.'},
+{tema:'gases', t:'mdec', q:'Compara la presión parcial del oxígeno en Cartagena (1 atm), Bogotá (0,74 atm) y el nevado del Ruiz a 4000 m (0,62 atm), y explica sus efectos en el cuerpo.'},
+
+{tema:'soluciones', t:'rx', q:'Describe paso a paso, con un dibujo de partículas, cómo se disuelve un cristal de NaCl en agua y escribe la ecuación de disociación.'},
+{tema:'soluciones', t:'rx', q:'Explica por qué el agua con sal conduce la electricidad y el agua con azúcar no.'},
+{tema:'soluciones', t:'rx', q:'Explica por qué el aceite no se disuelve en agua pero sí en gasolina, usando la regla «semejante disuelve a semejante».'},
+{tema:'soluciones', t:'rx', q:'Explica tres factores que aumentan la rapidez de disolución del azúcar en el café y por qué cada uno funciona.'},
+{tema:'soluciones', t:'rx', q:'Explica por qué la sal de Manaure se obtiene evaporando el agua y no enfriándola, usando la curva de solubilidad del NaCl.'},
+{tema:'soluciones', t:'rx', q:'¿Por qué al diluir un ácido concentrado se agrega el ácido sobre el agua y no al revés?'},
+{tema:'soluciones', t:'rx', q:'Explica por qué una gaseosa pierde el gas más rápido si está caliente.'},
+{tema:'soluciones', t:'nom', q:'Se disuelven 15 g de azúcar en 135 g de agua. Calcula el % m/m de la solución.'},
+{tema:'soluciones', t:'nom', q:'¿Cuántos gramos de NaCl se necesitan para preparar 2 L de suero fisiológico al 0,9 % m/v? ¿Cuál es su molaridad?'},
+{tema:'soluciones', t:'nom', q:'¿Cuántos mL de etanol hay en una botella de 750 mL de aguardiente de 29 % v/v?'},
+{tema:'soluciones', t:'nom', q:'Una muestra de 5 L de agua potable tiene 4 mg de cloro. Calcula las ppm y di si cumple la norma colombiana (0,3 a 2,0 ppm).'},
+{tema:'soluciones', t:'nom', q:'¿Cuántos gramos de NaOH (40 g/mol) se necesitan para preparar 500 mL de solución 0,25 M?'},
+{tema:'soluciones', t:'nom', q:'Se disuelven 36 g de glucosa (180 g/mol) en 400 g de agua. Calcula la molalidad.'},
+{tema:'soluciones', t:'nom', q:'¿Cuántos mL de HCl 6 M se necesitan para preparar 1 L de HCl 0,3 M? Describe cómo lo prepararías.'},
+{tema:'soluciones', t:'mdec', q:'Con la curva de solubilidad del KNO₃ (32 g a 20 °C y 110 g a 60 °C por 100 g de agua), indica si 80 g en 100 g de agua a 60 °C forman una solución insaturada o saturada, y cuánto cristaliza al enfriarla a 20 °C.'},
+{tema:'soluciones', t:'mdec', q:'Identifica el soluto y el solvente y escoge la unidad de concentración más adecuada para cada caso.', partes:[['Suero fisiológico','cat'],['Alcohol antiséptico','ox'],['Cloro en el agua potable','an'],['Ácido del laboratorio','oh']]},
+{tema:'soluciones', t:'mdec', q:'Explica la diferencia entre molaridad y molalidad y por qué la molalidad no cambia con la temperatura.'},
+{tema:'soluciones', t:'mdec', q:'Ordena los pasos para preparar 250 mL de CuSO₄ 0,1 M en el laboratorio, con los cálculos y los materiales de cada paso.'},
+{tema:'soluciones', t:'mdec', q:'Al diluir 100 mL de una solución 0,4 M hasta 400 mL, ¿qué cambia y qué se mantiene? Calcula la nueva concentración y explica con un dibujo de partículas.'},
+{tema:'soluciones', t:'mdec', q:'Calcula la normalidad de una solución 0,2 M de H₂SO₄ y explica por qué es distinta de su molaridad.'}
 ]
 
 };
@@ -2606,8 +2707,8 @@ ABIERTAS: [
    ambiente o industria). */
 (function(){
   var D=window.DOCENTE_DATOS;if(!D)return;
-  var fuentes=[['modelos',typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:[]],['acidobase',typeof BANCO_PH!=='undefined'?BANCO_PH:[]],['industria',typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:[]]];
-  var CTS={cuerpo:1,ambiente:1,procesos:1};
+  var fuentes=[['gases',typeof BANCO_GASES!=='undefined'?BANCO_GASES:[]],['soluciones',typeof BANCO_SOLUCIONES!=='undefined'?BANCO_SOLUCIONES:[]],['modelos',typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:[]],['acidobase',typeof BANCO_PH!=='undefined'?BANCO_PH:[]],['industria',typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:[]]];
+  var CTS={cuerpo:1,ambiente:1,procesos:1,dalton:1};
   fuentes.forEach(function(f){f[1].forEach(function(q){if(q.tipo&&q.tipo!=='mc')return;
     D.SABER.push({tema:f[0],c:q.tema,k:CTS[q.tema]?'CTS':'Q',ctx:'',q:q.q,o:[q.ok].concat(q.d)});});});
 })();

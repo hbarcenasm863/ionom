@@ -186,13 +186,13 @@ function contarDisponiblesTema(id){
 // mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
 // este momento -- se recalcula cada vez que cambia la selección de temas,
 // igual que los "(N disponibles)" de ChromaNom.
-const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace','modelos','acidobase','industria'];
+const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace','modelos','acidobase','industria','gases','soluciones'];
 // Mapa tema→tipo de ejercicio "D" que le corresponde. Se usa para
 // auto-marcar el tipo de ejercicio apenas se marca su tema (ver
 // actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
 // "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
 // Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
-const TEMA_A_TIPO_D = {modelos:'d-sed', acidobase:'d-sed', industria:'d-sed', reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':['d-config','d-cuanticos'], enlace:'d-enlace', elemento:'d-tabla'};
+const TEMA_A_TIPO_D = {modelos:'d-sed', acidobase:'d-sed', industria:'d-sed', gases:'d-sed', soluciones:'d-sed', reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':['d-config','d-cuanticos'], enlace:'d-enlace', elemento:'d-tabla'};
 
 // Región «El átomo» (atomo / config-e): no viven en banco.js.
 // ESPECIES_ATOMO: isótopos e iones reales [Z, A, carga] para el ejercicio
@@ -287,7 +287,7 @@ const TIPO_ROTULO = {
   'd-cuanticos':'Números cuánticos',
   'd-tabla':'Ubicación y propiedades periódicas',
   'd-enlace':'Tipo de enlace (ΔEN)',
-  'd-sed':'Preguntas y problemas (modelos, pH, industria)',
+  'd-sed':'Preguntas y problemas (modelos, pH, industria, gases, soluciones)',
   'x-errores':'Cazar errores',
   'ox-estado':'Estado de oxidación'
 };
@@ -476,7 +476,9 @@ function tarjetaTabla(par, numero){
 const BANCO_SED = {
   modelos: () => (typeof BANCO_MODELOS!=='undefined' ? BANCO_MODELOS : []),
   acidobase: () => (typeof BANCO_PH!=='undefined' ? BANCO_PH : []),
-  industria: () => (typeof BANCO_INDUSTRIA!=='undefined' ? BANCO_INDUSTRIA : [])
+  industria: () => (typeof BANCO_INDUSTRIA!=='undefined' ? BANCO_INDUSTRIA : []),
+  gases: () => (typeof BANCO_GASES!=='undefined' ? BANCO_GASES : []),
+  soluciones: () => (typeof BANCO_SOLUCIONES!=='undefined' ? BANCO_SOLUCIONES : [])
 };
 function poolSed(temas){ return temas.filter(t => BANCO_SED[t]).reduce((a,t) => a.concat(BANCO_SED[t]()), []); }
 function tarjetaSed(q, numero, rngFn){

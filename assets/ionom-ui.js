@@ -58,6 +58,8 @@
     {href:'balanceo.html',ico:ICO.balanceo,txt:'Balanceo'},
     {href:'ph.html',ico:ICO.simulador,txt:'Ácidos, Bases y pH'},
     {href:'moles.html',ico:ICO.mol,txt:'Mol y Masa Molar'},
+    {href:'gases.html',ico:ICO.mol,txt:'Leyes de los Gases'},
+    {href:'soluciones.html',ico:ICO.simulador,txt:'Soluciones y Concentración'},
     {href:'estequiometria.html',ico:ICO.estequiometria,txt:'Estequiometría'},
     {href:'industria.html',ico:ICO.reaccion,txt:'Química en la Industria'},
     {href:'balanceo-avanzado.html',ico:ICO.balanceoAvanzado,txt:'Balanceo Avanzado'},

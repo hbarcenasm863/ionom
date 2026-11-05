@@ -4,6 +4,25 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (3) — Leyes de los gases completas y Soluciones
+
+El docente pidió que gases fuera un simulador de todas las leyes y que se agregara el tema de soluciones, mostrando el proceso de disolución y los cálculos de concentración.
+
+**`gases.html` · Leyes de los gases (nuevo, n = 4)**
+- **Laboratorio de gases** (canvas, `SIM.gases`): un cilindro con partículas en movimiento y seis modos: **Boyle**, **Charles** (émbolo libre que se mueve solo), **Gay-Lussac** (émbolo fijo y llama), **Avogadro**, **gas ideal** y **Dalton** (mezcla de N₂ y O₂ con presiones parciales medidas por separado). La presión se **mide** con los choques contra las paredes y se compara con P = nRT/V y con PV/nT ≈ 0,082. Cada modo tiene su gráfica para registrar puntos (P–V, V–T con la recta que llega a −273 °C, P–T, V–n, barras de Dalton). Verificado: todas las leyes coinciden con la teoría dentro de un 3 %.
+- Conversor de unidades (atm, mmHg, kPa, °C, K), tarjetas de las siete leyes con ejemplos colombianos, ejemplos resueltos (paquete de papas de Cartagena a Bogotá con la ley combinada; aire de un salón de Bogotá con PV = nRT), presión parcial del oxígeno en Cartagena, Medellín, Bogotá y el nevado del Ruiz, y **problemas al azar con verificación** de siete tipos.
+
+**`soluciones.html` · Soluciones y concentración (nuevo, n = 4)**
+- **Disolución en vivo** (`SIM.disolucion`): moléculas de agua que se orientan (O hacia el Na⁺, H hacia el Cl⁻) y arrancan los iones del borde del cristal; temperatura, botón para agitar, saturación y equilibrio, bombillo de conductividad. Se compara con el azúcar (moléculas, no conduce) y el aceite (apolar, no se disuelve).
+- **Curvas de solubilidad** de NaCl, KCl y KNO₃: insaturada o saturada, cuánto queda en el fondo y cuánto cristaliza al enfriar.
+- Tabla de **todas las unidades** (% m/m, % m/v, % v/v, ppm, M, m, X, N) con ejemplos colombianos (suero fisiológico, alcohol antiséptico, aguardiente, cloro del agua potable según la Resolución 2115 de 2007) y ejemplos resueltos.
+- **Prepara y diluye** (`SIM.preparar`): sulfato de cobre azul cuyo color depende de la concentración, retos de preparación y dilución con C₁V₁ = C₂V₂.
+- **Problemas al azar** de diez tipos (incluidos gramos para preparar, dilución y normalidad).
+
+**Juego:** BANCO_GASES (25) y BANCO_SOLUCIONES (27); dos temas nuevos (20 en total). **Generador Docente:** dos temas con lectura, ejemplo, 20 preguntas abiertas cada uno, preguntas tipo Saber y el ejercicio «D · Preguntas y problemas». **Navegación:** menú de todas las páginas, hoja «Más», portada (tarjetas y menú átomo) y un enlace desde `modelos.html`. Componente nuevo `SED10.problemas` en `assets/sed10.js`. `sw.js` pasó a `ionom-v74` (cambian `banco.js` y hay páginas nuevas).
+
+---
+
 ## 5 de noviembre (2) — Simulaciones en canvas que se mueven
 
 El docente pidió que todo fuera muy interactivo, con simulaciones y modelos en canvas que se puedan mover. Nuevo `assets/sim10.js` con tres simulaciones animadas, cada una con controles, botón de pausa y una pregunta para predecir antes de mirar (se ajustan a la pantalla del celular, se manejan con el dedo y se detienen solas cuando no se ven):

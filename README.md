@@ -25,7 +25,9 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `modelos.html` | Modelos, leyes y datos | Hipótesis, ley, teoría y modelo; laboratorio virtual de Boyle; modelo del punto de ebullición por altitud (SED 10.°) |
 | `ph.html` | Ácidos, bases y pH | Teorías ácido-base, escala de pH, estudios de casos del cuerpo y los alimentos, suelos, lluvia y mar (SED 10.°) |
 | `industria.html` | Química en la industria | Conservación de masa y carga, procesos industriales colombianos, limitante, pureza, rendimiento y experimento con cáscara de huevo (SED 10.°) |
-| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) + `BANCO_ENLACE` (47 preguntas de enlace químico) + `BANCO_PH`, `BANCO_INDUSTRIA` y `BANCO_MODELOS` (83 preguntas de los temas de la SED para 10.°) |
+| `gases.html` | Leyes de los gases | Laboratorio de gases con Boyle, Charles, Gay-Lussac, Avogadro, gas ideal y Dalton; problemas al azar |
+| `soluciones.html` | Soluciones y concentración | Disolución animada, solubilidad, % m/m, % m/v, % v/v, ppm, M, m, X, N y dilución; problemas al azar |
+| `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) + `BANCO_ENLACE` (47 preguntas de enlace químico) + `BANCO_PH`, `BANCO_INDUSTRIA`, `BANCO_MODELOS`, `BANCO_GASES` y `BANCO_SOLUCIONES` (135 preguntas de ampliación para 10.°) |
 | `ionom-analytics.gs` | Registro | Google Apps Script para registrar resultados del Modo Estudiante en Google Sheets |
 
 Detalle de la región «El átomo» (teoría atómica, configuración electrónica, menú átomo y tema del Juego): ver [`TEORIA_ATOMICA.md`](TEORIA_ATOMICA.md).

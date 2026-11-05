@@ -5,6 +5,10 @@
    - haber    (industria.html) reactor N₂ + 3 H₂ → 2 NH₃ y reactivo limitante
    - cilindro (modelos.html)   gas en un cilindro con émbolo: la presión sale
                                de los choques de las partículas (Boyle/Charles)
+   - gases    (gases.html)     laboratorio con las leyes de Boyle, Charles,
+                               Gay-Lussac, Avogadro, gas ideal y Dalton
+   - disolucion, preparar (soluciones.html) proceso de disolución y
+                               preparación/dilución de una solución
    Se ajustan al ancho de la pantalla, se pausan solas cuando no se ven y
    arrancan en pausa si el sistema pide «reducir movimiento». Son MODELOS:
    cada partícula representa muchísimas partículas reales.
@@ -45,6 +49,9 @@ function nota(box,html){var n=el('div',{class:'sim-msg','aria-live':'polite'},ht
 function mover(p,dt,x0,y0,x1,y1){p.x+=p.vx*dt;p.y+=p.vy*dt;var b=false;if(p.x<x0){p.x=x0;p.vx=Math.abs(p.vx);b=true;}if(p.x>x1){p.x=x1;p.vx=-Math.abs(p.vx);b=true;}if(p.y<y0){p.y=y0;p.vy=Math.abs(p.vy);b=true;}if(p.y>y1){p.y=y1;p.vy=-Math.abs(p.vy);b=true;}if(b&&p.a!=null)p.a=Math.atan2(p.vy,p.vx);}
 function circ(ctx,x,y,r,c){ctx.beginPath();ctx.arc(x,y,r,0,PI2);ctx.fillStyle=c;ctx.fill();}
 function texto(ctx,t,x,y,c,f,al){ctx.fillStyle=c||'#0d2d42';ctx.font=f||'700 11px Outfit,sans-serif';ctx.textAlign=al||'left';ctx.fillText(t,x,y);}
+
+function pildoras10(cont,ops,ini,fn){var s=el('div',{class:'seg',role:'group'});ops.forEach(function(o){var b=el('button',{type:'button'},o[1]);b.dataset.k=o[0];if(o[0]===ini)b.classList.add('on');s.appendChild(b);});
+  s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;s.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});fn(b.dataset.k);});cont.appendChild(s);return s;}
 
 var SIM={};
 
@@ -215,6 +222,226 @@ SIM.cilindro=function(box){
   rT.addEventListener('input',function(){imp=[];tMed=0;});
   rV.addEventListener('input',function(){imp=[];tMed=0;var g=geo();P.forEach(function(p){if(p.x>g.x0+g.w)p.x=g.x0+g.w-rnd(1,8);});});
   box._prueba=function(seg,vol){if(vol){V=vol;rV.value=vol;rV._upd();rV.dispatchEvent(new Event('input'));}for(var t=0;t<seg;t+=0.02)paso(0.02);return {P:Pmed,V:V,T:T};};
+};
+
+/* ── 4. Laboratorio de gases: todas las leyes ────────────────────────────
+   Un cilindro con émbolo y partículas que chocan contra las paredes. La
+   presión se MIDE con el impulso de los choques (como un manómetro) y se
+   compara con P = nRT/V. Cada mol es un grupo de 40 partículas modelo; la
+   rapidez es ∝ √T. Modos: Boyle (n, T fijos), Charles (n, P fijos: el
+   émbolo se mueve solo), Gay-Lussac (n, V fijos), Avogadro (P, T fijos),
+   gas ideal (todo libre) y Dalton (mezcla de N₂ y O₂: presiones parciales,
+   que se miden por separado para cada gas). R = 0,082 atm·L/(mol·K). */
+SIM.gases=function(box){
+  var L=lienzo(box,0.62,'Cilindro con gas: émbolo, termómetro y manómetro; las partículas chocan contra las paredes'),ctx=L.ctx;
+  var R=0.08206,modo='boyle',n=1,n2=0.5,T=273,V=22.4,Vd=22.4,Vmax=60,P=[],imp=[],imp2=[],tMed=0,Pmed=1,Pmed1=0,Pmed2=0,pts=[],arr=false,v0=150;
+  var MOD={boyle:{t:'Boyle',fijo:'n y T constantes',x:'V',y:'P',ley:'P₁V₁ = P₂V₂'},charles:{t:'Charles',fijo:'n y P constantes',x:'T',y:'V',ley:'V₁/T₁ = V₂/T₂'},
+    gay:{t:'Gay-Lussac',fijo:'n y V constantes',x:'T',y:'P',ley:'P₁/T₁ = P₂/T₂'},avog:{t:'Avogadro',fijo:'P y T constantes',x:'n',y:'V',ley:'V₁/n₁ = V₂/n₂'},
+    ideal:{t:'Gas ideal',fijo:'todo puede cambiar',x:'V',y:'P',ley:'PV = nRT'},dalton:{t:'Dalton',fijo:'V y T constantes',x:'n',y:'P',ley:'P total = P₁ + P₂'}};
+  var c0=fila(box);pildoras10(c0,Object.keys(MOD).map(function(k){return [k,MOD[k].t];}),modo,function(k){modo=k;preparar();});
+  var c1=fila(box);
+  var rV=deslizador(c1,'Volumen',5,60,0.5,V,function(x){V=x;return coma(x,1)+' L';});
+  var rT=deslizador(c1,'Temperatura',100,600,5,T,function(x){var f=Math.sqrt(x/T);T=x;P.forEach(function(p){p.vx*=f;p.vy*=f;});return x+' K ('+Math.round(x-273)+' °C)';});
+  var rN=deslizador(c1,'Moles (N₂)',0.25,2.5,0.25,n,function(x){n=x;return coma(x,2)+' mol';});
+  var rN2=deslizador(c1,'Moles de O₂',0,2,0.25,n2,function(x){n2=x;return coma(x,2)+' mol';});
+  var c2=fila(box);
+  boton(c2,'📋 Registrar punto','prim',function(){if(tMed<1.4){msg.innerHTML='Espera un momento: el manómetro todavía está midiendo los choques.';return;}var m=MOD[modo];pts.push({m:modo,x:m.x==='V'?V:m.x==='T'?T:n,y:m.y==='P'?Pmed:Vd,T:T,n:n,P:Pmed});});
+  boton(c2,'↺ Borrar puntos','',function(){pts=[];});
+  var msg=nota(box,'');
+  function etq(r,t){r.parentNode.querySelector('span').textContent=t;}
+  function mostrar(r,si){r.parentNode.style.display=si?'':'none';}
+  function Pteo(){return (n+(modo==='dalton'?n2:0))*R*T/Vd;}
+  function preparar(){pts=[];imp=[];imp2=[];tMed=0;
+    if(modo==='boyle'){n=1;T=273;}if(modo==='charles'){n=1;}if(modo==='gay'){n=1;V=22.4;}if(modo==='avog'){T=273;}if(modo==='dalton'){V=40;T=300;}
+    mostrar(rV,modo==='boyle'||modo==='ideal');mostrar(rT,modo!=='boyle'&&modo!=='avog'&&modo!=='dalton');mostrar(rN,modo==='avog'||modo==='ideal'||modo==='dalton');mostrar(rN2,modo==='dalton');
+    etq(rN,modo==='dalton'?'Moles de N₂':'Moles de gas');
+    [[rV,V],[rT,T],[rN,n],[rN2,n2]].forEach(function(a){a[0].value=a[1];a[0]._upd();});
+    if(modo==='charles'||modo==='avog')V=Math.min(Vmax,n*R*T/1);
+    Vd=V;cargar();A.dibujar();}
+  function cargar(){var g=geo();P=[];var tot=[[Math.round(n*40),'a'],[modo==='dalton'?Math.round(n2*40):0,'b']];
+    tot.forEach(function(t){for(var i=0;i<t[0];i++){var a=rnd(0,PI2),s=v0*Math.sqrt(T/273)*(0.6+Math.random()*0.8);P.push({x:g.x0+rnd(4,g.w-4),y:g.y0+rnd(4,g.h-4),vx:Math.cos(a)*s,vy:Math.sin(a)*s,e:t[1]});}});normaliza();}
+  function normaliza(){if(!P.length)return;var m2=P.reduce(function(s,p){return s+p.vx*p.vx+p.vy*p.vy;},0)/P.length,f=Math.sqrt(v0*v0*1.0533*T/273/m2);P.forEach(function(p){p.vx*=f;p.vy*=f;});}
+  function ajustarN(){var g=geo(),q={a:Math.round(n*40),b:modo==='dalton'?Math.round(n2*40):0};['a','b'].forEach(function(e){var act=P.filter(function(p){return p.e===e;});
+    while(act.length<q[e]){var a=rnd(0,PI2),s=v0*Math.sqrt(T/273)*(0.6+Math.random()*0.8);var p={x:g.x0+rnd(4,g.w-4),y:g.y0+rnd(4,g.h-4),vx:Math.cos(a)*s,vy:Math.sin(a)*s,e:e};P.push(p);act.push(p);}
+    while(act.length>q[e]){var x=act.pop();P.splice(P.indexOf(x),1);}});normaliza();imp=[];imp2=[];tMed=0;}
+  function geo(){var W=L.W,H=L.H,x0=16,y0=30,h=H*0.56,wmax=W*0.55;return {x0:x0,y0:y0,h:h,w:wmax*Vd/Vmax,wmax:wmax};}
+  rV.addEventListener('input',function(){imp=[];imp2=[];tMed=0;});
+  rT.addEventListener('input',function(){imp=[];imp2=[];tMed=0;});
+  rN.addEventListener('input',function(){ajustarN();});rN2.addEventListener('input',function(){ajustarN();});
+  L.cv.addEventListener('pointerdown',function(e){if(!(modo==='boyle'||modo==='ideal'))return;var g=geo(),p=L.pos(e);if(Math.abs(p.x-(g.x0+g.w))<22&&p.y>g.y0&&p.y<g.y0+g.h){arr=true;L.cv.setPointerCapture(e.pointerId);}});
+  L.cv.addEventListener('pointermove',function(e){if(!arr)return;var g=geo(),p=L.pos(e);V=Math.round(Math.max(5,Math.min(60,(p.x-g.x0)/g.wmax*Vmax))*2)/2;rV.value=V;rV._upd();imp=[];imp2=[];tMed=0;A.dibujar();});
+  L.cv.addEventListener('pointerup',function(){arr=false;});
+  var REF=null;
+  function paso(dt){
+    var W=L.W,H=L.H;
+    if(modo==='charles'||modo==='avog')V=Math.min(Vmax,Math.max(5,n*R*T/1));
+    var Vant=Vd;Vd+=(V-Vd)*(dt>0?Math.min(1,dt*2.5):1);if(Math.abs(Vd-Vant)>0.05){imp=[];imp2=[];tMed=Math.min(tMed,0.3);}
+    var g=geo(),xr=g.x0+g.w;
+    if(dt>0){var J=[0,0],sub=3,h=dt/sub;
+      P.forEach(function(p){if(p.x>xr)p.x=xr-rnd(1,6);});
+      for(var k=0;k<sub;k++)P.forEach(function(p){var j=p.e==='a'?0:1;p.x+=p.vx*h;p.y+=p.vy*h;
+        if(p.x<g.x0){p.x=g.x0;p.vx=Math.abs(p.vx);J[j]+=2*p.vx;}
+        if(p.x>xr){p.x=xr;J[j]+=2*Math.abs(p.vx);p.vx=-Math.abs(p.vx);}
+        if(p.y<g.y0){p.y=g.y0;p.vy=Math.abs(p.vy);J[j]+=2*p.vy;}
+        if(p.y>g.y0+g.h){p.y=g.y0+g.h;J[j]+=2*Math.abs(p.vy);p.vy=-Math.abs(p.vy);}});
+      var per=2*(g.w+g.h);imp.push([dt,J[0]/per]);imp2.push([dt,J[1]/per]);
+      function prom(a){var tt=0,jj=0;for(var i=a.length-1;i>=0;i--){tt+=a[i][0];jj+=a[i][1];if(tt>1.5){a.splice(0,i);break;}}return [tt,jj/Math.max(tt,1e-3)];}
+      var r1=prom(imp),r2=prom(imp2);tMed=r1[0];
+      if(!REF)REF={v2:v0*v0*1.0533};
+      // impulso esperado para 1 mol (40 partículas) a 273 K en 22,4 L = 1 atm
+      var ref=40*REF.v2/(2*(g.wmax*22.4/Vmax)*g.h);
+      if(tMed>0.5){Pmed1=r1[1]/ref;Pmed2=r2[1]/ref;Pmed=Pmed1+Pmed2;}}
+    ctx.clearRect(0,0,W,H);
+    // cilindro
+    var calor=T<250?'#dbeafe':T<400?'#eff6ff':'#fee2e2';ctx.fillStyle=calor;ctx.fillRect(g.x0,g.y0,g.w,g.h);
+    ctx.strokeStyle='#334155';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(g.x0+g.wmax+8,g.y0);ctx.lineTo(g.x0,g.y0);ctx.lineTo(g.x0,g.y0+g.h);ctx.lineTo(g.x0+g.wmax+8,g.y0+g.h);ctx.stroke();ctx.lineWidth=1;
+    ctx.fillStyle='#475569';ctx.fillRect(xr,g.y0+2,10,g.h-4);ctx.fillRect(xr+10,g.y0+g.h/2-5,Math.max(0,g.x0+g.wmax+24-xr),10);
+    if(modo==='boyle'||modo==='ideal'){ctx.fillStyle='#f59e0b';ctx.beginPath();ctx.arc(xr+5,g.y0+g.h/2,8,0,PI2);ctx.fill();texto(ctx,'Arrastra el émbolo ↔',g.x0+4,g.y0-10,'#334155','11px Outfit,sans-serif');}
+    else if(modo==='charles'||modo==='avog'){for(var pe=0;pe<3;pe++){ctx.fillStyle='#64748b';ctx.fillRect(g.x0+g.wmax+12,g.y0+g.h/2-28+pe*20,22,14);}texto(ctx,'Émbolo libre: P externa = 1 atm',g.x0+4,g.y0-10,'#334155','11px Outfit,sans-serif');}
+    else texto(ctx,'Émbolo fijo: volumen constante',g.x0+4,g.y0-10,'#334155','11px Outfit,sans-serif');
+    // fuego
+    if(modo!=='boyle'&&modo!=='avog'&&modo!=='dalton'&&T>300){var fl=Math.min(1,(T-300)/300);for(var f=0;f<5;f++){ctx.fillStyle='rgba(249,115,22,'+(0.4+0.5*fl)+')';ctx.beginPath();var fx=g.x0+20+f*(g.w-30)/4,fy=g.y0+g.h+4;ctx.moveTo(fx-6,fy);ctx.quadraticCurveTo(fx,fy+18*fl+6*Math.sin(performance.now()/120+f),fx+6,fy);ctx.fill();}}
+    P.forEach(function(p){circ(ctx,p.x,p.y,3.3,p.e==='a'?(modo==='dalton'?'#2563eb':'#7c3aed'):'#dc2626');});
+    // lecturas
+    var lx=g.x0+g.wmax+44,lw=W-lx-10,ly=g.y0;
+    ctx.fillStyle='#0d2d42';ctx.fillRect(lx,ly,lw,94);
+    texto(ctx,tMed<1.4?'P: midiendo…':'P medida = '+coma(Pmed,2)+' atm',lx+8,ly+20,'#4ade80','800 13px JetBrains Mono,monospace');
+    texto(ctx,'P = nRT/V = '+coma(Pteo(),2)+' atm',lx+8,ly+38,'#bbf7d0','11px JetBrains Mono,monospace');
+    texto(ctx,'V = '+coma(Vd,1)+' L · T = '+T+' K',lx+8,ly+56,'#e2e8f0','11px Outfit,sans-serif');
+    texto(ctx,'n = '+coma(n+(modo==='dalton'?n2:0),2)+' mol',lx+8,ly+72,'#e2e8f0','11px Outfit,sans-serif');
+    texto(ctx,'PV/nT = '+coma(Pmed*Vd/((n+(modo==='dalton'?n2:0))*T),3),lx+8,ly+88,'#fde68a','11px Outfit,sans-serif');
+    // gráfica según el modo
+    var m=MOD[modo],gx=lx+30,gy=ly+112,gw=lw-38,gh=H-gy-24;
+    if(gh>50&&modo!=='dalton'){var XR=m.x==='V'?[0,60]:m.x==='T'?[-300,350]:[0,2.6],YR=m.y==='P'?[0,4]:[0,60];
+      var X=function(x){return gx+(x-XR[0])/(XR[1]-XR[0])*gw;},Y=function(y){return gy+gh-(y-YR[0])/(YR[1]-YR[0])*gh;};
+      ctx.strokeStyle='#94a3b8';ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
+      texto(ctx,m.y+(m.y==='P'?' (atm)':' (L)'),gx-28,gy-4,'#334155','10px Outfit,sans-serif');
+      texto(ctx,m.x==='V'?'V (L)':m.x==='T'?'T (°C)':'n (mol)',gx+gw,gy+gh+16,'#334155','10px Outfit,sans-serif','right');
+      [XR[0],(XR[0]+XR[1])/2,XR[1]].forEach(function(v){texto(ctx,m.x==='T'?String(Math.round(v)):coma(v,m.x==='n'?1:0),X(v),gy+gh+12,'#64748b','9px Outfit,sans-serif','center');});
+      texto(ctx,String(YR[1]),gx-4,gy+6,'#64748b','9px Outfit,sans-serif','right');
+      ctx.strokeStyle='rgba(124,58,237,.55)';ctx.setLineDash([4,3]);ctx.beginPath();var prim=true;
+      for(var s=0;s<=60;s++){var xv=XR[0]+(XR[1]-XR[0])*s/60,yv;
+        if(modo==='boyle'||modo==='ideal')yv=xv>0?n*R*T/xv:99;else if(modo==='charles')yv=n*R*(xv+273)/1;else if(modo==='gay')yv=n*R*(xv+273)/V;else yv=xv*R*T/1;
+        if(yv<YR[0]||yv>YR[1]){prim=true;continue;}if(prim){ctx.moveTo(X(xv),Y(yv));prim=false;}else ctx.lineTo(X(xv),Y(yv));}ctx.stroke();ctx.setLineDash([]);
+      if(m.x==='T'){ctx.strokeStyle='#dc2626';ctx.beginPath();ctx.moveTo(X(-273),gy+gh-4);ctx.lineTo(X(-273),gy+gh+4);ctx.stroke();texto(ctx,'−273 °C',X(-273),gy+gh-8,'#dc2626','9px Outfit,sans-serif','center');}
+      pts.filter(function(q){return q.m===modo;}).forEach(function(q){var xx=m.x==='T'?q.x-273:q.x;circ(ctx,X(xx),Y(Math.min(YR[1],q.y)),4,'#dc2626');});
+      texto(ctx,'- - '+m.ley,gx+6,gy+10,'#7c3aed','10px Outfit,sans-serif');}
+    if(modo==='dalton'&&gh>50){var bars=[['N₂',Pmed1,'#2563eb'],['O₂',Pmed2,'#dc2626'],['Total',Pmed,'#0d2d42']],bw=gw/5;
+      bars.forEach(function(b,i){var bh=Math.min(gh,b[1]/3*gh);ctx.fillStyle=b[2];ctx.fillRect(gx+i*bw*1.6+10,gy+gh-bh,bw,bh);texto(ctx,b[0],gx+i*bw*1.6+10+bw/2,gy+gh+12,'#334155','10px Outfit,sans-serif','center');texto(ctx,coma(b[1],2),gx+i*bw*1.6+10+bw/2,gy+gh-bh-4,'#0d2d42','700 10px Outfit,sans-serif','center');});}
+    var txt={boyle:'<b>Ley de Boyle</b> ('+m.fijo+'): al reducir el volumen, las partículas chocan más seguido contra las paredes y la presión sube. Registra puntos con volúmenes distintos: caen sobre una curva (P y V son inversamente proporcionales).',
+      charles:'<b>Ley de Charles</b> ('+m.fijo+'): al calentar, las partículas van más rápido, empujan el émbolo libre y el gas ocupa más volumen. Registra puntos: forman una recta que, prolongada, llega a V = 0 en −273 °C, el <b>cero absoluto</b>.',
+      gay:'<b>Ley de Gay-Lussac</b> ('+m.fijo+'): con el émbolo fijo, calentar hace que las partículas choquen más rápido y con más fuerza: la presión sube en proporción a la temperatura absoluta (por eso una olla a presión o una llanta caliente aumentan su presión).',
+      avog:'<b>Ley de Avogadro</b> ('+m.fijo+'): más moles = más partículas = más volumen. A 0 °C y 1 atm, 1 mol de cualquier gas ocupa 22,4 L.',
+      ideal:'<b>Gas ideal</b>: cambia volumen, temperatura y moles a la vez. La presión medida con los choques siempre se acerca a nRT/V y el cociente PV/nT se mantiene cerca de R = 0,082 atm·L/(mol·K).',
+      dalton:'<b>Ley de Dalton</b> ('+m.fijo+'): cada gas choca contra las paredes por su cuenta. La presión total es la suma de las presiones parciales, y cada una es proporcional a los moles de ese gas.'}[modo];
+    msg.innerHTML=txt;
+  }
+  var A=animar(L,paso);botonPausa(A,c2);
+  preparar();
+  box._prueba=function(seg,cfg){if(cfg){if(cfg.modo&&cfg.modo!==modo){modo=cfg.modo;preparar();}['V','T','n','n2'].forEach(function(k){if(cfg[k]!=null){var r={V:rV,T:rT,n:rN,n2:rN2}[k];r.value=cfg[k];r.dispatchEvent(new Event('input'));}});}
+    for(var t=0;t<seg;t+=0.02)paso(0.02);return {P:Pmed,Pteo:Pteo(),V:Vd,T:T,n:n,P1:Pmed1,P2:Pmed2,v2:P.reduce(function(s,p){return s+p.vx*p.vx+p.vy*p.vy;},0)/Math.max(1,P.length)*273/T,REF:REF&&REF.v2,N:P.length};};
+};
+
+/* ── 5. Disolución en vivo ───────────────────────────────────────────────
+   Un cristal en el fondo de un vaso con moléculas de agua (O rojo δ−, H
+   blancos δ+). Las moléculas se orientan: el O hacia los cationes (Na⁺) y
+   los H hacia los aniones (Cl⁻). Una partícula del borde del cristal se
+   suelta cuando la rodean suficientes moléculas de agua (hidratación); la
+   rapidez crece con la temperatura y al agitar. Si la solución llega a su
+   límite (saturada), las partículas vuelven al cristal tan rápido como
+   salen: equilibrio. Azúcar: se separan moléculas enteras (no iones).
+   Aceite: apolar, no se disuelve y queda flotando. */
+SIM.disolucion=function(box){
+  var L=lienzo(box,0.62,'Vaso con agua y un cristal que se disuelve: las moléculas de agua rodean las partículas'),ctx=L.ctx;
+  var sust='nacl',T=20,agita=0,Wm=[],C=[],libres=[],sat=false;
+  var DAT={nacl:{n:'Sal (NaCl)',cap:function(T){return 15+T*0.03;}},azucar:{n:'Azúcar (sacarosa)',cap:function(T){return 9+T*0.18;}},aceite:{n:'Aceite',cap:function(){return 0;}}};
+  var c1=fila(box);pildoras10(c1,[['nacl','🧂 Sal (iónica)'],['azucar','🍬 Azúcar (molecular)'],['aceite','🛢️ Aceite (apolar)']],sust,function(k){sust=k;iniciar();});
+  var c2=fila(box);
+  deslizador(c2,'Temperatura',0,100,1,T,function(x){T=x;return x+' °C';});
+  boton(c2,'🥄 Agitar','prim',function(){agita=2.5;A.play();});
+  boton(c2,'↺ Empezar de nuevo','',function(){iniciar();});
+  var msg=nota(box,'');
+  function iniciar(){var W=L.W,H=L.H;Wm=[];C=[];libres=[];
+    for(var i=0;i<70;i++)Wm.push({x:rnd(0.06,0.94)*W,y:rnd(0.2,0.92)*H,vx:rnd(-40,40),vy:rnd(-40,40),a:rnd(0,PI2)});
+    var cols=6,filas=4,s=17,x0=W*0.5-cols*s/2,y0=H*0.93-filas*s;
+    if(sust==='aceite'){for(i=0;i<24;i++)C.push({x:W*0.5+rnd(-60,60),y:H*0.22+rnd(-6,6),t:'o',fijo:true});}
+    else for(var f=0;f<filas;f++)for(var c=0;c<cols;c++)C.push({gx:c,gy:f,x:x0+c*s+s/2,y:y0+f*s+s/2,t:sust==='nacl'?((c+f)%2?'cl':'na'):'s',enCristal:true});
+    A&&A.dibujar();}
+  function borde(p){if(!p.enCristal)return false;var vec=C.filter(function(q){return q.enCristal&&Math.abs(q.gx-p.gx)+Math.abs(q.gy-p.gy)===1;});return vec.length<4&&!C.some(function(q){return q.enCristal&&q.gx===p.gx&&q.gy===p.gy-1;});}
+  function paso(dt){
+    var W=L.W,H=L.H,top=H*0.12,fondo=H*0.95,izq=W*0.04,der=W*0.96,v=40+T*1.4+agita*90;
+    if(dt>0){agita=Math.max(0,agita-dt);
+      Wm.forEach(function(m){m.vx+=gauss()*v*3*dt;m.vy+=gauss()*v*3*dt;var sp=Math.hypot(m.vx,m.vy);if(sp>v){m.vx*=v/sp;m.vy*=v/sp;}
+        if(agita>0){var cx=W/2,cy=H*0.55,dx=m.x-cx,dy=m.y-cy;m.vx+=-dy*0.9*dt*agita;m.vy+=dx*0.9*dt*agita;}
+        mover(m,dt,izq,top,der,fondo);
+        // orientación: hacia el ion más cercano
+        var cerca=null,dmin=34;C.concat(libres).forEach(function(q){if(q.t==='o')return;var d=Math.hypot(q.x-m.x,q.y-m.y);if(d<dmin){dmin=d;cerca=q;}});
+        var obj=cerca?Math.atan2(cerca.y-m.y,cerca.x-m.x)+(cerca.t==='cl'?Math.PI:0):m.a+gauss()*2*dt;var da=Math.atan2(Math.sin(obj-m.a),Math.cos(obj-m.a));m.a+=da*Math.min(1,6*dt);});
+      var cap=DAT[sust].cap(T),nlib=libres.length;sat=nlib>=cap;
+      C.forEach(function(p){if(!p.enCristal||sat||sust==='aceite'||!borde(p))return;var rodea=Wm.filter(function(m){return Math.hypot(m.x-p.x,m.y-p.y)<30;}).length;
+        if(rodea>=2&&Math.random()<(0.6+T*0.025+agita*1.2)*dt){p.enCristal=false;p.vx=rnd(-30,30);p.vy=rnd(-60,-20);libres.push(p);}});
+      C=C.filter(function(p){return p.enCristal||p.t==='o';});
+      // equilibrio: si hay más disuelto que el límite, algunas vuelven al cristal
+      if(libres.length>cap&&sust!=='aceite'){var hueco=null;libres.forEach(function(q,i){if(hueco||Math.random()>0.6*dt)return;var cand=libres[i];var cols=6,s=17,x0=W*0.5-cols*s/2,y0=H*0.93-4*s;
+        for(var f=3;f>=0&&!hueco;f--)for(var c=0;c<cols;c++){if(!C.some(function(z){return z.gx===c&&z.gy===f;})&&(f===3||C.some(function(z){return z.gx===c&&z.gy===f+1;}))&&(sust!=='nacl'||((c+f)%2?'cl':'na')===cand.t)){hueco={c:c,f:f,x:x0+c*s+s/2,y:y0+f*s+s/2,q:cand};break;}}});
+        if(hueco){var q=hueco.q;libres.splice(libres.indexOf(q),1);q.enCristal=true;q.gx=hueco.c;q.gy=hueco.f;q.x=hueco.x;q.y=hueco.y;C.push(q);}}
+      libres.forEach(function(p){p.vx+=gauss()*v*2*dt;p.vy+=gauss()*v*2*dt;var sp=Math.hypot(p.vx,p.vy),mx=v*0.6;if(sp>mx){p.vx*=mx/sp;p.vy*=mx/sp;}
+        if(agita>0){var cx=W/2,cy=H*0.55,dx=p.x-cx,dy=p.y-cy;p.vx+=-dy*0.9*dt*agita;p.vy+=dx*0.9*dt*agita;}mover(p,dt,izq+6,top+6,der-6,fondo-6);});
+      if(sust==='aceite')C.forEach(function(o){o.x+=gauss()*8*dt;o.y=Math.max(top+4,Math.min(top+26,o.y+gauss()*6*dt));});}
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#e0f2fe';ctx.fillRect(izq,top,der-izq,fondo-top);
+    ctx.strokeStyle='#334155';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(izq,top-20);ctx.lineTo(izq,fondo);ctx.lineTo(der,fondo);ctx.lineTo(der,top-20);ctx.stroke();ctx.lineWidth=1;
+    function dibuja(p){if(p.t==='na')circ(ctx,p.x,p.y,6,'#94a3b8');else if(p.t==='cl')circ(ctx,p.x,p.y,8,'#16a34a');else if(p.t==='s'){ctx.fillStyle='#d97706';ctx.beginPath();for(var k=0;k<6;k++){var a=k*Math.PI/3;ctx.lineTo(p.x+Math.cos(a)*8,p.y+Math.sin(a)*8);}ctx.closePath();ctx.fill();}else circ(ctx,p.x,p.y,7,'#facc15');}
+    libres.forEach(function(p){ctx.strokeStyle='rgba(37,99,235,.35)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.arc(p.x,p.y,15,0,PI2);ctx.stroke();ctx.setLineDash([]);});
+    C.forEach(dibuja);libres.forEach(dibuja);
+    Wm.forEach(function(m){var ox=m.x,oy=m.y,a=m.a;circ(ctx,ox,oy,4.5,'#ef4444');[0.95,-0.95].forEach(function(d){circ(ctx,ox-Math.cos(a+d)*6,oy-Math.sin(a+d)*6,2.6,'#f8fafc');});});
+    // bombillo de conductividad
+    var ion=sust==='nacl'?libres.length:0,brillo=Math.min(1,ion/12);ctx.fillStyle='rgba(250,204,21,'+(0.15+brillo*0.85)+')';ctx.beginPath();ctx.arc(der-30,top-2,12,0,PI2);ctx.fill();ctx.strokeStyle='#334155';ctx.stroke();
+    texto(ctx,brillo>0.1?'💡 conduce':'💡 no conduce',der-48,top+24,'#334155','10px Outfit,sans-serif','right');
+    texto(ctx,'Disuelto: '+libres.length+(sust==='aceite'?'':' · límite a '+T+' °C ≈ '+Math.round(DAT[sust].cap(T))),izq+8,top+16,'#0d2d42','700 11px Outfit,sans-serif');
+    var restan=C.filter(function(p){return p.enCristal;}).length;
+    msg.innerHTML=sust==='aceite'?'El aceite es <b>apolar</b>: las moléculas de agua se atraen entre ellas (puentes de hidrógeno) y no rodean al aceite, que queda flotando. <b>Semejante disuelve a semejante.</b>'
+      :(sust==='nacl'?'Las moléculas de agua se orientan: el <b>O (δ−)</b> hacia el Na⁺ y los <b>H (δ+)</b> hacia el Cl⁻. Cuando varias rodean un ion del borde, lo arrancan del cristal: <b>disociación e hidratación</b>. Los iones libres hacen que la solución <b>conduzca</b> la electricidad.':'El azúcar se disuelve como <b>moléculas enteras</b> (no se separa en iones): por eso la solución <b>no conduce</b> la electricidad. El agua la rodea por puentes de hidrógeno con sus −OH.')
+      +' '+(restan===0?'Se disolvió todo: la solución es <b>insaturada</b>.':sat?'La solución está <b>saturada</b>: ya no se disuelve más a esta temperatura (las partículas vuelven al cristal tan rápido como salen). Sube la temperatura y observa.':'Todavía se está disolviendo: <b>insaturada</b>. Agita o calienta para hacerlo más rápido.');
+  }
+  var A=null;A=animar(L,paso);botonPausa(A,c2);iniciar();
+  box._prueba=function(seg,cfg){if(cfg&&cfg.sust&&cfg.sust!==sust){sust=cfg.sust;iniciar();}if(cfg&&cfg.T!=null)T=cfg.T;for(var t=0;t<seg;t+=0.05)paso(0.05);return {libres:libres.length,cristal:C.filter(function(p){return p.enCristal;}).length,sat:sat};};
+};
+
+/* ── 6. Prepara y diluye una solución ────────────────────────────────────
+   Sulfato de cobre(II), CuSO₄ (159,6 g/mol), que es azul: el color depende
+   de la concentración. Cada punto representa 0,25 g de soluto. Diluir
+   agrega agua: los moles de soluto no cambian (C₁V₁ = C₂V₂). */
+SIM.preparar=function(box){
+  var L=lienzo(box,0.58,'Vaso aforado con una solución azul de sulfato de cobre; el color depende de la concentración'),ctx=L.ctx;
+  var M=159.6,m=8,Vs=250,agua=0,pts=[],reto=null;
+  var c1=fila(box);
+  var rm=deslizador(c1,'Masa de CuSO₄',0,40,0.5,m,function(x){m=x;ajustar();return coma(x,1)+' g';});
+  var rv=deslizador(c1,'Volumen de solución',50,500,10,Vs,function(x){Vs=x;agua=0;if(rA){rA.value=0;rA._upd();}return x+' mL';});
+  var c2=fila(box);
+  var rA=deslizador(c2,'Diluir: agregar agua',0,500,10,0,function(x){agua=x;return '+'+x+' mL';});
+  boton(c2,'🎯 Reto','prim',function(){var vs=[100,200,250,500],cs=[0.1,0.2,0.25,0.4];reto={V:vs[Math.floor(Math.random()*4)],C:cs[Math.floor(Math.random()*4)]};agua=0;rA.value=0;rA._upd();A.dibujar();
+    rev.innerHTML='🎯 <b>Reto:</b> prepara <b>'+reto.V+' mL</b> de CuSO₄ <b>'+coma(reto.C,2)+' M</b>. Calcula primero en tu cuaderno los gramos y luego ajusta los dos controles (con «Diluir» en 0).';});
+  var rev=nota(box,'Mueve la masa y el volumen: observa el color y las concentraciones. Luego diluye con agua.');
+  boton(c2,'✔ Revisar el reto','',function(){if(!reto){rev.innerHTML='Primero pulsa «Reto».';return;}var C=m/M/(Vs/1000),gok=reto.C*reto.V/1000*M;
+    if(agua===0&&Math.abs(Vs-reto.V)<1&&Math.abs(C-reto.C)/reto.C<0.03)rev.innerHTML='✅ <b>¡Bien preparada!</b> '+coma(reto.C,2)+' mol/L × '+coma(reto.V/1000,3)+' L = '+coma(reto.C*reto.V/1000,4)+' mol × 159,6 g/mol = <b>'+coma(gok,2)+' g</b>.';
+    else rev.innerHTML='🔎 Todavía no: tu solución es '+coma(C,3)+' M en '+Vs+' mL. Pista: moles = M × V (en litros); gramos = moles × 159,6 g/mol.';});
+  function ajustar(){var n=Math.round(m/0.25);while(pts.length<n)pts.push({u:Math.random(),w:Math.random(),f:rnd(0,PI2)});pts.length=n;}
+  ajustar();
+  function paso(dt){
+    var W=L.W,H=L.H,Vt=Vs+agua,bx=W*0.1,bw=W*0.36,by=H*0.08,bh=H*0.84,Vmax=1000,hl=bh*Vt/Vmax,yl=by+bh-hl,C=m/M/(Vt/1000);
+    ctx.clearRect(0,0,W,H);
+    var alfa=Math.min(0.9,C/0.5*0.9);ctx.fillStyle='rgba(37,99,235,'+alfa+')';ctx.fillRect(bx,yl,bw,hl);ctx.fillStyle='rgba(224,242,254,.5)';ctx.fillRect(bx,yl,bw,3);
+    ctx.strokeStyle='#334155';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx,by+bh);ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx+bw,by);ctx.stroke();ctx.lineWidth=1;
+    for(var v=100;v<=1000;v+=100){var y=by+bh-bh*v/Vmax;ctx.strokeStyle='#64748b';ctx.beginPath();ctx.moveTo(bx+bw-14,y);ctx.lineTo(bx+bw,y);ctx.stroke();texto(ctx,v+' mL',bx+bw+4,y+3,'#475569','9px Outfit,sans-serif');}
+    var t=performance.now()/1000;pts.forEach(function(p){var x=bx+6+p.u*(bw-12)+Math.sin(t+p.f)*3,y=yl+6+p.w*(hl-12)+Math.cos(t*0.8+p.f)*3;if(hl>12)circ(ctx,x,y,2.2,'#1e3a8a');});
+    var n=m/M,lx=bx+bw+64,lw=W-lx-10;ctx.fillStyle='#0d2d42';ctx.fillRect(lx,by,lw,170);
+    var filas=[['Moles de soluto',coma(n,4)+' mol'],['Volumen total',Vt+' mL'],['Molaridad',coma(C,3)+' mol/L'],['% m/v',coma(m/Vt*100,2)+' %'],['g/L',coma(m/(Vt/1000),1)+' g/L'],['ppm (mg/L)',Math.round(m*1000/(Vt/1000)).toLocaleString('es-CO')]];
+    filas.forEach(function(f,i){texto(ctx,f[0],lx+10,by+24+i*25,'#94a3b8','11px Outfit,sans-serif');texto(ctx,f[1],lx+lw-10,by+24+i*25,'#4ade80','700 12px JetBrains Mono,monospace','right');});
+    if(agua>0){var C1=m/M/(Vs/1000);texto(ctx,'C₁V₁ = '+coma(C1,3)+' × '+Vs+' = '+coma(C1*Vs,1),lx+4,by+196,'#0d2d42','700 11px Outfit,sans-serif');texto(ctx,'C₂V₂ = '+coma(C,3)+' × '+Vt+' = '+coma(C*Vt,1),lx+4,by+214,'#0d2d42','700 11px Outfit,sans-serif');
+      texto(ctx,'Los puntos (moles) no cambian; el color se aclara.',lx+4,by+234,'#475569','10px Outfit,sans-serif');}
+  }
+  var A=animar(L,paso);botonPausa(A,c2);
+  box._prueba=function(cfg){if(cfg.m!=null){rm.value=cfg.m;rm.dispatchEvent(new Event('input'));}if(cfg.V!=null){rv.value=cfg.V;rv.dispatchEvent(new Event('input'));}if(cfg.agua!=null){rA.value=cfg.agua;rA.dispatchEvent(new Event('input'));}paso(0);return {C:m/M/((Vs+agua)/1000)};};
 };
 
 function iniciar(){document.querySelectorAll('.sim[data-sim]').forEach(function(b){if(b.dataset.listo)return;b.dataset.listo='1';var f=SIM[b.dataset.sim];if(f)try{f(b);}catch(e){b.innerHTML='<p>No se pudo iniciar la simulación.</p>';if(window.console)console.error(e);}});}
