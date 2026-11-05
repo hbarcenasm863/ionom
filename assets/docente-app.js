@@ -236,7 +236,7 @@ function contarDisponiblesTipo(temasMarcados){
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
   return {
     'a-nombrar': nCompuestos, 'b-formula': nCompuestos, 'c-tabla': nCompuestos, 'ox-estado': nCompuestos,
-    'x-errores': nCompuestos,
+    'x-errores': poolPorGrupo(gruposCompuestos).filter(c => introducirError(c, ()=>0)).length + temasMarcados.reduce((n,t)=>n+erroresTema(t, TEMAS_SIN_COMPUESTOS.includes(t)).length,0),
     'd-reaccion': temasMarcados.includes('reaccion') ? poolPorGrupo(['reaccion']).length : 0,
     'd-balanceo': temasMarcados.includes('balanceo') ? poolPorGrupo(['balanceo']).length : 0,
     'd-molmasa': temasMarcados.includes('mol-masa') ? poolPorGrupo(['mol-masa']).length : 0,
@@ -300,17 +300,182 @@ function introducirError(c, rngFn){
   const variantes = [];
   if(c.trad && c.trad[0]){
     const n = c.trad[0];
-    if(/oso\b/.test(n)) variantes.push({texto:n.replace(/oso\b/,'ico'), motivo:'sufijo -oso/-ico invertido'});
-    else if(/ico\b/.test(n)) variantes.push({texto:n.replace(/ico\b/,'oso'), motivo:'sufijo -oso/-ico invertido'});
+    // La palabra con el sufijo cambiado se toma con la ortografía exacta que
+    // tiene en el banco (férrico, cromoso…), para que el ejercicio tenga un
+    // solo error -- el del sufijo -- y no también uno de tilde.
+    const sinTilde = w => w.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(!introducirError._palabras){
+      const m = {};
+      (B.BANCO||[]).forEach(x => ((x.trad||[]).join(' ').match(/[a-záéíóúñ]+(?:oso|ico)\b/g)||[]).forEach(w => { m[sinTilde(w)] = w; }));
+      introducirError._palabras = m;
+    }
+    const mw = n.match(/([a-záéíóúñ]+)(oso|ico)\b/);
+    if(mw){
+      const otra = introducirError._palabras[sinTilde(mw[1])+(mw[2]==='oso'?'ico':'oso')];
+      if(otra) variantes.push({texto:n.replace(mw[0], otra), motivo:'sufijo -oso/-ico invertido'});
+    }
   }
   // cruce de cargas mal hecho: duplica o quita un subíndice del final de la fórmula
   const m = c.formula.match(/^(.*?)([₀-₉]+)?$/);
-  if(c.formula.length>1){
-    variantes.push({texto:c.formula.replace(/(\d|[₀-₉])$/,''), motivo:'le falta el subíndice del cruce de cargas'});
+  // Solo si de verdad cambia: una fórmula sin subíndice final (HCl, NaOH)
+  // quedaría igual y el «error» sería la fórmula correcta.
+  const sinSub = c.formula.replace(/(\d|[₀-₉])$/,'');
+  if(c.formula.length>1 && sinSub!==c.formula){
+    variantes.push({texto:sinSub, motivo:'le falta el subíndice del cruce de cargas'});
   }
   if(!variantes.length) return null;
   const elegido = variantes[Math.floor(rngFn()*variantes.length)];
   return {formulaOriginal:c.formula, nombreOriginal:c.trad&&c.trad[0], version:elegido.texto, motivo:elegido.motivo, group:c.group};
+}
+
+
+/* ── Cazar errores para los temas sin compuestos que nombrar ──────────────
+   Dos fuentes, siempre con UN solo error por ejercicio:
+   1) Afirmaciones escritas a mano (DOCENTE_DATOS.CAZAR) para modelos, pH,
+      industria, gases y soluciones.
+   2) Errores generados a partir de los datos reales del sitio (especies
+      del átomo, configuraciones, pares de enlace, pares de la tabla, masas
+      molares, ecuaciones de balanceo y reacción, cadenas de reactividad):
+      se calcula primero la respuesta correcta y luego se cambia un solo
+      dato, así que el error siempre es real y la corrección es única. */
+const SUPd = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup = n => String(n).split('').map(d=>SUPd[d]||d).join('');
+const coma = (x,d) => (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace('.',',');
+const ORDEN_MOELLER = [['1s',2],['2s',2],['2p',6],['3s',2],['3p',6],['4s',2],['3d',10],['4p',6]];
+function configDe(z){ const out=[]; let r=z; for(const [o,c] of ORDEN_MOELLER){ if(r<=0)break; const k=Math.min(c,r); out.push([o,k]); r-=k; } return out; }
+const txtConfig = cf => cf.map(([o,k])=>o+sup(k)).join(' ');
+const NOMBRE_RX = {sintesis:'síntesis', descomposicion:'descomposición', 'sus-simple':'sustitución simple', 'sus-doble':'doble sustitución', combustion:'combustión', neutralizacion:'neutralización'};
+const METALES_ENLACE = new Set(['Na','K','Li','Mg','Ca','Cu','Fe','Al']);
+function tipoEnlace(p){
+  if(METALES_ENLACE.has(p[0]) && METALES_ENLACE.has(p[2])) return 'metálico';
+  const d = Math.abs(p[1]-p[3]);
+  if(METALES_ENLACE.has(p[0]) || METALES_ENLACE.has(p[2])) return d>=1.7 ? 'iónico' : 'covalente polar';
+  return d<0.4 ? 'covalente apolar' : 'covalente polar';
+}
+function erroresGenerados(tema){
+  const E = B.ELEMENTS||{}, out = [];
+  const add = (texto, motivo) => out.push({texto, motivo});
+  if(tema==='atomo'){
+    ESPECIES_ATOMO.forEach(([z,a,q],i)=>{
+      const el = E[z]; if(!el) return;
+      const sim = sup(a)+el.sym+(q?(Math.abs(q)>1?sup(Math.abs(q)):'')+(q>0?'⁺':'⁻'):'');
+      const n = a-z, e = z-q;
+      const v = [[z, a, e, 'Los neutrones son A − Z, no A.'], [z, n, z+q, 'Los electrones son Z − carga: un catión pierde electrones y un anión los gana.'], [a, n, e, 'Los protones son Z, no A.']];
+      let k = i%3; if(k===1 && q===0) k = 0;
+      const [pp,nn,ee,mot] = v[k];
+      if(pp===z && nn===n && ee===e) return;
+      const pl = (x,u,us) => x+' '+(x===1?u:us);
+      add('Para '+el.name.toLowerCase()+' '+sim+' (Z = '+z+', A = '+a+'): '+pl(pp,'protón','protones')+', '+pl(nn,'neutrón','neutrones')+' y '+pl(ee,'electrón','electrones')+'.', mot);
+    });
+  } else if(tema==='config-e'){
+    poolConfig().forEach((z,i)=>{
+      const el = E[z]; if(!el) return;
+      const cf = configDe(z); let malo = null, mot = '';
+      const k = i%3;
+      if(k===0 && z>=20 && z<=30){ // 3d antes que 4s
+        const sin4s = cf.filter(x=>x[0]!=='4s'), n4s = (cf.find(x=>x[0]==='4s')||[0,0])[1];
+        const d = sin4s.find(x=>x[0]==='3d'); if(d){ d[1]+=n4s; if(d[1]<=10){ malo = sin4s; mot = 'Según el diagrama de Moeller el 4s se llena antes que el 3d.'; } }
+      }
+      if(!malo && k!==2){ const c2 = cf.map(x=>x.slice()); c2[c2.length-1][1] += 1;
+        if(c2[c2.length-1][1] <= ORDEN_MOELLER.find(o=>o[0]===c2[c2.length-1][0])[1]){ malo = c2; mot = 'La suma de los superíndices debe ser igual a Z = '+z+'.'; } }
+      if(!malo && cf.length>=2){ const c3 = cf.map(x=>x.slice()); const j = c3.findIndex(x=>x[0].endsWith('s') && x[1]===2 && x[0]!=='1s');
+        if(j>0 && c3[j-1][0].endsWith('p') ){ c3[j-1][1]-=1; c3[j][1]+=1; malo = c3; mot = 'Un subnivel s admite como máximo 2 electrones (principio de Pauli).'; } }
+      if(!malo){ const c4 = cf.map(x=>x.slice()); c4[c4.length-1][1] -= 1; if(c4[c4.length-1][1]===0) c4.pop(); malo = c4; mot = 'La suma de los superíndices debe ser igual a Z = '+z+'.'; }
+      add('Configuración electrónica del '+el.name.toLowerCase()+' (Z = '+z+'): '+txtConfig(malo), mot);
+    });
+  } else if(tema==='enlace'){
+    const TIPOS = ['iónico','covalente polar','covalente apolar','metálico'];
+    PARES_ENLACE.forEach((p,i)=>{
+      const ok = tipoEnlace(p), d = Math.abs(p[1]-p[3]);
+      if(i%2===0 && ok!=='metálico'){
+        add('Enlace '+p[0]+'−'+p[2]+' (EN '+coma(p[1],2)+' y '+coma(p[3],2)+'): ΔEN = '+coma(p[1]+p[3],2)+', así que el enlace es '+(p[1]+p[3]>=1.7?'iónico':'covalente polar')+'.', 'ΔEN es la resta de las electronegatividades, no la suma: '+coma(d,2)+' → '+ok+'.');
+      } else {
+        const malo = ok==='iónico' ? 'covalente polar' : ok==='covalente polar' ? (METALES_ENLACE.has(p[0])||METALES_ENLACE.has(p[2]) ? 'iónico' : 'covalente apolar') : ok==='covalente apolar' ? 'covalente polar' : 'iónico';
+        add('Enlace '+p[0]+'−'+p[2]+' (EN '+coma(p[1],2)+' y '+coma(p[3],2)+'): ΔEN = '+coma(d,2)+', así que el enlace es '+malo+'.', 'Con esos átomos y ese ΔEN el enlace es '+ok+'.');
+      }
+    });
+  } else if(tema==='elemento'){
+    const PROP = [['mayor radio atómico','radio'],['mayor energía de ionización','ei'],['mayor electronegatividad','en']];
+    PARES_TABLA.forEach((par,i)=>{
+      const a = E[par[0]], b = E[par[1]]; if(!a||!b) return;
+      const mismoPeriodo = a.period===b.period;
+      // Mismo periodo: a la derecha (mayor Z) menor radio, mayor EI y mayor EN.
+      // Mismo grupo: hacia abajo (mayor Z) mayor radio, menor EI y menor EN.
+      const [txt,k] = PROP[i%3];
+      const mayorZ = par[0]>par[1] ? a : b, menorZ = par[0]>par[1] ? b : a;
+      let gana = mismoPeriodo ? (k==='radio' ? menorZ : mayorZ) : (k==='radio' ? mayorZ : menorZ);
+      const pierde = gana===a ? b : a;
+      const razon = mismoPeriodo ? (pierde===menorZ ? 'está más a la izquierda del periodo' : 'está más a la derecha del periodo') : (pierde===mayorZ ? 'está más abajo en el grupo' : 'está más arriba en el grupo');
+      add('El '+pierde.name.toLowerCase()+' ('+pierde.sym+') tiene '+txt+' que el '+gana.name.toLowerCase()+' ('+gana.sym+') porque '+razon+'.', 'Es al revés: el '+gana.sym+' tiene '+txt+' (tendencia '+(mismoPeriodo?'en el periodo':'en el grupo')+').');
+    });
+  } else if(tema==='mol-masa'){
+    poolPorGrupo(['mol-masa']).forEach((m,i)=>{
+      const M = m.masa_molar; if(!M) return;
+      if(i%2===0){
+        const ign = masaMolarDe(String(m.formula).replace(/[₀-₉]/g,''));
+        if(Math.abs(ign-M)>0.5){ add('La masa molar de '+m.formula+' es '+coma(ign,2)+' g/mol.', 'Hay que multiplicar cada masa atómica por su subíndice: '+coma(M,2)+' g/mol.'); return; }
+      }
+      add('En 2,5 mol de '+m.formula+' (M = '+coma(M,2)+' g/mol) hay '+coma(2.5/M,3)+' g.', 'm = n × M = 2,5 × '+coma(M,2)+' = '+coma(2.5*M,1)+' g; se dividió en vez de multiplicar.');
+    });
+  } else if(tema==='balanceo'){
+    poolPorGrupo(['balanceo']).forEach((b,i)=>{
+      const c = b.coeficientes.slice();
+      if(i%3===2){ const mal = Object.assign({}, b, {coeficientes:c.map(x=>x*2)}); add('Ecuación balanceada: '+construirEcuacionBalanceada(mal), 'Está balanceada pero no con los mínimos enteros: hay que dividir todo entre 2.'); return; }
+      const j = i % c.length; c[j] += 1;
+      add('Ecuación balanceada: '+construirEcuacionBalanceada(Object.assign({}, b, {coeficientes:c})), 'El coeficiente de '+b.especies[j]+' debe ser '+b.coeficientes[j]+': cuenta los átomos a cada lado.');
+    });
+  } else if(tema==='estequiometria'){
+    poolPorGrupo(['balanceo']).forEach((b,i)=>{
+      const n = b.especies.length, nIzq = b.ecuacion_sin_coef.split('→')[0].split('+').length;
+      for(let r=0;r<nIzq;r++) for(let p=nIzq;p<n;p++){
+        if(b.coeficientes[r]===b.coeficientes[p]) continue;
+        const x = 2 + (i%3);
+        add('Según '+construirEcuacionBalanceada(b)+', con '+x+' mol de '+b.especies[r]+' se forman '+x+' mol de '+b.especies[p]+'.', 'La razón molar es '+b.coeficientes[r]+' : '+b.coeficientes[p]+': se forman '+coma(x*b.coeficientes[p]/b.coeficientes[r],2)+' mol.');
+        return;
+      }
+    });
+  } else if(tema==='reaccion'){
+    const tipos = Object.keys(NOMBRE_RX);
+    poolPorGrupo(['reaccion']).forEach((r,i)=>{
+      if(!NOMBRE_RX[r.tipo_rx]) return;
+      const otros = tipos.filter(t=>t!==r.tipo_rx);
+      const malo = otros[i % otros.length];
+      add('La reacción '+r.ecuacion+' es de '+NOMBRE_RX[malo]+'.', 'Es de '+NOMBRE_RX[r.tipo_rx]+'.');
+    });
+  } else if(tema==='reactividad'){
+    (B.REACT_CHAINS||[]).forEach((c,i)=>{
+      const sal = (c.salts||[])[i % Math.max(1,(c.salts||[]).length)];
+      const cand = [['oxide',c.oxide],['hydroxide',c.hydroxide],['sal',sal&&sal.formula]].filter(x=>x[1] && /[₀-₉]/.test(x[1]));
+      if(!cand.length) return;
+      const [k,f] = cand[i % cand.length];
+      const malo = f.replace(/[₀-₉]+(?!.*[₀-₉])/, '');
+      if(malo===f) return;
+      const cadena = [c.metal, k==='oxide'?malo:c.oxide, k==='hydroxide'?malo:c.hydroxide, (k==='sal'?malo:(sal&&sal.formula))+(sal?' (con '+sal.acid+')':'')].join(' → ');
+      add('Cadena de reactividad del '+c.metal+' (estado de oxidación '+c.eo+'): '+cadena, 'La fórmula '+malo+' está mal: le falta un subíndice del cruce de cargas; lo correcto es '+f+'.');
+    });
+  }
+  return out;
+}
+// Afirmaciones escritas del tema y, si se pide, los errores generados de
+// sus datos (solo para los temas sin compuestos que nombrar).
+function erroresTema(tema, conGenerados){
+  const escritos = ((window.DOCENTE_DATOS||{}).CAZAR||{})[tema] || [];
+  const out = escritos.map(c=>({texto:c[0], motivo:c[1], escrito:true}));
+  return conGenerados===false ? out : out.concat(erroresGenerados(tema));
+}
+// Expuesto solo para revisar el banco desde la consola o las pruebas.
+window.ionomErroresTema = erroresTema;
+function tarjetaErrorTexto(e, numero){
+  return '<div class="exercise-card" style="border-left:4px solid var(--err)">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.88rem;margin:4px 0 8px">'+(e.escrito?'Un compañero escribió:':'Un compañero resolvió así:')+'</p>'
+    +'<div style="font-size:.95rem;font-weight:700;color:var(--err-t);background:var(--err-b);padding:8px 14px;border-radius:var(--rm);margin-bottom:8px">'+e.texto+'</div>'
+    +'<p style="font-size:.84rem;margin:4px 0">Tiene <strong>un</strong> error. Encuéntralo, explica por qué está mal y escribe la versión correcta.</p>'
+    +'<div style="margin:6px 0;font-size:.88rem"><strong>¿Qué está mal?</strong></div>'
+    +'<div class="cuad" style="height:37.8px"></div>'
+    +'<div style="margin:8px 0;font-size:.88rem"><strong>Versión correcta:</strong></div>'
+    +'<div class="cuad" style="height:37.8px"></div>'
+    +'</div>';
 }
 
 /* ───────────────────────── 4. Construcción de bloques HTML ───────────────────────── */
@@ -628,7 +793,13 @@ function armarBloquesPractica(F, rngFn, usados){
     } else if(tipo==='x-errores'){
       const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
       let pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula));
-      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn).forEach(c=>{
+      // Compuestos (nomenclatura) y errores de los temas sin compuestos, en un
+      // solo grupo barajado para que el taller mezcle los temas marcados.
+      const errTemas = temas.reduce((a,t)=>a.concat(erroresTema(t, TEMAS_SIN_COMPUESTOS.includes(t)).map(e=>({e}))),[]).filter(x=>!usados.has('err-'+x.e.texto));
+      const mixto = pool.filter(c => introducirError(c, ()=>0)).map(c=>({c})).concat(errTemas);
+      elegirN(mixto, Math.min(cantidad, mixto.length||cantidad), rngFn, x=>x.c?x.c.formula:x.e.texto).forEach(x=>{
+        if(x.e){ usados.add('err-'+x.e.texto); bloques.push({html:tarjetaErrorTexto(x.e, numero++), esMultiple:false}); return; }
+        const c = x.c;
         usados.add(c.formula);
         const err = introducirError(c, rngFn);
         if(err) bloques.push({html:tarjetaError(err, numero++), esMultiple:false});

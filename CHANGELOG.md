@@ -4,6 +4,45 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (6) — Cazar errores: al menos 20 por tema en el generador docente
+
+El docente pidió ejercicios de «cazar errores» en todos los temas, con al menos 20 por tema. Antes solo existían para los temas de nomenclatura; los otros 14 temas tenían 0.
+
+**Errores escritos (nuevo banco `CAZAR` en `assets/docente-datos.js`).** Son 128 afirmaciones con **un** error cada una, basadas solo en lo que explica la página del tema:
+
+| Tema | Afirmaciones |
+|---|---|
+| Modelos | 21 |
+| Ácidos, bases y pH | 22 |
+| Industria | 21 |
+| Gases | 21 |
+| Soluciones | 22 |
+| Ácidos hidrácidos | 21 |
+
+En hidrácidos el banco solo tiene 10 compuestos y no alcanzaba los 20; las afirmaciones cubren los dos nombres (gas y solución), el H al inicio y los estados de oxidación −1 y −2.
+
+**Errores generados a partir de los datos del sitio (`assets/docente-app.js`).** Primero se calcula la respuesta correcta y luego se cambia **un solo** dato, así que el error siempre es real:
+
+| Tema | De dónde sale el error | Ejercicios |
+|---|---|---|
+| Átomo | Protones, neutrones o electrones mal contados | 37 |
+| Configuración | 3d antes que 4s, superíndices que no suman Z, un s con 3 electrones | 34 |
+| Enlace | ΔEN sumada en vez de restada, o tipo de enlace equivocado | 28 |
+| Tabla periódica | Tendencia de radio, energía de ionización o electronegatividad al revés | 27 |
+| Mol y masa molar | Subíndices olvidados, o dividir en vez de multiplicar | 60 |
+| Balanceo | Un coeficiente cambiado, o coeficientes que no son los mínimos | 72 |
+| Estequiometría | Razón molar ignorada | 64 |
+| Tipos de reacción | Tipo de reacción equivocado | 99 |
+| Reactividad | Un subíndice del cruce de cargas olvidado en la cadena | 21 |
+
+**Correcciones de los «cazar errores» que ya existían:**
+- Con fórmulas sin subíndice final (HCl, NaOH) el ejercicio mostraba la fórmula **correcta** como si fuera errada. Ahora esas fórmulas no se usan.
+- Al cambiar -oso por -ico salían nombres con una tilde de más («óxido crómoso»), y el ejercicio quedaba con dos errores. Ahora la palabra se toma con la ortografía exacta del banco (férrico, cromoso, cúprico…).
+
+**Resultado.** Los 23 temas del generador tienen 20 o más ejercicios de cazar errores. Lo verificó Playwright contando los disponibles de cada tema y generando talleres: no hubo errores en consola. `sw.js` pasa a `ionom-v76`.
+
+---
+
 ## 5 de noviembre (5) — Preguntas abiertas del generador revisadas contra lo que explica cada página
 
 El docente pidió que las preguntas abiertas del generador docente se basaran exclusivamente en lo que se explica dentro del sitio.
