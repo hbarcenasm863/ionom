@@ -4,6 +4,31 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (7) — Cazar errores en el Juego y en todos los documentos del generador
+
+El docente pidió que los ejercicios del generador cubrieran todos los tipos de documento y que el Juego tuviera cazadores de errores.
+
+**Juego (`juego.html`)**
+- **Grupo nuevo «🔎 Cazar errores»:** 20 preguntas de todos los temas.
+  - Cada una muestra la afirmación de un compañero con un error y pregunta «¿Cuál es la corrección?».
+  - Los distractores son correcciones de **otros** errores del mismo tema: suenan a química del tema, pero no corrigen esa afirmación.
+  - Después de responder se muestra la corrección.
+- **Mezcla en los temas:** las partidas de Modelos, pH, Industria, Gases y Soluciones traen 3 cazadores de su tema en lugar de 3 preguntas de opción múltiple.
+
+**Banco compartido.** Las 128 afirmaciones con error pasan de `assets/docente-datos.js` a `banco.js` (`BANCO_CAZAR`). Así el Juego y el generador usan el mismo banco y no hay dos copias.
+
+**Generador docente**
+- **Evaluación:** campo nuevo «Cazar errores» (por defecto 2). Lo traen «Solo evaluación» y la evaluación de la «Guía completa», sin repetir lo que ya salió en el trabajo práctico.
+- **Taller y guía:** se corrigió un error que dejaba la casilla «Cazar errores» desmarcada. Al abrir el generador sin temas la casilla quedaba en 0 y se apagaba; al marcar después un tema como Soluciones no se volvía a marcar, y el taller salía sin estos ejercicios. Ahora, cuando la casilla vuelve a tener ejercicios, recupera su estado inicial.
+- **Laberintos y crucigramas** no cambian: cada casilla necesita una respuesta corta y única.
+
+**Verificación (Playwright):**
+- Juego: el grupo «Cazar errores» completó las 20 preguntas con 4 opciones distintas en cada una, y en las partidas de los temas aparecieron los cazadores mezclados.
+- Generador: los 23 temas siguen con 20 o más disponibles; la evaluación, la guía completa y el taller traen el bloque de cazar errores.
+- No hubo errores en consola. `sw.js` pasa a `ionom-v77` porque cambió `banco.js`.
+
+---
+
 ## 5 de noviembre (6) — Cazar errores: al menos 20 por tema en el generador docente
 
 El docente pidió ejercicios de «cazar errores» en todos los temas, con al menos 20 por tema. Antes solo existían para los temas de nomenclatura; los otros 14 temas tenían 0.

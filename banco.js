@@ -3862,3 +3862,536 @@ const BANCO_SOLUCIONES = [
   {id:'Relaciona: unidades', tema:'concentracion', tipo:'relacionar', q:'Relaciona cada unidad con su definición.', pares:[['Molaridad','mol de soluto / L de solución'],['Molalidad','mol de soluto / kg de solvente'],['% m/v','g de soluto / 100 mL de solución'],['ppm','mg de soluto / L de solución']], x:'Fíjate en qué va en el denominador: solución o solvente, litros o kilogramos.'},
   {id:'Ordena: preparar', tema:'concentracion', tipo:'ordenar', q:'Ordena los pasos para preparar 250 mL de una solución 0,1 M.', items:['Calcular los gramos de soluto','Pesar el soluto en la balanza','Disolverlo en un poco de agua','Completar con agua hasta 250 mL en el balón aforado'], x:'Primero el cálculo (n = M × V; masa = n × masa molar), luego pesar, disolver y aforar.'}
 ];
+
+/* ── Cazar errores (Juego y generador docente) ──
+   Por tema: [afirmación de un compañero con UN error, la corrección].
+   Se basan solo en lo que explica la página de cada tema. En el Juego
+   salen como «¿Cuál es la corrección?» con distractores tomados de las
+   correcciones de otros errores del mismo tema; en el generador docente,
+   como ejercicios para encontrar y corregir el error. */
+const BANCO_CAZAR={
+"modelos": [
+[
+"Una teoría se convierte en ley cuando se comprueba con muchos experimentos.",
+"No: la ley describe qué pasa y la teoría explica por qué; responden preguntas distintas."
+],
+[
+"La ley de Boyle explica por qué la presión de un gas aumenta al comprimirlo.",
+"La ley solo describe (P × V = constante); lo explica la teoría cinético-molecular."
+],
+[
+"El modelo de bolitas que rebotan es una copia exacta de un gas real.",
+"Es un modelo: simplifica (las partículas reales no son bolas), pero permite predecir."
+],
+[
+"Según la teoría cinético-molecular, al reducir el volumen las partículas chocan menos veces contra las paredes y la presión baja.",
+"Chocan más veces por segundo y la presión sube."
+],
+[
+"«Si caliento el globo, se inflará más» es una ley.",
+"Es una hipótesis: una predicción que se puede poner a prueba."
+],
+[
+"«En una reacción química, la masa total se conserva» es una teoría.",
+"Es una ley: describe lo que ocurre siempre."
+],
+[
+"Un dibujo del átomo con su núcleo y los electrones en niveles es una teoría.",
+"Es un modelo: una representación que explica y predice."
+],
+[
+"La ley de Boyle dice que, a temperatura constante, la presión y el volumen son directamente proporcionales.",
+"Son inversamente proporcionales."
+],
+[
+"Si un gas tiene 60 mL a 1 atm, a 2 atm ocupará 120 mL.",
+"Al duplicar la presión el volumen baja a la mitad: 30 mL."
+],
+[
+"En el experimento de la jeringa, el volumen es la variable independiente porque es lo que se mide.",
+"Lo que se mide es la variable dependiente; la presión es la que se cambia (independiente)."
+],
+[
+"En el experimento de la jeringa, la temperatura y la cantidad de aire son variables dependientes.",
+"Son variables controladas: se mantienen iguales."
+],
+[
+"La gráfica de V contra P de un gas que cumple la ley de Boyle es una línea recta.",
+"Es una curva; la recta es la gráfica de P contra 1/V."
+],
+[
+"Usar un modelo hecho con datos de 0 a 3000 m para predecir a 4800 m es una interpolación.",
+"Es una extrapolación: está fuera del rango de los datos y es más arriesgada."
+],
+[
+"Predecir el punto de ebullición a 1500 m con un modelo hecho con datos de 0 a 3000 m es una extrapolación.",
+"Es una interpolación: está dentro del rango de los datos."
+],
+[
+"El agua hierve a mayor temperatura en Bogotá que en Cartagena.",
+"Hierve a menor temperatura (unos 91 °C): con la altura hay menos presión."
+],
+[
+"Un líquido hierve cuando su presión de vapor es menor que la presión del aire.",
+"Hierve cuando su presión de vapor iguala la presión del aire."
+],
+[
+"Con el modelo T = 100 − 3,4 × (altitud ÷ 1000), en Medellín (1495 m) el agua hierve a 105,1 °C.",
+"Hay que restar: 100 − 3,4 × 1,495 ≈ 94,9 °C."
+],
+[
+"Si un modelo predice 91,0 °C y un estudiante mide 91,8 °C, el modelo está equivocado.",
+"La diferencia es pequeña: el modelo funciona bien."
+],
+[
+"Con más altura hay más aire encima, por eso la presión atmosférica sube.",
+"Hay menos aire encima: la presión baja."
+],
+[
+"Si subes la temperatura del gas de la jeringa, las partículas se mueven más despacio y la presión baja.",
+"Se mueven más rápido y la presión aumenta (Gay-Lussac)."
+],
+[
+"La teoría atómica es menos confiable que una ley porque es «solo una teoría».",
+"La teoría atómica está tan comprobada como cualquier ley."
+]
+],
+"acidobase": [
+[
+"Según Arrhenius, un ácido es una sustancia que en agua libera OH⁻.",
+"El ácido libera H⁺; la base libera OH⁻."
+],
+[
+"Según Brønsted-Lowry, una base es la sustancia que dona un H⁺.",
+"La base acepta un H⁺; el ácido lo dona."
+],
+[
+"En NH₃ + H₂O ⇌ NH₄⁺ + OH⁻, el NH₃ es el ácido porque forma NH₄⁺.",
+"El NH₃ acepta el H⁺: es la base; el agua es el ácido."
+],
+[
+"En HCl + H₂O → H₃O⁺ + Cl⁻, la base conjugada del HCl es el H₃O⁺.",
+"Es el Cl⁻; el H₃O⁺ es el ácido conjugado del agua."
+],
+[
+"El agua siempre actúa como base.",
+"Es anfótera: con el HCl actúa como base y con el NH₃ como ácido."
+],
+[
+"El pH se calcula como pH = log[H⁺].",
+"pH = −log[H⁺]."
+],
+[
+"Una solución con [H⁺] = 1 × 10⁻³ mol/L tiene pH 11.",
+"Su pH es 3; 11 es su pOH."
+],
+[
+"Si una solución tiene pH 4, su pOH también es 4.",
+"pH + pOH = 14: el pOH es 10."
+],
+[
+"Una solución de pH 3 tiene 3 veces más H⁺ que una de pH 6.",
+"Cada unidad de pH es 10 veces: 10³ = 1000 veces más."
+],
+[
+"Una solución de pH 9 es ácida.",
+"Es básica: está por encima de 7."
+],
+[
+"El HCl y el vinagre de la misma concentración tienen el mismo pH porque los dos son ácidos.",
+"El HCl es fuerte (pH ≈ 1) y el ácido acético débil (pH ≈ 2,9)."
+],
+[
+"«Ácido fuerte» y «ácido concentrado» significan lo mismo.",
+"Fuerte describe cuánto se ioniza; concentrado, cuánto ácido hay disuelto."
+],
+[
+"El ácido acético del vinagre es un ácido fuerte.",
+"Es débil: solo una pequeña parte de sus moléculas suelta el H⁺."
+],
+[
+"En la neutralización HCl + NaOH → NaCl + H₂O se forman un ácido y una base nuevos.",
+"Se forman una sal y agua."
+],
+[
+"En el fondo de toda neutralización ocurre H⁺ + Cl⁻ → HCl.",
+"Ocurre H⁺ + OH⁻ → H₂O."
+],
+[
+"El pH de la sangre de una persona sana se mantiene entre 6,5 y 7,0.",
+"Se mantiene entre 7,35 y 7,45."
+],
+[
+"El jugo gástrico es básico para poder digerir las proteínas.",
+"Es ácido (pH 1,5 – 3,5): el HCl activa la pepsina."
+],
+[
+"Tomar agua alcalina sube el pH de la sangre.",
+"El cuerpo lo regula con amortiguadores, pulmones y riñones; además, el agua se neutraliza en el estómago."
+],
+[
+"La lluvia normal tiene pH 7, igual que el agua pura.",
+"Tiene pH ≈ 5,6 por el CO₂ del aire."
+],
+[
+"La cal agrícola, CaCO₃, baja el pH de los suelos ácidos.",
+"Lo sube: consume H⁺ (CaCO₃ + 2 H⁺ → Ca²⁺ + H₂O + CO₂)."
+],
+[
+"Si el pH del mar baja de 8,2 a 8,1, el mar tiene menos H⁺.",
+"Tiene más H⁺ (cerca de 26 % más)."
+],
+[
+"El indicador de repollo morado se pone verde en los ácidos.",
+"En ácido se pone rojo o rosado; verde o amarillo en base."
+]
+],
+"industria": [
+[
+"La ecuación Al + Cu²⁺ → Al³⁺ + Cu está bien porque tiene los mismos átomos a cada lado.",
+"La carga no se conserva (+2 frente a +3): 2 Al + 3 Cu²⁺ → 2 Al³⁺ + 3 Cu."
+],
+[
+"Una ecuación iónica está balanceada si se conserva la masa, aunque la carga no se conserve.",
+"Deben conservarse las dos: la masa y la carga."
+],
+[
+"La calcinación de la caliza, CaCO₃ → CaO + CO₂, es una síntesis.",
+"Es una descomposición: un compuesto se separa en dos."
+],
+[
+"El proceso Haber, N₂ + 3 H₂ → 2 NH₃, es una descomposición.",
+"Es una síntesis: dos gases se combinan en uno."
+],
+[
+"La ecuación balanceada del proceso Haber es N₂ + H₂ → NH₃.",
+"Faltan coeficientes: N₂ + 3 H₂ → 2 NH₃."
+],
+[
+"En el alto horno, Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂, el hierro se oxida.",
+"El Fe pasa de +3 a 0: se reduce; el C (de +2 a +4) se oxida."
+],
+[
+"En la potabilización del agua se forma un gas que atrapa la suciedad.",
+"Se forma un precipitado gelatinoso de Al(OH)₃."
+],
+[
+"La electrólisis de la salmuera produce NaOH, Cl₂ y O₂.",
+"Produce NaOH, Cl₂ y H₂."
+],
+[
+"Con 280 kg de N₂ y 80 kg de H₂, el limitante es el H₂ porque hay menos kilogramos.",
+"Hay que comparar moles: el N₂ es el limitante y sobra H₂."
+],
+[
+"El reactivo limitante es el que sobra cuando termina la reacción.",
+"El limitante es el que se acaba; el que sobra es el reactivo en exceso."
+],
+[
+"Para encontrar el reactivo limitante se comparan directamente los kilogramos de cada reactivo.",
+"Se pasan a moles y se comparan con la razón molar de la ecuación."
+],
+[
+"Según N₂ + 3 H₂ → 2 NH₃, con 10 000 mol de N₂ se forman 10 000 mol de NH₃.",
+"La razón es 1 N₂ : 2 NH₃: se forman 20 000 mol."
+],
+[
+"En 1000 kg de caliza con 90 % de CaCO₃ hay 1000 kg de CaCO₃ útil.",
+"Hay 1000 × 90 / 100 = 900 kg."
+],
+[
+"Rendimiento = masa teórica ÷ masa real × 100.",
+"Rendimiento = masa real ÷ masa teórica × 100."
+],
+[
+"Si se obtienen 480 kg de CaO y la masa teórica es 504 kg, el rendimiento es 105 %.",
+"480 ÷ 504 × 100 ≈ 95,2 %."
+],
+[
+"Cada tonelada de CaCO₃ puro libera 1000 kg de CO₂ al calcinarse.",
+"Libera 440 kg de CO₂."
+],
+[
+"Cuando la cáscara de huevo reacciona con el vinagre se libera O₂.",
+"Se libera CO₂: CaCO₃ + 2 CH₃COOH → Ca(CH₃COO)₂ + H₂O + CO₂."
+],
+[
+"En el experimento de la cáscara, la masa que se pierde es solo agua evaporada.",
+"Es sobre todo el CO₂ que escapa; parte del agua también se evapora, por eso se usa un vaso de control."
+],
+[
+"El cloro de la electrólisis se usa en jabones y la soda cáustica para desinfectar el agua.",
+"Es al revés: el cloro desinfecta el agua y la soda se usa en jabones y papel."
+],
+[
+"En la calcinación CaCO₃ → CaO + CO₂, la razón molar entre CaCO₃ y CO₂ es 1 : 2.",
+"Es 1 : 1."
+],
+[
+"Fe³⁺ + 3 OH⁻ → Fe(OH)₃↓ no conserva la carga.",
+"Sí la conserva: +3 + 3(−1) = 0 a la izquierda y 0 a la derecha."
+]
+],
+"gases": [
+[
+"En las leyes de los gases se puede usar la temperatura en °C.",
+"Siempre en kelvin: K = °C + 273."
+],
+[
+"Si un gas pasa de 10 °C a 20 °C, su temperatura absoluta se duplica.",
+"Pasa de 283 K a 293 K: solo un 3,5 % más."
+],
+[
+"1 atm equivale a 101,3 mmHg.",
+"1 atm = 760 mmHg = 101,3 kPa."
+],
+[
+"Para pasar de °C a kelvin se usa K = °C − 273.",
+"K = °C + 273."
+],
+[
+"Según la ley de Boyle, si el volumen baja a la mitad, la presión también baja a la mitad.",
+"La presión se duplica: P y V son inversamente proporcionales."
+],
+[
+"La ley de Charles se cumple a volumen constante.",
+"Se cumple con n y P constantes; a volumen constante es Gay-Lussac."
+],
+[
+"La ley de Gay-Lussac se escribe P₁ × T₁ = P₂ × T₂.",
+"Se escribe P₁/T₁ = P₂/T₂."
+],
+[
+"Un aerosol se puede acercar al fuego porque su volumen no cambia.",
+"Justo por eso es peligroso: a volumen fijo la presión sube con la temperatura."
+],
+[
+"A 0 °C y 1 atm, 1 mol de cualquier gas ocupa 2,24 L.",
+"Ocupa 22,4 L."
+],
+[
+"En PV = nRT, R = 8,2 atm·L/(mol·K).",
+"R = 0,082 atm·L/(mol·K)."
+],
+[
+"El paquete de papas llega inflado a Bogotá porque allá hace más calor que en Cartagena.",
+"En Bogotá hace más frío; lo infla la menor presión (0,74 atm)."
+],
+[
+"Según la ley de Dalton, la presión total es el producto de las presiones parciales.",
+"Es la suma: P total = P₁ + P₂ + …"
+],
+[
+"La presión parcial de un gas se calcula como Pᵢ = P total ÷ Xᵢ.",
+"Pᵢ = Xᵢ × P total."
+],
+[
+"En Bogotá, P(O₂) = 0,21 × 1,00 atm = 0,21 atm, igual que en Cartagena.",
+"En Bogotá la presión es 0,74 atm: P(O₂) = 0,21 × 0,74 ≈ 0,155 atm."
+],
+[
+"En la ley combinada, V₂ = P₁ × V₁ × T₁ ÷ (T₂ × P₂).",
+"V₂ = P₁ × V₁ × T₂ ÷ (T₁ × P₂)."
+],
+[
+"Un globo que se deja al sol se arruga y en la nevera se infla.",
+"Es al revés: al sol se infla y en la nevera se arruga (Charles)."
+],
+[
+"A la misma presión y temperatura, volúmenes iguales de gases distintos tienen distinto número de moléculas.",
+"Tienen el mismo número de moléculas (Avogadro)."
+],
+[
+"El gas ideal es un modelo de partículas grandes que se atraen mucho.",
+"Son partículas muy pequeñas que no se atraen; los gases reales se le parecen a bajas presiones."
+],
+[
+"Cuando un buzo sube rápido, el aire de sus pulmones se comprime porque baja la presión.",
+"Al bajar la presión el aire se expande (Boyle)."
+],
+[
+"Para calcular los moles de aire de un salón se usa n = P × V × R × T.",
+"n = PV ÷ RT."
+],
+[
+"En Bogotá la presión atmosférica es de unos 1,00 atm, igual que en Cartagena.",
+"En Bogotá es de unos 0,74 atm (560 mmHg)."
+]
+],
+"soluciones": [
+[
+"Al disolverse la sal, el O del agua se orienta hacia el Cl⁻ y los H hacia el Na⁺.",
+"El O (δ−) mira hacia el Na⁺ y los H (δ+) hacia el Cl⁻."
+],
+[
+"Al disolverse, el NaCl queda en el agua como moléculas de NaCl sueltas.",
+"Queda como iones hidratados: NaCl(s) → Na⁺(ac) + Cl⁻(ac)."
+],
+[
+"El agua con azúcar conduce la electricidad porque el azúcar se disuelve.",
+"El azúcar se disuelve como moléculas, sin formar iones: no conduce."
+],
+[
+"El aceite se disuelve en agua si se agita con fuerza.",
+"El aceite es apolar: no se disuelve en agua; semejante disuelve a semejante."
+],
+[
+"Agitar el agua hace que se pueda disolver más sal.",
+"Agitar acelera la disolución, pero no cambia cuánto se puede disolver (la solubilidad)."
+],
+[
+"Moler el soluto hace más lenta la disolución.",
+"La hace más rápida: hay más superficie de contacto."
+],
+[
+"Una solución saturada todavía puede disolver más soluto a la misma temperatura.",
+"Eso es una solución insaturada; la saturada ya no admite más."
+],
+[
+"A 60 °C caben 110 g de KNO₃ en 100 g de agua, así que con 80 g la solución queda saturada.",
+"Queda insaturada: 80 g es menos de lo que cabe."
+],
+[
+"Al enfriar a 20 °C una solución con 80 g de KNO₃ en 100 g de agua, cristalizan 31,6 g.",
+"A 20 °C caben 31,6 g: cristalizan 80 − 31,6 = 48,4 g."
+],
+[
+"% m/m = gramos de soluto ÷ gramos de solvente × 100.",
+"Se divide entre los gramos de solución (soluto + solvente)."
+],
+[
+"15 g de azúcar en 135 g de agua dan una solución al 11,1 % m/m.",
+"La solución pesa 150 g: 15 ÷ 150 × 100 = 10 %."
+],
+[
+"El suero fisiológico al 0,9 % m/v tiene 0,9 g de NaCl en cada litro.",
+"Tiene 0,9 g en cada 100 mL (9 g por litro)."
+],
+[
+"Un aguardiente de 29 grados tiene 29 mL de etanol por cada litro.",
+"Tiene 29 mL por cada 100 mL: 29 % v/v."
+],
+[
+"Un agua con 1,5 ppm de cloro tiene 1,5 g de cloro por litro.",
+"1,5 ppm en agua = 1,5 mg por litro."
+],
+[
+"La molaridad son los moles de soluto por kilogramo de solvente.",
+"Eso es la molalidad; la molaridad son moles por litro de solución."
+],
+[
+"La molaridad no cambia con la temperatura, pero la molalidad sí.",
+"Es al revés: la molalidad no cambia con la temperatura."
+],
+[
+"4,5 g de NaCl (58,5 g/mol) en 500 mL de solución dan una concentración de 0,0769 M.",
+"0,0769 son los moles; M = 0,0769 ÷ 0,500 L = 0,154 M."
+],
+[
+"Al diluir una solución con agua, los moles de soluto aumentan.",
+"Los moles no cambian: C₁ × V₁ = C₂ × V₂."
+],
+[
+"Para preparar 250 mL de HCl 0,1 M a partir de HCl 2 M se miden 125 mL del ácido concentrado.",
+"V₁ = 0,1 × 250 ÷ 2 = 12,5 mL."
+],
+[
+"Para diluir un ácido concentrado se agrega el agua sobre el ácido.",
+"Siempre el ácido sobre el agua, porque se libera calor."
+],
+[
+"El H₂SO₄ 1 M es 1 N porque tiene un solo átomo de azufre.",
+"Aporta 2 H⁺: es 2 N."
+],
+[
+"En el aire, la fracción molar del O₂ es 21.",
+"La fracción molar no tiene unidades y va de 0 a 1: X(O₂) ≈ 0,21."
+]
+],
+"ac-hid": [
+[
+"El HCl disuelto en agua se llama cloruro de hidrógeno.",
+"En agua se llama ácido clorhídrico; cloruro de hidrógeno es el nombre del gas."
+],
+[
+"El HCl en estado gaseoso se llama ácido clorhídrico.",
+"Como gas es cloruro de hidrógeno; ácido clorhídrico es en solución acuosa."
+],
+[
+"El H₂S disuelto en agua se llama ácido sulfúrico.",
+"Se llama ácido sulfhídrico; el sulfúrico es un oxácido, H₂SO₄."
+],
+[
+"La fórmula del ácido sulfhídrico es HS.",
+"Es H₂S: el azufre actúa con −2 y necesita dos H."
+],
+[
+"La fórmula del ácido fluorhídrico es HF₂.",
+"Es HF: el flúor actúa con −1."
+],
+[
+"El HBr disuelto en agua se llama ácido brómico.",
+"Se llama ácido bromhídrico (sufijo -hídrico)."
+],
+[
+"La fórmula del ácido yodhídrico es H₂I.",
+"Es HI: el yodo actúa con −1."
+],
+[
+"Los ácidos hídricos tienen oxígeno en su fórmula.",
+"No tienen oxígeno: solo H y un no metal. Los que tienen O son oxácidos."
+],
+[
+"En los ácidos hídricos el hidrógeno va al final de la fórmula, como en ClH.",
+"En los ácidos hídricos el H va al inicio: HCl. Al final va en los hidruros metálicos."
+],
+[
+"El NaH es un ácido hídrico porque tiene hidrógeno.",
+"Es un hidruro metálico: metal + H, con el H al final."
+],
+[
+"Los ácidos hídricos se forman cuando un hidruro metálico se disuelve en agua.",
+"Se forman cuando un hidruro de no metal se disuelve en agua."
+],
+[
+"El H₂Se disuelto en agua se llama ácido selénico.",
+"Se llama ácido selenhídrico."
+],
+[
+"El H₂S en estado gaseoso se llama sulfuro de azufre.",
+"Se llama sulfuro de hidrógeno."
+],
+[
+"El HCN disuelto en agua se llama ácido cianúrico.",
+"Se llama ácido cianhídrico."
+],
+[
+"En el HCl, el cloro actúa con estado de oxidación +1.",
+"Actúa con −1; el hidrógeno es el que tiene +1."
+],
+[
+"En el H₂S, el azufre actúa con estado de oxidación −1.",
+"Actúa con −2: por eso la fórmula lleva dos H."
+],
+[
+"El HF disuelto en agua se llama ácido fluórico.",
+"Se llama ácido fluorhídrico."
+],
+[
+"El ácido clorhídrico se escribe H₂Cl porque el hidrógeno siempre lleva subíndice 2.",
+"Se escribe HCl: el cloro actúa con −1 y basta un H."
+],
+[
+"El bromuro de hidrógeno es el nombre del HBr disuelto en agua.",
+"Es el nombre del gas; en solución es ácido bromhídrico."
+],
+[
+"Un ácido hídrico se nombra con la raíz del no metal y el sufijo -ico, como «ácido clórico».",
+"Se usa el sufijo -hídrico: ácido clorhídrico."
+],
+[
+"La fórmula del ácido selenhídrico es HSe₂.",
+"Es H₂Se: el selenio actúa con −2."
+]
+]
+};

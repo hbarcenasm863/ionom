@@ -465,6 +465,27 @@ function erroresTema(tema, conGenerados){
 }
 // Expuesto solo para revisar el banco desde la consola o las pruebas.
 window.ionomErroresTema = erroresTema;
+
+// Bloques de «cazar errores» para los temas marcados: compuestos con un
+// error de nomenclatura y errores escritos o generados de los demás temas,
+// mezclados y sin repetir lo ya usado en el documento. Lo usan el taller
+// (trabajo práctico) y la evaluación.
+function armarBloquesCazar(temas, cantidad, rngFn, usados, numIni){
+  if(!cantidad) return [];
+  let numero = numIni || 1;
+  const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
+  const pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula) && introducirError(c, ()=>0));
+  const errTemas = temas.reduce((a,t)=>a.concat(erroresTema(t, TEMAS_SIN_COMPUESTOS.includes(t)).map(e=>({e}))),[]).filter(x=>!usados.has('err-'+x.e.texto));
+  const mixto = pool.map(c=>({c})).concat(errTemas);
+  const out = [];
+  elegirN(mixto, Math.min(cantidad, mixto.length||cantidad), rngFn, x=>x.c?x.c.formula:x.e.texto).forEach(x=>{
+    if(x.e){ usados.add('err-'+x.e.texto); out.push({html:tarjetaErrorTexto(x.e, numero++), esMultiple:false}); return; }
+    usados.add(x.c.formula);
+    const err = introducirError(x.c, rngFn);
+    if(err) out.push({html:tarjetaError(err, numero++), esMultiple:false});
+  });
+  return out;
+}
 function tarjetaErrorTexto(e, numero){
   return '<div class="exercise-card" style="border-left:4px solid var(--err)">'
     +'<div class="ex-num">Ejercicio '+numero+'</div>'
@@ -791,19 +812,7 @@ function armarBloquesPractica(F, rngFn, usados){
         bloques.push({html:tarjetaSed(q, numero++, rngFn), esMultiple:false});
       });
     } else if(tipo==='x-errores'){
-      const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
-      let pool = poolPorGrupo(gruposCompuestos).filter(c => !usados.has(c.formula));
-      // Compuestos (nomenclatura) y errores de los temas sin compuestos, en un
-      // solo grupo barajado para que el taller mezcle los temas marcados.
-      const errTemas = temas.reduce((a,t)=>a.concat(erroresTema(t, TEMAS_SIN_COMPUESTOS.includes(t)).map(e=>({e}))),[]).filter(x=>!usados.has('err-'+x.e.texto));
-      const mixto = pool.filter(c => introducirError(c, ()=>0)).map(c=>({c})).concat(errTemas);
-      elegirN(mixto, Math.min(cantidad, mixto.length||cantidad), rngFn, x=>x.c?x.c.formula:x.e.texto).forEach(x=>{
-        if(x.e){ usados.add('err-'+x.e.texto); bloques.push({html:tarjetaErrorTexto(x.e, numero++), esMultiple:false}); return; }
-        const c = x.c;
-        usados.add(c.formula);
-        const err = introducirError(c, rngFn);
-        if(err) bloques.push({html:tarjetaError(err, numero++), esMultiple:false});
-      });
+      armarBloquesCazar(temas, cantidad, rngFn, usados, numero).forEach(b=>{ bloques.push(b); numero++; });
     }
   });
 
@@ -906,6 +915,13 @@ function construirVersion(F, numVersion, totalVersiones){
     if(abiertasBloques.length){
       bloques.push({html:'<h2 class="sec-tit">Preguntas abiertas</h2>', esTitulo:true});
       bloques.push.apply(bloques, abiertasBloques);
+    }
+    // Cazar errores también en la evaluación (y en la «Guía completa»):
+    // mismo banco que el taller, sin repetir lo que ya salió en la práctica.
+    const cazarBloques = armarBloquesCazar(F.temas, F.cazarCant||0, rng(semilla+'|cazar'), usados);
+    if(cazarBloques.length){
+      bloques.push({html:'<h2 class="sec-tit">Cazar errores</h2>', esTitulo:true});
+      bloques.push.apply(bloques, cazarBloques);
     }
   }
 
@@ -1345,6 +1361,7 @@ function leerForm(){
     numEjercicios: parseInt(document.getElementById('f-num-ejercicios').value,10)||0,
     saberCant: parseInt(document.getElementById('f-saber').value,10)||0,
     abiertasCant: parseInt(document.getElementById('f-abiertas').value,10)||0,
+    cazarCant: Math.max(0, Math.min(10, parseInt((document.getElementById('f-cazar')||{}).value,10)||0)),
     incluirHojaResp: !!document.getElementById('f-hoja-resp').checked,
     incluirRubricas: !!document.getElementById('f-rubricas').checked,
     versiones: parseInt(document.getElementById('f-versiones').value,10)||1,
@@ -1394,6 +1411,11 @@ function actualizarDisponibilidad(){
     if(!inp || !disp) return;
     const n = disponiblesTipo[inp.dataset.tipo]||0;
     disp.textContent = '('+n+' disponibles)';
+    // Si el tipo vuelve a tener ejercicios (estaba deshabilitado porque los
+    // temas marcados antes no tenían ninguno), recupera su estado inicial del
+    // formulario: así «Cazar errores», marcado por defecto, no queda apagado
+    // para siempre por haber empezado sin temas.
+    if(inp.disabled && n>0) inp.checked = inp.defaultChecked;
     inp.disabled = n===0;
     if(n===0) inp.checked = false;
   });

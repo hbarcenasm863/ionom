@@ -862,6 +862,12 @@ html{font-size:var(--base-fs)}
         <span class="gb-name">Soluciones</span>
         <span class="gb-sub">Disolución, solubilidad, concentración y dilución</span>
       </button>
+      <button class="group-btn" onclick="pickGroup('cazar')">
+        <span class="gb-step">20</span>
+        <div class="gb-icon-wrap gic-mol">🔎</div>
+        <span class="gb-name">Cazar errores</span>
+        <span class="gb-sub">Encuentra la corrección del error de un compañero</span>
+      </button>
 
     </div><!-- /group-grid -->
   </div><!-- /p-body -->
@@ -1854,6 +1860,14 @@ function startGame(group){
   // Ácidos y bases, procesos industriales y modelos/datos (aprendizajes
   // priorizados de la SED para 10.°) usan el mismo formato: BANCO_PH,
   // BANCO_INDUSTRIA y BANCO_MODELOS, también en banco.js.
+  if(group==='cazar'){
+    const qs=preguntasCazar(null,20);
+    if(!qs.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
+    ST.questions=qs;
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
+    sendProgress('inicio'); _startProgressTracking();
+    showScreen('s-game');loadQuestion();return;
+  }
   const BANCOS_MC={atomo:typeof BANCO_ATOMO!=='undefined'?BANCO_ATOMO:null,enlace:typeof BANCO_ENLACE!=='undefined'?BANCO_ENLACE:null,
     acidobase:typeof BANCO_PH!=='undefined'?BANCO_PH:null,industria:typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:null,modelos:typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:null,
     gases:typeof BANCO_GASES!=='undefined'?BANCO_GASES:null,soluciones:typeof BANCO_SOLUCIONES!=='undefined'?BANCO_SOLUCIONES:null};
@@ -1867,7 +1881,11 @@ function startGame(group){
     const inter=pool.filter(a=>a.tipo&&a.tipo!=='mc'), mcs=pool.filter(a=>!a.tipo||a.tipo==='mc');
     const nInter=Math.min(inter.length,6);
     const elegidas=(inter.length&&mcs.length>=20-nInter)?shuffle([...shuffle(inter).slice(0,nInter),...shuffle(mcs).slice(0,20-nInter)]):buildQuestionQueue(pool,20);
-    ST.questions=elegidas.map(a=>({...a,isAtom:true,qtype,group,formula:a.id,trad:[respuestaTexto(a)],stock:[],sist:[],hint:''}));
+    let lista=elegidas.map(a=>({...a,isAtom:true,qtype,group,formula:a.id,trad:[respuestaTexto(a)],stock:[],sist:[],hint:''}));
+    // Tres «cazar errores» del mismo tema reemplazan tres de opción múltiple.
+    const cz=preguntasCazar(group,3);
+    if(cz.length){let k=0;lista=lista.map(q=>(k<cz.length&&(!q.tipo||q.tipo==='mc'))?cz[k++]:q);lista=shuffle(lista);}
+    ST.questions=lista;
     ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
@@ -2198,7 +2216,7 @@ function renderElProperty(q){
 // ── Teoría atómica y configuración (BANCO_ATOMO) ──
 // Mismo flujo de opción múltiple que las preguntas de la tabla periódica:
 // checkElMC() califica (3 intentos) y showElFeedback() muestra la explicación.
-const ATOM_TEMA={variables:'📏 Variables y unidades de los gases',leyes:'🎈 Leyes de los gases',ideal:'🧮 Gas ideal (PV = nRT)',dalton:'🫁 Ley de Dalton',disolucion:'💧 Proceso de disolución',solubilidad:'📈 Solubilidad',concentracion:'🧪 Unidades de concentración',dilucion:'🚰 Dilución',teorias:'🧪 Teorías ácido-base',escala:'🌡️ Escala de pH',fuerza:'💪 Fuerza y neutralización',cuerpo:'🫀 pH en el cuerpo y los alimentos',ambiente:'🌎 pH en el ambiente y el territorio',
+const ATOM_TEMA={cazar:'🔎 Cazar errores',variables:'📏 Variables y unidades de los gases',leyes:'🎈 Leyes de los gases',ideal:'🧮 Gas ideal (PV = nRT)',dalton:'🫁 Ley de Dalton',disolucion:'💧 Proceso de disolución',solubilidad:'📈 Solubilidad',concentracion:'🧪 Unidades de concentración',dilucion:'🚰 Dilución',teorias:'🧪 Teorías ácido-base',escala:'🌡️ Escala de pH',fuerza:'💪 Fuerza y neutralización',cuerpo:'🫀 pH en el cuerpo y los alimentos',ambiente:'🌎 pH en el ambiente y el territorio',
   conservacion:'⚖️ Conservación de masa y carga',procesos:'🏭 Procesos industriales',limitante:'🧮 Razón molar y reactivo limitante',pureza:'🎯 Pureza y rendimiento',
   naturaleza:'🔭 Teorías, leyes y modelos',gases:'🎈 Leyes de los gases',datos:'📈 Datos, variables y predicción',
   modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructura del átomo',config:'🧬 Configuración electrónica',tabla:'📊 Tabla periódica: historia y propiedades',cuanticos:'🔢 Números cuánticos',iones:'🧮 A, Z, neutrones e iones',
@@ -2224,6 +2242,22 @@ function renderAtomMC(q){
 // intentos y puntos que la opción múltiple; la explicación «x» se muestra
 // al final.
 const ATOMX_LABEL={completar:'Completar arrastrando',escribir:'Escribir la respuesta',calcular:'Calcular',ordenar:'Ordenar',relacionar:'Relacionar'};
+// «Cazar errores»: la afirmación de un compañero con UN error (BANCO_CAZAR de
+// banco.js). Se pregunta cuál es la corrección; los distractores son
+// correcciones de OTROS errores del mismo tema, así que suenan a química del
+// tema pero no corrigen esta afirmación. Con tema = null se mezclan todos.
+function preguntasCazar(tema,n){
+  if(typeof BANCO_CAZAR==='undefined') return [];
+  const temas=tema?(BANCO_CAZAR[tema]?[tema]:[]):Object.keys(BANCO_CAZAR);
+  const todas=[];
+  temas.forEach(t=>BANCO_CAZAR[t].forEach((c,i)=>todas.push({t,i,c})));
+  return shuffle(todas).slice(0,n).map(({t,i,c})=>{
+    const otras=shuffle(BANCO_CAZAR[t].filter((x,j)=>j!==i&&x[1]!==c[1]).map(x=>x[1])).slice(0,3);
+    const enunciado='Un compañero escribió: «'+String(c[0]).replace(/\.$/,'')+'». ¿Cuál es la corrección?';
+    return {id:'cazar-'+t+'-'+i,tema:'cazar',temaOrigen:t,q:enunciado,ok:c[1],d:otras,x:'La corrección: '+c[1],
+      isAtom:true,qtype:'enlace-mc',group:tema||'cazar',formula:'cazar-'+t+'-'+i,trad:[c[1]],stock:[],sist:[],hint:''};
+  });
+}
 function respuestaTexto(q){
   if(!q.tipo||q.tipo==='mc'||q.tipo==='escribir') return q.ok;
   if(q.tipo==='calcular') return String(q.ok).replace('.',',')+(q.unidad?' '+q.unidad:'');
@@ -3324,9 +3358,9 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
+const GROUP_LABELS={all:'Todos los grupos',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
