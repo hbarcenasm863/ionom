@@ -4,6 +4,30 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (5) — Preguntas abiertas del generador revisadas contra lo que explica cada página
+
+El docente pidió que las preguntas abiertas del generador docente se basaran exclusivamente en lo que se explica dentro del sitio.
+
+**Revisión.** Se compararon las 100 preguntas abiertas de los temas nuevos (Modelos, pH, Industria, Gases y Soluciones; 20 por tema) con el texto de su página. Nueve pedían algo que el sitio no explica y se reescribieron:
+
+- **Modelos:** el porcentaje de error no se explica en IonNom. Ahora se pide la diferencia entre medida y modelo, y qué paso convierte un modelo en conocimiento comprobado.
+- **Ácidos, bases y pH:**
+  - Las dos preguntas con bicarbonato + HCl se cambiaron, porque esa reacción no aparece en el sitio. Ahora son la neutralización HNO₃ + KOH con su ecuación de fondo H⁺ + OH⁻ → H₂O, y los moles de HCl que neutraliza el NaOH.
+  - En la de lluvia ácida se pide la ecuación a partir del SO₃, que es la que muestra la página, y no desde el SO₂.
+- **Industria:**
+  - Las causas de un rendimiento bajo no se explican; ahora se pide cuánto producto faltó.
+  - La pregunta del rendimiento mayor que 100 % se ligó al experimento de la cáscara de huevo, que sí explica ese error (agua evaporada) y el vaso de control.
+- **Soluciones:**
+  - Se quitó la gasolina, que no aparece en la página: ahora se usan la polaridad del agua y los puentes de hidrógeno.
+  - La pregunta de la sal de Manaure se cambió por la comparación de las curvas del NaCl y del KNO₃.
+  - La de la gaseosa caliente (solubilidad de gases, que no se explica) se cambió por «disolver más rápido no es disolver más».
+
+**Gases** no necesitó cambios: sus 20 preguntas se responden con la página (y con la olla a presión de Modelos).
+
+Se verificó con Playwright que las evaluaciones generadas de cada tema traen las preguntas corregidas, sin errores. `sw.js` pasa a `ionom-v75` porque cambió `assets/docente-datos.js`, que se guarda en la caché.
+
+---
+
 ## 5 de noviembre (4) — Los módulos nuevos entran a la ruta del átomo IonNom
 
 El docente pidió que los temas nuevos quedaran bien integrados y diferenciados en el átomo de la portada, igual que las fases en la molécula de ChromaNom.
