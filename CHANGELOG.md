@@ -4,6 +4,43 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (9) — Ahorcado en el generador docente: para imprimir y para proyectar en clase
+
+El docente pidió llevar el Ahorcado del Juego al generador docente, en versión para imprimir y en versión interactiva para la clase.
+
+**Pestaña nueva «🪢 Ahorcado» en `docente.html`** (código en `assets/ahorcado.js`). Usa el mismo banco del Juego (`BANCO_AHORCADO`, 89 palabras con 3 pistas cada una).
+
+1. **Temas:** siete grupos que se pueden combinar:
+   - átomo y configuración;
+   - tabla periódica y enlace;
+   - nomenclatura;
+   - reacciones y pH;
+   - mol, estequiometría e industria;
+   - gases y soluciones;
+   - modelos y datos.
+2. **Hoja para imprimir (carta):**
+   - De 4 a 16 palabras, 8 por hoja.
+   - Cada palabra trae un patíbulo para ir dibujando, el número de letras, las pistas (3, 2 o 1, a elección del docente), una casilla por letra y el abecedario para tachar.
+   - Instrucciones en la primera hoja y espacio para nombre y curso.
+   - Hasta 40 versiones paralelas con otras palabras, y hojas de clave al final con el código para volver a generarlas otro día.
+3. **Modo clase (📽️), para proyectar:**
+   - Patíbulo y letras grandes.
+   - Teclado en pantalla; en el computador también funciona el teclado físico.
+   - Botones para mostrar la pista siguiente, revelar la palabra y pasar a la siguiente.
+   - Marcador de dos equipos y botón de pantalla completa.
+   - Al terminar la lista se puede empezar otra ronda con palabras nuevas.
+
+**Verificación (Playwright):**
+- la hoja cabe en una página carta;
+- la clave muestra las palabras;
+- el modo clase respondió al teclado, a las pistas, a revelar, a siguiente y al marcador;
+- 2 versiones de 12 palabras se imprimieron en 8 páginas (4 de hojas y 4 de clave);
+- no hubo errores en consola.
+
+`sw.js` pasa a `ionom-v79`.
+
+---
+
 ## 5 de noviembre (8) — Ahorcado con 3 pistas en el Juego
 
 Los estudiantes pidieron un tipo de juego especial: el ahorcado con 3 pistas.
