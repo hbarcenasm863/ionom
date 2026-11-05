@@ -4,6 +4,23 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (4) — Los módulos nuevos entran a la ruta del átomo IonNom
+
+El docente pidió que los temas nuevos quedaran bien integrados y diferenciados en el átomo de la portada, igual que las fases en la molécula de ChromaNom.
+
+**`index.html` · Menú átomo y lista de módulos**
+- Los cinco módulos nuevos dejan de ser «desvíos» y pasan a ser **paradas de la ruta**. La ruta queda de **17 paradas** (antes eran 12) y el núcleo muestra el progreso sobre 17.
+  - **n = 1**, el átomo: Teoría Atómica, Configuración, Tabla, Enlace y **Modelos, Leyes y Datos** (5).
+  - **n = 2**, nomenclatura: Principios, Funciones y NomenClash (6–8).
+  - **n = 3**, reacciones: Tipos de reacción, Balanceo y **Ácidos, Bases y pH** (9–11).
+  - **n = 4**, cálculos: Mol y masa molar (12), **Gases** (13), **Soluciones** (14), Estequiometría (15), **Industria** (16) y la cumbre, Balanceo algebraico y redox (17).
+  - Solo el Simulador y la Guía siguen como opcionales.
+- Corregido: las cinco tarjetas nuevas habían quedado por error dentro del menú lateral. Ahora cada una está en la sección de su nivel en «Todos los módulos, por nivel», con su número de parada («Parada 13 · n = 4»…). Las tarjetas antiguas se renumeraron.
+- Las descripciones de cada nivel (botones n = 1…4 y ventana de bienvenida) mencionan los temas nuevos.
+- Verificado con Playwright en un celular de 390 px: los paneles de cada nivel muestran los módulos en orden, no hay errores ni desbordes.
+
+---
+
 ## 5 de noviembre (3) — Leyes de los gases completas y Soluciones
 
 El docente pidió que gases fuera un simulador de todas las leyes y que se agregara el tema de soluciones, mostrando el proceso de disolución y los cálculos de concentración.
