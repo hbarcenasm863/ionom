@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 5 de noviembre (10) — Corrección: el Ahorcado mostraba «0 palabras» en el celular
+
+El docente reportó que en su celular la pestaña Ahorcado del generador decía «0 palabras» en todos los temas.
+
+**Causa.** Las palabras del Ahorcado, y también las de Cazar errores, estaban dentro de `banco.js`. `sw.js` guarda ese archivo con prioridad en la caché, así que un celular que ya tenía el sitio siguió usando la copia vieja, sin esas palabras, hasta que alguien tocara «Actualizar» en el aviso de nueva versión. Lo mismo les habría pasado a los estudiantes en el Juego, en los grupos Ahorcado y Cazar errores.
+
+**Corrección.**
+- **Archivo propio:** los dos bancos pasan a `assets/bancos-extra.js`, que cargan `juego.html` y `docente.html`. `sw.js` sirve ese archivo y `assets/ahorcado.js` **primero desde internet**, y solo usa la caché si no hay conexión. Como el archivo es nuevo, los celulares lo descargan de inmediato aunque no toquen «Actualizar», y los cambios futuros también llegan solos.
+- **Aviso:** si por algún motivo no cargan las palabras, la pestaña lo dice con claridad en lugar de mostrar «0 palabras».
+- `sw.js` pasa a `ionom-v80`.
+
+---
+
 ## 5 de noviembre (9) — Ahorcado en el generador docente: para imprimir y para proyectar en clase
 
 El docente pidió llevar el Ahorcado del Juego al generador docente, en versión para imprimir y en versión interactiva para la clase.

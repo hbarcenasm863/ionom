@@ -54,6 +54,7 @@ function getCfg(){
 function palabrasDe(c, v){ return barajar(c.pool, rng(c.seed + '|' + v)).slice(0, c.n); }
 function contarPalabras(){
   const c = getCfg();
+  if(!banco().length){ $('#ah-status').textContent = '⚠️ No se cargaron las palabras del ahorcado. Recargue la página; si sigue igual, toque «Actualizar» en el aviso de nueva versión.'; return; }
   $$('#ah-grupos label').forEach(l => { const g = GRUPOS.find(x => x[0] === l.querySelector('input').value); const k = banco().filter(w => g[2].includes(w[1])).length; const s = l.querySelector('small'); if(s) s.textContent = k + ' palabras'; });
   $('#ah-status').textContent = c.vacio ? '⚠️ ' + c.vacio : (c.pool.length < c.n ? 'Hay ' + c.pool.length + ' palabras para esos temas: cada hoja trae todas.' : c.pool.length + ' palabras disponibles para esos temas.');
 }
