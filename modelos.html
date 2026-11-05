@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Teorías, leyes, modelos y datos</title>
+<meta name="description" content="Diferencia entre hipótesis, ley, teoría y modelo; laboratorio virtual de la ley de Boyle con datos y gráficas; modelo predictivo del punto de ebullición del agua en ciudades colombianas.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html" class="active"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🔭 Teorías, leyes y modelos: predecir con datos</h1>
+    <p>¿Por qué los fríjoles se demoran más en cocinarse en Bogotá que en Cartagena? Para responder como científico hay que distinguir qué es una ley, una teoría y un modelo, medir datos, graficarlos y usar un modelo matemático para predecir. Aquí lo haces con un laboratorio virtual de gases y con datos de ciudades de Colombia. Grado 10.</p>
+  </div>
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
+  <div class="sect">
+    <h2>Palabras clave de esta página <button class="tts-btn" onclick="speakText(this)" data-text="Estas palabras se usan en todas las ciencias. Toca cada tarjeta para ver qué significa. Fíjate sobre todo en la diferencia entre ley, teoría y modelo.">🔊 Escuchar</button></h2>
+    <div class="glos">
+      <button type="button"><b>Hipótesis</b><span class="hint">Toca para ver</span><span class="def">Respuesta posible a una pregunta, que se puede poner a prueba.</span></button>
+      <button type="button"><b>Ley</b><span class="hint">Toca para ver</span><span class="def">Describe QUÉ pasa siempre en ciertas condiciones, muchas veces con una ecuación.</span></button>
+      <button type="button"><b>Teoría</b><span class="hint">Toca para ver</span><span class="def">Explica POR QUÉ pasa, apoyada en muchas evidencias. No es «una simple suposición».</span></button>
+      <button type="button"><b>Modelo</b><span class="hint">Toca para ver</span><span class="def">Representación simplificada (dibujo, maqueta, ecuación, simulación) para explicar y predecir.</span></button>
+      <button type="button"><b>Variable independiente</b><span class="hint">Toca para ver</span><span class="def">La que tú cambias a propósito.</span></button>
+      <button type="button"><b>Variable dependiente</b><span class="hint">Toca para ver</span><span class="def">La que mides como resultado.</span></button>
+      <button type="button"><b>Interpolar</b><span class="hint">Toca para ver</span><span class="def">Predecir un valor DENTRO del rango de datos medidos (más confiable).</span></button>
+      <button type="button"><b>Extrapolar</b><span class="hint">Toca para ver</span><span class="def">Predecir FUERA del rango medido (más arriesgado).</span></button>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Ley, teoría y modelo no son lo mismo <button class="tts-btn" onclick="speakText(this)" data-text="Una ley describe lo que pasa. Una teoría explica por qué pasa. Un modelo lo representa para poder pensar y predecir. Una teoría nunca se convierte en ley: son herramientas distintas que trabajan juntas.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás clasificar un enunciado como hipótesis, ley, teoría o modelo.</div>
+    <div class="proc">
+      <div class="card"><span class="tipo">Ley · describe</span><h4>Ley de Boyle</h4><p>A temperatura constante, la presión y el volumen de un gas son inversamente proporcionales:</p><span class="eq">P × V = constante</span><p>Dice <strong>qué</strong> pasa, no por qué.</p></div>
+      <div class="card"><span class="tipo">Teoría · explica</span><h4>Teoría cinético-molecular</h4><p>Los gases están formados por partículas en movimiento que chocan contra las paredes. Con menos volumen chocan más veces por segundo → más presión.</p><p>Explica <strong>por qué</strong> se cumple la ley.</p></div>
+      <div class="card"><span class="tipo">Modelo · representa</span><h4>Las bolitas en la jeringa</h4><p>Dibujar el gas como bolitas que rebotan es un modelo: simplifica (las partículas reales no son bolas) pero permite predecir.</p><p>Los <a href="atomo.html">modelos atómicos</a> también lo son.</p></div>
+    </div>
+    <div class="warn-box">⚠️ <strong>Idea equivocada frecuente:</strong> «una teoría se vuelve ley cuando se demuestra». No: la ley y la teoría responden preguntas distintas. La teoría atómica o la de la evolución están tan comprobadas como cualquier ley.</div>
+    <div id="cl-tipo"></div>
+    <div class="calc-out" id="cl-tipo-out" aria-live="polite">Clasifica los ocho enunciados.</div>
+  </div>
+
+  <div class="sect">
+    <h2>Laboratorio virtual: la ley de Boyle con datos <button class="tts-btn" onclick="speakText(this)" data-text="Vas a hacer un experimento con una jeringa llena de aire. Primero escribe tu hipótesis. Después cambia la presión, mide el volumen y registra cada dato en la tabla. Con la gráfica vas a descubrir la ley y a usarla para predecir.">🔊 Escuchar</button></h2>
+    <div class="meta">Plantea una hipótesis, toma datos, grafícalos, encuentra la constante y predice un valor que no mediste.</div>
+    <div class="calc">
+      <div class="calc-row"><label for="by-hip">1 · Hipótesis:</label><select id="by-hip" style="max-width:100%"><option value="">— elige —</option><option value="inv">Si aumenta la presión, el volumen disminuye</option><option value="dir">Si aumenta la presión, el volumen aumenta</option><option value="nada">La presión no cambia el volumen</option></select></div>
+      <div class="duo">
+        <div class="fig"><svg id="by-svg" viewBox="0 0 300 170" role="img" aria-label="Jeringa con aire: el émbolo baja al aumentar la presión"></svg></div>
+        <div>
+          <div class="calc-row"><label for="by-p">2 · Presión (atm):</label><input type="range" id="by-p" min="0.5" max="3" step="0.25" value="1"><span class="eq" id="by-pv">1,00 atm</span></div>
+          <div class="calc-row"><span>Volumen medido: <b id="by-v">—</b></span></div>
+          <div class="calc-row"><button type="button" class="btn-s prim" id="by-reg">📋 Registrar dato</button><button type="button" class="btn-s" id="by-borra">↺ Borrar tabla</button></div>
+          <p style="font-size:.78rem;color:var(--dimmer)">Temperatura constante (20 °C) y la misma cantidad de aire: son las variables controladas. Las medidas traen un error al azar de ±1 %, como una jeringa real.</p>
+        </div>
+      </div>
+      <div style="overflow-x:auto"><table class="tbl" id="by-tab"><thead><tr><th>P (atm)</th><th>V (mL)</th><th>P × V (atm·mL)</th><th>1/V (1/mL)</th></tr></thead><tbody></tbody></table></div>
+      <div class="seg" id="by-graf" role="group" aria-label="Tipo de gráfica"><button type="button" data-g="pv" class="on">Gráfica V contra P</button><button type="button" data-g="inv">Gráfica P contra 1/V</button></div>
+      <div class="plot"><svg id="by-plot" viewBox="0 0 520 250" role="img" aria-label="Gráfica de los datos registrados"></svg></div>
+      <div class="calc-row"><label for="by-k">3 · Con al menos 4 datos: ¿cuánto vale en promedio P × V (atm·mL)?</label><input id="by-k" inputmode="decimal"><button type="button" class="btn-s" id="by-kok">Revisar</button></div>
+      <div class="calc-row"><label for="by-pr">4 · Predice: ¿qué volumen (mL) tendrá el aire a 4 atm?</label><input id="by-pr" inputmode="decimal"><button type="button" class="btn-s" id="by-prok">Revisar</button></div>
+      <div class="calc-out" id="by-out" aria-live="polite">Empieza por la hipótesis y registra al menos 4 datos con presiones distintas.</div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Un modelo para tu territorio: el agua no hierve igual en todo Colombia <button class="tts-btn" onclick="speakText(this)" data-text="En Cartagena el agua hierve a cien grados, pero en Bogotá hierve más o menos a noventa y uno. Con los datos de varias ciudades vas a construir un modelo matemático, usarlo para predecir el punto de ebullición en otros lugares y decidir cuándo esa predicción es confiable.">🔊 Escuchar</button></h2>
+    <div class="meta">Construye un modelo lineal con datos de ciudades, úsalo para predecir y compara la predicción con una medida.</div>
+    <p>Un líquido hierve cuando su presión de vapor iguala la presión del aire. Con la altura hay menos aire encima y la presión baja, así que el agua hierve a menor temperatura. La tabla muestra la altitud de varias ciudades y el punto de ebullición del agua calculado con la presión atmosférica típica de esa altura.</p>
+    <div class="duo">
+      <div style="overflow-x:auto"><table class="tbl" id="eb-tab"><thead><tr><th>Ciudad</th><th>Altitud (m)</th><th>Ebullición (°C)</th></tr></thead><tbody></tbody></table></div>
+      <div class="plot"><svg id="eb-svg" viewBox="0 0 360 250" role="img" aria-label="Punto de ebullición del agua contra altitud, con la recta del modelo"></svg></div>
+    </div>
+    <div class="calc">
+      <div class="calc-row"><label for="eb-m">Ajusta la pendiente del modelo (°C por cada 1000 m):</label><input type="range" id="eb-m" min="-5" max="-1" step="0.05" value="-2"><span class="eq" id="eb-mv">−2,00</span></div>
+      <div class="calc-out" id="eb-fit" aria-live="polite"></div>
+      <div class="calc-row" style="margin-top:10px"><label for="eb-c">Usa tu modelo para predecir en:</label><select id="eb-c"></select><button type="button" class="btn-s prim" id="eb-ok">Predecir y comparar</button></div>
+      <div class="calc-out" id="eb-out" aria-live="polite">Primero ajusta la recta para que pase cerca de todos los puntos.</div>
+    </div>
+    <div class="warn-box">⚠️ Los puntos de ebullición de la tabla se <strong>calcularon</strong> con un modelo de la atmósfera estándar y la presión de vapor del agua (Clausius-Clapeyron). El valor real cambia un poco con el estado del tiempo. <strong>Mídelo tú</strong> con un termómetro de laboratorio en tu colegio y compáralo con la predicción: ese es el paso que convierte un modelo en conocimiento comprobado.</div>
+    <div class="info-box">🗂️ <strong>Datos históricos del territorio:</strong> para preguntas como «¿ha cambiado la temperatura o la lluvia de mi municipio en 30 años?», el IDEAM publica en línea los registros de sus estaciones meteorológicas. Con ellos se puede repetir este mismo proceso: graficar, ajustar un modelo y comparar.</div>
+  </div>
+
+  <div class="sect quiz-sect" id="practica">
+    <h2>✅ Practica — Modelos, leyes y datos <button class="tts-btn" onclick="speakText(this)" data-text="Ocho preguntas al azar del banco del Juego sobre teorías, leyes, modelos, gases y análisis de datos.">🔊 Escuchar</button></h2>
+    <div id="prac-mo"></div>
+  </div>
+
+  <footer>
+    <a href="juego.html?g=modelos">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function pickVoice(){
+    const v=window.speechSynthesis.getVoices();
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
+}
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="banco.js"></script>
+<script src="assets/sed10.js"></script>
+<script>
+(function(){
+'use strict';
+function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
+function num(id){return parseFloat(String(document.getElementById(id).value).replace(',','.'));}
+var NS='http://www.w3.org/2000/svg';
+function el(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);if(p)p.appendChild(x);return x;}
+function tx(p,x,y,s,a){var t=el('text',Object.assign({x:x,y:y},a||{}),p);t.textContent=s;return t;}
+if(window.SED10&&typeof BANCO_MODELOS!=='undefined')SED10.practica('prac-mo',BANCO_MODELOS,8,'Practica: modelos, leyes y datos','modelos');
+
+SED10.clasificador('cl-tipo',[
+  {t:'«Si caliento el globo, se inflará más.»',ok:'Hipótesis',fb:'Es una predicción que se puede poner a prueba.'},
+  {t:'«En una reacción química, la masa total se conserva.»',ok:'Ley',fb:'Ley de conservación de la masa (Lavoisier): describe lo que siempre pasa.'},
+  {t:'«La materia está formada por átomos que se reorganizan en las reacciones.»',ok:'Teoría',fb:'Teoría atómica: explica por qué se conserva la masa.'},
+  {t:'Un dibujo del átomo con un núcleo y electrones en niveles (Bohr)',ok:'Modelo',fb:'Representa el átomo de forma simplificada.'},
+  {t:'«P × V = constante, a temperatura constante.»',ok:'Ley',fb:'Ley de Boyle: una relación matemática que describe.'},
+  {t:'«Los gases son partículas en movimiento que chocan con las paredes.»',ok:'Teoría',fb:'Teoría cinético-molecular: explica la presión.'},
+  {t:'Una simulación de computador del clima de Colombia',ok:'Modelo',fb:'Representa un sistema real para predecir.'},
+  {t:'«Si agrego más sal, el agua hervirá a mayor temperatura.»',ok:'Hipótesis',fb:'Se puede comprobar midiendo.'}
+],['Hipótesis','Ley','Teoría','Modelo'],function(b,n){document.getElementById('cl-tipo-out').innerHTML='Terminaste: <b>'+b+' de '+n+'</b> al primer intento. Pregúntate: ¿describe (ley), explica (teoría), representa (modelo) o predice algo por comprobar (hipótesis)?';});
+
+/* ── Boyle ── k = 50 atm·mL (50 mL a 1 atm) */
+var K=50,datos=[],graf='pv',vAct=null;
+function medir(p){return Math.round(K/p*(1+(Math.random()*0.02-0.01))*10)/10;}
+function jeringa(p){var s=document.getElementById('by-svg');s.innerHTML='';var v=K/p,len=v/100*200;
+  el('rect',{x:40,y:60,width:220,height:50,rx:6,fill:'#f1f5f9',stroke:'#334155','stroke-width':2},s);
+  el('rect',{x:42,y:62,width:len,height:46,fill:'#dbeafe'},s);
+  el('rect',{x:42+len,y:56,width:8,height:58,fill:'#475569'},s);el('rect',{x:50+len,y:80,width:260-len,height:10,fill:'#94a3b8'},s);
+  var n=24;for(var i=0;i<n;i++){var x=48+((i*37)%100)/100*(len-12),y=68+((i*53)%100)/100*34;el('circle',{cx:x,cy:y,r:3,fill:'#1d4ed8'},s);}
+  for(var t=0;t<=100;t+=20){var xx=42+t/100*200;el('line',{x1:xx,y1:110,x2:xx,y2:118,stroke:'#334155'},s);tx(s,xx,132,t+'',{'text-anchor':'middle','font-size':10,fill:'#334155'});}
+  tx(s,150,150,'mL',{'text-anchor':'middle','font-size':10,fill:'#334155'});
+  tx(s,150,40,'P = '+coma(p,2)+' atm',{'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#0d4a73'});}
+function tabla(){var tb=document.querySelector('#by-tab tbody');tb.innerHTML=datos.map(function(d){return '<tr><td>'+coma(d[0],2)+'</td><td>'+coma(d[1],1)+'</td><td>'+coma(d[0]*d[1],1)+'</td><td>'+coma(1/d[1],4)+'</td></tr>';}).join('')||'<tr><td colspan="4">Sin datos todavía</td></tr>';
+  var s=document.getElementById('by-plot');s.innerHTML='';var x0=60,y0=210,W=430,H=180;
+  el('line',{x1:x0,y1:y0,x2:x0+W,y2:y0,stroke:'#334155'},s);el('line',{x1:x0,y1:y0,x2:x0,y2:y0-H,stroke:'#334155'},s);
+  if(graf==='pv'){tx(s,x0+W/2,244,'Presión (atm)',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#0d2d42'});tx(s,16,y0-H/2,'Volumen (mL)',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#0d2d42',transform:'rotate(-90 16 '+(y0-H/2)+')'});
+    for(var p=0;p<=4;p++){tx(s,x0+p/4*W,226,String(p),{'text-anchor':'middle','font-size':10,fill:'#475569'});}
+    for(var v=0;v<=100;v+=25){tx(s,x0-6,y0-v/110*H+4,String(v),{'text-anchor':'end','font-size':10,fill:'#475569'});}
+    datos.forEach(function(d){el('circle',{cx:x0+d[0]/4*W,cy:y0-d[1]/110*H,r:5,fill:'#1d4ed8'},s);});
+  }else{tx(s,x0+W/2,244,'1/V (1/mL)',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#0d2d42'});tx(s,16,y0-H/2,'Presión (atm)',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#0d2d42',transform:'rotate(-90 16 '+(y0-H/2)+')'});
+    var mx=0.08;for(var q=0;q<=4;q++){tx(s,x0+q/4*W,226,coma(q*mx/4,2),{'text-anchor':'middle','font-size':10,fill:'#475569'});}
+    for(p=0;p<=4;p++){tx(s,x0-6,y0-p/4.4*H+4,String(p),{'text-anchor':'end','font-size':10,fill:'#475569'});}
+    datos.forEach(function(d){el('circle',{cx:x0+(1/d[1])/mx*W,cy:y0-d[0]/4.4*H,r:5,fill:'#1d4ed8'},s);});
+    if(datos.length>=2)el('line',{x1:x0,y1:y0,x2:x0+W,y2:y0-(mx*K)/4.4*H,stroke:'#94a3b8','stroke-dasharray':'5 4'},s);
+  }
+  if(!datos.length)tx(s,x0+W/2,y0-H/2,'Registra datos para verlos aquí',{'text-anchor':'middle','font-size':13,fill:'#94a3b8'});
+}
+function actual(){var p=+document.getElementById('by-p').value;document.getElementById('by-pv').textContent=coma(p,2)+' atm';vAct=medir(p);document.getElementById('by-v').textContent=coma(vAct,1)+' mL';jeringa(p);}
+document.getElementById('by-p').addEventListener('input',actual);
+document.getElementById('by-reg').addEventListener('click',function(){var o=document.getElementById('by-out');
+  if(!document.getElementById('by-hip').value){o.className='calc-out fail';o.innerHTML='Primero escribe tu <b>hipótesis</b>: se predice antes de medir.';return;}
+  var p=+document.getElementById('by-p').value;if(datos.some(function(d){return d[0]===p;})){o.className='calc-out fail';o.innerHTML='Ya registraste esa presión. Cambia la presión para tener datos distintos.';return;}
+  datos.push([p,vAct]);datos.sort(function(a,b){return a[0]-b[0];});tabla();
+  o.className='calc-out';o.innerHTML='Datos: <b>'+datos.length+'</b>. '+(datos.length<4?'Registra al menos 4 presiones distintas.':'Mira la columna P × V: ¿qué notas? Cambia a la gráfica P contra 1/V.');});
+document.getElementById('by-borra').addEventListener('click',function(){datos=[];tabla();});
+document.getElementById('by-graf').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;graf=b.dataset.g;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});tabla();});
+document.getElementById('by-kok').addEventListener('click',function(){var o=document.getElementById('by-out');if(datos.length<4){o.className='calc-out fail';o.innerHTML='Necesitas al menos 4 datos.';return;}
+  var k=datos.reduce(function(s,d){return s+d[0]*d[1];},0)/datos.length,r=num('by-k');if(isNaN(r)){o.className='calc-out fail';o.innerHTML='Escribe un número.';return;}
+  if(Math.abs(r-k)/k<=0.03){var h=document.getElementById('by-hip').value;o.className='calc-out ok';o.innerHTML='✅ <b>k ≈ '+coma(k,1)+' atm·mL.</b> El producto P × V casi no cambia: esa es la <b>ley de Boyle</b>. La gráfica V contra P es una curva (inversa) y la de P contra 1/V es una recta: así se reconoce una proporcionalidad inversa. '+(h==='inv'?'Tu hipótesis quedó apoyada por los datos.':'Tu hipótesis no se cumplió: los datos muestran que el volumen <b>disminuye</b> al aumentar la presión. Corregir una hipótesis con evidencia también es hacer ciencia.');}
+  else{o.className='calc-out fail';o.innerHTML='🔎 Suma la columna P × V y divide entre el número de datos.';}});
+document.getElementById('by-prok').addEventListener('click',function(){var o=document.getElementById('by-out'),r=num('by-pr');if(datos.length<4){o.className='calc-out fail';o.innerHTML='Primero toma al menos 4 datos.';return;}
+  var k=datos.reduce(function(s,d){return s+d[0]*d[1];},0)/datos.length,v=k/4;if(isNaN(r)){o.className='calc-out fail';o.innerHTML='Escribe un número.';return;}
+  if(Math.abs(r-v)/v<=0.05){o.className='calc-out ok';o.innerHTML='✅ <b>V ≈ '+coma(v,1)+' mL.</b> V = k ÷ P = '+coma(k,1)+' ÷ 4. Ojo: 4 atm está <b>fuera</b> del rango que mediste (0,5 a 3 atm): es una <b>extrapolación</b>. Para un gas como el aire a estas presiones funciona bien, pero siempre conviene comprobarla midiendo.';}
+  else{o.className='calc-out fail';o.innerHTML='🔎 Usa la ley: V = k ÷ P, con la k que calculaste.';}});
+actual();tabla();
+
+/* ── Modelo de ebullición ── Altitudes de referencia (m); la presión se
+   calcula con la atmósfera estándar y Tb con Clausius-Clapeyron (ΔHvap del
+   agua = 40,7 kJ/mol). */
+var CIU=[['Cartagena',2],['Barranquilla',18],['Cali',1018],['Bucaramanga',959],['Medellín',1495],['Manizales',2160],['Pasto',2527],['Bogotá',2640],['Tunja',2810]];
+var PRED=[['Popayán',1737],['Ipiales',2898],['Villavicencio',467],['Refugio del Nevado del Ruiz (≈ 4800 m)',4800]];
+function tb(h){var P=Math.pow(1-2.25577e-5*h,5.25588),T=1/(1/373.15-8.314*Math.log(P)/40700);return T-273.15;}
+var tab=document.querySelector('#eb-tab tbody');tab.innerHTML=CIU.map(function(c){return '<tr><td>'+c[0]+'</td><td>'+c[1]+'</td><td>'+coma(tb(c[1]),1)+'</td></tr>';}).join('');
+var cs=document.getElementById('eb-c');cs.innerHTML=PRED.map(function(c,i){return '<option value="'+i+'">'+c[0]+'</option>';}).join('');
+function modelo(){var m=+document.getElementById('eb-m').value;document.getElementById('eb-mv').textContent=coma(m,2).replace('-','−');
+  var s=document.getElementById('eb-svg');s.innerHTML='';var x0=50,y0=210,W=290,H=180,X=function(h){return x0+h/5000*W;},Y=function(t){return y0-(t-82)/20*H;};
+  el('line',{x1:x0,y1:y0,x2:x0+W,y2:y0,stroke:'#334155'},s);el('line',{x1:x0,y1:y0,x2:x0,y2:y0-H,stroke:'#334155'},s);
+  [0,1000,2000,3000,4000,5000].forEach(function(h){tx(s,X(h),226,String(h),{'text-anchor':'middle','font-size':9,fill:'#475569'});});
+  [84,88,92,96,100].forEach(function(t){tx(s,x0-5,Y(t)+3,String(t),{'text-anchor':'end','font-size':9,fill:'#475569'});el('line',{x1:x0,y1:Y(t),x2:x0+W,y2:Y(t),stroke:'#eef2f7'},s);});
+  tx(s,x0+W/2,244,'Altitud (m)',{'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#0d2d42'});tx(s,14,y0-H/2,'Ebullición (°C)',{'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#0d2d42',transform:'rotate(-90 14 '+(y0-H/2)+')'});
+  el('rect',{x:X(0),y:y0-H,width:X(2810)-X(0),height:H,fill:'#dbeafe',opacity:.35},s);tx(s,X(1400),y0-H+12,'rango de los datos',{'text-anchor':'middle','font-size':9,fill:'#1d4ed8'});
+  el('line',{x1:X(0),y1:Y(100),x2:X(5000),y2:Y(100+m*5),stroke:'#dc2626','stroke-width':2},s);
+  CIU.forEach(function(c){el('circle',{cx:X(c[1]),cy:Y(tb(c[1])),r:4.5,fill:'#1d4ed8'},s);});
+  var err=CIU.map(function(c){return Math.abs(100+m*c[1]/1000-tb(c[1]));}),mxe=Math.max.apply(null,err);
+  var f=document.getElementById('eb-fit');f.className='calc-out'+(mxe<0.4?' ok':'');
+  f.innerHTML='Modelo: <b>T = 100 '+(m<0?'−':'+')+' '+coma(Math.abs(m),2)+' × (altitud ÷ 1000)</b>. Mayor distancia entre la recta y un dato: '+coma(mxe,2)+' °C. '+(mxe<0.4?'✅ ¡Buen ajuste! La recta pasa cerca de todos los puntos.':'Mueve la pendiente hasta que la recta pase cerca de todos los puntos azules.');}
+document.getElementById('eb-m').addEventListener('input',modelo);modelo();
+document.getElementById('eb-ok').addEventListener('click',function(){var m=+document.getElementById('eb-m').value,c=PRED[+cs.value],pr=100+m*c[1]/1000,re=tb(c[1]),o=document.getElementById('eb-out'),ext=c[1]>2810;
+  o.className='calc-out'+(Math.abs(pr-re)<0.6?' ok':'');
+  o.innerHTML='<b>'+c[0]+'</b> ('+c[1]+' m): tu modelo predice <b>'+coma(pr,1)+' °C</b>; el cálculo con la presión da <b>'+coma(re,1)+' °C</b> (diferencia '+coma(Math.abs(pr-re),1)+' °C). '+(ext?'⚠️ Esta altitud está <b>fuera del rango</b> de tus datos (0 a 2810 m): es una <b>extrapolación</b>. '+(Math.abs(pr-re)>0.6?'Fíjate que el error crece: la relación real no es exactamente una recta.':'Aquí todavía funciona, pero lejos del rango el error crece porque la relación real no es una recta.'):'Esta altitud está dentro del rango de tus datos: es una <b>interpolación</b>, más confiable.')+' Para cocinar fríjoles en Bogotá se usa olla a presión: con más presión el agua hierve a más de 100 °C.';});
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

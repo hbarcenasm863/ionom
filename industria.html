@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Química en la industria colombiana</title>
+<meta name="description" content="Conservación de la masa y la carga, tipos de reacción en procesos industriales colombianos, reactivo limitante, pureza y rendimiento, con un experimento con cáscara de huevo.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html" class="active"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🏭 Química en la industria: estequiometría de procesos reales</h1>
+    <p>El cemento de tu colegio, el agua potable de tu casa, los fertilizantes del campo y el acero de las varillas salen de reacciones químicas que alguien tuvo que calcular. Aquí aplicas la conservación de la masa y la carga, el reactivo limitante, la pureza y el rendimiento a procesos industriales de Colombia, y haces tu propio experimento. Grado 10.</p>
+  </div>
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
+  <div class="sect">
+    <h2>Palabras clave de esta página <button class="tts-btn" onclick="speakText(this)" data-text="Antes de empezar, repasa las palabras clave. Toca cada tarjeta para ver su significado. Vas a usarlas en todos los cálculos de la página.">🔊 Escuchar</button></h2>
+    <div class="glos">
+      <button type="button"><b>Conservación de la masa</b><span class="hint">Toca para ver</span><span class="def">La masa de los reactivos es igual a la de los productos: los átomos solo se reorganizan.</span></button>
+      <button type="button"><b>Conservación de la carga</b><span class="hint">Toca para ver</span><span class="def">En una ecuación iónica, la suma de cargas es igual en los dos lados.</span></button>
+      <button type="button"><b>Razón molar</b><span class="hint">Toca para ver</span><span class="def">Relación entre los coeficientes de la ecuación balanceada (por ejemplo, 2 mol NH₃ / 1 mol N₂).</span></button>
+      <button type="button"><b>Reactivo limitante</b><span class="hint">Toca para ver</span><span class="def">El que se acaba primero y decide cuánto producto se forma.</span></button>
+      <button type="button"><b>Reactivo en exceso</b><span class="hint">Toca para ver</span><span class="def">El que sobra cuando el limitante se acaba.</span></button>
+      <button type="button"><b>Pureza</b><span class="hint">Toca para ver</span><span class="def">Porcentaje de la sustancia útil en una materia prima (el resto son impurezas).</span></button>
+      <button type="button"><b>Rendimiento</b><span class="hint">Toca para ver</span><span class="def">(masa real ÷ masa teórica) × 100. Casi nunca llega a 100 %.</span></button>
+      <button type="button"><b>Precipitado</b><span class="hint">Toca para ver</span><span class="def">Sólido insoluble que se forma en una reacción entre soluciones (se marca con ↓).</span></button>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Masa y carga: lo que nunca cambia <button class="tts-btn" onclick="speakText(this)" data-text="En una reacción química los átomos no se crean ni se destruyen, y la carga eléctrica tampoco. Una ecuación iónica puede tener los átomos igualados y aun así estar mal, si las cargas no coinciden. Revisa ambas cosas.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás comprobar si una ecuación cumple la conservación de la masa y de la carga.</div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: ¿está bien Al + Cu²⁺ → Al³⁺ + Cu?</div>
+      <ol>
+        <li><strong>Cuenta átomos.</strong> Izquierda: 1 Al y 1 Cu. Derecha: 1 Al y 1 Cu. ✔ La masa está balanceada.</li>
+        <li><strong>Suma cargas.</strong> Izquierda: 0 + 2 = <strong>+2</strong>. Derecha: +3 + 0 = <strong>+3</strong>. ✘ La carga no se conserva.</li>
+        <li><strong>Iguala la carga con coeficientes.</strong> El mínimo común múltiplo de 2 y 3 es 6: 2 Al³⁺ (carga +6) y 3 Cu²⁺ (carga +6).</li>
+        <li><strong>Ecuación correcta:</strong> <span class="eq">2 Al + 3 Cu²⁺ → 2 Al³⁺ + 3 Cu</span> — 2 Al, 3 Cu y +6 en cada lado. Cada Al pierde 3 electrones (6 en total) y cada Cu²⁺ gana 2 (6 en total).</li>
+      </ol>
+    </div>
+    <p>¿Cada ecuación cumple <strong>las dos</strong> conservaciones?</p>
+    <div id="cl-cons"></div>
+    <div class="calc-out" id="cl-cons-out" aria-live="polite">Revisa las cinco ecuaciones.</div>
+  </div>
+
+  <div class="sect">
+    <h2>Cinco procesos industriales de Colombia <button class="tts-btn" onclick="speakText(this)" data-text="Estos cinco procesos usan los tipos de reacción que ya conoces: descomposición, síntesis, precipitación, óxido-reducción y electrólisis. Lee cada tarjeta y luego relaciona cada proceso con su tipo de reacción.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás reconocer el tipo de reacción de cada proceso y escribir su ecuación balanceada.</div>
+    <div class="proc">
+      <div class="card"><span class="tipo">Descomposición</span><h4>🧱 Cemento y cal</h4><p>En hornos a unos 900 °C se calcina la caliza de las canteras de Antioquia, Boyacá y Santander:</p><span class="eq">CaCO₃ → CaO + CO₂</span><p>El CaO (cal viva) es la base del cemento. Cada tonelada de caliza libera 440 kg de CO₂.</p></div>
+      <div class="card"><span class="tipo">Síntesis</span><h4>🌾 Amoníaco para fertilizantes</h4><p>Proceso Haber, con catalizador de hierro, alta presión y unos 450 °C:</p><span class="eq">N₂ + 3 H₂ → 2 NH₃</span><p>Con el NH₃ se fabrican la urea y otros fertilizantes nitrogenados para el café, la papa y las flores.</p></div>
+      <div class="card"><span class="tipo">Precipitación</span><h4>🚰 Potabilización del agua</h4><p>En plantas como Tibitoc y Wiesner, que abastecen a Bogotá, se agregan coagulantes; se forma un sólido gelatinoso que atrapa la suciedad:</p><span class="eq">Al₂(SO₄)₃ + 3 Ca(OH)₂ → 2 Al(OH)₃↓ + 3 CaSO₄</span></div>
+      <div class="card"><span class="tipo">Óxido-reducción</span><h4>🔩 Acero</h4><p>En Boyacá, el mineral de hierro se reduce en el alto horno con monóxido de carbono:</p><span class="eq">Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂</span><p>El Fe pasa de +3 a 0 (se reduce); el C pasa de +2 a +4 (se oxida).</p></div>
+      <div class="card"><span class="tipo">Electrólisis (redox)</span><h4>🧂 Cloro y soda cáustica</h4><p>De la sal de Zipaquirá y de Manaure, con corriente eléctrica:</p><span class="eq">2 NaCl + 2 H₂O → 2 NaOH + Cl₂ + H₂</span><p>El cloro desinfecta el agua; la soda se usa en jabones y papel.</p></div>
+    </div>
+    <div id="cl-proc"></div>
+    <div class="calc-out" id="cl-proc-out" aria-live="polite">Relaciona cada situación con su tipo de reacción.</div>
+  </div>
+
+  <div class="sect">
+    <h2>Reactivo limitante en la planta de amoníaco <button class="tts-btn" onclick="speakText(this)" data-text="En una fábrica casi nunca se mezclan los reactivos en la proporción exacta. El que se acaba primero, el limitante, decide cuánto producto sale. Mira el ejemplo paso a paso y luego prueba con tus propios números.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás encontrar el reactivo limitante y calcular cuánto producto se forma y cuánto reactivo sobra.</div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: 280 kg de N₂ y 80 kg de H₂ (N₂ = 28 g/mol; H₂ = 2 g/mol; NH₃ = 17 g/mol)</div>
+      <ol>
+        <li><strong>Pasa a moles.</strong> 280 000 g ÷ 28 = <strong>10 000 mol N₂</strong>; 80 000 g ÷ 2 = <strong>40 000 mol H₂</strong>.</li>
+        <li><strong>¿Cuánto H₂ necesita todo el N₂?</strong> 10 000 mol N₂ × (3 mol H₂ / 1 mol N₂) = 30 000 mol H₂. Hay 40 000: <strong>sobra H₂</strong>.</li>
+        <li><strong>Concluye.</strong> El <strong>N₂ es el limitante</strong> y el H₂ está en exceso (sobran 10 000 mol = 20 kg).</li>
+        <li><strong>Calcula el producto con el limitante.</strong> 10 000 mol N₂ × (2 mol NH₃ / 1 mol N₂) × 17 g/mol = 340 000 g = <strong>340 kg de NH₃</strong>.</li>
+        <li><strong>Comprueba la masa.</strong> Reaccionaron 280 kg de N₂ + 60 kg de H₂ = 340 kg = masa de NH₃. ✔ Se conserva.</li>
+      </ol>
+    </div>
+    <div class="calc">
+      <div class="calc-row"><label for="hb-n">N₂ (kg):</label><input id="hb-n" inputmode="decimal" value="140"><label for="hb-h">H₂ (kg):</label><input id="hb-h" inputmode="decimal" value="20"></div>
+      <div class="calc-row"><label for="hb-l">¿Cuál es el limitante?</label><select id="hb-l"><option value="">— elige —</option><option value="n">N₂</option><option value="h">H₂</option><option value="e">Ninguno (proporción exacta)</option></select><label for="hb-r">kg de NH₃:</label><input id="hb-r" inputmode="decimal"><button type="button" class="btn-s prim" id="hb-ok">Revisar</button></div>
+      <div class="calc-out" id="hb-out" aria-live="polite">Calcula en tu cuaderno con la cadena de factores y escribe tus resultados.</div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Pureza y rendimiento: la fábrica real <button class="tts-btn" onclick="speakText(this)" data-text="Las materias primas traen impurezas y ningún proceso aprovecha el cien por ciento de los reactivos. Por eso, en la industria, siempre se corrige el cálculo por la pureza y por el rendimiento. Usa la planta virtual para ver cómo cambia la producción.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás calcular cuánto producto real sale de una materia prima impura en un proceso con un rendimiento dado.</div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: una cementera calcina 1000 kg de caliza con 90 % de CaCO₃ y obtiene 480 kg de CaO (CaCO₃ = 100 g/mol; CaO = 56 g/mol)</div>
+      <ol>
+        <li><strong>Corrige por pureza.</strong> 1000 kg × (90 / 100) = <strong>900 kg de CaCO₃</strong> útil.</li>
+        <li><strong>Masa teórica de CaO.</strong> 900 kg ÷ 100 kg/kmol = 9 kmol CaCO₃ → 9 kmol CaO × 56 kg/kmol = <strong>504 kg</strong>.</li>
+        <li><strong>Rendimiento.</strong> 480 ÷ 504 × 100 ≈ <strong>95,2 %</strong>.</li>
+        <li><strong>Impacto ambiental.</strong> 9 kmol de CO₂ × 44 kg/kmol = <strong>396 kg de CO₂</strong> solo por la reacción, sin contar el combustible del horno. Por eso las cementeras buscan reducir y capturar sus emisiones.</li>
+      </ol>
+    </div>
+    <div class="calc">
+      <div class="calc-row"><strong>Planta virtual</strong></div>
+      <div class="calc-row"><label for="pl-p">Proceso:</label><select id="pl-p"></select></div>
+      <div class="calc-row"><label for="pl-m">Materia prima (kg):</label><input id="pl-m" inputmode="decimal" value="1000"><label for="pl-pu">Pureza (%):</label><input type="range" id="pl-pu" min="50" max="100" value="90"><span class="eq" id="pl-puv">90 %</span><label for="pl-re">Rendimiento (%):</label><input type="range" id="pl-re" min="50" max="100" value="95"><span class="eq" id="pl-rev">95 %</span></div>
+      <div class="calc-out" id="pl-out" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Experimento práctico: ¿cuánto carbonato tiene una cáscara de huevo? <button class="tts-btn" onclick="speakText(this)" data-text="Ahora eres el químico de la planta. Con una balanza, un vaso de vinagre y cáscaras de huevo puedes medir cuánto dióxido de carbono se escapa y, con estequiometría, calcular cuánto carbonato de calcio tenía la cáscara.">🔊 Escuchar</button></h2>
+    <div class="meta">Con datos que tú mides, calcula la pureza de una materia prima por estequiometría.</div>
+    <div class="duo">
+      <div>
+        <p><strong>Materiales:</strong> cáscaras de huevo limpias, secas y molidas; vinagre blanco; un vaso plástico; una balanza de cocina o de laboratorio (mejor si mide décimas de gramo).</p>
+        <ol>
+          <li>Pesa el vaso con unos 100 mL de vinagre (masa 1).</li>
+          <li>Pesa unos 5 g de cáscara molida (masa de la muestra).</li>
+          <li>Agrégala al vinagre, espera a que dejen de salir burbujas (unos 30 a 60 minutos, revolviendo de vez en cuando) y pesa todo otra vez (masa 2).</li>
+          <li>La masa perdida es el CO₂ que se escapó: <span class="eq">CaCO₃ + 2 CH₃COOH → Ca(CH₃COO)₂ + H₂O + CO₂</span></li>
+        </ol>
+        <div class="warn-box">⚠️ Trabaja con supervisión del docente, usa gafas y no consumas lo que queda en el vaso. Parte del agua también se evapora: por eso conviene comparar con un vaso solo con vinagre (control).</div>
+      </div>
+      <div class="calc">
+        <div class="calc-row"><label for="hv-m">Masa de cáscara (g):</label><input id="hv-m" inputmode="decimal" value="5,0"></div>
+        <div class="calc-row"><label for="hv-c">Masa de CO₂ perdida (g):</label><input id="hv-c" inputmode="decimal" value="2,1"></div>
+        <div class="calc-row"><label for="hv-r">Tu cálculo de % de CaCO₃:</label><input id="hv-r" inputmode="decimal" placeholder="%"><button type="button" class="btn-s prim" id="hv-ok">Revisar</button></div>
+        <div class="calc-out" id="hv-out" aria-live="polite">Los valores de ejemplo son posibles resultados de clase; reemplázalos por los tuyos.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect quiz-sect" id="practica">
+    <h2>✅ Practica — Química en la industria <button class="tts-btn" onclick="speakText(this)" data-text="Ocho preguntas al azar del banco del Juego sobre conservación, procesos industriales, reactivo limitante, pureza y rendimiento. Si te equivocas dos veces, verás la explicación.">🔊 Escuchar</button></h2>
+    <div id="prac-in"></div>
+  </div>
+
+  <footer>
+    <a href="juego.html?g=industria">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function pickVoice(){
+    const v=window.speechSynthesis.getVoices();
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
+}
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="banco.js"></script>
+<script src="assets/sed10.js"></script>
+<script>
+(function(){
+'use strict';
+function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
+function num(id){return parseFloat(String(document.getElementById(id).value).replace(',','.'));}
+if(window.SED10&&typeof BANCO_INDUSTRIA!=='undefined')SED10.practica('prac-in',BANCO_INDUSTRIA,8,'Practica: química en la industria','industria');
+
+SED10.clasificador('cl-cons',[
+  {t:'<span class="eq">Zn + Cu²⁺ → Zn²⁺ + Cu</span>',ok:'Sí, las dos',fb:'1 Zn y 1 Cu por lado; carga +2 = +2.'},
+  {t:'<span class="eq">Ag⁺ + Cu → Ag + Cu²⁺</span>',ok:'Solo la masa',fb:'Átomos iguales, pero carga +1 frente a +2. Correcta: 2 Ag⁺ + Cu → 2 Ag + Cu²⁺.'},
+  {t:'<span class="eq">2 H₂ + O₂ → 2 H₂O</span>',ok:'Sí, las dos',fb:'4 H y 2 O por lado; no hay iones (carga 0 = 0).'},
+  {t:'<span class="eq">Fe³⁺ + 3 OH⁻ → Fe(OH)₃↓</span>',ok:'Sí, las dos',fb:'1 Fe, 3 O, 3 H por lado; carga +3 − 3 = 0, y el precipitado es neutro.'},
+  {t:'<span class="eq">CH₄ + O₂ → CO₂ + 2 H₂O</span>',ok:'Ni la masa',fb:'A la izquierda hay 2 O y a la derecha 4. Correcta: CH₄ + 2 O₂ → CO₂ + 2 H₂O.'}
+],['Sí, las dos','Solo la masa','Ni la masa'],function(b,n){document.getElementById('cl-cons-out').innerHTML='Terminaste: <b>'+b+' de '+n+'</b> al primer intento. Primero cuenta átomos; si hay iones, suma también las cargas.';});
+
+SED10.clasificador('cl-proc',[
+  {t:'Al calentar la caliza en el horno sale un gas y queda un sólido blanco',ok:'Descomposición',fb:'CaCO₃ → CaO + CO₂: un reactivo, dos productos.'},
+  {t:'Dos gases se combinan sobre un catalizador y forman uno solo',ok:'Síntesis',fb:'N₂ + 3 H₂ → 2 NH₃.'},
+  {t:'Al mezclar dos soluciones aparecen grumos sólidos que se van al fondo',ok:'Precipitación',fb:'Se forma un sólido insoluble: Al(OH)₃↓.'},
+  {t:'El hierro pasa de +3 a 0 y el carbono de +2 a +4',ok:'Óxido-reducción',fb:'Cambian los estados de oxidación: hay transferencia de electrones.'},
+  {t:'El exceso de ácido de las aguas de una mina se corrige con cal',ok:'Neutralización',fb:'Ácido + base → sal + agua.'}
+],['Descomposición','Síntesis','Precipitación','Óxido-reducción','Neutralización'],function(b,n){document.getElementById('cl-proc-out').innerHTML='Terminaste: <b>'+b+' de '+n+'</b> al primer intento.';});
+
+/* ── Haber con datos del estudiante ── */
+document.getElementById('hb-ok').addEventListener('click',function(){
+  var n=num('hb-n')*1000/28,h=num('hb-h')*1000/2,o=document.getElementById('hb-out'),l=document.getElementById('hb-l').value,r=num('hb-r');
+  if(!(n>0&&h>0)){o.className='calc-out fail';o.innerHTML='Escribe masas mayores que 0.';return;}
+  var nec=n*3,lim=Math.abs(nec-h)/h<0.005?'e':(h<nec?'h':'n'),molN=lim==='h'?h/3:n,kg=molN*2*17/1000;
+  var ex=lim==='h'?'Sobra N₂: '+coma(n-h/3,0)+' mol = '+coma((n-h/3)*28/1000,1)+' kg.':lim==='n'?'Sobra H₂: '+coma(h-nec,0)+' mol = '+coma((h-nec)*2/1000,1)+' kg.':'No sobra nada.';
+  var det='N₂: '+coma(n,0)+' mol; H₂: '+coma(h,0)+' mol. Todo el N₂ necesitaría '+coma(nec,0)+' mol de H₂. → limitante: <b>'+(lim==='h'?'H₂':lim==='n'?'N₂':'ninguno')+'</b>. NH₃ = '+coma(kg,1)+' kg. '+ex;
+  if(!l){o.className='calc-out fail';o.innerHTML='Elige primero cuál es el limitante.';return;}
+  if(l!==lim){o.className='calc-out fail';o.innerHTML='🔎 Revisa el limitante: compara cuánto H₂ necesita <b>todo</b> el N₂ (razón 3 : 1) con el H₂ que tienes.';return;}
+  if(isNaN(r)){o.className='calc-out fail';o.innerHTML='✔ Limitante correcto. Ahora calcula los kg de NH₃.';return;}
+  if(Math.abs(r-kg)/kg<=0.02){o.className='calc-out ok';o.innerHTML='✅ <b>Correcto.</b> '+det;}
+  else{o.className='calc-out fail';o.innerHTML='🔎 El limitante está bien, pero revisa la masa: usa los moles del <b>limitante</b>, la razón molar (2 NH₃ por 1 N₂, o 2 NH₃ por 3 H₂) y 17 g/mol.';}
+});
+
+/* ── Planta virtual ── (masas molares redondeadas) */
+var PR=[
+ {n:'Cemento: caliza → cal viva',mp:'caliza',r:'CaCO₃',Mr:100,p:'CaO',Mp:56,k:1,ec:'CaCO₃ → CaO + CO₂',co2:44},
+ {n:'Acero: mineral de hierro → hierro',mp:'mineral de hierro',r:'Fe₂O₃',Mr:160,p:'Fe',Mp:56,k:2,ec:'Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂',co2:132},
+ {n:'Cloro-soda: sal → soda cáustica',mp:'sal',r:'NaCl',Mr:58.5,p:'NaOH',Mp:40,k:1,ec:'2 NaCl + 2 H₂O → 2 NaOH + Cl₂ + H₂',co2:0}
+];
+var sel=document.getElementById('pl-p');sel.innerHTML=PR.map(function(x,i){return '<option value="'+i+'">'+x.n+'</option>';}).join('');
+function planta(){var P=PR[+sel.value],m=num('pl-m'),pu=+document.getElementById('pl-pu').value,re=+document.getElementById('pl-re').value,o=document.getElementById('pl-out');
+  document.getElementById('pl-puv').textContent=pu+' %';document.getElementById('pl-rev').textContent=re+' %';
+  if(!(m>0)){o.innerHTML='Escribe una masa mayor que 0.';return;}
+  var util=m*pu/100,kmol=util/P.Mr,teo=kmol*P.k*P.Mp,real=teo*re/100;
+  o.innerHTML='<span class="eq">'+P.ec+'</span><br>'+coma(m,0)+' kg de '+P.mp+' × '+pu+' % = <b>'+coma(util,1)+' kg de '+P.r+'</b> → '+coma(kmol,2)+' kmol × ('+P.k+' '+P.p+' / 1 '+P.r+') × '+P.Mp+' kg/kmol = <b>'+coma(teo,1)+' kg de '+P.p+' (teórico)</b> → × '+re+' % = <b>'+coma(real,1)+' kg (real)</b>.'+(P.co2?'<br>CO₂ liberado por la reacción: '+coma(kmol*P.co2,1)+' kg.':'')+'<br><small>Mueve la pureza y el rendimiento: ¿cuál de los dos cambia más la producción real?</small>';}
+['pl-p','pl-m','pl-pu','pl-re'].forEach(function(id){document.getElementById(id).addEventListener('input',planta);});sel.addEventListener('change',planta);planta();
+
+/* ── Cáscara de huevo ── */
+document.getElementById('hv-ok').addEventListener('click',function(){var m=num('hv-m'),c=num('hv-c'),r=num('hv-r'),o=document.getElementById('hv-out');
+  if(!(m>0&&c>0)){o.className='calc-out fail';o.innerHTML='Escribe la masa de la cáscara y la del CO₂.';return;}
+  var g=c/44*100,p=g/m*100;
+  if(p>100){o.className='calc-out fail';o.innerHTML='🔎 Con esos datos saldría más de 100 % de CaCO₃ ('+coma(p,0)+' %). Eso indica un error: probablemente se evaporó agua y la masa perdida no es solo CO₂. Repite el experimento con un vaso de control.';return;}
+  if(isNaN(r)){o.className='calc-out fail';o.innerHTML='Escribe tu resultado en %.';return;}
+  if(Math.abs(r-p)<=1){o.className='calc-out ok';o.innerHTML='✅ <b>'+coma(p,1)+' % de CaCO₃.</b> '+coma(c,2)+' g CO₂ ÷ 44 g/mol = '+coma(c/44,4)+' mol CO₂ = mol CaCO₃ × 100 g/mol = '+coma(g,2)+' g; '+coma(g,2)+' ÷ '+coma(m,1)+' × 100. Las cáscaras suelen tener alrededor de 95 % de CaCO₃: compara tu resultado y explica la diferencia.';}
+  else{o.className='calc-out fail';o.innerHTML='🔎 Pasos: g CO₂ → mol CO₂ (÷ 44) → mol CaCO₃ (1 : 1) → g CaCO₃ (× 100) → % = g CaCO₃ ÷ g cáscara × 100.';}});
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

@@ -587,12 +587,15 @@ html{font-size:var(--base-fs)}
     <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
     <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
     <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
     <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
     <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
         <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+        <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
     <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
     <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
     <a href="juego.html" class="active"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
@@ -614,7 +617,7 @@ html{font-size:var(--base-fs)}
     <div class="p-subtitle">Química · Modo Juego</div>
     <div class="p-stats">
       <div class="p-stat"><span>🎯</span> 20 preguntas</div>
-      <div class="p-stat"><span>📚</span> 15 temas</div>
+      <div class="p-stat"><span>📚</span> 18 temas</div>
       <div class="p-stat"><span>⏱</span> 60 s / pregunta</div>
       <div class="p-stat"><span>🏆</span> Certificado al final</div>
     </div>
@@ -720,62 +723,69 @@ html{font-size:var(--base-fs)}
         <span class="gb-sub">Lewis, ΔEN, iónico, covalente y metálico</span>
       </button>
 
+      <button class="group-btn" onclick="pickGroup('modelos')">
+        <span class="gb-step">4</span>
+        <div class="gb-icon-wrap gic-elem">🔭</div>
+        <span class="gb-name">Modelos, leyes y datos</span>
+        <span class="gb-sub">Teoría, ley y modelo · gases · predecir con datos</span>
+      </button>
+
     </div>
 
     <div class="niv-head" style="--c:#0072B2"><span class="nh-n">n = 2</span><span class="nh-t">🏷️ Nomenclatura</span><span class="nh-d">De los compuestos binarios a los cuaternarios.</span></div>
     <div class="group-grid">
 
       <button class="group-btn" onclick="pickGroup('ox-anh')">
-        <span class="gb-step">4</span>
+        <span class="gb-step">5</span>
         <div class="gb-icon-wrap gic-ox">💨</div>
         <span class="gb-name">Óxidos y Anhídridos</span>
         <span class="gb-sub">Binarios · básicos + ácidos</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('hidru')">
-        <span class="gb-step">5</span>
+        <span class="gb-step">6</span>
         <div class="gb-icon-wrap gic-hid">⚗️</div>
         <span class="gb-name">Hidruros</span>
         <span class="gb-sub">Binarios · metal + H⁻</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('ac-hid')">
-        <span class="gb-step">6</span>
+        <span class="gb-step">7</span>
         <div class="gb-icon-wrap gic-ahid">🧪</div>
         <span class="gb-name">Ácidos hídricos</span>
         <span class="gb-sub">Binarios · HX sin oxígeno</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-bin')">
-        <span class="gb-step">7</span>
+        <span class="gb-step">8</span>
         <div class="gb-icon-wrap gic-sbin">🔵</div>
         <span class="gb-name">Sales binarias</span>
         <span class="gb-sub">Binarios · metal + no metal</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('base')">
-        <span class="gb-step">8</span>
+        <span class="gb-step">9</span>
         <div class="gb-icon-wrap gic-base">🟣</div>
         <span class="gb-name">Bases</span>
         <span class="gb-sub">Ternarios · metal + OH⁻</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('ac-ox')">
-        <span class="gb-step">9</span>
+        <span class="gb-step">10</span>
         <div class="gb-icon-wrap gic-aox">⚡</div>
         <span class="gb-name">Ácidos oxácidos</span>
         <span class="gb-sub">Ternarios · H + oxoanión</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-ox')">
-        <span class="gb-step">10</span>
+        <span class="gb-step">11</span>
         <div class="gb-icon-wrap gic-sox">🟠</div>
         <span class="gb-name">Sales oxigenadas</span>
         <span class="gb-sub">Ternarios · metal + oxoanión</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('sal-ac')">
-        <span class="gb-step">11</span>
+        <span class="gb-step">12</span>
         <div class="gb-icon-wrap gic-sac">🧪</div>
         <span class="gb-name">Sales ácidas</span>
         <span class="gb-sub">Cuaternarios · bi-, hidrogeno-</span>
@@ -795,24 +805,30 @@ html{font-size:var(--base-fs)}
     <div class="group-grid">
 
       <button class="group-btn" onclick="pickGroup('reaccion')">
-        <span class="gb-step">12</span>
+        <span class="gb-step">13</span>
         <div class="gb-icon-wrap gic-rx">🔁</div>
         <span class="gb-name">Tipos de reacción</span>
         <span class="gb-sub">Síntesis, combustión…</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('reactividad')">
-        <span class="gb-step">13</span>
+        <span class="gb-step">14</span>
         <div class="gb-icon-wrap gic-reac">🔗</div>
         <span class="gb-name">Cadena de reactividad</span>
         <span class="gb-sub">Óxido → base → sal</span>
       </button>
 
       <button class="group-btn" onclick="pickGroup('balanceo')">
-        <span class="gb-step">14</span>
+        <span class="gb-step">15</span>
         <div class="gb-icon-wrap gic-bal">⚖️</div>
         <span class="gb-name">Balanceo</span>
         <span class="gb-sub">Coeficientes por tanteo</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('acidobase')">
+        <span class="gb-step">16</span>
+        <div class="gb-icon-wrap gic-rx">🧪</div>
+        <span class="gb-name">Ácidos, bases y pH</span>
+        <span class="gb-sub">Teorías, escala de pH, cuerpo, alimentos y ambiente</span>
       </button>
 
     </div>
@@ -821,10 +837,16 @@ html{font-size:var(--base-fs)}
     <div class="group-grid">
 
       <button class="group-btn" onclick="pickGroup('mol-masa')">
-        <span class="gb-step">15</span>
+        <span class="gb-step">17</span>
         <div class="gb-icon-wrap gic-mol">🔢</div>
         <span class="gb-name">Mol y masa molar</span>
         <span class="gb-sub">n = m / M</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('industria')">
+        <span class="gb-step">18</span>
+        <div class="gb-icon-wrap gic-mol">🏭</div>
+        <span class="gb-name">Química en la industria</span>
+        <span class="gb-sub">Masa y carga, limitante, pureza y rendimiento</span>
       </button>
 
     </div><!-- /group-grid -->
@@ -1815,8 +1837,13 @@ function startGame(group){
   }
   // ── Teoría atómica (BANCO_ATOMO) y enlace químico (BANCO_ENLACE), en banco.js ──
   // Los dos usan el mismo formato de opción múltiple con explicación (isAtom).
-  if(group==='atomo'||group==='enlace'){
-    const banco=group==='atomo'?(typeof BANCO_ATOMO!=='undefined'?BANCO_ATOMO:null):(typeof BANCO_ENLACE!=='undefined'?BANCO_ENLACE:null);
+  // Ácidos y bases, procesos industriales y modelos/datos (aprendizajes
+  // priorizados de la SED para 10.°) usan el mismo formato: BANCO_PH,
+  // BANCO_INDUSTRIA y BANCO_MODELOS, también en banco.js.
+  const BANCOS_MC={atomo:typeof BANCO_ATOMO!=='undefined'?BANCO_ATOMO:null,enlace:typeof BANCO_ENLACE!=='undefined'?BANCO_ENLACE:null,
+    acidobase:typeof BANCO_PH!=='undefined'?BANCO_PH:null,industria:typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:null,modelos:typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:null};
+  if(group in BANCOS_MC){
+    const banco=BANCOS_MC[group];
     const pool=banco||[];
     if(!pool.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
     const qtype=group==='atomo'?'atom-mc':'enlace-mc';
@@ -1910,7 +1937,7 @@ function loadQuestion(){
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
   const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','el-metal':'Tabla — Metal / No metal / Metaloide','el-block':'Tabla — Bloque s/p/d/f','el-valence':'Tabla — Electrones de valencia','el-property':'Tabla — Propiedades periódicas','atom-mc':'Teoría atómica y configuración','enlace-mc':'Enlace químico','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
-  document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${typeLabels[q.qtype]||''}`;
+  document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${(q.isAtom&&q.group&&q.group!=='atomo'&&q.group!=='enlace'&&GROUP_LABELS[q.group])||typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   ST.answered=false;
   // reactivar botones que scheduleNext() deshabilitó en la pregunta anterior
@@ -2156,11 +2183,14 @@ function renderElProperty(q){
 // ── Teoría atómica y configuración (BANCO_ATOMO) ──
 // Mismo flujo de opción múltiple que las preguntas de la tabla periódica:
 // checkElMC() califica (3 intentos) y showElFeedback() muestra la explicación.
-const ATOM_TEMA={modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructura del átomo',config:'🧬 Configuración electrónica',tabla:'📊 Tabla periódica: historia y propiedades',cuanticos:'🔢 Números cuánticos',iones:'🧮 A, Z, neutrones e iones',
+const ATOM_TEMA={teorias:'🧪 Teorías ácido-base',escala:'🌡️ Escala de pH',fuerza:'💪 Fuerza y neutralización',cuerpo:'🫀 pH en el cuerpo y los alimentos',ambiente:'🌎 pH en el ambiente y el territorio',
+  conservacion:'⚖️ Conservación de masa y carga',procesos:'🏭 Procesos industriales',limitante:'🧮 Razón molar y reactivo limitante',pureza:'🎯 Pureza y rendimiento',
+  naturaleza:'🔭 Teorías, leyes y modelos',gases:'🎈 Leyes de los gases',datos:'📈 Datos, variables y predicción',
+  modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructura del átomo',config:'🧬 Configuración electrónica',tabla:'📊 Tabla periódica: historia y propiedades',cuanticos:'🔢 Números cuánticos',iones:'🧮 A, Z, neutrones e iones',
   lewis:'🔵 Octeto y estructuras de Lewis',ionico:'➕➖ Enlace iónico',covalente:'🤝 Enlace covalente',polaridad:'⚖️ Electronegatividad y polaridad',metalico:'🔩 Enlace metálico',propiedades:'🧪 Propiedades de las sustancias'};
 function renderAtomMC(q){
   try{
-    document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${ATOM_TEMA[q.tema]||(q.group==='enlace'?'🧲 Enlace químico':'🪐 Teoría atómica')}</span>`;
+    document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${(q.group==='modelos'&&q.tema==='modelos')?'🕰️ Modelos atómicos':(ATOM_TEMA[q.tema]||GROUP_LABELS[q.group]||'🪐 Teoría atómica')}</span>`;
     if(q.tipo&&q.tipo!=='mc'){ renderAtomX(q); return; }
     document.getElementById('q-prompt').textContent=q.q;
     const options=shuffle([q.ok,...q.d]);
@@ -3279,9 +3309,9 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
+const GROUP_LABELS={all:'Todos los grupos','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);

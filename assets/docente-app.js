@@ -175,6 +175,7 @@ function contarDisponiblesTema(id){
   else if(id==='config-e') nEj = poolConfig().length * 2; // configuración + números cuánticos
   else if(id==='elemento') nEj = PARES_TABLA.length;
   else if(id==='enlace') nEj = PARES_ENLACE.length;
+  else if(BANCO_SED[id]) nEj = BANCO_SED[id]().length;
   else nEj = poolPorGrupo([id]).length;
   const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
   const nSaber = saber.filter(q=>q.tema===id).length;
@@ -185,13 +186,13 @@ function contarDisponiblesTema(id){
 // mol-masa/errores) hay disponibles dado el conjunto de temas marcados en
 // este momento -- se recalcula cada vez que cambia la selección de temas,
 // igual que los "(N disponibles)" de ChromaNom.
-const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace'];
+const TEMAS_SIN_COMPUESTOS = ['reaccion','balanceo','mol-masa','elemento','reactividad','estequiometria','atomo','config-e','enlace','modelos','acidobase','industria'];
 // Mapa tema→tipo de ejercicio "D" que le corresponde. Se usa para
 // auto-marcar el tipo de ejercicio apenas se marca su tema (ver
 // actualizarDisponibilidad) -- evita la trampa de seleccionar p.ej.
 // "Balanceo de ecuaciones" como tema y terminar con "0 ejercicios" en
 // Trabajo práctico porque su casilla "D Balanceo" seguía sin marcar.
-const TEMA_A_TIPO_D = {reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':['d-config','d-cuanticos'], enlace:'d-enlace', elemento:'d-tabla'};
+const TEMA_A_TIPO_D = {modelos:'d-sed', acidobase:'d-sed', industria:'d-sed', reaccion:'d-reaccion', balanceo:'d-balanceo', 'mol-masa':'d-molmasa', estequiometria:'d-estequiometria', atomo:'d-atomo', 'config-e':['d-config','d-cuanticos'], enlace:'d-enlace', elemento:'d-tabla'};
 
 // Región «El átomo» (atomo / config-e): no viven en banco.js.
 // ESPECIES_ATOMO: isótopos e iones reales [Z, A, carga] para el ejercicio
@@ -244,7 +245,8 @@ function contarDisponiblesTipo(temasMarcados){
     'd-config': temasMarcados.includes('config-e') ? poolConfig().length : 0,
     'd-cuanticos': temasMarcados.includes('config-e') ? poolConfig().length : 0,
     'd-tabla': temasMarcados.includes('elemento') ? PARES_TABLA.length : 0,
-    'd-enlace': temasMarcados.includes('enlace') ? PARES_ENLACE.length : 0
+    'd-enlace': temasMarcados.includes('enlace') ? PARES_ENLACE.length : 0,
+    'd-sed': poolSed(temasMarcados).length
   };
 }
 
@@ -285,6 +287,7 @@ const TIPO_ROTULO = {
   'd-cuanticos':'Números cuánticos',
   'd-tabla':'Ubicación y propiedades periódicas',
   'd-enlace':'Tipo de enlace (ΔEN)',
+  'd-sed':'Preguntas y problemas (modelos, pH, industria)',
   'x-errores':'Cazar errores',
   'ox-estado':'Estado de oxidación'
 };
@@ -466,6 +469,41 @@ function tarjetaTabla(par, numero){
     +'</div>';
 }
 
+// Temas de la SED para 10.° (modelos, acidobase, industria): el trabajo
+// práctico toma las preguntas de BANCO_MODELOS, BANCO_PH y BANCO_INDUSTRIA
+// (banco.js). Opción múltiple, problemas para calcular (con espacio para el
+// procedimiento), ordenar, relacionar, completar y respuesta corta.
+const BANCO_SED = {
+  modelos: () => (typeof BANCO_MODELOS!=='undefined' ? BANCO_MODELOS : []),
+  acidobase: () => (typeof BANCO_PH!=='undefined' ? BANCO_PH : []),
+  industria: () => (typeof BANCO_INDUSTRIA!=='undefined' ? BANCO_INDUSTRIA : [])
+};
+function poolSed(temas){ return temas.filter(t => BANCO_SED[t]).reduce((a,t) => a.concat(BANCO_SED[t]()), []); }
+function tarjetaSed(q, numero, rngFn){
+  const linea = '<span style="display:inline-block;border-bottom:1px solid var(--tx2);min-width:120px;margin:0 6px">&nbsp;</span>';
+  const letras = ['a','b','c','d'];
+  let cuerpo = '';
+  if(!q.tipo || q.tipo==='mc'){
+    const op = barajar([q.ok].concat(q.d), rngFn);
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 8px">'+q.q+'</p>'+op.map((o,i)=>'<p style="font-size:.84rem;margin:2px 0 2px 10px">'+letras[i]+') '+o+'</p>').join('')
+      +'<p style="font-size:.82rem;margin:8px 0 4px">Explica por qué escogiste esa opción:</p><div class="cuad" style="height:37.8px"></div>';
+  } else if(q.tipo==='calcular'){
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 6px">'+q.q+'</p><p style="font-size:.82rem;margin:4px 0">Procedimiento (con unidades):</p><div class="cuad" style="height:94.5px"></div><p style="font-size:.84rem;margin:6px 0">Resultado:'+linea+'</p>';
+  } else if(q.tipo==='ordenar'){
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 6px">'+q.q+'</p>'+barajar(q.items, rngFn).map(x=>'<p style="font-size:.84rem;margin:3px 0 3px 10px">( &nbsp;&nbsp; ) '+x+'</p>').join('');
+  } else if(q.tipo==='relacionar'){
+    const der = barajar(q.pares.map(p=>p[1]), rngFn);
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 6px">'+q.q+' Escribe la letra que corresponde.</p><table style="width:100%;font-size:.84rem;border-collapse:collapse">'
+      +q.pares.map((p,i)=>'<tr><td style="padding:3px 6px">( &nbsp;&nbsp; ) '+p[0]+'</td><td style="padding:3px 6px">'+letras[i]+') '+der[i]+'</td></tr>').join('')+'</table>';
+  } else if(q.tipo==='completar'){
+    const banco = barajar([].concat(q.ok).concat(q.d||[]), rngFn);
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 6px">'+q.q.split('____').join(linea)+'</p><p style="font-size:.8rem;margin:4px 0;color:var(--tx2)">Palabras: '+banco.join(' · ')+'</p>';
+  } else {
+    cuerpo = '<p style="font-size:.9rem;margin:4px 0 6px">'+q.q+'</p><p style="font-size:.84rem;margin:6px 0">Respuesta:'+linea+'</p>';
+  }
+  return '<div class="exercise-card"><div class="ex-num">Ejercicio '+numero+'</div>'+cuerpo+'</div>';
+}
+
 // Tipo de enlace: con las EN dadas, calcular ΔEN, clasificar y representar.
 function tarjetaEnlace(par, numero){
   const en = x => x.toFixed(2).replace('.', ',');
@@ -578,6 +616,12 @@ function armarBloquesPractica(F, rngFn, usados){
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.join('|')).forEach(e=>{
         usados.add('enl-'+e.join('|'));
         bloques.push({html:tarjetaEnlace(e, numero++), esMultiple:false});
+      });
+    } else if(tipo==='d-sed'){
+      let pool = poolSed(temas).filter(q => !usados.has('sed-'+q.q));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.q).forEach(q=>{
+        usados.add('sed-'+q.q);
+        bloques.push({html:tarjetaSed(q, numero++, rngFn), esMultiple:false});
       });
     } else if(tipo==='x-errores'){
       const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));

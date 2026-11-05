@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Ácidos, bases y pH en tu cuerpo y tu territorio</title>
+<meta name="description" content="Teorías ácido-base, escala de pH, ácidos fuertes y débiles, neutralización, el pH del cuerpo y los alimentos, y el pH de suelos, lluvia y océanos en Colombia.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html" class="active"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>🧪 Ácidos, bases y pH: en tu cuerpo, tu comida y tu territorio</h1>
+    <p>Qué hace ácido al limón y básica a la leche de magnesia, cómo se mide la acidez con la escala de pH, por qué tu sangre casi no cambia de pH aunque comas limón, y cómo la acidez de los suelos y del mar afecta al campo y a los ecosistemas de Colombia. Grado 10.</p>
+  </div>
+  <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
+  <!-- ── PALABRAS CLAVE (pre-entrenamiento) ── -->
+  <div class="sect">
+    <h2>Palabras clave de esta página <button class="tts-btn" onclick="speakText(this)" data-text="Antes de empezar, conoce las palabras que vas a usar en toda la página. Toca cada tarjeta para ver qué significa. Si las aprendes primero, el resto será mucho más fácil de entender.">🔊 Escuchar</button></h2>
+    <p>Toca cada tarjeta para ver qué significa.</p>
+    <div class="glos">
+      <button type="button"><b>Ácido</b><span class="hint">Toca para ver</span><span class="def">Sustancia que dona iones H⁺. Sabor agrio; pH menor que 7.</span></button>
+      <button type="button"><b>Base</b><span class="hint">Toca para ver</span><span class="def">Sustancia que acepta H⁺ (o libera OH⁻). Sabor amargo, tacto jabonoso; pH mayor que 7.</span></button>
+      <button type="button"><b>Ion hidronio, H₃O⁺</b><span class="hint">Toca para ver</span><span class="def">Un H⁺ unido a una molécula de agua. Es lo que hace ácida una solución.</span></button>
+      <button type="button"><b>Ion hidróxido, OH⁻</b><span class="hint">Toca para ver</span><span class="def">Ion que hace básica una solución.</span></button>
+      <button type="button"><b>pH</b><span class="hint">Toca para ver</span><span class="def">Número de 0 a 14 que mide la acidez: pH = −log[H⁺]. Menos de 7 ácido, 7 neutro, más de 7 básico.</span></button>
+      <button type="button"><b>Indicador</b><span class="hint">Toca para ver</span><span class="def">Sustancia que cambia de color según el pH: fenolftaleína, repollo morado, papel tornasol.</span></button>
+      <button type="button"><b>Neutralización</b><span class="hint">Toca para ver</span><span class="def">Reacción ácido + base → sal + agua (H⁺ + OH⁻ → H₂O).</span></button>
+      <button type="button"><b>Amortiguador</b><span class="hint">Toca para ver</span><span class="def">Mezcla que resiste los cambios de pH, como el bicarbonato de tu sangre.</span></button>
+    </div>
+  </div>
+
+  <!-- ── TEORÍAS ── -->
+  <div class="sect">
+    <h2>¿Qué es un ácido? Dos teorías <button class="tts-btn" onclick="speakText(this)" data-text="Los químicos han tenido varias ideas sobre qué es un ácido. Arrhenius dijo que los ácidos liberan iones hidrógeno en el agua. Después, Brønsted y Lowry dieron una definición más amplia: un ácido dona un protón y una base lo acepta. Con la segunda idea se explica por qué el amoníaco es una base aunque no tenga hidróxido.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás identificar el ácido y la base de una reacción con la teoría de Brønsted-Lowry.</div>
+    <div class="duo">
+      <div class="info-box"><strong>Arrhenius (1887)</strong><br>Ácido: en agua libera <strong>H⁺</strong>. <span class="eq">HCl → H⁺ + Cl⁻</span><br>Base: en agua libera <strong>OH⁻</strong>. <span class="eq">NaOH → Na⁺ + OH⁻</span><br><em>Límite:</em> no explica bases sin OH⁻, como el amoníaco.</div>
+      <div class="ok-box"><strong>Brønsted-Lowry (1923)</strong><br>Ácido: <strong>dona</strong> un H⁺ (protón). Base: <strong>acepta</strong> un H⁺.<br><span class="eq">NH₃ + H₂O ⇌ NH₄⁺ + OH⁻</span><br>El agua dona el H⁺ (ácido) y el NH₃ lo acepta (base).</div>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: ¿quién es el ácido en HCl + H₂O → H₃O⁺ + Cl⁻?</div>
+      <ol>
+        <li><strong>Sigue al H⁺.</strong> El HCl pierde un H (queda Cl⁻) y el H₂O gana uno (queda H₃O⁺).</li>
+        <li><strong>Aplica la definición.</strong> El que dona el H⁺ es el <strong>ácido</strong>: HCl. El que lo acepta es la <strong>base</strong>: H₂O.</li>
+        <li><strong>Encuentra los pares conjugados.</strong> HCl / Cl⁻ (el Cl⁻ es la base conjugada) y H₂O / H₃O⁺ (el H₃O⁺ es el ácido conjugado). Cada par difiere en un solo H⁺.</li>
+        <li><strong>Fíjate:</strong> el agua actuó como base aquí, pero con el NH₃ actuó como ácido. Una sustancia que puede hacer las dos cosas se llama <strong>anfótera</strong>.</li>
+      </ol>
+    </div>
+    <p>En cada reacción, ¿cuál sustancia es el <strong>ácido</strong> (la que dona el H⁺)?</p>
+    <div id="cl-acido"></div>
+    <div class="calc-out" id="cl-acido-out" aria-live="polite">Responde las cuatro.</div>
+  </div>
+
+  <!-- ── ESCALA DE pH ── -->
+  <div class="sect">
+    <h2>La escala de pH: cada número es diez veces <button class="tts-btn" onclick="speakText(this)" data-text="La escala de pH va de cero a catorce. Lo más importante es que es logarítmica: si el pH baja una unidad, hay diez veces más iones hidrógeno. Mueve el control y observa cómo cambia la concentración y qué sustancias de tu casa tienen ese pH.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás calcular el pH a partir de [H⁺] y decir cuántas veces más ácida es una sustancia que otra.</div>
+    <p>El pH se define como <strong>pH = −log[H⁺]</strong>. Como es un logaritmo, <strong>bajar una unidad de pH significa diez veces más H⁺</strong>. A 25 °C también se cumple <strong>pH + pOH = 14</strong>.</p>
+    <div class="calc">
+      <div class="calc-row"><label for="ph-r">pH:</label><input type="range" id="ph-r" min="0" max="14" step="0.1" value="7"><span class="eq" id="ph-v">7,0</span></div>
+      <div class="plot"><svg id="ph-svg" viewBox="0 0 560 150" role="img" aria-label="Escala de pH con colores del indicador universal y sustancias de ejemplo"></svg></div>
+      <div class="calc-out" id="ph-out" aria-live="polite"></div>
+    </div>
+    <h3>Compara dos sustancias</h3>
+    <div class="calc">
+      <div class="calc-row"><label for="cmp-a">¿Cuántas veces más H⁺ tiene</label><select id="cmp-a"></select><label for="cmp-b">que</label><select id="cmp-b"></select><label>?</label></div>
+      <div class="calc-row"><label for="cmp-r">Tu respuesta:</label><input id="cmp-r" inputmode="decimal" placeholder="veces"><button type="button" class="btn-s prim" id="cmp-ok">Revisar</button></div>
+      <div class="calc-out" id="cmp-out" aria-live="polite">Pista: resta los pH y eleva 10 a esa diferencia.</div>
+    </div>
+    <div class="warn-box">⚠️ Los valores de pH de las sustancias de esta página son <strong>típicos</strong>: cambian según la marca, la madurez de la fruta o la persona. Mídelos tú con papel indicador o con el indicador de repollo morado del <a href="simulador.html">Simulador</a>.</div>
+  </div>
+
+  <!-- ── FUERTES Y DÉBILES ── -->
+  <div class="sect">
+    <h2>Fuertes y débiles: no es lo mismo que concentrado <button class="tts-btn" onclick="speakText(this)" data-text="Un ácido fuerte se separa en iones casi por completo cuando está en agua. Un ácido débil solo se separa un poquito. Por eso, a la misma concentración, el ácido clorhídrico tiene un pH mucho más bajo que el vinagre.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás explicar por qué dos ácidos con la misma concentración tienen pH distinto.</div>
+    <div class="duo">
+      <div class="fig">
+        <svg viewBox="0 0 300 160" role="img" aria-label="Diez moléculas de HCl: todas ionizadas. Diez moléculas de ácido acético: solo una ionizada">
+          <g font-family="Outfit" font-size="11" font-weight="700">
+            <rect x="8" y="20" width="135" height="110" rx="10" fill="#fee2e2" stroke="#dc2626"/>
+            <text x="75" y="14" text-anchor="middle" fill="#991b1b">HCl 0,1 mol/L (fuerte)</text>
+            <rect x="157" y="20" width="135" height="110" rx="10" fill="#fef3c7" stroke="#b45309"/>
+            <text x="225" y="14" text-anchor="middle" fill="#92400e">CH₃COOH 0,1 mol/L (débil)</text>
+            <text x="75" y="150" text-anchor="middle" fill="#991b1b">pH ≈ 1</text>
+            <text x="225" y="150" text-anchor="middle" fill="#92400e">pH ≈ 2,9</text>
+          </g>
+          <g id="part-f"></g><g id="part-d"></g>
+        </svg>
+        <div class="fig-sub">Esquema: en el fuerte casi todas las moléculas se separan en iones (H⁺ en rojo); en el débil, cerca de 1 de cada 100.</div>
+      </div>
+      <div>
+        <p><strong>Ácido fuerte</strong> (HCl, HNO₃, H₂SO₄): en agua se ioniza casi por completo. <strong>Ácido débil</strong> (ácido acético del vinagre, ácido cítrico del limón, ácido carbónico de las gaseosas): solo una pequeña parte de sus moléculas suelta el H⁺.</p>
+        <p>«Fuerte» describe <strong>cuánto se ioniza</strong>; «concentrado» describe <strong>cuánto ácido hay disuelto</strong>. Un ácido fuerte muy diluido puede ser menos ácido que un ácido débil concentrado.</p>
+        <div class="info-box">⚗️ <strong>Neutralización:</strong> ácido + base → sal + agua. <span class="eq">HCl + NaOH → NaCl + H₂O</span> En el fondo siempre ocurre <span class="eq">H⁺ + OH⁻ → H₂O</span>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPERIMENTO CONTROLADO ── -->
+  <div class="sect">
+    <h2>Diseña un experimento controlado con indicador de repollo <button class="tts-btn" onclick="speakText(this)" data-text="Para que un experimento sea confiable, hay que cambiar una sola cosa y mantener todo lo demás igual. Aquí vas a decidir qué cambiar, qué medir y qué mantener constante para comparar el pH de varias sustancias de tu casa.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás identificar la variable independiente, la dependiente y las controladas de un experimento de pH.</div>
+    <p>El agua morada del repollo cocido es un indicador natural: se pone <strong>roja o rosada en ácido</strong>, <strong>morada cerca de neutro</strong> y <strong>verde o amarilla en base</strong> (lo producen unos pigmentos llamados antocianinas). Pregunta de investigación: <em>¿cuál de estos productos de la casa es más ácido: limón, vinagre, gaseosa, leche o bicarbonato disuelto?</em></p>
+    <div id="cl-var"></div>
+    <div class="calc-out" id="cl-var-out" aria-live="polite">Clasifica cada elemento del experimento.</div>
+    <p style="margin-top:10px">Cuando tengas tus resultados, compáralos con el <a href="simulador.html">laboratorio virtual de pH del Simulador</a>.</p>
+  </div>
+
+  <!-- ── EL CUERPO HUMANO ── -->
+  <div class="sect">
+    <h2>El pH de tu cuerpo: estudio de casos <button class="tts-btn" onclick="speakText(this)" data-text="Tu cuerpo tiene zonas muy ácidas, como el estómago, y otras casi neutras, como la sangre. Aquí analizas tres casos reales: la acidez estomacal, las gaseosas y los dientes, y la idea de que la comida puede cambiar el pH de la sangre.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás evaluar con argumentos químicos el efecto de alimentos y productos ácidos o básicos en tu salud.</div>
+    <div class="tbl-wrap" style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Lugar del cuerpo</th><th>pH típico</th><th>¿Por qué?</th></tr></thead>
+      <tbody>
+        <tr><td>Jugo gástrico (estómago)</td><td>1,5 – 3,5</td><td>Contiene HCl: activa la pepsina, que digiere proteínas, y elimina microorganismos.</td></tr>
+        <tr><td>Saliva</td><td>6,5 – 7,5</td><td>Tiene bicarbonato, que neutraliza los ácidos de la boca.</td></tr>
+        <tr><td>Sangre</td><td>7,35 – 7,45</td><td>Amortiguador H₂CO₃ / HCO₃⁻, más los pulmones (eliminan CO₂) y los riñones.</td></tr>
+        <tr><td>Intestino delgado</td><td>≈ 7 – 8</td><td>El páncreas vierte bicarbonato que neutraliza el ácido que sale del estómago.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="seg" id="caso-sel" role="group" aria-label="Caso"><button type="button" data-c="0" class="on">Caso 1 · Acidez estomacal</button><button type="button" data-c="1">Caso 2 · Gaseosas y dientes</button><button type="button" data-c="2">Caso 3 · ¿La comida cambia el pH de la sangre?</button></div>
+    <div class="calc" id="caso-box"></div>
+  </div>
+
+  <!-- ── TERRITORIO ── -->
+  <div class="sect">
+    <h2>El pH del territorio: suelos, lluvia y mar <button class="tts-btn" onclick="speakText(this)" data-text="La acidez no solo está en la cocina. Muchos suelos de Colombia son ácidos y hay que encalarlos para cultivar. La quema de combustibles produce lluvia ácida. Y el dióxido de carbono que emitimos está haciendo más ácido el mar, lo que pone en riesgo a los corales del Caribe.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás relacionar el pH con los recursos naturales de Colombia y escribir la reacción que corrige un suelo ácido.</div>
+    <div class="proc">
+      <div class="card"><span class="tipo">Suelos</span><h4>🌱 Encalado</h4><p>Gran parte de los suelos de la Orinoquía y la Amazonía son ácidos (pH 4 – 5). El aluminio que se disuelve en ellos daña las raíces. Los agricultores agregan cal agrícola:</p><span class="eq">CaCO₃ + 2 H⁺ → Ca²⁺ + H₂O + CO₂</span><p>Sube el pH y aporta calcio.</p></div>
+      <div class="card"><span class="tipo">Aire</span><h4>🌧️ Lluvia ácida</h4><p>La lluvia normal tiene pH ≈ 5,6 por el CO₂ del aire. Con SO₂ y NOₓ de la quema de carbón y diésel baja de 5,6:</p><span class="eq">SO₃ + H₂O → H₂SO₄</span><p>Daña cultivos, ecosistemas de páramo y monumentos de piedra caliza.</p></div>
+      <div class="card"><span class="tipo">Mar</span><h4>🪸 Acidificación del océano</h4><p>El mar absorbe parte del CO₂ que emitimos:</p><span class="eq">CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</span><p>Su pH bajó de unos 8,2 a unos 8,1: cerca de 26 % más H⁺. Los corales de San Andrés y del Rosario tienen más dificultad para formar su esqueleto de CaCO₃.</p></div>
+    </div>
+    <div class="calc">
+      <div class="calc-row"><strong>Analiza datos:</strong>&nbsp;un agricultor del Meta midió el pH de su suelo antes de encalar (4,6) y seis meses después (5,8).</div>
+      <div class="calc-row"><label for="sue-r">¿Cuántas veces disminuyó la concentración de H⁺? (redondea a un entero)</label><input id="sue-r" inputmode="decimal"><button type="button" class="btn-s prim" id="sue-ok">Revisar</button></div>
+      <div class="calc-out" id="sue-out" aria-live="polite">Pista: 10 elevado a la diferencia de pH.</div>
+    </div>
+  </div>
+
+  <!-- ── PRÁCTICA ── -->
+  <div class="sect quiz-sect" id="practica">
+    <h2>✅ Practica — Ácidos, bases y pH <button class="tts-btn" onclick="speakText(this)" data-text="Ocho preguntas al azar del mismo banco que usa el Juego. Si te equivocas dos veces, verás la explicación. Al final puedes pedir otras ocho.">🔊 Escuchar</button></h2>
+    <div id="prac-ph"></div>
+  </div>
+
+  <footer>
+    <a href="juego.html?g=acidobase">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<button id="tts-float-btn" onclick="speakPage()" style="position:fixed;bottom:80px;right:18px;z-index:50;padding:12px 16px;background:#0d4a73;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">🔊 Leer</button>
+<button id="tts-stop-btn" onclick="stopTTS()" style="display:none;position:fixed;bottom:140px;right:18px;z-index:50;padding:12px 16px;background:#dc2626;border:none;border-radius:100px;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)">⏹ Detener</button>
+<script>
+let _ttsUtt=null;
+function speak(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='block';
+  _ttsUtt=new SpeechSynthesisUtterance(text);
+  _ttsUtt.lang='es-CO'; _ttsUtt.rate=0.88; _ttsUtt.pitch=1.0;
+  _ttsUtt.onend=()=>{ document.getElementById('tts-stop-btn').style.display='none'; };
+  function pickVoice(){
+    const v=window.speechSynthesis.getVoices();
+    // Prioridad: es-CO > es-US > es-419 > es-ES > es-MX > cualquier es-XX (no pt)
+    const prefs=['es-CO','es-US','es-419','es-ES','es-MX','es-AR','es-CL','es-PE'];
+    for(const lang of prefs){
+      const found=v.find(x=>x.lang.toLowerCase()===lang.toLowerCase());
+      if(found){ _ttsUtt.voice=found; break; }
+    }
+    // Fallback: cualquier voz cuyo lang empiece por 'es' y NO sea portugués
+    if(!_ttsUtt.voice){
+      const fallback=v.find(x=>/^es/i.test(x.lang)&&!/^pt/i.test(x.lang));
+      if(fallback) _ttsUtt.voice=fallback;
+    }
+    window.speechSynthesis.speak(_ttsUtt);
+  }
+  if(window.speechSynthesis.getVoices().length) pickVoice();
+  else window.speechSynthesis.onvoiceschanged=pickVoice;
+}
+function stopTTS(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('tts-stop-btn').style.display='none';
+}
+function speakText(btn){ speak(btn.getAttribute('data-text')); }
+function speakPage(){
+  const btns=[...document.querySelectorAll('[data-text]')];
+  if(!btns.length){ speak(document.body.innerText.slice(0,3000)); return; }
+  const parts=btns.map(b=>b.getAttribute('data-text')).filter(Boolean);
+  speak(parts.join('. '));
+}
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="banco.js"></script>
+<script src="assets/sed10.js"></script>
+<script>
+(function(){
+'use strict';
+function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
+var NS='http://www.w3.org/2000/svg';
+function el(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);if(p)p.appendChild(x);return x;}
+function tx(p,x,y,s,a){var t=el('text',Object.assign({x:x,y:y},a||{}),p);t.textContent=s;return t;}
+if(window.SED10&&typeof BANCO_PH!=='undefined')SED10.practica('prac-ph',BANCO_PH,8,'Practica: ácidos, bases y pH','acidobase');
+
+SED10.clasificador('cl-acido',[
+  {t:'<span class="eq">HNO₃ + H₂O → H₃O⁺ + NO₃⁻</span>',ok:'HNO₃',fb:'El HNO₃ pierde un H y queda NO₃⁻: dona el protón.',opc:['HNO₃','H₂O']},
+  {t:'<span class="eq">NH₃ + H₂O ⇌ NH₄⁺ + OH⁻</span>',ok:'H₂O',fb:'Aquí el agua dona el H⁺ y queda OH⁻; el NH₃ es la base.',opc:['NH₃','H₂O']},
+  {t:'<span class="eq">HCO₃⁻ + H₃O⁺ → H₂CO₃ + H₂O</span>',ok:'H₃O⁺',fb:'El H₃O⁺ pierde un H y queda H₂O; el bicarbonato lo acepta (por eso es antiácido).',opc:['HCO₃⁻','H₃O⁺']},
+  {t:'<span class="eq">CH₃COOH + OH⁻ → CH₃COO⁻ + H₂O</span>',ok:'CH₃COOH',fb:'El ácido acético dona su H⁺ al OH⁻.',opc:['CH₃COOH','OH⁻']}
+],['HNO₃','H₂O','H₃O⁺','CH₃COOH'],function(b,n){document.getElementById('cl-acido-out').innerHTML='Terminaste: <b>'+b+' de '+n+'</b> al primer intento. Regla que no falla: sigue al H⁺. Quien lo pierde es el ácido.';});
+
+/* ── Escala de pH ── (valores típicos) */
+var SUST=[['Jugo gástrico',1.8],['Limón',2.2],['Gaseosa de cola',2.5],['Vinagre',2.9],['Jugo de naranja',3.5],['Tomate',4.3],['Café',5.0],['Lluvia normal',5.6],['Leche',6.6],['Agua pura',7.0],['Sangre',7.4],['Agua de mar',8.1],['Bicarbonato disuelto',8.3],['Leche de magnesia',10.5],['Amoníaco de limpieza',11.5],['Cal disuelta (agua de cal)',12.4]];
+function colorPH(p){var c=[[0,'#c0262d'],[2,'#e8452c'],[4,'#f5a623'],[6,'#f5e050'],[7,'#7ac143'],[8,'#2fa34a'],[10,'#1e7fc2'],[12,'#3b3fb6'],[14,'#5a2a8c']];for(var i=1;i<c.length;i++){if(p<=c[i][0])return c[i-1][1];}return c[c.length-1][1];}
+function sup(n){return String(n).replace(/-/g,'⁻').replace(/[0-9]/g,function(d){return '⁰¹²³⁴⁵⁶⁷⁸⁹'[d];});}
+function notac(v){var e=Math.floor(Math.log10(v)),m=v/Math.pow(10,e);return coma(Math.round(m*10)/10)+' × 10'+sup(e)+' mol/L';}
+function pinta(){
+  var p=+document.getElementById('ph-r').value,s=document.getElementById('ph-svg');s.innerHTML='';
+  document.getElementById('ph-v').textContent=coma(p,1);
+  var X=function(v){return 20+v/14*520;};
+  for(var i=0;i<14;i++)el('rect',{x:X(i),y:40,width:520/14+0.5,height:30,fill:colorPH(i+0.5)},s);
+  for(i=0;i<=14;i++)tx(s,X(i),86,String(i),{'text-anchor':'middle','font-size':11,fill:'#334155'});
+  tx(s,X(3),30,'← más ácido',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#b91c1c'});
+  tx(s,X(11),30,'más básico →',{'text-anchor':'middle','font-size':11,'font-weight':700,fill:'#1d4ed8'});
+  el('path',{d:'M'+X(p)+' 38 l-8 -10 h16 z',fill:'#0d2d42'},s);el('line',{x1:X(p),y1:38,x2:X(p),y2:72,stroke:'#0d2d42','stroke-width':3},s);
+  var cerca=SUST.filter(function(x){return Math.abs(x[1]-p)<=0.6;});
+  cerca.slice(0,3).forEach(function(x,k){tx(s,X(x[1]),106+k*15,'▲ '+x[0]+' ('+coma(x[1])+')',{'text-anchor':'middle','font-size':10.5,fill:'#0d2d42'});});
+  var h=Math.pow(10,-p),oh=Math.pow(10,p-14);
+  document.getElementById('ph-out').innerHTML='pH '+coma(p,1)+' → <b>'+(p<6.95?'ácido':p>7.05?'básico':'neutro')+'</b>. [H⁺] = '+notac(h)+' · [OH⁻] = '+notac(oh)+' · pOH = '+coma(14-p,1)+(cerca.length?'<br>Sustancias con un pH cercano: '+cerca.map(function(x){return x[0]+' ('+coma(x[1])+')';}).join(', ')+'.':'');
+}
+document.getElementById('ph-r').addEventListener('input',pinta);pinta();
+var A=document.getElementById('cmp-a'),Bs=document.getElementById('cmp-b');
+A.innerHTML=Bs.innerHTML=SUST.map(function(x,i){return '<option value="'+i+'">'+x[0]+' (pH '+coma(x[1])+')</option>';}).join('');
+A.value='1';Bs.value='6';
+document.getElementById('cmp-ok').addEventListener('click',function(){var a=SUST[+A.value],b=SUST[+Bs.value],o=document.getElementById('cmp-out'),r=parseFloat(String(document.getElementById('cmp-r').value).replace(',','.')),d=b[1]-a[1],v=Math.pow(10,d);
+  if(d<=0){o.className='calc-out fail';o.innerHTML='Elige como primera sustancia la que tiene el pH <b>menor</b> (la más ácida).';return;}
+  if(isNaN(r)){o.className='calc-out fail';o.innerHTML='Escribe un número.';return;}
+  if(Math.abs(r-v)/v<=0.06){o.className='calc-out ok';o.innerHTML='✅ <b>Correcto: unas '+coma(Math.round(v*10)/10)+' veces.</b> Diferencia de pH = '+coma(b[1])+' − '+coma(a[1])+' = '+coma(Math.round(d*10)/10)+' → 10'+'^'+coma(Math.round(d*10)/10)+' ≈ '+coma(Math.round(v*10)/10)+'.';}
+  else if(Math.abs(r-d*10)<0.6||Math.abs(r-d)<0.06){o.className='calc-out fail';o.innerHTML='🔎 La escala no es lineal: no se multiplica ni se resta. Se calcula 10 elevado a la diferencia de pH ('+coma(Math.round(d*10)/10)+').';}
+  else{o.className='calc-out fail';o.innerHTML='🔎 Revisa: veces = 10^(pH mayor − pH menor). Usa la tecla 10ˣ de la calculadora.';}});
+
+/* ── Partículas fuerte/débil ── */
+(function(){var f=document.getElementById('part-f'),d=document.getElementById('part-d');
+  for(var i=0;i<10;i++){var x=24+(i%5)*26,y=48+Math.floor(i/5)*44;el('circle',{cx:x,cy:y,r:7,fill:'#dc2626'},f);tx(f,x,y+3.5,'H⁺',{'text-anchor':'middle','font-size':7,fill:'#fff','font-weight':800});el('circle',{cx:x+5,cy:y+20,r:7,fill:'#16a34a'},f);tx(f,x+5,y+23.5,'Cl⁻',{'text-anchor':'middle','font-size':7,fill:'#fff','font-weight':800});}
+  for(i=0;i<10;i++){x=172+(i%5)*26;y=52+Math.floor(i/5)*44;if(i===3){el('circle',{cx:x,cy:y-4,r:7,fill:'#dc2626'},d);tx(d,x,y-0.5,'H⁺',{'text-anchor':'middle','font-size':7,fill:'#fff','font-weight':800});el('circle',{cx:x+4,cy:y+16,r:7,fill:'#b45309'},d);}
+    else{el('ellipse',{cx:x+2,cy:y+6,rx:11,ry:8,fill:'#fde68a',stroke:'#b45309'},d);tx(d,x+2,y+9,'HA',{'text-anchor':'middle','font-size':7,fill:'#92400e','font-weight':800});}}
+})();
+
+/* ── Variables del experimento ── */
+SED10.clasificador('cl-var',[
+  {t:'El producto que se prueba (limón, vinagre, gaseosa…)',ok:'Independiente',fb:'Es lo que tú cambias a propósito.'},
+  {t:'El color que toma el indicador (y el pH que le corresponde)',ok:'Dependiente',fb:'Es lo que mides como resultado.'},
+  {t:'La cantidad de indicador en cada vaso (por ejemplo, 20 mL)',ok:'Controlada',fb:'Si cambia, el color se ve más claro u oscuro y la comparación no es justa.'},
+  {t:'La cantidad de cada producto (por ejemplo, 5 mL o una cucharadita)',ok:'Controlada',fb:'Debe ser igual para todos.'},
+  {t:'Un vaso solo con agua e indicador',ok:'Control',fb:'Es el vaso de referencia (control): sirve para comparar los colores.'}
+],['Independiente','Dependiente','Controlada','Control'],function(b,n){document.getElementById('cl-var-out').innerHTML='Terminaste: <b>'+b+' de '+n+'</b> al primer intento. Un experimento controlado cambia <b>una sola variable</b> y mantiene las demás iguales.';});
+
+/* ── Casos ── */
+var CASOS=[
+ {t:'<b>Caso 1.</b> Después de un almuerzo con mucha fritanga, Andrés siente ardor: parte del jugo gástrico subió al esófago. Su mamá le ofrece leche de magnesia, Mg(OH)₂.',
+  q:'¿Qué ecuación describe lo que hace el antiácido?',o:['Mg(OH)₂ + 2 HCl → MgCl₂ + 2 H₂O','Mg(OH)₂ → Mg + H₂O₂','MgCl₂ + 2 H₂O → Mg(OH)₂ + 2 HCl'],
+  x:'Es una <b>neutralización</b>: la base consume parte del HCl y sube el pH. Ojo: abusar de los antiácidos también es malo, porque el estómago <b>necesita</b> su acidez para digerir y defenderse de microorganismos. Si el ardor es frecuente, hay que consultar al médico.'},
+ {t:'<b>Caso 2.</b> Valentina toma tres gaseosas de cola al día (pH ≈ 2,5). Después de cada una, el pH de su boca baja de casi 7 a menos de 5,5 en pocos minutos y tarda entre 30 y 60 minutos en recuperarse (curva de Stephan).',
+  q:'¿Por qué esto aumenta su riesgo de caries?',o:['Porque por debajo de pH 5,5 el esmalte (hidroxiapatita) se empieza a disolver, y con tres gaseosas pasa varias horas así','Porque el gas de la gaseosa rompe los dientes','Porque la gaseosa es básica y ablanda el esmalte'],
+  x:'El esmalte es un mineral que se disuelve en medio ácido. El daño depende de <b>cuántas veces</b> y <b>cuánto tiempo</b> la boca está ácida. Ayuda tomar agua después, no picar azúcar todo el día y cepillarse con crema con flúor (el flúor forma fluorapatita, más resistente).'},
+ {t:'<b>Caso 3.</b> Un video en redes dice: «el agua alcalina y la dieta alcalina suben el pH de tu sangre y curan enfermedades».',
+  q:'¿Qué responde la química?',o:['La sangre se mantiene entre 7,35 y 7,45 por los amortiguadores, los pulmones y los riñones; la comida no cambia su pH de forma importante','Es cierto: cada vaso de agua alcalina sube el pH de la sangre una unidad','La sangre no tiene pH porque es un líquido rojo'],
+  x:'Si el pH de la sangre cambiara con cada comida, sería mortal. El par H₂CO₃ / HCO₃⁻ neutraliza los excesos; los pulmones eliminan CO₂ y los riñones regulan el bicarbonato. Además, el agua alcalina se neutraliza apenas llega al estómago (pH 1,5 – 3,5). Lo que sí puede cambiar con la dieta es el pH de la <b>orina</b>. Evaluar una afirmación exige preguntar: ¿qué evidencia hay?, ¿qué mecanismo lo explicaría?'}
+];
+function caso(i){var c=CASOS[i],box=document.getElementById('caso-box');
+  var op=c.o.map(function(t,j){return [t,j];}).sort(function(){return 0;});
+  op=[op[1],op[0],op[2]];if(i===1)op=[op[2],op[1],op[0]];
+  box.innerHTML='<p>'+c.t+'</p><p><b>'+c.q+'</b></p><div class="seg">'+op.map(function(x){return '<button type="button" data-j="'+x[1]+'" style="text-align:left;border-radius:12px">'+x[0]+'</button>';}).join('')+'</div><div class="calc-out" id="caso-out" aria-live="polite">Elige una respuesta.</div>';
+  box.querySelector('.seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var ok=b.dataset.j==='0',o=document.getElementById('caso-out');
+    box.querySelectorAll('.seg button').forEach(function(x){x.classList.toggle('on',x===b);});
+    o.className='calc-out '+(ok?'ok':'fail');o.innerHTML=(ok?'✅ <b>Bien argumentado.</b> ':'🔎 <b>Revisa:</b> ')+c.x;});
+}
+document.getElementById('caso-sel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});caso(+b.dataset.c);});
+caso(0);
+
+document.getElementById('sue-ok').addEventListener('click',function(){var r=parseFloat(String(document.getElementById('sue-r').value).replace(',','.')),o=document.getElementById('sue-out'),v=Math.pow(10,1.2);
+  if(isNaN(r)){o.className='calc-out fail';o.innerHTML='Escribe un número.';return;}
+  if(Math.abs(r-v)<=1){o.className='calc-out ok';o.innerHTML='✅ <b>Unas 16 veces.</b> 5,8 − 4,6 = 1,2 → 10^1,2 ≈ 15,8. Un cambio de «solo» 1,2 en el pH es una disminución grande de la acidez.';}
+  else if(Math.abs(r-1.2)<0.05||Math.abs(r-12)<0.5){o.className='calc-out fail';o.innerHTML='🔎 La diferencia de pH es 1,2, pero hay que calcular 10^1,2.';}
+  else{o.className='calc-out fail';o.innerHTML='🔎 Calcula 10 elevado a (5,8 − 4,6).';}});
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

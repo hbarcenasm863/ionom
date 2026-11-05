@@ -623,12 +623,15 @@ html{font-size:var(--base-fs)}
     <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
     <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
     <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
     <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
     <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
     <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
         <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+        <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
     <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
     <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
     <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
@@ -637,6 +640,60 @@ html{font-size:var(--base-fs)}
     <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
     <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
   </nav>
+
+  <a class="mod-card teal" href="modelos.html">
+    <div class="mod-top">
+      <span class="mod-icon">🔭</span>
+      <div class="mod-paso">Ampliación · n = 1</div>
+      <div class="mod-title">Modelos, Leyes y Datos</div>
+      <div class="mod-subtitle">Aprenderás: diferenciar teoría, ley y modelo; tomar datos, graficar y predecir</div>
+      <div class="mod-desc">Laboratorio virtual de la ley de Boyle y un modelo del punto de ebullición del agua en ciudades de Colombia.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">📈 Datos</span><span class="mc">🎈 Gases</span><span class="mc">🔭 Modelos</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+
+  <a class="mod-card verde" href="ph.html">
+    <div class="mod-top">
+      <span class="mod-icon">🧪</span>
+      <div class="mod-paso">Ampliación · n = 3</div>
+      <div class="mod-title">Ácidos, Bases y pH</div>
+      <div class="mod-subtitle">Aprenderás: teorías ácido-base, escala de pH, neutralización y el pH del cuerpo y del territorio</div>
+      <div class="mod-desc">Estudios de casos (antiácidos, gaseosas, «dieta alcalina»), experimento controlado con repollo y suelos, lluvia y mar de Colombia.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🌡️ pH</span><span class="mc">🫀 Cuerpo</span><span class="mc">🌱 Suelos</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+
+  <a class="mod-card violeta" href="industria.html">
+    <div class="mod-top">
+      <span class="mod-icon">🏭</span>
+      <div class="mod-paso">Ampliación · n = 4</div>
+      <div class="mod-title">Química en la Industria</div>
+      <div class="mod-subtitle">Aprenderás: conservación de masa y carga, reactivo limitante, pureza y rendimiento en procesos reales</div>
+      <div class="mod-desc">Cemento, amoníaco, agua potable, acero y cloro-soda en Colombia, una planta virtual y un experimento con cáscara de huevo.</div>
+    </div>
+    <div class="mod-bottom">
+      <div class="mod-chips"><span class="mc">🧱 Cemento</span><span class="mc">🌾 Haber</span><span class="mc">🥚 Experimento</span></div>
+      <div class="mod-meta">
+        <span class="mod-badge basico">Nuevo</span>
+        <span class="mod-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="app">
@@ -1305,6 +1362,7 @@ window.addEventListener('appinstalled', () => {
     {id:'configuracion.html',r:2,n:1,e:'🧬',t:'Configuración Electrónica',d:'Números cuánticos, Aufbau, Pauli y Hund, diagrama de Moeller, configurador de cualquier elemento o ion y práctica de orbitales.',nuevo:true},
     {id:'tabla.html',r:3,n:1,e:'📊',t:'Tabla Periódica',d:'118 elementos, historia de la tabla, grupos, periodos, bloques y propiedades periódicas.'},
     {id:'enlace.html',r:4,n:1,e:'🔗',t:'Enlace Químico',d:'Iónico, covalente y metálico: estructuras de Lewis, ΔEN, simuladores y laboratorio virtual.',nuevo:true},
+    {id:'modelos.html',r:null,n:1,e:'🔭',t:'Modelos, Leyes y Datos',d:'Teoría, ley y modelo; laboratorio de Boyle y un modelo con datos de ciudades de Colombia.',nuevo:true},
     {id:'teoria.html',r:5,n:2,e:'📖',t:'Principios de nomenclatura',d:'Estados de oxidación y los 3 sistemas con el código de 4 colores.'},
     {id:'funciones.html',r:6,n:2,e:'🧪',t:'Funciones Inorgánicas',d:'Los 9 grupos funcionales con ejercicios paso a paso.'},
     {id:'nomenClash.html',r:7,n:2,e:'⚔️',t:'NomenClash',d:'Duelo de cartas de iones contra la IA.'},
@@ -1312,18 +1370,20 @@ window.addEventListener('appinstalled', () => {
     {id:'reacciones.html',r:8,n:3,e:'⚗️',t:'Tipos de Reacción',d:'Síntesis, descomposición, sustitución, combustión y neutralización.'},
     {id:'balanceo.html',r:9,n:3,e:'⚖️',t:'Balanceo',d:'Ajusta coeficientes por tanteo, paso a paso.'},
     {id:'simulador.html',r:null,n:3,e:'🔬',t:'Simulador',d:'Predice productos de reacción y usa el laboratorio de pH.'},
+    {id:'ph.html',r:null,n:3,e:'🧪',t:'Ácidos, Bases y pH',d:'Escala de pH, neutralización y el pH del cuerpo, los alimentos y el territorio.',nuevo:true},
     {id:'moles.html',r:10,n:4,e:'⚛️',t:'Mol y Masa Molar',d:'n = m/M con factores de conversión.'},
     {id:'estequiometria.html',r:11,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
-    {id:'balanceo-avanzado.html',r:12,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
+    {id:'balanceo-avanzado.html',r:12,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'},
+    {id:'industria.html',r:null,n:4,e:'🏭',t:'Química en la Industria',d:'Masa y carga, limitante, pureza y rendimiento en procesos industriales colombianos.',nuevo:true},
   ];
   // El Juego no es una estación: tiene preguntas de todos los niveles. Cada
   // panel de nivel enlaza a sus temas con juego.html?g=<grupo>, que resalta
   // ese tema en la portada del Juego.
   var JUEGO={
-    1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico']],
+    1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico'],['modelos','🔭 Modelos y datos']],
     2:[['ox-anh','💨 Óxidos'],['sal-bin','🔵 Sales binarias'],['ac-ox','⚡ Ácidos oxácidos'],['sal-ox','🟠 Sales oxigenadas'],['all','🔬 Repaso: todos']],
-    3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo']],
-    4:[['mol-masa','🔢 Mol y masa molar']]
+    3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo'],['acidobase','🧪 Ácidos y bases']],
+    4:[['mol-masa','🔢 Mol y masa molar'],['industria','🏭 Industria']]
   };
   var visitas={};
   try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}

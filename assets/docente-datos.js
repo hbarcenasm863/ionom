@@ -800,6 +800,139 @@ TEMAS: [
       ['ΔEN 2,23 ≥ 1,7','ox','metal + no metal con ΔEN alta: enlace iónico; fórmula NaCl (cargas +1 y −1)']
     ]
   }
+},
+{
+  id: 'modelos',
+  titulo: 'Teorías, leyes, modelos y datos',
+  gen: [], jue: 'modelos', rxn: [],
+  previos: {
+    curiosos: [
+      'En Bogotá el agua hierve a unos 91 °C y en Cartagena a 100 °C: por eso los fríjoles se cocinan en olla a presión en la capital.',
+      'Robert Boyle publicó en 1662 que, a temperatura constante, el volumen de un gas y su presión son inversamente proporcionales. Su ley se sigue usando para diseñar jeringas, buzos y neumáticos.'
+    ],
+    contexto: [
+      {amb:'Local', t:'Una jeringa tapada con el dedo permite comprobar la ley de Boyle en el salón: al empujar el émbolo, el aire se comprime y empuja más fuerte.'},
+      {amb:'Nacional', t:'El IDEAM registra desde hace décadas la temperatura y la lluvia de cientos de estaciones del país: son los datos históricos con que se construyen modelos del clima de Colombia.'}
+    ],
+    cotidianos: [
+      'Una olla a presión, un balón que se desinfla en la montaña y un paquete de papas que se infla en un viaje a la Sabana son ejemplos de cómo cambia un gas con la presión.'
+    ],
+    activacion: [
+      '¿Qué diferencia crees que hay entre una ley y una teoría científica? ¿Una teoría es «una simple suposición»? ¿Cómo podrías predecir a qué temperatura hierve el agua en un municipio donde nunca la has medido?'
+    ]
+  },
+  info: {
+    lectura: [
+      'Una <strong>hipótesis</strong> es una respuesta posible que se pone a prueba. Una <strong>ley</strong> describe qué pasa siempre en ciertas condiciones, muchas veces con una ecuación (P × V = constante). Una <strong>teoría</strong> explica por qué pasa (las partículas de un gas chocan contra las paredes). Un <strong>modelo</strong> es una representación simplificada para explicar y predecir.',
+      'En un experimento se cambia una sola variable (<strong>independiente</strong>), se mide otra (<strong>dependiente</strong>) y se mantienen las demás iguales (<strong>controladas</strong>). Con los datos se hace una tabla y una gráfica; si la gráfica muestra una tendencia, se puede escribir un modelo matemático.',
+      'Un modelo sirve para <strong>predecir</strong>. Predecir dentro del rango de los datos (interpolar) es más confiable que fuera de él (extrapolar). Toda predicción debe compararse con una medida real, teniendo en cuenta el margen de error.'
+    ],
+    esquema: {
+      raiz: 'Construcción del conocimiento',
+      ramas: [
+        {t:'Ideas científicas', items:['Hipótesis: se pone a prueba','Ley: describe','Teoría: explica','Modelo: representa']},
+        {t:'Experimento', items:['Variable independiente','Variable dependiente','Variables controladas']},
+        {t:'Datos', items:['Tabla y gráfica','Modelo matemático','Interpolar y extrapolar']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: 'P₁ × V₁ = P₂ × V₂  (6 L a 1 atm → ? L a 3 atm)',
+    partes: [
+      ['P₁V₁ = 1 × 6 = 6','cat','ley de Boyle: el producto P × V se mantiene a temperatura constante'],
+      ['V₂ = 6 ÷ 3','ox','se despeja el volumen nuevo'],
+      ['V₂ = 2 L','an','al triplicar la presión, el volumen queda en la tercera parte']
+    ]
+  }
+},
+{
+  id: 'acidobase',
+  titulo: 'Ácidos, bases y pH',
+  gen: [], jue: 'acidobase', rxn: [],
+  previos: {
+    curiosos: [
+      'Tu estómago produce ácido clorhídrico con un pH entre 1,5 y 3,5, pero tu sangre se mantiene entre 7,35 y 7,45 sin importar si comes limón o bicarbonato.',
+      'El agua del repollo morado cocido cambia de color con el pH: se pone roja en vinagre y verde en bicarbonato. Es un indicador natural.'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'Muchos suelos de la Orinoquía y la Amazonía tienen pH entre 4 y 5. Los agricultores los corrigen con cal agrícola (CaCO₃) antes de sembrar.'},
+      {amb:'Local', t:'Las gaseosas tienen pH cercano a 2,5. Tomarlas con frecuencia baja el pH de la boca y favorece la caries.'}
+    ],
+    cotidianos: [
+      'El vinagre de la ensalada, el limón del ceviche, la leche de magnesia para la acidez y el amoníaco de los limpiadores son ácidos y bases que hay en casi cualquier casa.'
+    ],
+    activacion: [
+      '¿Qué tienen en común el limón y el vinagre? ¿Por qué un antiácido alivia el ardor de estómago? ¿Crees que lo que comes puede cambiar el pH de tu sangre?'
+    ]
+  },
+  info: {
+    lectura: [
+      'Según <strong>Arrhenius</strong>, un ácido libera H⁺ en agua y una base libera OH⁻. Según <strong>Brønsted-Lowry</strong>, un ácido <strong>dona</strong> un H⁺ y una base lo <strong>acepta</strong>; así se explica que el NH₃ sea una base.',
+      'El <strong>pH</strong> mide la acidez: pH = −log[H⁺]. Menos de 7 es ácido, 7 neutro y más de 7 básico (a 25 °C). La escala es logarítmica: cada unidad de pH es un factor de 10 en la concentración de H⁺. Además, pH + pOH = 14.',
+      'Un ácido <strong>fuerte</strong> (HCl) se ioniza casi por completo; uno <strong>débil</strong> (ácido acético), solo en parte. En la <strong>neutralización</strong>, ácido + base → sal + agua. El cuerpo regula su pH con <strong>amortiguadores</strong> como el par H₂CO₃ / HCO₃⁻.'
+    ],
+    esquema: {
+      raiz: 'Ácidos y bases',
+      ramas: [
+        {t:'Teorías', items:['Arrhenius: H⁺ y OH⁻','Brønsted-Lowry: dona o acepta H⁺']},
+        {t:'pH', items:['pH = −log[H⁺]','Cada unidad = × 10','pH + pOH = 14']},
+        {t:'Reacciones', items:['Neutralización → sal + agua','Antiácidos y encalado']},
+        {t:'Contexto', items:['Estómago, sangre, boca','Suelos, lluvia ácida, mar']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: 'Mg(OH)₂ + 2 HCl → MgCl₂ + 2 H₂O',
+    partes: [
+      ['Mg(OH)₂','oh','base (leche de magnesia): aporta los OH⁻'],
+      ['2 HCl','cat','ácido del jugo gástrico: aporta los H⁺'],
+      ['MgCl₂ + 2 H₂O','an','sal + agua: el ácido quedó neutralizado']
+    ]
+  }
+},
+{
+  id: 'industria',
+  titulo: 'Química en la industria (estequiometría de procesos)',
+  gen: [], jue: 'industria', rxn: [],
+  previos: {
+    curiosos: [
+      'Calcinar una tonelada de caliza para hacer cemento libera 440 kg de CO₂ solo por la reacción química.',
+      'Casi la mitad de la comida del mundo se produce con fertilizantes hechos con el amoníaco del proceso Haber, que combina el nitrógeno del aire con hidrógeno.'
+    ],
+    contexto: [
+      {amb:'Nacional', t:'En Boyacá se produce acero reduciendo mineral de hierro en el alto horno (Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂), y de la sal de Zipaquirá y Manaure se obtienen cloro y soda cáustica por electrólisis.'},
+      {amb:'Local', t:'En las plantas de potabilización que abastecen a Bogotá se agregan coagulantes que forman un precipitado de hidróxido de aluminio, que atrapa la suciedad del agua.'}
+    ],
+    cotidianos: [
+      'El cemento de los andenes, el agua de la llave, el abono de una huerta y las varillas de una construcción vienen de procesos químicos que alguien calculó con estequiometría.'
+    ],
+    activacion: [
+      'Si una fábrica tiene más de un reactivo que del otro, ¿cuál decide cuánto producto sale? ¿Por qué crees que una fábrica nunca obtiene el 100 % del producto que calcula en el papel?'
+    ]
+  },
+  info: {
+    lectura: [
+      'En toda reacción se conservan la <strong>masa</strong> (los átomos no se crean ni se destruyen) y la <strong>carga</strong>. Una ecuación iónica como 2 Al + 3 Cu²⁺ → 2 Al³⁺ + 3 Cu debe tener los mismos átomos y la misma carga total en los dos lados.',
+      'Para calcular cuánto producto se forma: ecuación balanceada → gramos del dato a moles → razón molar → moles del producto a gramos. El <strong>reactivo limitante</strong> es el que se acaba primero; el otro queda en <strong>exceso</strong>.',
+      'En la industria se corrige el cálculo por la <strong>pureza</strong> de la materia prima (masa × % / 100) y por el <strong>rendimiento</strong> del proceso (real ÷ teórico × 100). Procesos colombianos: cemento (descomposición), amoníaco (síntesis), potabilización (precipitación), acero (óxido-reducción) y cloro-soda (electrólisis).'
+    ],
+    esquema: {
+      raiz: 'Estequiometría industrial',
+      ramas: [
+        {t:'Conservación', items:['Masa: átomos iguales','Carga: suma igual']},
+        {t:'Cálculo', items:['g → mol','Razón molar','mol → g']},
+        {t:'Industria real', items:['Reactivo limitante','Pureza','Rendimiento']}
+      ]
+    }
+  },
+  ejemplo: {
+    f: 'CaCO₃ → CaO + CO₂  (1000 kg de caliza al 90 %)',
+    partes: [
+      ['1000 kg × 90 % = 900 kg CaCO₃','cat','paso 1: corregir por pureza'],
+      ['900 kg ÷ 100 = 9 kmol CaCO₃','ox','paso 2: kilogramos a kilomoles (razón 1 : 1 con el CaO)'],
+      ['9 kmol × 56 = 504 kg CaO','an','paso 3: masa teórica; si salen 480 kg, el rendimiento es 95,2 %']
+    ]
+  }
 }
 
 ],
@@ -2398,7 +2531,84 @@ ABIERTAS: [
 {tema:'atomo', t:'mdec', q:'Una especie química tiene las partículas indicadas. Escribe su símbolo con número de masa y carga, y di si es un átomo neutro, un catión o un anión.', partes:[['29 p⁺','cat'],['34 n⁰','oh'],['27 e⁻','an']]},
 {tema:'atomo', t:'mdec', q:'Completa los datos que faltan de esta especie (Z, A, protones, neutrones, electrones y carga) y escribe su notación.', partes:[['Azufre','cat'],['A = 32','oh'],['18 e⁻','an']]},
 {tema:'atomo', t:'mdec', q:'Completa los datos que faltan de esta especie (símbolo, A, protones, electrones y carga) y escribe su notación.', partes:[['Z = 13','cat'],['14 n⁰','oh'],['carga 3+','an']]},
-{tema:'atomo', t:'mdec', q:'Estos son los isótopos del magnesio con su masa y abundancia. Calcula la masa atómica promedio y explica por qué no es un número entero.', partes:[['²⁴Mg · 23,985 u · 78,99 %','cat'],['²⁵Mg · 24,986 u · 10,00 %','oh'],['²⁶Mg · 25,983 u · 11,01 %','an']]}
+{tema:'atomo', t:'mdec', q:'Estos son los isótopos del magnesio con su masa y abundancia. Calcula la masa atómica promedio y explica por qué no es un número entero.', partes:[['²⁴Mg · 23,985 u · 78,99 %','cat'],['²⁵Mg · 24,986 u · 10,00 %','oh'],['²⁶Mg · 25,983 u · 11,01 %','an']]},
+{tema:'modelos', t:'rx', q:'Explica con tus palabras la diferencia entre una ley, una teoría y un modelo, y da un ejemplo de cada una relacionado con los gases.'},
+{tema:'modelos', t:'rx', q:'¿Por qué es incorrecto decir que «una teoría es una idea que todavía no se ha comprobado»? Usa como ejemplo la teoría atómica.'},
+{tema:'modelos', t:'rx', q:'Explica con la teoría cinético-molecular por qué la presión de un gas aumenta cuando se reduce su volumen a temperatura constante.'},
+{tema:'modelos', t:'rx', q:'Explica por qué el modelo atómico de Thomson fue reemplazado por el de Rutherford. ¿Qué nos enseña esto sobre cómo cambian los modelos científicos?'},
+{tema:'modelos', t:'rx', q:'¿Por qué los fríjoles se cocinan más despacio en Bogotá que en Cartagena, y cómo ayuda la olla a presión? Explica con la relación entre presión y punto de ebullición.'},
+{tema:'modelos', t:'rx', q:'Un paquete de papas sellado en Cartagena llega inflado a Bogotá. Formula una hipótesis que lo explique e indica cómo la pondrías a prueba.'},
+{tema:'modelos', t:'rx', q:'Explica la diferencia entre interpolar y extrapolar con un modelo, y por qué la extrapolación es más arriesgada.'},
+{tema:'modelos', t:'nom', q:'Un gas ocupa 9 L a 1 atm. Calcula su volumen a 3 atm y a 0,5 atm, a la misma temperatura. Muestra el uso de la ley de Boyle.'},
+{tema:'modelos', t:'nom', q:'En un experimento se obtuvieron estos datos (P en atm; V en mL): (1; 60), (1,5; 40), (2; 30), (3; 20). Calcula P × V para cada par y explica qué ley comprueban.'},
+{tema:'modelos', t:'nom', q:'Con los datos (1 atm; 60 mL), (2 atm; 30 mL) y (3 atm; 20 mL), predice el volumen a 4 atm e indica si es una interpolación o una extrapolación.'},
+{tema:'modelos', t:'nom', q:'Un modelo dice que el agua hierve a T = 100 − 3,4 × (altitud ÷ 1000). Calcula el punto de ebullición en Medellín (1495 m) y en Tunja (2810 m).'},
+{tema:'modelos', t:'nom', q:'Un estudiante midió en Bogotá que el agua hierve a 91,8 °C y el modelo predice 91,0 °C. Calcula el porcentaje de error y explica si el modelo es aceptable.'},
+{tema:'modelos', t:'nom', q:'Un globo tiene 2 L a 1 atm. ¿Qué presión se necesita para comprimirlo a 0,5 L a la misma temperatura?'},
+{tema:'modelos', t:'nom', q:'Dibuja cómo se vería la gráfica de V contra P y la de P contra 1/V para un gas que cumple la ley de Boyle. Explica por qué la segunda es una recta.'},
+{tema:'modelos', t:'mdec', q:'En el siguiente experimento identifica la variable independiente, la dependiente y dos variables controladas.', partes:[['Se mide el volumen de aire de una jeringa','cat'],['a presiones de 1, 2 y 3 atm','ox'],['a 20 °C y con la misma cantidad de aire','an']]},
+{tema:'modelos', t:'mdec', q:'Clasifica cada enunciado como hipótesis, ley, teoría o modelo y justifica.', partes:[['P × V = constante','cat'],['Las partículas de un gas chocan con las paredes','ox'],['Si caliento el globo, se inflará','an'],['Un dibujo del átomo de Bohr','oh']]},
+{tema:'modelos', t:'mdec', q:'Diseña un experimento para comprobar si la temperatura del agua cambia el tiempo que tarda en disolverse una pastilla efervescente. Indica la pregunta, la hipótesis y las variables.'},
+{tema:'modelos', t:'mdec', q:'Plantea una pregunta sobre un fenómeno de tu municipio (lluvia, temperatura, calidad del aire) que se pueda responder con datos históricos, e indica qué datos necesitarías y dónde los buscarías.'},
+{tema:'modelos', t:'mdec', q:'Un grupo obtuvo P × V = 49,6; 50,4; 49,9 y 50,5 atm·mL. Calcula el promedio, indica cuánto varían los datos y explica de dónde puede venir esa variación.'},
+{tema:'modelos', t:'mdec', q:'Explica qué partes del modelo de «bolitas que rebotan» representan bien un gas real y qué simplifica o deja por fuera.'},
+
+{tema:'acidobase', t:'rx', q:'Escribe la ecuación de neutralización entre el ácido clorhídrico y el hidróxido de sodio, y nombra los productos.'},
+{tema:'acidobase', t:'rx', q:'Escribe la reacción del antiácido Mg(OH)₂ con el HCl del estómago, balancéala y explica por qué no conviene abusar de los antiácidos.'},
+{tema:'acidobase', t:'rx', q:'Escribe la reacción del bicarbonato de sodio con el ácido clorhídrico e indica qué gas se libera.'},
+{tema:'acidobase', t:'rx', q:'Escribe la reacción de la cal agrícola (CaCO₃) con los H⁺ de un suelo ácido y explica por qué sube el pH.'},
+{tema:'acidobase', t:'rx', q:'Explica, con ecuaciones, cómo se forma la lluvia ácida a partir del SO₂ que sale de quemar carbón.'},
+{tema:'acidobase', t:'rx', q:'Escribe la reacción del CO₂ con el agua del mar y explica por qué la acidificación del océano afecta a los corales del Caribe colombiano.'},
+{tema:'acidobase', t:'rx', q:'Explica por qué el amoníaco es una base según Brønsted-Lowry pero no según Arrhenius. Escribe su reacción con el agua.'},
+{tema:'acidobase', t:'nom', q:'Calcula el pH de una solución con [H⁺] = 1 × 10⁻³ mol/L y su pOH. Indica si es ácida o básica.'},
+{tema:'acidobase', t:'nom', q:'Calcula cuántas veces más H⁺ tiene el jugo gástrico (pH 2) que la saliva (pH 7).'},
+{tema:'acidobase', t:'nom', q:'Un suelo pasó de pH 4,6 a pH 5,8 después de encalarlo. ¿Cuántas veces disminuyó la concentración de H⁺?'},
+{tema:'acidobase', t:'nom', q:'El pH del océano bajó de 8,2 a 8,1. Calcula en qué porcentaje aumentó la concentración de H⁺.'},
+{tema:'acidobase', t:'nom', q:'Una solución tiene pOH = 3. Calcula su pH y su [H⁺], y nombra un producto de la casa con un pH parecido.'},
+{tema:'acidobase', t:'nom', q:'¿Cuántos moles de HCl neutraliza 1 mol de Mg(OH)₂? ¿Y 1 mol de NaHCO₃? Justifica con las ecuaciones.'},
+{tema:'acidobase', t:'mdec', q:'En la reacción indicada, identifica el ácido, la base y los dos pares conjugados.', f:'HNO₃ + H₂O → H₃O⁺ + NO₃⁻'},
+{tema:'acidobase', t:'mdec', q:'En la reacción indicada, identifica quién dona y quién acepta el H⁺, y explica por qué el agua puede actuar como ácido o como base.', f:'NH₃ + H₂O ⇌ NH₄⁺ + OH⁻'},
+{tema:'acidobase', t:'mdec', q:'Diseña un experimento controlado con indicador de repollo morado para comparar la acidez de cinco productos de tu casa. Indica las variables independiente, dependiente y controladas, y el vaso de control.'},
+{tema:'acidobase', t:'mdec', q:'Analiza el caso: «Valentina toma tres gaseosas al día y tiene caries». Explica con el pH por qué hay relación y propone dos acciones para reducir el riesgo.'},
+{tema:'acidobase', t:'mdec', q:'Un video afirma que el agua alcalina cambia el pH de la sangre. Escribe un argumento científico que evalúe esta afirmación, usando los amortiguadores y el pH del estómago.'},
+{tema:'acidobase', t:'mdec', q:'Explica la diferencia entre un ácido fuerte y uno concentrado. ¿Puede una solución de HCl ser menos ácida que una de vinagre? Justifica.'},
+{tema:'acidobase', t:'mdec', q:'Compara el pH del estómago, de la sangre y del intestino delgado, y explica por qué cada órgano necesita un pH distinto.'},
+
+{tema:'industria', t:'rx', q:'Escribe la ecuación de la calcinación de la caliza en una cementera, clasifica la reacción y explica su impacto ambiental.'},
+{tema:'industria', t:'rx', q:'Escribe la ecuación del proceso Haber, clasifica la reacción y explica para qué se usa el producto en Colombia.'},
+{tema:'industria', t:'rx', q:'Escribe la reacción que ocurre en el alto horno con el Fe₂O₃ y el CO, e indica qué elemento se oxida y cuál se reduce.'},
+{tema:'industria', t:'rx', q:'Escribe la reacción de electrólisis de la salmuera (NaCl + H₂O) y nombra los tres productos y un uso de cada uno.'},
+{tema:'industria', t:'rx', q:'Balancea en masa y en carga la ecuación Ag⁺ + Cu → Ag + Cu²⁺ y explica por qué no basta con igualar los átomos.'},
+{tema:'industria', t:'rx', q:'Escribe la reacción de la cáscara de huevo (CaCO₃) con el ácido acético del vinagre e indica qué se puede medir para calcular la pureza de la cáscara.'},
+{tema:'industria', t:'rx', q:'Explica por qué en la potabilización del agua se forma un precipitado y para qué sirve. Escribe la ecuación.'},
+{tema:'industria', t:'nom', q:'Calcula cuántos kilogramos de CaO se obtienen al calcinar 500 kg de CaCO₃ puro (CaCO₃ = 100 g/mol; CaO = 56 g/mol).'},
+{tema:'industria', t:'nom', q:'Calcula los kilogramos de CO₂ que se liberan al calcinar 2000 kg de caliza con 85 % de CaCO₃.'},
+{tema:'industria', t:'nom', q:'Se mezclan 56 kg de N₂ y 10 kg de H₂ para formar NH₃. Determina el reactivo limitante, la masa de NH₃ y la masa del reactivo en exceso que sobra.'},
+{tema:'industria', t:'nom', q:'Una planta debía producir 340 kg de NH₃ y obtuvo 289 kg. Calcula el rendimiento porcentual y propone dos causas de la diferencia.'},
+{tema:'industria', t:'nom', q:'¿Cuántos kilogramos de hierro se obtienen de 800 kg de Fe₂O₃ con un rendimiento del 90 %? (Fe₂O₃ = 160 g/mol; Fe = 56 g/mol)'},
+{tema:'industria', t:'nom', q:'De 5,0 g de cáscara de huevo se liberaron 2,1 g de CO₂ con vinagre. Calcula la masa y el porcentaje de CaCO₃ de la cáscara.'},
+{tema:'industria', t:'nom', q:'Comprueba la conservación de la masa en 2 H₂ + O₂ → 2 H₂O usando las masas molares (H₂ = 2 g/mol; O₂ = 32 g/mol; H₂O = 18 g/mol).'},
+{tema:'industria', t:'mdec', q:'Identifica en esta reacción el tipo de reacción, el reactivo, los productos y la razón molar entre el reactivo y el CO₂.', f:'CaCO₃ → CaO + CO₂'},
+{tema:'industria', t:'mdec', q:'Identifica el agente oxidante, el agente reductor y el cambio de estado de oxidación de cada elemento.', f:'Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂'},
+{tema:'industria', t:'mdec', q:'Comprueba si la ecuación cumple la conservación de la masa y de la carga; si no, corrígela.', f:'Al + Cu²⁺ → Al³⁺ + Cu'},
+{tema:'industria', t:'mdec', q:'Explica por qué un rendimiento mayor que 100 % indica un error experimental y menciona dos errores que podrían causarlo.'},
+{tema:'industria', t:'mdec', q:'Relaciona cada proceso industrial con su tipo de reacción y escribe su ecuación: cemento, amoníaco, potabilización del agua, acero y cloro-soda.'},
+{tema:'industria', t:'mdec', q:'Explica qué cambia más la producción real de una fábrica: bajar la pureza de la materia prima del 90 % al 80 % o bajar el rendimiento del 95 % al 85 %. Justifica con un cálculo.'}
 ]
 
 };
+
+/* Preguntas tipo Saber de los tres temas de la SED para 10.° (modelos,
+   acidobase, industria): se toman de las preguntas de opción múltiple de
+   BANCO_MODELOS, BANCO_PH y BANCO_INDUSTRIA (banco.js, que docente.html
+   carga antes que este archivo). La primera opción es la correcta, como en
+   el resto de SABER; c = subtema y k = Q o CTS (contexto de salud,
+   ambiente o industria). */
+(function(){
+  var D=window.DOCENTE_DATOS;if(!D)return;
+  var fuentes=[['modelos',typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:[]],['acidobase',typeof BANCO_PH!=='undefined'?BANCO_PH:[]],['industria',typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:[]]];
+  var CTS={cuerpo:1,ambiente:1,procesos:1};
+  fuentes.forEach(function(f){f[1].forEach(function(q){if(q.tipo&&q.tipo!=='mc')return;
+    D.SABER.push({tema:f[0],c:q.tema,k:CTS[q.tema]?'CTS':'Q',ctx:'',q:q.q,o:[q.ok].concat(q.d)});});});
+})();
+
