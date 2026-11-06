@@ -4,6 +4,23 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre — Ahorcado en pantalla completa: gira a horizontal en el celular
+
+El docente pidió que la pantalla completa del modo clase del Ahorcado girara sola a horizontal en el celular.
+
+**Fallo corregido.** La pantalla completa se aplicaba al tablero, que se redibuja con cada letra, así que se cerraba sola al tocar la primera letra. Ahora se aplica a `#ah-play`, que no se redibuja, y se mantiene durante toda la partida.
+
+**Cambios en `assets/ahorcado.js` y `docente.html`:**
+- Al entrar en pantalla completa se pide el giro a horizontal (`screen.orientation.lock`); al salir, el giro se libera.
+- El botón cambia a «✕ Salir de pantalla completa».
+- En un celular en horizontal se usan dos columnas: a la izquierda el muñeco, los fallos y las pistas; a la derecha la palabra, el teclado y los botones. Todo cabe sin desplazarse.
+
+**Verificación.** Probado con Playwright simulando un celular en horizontal (844 × 390): la pantalla completa se mantuvo mientras se jugaba, se pidió el giro y se liberó al salir, y no hubo errores. `sw.js` pasa a `ionom-v81`.
+
+**Límite.** En iPhone, Safari no permite poner en pantalla completa ni girar una parte de la página: ahí hay que girar el celular a mano. En Android (Chrome) y en tabletas sí funciona.
+
+---
+
 ## 5 de noviembre (10) — Corrección: el Ahorcado mostraba «0 palabras» en el celular
 
 El docente reportó que en su celular la pestaña Ahorcado del generador decía «0 palabras» en todos los temas.

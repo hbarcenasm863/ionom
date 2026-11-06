@@ -119,6 +119,27 @@ function letraClase(l){
   else if(CL.fallos >= MAX_FALLOS){ CL.fin = true; CL.msg = '✗ Se completó el muñeco. La palabra era ' + CL.pal + '.'; }
   pintarClase();
 }
+/* Pantalla completa del modo clase: se aplica a #ah-play (que no se redibuja
+   al tocar una letra; antes se aplicaba al tablero, que sí se reemplaza, y
+   la pantalla completa se cerraba sola). En celular gira a horizontal. */
+function pantallaCompleta(){
+  const box = $('#ah-play'); if(!box) return;
+  const fe = document.fullscreenElement || document.webkitFullscreenElement;
+  if(fe){ (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+  const req = box.requestFullscreen || box.webkitRequestFullscreen;
+  if(!req) return;
+  const p = req.call(box);
+  const girar = () => { try{ if(screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); }catch(e){} };
+  if(p && p.then) p.then(girar).catch(() => {}); else girar();
+}
+function alCambiarPantalla(){
+  const fe = document.fullscreenElement || document.webkitFullscreenElement;
+  if(!fe){ try{ if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); }catch(e){} }
+  if(CL) pintarClase();
+}
+document.addEventListener('fullscreenchange', alCambiarPantalla);
+document.addEventListener('webkitfullscreenchange', alCambiarPantalla);
+window.addEventListener('resize', () => { if(CL && (document.fullscreenElement || document.webkitFullscreenElement)) pintarClase(); });
 function pintarClase(){
   const box = $('#ah-play'); if(!box || !CL) return;
   const pal = [...CL.pal].map(ch => ch === ' ' ? '<span class="ahc-sp"></span>' : !esLetra(ch) ? '<span class="ahc-l v">' + esc(ch) + '</span>'
@@ -127,7 +148,7 @@ function pintarClase(){
     + '<div class="ahc-bar"><b>Palabra ' + (CL.i + 1) + ' de ' + CL.lista.length + '</b>'
     + '<span class="ahc-eq">Equipo A: <b>' + CL.eqA + '</b> <button type="button" data-eq="A">+1</button></span>'
     + '<span class="ahc-eq">Equipo B: <b>' + CL.eqB + '</b> <button type="button" data-eq="B">+1</button></span>'
-    + '<button type="button" class="ahc-fs">⛶ Pantalla completa</button></div>'
+    + '<button type="button" class="ahc-fs">' + ((document.fullscreenElement || document.webkitFullscreenElement) ? '✕ Salir de pantalla completa' : '⛶ Pantalla completa') + '</button></div>'
     + '<div class="ahc-main">' + dibujoGrande(CL.fallos) + '<div class="ahc-info"><div class="ahc-fallos">Fallos: <b>' + CL.fallos + '</b> de ' + MAX_FALLOS + '</div>'
     + CL.w.slice(2, 2 + CL.nPistas).map((t, k) => '<div class="ahc-pista"><b>Pista ' + (k+1) + ':</b> ' + esc(t) + '</div>').join('')
     + (CL.nPistas < 3 && !CL.fin ? '<button type="button" class="ahc-btn ahc-mas">💡 Mostrar la pista ' + (CL.nPistas + 1) + '</button>' : '') + '</div></div>'
@@ -143,7 +164,7 @@ function pintarClase(){
   on('.ahc-rev', () => { CL.fin = true; CL.msg = 'La palabra era ' + CL.pal + '.'; pintarClase(); });
   on('.ahc-sig', () => { CL.i++; nuevaPalabra(); });
   on('.ahc-otra', () => { semilla = nuevaSemilla(); $('#ah-seed').value = ''; iniciarClase(); });
-  on('.ahc-fs', () => { const el = box.querySelector('.ahc'); if(document.fullscreenElement) document.exitFullscreen(); else if(el.requestFullscreen) el.requestFullscreen(); });
+  on('.ahc-fs', pantallaCompleta);
   box.querySelectorAll('[data-eq]').forEach(b => b.addEventListener('click', () => { if(b.dataset.eq === 'A') CL.eqA++; else CL.eqB++; pintarClase(); }));
 }
 document.addEventListener('keydown', e => {
