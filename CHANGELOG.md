@@ -4,6 +4,42 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (4) — Criptograma químico, mapa conceptual con huecos y detective químico
+
+Tres actividades nuevas que propuso el docente, en el generador docente (`assets/extras.js`, el mismo archivo que en ChromaNom). Todas tienen hoja carta con logo, Nombre / Curso / Fecha, marca de agua y pie, versiones con clave y modo clase con pantalla completa.
+
+- **🔐 Criptograma químico.**
+  - La frase es una palabra clave con su definición, tomada del banco del Ahorcado.
+  - Cada letra se cifra con el número atómico Z de un elemento cuyo símbolo empieza por esa letra; el estudiante descifra con la tabla periódica.
+  - Opciones: rango de Z, letras con número fijo o variable, y frases por hoja.
+  - Modo clase: casillas para escribir, «Comprobar», «Revelar una letra» y «Revelar la frase».
+- **🗺️ Mapa conceptual con huecos.**
+  - Usa el esquema de cada uno de los 23 temas, con sus conectores.
+  - Se eligen los recuadros en blanco (ramas, ejemplos, la mitad o casi todos), con o sin banco de palabras.
+  - Modo clase: se toca un concepto y luego su recuadro.
+- **🕵️ El detective químico.**
+  - 7 historias nuevas en `assets/bancos-extra.js` (`DETECTIVE`), una por grupo de temas:
+    - la maqueta del átomo;
+    - un recorrido por la tabla periódica;
+    - las etiquetas del laboratorio;
+    - la práctica de reacciones y pH;
+    - la visita a la cementera;
+    - de Cartagena a Bogotá;
+    - el experimento de la jeringa.
+  - Cada historia tiene 8 puntos dudosos; cada versión elige al azar cuáles salen con error (3 a 6).
+  - Hoja con líneas para corregir; clave con los errores y sus correcciones.
+  - Modo clase: se toca cada frase con error y aparece la corrección.
+
+**Verificación (Playwright):**
+- las hojas cumplen la marca del sitio y caben en la carta, y los 23 mapas caben;
+- los tres modos clase funcionan;
+- en un celular en horizontal quedan en pantalla completa y piden el giro;
+- no hubo errores en consola.
+
+`sw.js` pasa a `ionom-v84` (`assets/extras.js` se sirve primero desde internet).
+
+---
+
 ## 6 de noviembre (3) — Marca del sitio en todas las hojas y pantalla completa en todo lo que se proyecta
 
 Reglas que pidió el docente para todo el material:

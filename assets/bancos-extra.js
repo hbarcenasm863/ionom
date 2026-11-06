@@ -1187,3 +1187,292 @@ window.AHORCADO_GRUPOS=[
 /* Marca del sitio para las hojas impresas (Ahorcado y Sopa de letras):
    mismo logo, marca de agua y pie que los crucigramas y laberintos. */
 window.HOJA_SITIO={logo:'assets/logo-ionom-hoja.png',marca:'assets/marca-ionom.png',nombre:'IonNom',pie:'<span class="m">Ion<b>Nom</b> · Nombra con precisión</span><span>© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span>'};
+
+/* Historias del «Detective químico» (extras.js): [grupo, título, partes].
+   Cada parte es texto fijo o [versión correcta, versión con error]; cada hoja
+   elige al azar cuáles puntos dudosos salen con error. Basadas en lo que
+   explican las páginas del sitio. */
+window.DETECTIVE=[
+[
+"atomo",
+"La maqueta del átomo",
+[
+"Para la feria de ciencias, Camila armó una maqueta del átomo.",
+[
+"Puso los protones y los neutrones en el núcleo, y los electrones alrededor.",
+"Puso los protones y los electrones en el núcleo, y los neutrones alrededor."
+],
+[
+"Explicó que Rutherford descubrió el núcleo con el experimento de la lámina de oro.",
+"Explicó que Thomson descubrió el núcleo con el experimento de la lámina de oro."
+],
+[
+"Para el sodio-23, con Z = 11, contó 11 protones y 12 neutrones.",
+"Para el sodio-23, con Z = 11, contó 11 protones y 23 neutrones."
+],
+[
+"Al ion Na⁺ le quitó un electrón, porque un catión pierde electrones.",
+"Al ion Na⁺ le agregó un electrón, porque un catión gana electrones."
+],
+[
+"Mostró que el carbono-12 y el carbono-14 son isótopos: tienen el mismo Z y distinto A.",
+"Mostró que el carbono-12 y el carbono-14 son isótopos: tienen distinto Z y el mismo A."
+],
+"Luego escribió la configuración electrónica del potasio, con Z = 19.",
+[
+"Siguiendo el diagrama de Moeller, llenó el 4s antes que el 3d: 1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹.",
+"Siguiendo el diagrama de Moeller, llenó el 3d antes que el 4s: 1s² 2s² 2p⁶ 3s² 3p⁶ 3d¹."
+],
+[
+"Recordó que en un orbital caben como máximo 2 electrones, con espines opuestos.",
+"Recordó que en un orbital caben hasta 8 electrones con el mismo espín."
+],
+"Su maqueta ganó el primer puesto."
+]
+],
+[
+"tabla",
+"Un recorrido por la tabla periódica",
+[
+"Juan recorrió con el dedo la tabla periódica del salón.",
+[
+"Las filas horizontales son los periodos, y las columnas, los grupos.",
+"Las filas horizontales son los grupos, y las columnas, los periodos."
+],
+[
+"En el grupo 1 están los metales alcalinos, muy reactivos con el agua.",
+"En el grupo 17 están los metales alcalinos, muy reactivos con el agua."
+],
+[
+"El flúor es el elemento con la mayor electronegatividad.",
+"El sodio es el elemento con la mayor electronegatividad."
+],
+[
+"En un periodo, el radio atómico disminuye hacia la derecha.",
+"En un periodo, el radio atómico aumenta hacia la derecha."
+],
+"Después Juan analizó la sal de cocina, NaCl.",
+[
+"Entre el sodio y el cloro la ΔEN es mayor que 1,7: el enlace es iónico.",
+"Entre el sodio y el cloro la ΔEN es menor que 0,4: el enlace es covalente apolar."
+],
+[
+"En el HCl, el cloro atrae más los electrones compartidos: es un enlace covalente polar.",
+"En el HCl, los dos átomos atraen igual los electrones compartidos: es un enlace covalente apolar."
+],
+[
+"El cobre de los cables tiene enlace metálico, con un «mar de electrones» que conduce la electricidad.",
+"El cobre de los cables tiene enlace iónico, y por eso conduce la electricidad."
+],
+[
+"Mendeléiev ordenó los elementos en 1869 y dejó huecos para los que faltaban por descubrir.",
+"Mendeléiev ordenó los elementos en 1969 y no dejó huecos."
+],
+"Juan entendió que la posición de un elemento predice cómo se enlaza."
+]
+],
+[
+"nom",
+"Las etiquetas del laboratorio",
+[
+"El laboratorio necesitaba etiquetas nuevas y Sofía se ofreció a escribirlas.",
+[
+"Para el Fe₂O₃ escribió «óxido de hierro (III)» en Stock y «óxido férrico» en tradicional.",
+"Para el Fe₂O₃ escribió «óxido de hierro (II)» en Stock y «óxido ferroso» en tradicional."
+],
+[
+"En la nomenclatura sistemática, el Fe₂O₃ se llama trióxido de dihierro.",
+"En la nomenclatura sistemática, el Fe₂O₃ se llama dióxido de trihierro."
+],
+[
+"En la tradicional, el sufijo -oso indica el estado de oxidación menor.",
+"En la tradicional, el sufijo -oso indica el estado de oxidación mayor."
+],
+[
+"El NaOH es un hidróxido: un metal con el grupo OH⁻.",
+"El NaOH es un óxido ácido: un no metal con oxígeno."
+],
+[
+"El HCl gaseoso se llama cloruro de hidrógeno y, disuelto en agua, ácido clorhídrico.",
+"El HCl gaseoso se llama ácido clorhídrico y, disuelto en agua, cloruro de hidrógeno."
+],
+[
+"El H₂SO₄ es un oxácido, porque tiene hidrógeno, un no metal y oxígeno.",
+"El H₂SO₄ es un hidrácido, porque tiene hidrógeno, un no metal y oxígeno."
+],
+[
+"El NaCl es una sal binaria y el CaCO₃ de la caliza es una oxisal.",
+"El NaCl es una oxisal y el CaCO₃ de la caliza es una sal binaria."
+],
+[
+"El NaH es un hidruro metálico, con el hidrógeno al final de la fórmula.",
+"El NaH es un ácido hidrácido, con el hidrógeno al final de la fórmula."
+],
+"Al final, cada frasco quedó con su nombre correcto."
+]
+],
+[
+"rx",
+"La práctica de reacciones y pH",
+[
+"En la práctica de laboratorio, el grupo de Mateo probó varias reacciones.",
+[
+"Al quemar gas propano obtuvieron CO₂ y agua: una combustión.",
+"Al quemar gas propano obtuvieron CO₂ y agua: una descomposición."
+],
+[
+"Al calentar la caliza se formaron cal viva y CO₂: una descomposición.",
+"Al calentar la caliza se formaron cal viva y CO₂: una síntesis."
+],
+[
+"Para balancear las ecuaciones cambiaron los coeficientes, nunca los subíndices.",
+"Para balancear las ecuaciones cambiaron los subíndices de las fórmulas."
+],
+"Luego midieron el pH con agua de repollo morado.",
+[
+"El limón tiñó el indicador de rojo, porque es ácido.",
+"El limón tiñó el indicador de verde, porque es ácido."
+],
+[
+"Una solución de pH 3 tiene mil veces más H⁺ que una de pH 6.",
+"Una solución de pH 3 tiene el doble de H⁺ que una de pH 6."
+],
+[
+"Al mezclar HCl con NaOH se formaron una sal y agua: una neutralización.",
+"Al mezclar HCl con NaOH se formaron un ácido y una base nuevos."
+],
+[
+"El ácido acético del vinagre es débil: solo una parte de sus moléculas suelta el H⁺.",
+"El ácido acético del vinagre es fuerte: todas sus moléculas sueltan el H⁺."
+],
+[
+"La profesora recordó que el pH de la sangre se mantiene entre 7,35 y 7,45.",
+"La profesora recordó que el pH de la sangre se mantiene entre 5 y 6."
+],
+"Mateo anotó todo en su bitácora."
+]
+],
+[
+"calc",
+"La visita a la cementera",
+[
+"El curso visitó una cementera de Antioquia.",
+[
+"El ingeniero explicó que la caliza se calcina así: CaCO₃ → CaO + CO₂.",
+"El ingeniero explicó que la caliza se calcina así: CaCO₃ → CaO + O₂."
+],
+[
+"La masa molar del CO₂ es 44 g/mol: 12 + 2 × 16.",
+"La masa molar del CO₂ es 28 g/mol: 12 + 16."
+],
+[
+"Un mol de cualquier sustancia tiene 6,022 × 10²³ partículas.",
+"Un mol de cualquier sustancia tiene 6,022 × 10²³ gramos."
+],
+[
+"Si la caliza tiene 90 % de CaCO₃, en 1000 kg hay 900 kg de CaCO₃ útil.",
+"Si la caliza tiene 90 % de CaCO₃, en 1000 kg hay 1000 kg de CaCO₃ útil."
+],
+"Luego hablaron del amoníaco para los fertilizantes: N₂ + 3 H₂ → 2 NH₃.",
+[
+"El reactivo que se acaba primero es el reactivo limitante.",
+"El reactivo que sobra al final es el reactivo limitante."
+],
+[
+"Con 1 mol de N₂ se forman 2 mol de NH₃.",
+"Con 1 mol de N₂ se forma 1 mol de NH₃."
+],
+[
+"El rendimiento se calcula como masa real ÷ masa teórica × 100.",
+"El rendimiento se calcula como masa teórica ÷ masa real × 100."
+],
+[
+"Una ecuación iónica bien escrita conserva la masa y también la carga.",
+"Una ecuación iónica bien escrita conserva la masa, aunque la carga cambie."
+],
+"Los estudiantes salieron con ganas de ser ingenieros químicos."
+]
+],
+[
+"gas",
+"De Cartagena a Bogotá",
+[
+"Lucía viajó en bus de Cartagena a Bogotá con un paquete de papas en la maleta.",
+[
+"Al llegar, el paquete estaba inflado porque en Bogotá la presión del aire es menor.",
+"Al llegar, el paquete estaba inflado porque en Bogotá la presión del aire es mayor."
+],
+[
+"Para calcularlo usó la ley combinada, con la temperatura en kelvin.",
+"Para calcularlo usó la ley combinada, con la temperatura en grados Celsius."
+],
+[
+"Según la ley de Boyle, si la presión baja, el volumen del gas aumenta.",
+"Según la ley de Boyle, si la presión baja, el volumen del gas también baja."
+],
+[
+"En Bogotá se cansaba más al subir escaleras, porque la presión parcial del oxígeno es menor.",
+"En Bogotá se cansaba más al subir escaleras, porque el aire tiene menos porcentaje de oxígeno."
+],
+"En la casa de su tía preparó un suero.",
+[
+"Al disolver la sal, el agua rodeó cada ion: el O hacia el Na⁺ y los H hacia el Cl⁻.",
+"Al disolver la sal, el agua rodeó cada ion: los H hacia el Na⁺ y el O hacia el Cl⁻."
+],
+[
+"El suero fisiológico tiene 0,9 g de NaCl por cada 100 mL de solución.",
+"El suero fisiológico tiene 0,9 g de NaCl por cada litro de solución."
+],
+[
+"Revolver hizo que la sal se disolviera más rápido, pero no que se disolviera más.",
+"Revolver hizo que se pudiera disolver más sal en la misma agua."
+],
+[
+"Al agregar más agua, la concentración bajó, pero los moles de sal siguieron iguales.",
+"Al agregar más agua, la concentración bajó porque se perdieron moles de sal."
+],
+"Lucía comprobó que la química viaja con ella."
+]
+],
+[
+"mod",
+"El experimento de la jeringa",
+[
+"En clase de ciencias, el grupo de Felipe investigó qué le pasa al aire de una jeringa al apretarla.",
+[
+"Primero escribieron su hipótesis: «si aumenta la presión, el volumen disminuye».",
+"Primero escribieron su ley: «si aumenta la presión, el volumen disminuye», aunque todavía no habían medido nada."
+],
+[
+"La presión era la variable independiente, y el volumen, la dependiente.",
+"El volumen era la variable independiente, porque era lo que medían."
+],
+[
+"Mantuvieron iguales la temperatura y la cantidad de aire: eran las variables controladas.",
+"Cambiaron la temperatura en cada medida para tener más datos."
+],
+[
+"Al multiplicar P × V obtuvieron casi el mismo valor en todas las medidas: la ley de Boyle.",
+"Al sumar P + V obtuvieron casi el mismo valor en todas las medidas: la ley de Boyle."
+],
+[
+"La teoría cinético-molecular lo explica: con menos volumen, las partículas chocan más veces contra las paredes.",
+"La teoría cinético-molecular lo explica: con menos volumen, las partículas chocan menos veces contra las paredes."
+],
+"Después usaron un modelo del punto de ebullición del agua según la altitud.",
+[
+"Predecir para Medellín, dentro del rango de los datos, fue una interpolación.",
+"Predecir para Medellín, dentro del rango de los datos, fue una extrapolación."
+],
+[
+"Predecir para la cima de un nevado, fuera del rango, fue más arriesgado: una extrapolación.",
+"Predecir para la cima de un nevado, fuera del rango, fue lo más seguro de todo."
+],
+[
+"Felipe concluyó que una teoría no es «una idea sin pruebas»: explica algo con muchas evidencias.",
+"Felipe concluyó que una teoría es «una idea que todavía no se ha comprobado»."
+],
+"El grupo presentó sus resultados con una gráfica de P contra 1/V."
+]
+]
+];
