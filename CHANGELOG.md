@@ -4,6 +4,21 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (8) — Detective: botón «Revelar pista» en vez de la lupa fija
+
+A pedido del docente, la lupa 🔍 ya no va fija al final de cada párrafo.
+
+- **Se quitó el nivel «Con pistas».** Las hojas quedan con «Guiado» y «Sin pistas».
+- **Modo clase, botón «🔍 Revelar pista»:**
+  - Lleva la vista al siguiente párrafo con errores pendientes, lo resalta y le pone encima una lupa que dice «Aquí hay N errores».
+  - La lupa se actualiza a medida que encuentran los errores.
+  - La barra cuenta las «Pistas usadas».
+- `assets/extras.js` es el mismo archivo que en ChromaNom. Los estilos están en `docente.html`.
+- **`sw.js`:** la caché pasa a `ionom-v88`.
+- **Verificación:** probado sin errores; las 21 historias caben en los dos niveles.
+
+---
+
 ## 6 de noviembre (7) — Detective químico: párrafos por tema y tres niveles de apoyo
 
 Le dieron al docente esta retroalimentación sobre «El juego de las cartas de elementos»: varias tendencias periódicas juntas en un párrafo corto saturan al estudiante, y las afirmaciones densas cuestan de identificar sin guía.
