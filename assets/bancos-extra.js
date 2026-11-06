@@ -1168,6 +1168,517 @@ window.BANCO_AHORCADO=[
 "Predecir dentro del rango de los datos.",
 "Es más confiable que extrapolar.",
 "Lo contrario de extrapolar."
+],
+[
+"NÚMERO ATÓMICO",
+"atomo",
+"Número de protones de un átomo.",
+"Define de qué elemento se trata.",
+"Se escribe Z; para el carbono es 6."
+],
+[
+"THOMSON",
+"atomo",
+"Científico que descubrió el electrón.",
+"Usó el tubo de rayos catódicos.",
+"Su modelo fue reemplazado por el de Rutherford."
+],
+[
+"NIVEL",
+"config-e",
+"Capa de energía donde están los electrones.",
+"Se numera con n = 1, 2, 3…",
+"Bohr propuso que los electrones giran en ellos."
+],
+[
+"SUBNIVEL",
+"config-e",
+"División de un nivel de energía: s, p, d o f.",
+"El p admite hasta 6 electrones.",
+"El 4s se llena antes que el 3d."
+],
+[
+"CUÁNTICOS",
+"config-e",
+"Números que describen a cada electrón del átomo.",
+"Son cuatro: n, l, mₗ y s.",
+"Números ___."
+],
+[
+"EXCITADO",
+"atomo",
+"Estado de un electrón que subió a un nivel de mayor energía.",
+"Al volver a su nivel emite luz.",
+"Lo contrario del estado fundamental."
+],
+[
+"METAL",
+"elemento",
+"Elemento brillante que conduce la electricidad.",
+"Está a la izquierda de la escalera de la tabla.",
+"Tiende a perder electrones y formar cationes."
+],
+[
+"NO METAL",
+"elemento",
+"Elemento a la derecha de la escalera de la tabla.",
+"Tiende a ganar electrones.",
+"El cloro y el oxígeno lo son."
+],
+[
+"GASES NOBLES",
+"elemento",
+"Elementos del grupo 18.",
+"Ya cumplen la regla del octeto.",
+"El helio, el neón y el argón."
+],
+[
+"IONIZACIÓN",
+"elemento",
+"Proceso en que un átomo pierde un electrón y queda como ion.",
+"Su energía aumenta hacia la derecha del periodo.",
+"Energía de ___."
+],
+[
+"RADIO",
+"elemento",
+"Distancia del núcleo al último nivel de un átomo.",
+"Aumenta hacia abajo en un grupo.",
+"___ atómico."
+],
+[
+"BLOQUE",
+"elemento",
+"Zona de la tabla según el último subnivel que se llena.",
+"Los hay s, p, d y f.",
+"El sodio está en el s."
+],
+[
+"APOLAR",
+"enlace",
+"Enlace covalente con ΔEN menor que 0,4.",
+"Es el de la molécula de H₂.",
+"Los dos átomos atraen igual los electrones."
+],
+[
+"TRANSFERENCIA",
+"enlace",
+"Paso de electrones de un metal a un no metal.",
+"Ocurre en el enlace iónico.",
+"Así se forma el NaCl."
+],
+[
+"PAULING",
+"enlace",
+"Científico de la escala de electronegatividad más usada.",
+"En su escala, el flúor vale 3,98.",
+"Escala de ___."
+],
+[
+"SAL BINARIA",
+"sal-bin",
+"Compuesto de un metal y un no metal, sin oxígeno.",
+"El NaCl es una.",
+"Su nombre termina en -uro."
+],
+[
+"SAL ÁCIDA",
+"sal-ac",
+"Sal que conserva hidrógeno del ácido.",
+"El NaHCO₃ es una.",
+"Se forma con un ácido que no perdió todos sus H."
+],
+[
+"ICO",
+"ox-bas",
+"Sufijo del estado de oxidación mayor en la nomenclatura tradicional.",
+"Como en «óxido férrico».",
+"Lo contrario de -oso."
+],
+[
+"OSO",
+"ox-bas",
+"Sufijo del estado de oxidación menor en la nomenclatura tradicional.",
+"Como en «óxido ferroso».",
+"Lo contrario de -ico."
+],
+[
+"HIPO",
+"ac-ox",
+"Prefijo del estado de oxidación más bajo cuando hay cuatro.",
+"Como en «ácido hipocloroso».",
+"Va con el sufijo -oso."
+],
+[
+"PER",
+"ac-ox",
+"Prefijo del estado de oxidación más alto cuando hay cuatro.",
+"Como en «ácido perclórico».",
+"Va con el sufijo -ico."
+],
+[
+"ATO",
+"sal-ox",
+"Terminación del anión de un ácido terminado en -ico.",
+"El SO₄²⁻ es el sulfato.",
+"Ácido sulfúrico → sulf___."
+],
+[
+"ITO",
+"sal-ox",
+"Terminación del anión de un ácido terminado en -oso.",
+"El SO₃²⁻ es el sulfito.",
+"Ácido sulfuroso → sulf___."
+],
+[
+"PREFIJO",
+"ox-bas",
+"Parte del nombre sistemático que dice cuántos átomos hay.",
+"Mono-, di-, tri-, tetra-…",
+"En «trióxido» es tri-."
+],
+[
+"CARGA",
+"ox-bas",
+"Valor que se cruza para obtener los subíndices de una fórmula.",
+"La del oxígeno en los óxidos es −2.",
+"Cruce de ___s."
+],
+[
+"SULFATO",
+"sal-ox",
+"Anión SO₄²⁻.",
+"Viene del ácido sulfúrico.",
+"El CuSO₄ es el ___ de cobre."
+],
+[
+"NITRATO",
+"sal-ox",
+"Anión NO₃⁻.",
+"Viene del ácido nítrico.",
+"El KNO₃ es el ___ de potasio."
+],
+[
+"CARBONATO",
+"sal-ox",
+"Anión CO₃²⁻.",
+"Está en la caliza y en la cáscara de huevo.",
+"El CaCO₃ es el ___ de calcio."
+],
+[
+"CLORURO",
+"sal-bin",
+"Anión Cl⁻.",
+"Viene del ácido clorhídrico.",
+"El NaCl es el ___ de sodio."
+],
+[
+"REACTIVO",
+"reaccion",
+"Sustancia que se transforma en una reacción.",
+"Se escribe a la izquierda de la flecha.",
+"Lo contrario de producto."
+],
+[
+"PRODUCTO",
+"reaccion",
+"Sustancia que se forma en una reacción.",
+"Se escribe a la derecha de la flecha.",
+"Lo contrario de reactivo."
+],
+[
+"SUSTITUCIÓN",
+"reaccion",
+"Un elemento reemplaza a otro en un compuesto.",
+"Puede ser simple o doble.",
+"Zn + CuSO₄ → ZnSO₄ + Cu es una ___ simple."
+],
+[
+"BALANCEO",
+"balanceo",
+"Ajuste de coeficientes para que haya los mismos átomos a cada lado.",
+"Cumple la conservación de la masa.",
+"Se hace por tanteo o por el método algebraico."
+],
+[
+"TANTEO",
+"balanceo",
+"Método de balanceo por ensayo y error.",
+"Se prueban coeficientes hasta igualar los átomos.",
+"Lo contrario del método algebraico."
+],
+[
+"POH",
+"acidobase",
+"Medida de la concentración de OH⁻ de una solución.",
+"Sumado al pH da 14, a 25 °C.",
+"pOH = −log[OH⁻]."
+],
+[
+"NEUTRO",
+"acidobase",
+"Ni ácido ni básico.",
+"Su pH es 7.",
+"El agua pura lo es."
+],
+[
+"BICARBONATO",
+"acidobase",
+"Base suave que neutraliza los ácidos de la boca y del intestino.",
+"La saliva y el páncreas lo usan.",
+"HCO₃⁻."
+],
+[
+"LLUVIA ÁCIDA",
+"acidobase",
+"Lluvia con un pH menor que 5,6.",
+"La causan el SO₂ y los NOₓ de la quema de carbón y diésel.",
+"Daña los páramos y los monumentos de piedra caliza."
+],
+[
+"ANTIÁCIDO",
+"acidobase",
+"Base que alivia la acidez estomacal.",
+"La leche de magnesia es uno.",
+"Mg(OH)₂ + 2 HCl → MgCl₂ + 2 H₂O."
+],
+[
+"FACTOR",
+"estequiometria",
+"Fracción que convierte unas unidades en otras.",
+"Se encadenan en la estequiometría.",
+"___ de conversión."
+],
+[
+"EXCESO",
+"estequiometria",
+"Reactivo que sobra al terminar la reacción.",
+"En el ejemplo del amoníaco era el H₂.",
+"Reactivo en ___."
+],
+[
+"TEÓRICO",
+"industria",
+"Rendimiento que se calcula con la ecuación.",
+"Casi nunca se obtiene completo.",
+"Rendimiento ___."
+],
+[
+"CALIZA",
+"industria",
+"Roca de CaCO₃ de las canteras.",
+"Se calcina para hacer cal y cemento.",
+"Libera CO₂ al calentarla."
+],
+[
+"CEMENTO",
+"industria",
+"Material de construcción hecho con cal viva.",
+"Se fabrica calcinando caliza.",
+"Su producción libera mucho CO₂."
+],
+[
+"HABER",
+"industria",
+"Proceso para fabricar amoníaco.",
+"N₂ + 3 H₂ → 2 NH₃.",
+"Usa un catalizador de hierro."
+],
+[
+"ALTO HORNO",
+"industria",
+"Lugar donde se reduce el mineral de hierro.",
+"Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂.",
+"Allí se obtiene el hierro para el acero."
+],
+[
+"SALMUERA",
+"industria",
+"Agua con mucha sal disuelta.",
+"Su electrólisis da NaOH, Cl₂ y H₂.",
+"Proceso cloro-soda."
+],
+[
+"COAGULANTE",
+"industria",
+"Sustancia que se agrega al agua para formar un sólido que atrapa la suciedad.",
+"Se usa en las plantas de potabilización.",
+"Forma un precipitado gelatinoso."
+],
+[
+"RAZÓN MOLAR",
+"estequiometria",
+"Relación entre los coeficientes de una ecuación balanceada.",
+"En N₂ + 3 H₂ → 2 NH₃ es 1 : 3 : 2.",
+"Sirve para pasar de los moles de una sustancia a los de otra."
+],
+[
+"VOLUMEN",
+"gases",
+"Espacio que ocupa un gas.",
+"Se mide en L o en mL.",
+"Según Boyle, baja si la presión sube."
+],
+[
+"TEMPERATURA",
+"gases",
+"Variable de los gases que se mide en kelvin.",
+"K = °C + 273.",
+"Según Charles, si sube, el volumen sube."
+],
+[
+"CONCENTRACIÓN",
+"soluciones",
+"Cantidad de soluto en una cantidad de solución.",
+"Se expresa en %, ppm, M, m…",
+"Baja al diluir."
+],
+[
+"PPM",
+"soluciones",
+"Unidad de concentración: miligramos por litro, en agua.",
+"Partes por millón.",
+"El cloro del agua potable va de 0,3 a 2,0."
+],
+[
+"SUERO",
+"soluciones",
+"Solución de NaCl al 0,9 % m/v.",
+"Su molaridad es 0,154 M.",
+"___ fisiológico."
+],
+[
+"INSATURADA",
+"soluciones",
+"Solución que todavía admite más soluto.",
+"Su punto está bajo la curva de solubilidad.",
+"Lo contrario de saturada."
+],
+[
+"NORMALIDAD",
+"soluciones",
+"Concentración en equivalentes por litro.",
+"El H₂SO₄ 1 M es 2 N.",
+"Se escribe con la letra N."
+],
+[
+"SOLUCIÓN",
+"soluciones",
+"Mezcla homogénea de un soluto y un solvente.",
+"El suero y el alcohol antiséptico lo son.",
+"Se prepara en un balón aforado."
+],
+[
+"VARIABLE",
+"modelos",
+"Lo que puede cambiar en un experimento.",
+"Puede ser independiente, dependiente o controlada.",
+"La presión lo es en el experimento de la jeringa."
+],
+[
+"INDEPENDIENTE",
+"modelos",
+"Variable que el investigador cambia a propósito.",
+"En la jeringa es la presión.",
+"Variable ___."
+],
+[
+"DEPENDIENTE",
+"modelos",
+"Variable que se mide en el experimento.",
+"En la jeringa es el volumen.",
+"Variable ___."
+],
+[
+"CONTROLADA",
+"modelos",
+"Variable que se mantiene igual en el experimento.",
+"En la jeringa, la temperatura.",
+"Variable ___."
+],
+[
+"GRÁFICA",
+"modelos",
+"Dibujo que muestra la relación entre dos variables.",
+"La de P contra 1/V es una recta.",
+"Se hace con los datos de la tabla."
+],
+[
+"DATOS",
+"modelos",
+"Medidas que se registran en un experimento.",
+"Se organizan en una tabla.",
+"Con ellos se construye un modelo."
+],
+[
+"PROMEDIO",
+"modelos",
+"Valor que resulta de sumar las medidas y dividir entre cuántas son.",
+"Se calcula con las medidas de P × V.",
+"Resume varias medidas en un solo número."
+],
+[
+"EVIDENCIA",
+"modelos",
+"Dato que apoya o rechaza una idea.",
+"Una teoría está respaldada por muchas.",
+"Sin ella, una idea es solo una suposición."
+],
+[
+"PREDICCIÓN",
+"modelos",
+"Lo que un modelo dice que va a pasar.",
+"Se compara con una medida.",
+"Con la recta se hace una para Popayán."
+],
+[
+"MEDICIÓN",
+"modelos",
+"Proceso de obtener un dato con un instrumento.",
+"Siempre trae un pequeño error.",
+"El termómetro sirve para hacerla."
+],
+[
+"JERINGA",
+"modelos",
+"Instrumento del laboratorio virtual de Boyle.",
+"Se aprieta para cambiar la presión.",
+"Contiene aire a 20 °C."
+],
+[
+"IDEAM",
+"modelos",
+"Entidad que publica los datos de las estaciones meteorológicas de Colombia.",
+"Sus registros sirven para estudiar el clima.",
+"Datos históricos del territorio."
+],
+[
+"CINÉTICA",
+"modelos",
+"Teoría ___-molecular, que explica los gases como partículas en movimiento.",
+"Explica por qué se cumple la ley de Boyle.",
+"Teoría ___-molecular."
+],
+[
+"PENDIENTE",
+"modelos",
+"Inclinación de la recta de un modelo lineal.",
+"En el modelo de ebullición se ajusta para que la recta pase cerca de los puntos.",
+"Se mide en °C por cada 1000 m."
+],
+[
+"ALTITUD",
+"modelos",
+"Altura sobre el nivel del mar.",
+"A más altitud, el agua hierve a menor temperatura.",
+"Bogotá está a unos 2640 m."
+],
+[
+"EBULLICIÓN",
+"modelos",
+"Paso de líquido a vapor cuando el líquido hierve.",
+"En Bogotá el agua lo hace a unos 91 °C.",
+"Punto de ___."
 ]
 ];
 
@@ -1231,6 +1742,87 @@ window.DETECTIVE=[
 ]
 ],
 [
+"atomo",
+"La historia del átomo en una línea del tiempo",
+[
+"Para la clase de historia de la ciencia, Daniela hizo una línea del tiempo del átomo.",
+[
+"Dalton imaginó el átomo como una esfera maciza e indivisible.",
+"Dalton imaginó el átomo con un núcleo pequeño y electrones girando."
+],
+[
+"Thomson descubrió el electrón con el tubo de rayos catódicos.",
+"Thomson descubrió el neutrón con el tubo de rayos catódicos."
+],
+[
+"En el experimento de Rutherford, la mayoría de las partículas atravesó la lámina de oro sin desviarse.",
+"En el experimento de Rutherford, la mayoría de las partículas rebotó en la lámina de oro."
+],
+[
+"De ahí concluyó que el átomo es casi todo espacio vacío, con un núcleo pequeño y positivo.",
+"De ahí concluyó que el átomo es una masa compacta, sin espacios vacíos."
+],
+[
+"Bohr propuso que los electrones giran en niveles de energía fijos.",
+"Bohr propuso que los electrones pueden estar a cualquier distancia del núcleo."
+],
+[
+"Cuando un electrón excitado vuelve a su nivel, emite luz.",
+"Cuando un electrón excitado vuelve a su nivel, absorbe luz."
+],
+[
+"El número atómico Z es el número de protones del átomo.",
+"El número atómico Z es el número de neutrones del átomo."
+],
+[
+"El número de masa A es la suma de protones y neutrones.",
+"El número de masa A es la suma de protones y electrones."
+],
+"Su línea del tiempo quedó colgada en el pasillo."
+]
+],
+[
+"atomo",
+"El código de los electrones",
+[
+"Esteban practicó configuraciones electrónicas con su compañero Simón.",
+[
+"El subnivel s admite 2 electrones y el p, 6.",
+"El subnivel s admite 6 electrones y el p, 2."
+],
+[
+"El subnivel d admite hasta 10 electrones.",
+"El subnivel d admite hasta 14 electrones."
+],
+[
+"Para el oxígeno, con Z = 8, escribieron 1s² 2s² 2p⁴.",
+"Para el oxígeno, con Z = 8, escribieron 1s² 2s² 2p⁶."
+],
+[
+"El oxígeno tiene 6 electrones de valencia.",
+"El oxígeno tiene 8 electrones de valencia."
+],
+[
+"Según la regla de Hund, en el 2p los electrones ocupan primero orbitales vacíos con el mismo espín.",
+"Según la regla de Hund, en el 2p los electrones se aparean primero en un mismo orbital."
+],
+"Luego hablaron de los números cuánticos.",
+[
+"El número cuántico principal n indica el nivel de energía.",
+"El número cuántico principal n indica el espín del electrón."
+],
+[
+"Dos electrones de un mismo átomo no pueden tener los cuatro números cuánticos iguales.",
+"Dos electrones de un mismo átomo pueden tener los cuatro números cuánticos iguales si están en el mismo orbital."
+],
+[
+"El ion Cl⁻ tiene un electrón más que el átomo de cloro.",
+"El ion Cl⁻ tiene un electrón menos que el átomo de cloro."
+],
+"Al final, Simón ya escribía configuraciones sin mirar el diagrama."
+]
+],
+[
 "tabla",
 "Un recorrido por la tabla periódica",
 [
@@ -1272,6 +1864,86 @@ window.DETECTIVE=[
 ]
 ],
 [
+"tabla",
+"El juego de las cartas de elementos",
+[
+"Mariana inventó un juego de cartas con los elementos de la tabla periódica.",
+[
+"Las cartas de los metales decían «brillante y buen conductor de la electricidad».",
+"Las cartas de los metales decían «opaco y mal conductor de la electricidad»."
+],
+[
+"Los metales están a la izquierda de la escalera de la tabla, y los no metales, a la derecha.",
+"Los metales están a la derecha de la escalera de la tabla, y los no metales, a la izquierda."
+],
+[
+"Los gases nobles, del grupo 18, casi no reaccionan porque ya tienen el octeto completo.",
+"Los gases nobles, del grupo 18, son los más reactivos de la tabla."
+],
+[
+"El radio atómico aumenta hacia abajo en un grupo, porque hay más niveles.",
+"El radio atómico disminuye hacia abajo en un grupo, porque hay más niveles."
+],
+[
+"La energía de ionización aumenta hacia la derecha de un periodo.",
+"La energía de ionización disminuye hacia la derecha de un periodo."
+],
+[
+"Los halógenos están en el grupo 17 y tienden a ganar un electrón.",
+"Los halógenos están en el grupo 1 y tienden a perder un electrón."
+],
+[
+"El sodio está en el bloque s, porque su último electrón entra en un orbital s.",
+"El sodio está en el bloque d, porque es un metal."
+],
+[
+"En la escala de Pauling, el flúor tiene el valor más alto: 3,98.",
+"En la escala de Pauling, el cesio tiene el valor más alto: 3,98."
+],
+"El juego se volvió el favorito del recreo."
+]
+],
+[
+"tabla",
+"Los enlaces del agua y la sal",
+[
+"Andrea quiso entender por qué la sal se disuelve en agua y el aceite no.",
+[
+"En el NaCl, el sodio le transfiere un electrón al cloro: el enlace es iónico.",
+"En el NaCl, el sodio y el cloro comparten un par de electrones: el enlace es covalente."
+],
+[
+"Los compuestos iónicos tienen puntos de fusión altos.",
+"Los compuestos iónicos tienen puntos de fusión muy bajos."
+],
+[
+"La sal sólida no conduce la electricidad, pero disuelta en agua sí.",
+"La sal sólida conduce muy bien la electricidad, pero disuelta en agua no."
+],
+[
+"En la molécula de H₂ el enlace es covalente apolar, porque los dos átomos son iguales.",
+"En la molécula de H₂ el enlace es iónico, porque los dos átomos son iguales."
+],
+[
+"En el agua, el oxígeno atrae más los electrones: el enlace O−H es covalente polar.",
+"En el agua, el hidrógeno atrae más los electrones: el enlace O−H es covalente apolar."
+],
+[
+"Si la diferencia de electronegatividad es menor que 0,4, el enlace es covalente apolar.",
+"Si la diferencia de electronegatividad es menor que 0,4, el enlace es iónico."
+],
+[
+"En la estructura de Lewis del agua, el oxígeno tiene dos pares de electrones sin compartir.",
+"En la estructura de Lewis del agua, el oxígeno no tiene pares de electrones sin compartir."
+],
+[
+"El enlace metálico explica que los metales se puedan doblar sin romperse.",
+"El enlace iónico explica que los metales se puedan doblar sin romperse."
+],
+"Andrea concluyó que el tipo de enlace explica las propiedades."
+]
+],
+[
 "nom",
 "Las etiquetas del laboratorio",
 [
@@ -1309,6 +1981,86 @@ window.DETECTIVE=[
 "El NaH es un ácido hidrácido, con el hidrógeno al final de la fórmula."
 ],
 "Al final, cada frasco quedó con su nombre correcto."
+]
+],
+[
+"nom",
+"El inventario de la bodega",
+[
+"Felipe hizo el inventario de los reactivos de la bodega del colegio.",
+[
+"El CaO, la cal viva, es un óxido básico: un metal con oxígeno.",
+"El CaO, la cal viva, es un óxido ácido: un no metal con oxígeno."
+],
+[
+"El CO₂ es un óxido ácido; en la sistemática se llama dióxido de carbono.",
+"El CO₂ es un óxido básico; en la sistemática se llama monóxido de dicarbono."
+],
+[
+"El Ca(OH)₂ se llama hidróxido de calcio.",
+"El Ca(OH)₂ se llama óxido de calcio."
+],
+[
+"El HNO₃ es el ácido nítrico, y su anión NO₃⁻ se llama nitrato.",
+"El HNO₃ es el ácido nítrico, y su anión NO₃⁻ se llama nitrito."
+],
+[
+"Un anión terminado en -ito viene de un ácido terminado en -oso.",
+"Un anión terminado en -ito viene de un ácido terminado en -ico."
+],
+[
+"En la tradicional, si un no metal tiene cuatro estados, el más alto lleva per- e -ico.",
+"En la tradicional, si un no metal tiene cuatro estados, el más alto lleva hipo- y -oso."
+],
+[
+"El CuSO₄ es una oxisal: el sulfato de cobre (II).",
+"El CuSO₄ es una sal binaria: el sulfuro de cobre (II)."
+],
+[
+"El NaHCO₃ es una sal ácida, porque conserva un hidrógeno del ácido.",
+"El NaHCO₃ es una sal binaria, porque conserva un hidrógeno del ácido."
+],
+"El inventario quedó listo para la próxima práctica."
+]
+],
+[
+"nom",
+"Escribiendo fórmulas con cruce de cargas",
+[
+"Valeria explicó a su grupo cómo escribir fórmulas cruzando las cargas.",
+[
+"Para el óxido de aluminio cruzó Al³⁺ y O²⁻ y obtuvo Al₂O₃.",
+"Para el óxido de aluminio cruzó Al³⁺ y O²⁻ y obtuvo Al₃O₂."
+],
+[
+"La suma de las cargas de una fórmula siempre da cero.",
+"La suma de las cargas de una fórmula siempre da +1."
+],
+[
+"Para el cloruro de magnesio, con Mg²⁺ y Cl⁻, escribió MgCl₂.",
+"Para el cloruro de magnesio, con Mg²⁺ y Cl⁻, escribió Mg₂Cl."
+],
+[
+"En el nombre sistemático, el prefijo tri- indica tres átomos.",
+"En el nombre sistemático, el prefijo tri- indica cuatro átomos."
+],
+[
+"En la nomenclatura Stock, el estado de oxidación se escribe en números romanos.",
+"En la nomenclatura Stock, el estado de oxidación se escribe con prefijos griegos."
+],
+[
+"El FeO se llama óxido ferroso, porque el hierro usa su estado menor, +2.",
+"El FeO se llama óxido férrico, porque el hierro usa su estado menor, +2."
+],
+[
+"Los hidrácidos, como el HCl o el H₂S, no tienen oxígeno.",
+"Los hidrácidos, como el HCl o el H₂S, siempre tienen oxígeno."
+],
+[
+"Las sales binarias, como el NaCl, terminan su nombre en -uro.",
+"Las sales binarias, como el NaCl, terminan su nombre en -ato."
+],
+"Su grupo sacó la nota más alta en el quiz."
 ]
 ],
 [
@@ -1353,6 +2105,88 @@ window.DETECTIVE=[
 ]
 ],
 [
+"rx",
+"La cocina como laboratorio",
+[
+"Sebastián buscó reacciones químicas en la cocina de su casa.",
+[
+"La llama de la estufa es una combustión: el gas reacciona con el oxígeno.",
+"La llama de la estufa es una descomposición: el gas se separa en sus elementos."
+],
+[
+"Al echar bicarbonato en vinagre salieron burbujas de CO₂: una reacción ácido-base.",
+"Al echar bicarbonato en vinagre salieron burbujas de O₂: una combustión."
+],
+[
+"Una reacción de síntesis une dos sustancias en una sola.",
+"Una reacción de síntesis separa una sustancia en dos."
+],
+[
+"En una ecuación, los reactivos se escriben a la izquierda de la flecha.",
+"En una ecuación, los productos se escriben a la izquierda de la flecha."
+],
+"Luego midió el pH de varios productos.",
+[
+"El jabón de manos tenía pH mayor que 7: es básico.",
+"El jabón de manos tenía pH menor que 7: es básico."
+],
+[
+"El agua pura tiene pH 7: es neutra.",
+"El agua pura tiene pH 0: es neutra."
+],
+[
+"A 25 °C, el pH y el pOH suman 14.",
+"A 25 °C, el pH y el pOH suman 7."
+],
+[
+"Un antiácido como la leche de magnesia neutraliza el exceso de ácido del estómago.",
+"Un antiácido como la leche de magnesia aumenta la acidez del estómago."
+],
+"Sebastián concluyó que cocinar es hacer química."
+]
+],
+[
+"rx",
+"El reporte del río",
+[
+"El curso tomó muestras de agua de un río cerca del colegio.",
+[
+"La lluvia ácida tiene un pH menor que 5,6.",
+"La lluvia ácida tiene un pH mayor que 8."
+],
+[
+"La lluvia ácida se forma por el SO₂ y los NOₓ de la quema de carbón y diésel.",
+"La lluvia ácida se forma por el oxígeno que producen las plantas."
+],
+[
+"Un ácido fuerte se disocia por completo en el agua.",
+"Un ácido fuerte solo se disocia en una pequeña parte en el agua."
+],
+[
+"Según Arrhenius, una base libera iones OH⁻ en el agua.",
+"Según Arrhenius, una base libera iones H⁺ en el agua."
+],
+"Luego balancearon la ecuación de la combustión del metano.",
+[
+"Escribieron CH₄ + 2 O₂ → CO₂ + 2 H₂O.",
+"Escribieron CH₄ + O₂ → CO₂ + H₂O, porque ya estaba balanceada."
+],
+[
+"Una ecuación balanceada tiene los mismos átomos de cada elemento a los dos lados.",
+"Una ecuación balanceada tiene las mismas moléculas a los dos lados."
+],
+[
+"El balanceo cumple la ley de conservación de la masa.",
+"El balanceo no tiene relación con la conservación de la masa."
+],
+[
+"En Zn + CuSO₄ → ZnSO₄ + Cu, el zinc reemplaza al cobre: una sustitución simple.",
+"En Zn + CuSO₄ → ZnSO₄ + Cu, el zinc reemplaza al cobre: una doble sustitución."
+],
+"El informe del río se envió a la alcaldía."
+]
+],
+[
 "calc",
 "La visita a la cementera",
 [
@@ -1391,6 +2225,88 @@ window.DETECTIVE=[
 "Una ecuación iónica bien escrita conserva la masa, aunque la carga cambie."
 ],
 "Los estudiantes salieron con ganas de ser ingenieros químicos."
+]
+],
+[
+"calc",
+"La receta de las arepas y los moles",
+[
+"Tatiana usó una receta de arepas para explicar la estequiometría a su hermano.",
+[
+"Así como la receta dice cuánta harina va por cada taza de agua, la ecuación dice cuántos moles reaccionan.",
+"Así como la receta dice cuánta harina va por cada taza de agua, la ecuación dice cuántos gramos exactos reaccionan, sin usar moles."
+],
+[
+"En N₂ + 3 H₂ → 2 NH₃, la razón molar entre N₂ y H₂ es 1 : 3.",
+"En N₂ + 3 H₂ → 2 NH₃, la razón molar entre N₂ y H₂ es 3 : 1."
+],
+[
+"La masa molar del agua es 18 g/mol: 2 × 1 + 16.",
+"La masa molar del agua es 17 g/mol: 1 + 16."
+],
+[
+"Para pasar de gramos a moles se divide entre la masa molar.",
+"Para pasar de gramos a moles se multiplica por la masa molar."
+],
+[
+"36 g de agua son 2 moles de agua.",
+"36 g de agua son 36 moles de agua."
+],
+"Luego le habló del reactivo limitante.",
+[
+"Si hay harina para 10 arepas y queso para 6, el queso es el limitante.",
+"Si hay harina para 10 arepas y queso para 6, la harina es el limitante."
+],
+[
+"El reactivo en exceso es el que sobra cuando termina la reacción.",
+"El reactivo en exceso es el que se acaba primero."
+],
+[
+"Los factores de conversión se encadenan para cancelar las unidades.",
+"Los factores de conversión se suman para cancelar las unidades."
+],
+"Su hermano entendió la estequiometría y además comió arepas."
+]
+],
+[
+"calc",
+"La planta de agua potable",
+[
+"El curso visitó la planta de tratamiento de agua de la ciudad.",
+[
+"El ingeniero explicó que agregan un coagulante para formar un sólido que atrapa la suciedad.",
+"El ingeniero explicó que agregan un coagulante para disolver la suciedad en el agua."
+],
+[
+"Al final añaden cloro para eliminar los microorganismos.",
+"Al final añaden cloro para darle color al agua."
+],
+"Después hablaron de otras industrias químicas.",
+[
+"El proceso cloro-soda obtiene NaOH, Cl₂ y H₂ a partir de salmuera.",
+"El proceso cloro-soda obtiene azúcar a partir de salmuera."
+],
+[
+"En el proceso Haber se fabrica amoníaco con N₂ e H₂ y un catalizador de hierro.",
+"En el proceso Haber se fabrica amoníaco con CO₂ y agua, sin catalizador."
+],
+[
+"En el alto horno, el CO reduce el óxido de hierro y se obtiene hierro metálico.",
+"En el alto horno, el CO oxida el hierro metálico y se obtiene óxido de hierro."
+],
+[
+"El rendimiento real casi siempre es menor que el teórico.",
+"El rendimiento real casi siempre es mayor que el teórico."
+],
+[
+"Si se esperaban 100 kg y se obtuvieron 80 kg, el rendimiento fue del 80 %.",
+"Si se esperaban 100 kg y se obtuvieron 80 kg, el rendimiento fue del 125 %."
+],
+[
+"Calcinar caliza para hacer cemento libera mucho CO₂.",
+"Calcinar caliza para hacer cemento absorbe CO₂ del aire."
+],
+"Los estudiantes valoraron el agua que sale de la llave."
 ]
 ],
 [
@@ -1435,6 +2351,87 @@ window.DETECTIVE=[
 ]
 ],
 [
+"gas",
+"El globo de la fiesta",
+[
+"Para la fiesta de su hermana, Nicolás infló globos y pensó en las leyes de los gases.",
+[
+"Un globo dejado al sol se infla más: según Charles, si la temperatura sube, el volumen sube.",
+"Un globo dejado al sol se desinfla: según Charles, si la temperatura sube, el volumen baja."
+],
+[
+"En las leyes de los gases, la temperatura siempre se usa en kelvin.",
+"En las leyes de los gases, la temperatura siempre se usa en grados Celsius."
+],
+[
+"25 °C equivalen a 298 K.",
+"25 °C equivalen a 25 K."
+],
+[
+"Según Gay-Lussac, en un recipiente rígido la presión sube si la temperatura sube.",
+"Según Gay-Lussac, en un recipiente rígido la presión baja si la temperatura sube."
+],
+[
+"Según Avogadro, a igual presión y temperatura, más moles de gas ocupan más volumen.",
+"Según Avogadro, a igual presión y temperatura, más moles de gas ocupan menos volumen."
+],
+[
+"En la ecuación PV = nRT, la n representa los moles del gas.",
+"En la ecuación PV = nRT, la n representa la masa del gas en gramos."
+],
+[
+"Las partículas de un gas se mueven más rápido cuando la temperatura aumenta.",
+"Las partículas de un gas se mueven más lento cuando la temperatura aumenta."
+],
+[
+"Un gas ocupa todo el volumen del recipiente que lo contiene.",
+"Un gas ocupa solo la mitad inferior del recipiente que lo contiene."
+],
+"La fiesta terminó con todos los globos en el techo."
+]
+],
+[
+"gas",
+"La enfermería del colegio",
+[
+"La enfermera del colegio le mostró a Laura las soluciones que usa.",
+[
+"El alcohol antiséptico es una solución: una mezcla homogénea.",
+"El alcohol antiséptico es una mezcla heterogénea, porque se ven dos fases."
+],
+[
+"En una solución, el soluto es lo que se disuelve, y el solvente, lo que disuelve.",
+"En una solución, el solvente es lo que se disuelve, y el soluto, lo que disuelve."
+],
+[
+"El suero fisiológico tiene una concentración de 0,154 M de NaCl.",
+"El suero fisiológico tiene una concentración de 9 M de NaCl."
+],
+[
+"La molaridad son los moles de soluto por cada litro de solución.",
+"La molaridad son los gramos de soluto por cada litro de solvente."
+],
+[
+"Una solución insaturada todavía admite más soluto.",
+"Una solución insaturada ya no admite más soluto."
+],
+"Luego hablaron del agua de la llave.",
+[
+"El cloro del agua potable se mide en ppm, que en agua equivalen a miligramos por litro.",
+"El cloro del agua potable se mide en ppm, que en agua equivalen a gramos por mililitro."
+],
+[
+"Al diluir una solución, los moles de soluto no cambian: C₁V₁ = C₂V₂.",
+"Al diluir una solución, los moles de soluto aumentan."
+],
+[
+"Una solución de H₂SO₄ 1 M es 2 N, porque cada molécula aporta dos H⁺.",
+"Una solución de H₂SO₄ 1 M es 0,5 N, porque cada molécula aporta dos H⁺."
+],
+"Laura decidió que quiere estudiar enfermería."
+]
+],
+[
 "mod",
 "El experimento de la jeringa",
 [
@@ -1473,6 +2470,88 @@ window.DETECTIVE=[
 "Felipe concluyó que una teoría es «una idea que todavía no se ha comprobado»."
 ],
 "El grupo presentó sus resultados con una gráfica de P contra 1/V."
+]
+],
+[
+"mod",
+"El clima de mi ciudad",
+[
+"El curso analizó datos de temperatura de una estación del IDEAM.",
+[
+"Primero organizaron los datos en una tabla, con sus unidades.",
+"Primero borraron los datos que no les gustaron."
+],
+[
+"Calcularon el promedio sumando las medidas y dividiendo entre cuántas eran.",
+"Calcularon el promedio tomando solo la medida más alta."
+],
+[
+"Con los datos hicieron una gráfica para ver la relación entre las variables.",
+"Con los datos hicieron una gráfica sin rótulos ni unidades en los ejes."
+],
+[
+"Toda medición trae un pequeño error, por eso se repiten las medidas.",
+"Una medición bien hecha nunca tiene ningún error, por eso basta una sola."
+],
+"Después compararon el agua hirviendo en distintas ciudades.",
+[
+"A mayor altitud, el agua hierve a menor temperatura.",
+"A mayor altitud, el agua hierve a mayor temperatura."
+],
+[
+"En Bogotá el agua hierve a unos 91 °C.",
+"En Bogotá el agua hierve a 120 °C."
+],
+[
+"La pendiente de la recta dice cuántos grados baja la ebullición por cada 1000 m.",
+"La pendiente de la recta dice a qué hora hierve el agua."
+],
+[
+"Un modelo sirve para hacer predicciones que luego se comparan con medidas.",
+"Un modelo es una verdad que ya no necesita compararse con medidas."
+],
+"Con su modelo, el curso predijo cuánto tardaría en cocinarse un huevo en el páramo."
+]
+],
+[
+"mod",
+"La feria de ciencias",
+[
+"Para la feria de ciencias, Juliana diseñó un experimento con su grupo.",
+[
+"Empezaron con una pregunta que se pudiera responder midiendo.",
+"Empezaron con la conclusión y después buscaron datos que la apoyaran."
+],
+[
+"La hipótesis es una respuesta posible que se pone a prueba.",
+"La hipótesis es una ley que ya está comprobada."
+],
+[
+"La variable independiente es la que el investigador cambia a propósito.",
+"La variable independiente es la que se mantiene igual en todo el experimento."
+],
+[
+"La variable dependiente es la que se mide.",
+"La variable dependiente es la que se cambia a propósito."
+],
+[
+"Las variables controladas se mantienen iguales para que la prueba sea justa.",
+"Las variables controladas se cambian al azar en cada medida."
+],
+"Al final presentaron sus resultados.",
+[
+"Una evidencia es un dato que apoya o rechaza una idea.",
+"Una evidencia es una opinión del grupo sobre el experimento."
+],
+[
+"Predecir dentro del rango de los datos, o interpolar, es más confiable que extrapolar.",
+"Predecir fuera del rango de los datos, o extrapolar, es más confiable que interpolar."
+],
+[
+"Una ley describe qué pasa; una teoría explica por qué pasa.",
+"Una ley explica por qué pasa algo; una teoría solo es una suposición."
+],
+"El jurado destacó el orden de su método."
 ]
 ]
 ];

@@ -4,6 +4,39 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (5) — Al menos 20 palabras por categoría y más historias del Detective
+
+El docente pidió al menos 20 palabras por categoría en la sopa de letras, y lo mismo para las demás actividades. El Ahorcado, la Sopa y el Criptograma usan el mismo banco (`assets/bancos-extra.js`), así que se ampliaron los tres a la vez.
+
+- **`BANCO_AHORCADO`:**
+  - Pasó de 89 a **162 palabras**, todas con 3 pistas tomadas de las páginas del sitio.
+  - Palabras por categoría:
+
+    | Categoría | Antes | Ahora |
+    |---|---|---|
+    | Átomo y configuración | 16 | 22 |
+    | Tabla periódica y enlace | 13 | 22 |
+    | Nomenclatura | 10 | 24 |
+    | Reacciones y pH | 15 | 25 |
+    | Mol, estequiometría e industria | 13 | 23 |
+    | Gases y soluciones | 16 | 24 |
+    | Modelos y datos | 6 | 22 |
+
+  - En la sopa, cada categoría tiene ahora 21 palabras o más.
+  - El Criptograma tiene ahora 21 frases o más por categoría.
+- **`DETECTIVE`:**
+  - 2 historias nuevas por categoría: **21 historias**, 3 por categoría.
+  - Cada categoría reúne 24 puntos dudosos.
+- **`sw.js`:** la caché pasa a `ionom-v85`.
+- **Verificación:** probado con Playwright, sin errores:
+  - los conteos en las pestañas;
+  - una sopa por cada categoría;
+  - las 21 historias en una hoja carta, en la hoja y en la clave;
+  - el modo clase;
+  - el Juego.
+
+---
+
 ## 6 de noviembre (4) — Criptograma químico, mapa conceptual con huecos y detective químico
 
 Tres actividades nuevas que propuso el docente, en el generador docente (`assets/extras.js`, el mismo archivo que en ChromaNom). Todas tienen hoja carta con logo, Nombre / Curso / Fecha, marca de agua y pie, versiones con clave y modo clase con pantalla completa.
