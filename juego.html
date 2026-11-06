@@ -574,7 +574,28 @@ html{font-size:var(--base-fs)}
 .ah-k:disabled{cursor:default}
 .ah-k.ah-si{background:#dcfce7;border-color:#16a34a;color:#166534}
 .ah-k.ah-no{background:#fee2e2;border-color:#fca5a5;color:#991b1b;opacity:.7}
+.ah-fs{float:right;border:1.5px solid #0d4a73;background:#eef6fb;color:#0d4a73;border-radius:8px;padding:3px 9px;font-weight:800;font-size:.75rem;cursor:pointer;font-family:inherit}
+/* Pantalla completa en celular horizontal: dos columnas (muñeco y pistas | palabra y teclado) */
+@media (orientation:landscape) and (max-height:560px){
+  html.juego-fs #area-ahorcado{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);grid-template-areas:"wrap pal" "wrap tec";column-gap:16px;align-items:start}
+  html.juego-fs .ah-wrap{grid-area:wrap;margin:0}
+  html.juego-fs .ah-svg{width:90px}
+  html.juego-fs .ah-pistas{font-size:.8rem}
+  html.juego-fs .ah-palabra{grid-area:pal;margin:4px 0 8px}
+  html.juego-fs .ah-teclado{grid-area:tec;gap:4px}
+  html.juego-fs .ah-k{min-height:34px;font-size:.9rem}
+}
 @media (max-width:420px){.ah-svg{width:84px}.ah-pistas{font-size:.85rem}.ah-l{width:1.3em;font-size:1.05rem}.ah-k{min-height:38px;font-size:.92rem}}
+
+/* Pantalla completa horizontal del Juego: sin la barra de navegación del sitio ni controles flotantes */
+@media (orientation:landscape) and (max-height:560px){
+  html.juego-fs .site-nav,html.juego-fs #text-zoom-widget,html.juego-fs .site-footer,html.juego-fs body>footer{display:none!important}
+  html.juego-fs .game-hdr{padding-top:6px;padding-bottom:6px}
+  html.juego-fs #s-game #q-meta,html.juego-fs #s-game #q-prompt{display:none}
+  html.juego-fs .stats-row{display:none}
+  html.juego-fs .ah-palabra{gap:4px 4px}
+  html.juego-fs .ah-l{width:1.25em;height:1.5em;font-size:1.05rem}
+}
 </style>
 <link rel="stylesheet" href="assets/ionom.css">
 </head>
@@ -4159,13 +4180,32 @@ function ahPintar(){
     return '<button type="button" class="ah-k'+(u?(en?' ah-si':' ah-no'):'')+'" data-l="'+l+'"'+(u||AH.fin?' disabled':'')+'>'+l+'</button>';
   }).join('');
   area.innerHTML='<div class="ah-wrap">'+ahDibujo(AH.fallos)
-    +'<div class="ah-info"><div class="ah-fallos">Fallos: <b>'+AH.fallos+'</b> de '+AH_MAX_FALLOS+'</div><ul class="ah-pistas">'+pistas+'</ul>'
+    +'<div class="ah-info"><div class="ah-fallos">Fallos: <b>'+AH.fallos+'</b> de '+AH_MAX_FALLOS+' <button type="button" class="ah-fs">'+(juegoEsPC()?'✕ Salir':'⛶ Pantalla completa')+'</button></div><ul class="ah-pistas">'+pistas+'</ul>'
     +(AH.nPistas<3&&!AH.fin?'<button type="button" class="ah-pista-btn">💡 Ver la pista '+(AH.nPistas+1)+' de 3'+(AH.nPistas===2?' (vale 1 punto menos)':'')+'</button>':'')+'</div></div>'
     +'<div class="ah-palabra" aria-label="Palabra de '+letras.filter(c=>c!==' ').length+' letras">'+hueco+'</div>'
     +'<div class="ah-teclado">'+teclas+'</div>';
   area.querySelectorAll('.ah-k').forEach(b=>b.addEventListener('click',()=>ahLetra(b.dataset.l)));
   const pb=area.querySelector('.ah-pista-btn'); if(pb) pb.addEventListener('click',()=>{ if(AH&&!AH.fin&&AH.nPistas<3){AH.nPistas++;ahPintar();} });
+  const fb=area.querySelector('.ah-fs'); if(fb) fb.addEventListener('click',juegoPantallaCompleta);
 }
+
+/* Pantalla completa del Juego (toda la página: se mantiene al pasar de
+   palabra y en los resultados). En celular gira a horizontal. En iPhone,
+   Safari no lo permite: queda la página normal y hay que girar a mano. */
+function juegoEsPC(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+function juegoPantallaCompleta(){
+  if(juegoEsPC()){ (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+  const el = document.documentElement, req = el.requestFullscreen || el.webkitRequestFullscreen;
+  if(!req){ alert('Este navegador no permite la pantalla completa. Gira el celular a horizontal.'); return; }
+  let p; try{ p = req.call(el); }catch(e){ return; }
+  const girar = () => { try{ if(screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); }catch(e){} };
+  if(p && p.then) p.then(girar).catch(() => {}); else girar();
+}
+['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+  document.documentElement.classList.toggle('juego-fs', juegoEsPC());
+  if(!juegoEsPC()){ try{ if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); }catch(e){} }
+  if(typeof AH !== 'undefined' && AH){ ahPintar(); const a = document.querySelector('#s-game .game-hdr') || document.getElementById('area-ahorcado'); if(a && juegoEsPC()) setTimeout(() => a.scrollIntoView({block:'start'}), 120); }
+}));
 function renderAhorcado(q){
   document.getElementById('q-meta').textContent='Pregunta '+(ST.idx+1)+' de 20 · Ahorcado';
   document.getElementById('q-formula').innerHTML='<span class="el-name-lg" style="font-size:1rem">🪢 Ahorcado</span>';

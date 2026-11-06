@@ -4,6 +4,37 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (3) — Marca del sitio en todas las hojas y pantalla completa en todo lo que se proyecta
+
+Reglas que pidió el docente para todo el material:
+1. lo que se proyecta debe tener pantalla completa;
+2. toda hoja impresa debe llevar arriba el logo con los espacios de Nombre y Curso, y el logo como marca de agua.
+
+**Hojas del Ahorcado y de la Sopa** (`assets/ahorcado.js`, `assets/sopa.js`):
+- Llevan el encabezado de los crucigramas: logo de IonNom, título, instrucciones, versión y la línea de Nombre, Curso y Fecha.
+- Llevan la marca de agua y el pie con la licencia.
+- Si una hoja no cabe en la carta, se ajusta sola (letra de las pistas y casillas de la sopa).
+- La marca del sitio queda en `assets/bancos-extra.js` (`HOJA_SITIO`).
+
+**Pantalla completa:**
+- **Crucigrama «Resolver»** (`assets/crucigrama.js`): botón nuevo. No borra lo escrito y gira a horizontal, con la cuadrícula a la izquierda y las pistas a la derecha.
+- **Ahorcado del Juego** (`juego.html`): botón nuevo que pone en pantalla completa toda la página del Juego.
+  - Se mantiene al pasar de palabra.
+  - En horizontal oculta la barra del sitio, las tarjetas de estadísticas y la instrucción.
+  - Deja el marcador (puntos, racha y tiempo) arriba y el tablero en dos columnas.
+- **Ahorcado y Sopa del generador:**
+  - Respaldo para iPhone: el tablero se fija a toda la ventana.
+  - Corregido: al entrar uno en pantalla completa, el otro liberaba el giro a horizontal.
+
+**Verificación (Playwright):**
+- Las hojas tienen logo, marca de agua, pie y línea de nombre, y ninguna se pasa de la carta.
+- En un celular en horizontal (844 × 390), el crucigrama, el ahorcado, la sopa y el Juego quedan en pantalla completa, piden el giro y todo queda a la vista.
+- No hubo errores en consola.
+
+`sw.js` pasa a `ionom-v83`.
+
+---
+
 ## 6 de noviembre (2) — Sopa de letras en el generador docente (para imprimir y modo clase)
 
 El docente eligió la sopa de letras como nueva actividad imprimible y en pantalla.

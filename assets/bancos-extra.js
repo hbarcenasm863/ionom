@@ -1183,3 +1183,7 @@ window.AHORCADO_GRUPOS=[
 ['gas','🎈 Gases y soluciones',['gases','soluciones']],
 ['mod','🔭 Modelos y datos',['modelos']]
 ];
+
+/* Marca del sitio para las hojas impresas (Ahorcado y Sopa de letras):
+   mismo logo, marca de agua y pie que los crucigramas y laberintos. */
+window.HOJA_SITIO={logo:'assets/logo-ionom-hoja.png',marca:'assets/marca-ionom.png',nombre:'IonNom',pie:'<span class="m">Ion<b>Nom</b> · Nombra con precisión</span><span>© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span>'};
