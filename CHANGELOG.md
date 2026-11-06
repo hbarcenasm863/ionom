@@ -4,6 +4,28 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (7) — Detective químico: párrafos por tema y tres niveles de apoyo
+
+Le dieron al docente esta retroalimentación sobre «El juego de las cartas de elementos»: varias tendencias periódicas juntas en un párrafo corto saturan al estudiante, y las afirmaciones densas cuestan de identificar sin guía.
+
+- **Historias** (`assets/bancos-extra.js`):
+  - Frases de transición que anuncian el tema de cada párrafo, con un máximo de 3 puntos dudosos por párrafo.
+  - «El juego de las cartas de elementos» se reescribió: radio atómico, energía de ionización y electronegatividad van en párrafos distintos, y cada tendencia lleva su causa.
+- **`assets/extras.js`** (igual que en ChromaNom):
+  - La historia se muestra en párrafos.
+  - Nuevo «Nivel de apoyo»:
+    - **guiado:** frases sospechosas numeradas; el estudiante marca ✔ o ✘ en una tabla y corrige;
+    - **con pistas:** 🔍 errores por párrafo;
+    - **experto:** solo el total.
+  - Tabla de respuestas con «¿Por qué estaba mal?».
+  - En el modo clase, al tocar una frase correcta aparece «✔ Esta frase está bien».
+  - El ajuste de tamaño de la hoja ya no deja la tabla encima del pie.
+- **`docente.html`:** estilos nuevos.
+- **`sw.js`:** la caché pasa a `ionom-v87`.
+- **Verificación:** las 21 historias × 3 niveles × hoja y clave caben, el modo clase funciona y no hay errores.
+
+---
+
 ## 6 de noviembre (6) — Material para 20 versiones distintas y actividades dentro de los talleres
 
 El docente pidió dos cosas:

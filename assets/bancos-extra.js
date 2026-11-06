@@ -1722,6 +1722,7 @@ window.DETECTIVE=[
 "Explicó que Rutherford descubrió el núcleo con el experimento de la lámina de oro.",
 "Explicó que Thomson descubrió el núcleo con el experimento de la lámina de oro."
 ],
+"Luego contó las partículas de algunos átomos e iones.",
 [
 "Para el sodio-23, con Z = 11, contó 11 protones y 12 neutrones.",
 "Para el sodio-23, con Z = 11, contó 11 protones y 23 neutrones."
@@ -1759,6 +1760,7 @@ window.DETECTIVE=[
 "Thomson descubrió el electrón con el tubo de rayos catódicos.",
 "Thomson descubrió el neutrón con el tubo de rayos catódicos."
 ],
+"Luego llegó el experimento que cambió el modelo.",
 [
 "En el experimento de Rutherford, la mayoría de las partículas atravesó la lámina de oro sin desviarse.",
 "En el experimento de Rutherford, la mayoría de las partículas rebotó en la lámina de oro."
@@ -1767,6 +1769,7 @@ window.DETECTIVE=[
 "De ahí concluyó que el átomo es casi todo espacio vacío, con un núcleo pequeño y positivo.",
 "De ahí concluyó que el átomo es una masa compacta, sin espacios vacíos."
 ],
+"Después vino un nuevo modelo.",
 [
 "Bohr propuso que los electrones giran en niveles de energía fijos.",
 "Bohr propuso que los electrones pueden estar a cualquier distancia del núcleo."
@@ -1775,6 +1778,7 @@ window.DETECTIVE=[
 "Cuando un electrón excitado vuelve a su nivel, emite luz.",
 "Cuando un electrón excitado vuelve a su nivel, absorbe luz."
 ],
+"Al final, Daniela anotó las dos cantidades que identifican a un átomo.",
 [
 "El número atómico Z es el número de protones del átomo.",
 "El número atómico Z es el número de neutrones del átomo."
@@ -1799,6 +1803,7 @@ window.DETECTIVE=[
 "El subnivel d admite hasta 10 electrones.",
 "El subnivel d admite hasta 14 electrones."
 ],
+"Luego escribieron la configuración de un elemento.",
 [
 "Para el oxígeno, con Z = 8, escribieron 1s² 2s² 2p⁴.",
 "Para el oxígeno, con Z = 8, escribieron 1s² 2s² 2p⁶."
@@ -1840,10 +1845,12 @@ window.DETECTIVE=[
 "En el grupo 1 están los metales alcalinos, muy reactivos con el agua.",
 "En el grupo 17 están los metales alcalinos, muy reactivos con el agua."
 ],
+"Luego buscó el elemento que más atrae los electrones de un enlace.",
 [
 "El flúor es el elemento con la mayor electronegatividad.",
 "El sodio es el elemento con la mayor electronegatividad."
 ],
+"Después comparó el tamaño de los átomos de un mismo periodo.",
 [
 "En un periodo, el radio atómico disminuye hacia la derecha.",
 "En un periodo, el radio atómico aumenta hacia la derecha."
@@ -1857,6 +1864,7 @@ window.DETECTIVE=[
 "En el HCl, el cloro atrae más los electrones compartidos: es un enlace covalente polar.",
 "En el HCl, los dos átomos atraen igual los electrones compartidos: es un enlace covalente apolar."
 ],
+"Luego miró otros materiales del salón.",
 [
 "El cobre de los cables tiene enlace metálico, con un «mar de electrones» que conduce la electricidad.",
 "El cobre de los cables tiene enlace iónico, y por eso conduce la electricidad."
@@ -1873,6 +1881,7 @@ window.DETECTIVE=[
 "El juego de las cartas de elementos",
 [
 "Mariana inventó un juego de cartas con los elementos de la tabla periódica.",
+"Primero hizo las cartas de los metales y los no metales.",
 [
 "Las cartas de los metales decían «brillante y buen conductor de la electricidad».",
 "Las cartas de los metales decían «opaco y mal conductor de la electricidad»."
@@ -1881,17 +1890,10 @@ window.DETECTIVE=[
 "Los metales están a la izquierda de la escalera de la tabla, y los no metales, a la derecha.",
 "Los metales están a la derecha de la escalera de la tabla, y los no metales, a la izquierda."
 ],
+"Luego vinieron las cartas de las familias.",
 [
 "Los gases nobles, del grupo 18, casi no reaccionan porque ya tienen el octeto completo.",
 "Los gases nobles, del grupo 18, son los más reactivos de la tabla."
-],
-[
-"El radio atómico aumenta hacia abajo en un grupo, porque hay más niveles.",
-"El radio atómico disminuye hacia abajo en un grupo, porque hay más niveles."
-],
-[
-"La energía de ionización aumenta hacia la derecha de un periodo.",
-"La energía de ionización disminuye hacia la derecha de un periodo."
 ],
 [
 "Los halógenos están en el grupo 17 y tienden a ganar un electrón.",
@@ -1901,6 +1903,17 @@ window.DETECTIVE=[
 "El sodio está en el bloque s, porque su último electrón entra en un orbital s.",
 "El sodio está en el bloque d, porque es un metal."
 ],
+"La carta más difícil fue la del tamaño de los átomos.",
+[
+"El radio atómico aumenta hacia abajo en un grupo, porque cada elemento tiene un nivel de energía más.",
+"El radio atómico disminuye hacia abajo en un grupo, porque cada elemento tiene un nivel de energía más."
+],
+"Otra carta mostraba cuánta energía cuesta quitarle un electrón a un átomo.",
+[
+"La energía de ionización aumenta hacia la derecha de un periodo, porque el núcleo tiene más protones y atrae con más fuerza a los electrones.",
+"La energía de ionización disminuye hacia la derecha de un periodo, porque el núcleo tiene más protones y atrae con más fuerza a los electrones."
+],
+"La última carta era la de la electronegatividad: qué tanto atrae un átomo los electrones de un enlace.",
 [
 "En la escala de Pauling, el flúor tiene el valor más alto: 3,98.",
 "En la escala de Pauling, el cesio tiene el valor más alto: 3,98."
@@ -1925,6 +1938,7 @@ window.DETECTIVE=[
 "La sal sólida no conduce la electricidad, pero disuelta en agua sí.",
 "La sal sólida conduce muy bien la electricidad, pero disuelta en agua no."
 ],
+"Luego comparó los enlaces en los que los electrones se comparten.",
 [
 "En la molécula de H₂ el enlace es covalente apolar, porque los dos átomos son iguales.",
 "En la molécula de H₂ el enlace es iónico, porque los dos átomos son iguales."
@@ -1937,6 +1951,7 @@ window.DETECTIVE=[
 "Si la diferencia de electronegatividad es menor que 0,4, el enlace es covalente apolar.",
 "Si la diferencia de electronegatividad es menor que 0,4, el enlace es iónico."
 ],
+"Para terminar, dibujó la molécula de agua y pensó en los metales.",
 [
 "En la estructura de Lewis del agua, el oxígeno tiene dos pares de electrones sin compartir.",
 "En la estructura de Lewis del agua, el oxígeno no tiene pares de electrones sin compartir."
@@ -1965,6 +1980,7 @@ window.DETECTIVE=[
 "En la tradicional, el sufijo -oso indica el estado de oxidación menor.",
 "En la tradicional, el sufijo -oso indica el estado de oxidación mayor."
 ],
+"Después escribió las etiquetas de los hidróxidos y de los ácidos.",
 [
 "El NaOH es un hidróxido: un metal con el grupo OH⁻.",
 "El NaOH es un óxido ácido: un no metal con oxígeno."
@@ -1977,6 +1993,7 @@ window.DETECTIVE=[
 "El H₂SO₄ es un oxácido, porque tiene hidrógeno, un no metal y oxígeno.",
 "El H₂SO₄ es un hidrácido, porque tiene hidrógeno, un no metal y oxígeno."
 ],
+"Al final quedaban las sales y los hidruros.",
 [
 "El NaCl es una sal binaria y el CaCO₃ de la caliza es una oxisal.",
 "El NaCl es una oxisal y el CaCO₃ de la caliza es una sal binaria."
@@ -2005,6 +2022,7 @@ window.DETECTIVE=[
 "El Ca(OH)₂ se llama hidróxido de calcio.",
 "El Ca(OH)₂ se llama óxido de calcio."
 ],
+"Luego pasó a los ácidos y a sus aniones.",
 [
 "El HNO₃ es el ácido nítrico, y su anión NO₃⁻ se llama nitrato.",
 "El HNO₃ es el ácido nítrico, y su anión NO₃⁻ se llama nitrito."
@@ -2017,6 +2035,7 @@ window.DETECTIVE=[
 "En la tradicional, si un no metal tiene cuatro estados, el más alto lleva per- e -ico.",
 "En la tradicional, si un no metal tiene cuatro estados, el más alto lleva hipo- y -oso."
 ],
+"Al final contó las sales.",
 [
 "El CuSO₄ es una oxisal: el sulfato de cobre (II).",
 "El CuSO₄ es una sal binaria: el sulfuro de cobre (II)."
@@ -2045,6 +2064,7 @@ window.DETECTIVE=[
 "Para el cloruro de magnesio, con Mg²⁺ y Cl⁻, escribió MgCl₂.",
 "Para el cloruro de magnesio, con Mg²⁺ y Cl⁻, escribió Mg₂Cl."
 ],
+"Después repasaron cómo se escriben los nombres.",
 [
 "En el nombre sistemático, el prefijo tri- indica tres átomos.",
 "En el nombre sistemático, el prefijo tri- indica cuatro átomos."
@@ -2057,6 +2077,7 @@ window.DETECTIVE=[
 "El FeO se llama óxido ferroso, porque el hierro usa su estado menor, +2.",
 "El FeO se llama óxido férrico, porque el hierro usa su estado menor, +2."
 ],
+"Por último, recordaron qué tienen en común algunas familias de compuestos.",
 [
 "Los hidrácidos, como el HCl o el H₂S, no tienen oxígeno.",
 "Los hidrácidos, como el HCl o el H₂S, siempre tienen oxígeno."
@@ -2098,6 +2119,7 @@ window.DETECTIVE=[
 "Al mezclar HCl con NaOH se formaron una sal y agua: una neutralización.",
 "Al mezclar HCl con NaOH se formaron un ácido y una base nuevos."
 ],
+"Después compararon la fuerza de los ácidos y el pH del cuerpo.",
 [
 "El ácido acético del vinagre es débil: solo una parte de sus moléculas suelta el H⁺.",
 "El ácido acético del vinagre es fuerte: todas sus moléculas sueltan el H⁺."
@@ -2122,6 +2144,7 @@ window.DETECTIVE=[
 "Al echar bicarbonato en vinagre salieron burbujas de CO₂: una reacción ácido-base.",
 "Al echar bicarbonato en vinagre salieron burbujas de O₂: una combustión."
 ],
+"Luego repasó cómo se escriben y se clasifican las reacciones.",
 [
 "Una reacción de síntesis une dos sustancias en una sola.",
 "Una reacción de síntesis separa una sustancia en dos."
@@ -2139,6 +2162,7 @@ window.DETECTIVE=[
 "El agua pura tiene pH 7: es neutra.",
 "El agua pura tiene pH 0: es neutra."
 ],
+"Después revisó dos datos de su libro.",
 [
 "A 25 °C, el pH y el pOH suman 14.",
 "A 25 °C, el pH y el pOH suman 7."
@@ -2163,6 +2187,7 @@ window.DETECTIVE=[
 "La lluvia ácida se forma por el SO₂ y los NOₓ de la quema de carbón y diésel.",
 "La lluvia ácida se forma por el oxígeno que producen las plantas."
 ],
+"Luego repasaron cómo se comportan los ácidos y las bases en el agua.",
 [
 "Un ácido fuerte se disocia por completo en el agua.",
 "Un ácido fuerte solo se disocia en una pequeña parte en el agua."
@@ -2180,6 +2205,7 @@ window.DETECTIVE=[
 "Una ecuación balanceada tiene los mismos átomos de cada elemento a los dos lados.",
 "Una ecuación balanceada tiene las mismas moléculas a los dos lados."
 ],
+"Después discutieron por qué es necesario balancear.",
 [
 "El balanceo cumple la ley de conservación de la masa.",
 "El balanceo no tiene relación con la conservación de la masa."
@@ -2204,6 +2230,7 @@ window.DETECTIVE=[
 "La masa molar del CO₂ es 44 g/mol: 12 + 2 × 16.",
 "La masa molar del CO₂ es 28 g/mol: 12 + 16."
 ],
+"Luego hicieron algunos cálculos con la caliza.",
 [
 "Un mol de cualquier sustancia tiene 6,022 × 10²³ partículas.",
 "Un mol de cualquier sustancia tiene 6,022 × 10²³ gramos."
@@ -2221,6 +2248,7 @@ window.DETECTIVE=[
 "Con 1 mol de N₂ se forman 2 mol de NH₃.",
 "Con 1 mol de N₂ se forma 1 mol de NH₃."
 ],
+"Al final calcularon cuánto producto se obtuvo en realidad.",
 [
 "El rendimiento se calcula como masa real ÷ masa teórica × 100.",
 "El rendimiento se calcula como masa teórica ÷ masa real × 100."
@@ -2245,6 +2273,7 @@ window.DETECTIVE=[
 "En N₂ + 3 H₂ → 2 NH₃, la razón molar entre N₂ y H₂ es 1 : 3.",
 "En N₂ + 3 H₂ → 2 NH₃, la razón molar entre N₂ y H₂ es 3 : 1."
 ],
+"Luego practicaron con la masa molar.",
 [
 "La masa molar del agua es 18 g/mol: 2 × 1 + 16.",
 "La masa molar del agua es 17 g/mol: 1 + 16."
@@ -2299,6 +2328,7 @@ window.DETECTIVE=[
 "En el alto horno, el CO reduce el óxido de hierro y se obtiene hierro metálico.",
 "En el alto horno, el CO oxida el hierro metálico y se obtiene óxido de hierro."
 ],
+"Después compararon lo que se esperaba producir con lo que se obtuvo.",
 [
 "El rendimiento real casi siempre es menor que el teórico.",
 "El rendimiento real casi siempre es mayor que el teórico."
@@ -2307,6 +2337,7 @@ window.DETECTIVE=[
 "Si se esperaban 100 kg y se obtuvieron 80 kg, el rendimiento fue del 80 %.",
 "Si se esperaban 100 kg y se obtuvieron 80 kg, el rendimiento fue del 125 %."
 ],
+"También hablaron del impacto ambiental.",
 [
 "Calcinar caliza para hacer cemento libera mucho CO₂.",
 "Calcinar caliza para hacer cemento absorbe CO₂ del aire."
@@ -2327,6 +2358,7 @@ window.DETECTIVE=[
 "Para calcularlo usó la ley combinada, con la temperatura en kelvin.",
 "Para calcularlo usó la ley combinada, con la temperatura en grados Celsius."
 ],
+"Por el camino recordó otras leyes de los gases.",
 [
 "Según la ley de Boyle, si la presión baja, el volumen del gas aumenta.",
 "Según la ley de Boyle, si la presión baja, el volumen del gas también baja."
@@ -2344,6 +2376,7 @@ window.DETECTIVE=[
 "El suero fisiológico tiene 0,9 g de NaCl por cada 100 mL de solución.",
 "El suero fisiológico tiene 0,9 g de NaCl por cada litro de solución."
 ],
+"Luego observó qué pasaba al revolver y al diluir.",
 [
 "Revolver hizo que la sal se disolviera más rápido, pero no que se disolviera más.",
 "Revolver hizo que se pudiera disolver más sal en la misma agua."
@@ -2372,6 +2405,7 @@ window.DETECTIVE=[
 "25 °C equivalen a 298 K.",
 "25 °C equivalen a 25 K."
 ],
+"Luego pensó en otras leyes de los gases.",
 [
 "Según Gay-Lussac, en un recipiente rígido la presión sube si la temperatura sube.",
 "Según Gay-Lussac, en un recipiente rígido la presión baja si la temperatura sube."
@@ -2380,6 +2414,7 @@ window.DETECTIVE=[
 "Según Avogadro, a igual presión y temperatura, más moles de gas ocupan más volumen.",
 "Según Avogadro, a igual presión y temperatura, más moles de gas ocupan menos volumen."
 ],
+"Para entender por qué pasa todo eso, recordó la ecuación de los gases ideales y el modelo de partículas.",
 [
 "En la ecuación PV = nRT, la n representa los moles del gas.",
 "En la ecuación PV = nRT, la n representa la masa del gas en gramos."
@@ -2408,6 +2443,7 @@ window.DETECTIVE=[
 "En una solución, el soluto es lo que se disuelve, y el solvente, lo que disuelve.",
 "En una solución, el solvente es lo que se disuelve, y el soluto, lo que disuelve."
 ],
+"Luego le explicó cómo se expresa la concentración.",
 [
 "El suero fisiológico tiene una concentración de 0,154 M de NaCl.",
 "El suero fisiológico tiene una concentración de 9 M de NaCl."
@@ -2453,6 +2489,7 @@ window.DETECTIVE=[
 "Mantuvieron iguales la temperatura y la cantidad de aire: eran las variables controladas.",
 "Cambiaron la temperatura en cada medida para tener más datos."
 ],
+"Después analizaron sus resultados.",
 [
 "Al multiplicar P × V obtuvieron casi el mismo valor en todas las medidas: la ley de Boyle.",
 "Al sumar P + V obtuvieron casi el mismo valor en todas las medidas: la ley de Boyle."
@@ -2494,6 +2531,7 @@ window.DETECTIVE=[
 "Con los datos hicieron una gráfica para ver la relación entre las variables.",
 "Con los datos hicieron una gráfica sin rótulos ni unidades en los ejes."
 ],
+"También discutieron por qué se repiten las medidas.",
 [
 "Toda medición trae un pequeño error, por eso se repiten las medidas.",
 "Una medición bien hecha nunca tiene ningún error, por eso basta una sola."
@@ -2507,6 +2545,7 @@ window.DETECTIVE=[
 "En Bogotá el agua hierve a unos 91 °C.",
 "En Bogotá el agua hierve a 120 °C."
 ],
+"Luego usaron un modelo lineal para resumir esos datos.",
 [
 "La pendiente de la recta dice cuántos grados baja la ebullición por cada 1000 m.",
 "La pendiente de la recta dice a qué hora hierve el agua."
@@ -2531,6 +2570,7 @@ window.DETECTIVE=[
 "La hipótesis es una respuesta posible que se pone a prueba.",
 "La hipótesis es una ley que ya está comprobada."
 ],
+"Luego definieron sus variables.",
 [
 "La variable independiente es la que el investigador cambia a propósito.",
 "La variable independiente es la que se mantiene igual en todo el experimento."
