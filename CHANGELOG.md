@@ -4,6 +4,32 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (2) — Sopa de letras en el generador docente (para imprimir y modo clase)
+
+El docente eligió la sopa de letras como nueva actividad imprimible y en pantalla.
+
+**Pestaña nueva «🔍 Sopa de letras» en `docente.html`** (código en `assets/sopa.js`, el mismo archivo que en ChromaNom).
+- **Palabras:** usa las 89 palabras del Ahorcado con sus pistas, por grupos de temas. Los grupos y el nombre del sitio quedan ahora en `assets/bancos-extra.js` (`AHORCADO_GRUPOS`).
+- **Opciones:** de 4 a 16 palabras; cuadrícula de 12, 14 o 16; direcciones fáciles (→ ↓), medias (también diagonales) o difíciles (también al revés); el estudiante ve la pista 1, 2 o 3, o la lista de palabras.
+- **Verificación:** cada palabra aparece una sola vez en la cuadrícula; si no, la sopa se vuelve a armar.
+- **Hoja carta:** pistas numeradas con el número de letras y una línea para la respuesta. Hasta 40 versiones, con clave a color y código para volver a generarlas.
+- **Modo clase:**
+  - se marca arrastrando, o tocando la primera y la última letra;
+  - al acertar, la palabra se pinta y su pista queda con ✓;
+  - marcador de dos equipos, «Revelar todas» y «Otra sopa»;
+  - pantalla completa que gira el celular a horizontal.
+
+**Verificación (Playwright):**
+- en las tres dificultades, cada palabra aparece exactamente una vez;
+- la hoja cabe en una página carta;
+- el modo clase reconoce el arrastre y los dos toques;
+- en un celular en horizontal todo cabe;
+- no hubo errores en consola.
+
+`sw.js` pasa a `ionom-v82`: `assets/sopa.js` se sirve primero desde internet.
+
+---
+
 ## 6 de noviembre — Ahorcado en pantalla completa: gira a horizontal en el celular
 
 El docente pidió que la pantalla completa del modo clase del Ahorcado girara sola a horizontal en el celular.

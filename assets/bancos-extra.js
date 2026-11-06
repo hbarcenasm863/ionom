@@ -1170,3 +1170,16 @@ window.BANCO_AHORCADO=[
 "Lo contrario de extrapolar."
 ]
 ];
+
+/* Grupos de temas del Ahorcado y de la Sopa de letras (generador docente):
+   [id, rótulo, temas de BANCO_AHORCADO]. */
+window.AHORCADO_SITIO='IonNom';
+window.AHORCADO_GRUPOS=[
+['atomo','⚛️ Átomo y configuración',['atomo','config-e']],
+['tabla','📊 Tabla periódica y enlace',['elemento','enlace']],
+['nom','🏷️ Nomenclatura',['ox-bas','anhid','base','hidru','ac-ox','ac-hid','sal-ox','sal-bin','sal-ac']],
+['rx','⚗️ Reacciones y pH',['reaccion','balanceo','acidobase']],
+['calc','🧮 Mol, estequiometría e industria',['mol-masa','estequiometria','industria']],
+['gas','🎈 Gases y soluciones',['gases','soluciones']],
+['mod','🔭 Modelos y datos',['modelos']]
+];
