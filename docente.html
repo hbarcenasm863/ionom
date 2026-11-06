@@ -599,6 +599,14 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   #cz-play.fs-on .cz-bar button{font-size:.82rem;padding:6px 12px;min-height:0}
   #cz-play.fs-on #cz-msg{font-size:.8rem}
 }
+/* ── Actividades dentro de guías y talleres (extras.js → ACT_TALLER) ── */
+.act-tall.ah-hoja,.act-tall.sp-hoja,.act-tall.ex-hoja{width:auto;height:auto;min-height:0;padding:0;margin:0 0 6px;box-shadow:none;background:transparent;overflow:visible;display:block}
+.act-tall .sp-centro{margin:2px 0 8px}
+.act-tall .mp-con{padding:12px 0 4px}
+.act-tall .mp-banco{margin-top:10px}
+.act-tall .dt-texto{margin:0 0 4px}
+.act-ins{font-size:.82rem;margin:0 0 6px;color:#334155}
+.act-chk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;margin-top:6px}
 /* ── Criptograma, mapa conceptual y detective (extras.js) ── */
 .ex-stage{overflow-x:auto;padding:6px 0}
 .ex-hoja{width:816px;height:1056px;background:#fff;color:#0d2d42;font-family:var(--sans);padding:32px 44px 26px;box-sizing:border-box;margin:0 auto 18px;box-shadow:0 2px 10px rgba(0,0,0,.12);position:relative;overflow:hidden;display:flex;flex-direction:column;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -889,6 +897,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
         <div class="field" style="max-width:220px"><label for="f-num-ejercicios">Número de ejercicios</label><input type="text" inputmode="numeric" id="f-num-ejercicios" value="12"></div>
       </div>
       <p class="sect-hint">El total se reparte en ronda entre los tipos marcados (uno de cada hasta completarlo), respetando cuántos hay disponibles de cada uno.</p>
+      <div class="field" style="margin-top:12px"><label>Actividades dentro del taller (opcional)</label></div>
+      <div class="act-chk-grid" id="f-act"></div>
+      <p class="sect-hint">Van después de los ejercicios, con las palabras, frases e historias de los temas marcados. Cada versión trae otras palabras, otras frases, otra historia y otros recuadros en blanco.</p>
     </div>
 
     <div class="sect" data-solo="completa evaluacion">

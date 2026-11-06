@@ -895,6 +895,7 @@ function construirVersion(F, numVersion, totalVersiones){
       bloques.push({html:'<h2 class="sec-tit">'+(incluyeLectura ? 'Sesión 3 · Trabajo práctico' : 'Ejercicios')+'</h2>', esTitulo:true});
       bloques.push.apply(bloques, practicaBloques);
     }
+    bloques.push.apply(bloques, bloquesActividades(F, numVersion));
   }
   let numSaberReal = 0;
   if(incluyeEval){
@@ -1365,6 +1366,7 @@ function leerForm(){
     incluirHojaResp: !!document.getElementById('f-hoja-resp').checked,
     incluirRubricas: !!document.getElementById('f-rubricas').checked,
     versiones: parseInt(document.getElementById('f-versiones').value,10)||1,
+    acts: Array.from(document.querySelectorAll('.chk-act:checked')).map(c=>c.value),
     area: document.getElementById('f-area').value,
     periodo: document.getElementById('f-periodo').value
   };
@@ -1419,6 +1421,36 @@ function actualizarDisponibilidad(){
     inp.disabled = n===0;
     if(n===0) inp.checked = false;
   });
+  pintarActs();
+}
+
+// Actividades dentro del taller (assets/extras.js → window.ACT_TALLER):
+// sopa, ahorcado, criptograma, mapa conceptual y detective, con lo que hay
+// en el banco para los temas marcados.
+function pintarActs(){
+  const cont = document.getElementById('f-act'), A = window.ACT_TALLER;
+  if(!cont || !A) return;
+  const prev = {}; cont.querySelectorAll('.chk-act').forEach(c => { prev[c.value] = c.checked; });
+  const d = A.disponibles(Array.from(document.querySelectorAll('.chk-tema:checked')).map(c => c.value));
+  const unidad = {sp:['palabra','palabras'], ah:['palabra','palabras'], cr:['frase','frases'], mp:['mapa','mapas'], dt:['historia','historias']};
+  cont.innerHTML = A.tipos.map(x => {
+    const n = d[x[0]] || 0, dis = !n || (x[0] === 'sp' && n < 4);
+    return '<label class="ej-row"><input type="checkbox" class="chk-act" value="'+x[0]+'"'+(!dis && prev[x[0]] ? ' checked' : '')+(dis ? ' disabled' : '')+'><span><strong>'+x[1]+'</strong><br><small>'+x[2]+' · '+n+' '+unidad[x[0]][n===1?0:1]+' en el banco</small></span></label>';
+  }).join('');
+}
+document.addEventListener('act-taller-listo', () => pintarActs());
+// Bloques de las actividades marcadas para la versión numVersion: la
+// semilla base es la misma en todas las versiones, así cada una toma otra
+// ventana del mazo (no se repiten las mismas palabras ni la misma historia).
+function bloquesActividades(F, numVersion){
+  const A = window.ACT_TALLER; if(!A || !F.acts || !F.acts.length) return [];
+  const base = ['act', F.variante||'', F.temas.join(',')].join('|'), out = [];
+  F.acts.forEach(id => {
+    const r = A.armar(id, F.temas, base, numVersion-1); if(!r) return;
+    // un solo elemento por bloque: paginar() toma solo el primer hijo del html
+    r.bloques.forEach((h, i) => out.push({html: '<div class="act-blq">'+(i===0 ? '<h2 class="sec-tit">'+esc(r.titulo)+'</h2><p class="act-ins">'+esc(r.instr)+'</p>' : '')+h+'</div>', esMultiple:false}));
+  });
+  return out;
 }
 
 async function generar(){

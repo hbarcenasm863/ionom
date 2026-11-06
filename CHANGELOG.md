@@ -4,6 +4,35 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 6 de noviembre (6) — Material para 20 versiones distintas y actividades dentro de los talleres
+
+El docente pidió dos cosas:
+1. Material suficiente para **hasta 20 versiones distintas**.
+2. Que las actividades puedan ir **dentro de los talleres**.
+
+`assets/extras.js` y `assets/sopa.js` son los mismos archivos que en ChromaNom.
+
+- **20 versiones distintas:**
+  - **Reparto «en mazo»:** las palabras y frases del Ahorcado, la Sopa y el Criptograma se reparten como un mazo de cartas, así que 20 versiones usan todo el banco por igual y no repiten el mismo grupo de palabras.
+  - **Mapa conceptual:** ninguna combinación de recuadros en blanco se repite mientras queden combinaciones.
+  - **Detective:**
+    - Nueva opción «🎲 Todas las de …»: cada versión trae otra historia del grupo.
+    - Cuando una historia se repite, sale con otros errores.
+- **Actividades dentro del taller:**
+  - En «Trabajo práctico» hay casillas nuevas: Sopa de letras, Ahorcado con pistas, Criptograma, Mapa conceptual con huecos y Detective químico. Cada una muestra cuánto material hay para los temas marcados.
+  - Las actividades van después de los ejercicios, en el taller y en la guía. Cada versión trae otras palabras, frases, historia y mapa.
+  - Código:
+    - `bloquesActividades()` en `assets/docente-app.js`;
+    - `window.ACT_TALLER` en `assets/extras.js`;
+    - `ACT_TEMA_GRUPO` en `assets/bancos-extra.js`, para el tema «Cadena de reactividad».
+- **`sw.js`:** la caché pasa a `ionom-v86`.
+- **Verificación:** probado con Playwright, sin errores:
+  - taller de «Ácidos, bases y pH» con 20 versiones y las cinco actividades;
+  - las 20 versiones son distintas;
+  - ninguna de las 142 hojas se desborda.
+
+---
+
 ## 6 de noviembre (5) — Al menos 20 palabras por categoría y más historias del Detective
 
 El docente pidió al menos 20 palabras por categoría en la sopa de letras, y lo mismo para las demás actividades. El Ahorcado, la Sopa y el Criptograma usan el mismo banco (`assets/bancos-extra.js`), así que se ampliaron los tres a la vez.

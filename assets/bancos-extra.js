@@ -1695,6 +1695,11 @@ window.AHORCADO_GRUPOS=[
 ['mod','🔭 Modelos y datos',['modelos']]
 ];
 
+/* Temas del generador que no están en ningún grupo de palabras → grupo
+   que usan sus actividades dentro de los talleres (ACT_TALLER, extras.js).
+   Los demás temas se buscan en AHORCADO_GRUPOS. */
+window.ACT_TEMA_GRUPO={reactividad:'rx'};
+
 /* Marca del sitio para las hojas impresas (Ahorcado y Sopa de letras):
    mismo logo, marca de agua y pie que los crucigramas y laberintos. */
 window.HOJA_SITIO={logo:'assets/logo-ionom-hoja.png',marca:'assets/marca-ionom.png',nombre:'IonNom',pie:'<span class="m">Ion<b>Nom</b> · Nombra con precisión</span><span>© 2026 Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</span>'};
