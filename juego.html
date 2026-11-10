@@ -10,6 +10,7 @@
 <title>IonNom — Juego</title>
 <script src="banco.js"></script>
 <script src="assets/bancos-extra.js"></script>
+<script src="assets/retos.js"></script>
 <link rel="stylesheet" href="assets/shared-tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -907,7 +908,19 @@ html{font-size:var(--base-fs)}
         <span class="gb-step">20</span>
         <div class="gb-icon-wrap gic-mol">🪢</div>
         <span class="gb-name">Ahorcado</span>
-        <span class="gb-sub">Adivina la palabra con 3 pistas</span>
+        <span class="gb-sub">Adivina la palabra con 3 pistas · tiempo según la palabra</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('crucigrama')">
+        <span class="gb-step">2×10</span>
+        <div class="gb-icon-wrap gic-mol">🔤</div>
+        <span class="gb-name">Crucigrama</span>
+        <span class="gb-sub">2 crucigramas de 10 palabras · 3 comprobaciones con pistas nuevas</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('sopa')">
+        <span class="gb-step">2×10</span>
+        <div class="gb-icon-wrap gic-mol">🔍</div>
+        <span class="gb-name">Sopa de letras</span>
+        <span class="gb-sub">2 sopas de 10 palabras · busca la palabra a partir de su pista</span>
       </button>
       <button class="group-btn" onclick="pickGroup('cazar')">
         <span class="gb-step">20</span>
@@ -1006,6 +1019,7 @@ html{font-size:var(--base-fs)}
       <div id="area-balance" style="display:none"></div>
       <div id="area-mol" style="display:none"></div>
       <div id="area-ahorcado" style="display:none"></div>
+      <div id="area-mini" style="display:none"></div>
       <div id="area-react" style="display:none">
         <div id="react-chain-diagram"></div>
         <div id="react-mc-opts" class="mc-opts"></div>
@@ -1764,6 +1778,8 @@ let TIMER_ID=null;
 const TIMER_BY_TYPE={'ahorcado':180,'mol-calc':180,'balance-eq':120,'classify-rx':90};
 const TIMER_TOTAL=60;
 function timerFor(qtype){
+  // Ahorcado: el tiempo crece con la palabra (letras distintas y largo), reglas de assets/retos.js.
+  if(qtype==='ahorcado'&&ST.questions[ST.idx]&&typeof RETOS!=='undefined')return RETOS.tiempo('ahorcado',[{pal:RETOS.letras(ST.questions[ST.idx].palabra)}]);
   // los formatos interactivos de átomo y enlace necesitan más tiempo que la opción múltiple
   const q=ST.questions&&ST.questions[ST.idx];
   if(q&&q.isAtom&&q.tipo&&q.tipo!=='mc') return q.tipo==='calcular'?120:90;
@@ -1771,6 +1787,8 @@ function timerFor(qtype){
 }
 function startTimer(){
   stopTimer();
+  // Crucigrama y sopa traen su propio reloj (tiempo según palabras y letras).
+  if(ST.qtype==='crucigrama'||ST.qtype==='sopa'){const n=document.getElementById('timer-num');if(n)n.textContent='⏱';return;}
   const total=timerFor(ST.qtype);
   let left=total;
   const fill=document.getElementById('timer-fill');
@@ -1789,7 +1807,7 @@ function stopTimer(){
   const fill=document.getElementById('timer-fill');
   const num=document.getElementById('timer-num');
   if(fill){fill.style.transition='none';fill.style.width='100%';fill.style.backgroundColor='#22c55e';setTimeout(()=>{if(fill)fill.style.transition='width 1s linear,background-color .5s';},50);}
-  if(num){num.textContent=timerFor(ST.qtype||'')+'s';num.className='timer-num';}
+  if(num){num.textContent=(ST.qtype==='crucigrama'||ST.qtype==='sopa')?'⏱':timerFor(ST.qtype||'')+'s';num.className='timer-num';}
 }
 function timeOut(){
   const q=ST.questions[ST.idx];
@@ -1917,6 +1935,17 @@ function startGame(group){
     sendProgress('inicio'); _startProgressTracking();
     showScreen('s-game');loadQuestion();return;
   }
+  // Crucigrama y sopa de letras: 2 rondas de 10 palabras del banco del
+  // Ahorcado de IonNom (20 palabras = 20 «preguntas» y 40 puntos, como las
+  // demás partidas). Reglas comunes en assets/retos.js.
+  if(group==='crucigrama'||group==='sopa'){
+    if(typeof BANCO_AHORCADO==='undefined'||BANCO_AHORCADO.length<20){alert('El banco de datos aún no tiene palabras suficientes.');return;}
+    ST.questions=[1,2].map(n=>({qtype:group,group,ronda:n,formula:group+'-'+n,trad:[],stock:[],sist:[],hint:''}));
+    ST.usadas=[];
+    ST.idx=0;ST.score=0;ST.correct=0;ST.totalAttempts=0;ST.attempts=0;ST.errors=[];ST.answered=false;ST.streak=0;_sessionSent=false;_nuevaSesionCodigo();
+    sendProgress('inicio'); _startProgressTracking();
+    showScreen('s-game');loadQuestion();return;
+  }
   if(group==='cazar'){
     const qs=preguntasCazar(null,20);
     if(!qs.length){alert('El banco de datos aún no tiene ejercicios para este grupo.');return;}
@@ -2020,7 +2049,7 @@ function loadQuestion(){
     if(streakWrap) streakWrap.classList.remove('hot');
   }
   const q=ST.questions[ST.idx];
-  ST.qtype=q.qtype; ST.attempts=0;
+  ST.qtype=q.qtype; ST.attempts=0; ST.malas=[];
   const pct=(ST.idx/ST.questions.length)*100;
   // dual bar updated via updateStats()
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
@@ -2035,7 +2064,7 @@ function loadQuestion(){
   document.querySelectorAll('[onclick="checkOxAssign()"]').forEach(b=>b.disabled=false);
   const fb=document.getElementById('feedback');
   fb.className='feedback';fb.innerHTML='';
-  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol','area-atomx','area-ahorcado'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  ['area-mc','area-write','area-ox','area-drag','area-ox-assign','area-react','area-classify','area-balance','area-mol','area-atomx','area-ahorcado','area-mini'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   // Red de seguridad: un error inesperado al renderizar (dato de compuesto
   // incompleto, tipo de pregunta mal asignado, etc.) ya no debe congelar la
   // partida completa —sin esto, una excepción aquí dejaba la pantalla sin
@@ -2060,6 +2089,7 @@ function loadQuestion(){
     else if(q.qtype==='balance-eq') renderBalanceEq(q);
     else if(q.qtype==='mol-calc') renderMolCalc(q);
     else if(q.qtype==='ahorcado') renderAhorcado(q);
+    else if(q.qtype==='crucigrama'||q.qtype==='sopa') renderMini(q);
   } catch(err) {
     console.error('Error renderizando la pregunta, se salta a la siguiente:', err, q);
     renderMC_fallback(q);
@@ -2123,22 +2153,92 @@ function renderMC(q){
   ).join('');
 }
 
+// ── 3 intentos con pistas progresivas (reglas comunes en assets/retos.js) ──
+// Al fallar, la opción elegida se descarta y aparece una pista: la 1 es la
+// regla general (por ejemplo, cómo se nombra ese grupo de compuestos) y la
+// 2 es más concreta, sin decir la respuesta. Al 3.er error (o cuando ya solo
+// quedaría una opción) se cierra la pregunta con la explicación completa.
+// Puntos: 2 al primer intento, 1 al segundo, 0 al tercero.
+function _ionMaxOpc(sel){const n=document.querySelectorAll(sel+' .mc-opt').length||4;return RETOS.maxIntentos(n);}
+function _ionPts(){return ST.attempts===1?2:ST.attempts===2?1:0;}
+function _ionPistas(q){
+  if(q._p)return q._p;
+  const t=q.qtype;let resp=[],exp='',extra=[],primera,general;
+  if(q.isElement){
+    const el=ELEMENTS[q.z]||{};
+    const ubic=el.period?'Búscalo en la tabla periódica: está en el periodo '+el.period+(el.group?', grupo '+el.group:'')+'.':'';
+    if(t==='el-property'){extra=[q.prop==='en'?'La electronegatividad aumenta hacia la derecha y hacia arriba en la tabla (el flúor es el más electronegativo).':'El radio atómico aumenta hacia abajo (más niveles) y hacia la izquierda en la tabla.'];}
+    else if(t==='el-valence'||t==='el-config2val'){extra=['Los electrones de valencia son los del último nivel de energía: el número más alto de la configuración.','Su configuración es '+supify(elFullConfig(q.z))+'. Suma los electrones del nivel más alto.'];}
+    else if(t==='el-block'){extra=[ubic,'El bloque es el subnivel (s, p, d o f) donde entra el último electrón. Mira el final de su configuración.'];}
+    else if(t==='el-metal'||t==='el-sym2type'){extra=[ubic,'Los metales están a la izquierda de la «escalera» de la tabla, los no metales a la derecha y los metaloides pegados a ella.'];}
+    else {extra=[ubic,'Es un '+String(TYPE_LABELS[el.type]||'elemento').toLowerCase()+' con número atómico '+q.z+'.'];if(t==='el-z2name')extra[1]='Es un '+String(TYPE_LABELS[el.type]||'elemento').toLowerCase()+'; su configuración es '+supify(elFullConfig(q.z))+'.';}
+    resp=[el.name,el.sym].filter(Boolean);
+  } else if(q.isAtom){
+    // también se tapan los elementos a ordenar o relacionar: si no, la explicación daría el orden
+    resp=[].concat(q.ok,q.alt||[],q.items||[],(q.pares||[]).map(x=>x[1])).filter(x=>x!=null).map(String);exp=q.x||'';
+    if(q.tipo==='calcular')extra=['Escribe los datos con sus unidades y decide qué fórmula los relaciona.','Revisa las unidades: deben cancelarse hasta quedar solo '+(q.unidad||'las que pide la pregunta')+'.'];
+  } else if(t==='react-chain'){
+    const nm=q.chainType==='nm';
+    primera={A:nm?'No metal + oxígeno → anhídrido (óxido ácido). Cruza las valencias para los subíndices.':'Metal + oxígeno → óxido básico. Aplica la regla de cruce de valencias.',
+      B:nm?'Anhídrido + H₂O → ácido oxácido. El número de H⁺ iguala la carga del oxoanión.':'Óxido básico + H₂O → hidróxido. El metal conserva su estado de oxidación.',
+      C:nm?'Ácido + base → sal + H₂O. Cruza las cargas del catión metálico y del anión del ácido.':'Hidróxido + ácido → sal + H₂O. Cruza las cargas del catión y del anión.'}[q.step];
+    extra=['El '+(nm?'no metal':'metal')+' trabaja con estado de oxidación '+q.eo+'; ese número no cambia a lo largo de la cadena.'];
+    resp=[q[q.step]];
+  } else if(t==='classify-rx'){
+    extra=['Cuenta cuántas sustancias entran (reactivos) y cuántas salen (productos).','Fíjate en qué pasa con los elementos: ¿se unen, se separan, uno reemplaza a otro o se intercambian parejas? Si hay O₂ y salen CO₂ y H₂O, es una combustión.'];
+  } else if(t==='mol-calc'){
+    extra=['La masa molar del '+q.formula+' es '+q.masa_molar+' g/mol: 1 mol pesa esos gramos.','Escribe el factor de conversión con la unidad que quieres eliminar abajo. Para moléculas usa 1 mol = 6,022 × 10²³ moléculas.'];
+  } else if(t==='balance-eq'){
+    // q.hint trae todos los coeficientes: la pista 2 solo da el primero.
+    const c0=(q.coeficientes||[])[0],e0=(q.especies||[])[0];
+    extra=['Cuenta los átomos de cada elemento a cada lado de la flecha; empieza por el que aparece en menos sustancias y deja el H y el O para el final.',
+      (c0!=null&&e0)?'El coeficiente de '+e0+' es '+c0+'. A partir de él, ajusta los demás contando átomos.':''];
+  } else {
+    resp=[...(q.trad||[]),...(q.stock||[]),...(q.sist||[]),q.formula].filter(Boolean);
+    exp=q.hint||'';primera=GROUP_MNEMO[q.group];
+    if(t==='ox-state'||t==='ox-assign'){primera='En un compuesto neutro, la suma de los estados de oxidación (cada uno multiplicado por su subíndice) es 0.';extra=['El oxígeno casi siempre trabaja con −2 y el hidrógeno con +1 (−1 en los hidruros metálicos).'];exp='';}
+    if(t==='balance'){primera='La fórmula debe quedar neutra: la carga positiva total debe igualar a la negativa.';extra=['Divide la carga del catión entre la carga de un anión.'];exp='';}
+  }
+  q._p=RETOS.pistas({resp,exp,extra:extra.filter(Boolean),primera,general});
+  return q._p;
+}
+// Si quedan intentos: descarta la opción, muestra la pista y deja la pregunta abierta (true).
+function _ionReintento(q,max,extra,el,dada){
+  if(dada!=null&&dada!=='')(ST.malas=ST.malas||[]).push(dada);
+  if(ST.attempts>=max)return false;
+  if(el){el.classList.add('wrong','disabled');el.disabled=true;}
+  const ps=_ionPistas(q);
+  const fb=document.getElementById('feedback');
+  fb.className='feedback tip show';
+  fb.innerHTML=RETOS.cajaPista(ST.attempts,max,ps[Math.min(ST.attempts,ps.length)-1],extra||'');
+  return true;
+}
+// Al cerrar la pregunta: resumen de los intentos (antes del botón «Siguiente»).
+function _ionNota(ok){
+  if(ok&&ST.attempts<=1)return;
+  const fb=document.getElementById('feedback');if(!fb)return;
+  fb.insertAdjacentHTML('beforeend',RETOS.cajaExplicacion({titulo:'🔁 Tus intentos',ok,intentos:ST.attempts,elegidas:(ST.malas||[]).map(String)}));
+}
 function checkMC(el){
-  if(ST.answered)return;
+  if(ST.answered||el.disabled)return;
   const q=ST.questions[ST.idx];
   ST.attempts++;ST.totalAttempts++;
+  const ok=isCorrect(el.textContent,q,'any');
+  if(!ok&&_ionReintento(q,_ionMaxOpc('#q-mc-opts'),'«'+el.textContent+'» no es el nombre de este compuesto.',el,el.textContent)){updateStats();return;}
   document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{b.disabled=true;b.classList.add('disabled');});
-  if(isCorrect(el.textContent,q,'any')){
+  if(ok){
     el.classList.add('correct');
-    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    const pts=_ionPts();
     ST.score+=pts;ST.correct++;
     showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     scheduleNext(1800);
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(isCorrect(b.textContent,q,'any'))b.classList.add('correct');});
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
-    showFeedback('err','✗ Incorrecto.',q);
+    showFeedback('err','✗ Se acabaron los intentos. Así se nombra:',q);
+    _ionNota(false);
     scheduleNext(3000);
   }
   updateStats();
@@ -2417,14 +2517,17 @@ function atomxRevisar(){
     const pts=ST.attempts===1?2:ST.attempts===2?1:0;
     ST.score+=pts; ST.correct++;
     showElFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     atomxBloquear(); scheduleNext(2600);
   } else if(ST.attempts>=3){
     ST.ax.locked=true;
     if(!ST.errors.find(e=>e.formula===q.formula&&e.group===q.group)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showElFeedback('err','✗ La respuesta correcta era: '+respuestaTexto(q),q);
+    _ionNota(false);
     atomxBloquear(); scheduleNext(4200);
   } else {
-    showElFeedback('err',`✗ Intento ${ST.attempts} de 3 — revisa lo marcado en rojo e intenta de nuevo.`,null);
+    const _dada=(q.tipo==='escribir'||q.tipo==='calcular')?(document.getElementById('ax-inp')||{}).value:null;
+    _ionReintento(q,3,(q.tipo==='escribir'||q.tipo==='calcular')?'Esa respuesta no es correcta.':'Lo marcado en rojo no está bien; lo verde sí.',null,_dada);
     // en arrastrar/ordenar se liberan solo las casillas equivocadas
     if(q.tipo==='completar'||q.tipo==='ordenar'){
       setTimeout(()=>{ if(!ST.ax||ST.ax.locked) return;
@@ -2453,27 +2556,25 @@ function checkElMC(el){
     const q=ST.questions[ST.idx];
     const chosen=el.textContent;
     const correct=document.getElementById('q-mc-opts').dataset.elCorrect;
+    if(el.disabled)return;
     ST.attempts++;ST.totalAttempts++;
+    if(chosen!==correct&&_ionReintento(q,_ionMaxOpc('#q-mc-opts'),'«'+chosen+'» no es la respuesta.',el,chosen)){updateStats();return;}
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{b.disabled=true;b.classList.add('disabled');});
     if(chosen===correct){
       el.classList.add('correct');
-      const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+      const pts=_ionPts();
       ST.score+=pts;ST.correct++;
       showElFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+      _ionNota(true);
       scheduleNext(1800);
     } else {
       el.classList.add('wrong');
       document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('correct');});
-      if(ST.attempts>=3){
-        const grp=q.isAtom?q.group:'elemento';
-        if(!ST.errors.find(e=>e.formula===q.formula&&e.group===grp)) ST.errors.push({group:grp,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
-        showElFeedback('err','✗ La respuesta correcta era: '+correct,q);
-        scheduleNext(3000);
-      } else {
-        document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.remove('correct'));
-        document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if(b!==el){b.disabled=false;b.classList.remove('disabled');}});
-        showElFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null);
-      }
+      const grp=q.isAtom?q.group:'elemento';
+      if(!ST.errors.find(e=>e.formula===q.formula&&e.group===grp)) ST.errors.push({group:grp,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
+      showElFeedback('err','✗ La respuesta correcta era: '+correct,q);
+      _ionNota(false);
+      scheduleNext(3000);
     }
     updateStats();
   }catch(err){
@@ -2595,17 +2696,20 @@ function submitWrite(){
     ST.score+=pts;ST.correct++;
     document.getElementById('q-input').disabled=true;
     showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     scheduleNext(1800);
   } else if(ST.attempts<3){
     const inp=document.getElementById('q-input');
     inp.classList.add('shake');
     setTimeout(()=>inp.classList.remove('shake'),320);
-    showFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null,true);
+    _ionReintento(q,3,'«'+val+'» no es correcto'+(mode==='stock'?' en nomenclatura Stock':mode==='sist'?' en nomenclatura sistemática':'')+'.',null,val);
   } else {
     document.getElementById('q-input').disabled=true;
     document.getElementById('btn-hint-el').style.display='none';
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
+    (ST.malas=ST.malas||[]).push(val);
     showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
+    _ionNota(false);
     scheduleNext(3500);
   }
   updateStats();
@@ -2615,7 +2719,10 @@ function showHint(){
   if(ST.answered)return;
   const q=ST.questions[ST.idx];
   document.getElementById('feedback').className='feedback tip show';
-  document.getElementById('feedback').innerHTML='💡 <strong>Pista:</strong> '+(q.hint||'Revisa el estado de oxidación y el grupo funcional.');
+  // La explicación (q.hint) suele traer el nombre: se muestra la pista que
+  // corresponde al intento, con la respuesta tapada (assets/retos.js).
+  const ps=_ionPistas(q);
+  document.getElementById('feedback').innerHTML='💡 <strong>Pista:</strong> '+ps[Math.min(ST.attempts,ps.length-1)];
 }
 
 // ── Ox-state ──
@@ -2633,20 +2740,24 @@ function renderOx(q){
 }
 
 function checkOx(el,chosen,correct){
+  if(ST.answered||el.disabled)return;
   const q=ST.questions[ST.idx];
   ST.attempts++;ST.totalAttempts++;
+  if(chosen!==correct&&_ionReintento(q,_ionMaxOpc('#q-ox-opts'),'El estado de oxidación no es +'+ROMAN[chosen]+'.',el,'+'+ROMAN[chosen])){updateStats();return;}
   document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
   if(chosen===correct){
     el.classList.add('correct');
-    const pts=ST.attempts===1?2:1;
+    const pts=_ionPts();
     ST.score+=pts;ST.correct++;
     showFeedback('ok',`✓ Estado de oxidación ${correct} (+${ROMAN[correct]}). +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     scheduleNext(1800);
   } else {
     el.classList.add('wrong');
     document.querySelectorAll('#q-ox-opts .mc-opt').forEach(b=>{if(b.textContent.includes('('+correct+')'))b.classList.add('correct');});
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ El estado de oxidación correcto es ${correct} (+${ROMAN[correct]}).`,q);
+    _ionNota(false);
     scheduleNext(3000);
   }
   updateStats();
@@ -2748,6 +2859,7 @@ function checkOxAssign(){
     ST.score+=pts;ST.correct++;
     data.forEach((_,i)=>{const inp=document.getElementById('oxa-inp-'+i);if(inp)inp.disabled=true;});
     showFeedback('ok',`✓ ¡Correcto! Suma = ${sum}. +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     scheduleNext(1800);
   } else if(ST.attempts>=3){
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
@@ -2756,9 +2868,10 @@ function checkOxAssign(){
       if(inp){inp.value=(state>0?'+':'')+state;inp.disabled=true;inp.classList.remove('err');inp.classList.add('ok');}
     });
     showFeedback('reveal','3 intentos agotados. Los estados correctos son:',q);
+    _ionNota(false);
     scheduleNext(3500);
   } else {
-    showFeedback('err',`✗ Intento ${ST.attempts} de 3 — algún estado es incorrecto. Suma actual: ${sum}.`,null,true);
+    _ionReintento(q,3,`Lo marcado en rojo no está bien. Con tus números la suma da ${sum}, y debe dar 0.`);
   }
   updateStats();
 }
@@ -2833,6 +2946,7 @@ function checkDrag(){
     const pts=ST.attempts===1?2:ST.attempts===2?1:0;
     ST.score+=pts;ST.correct++;
     showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+    _ionNota(true);
     scheduleNext(1800);
   } else {
     document.querySelectorAll('.drag-slot').forEach((s,i)=>{
@@ -2844,14 +2958,19 @@ function checkDrag(){
       document.querySelectorAll('.drag-chip').forEach(b=>b.style.pointerEvents='none');
       if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
       showFeedback('reveal','3 intentos agotados. La respuesta era:',q);
+      _ionNota(false);
       scheduleNext(3500);
     } else {
-      showFeedback('err',`✗ Intento ${ST.attempts} de 3 — intenta de nuevo.`,null,true);
+      const _nb=ds.placed.filter((p,i)=>p&&norm(p.word)===norm(ds.answers[i])).length;
+      _ionReintento(q,3,`Tienes ${_nb} de ${ds.nb} palabras en su lugar (en verde). Las rojas vuelven al banco.`);
+      // Se quedan las palabras bien puestas; las demás vuelven al banco.
       setTimeout(()=>{
-        ds.placed=new Array(ds.nb).fill(null);ds.sel=null;
-        document.querySelectorAll('.drag-slot').forEach(s=>{s.textContent='···';s.classList.remove('filled','ok','err');});
-        document.querySelectorAll('.drag-chip').forEach(b=>{b.classList.remove('used','sel');b.style.pointerEvents='';});
-        document.getElementById('feedback').className='feedback';
+        if(ds.locked)return;ds.sel=null;
+        ds.placed.forEach((p,i)=>{
+          if(p&&norm(p.word)===norm(ds.answers[i]))return;
+          if(p){const ch=document.getElementById('dchip-'+p.ci);if(ch){ch.classList.remove('used','sel');ch.style.pointerEvents='';}}
+          ds.placed[i]=null;const sl=document.getElementById('dslot-'+i);sl.textContent='···';sl.classList.remove('filled','ok','err');
+        });
       },1400);
     }
   }
@@ -3142,53 +3261,51 @@ function checkReactChainWrite(){
       if(ST.attempts>=3){
         if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
         document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.innerHTML=correct;b.classList.remove('asked');b.classList.add('revealed');});
+        (ST.malas=ST.malas||[]).push(inp.value);
         showFeedback('err',`✗ La fórmula correcta es: ${correct}`,q);
+        _ionNota(false);
         scheduleNext(2500);
       } else {
         inp.disabled=false;if(btn)btn.disabled=false;
         setTimeout(()=>{inp.style.borderColor='';inp.style.background='';inp.style.color='';inp.focus();inp.select();},600);
-        showFeedback('err','✗ Revisa la fórmula e intenta de nuevo.',q);
+        _ionReintento(q,3,'«'+inp.value+'» no es la fórmula correcta.',null,inp.value);
       }
     }
   }catch(e){scheduleNext(0);}
 }
 
 function checkReactChain(el){
-  if(ST.answered)return;
+  if(ST.answered||el.disabled)return;
   try{
     const q=ST.questions[ST.idx];
     const correct=document.getElementById('react-mc-opts').dataset.correct;
     ST.attempts++;ST.totalAttempts++;
+    const ok=el.textContent.trim()===correct;
+    if(!ok&&_ionReintento(q,_ionMaxOpc('#react-mc-opts'),el.textContent.trim()+' no es el compuesto correcto.',el,el.textContent.trim())){updateStats();return;}
     document.querySelectorAll('#react-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
-    if(el.textContent.trim()===correct){
+    if(ok){
       el.classList.add('correct');
-      const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+      const pts=_ionPts();
       ST.score+=pts;ST.correct++;
       document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{
         b.textContent=correct;b.classList.remove('asked');b.classList.add('revealed');
       });
       showFeedback('ok',`✓ ¡Correcto! +${pts} punto${pts!==1?'s':''}`,q);
+      _ionNota(true);
       scheduleNext(1800);
     } else {
       el.classList.add('wrong');
       document.querySelectorAll('#react-mc-opts .mc-opt').forEach(b=>{
         if(b.textContent.trim()===correct) b.classList.add('correct');
       });
-      const nm=q.chainType==='nm';
-      const hint={
-        A:nm?`Recuerda: no metal ${q.eo} + O²⁻ → anhídrido. Cruza las valencias para los subíndices.`
-            :`Recuerda: metal ${q.eo} + O²⁻ → óxido básico. Aplica la regla de cruce de valencias.`,
-        B:nm?`Recuerda: anhídrido + H₂O → ácido oxácido. El número de H⁺ iguala la carga del oxoanión.`
-            :`Recuerda: óxido básico + H₂O → hidróxido. El catión conserva su estado de oxidación.`,
-        C:nm?`Recuerda: ácido oxácido + base → sal + H₂O. Cruza las cargas del catión metálico y el oxoanión ácido.`
-            :`Recuerda: hidróxido + ácido → sal + H₂O. Cruza las cargas del catión y del anión ácido.`
-      }[q.step];
-      showFeedback('err',`✗ Incorrecto. ${hint}`,q);
-      if(ST.attempts>=2){
-        if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
-        scheduleNext(2000);
-      }
+      document.querySelectorAll('#react-chain-diagram .chain-box.asked').forEach(b=>{b.textContent=correct;b.classList.remove('asked');b.classList.add('revealed');});
+      const ps=_ionPistas(q);
+      if(!ST.errors.find(e=>e.formula===correct)) ST.errors.push({group:q.group||'reactividad',formula:correct,name:'',qtype:ST.qtype});
+      showFeedback('err',`✗ El compuesto correcto es ${correct}. ${ps[0]||''}`,q);
+      _ionNota(false);
+      scheduleNext(2000);
     }
+    updateStats();
   }catch(err){scheduleNext(0);}
 }
 
@@ -3210,12 +3327,14 @@ function renderBalance(q){
 function checkBalance(el,chosen,correct){
   if(ST.answered)return;
   const q=ST.questions[ST.idx];
+  if(el.disabled)return;
   const b=extractBalance(q);
   ST.attempts++;ST.totalAttempts++;
+  if(chosen!==correct&&_ionReintento(q,_ionMaxOpc('#q-mc-opts'),'Con '+chosen+' ion'+(chosen>1?'es':'')+' la fórmula no queda neutra.',el,chosen+' ion'+(chosen>1?'es':''))){updateStats();return;}
   document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>btn.classList.add('disabled'));
   if(chosen===correct){
     el.classList.add('correct');
-    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    const pts=_ionPts();
     ST.score+=pts;ST.correct++;
     showFeedback('ok',`✓ ¡Correcto! ${correct} ion${correct>1?'es':''} ${b?b.anSym:''} para EO +${b?b.eo:''}. Carga total: +${b?b.eo:''} + (${correct}×${b?b.anCharge:''}) = 0 ✓ +${pts} punto${pts!==1?'s':''}`,q);
     scheduleNext(1800);
@@ -3224,6 +3343,7 @@ function checkBalance(el,chosen,correct){
     document.querySelectorAll('#q-mc-opts .mc-opt').forEach(btn=>{if(btn.textContent.startsWith(correct+' '))btn.classList.add('correct');});
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ La respuesta es ${correct}. Regla: ${b?b.eo:''} ÷ ${b?Math.abs(b.anCharge):''} = ${correct} iones.`,q);
+    _ionNota(false);
     scheduleNext(3000);
   }
   updateStats();
@@ -3246,12 +3366,14 @@ function renderInvert(q){
 }
 
 function checkInvert(el,chosen,correct){
+  if(ST.answered||el.disabled)return;
   const q=ST.questions[ST.idx];
   ST.attempts++;ST.totalAttempts++;
+  if(chosen!==correct&&_ionReintento(q,_ionMaxOpc('#q-mc-opts'),chosen+' no es la fórmula de este compuesto.',el,chosen)){updateStats();return;}
   document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
   if(chosen===correct){
     el.classList.add('correct');
-    const pts=ST.attempts===1?2:ST.attempts===2?1:0;
+    const pts=_ionPts();
     ST.score+=pts;ST.correct++;
     document.getElementById('q-formula').textContent=q.formula;
     showFeedback('ok',`✓ ¡Correcto! La fórmula es ${q.formula}. +${pts} punto${pts!==1?'s':''}`,q);
@@ -3262,6 +3384,7 @@ function checkInvert(el,chosen,correct){
     document.getElementById('q-formula').textContent=q.formula;
     if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
     showFeedback('err',`✗ La fórmula correcta es ${q.formula}.`,q);
+    _ionNota(false);
     scheduleNext(3000);
   }
   updateStats();
@@ -3341,7 +3464,8 @@ function showFeedback(type,msg,q,noAlts=false){
 function updateStats(){
   document.getElementById('g-correct').textContent=ST.correct;
   document.getElementById('g-attempts').textContent=ST.totalAttempts;
-  const done=Math.min(ST.idx+1,20);
+  // en crucigrama y sopa cada ronda son 10 palabras
+  const done=(ST.qtype==='crucigrama'||ST.qtype==='sopa')?Math.min((ST.idx+(ST.answered?1:0))*10,20):Math.min(ST.idx+1,20);
   const effPct=done>0?Math.round((ST.correct/done)*100):0;
   const effEl=document.getElementById('g-eff');
   effEl.textContent=done>0?effPct+'%':'—';
@@ -3416,9 +3540,9 @@ function endGame(){
   if(GAME_MODE==='student' && CODE_VERIFIED) sendResults(grade,level,pct);
 }
 
-const GROUP_LABELS={all:'Todos los grupos',ahorcado:'Ahorcado',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
+const GROUP_LABELS={all:'Todos los grupos',ahorcado:'Ahorcado',crucigrama:'Crucigrama',sopa:'Sopa de letras',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',reactividad:'Cadena de reactividad'};
 
-const STUDY_TIPS={'ahorcado':'Empieza por las vocales y por las letras más comunes (S, R, N, L, C). Pide la segunda pista antes de arriesgar: la tercera te deja solo 1 punto.','cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+const STUDY_TIPS={'crucigrama':'Empieza por las palabras que ya sabes: sus letras te ayudan con las que se cruzan. Antes de comprobar, llena todas las casillas.','sopa':'Primero piensa la palabra con la pista y cuenta sus letras; luego busca su primera letra en la cuadrícula.','ahorcado':'Empieza por las vocales y por las letras más comunes (S, R, N, L, C). Pide la segunda pista antes de arriesgar: la tercera te deja solo 1 punto.','cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);
@@ -3544,11 +3668,13 @@ function _qtypeBucket(qtype){
 
 function _buildPayload(razon, extra){
   extra = extra || {};
-  const total      = (ST.questions && ST.questions.length) || 20;
+  // Crucigrama y sopa: 2 rondas de 10 palabras = 20 «preguntas».
+  const _mini      = ST.group === 'crucigrama' || ST.group === 'sopa';
+  const total      = _mini ? 20 : ((ST.questions && ST.questions.length) || 20);
   // respondidas: preguntas realmente contestadas (no el índice en curso)
   // ST.idx es el índice de la pregunta actual; si ya respondió y espera "siguiente",
   // ST.correct ya incluye esa pregunta. Usamos min(correct + wrong, total) como proxy seguro.
-  const respondidas = Math.min(ST.idx, total);
+  const respondidas = Math.min(_mini ? ST.idx * 10 : ST.idx, total);
   const correctas   = Math.min(ST.correct || 0, respondidas);
   const puntaje     = Math.min(ST.score   || 0, total * 2);
   const pct = extra.porcentaje !== undefined ? extra.porcentaje
@@ -4081,10 +4207,12 @@ function renderClassifyRx(q){
 function checkClassifyRx(btn, chosen, correct){
   if(ST.answered)return;
   if(btn.classList.contains('disabled')) return;
-  document.querySelectorAll('#area-classify .mc-opt').forEach(b=>b.classList.add('disabled'));
   const ok = chosen === correct;
   const qcr = ST.questions[ST.idx];
-  if(ok){ btn.classList.add('correct'); scoreOk(); }
+  ST.attempts++;
+  if(!ok){ ST.totalAttempts++; updateStats(); if(_ionReintento(qcr,_ionMaxOpc('#area-classify'),'No es '+TIPO_RX_LABELS[chosen].split('  ')[0].toLowerCase()+'.',btn,TIPO_RX_LABELS[chosen].split('  ')[0])) return; ST.totalAttempts--; }
+  document.querySelectorAll('#area-classify .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(ok){ btn.classList.add('correct'); scoreOk(); ST.score-=2-_ionPts(); updateStats(); }
   else {
     btn.classList.add('wrong');
     document.querySelectorAll('#area-classify .mc-opt').forEach(b=>{
@@ -4093,7 +4221,8 @@ function checkClassifyRx(btn, chosen, correct){
     scoreErr();
     if(!ST.errors.find(e=>e.formula===qcr.formula)) ST.errors.push({group:qcr.group||'reaccion',formula:qcr.formula||qcr.ecuacion||'?',name:(qcr.trad&&qcr.trad[0])||'',qtype:ST.qtype});
   }
-  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto!':'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], qcr);
+  showFeedback(ok?'ok':'err', ok?'✓ ¡Correcto! +'+_ionPts()+' punto'+(_ionPts()!==1?'s':''):'✗ Incorrecto — el tipo correcto es: '+TIPO_RX_LABELS[correct], qcr);
+  _ionNota(ok);
   scheduleNext(0);
 }
 
@@ -4121,16 +4250,20 @@ function checkBalanceEq(){
   const ok = entered.length===correct.length && entered.every(function(v,i){ return v===correct[i]; });
   const area = document.getElementById('area-balance');
   area._attempts = (area._attempts||0)+1;
+  ST.attempts = area._attempts;
   if(ok){
     document.getElementById('balance-fb').innerHTML = '<span style="color:var(--ok);font-weight:700">✓ ¡Ecuación balanceada correctamente!</span>';
-    scoreOk();
+    scoreOk(); ST.score-=2-_ionPts(); updateStats();
     showFeedback('ok','✓ ¡Correcto! Coeficientes: ['+correct.join(', ')+']', q);
+    _ionNota(true);
     scheduleNext(0);
   } else {
-    if(area._attempts>=2){
+    (ST.malas=ST.malas||[]).push('['+entered.join(', ')+']');
+    if(area._attempts>=3){
       showBalanceAnswer();
     } else {
-      document.getElementById('balance-fb').innerHTML = '<span style="color:var(--warn);font-weight:700">Incorrecto — intento '+area._attempts+'/2. Pista: '+q.hint+'</span>';
+      document.getElementById('balance-fb').innerHTML='';
+      _ionReintento(q,3,'Con ['+entered.join(', ')+'] la ecuación todavía no está balanceada.');
     }
   }
 }
@@ -4141,6 +4274,7 @@ function showBalanceAnswer(){
   scoreErr();
   if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group||'balanceo',formula:q.formula||q.ecuacion||'?',name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
   showFeedback('err','Coeficientes correctos: ['+((q.coeficientes||[]).join(', '))+']', q);
+  _ionNota(false);
   scheduleNext(0);
 }
 
@@ -4206,6 +4340,37 @@ function juegoPantallaCompleta(){
   if(!juegoEsPC()){ try{ if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); }catch(e){} }
   if(typeof AH !== 'undefined' && AH){ ahPintar(); const a = document.querySelector('#s-game .game-hdr') || document.getElementById('area-ahorcado'); if(a && juegoEsPC()) setTimeout(() => a.scrollIntoView({block:'start'}), 120); }
 }));
+/* ── Crucigrama y sopa de letras (reglas en assets/retos.js) ── */
+function renderMini(q){
+  const nom=q.qtype==='crucigrama'?'Crucigrama':'Sopa de letras';
+  document.getElementById('q-meta').textContent=nom+' '+q.ronda+' de 2 · 10 palabras';
+  document.getElementById('g-qnum').textContent=nom+' '+q.ronda+'/2';
+  document.getElementById('q-formula').innerHTML='<span class="el-name-lg" style="font-size:1rem">'+(q.qtype==='crucigrama'?'🔤':'🔍')+' '+nom+'</span>';
+  document.getElementById('q-prompt').textContent=q.qtype==='crucigrama'?'Completa el crucigrama con las pistas.':'Lee cada pista, piensa la palabra y búscala en la sopa.';
+  const area=document.getElementById('area-mini');area.style.display='';
+  // la 2.ª ronda no repite palabras de la 1.ª
+  const banco=BANCO_AHORCADO.filter(w=>ST.usadas.indexOf(RETOS.letras(w[0]))<0);
+  const fn=q.qtype==='crucigrama'?RETOS.crucigrama:RETOS.sopa;
+  const j=fn(area,banco,{n:10,onFin:function(r){
+    if(ST.answered)return;
+    let ok=0;
+    r.resultados.forEach(x=>{
+      ST.usadas.push(x.item.pal);
+      // 2 puntos a la 1.ª comprobación (o con 1 pista), 1 a la 2.ª, 0 a la 3.ª
+      if(x.ok){ok++;ST.correct++;ST.score+=x.intento===1?2:x.intento===2?1:0;}
+      else if(!ST.errors.find(e=>e.formula===q.qtype+'-'+x.item.pal))ST.errors.push({group:q.qtype,formula:q.qtype+'-'+x.item.pal,name:x.item.txt,qtype:q.qtype});
+    });
+    ST.totalAttempts+=r.resultados.length;
+    // cada ronda vale 10 de las 20 «preguntas»: el índice avanza 10 por ronda
+    updateStats();
+    const fb=document.getElementById('feedback');
+    fb.className='feedback '+(ok>=r.resultados.length/2?'ok':'err')+' show';
+    fb.innerHTML='<strong>'+nom+' '+q.ronda+': '+ok+' de '+r.resultados.length+' palabras.</strong> Abajo está la explicación de cada palabra.';
+    scheduleNext(0);
+  }});
+  if(!j){scheduleNext(0);}
+  else setTimeout(()=>{try{area.scrollIntoView({block:'start'});}catch(e){}},80);
+}
 function renderAhorcado(q){
   document.getElementById('q-meta').textContent='Pregunta '+(ST.idx+1)+' de 20 · Ahorcado';
   document.getElementById('q-formula').innerHTML='<span class="el-name-lg" style="font-size:1rem">🪢 Ahorcado</span>';
@@ -4304,10 +4469,12 @@ function renderMolCalc(q){
 function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
   if(ST.answered)return;
   if(btn.classList.contains('disabled')) return;
-  document.querySelectorAll('#area-mol .mc-opt').forEach(b=>b.classList.add('disabled'));
   const ok = Math.abs(chosen-correct) < Math.abs(correct)*0.02;
   const q = ST.questions[ST.idx];
-  if(ok){ btn.classList.add('correct'); ST.score+=2; ST.correct++; }
+  ST.attempts++;
+  if(!ok){ ST.totalAttempts++; updateStats(); if(_ionReintento(q,_ionMaxOpc('#area-mol'),btn.textContent+' no es el resultado.',btn,btn.textContent)) return; ST.totalAttempts--; }
+  document.querySelectorAll('#area-mol .mc-opt').forEach(b=>b.classList.add('disabled'));
+  if(ok){ btn.classList.add('correct'); ST.score+=_ionPts(); ST.correct++; }
   else {
     btn.classList.add('wrong');
     const q2 = ST.questions[ST.idx];
@@ -4319,6 +4486,7 @@ function checkMolCalc(btn, chosen, correct, cadena, formula_calc){
   const fb = document.getElementById('feedback');
   fb.innerHTML += '<div class="fb-why">Cadena de factores: <code style="font-family:var(--mono)">'+cadena+'</code></div>';
   if(formula_calc) fb.innerHTML += '<div class="fb-tip">MM de '+q.formula+': '+formula_calc+'</div>';
+  _ionNota(ok);
   scheduleNext(0);
 }
 

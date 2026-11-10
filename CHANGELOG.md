@@ -4,6 +4,42 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 10 de noviembre (9) — Juego: 3 intentos con pistas progresivas; crucigrama y sopa de letras
+
+El docente pidió revisar que en todos los juegos el estudiante tenga siempre 3 oportunidades para responder, con pistas progresivas que no regalen la respuesta, y que al final se explique completa la respuesta correcta. También pidió integrar como secciones del juego crucigramas de 10 palabras, sopas de letras de 10 palabras y ahorcado, con un tiempo proporcional a la dificultad de cada uno. Aclaró que cada sitio es único: los bancos de preguntas y de palabras no se comparten, solo las reglas.
+
+- **`assets/retos.js`** (archivo nuevo; el mismo en ChromaNom, IonNom —en `assets/`— y BioNom). Solo tiene **reglas**, ningún banco: cada sitio le pasa su propio banco de preguntas y su propio `BANCO_AHORCADO`.
+  - **3 intentos con pistas progresivas:**
+    - 1.er error → la opción elegida se descarta y aparece la pista 1, la más general (qué revisar).
+    - 2.º error → pista 2, más concreta.
+    - 3.er error → se cierra la pregunta con la explicación completa y la lista de intentos equivocados.
+    - Las pistas salen de las pistas propias de la pregunta o de su explicación, con las palabras de la respuesta tapadas (▢▢▢). Se verifica que ninguna pista contenga la respuesta.
+    - Puntos: 100 % al primer intento, 50 % al segundo y 20 % al tercero.
+    - Excepción: si la pregunta solo tiene 2 o 3 opciones, hay un intento menos que opciones (en verdadero/falso, un solo intento), porque si no, la última oportunidad sería regalada.
+  - **Crucigrama de 10 palabras:** palabras conectadas, sin palabras «accidentales» en los cruces. Hay 3 comprobaciones: después de cada una, las palabras que siguen mal reciben la pista siguiente, y en la segunda se regala su primera letra. Puntos por palabra: 10, 5 y 2. Al final, cada palabra con su explicación (sus 3 pistas).
+  - **Sopa de letras de 10 palabras:** el estudiante no ve la palabra sino su pista y el número de letras. Puede pedir hasta 3 pistas por palabra; con la tercera parpadea la primera letra en la cuadrícula. Se marca arrastrando o tocando la primera y la última letra. Cada palabra aparece una sola vez.
+  - **Tiempo proporcional a la dificultad**, con su propio reloj:
+    - Crucigrama: 22 s por palabra + 4 s por letra (entre 4 y 15 min; con 10 palabras, unos 9 a 11 min).
+    - Sopa: 20 s por palabra + 2 s por letra + el tamaño de la cuadrícula (unos 6 a 8 min).
+    - Ahorcado: 45 s + 10 s por letra distinta + 2 s por letra (entre 1:15 y 4 min por palabra).
+  - Los paneles del crucigrama y de la sopa tienen fondo claro propio, así que se leen bien también en modo oscuro.
+- **`juego.html`:**
+  - Todos los tipos de pregunta tienen ahora hasta 3 intentos con pista. Antes, nombre por opción múltiple, estado de oxidación, nombre → fórmula, equilibrio de cargas, clasificar reacción y mol/masa molar daban un solo intento; la cadena de reactividad y el balanceo daban 2. Los que ya tenían 3 solo decían «intenta de nuevo»; ahora dan pista.
+  - Las pistas de cada tipo:
+    - **Compuestos:** la pista 1 es la regla del grupo («Recuerda: [anión]-uro de [metal]…») y la 2 sale de la explicación del compuesto con el nombre tapado.
+    - **Tabla periódica:** periodo y grupo, y luego la categoría o la configuración.
+    - **Átomo y enlace:** la explicación con la respuesta tapada; en «ordenar» y «relacionar» se tapan también los elementos, para no dar el orden.
+    - **Balanceo:** cómo contar átomos y, en la 2, solo el primer coeficiente.
+    - **Mol:** la masa molar y cómo armar el factor de conversión.
+  - El botón «💡 Pista» de la escritura mostraba la explicación con el nombre completo. Ahora muestra la pista que corresponde al intento.
+  - Nuevos grupos **🔤 Crucigrama** y **🔍 Sopa de letras**: 2 rondas de 10 palabras del banco del Ahorcado de IonNom (`assets/bancos-extra.js`), sin repetir palabras entre rondas. Son 20 palabras = 20 preguntas y 40 puntos, como las demás partidas. Lo que se envía a la hoja también cuenta 20.
+  - El **Ahorcado** ya no tiene 3 minutos fijos: el tiempo depende de la palabra.
+- **`sw.js`:** la caché pasa a `ionom-v89`, con `assets/retos.js` en la lista y servido «red primero». No se tocó `banco.js`.
+- **Verificación:** con Playwright se fallaron preguntas de todos los tipos de los grupos y aparecieron la pista 1, la 2 y la explicación final. Las dos rondas de crucigrama terminan en «de 20 preguntas», y no hay errores en `juego.html` ni en `docente.html`.
+- **Pendiente:** ningún paso manual; no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 6 de noviembre (8) — Detective: botón «Revelar pista» en vez de la lupa fija
 
 A pedido del docente, la lupa 🔍 ya no va fija al final de cada párrafo.
