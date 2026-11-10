@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 10 de noviembre (10) — `extras.js` y `retos.js` compartidos con BioNom
+
+Para completar el panel docente de BioNom, que ahora usa los mismos archivos:
+
+- **`assets/extras.js`** (igual en los tres sitios): acepta un ajuste opcional, `window.EXTRAS_SITIO`, que BioNom usa para hablar de biología y hacer el criptograma con codones del código genético. **En IonNom no cambia nada.** En las actividades del taller, el ícono del ahorcado pasó de 🪢 a 🔠.
+- **`assets/retos.js`:** nueva función `RETOS.armarCrucigrama` (crucigrama con semilla) e ícono 🔠 en el ahorcado del módulo.
+- **`sw.js`:** la caché pasa a `ionom-v90`.
+- **Verificación:** con Playwright, el panel docente sigue con «Criptograma químico» y «El detective químico» y no hay errores.
+
+---
+
 ## 10 de noviembre (9) — Juego: 3 intentos con pistas progresivas; crucigrama y sopa de letras
 
 El docente pidió revisar que en todos los juegos el estudiante tenga siempre 3 oportunidades para responder, con pistas progresivas que no regalen la respuesta, y que al final se explique completa la respuesta correcta. También pidió integrar como secciones del juego crucigramas de 10 palabras, sopas de letras de 10 palabras y ahorcado, con un tiempo proporcional a la dificultad de cada uno. Aclaró que cada sitio es único: los bancos de preguntas y de palabras no se comparten, solo las reglas.
