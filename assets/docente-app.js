@@ -826,10 +826,10 @@ function tarjetaSaber(q, idxLocal, rngFn){
   // las opciones son dibujos (q.imgOps), se muestra la figura con A-D.
   const opciones = q.o.map((texto,i)=>({texto, correcta:q.fijo?i===q.r:i===0}));
   const barajadas = q.fijo ? opciones : barajar(opciones, rngFn);
-  return '<div class="sq">'
+  return '<div class="sq" data-k="'+(idxLocal-1)+'">'
     +'<div class="sq-ctx">'+(q.ctx||'')+'</div>'
     +(SI?SI.extraHTML(q):'')
-    +'<div class="sq-q"><strong>'+(idxLocal)+'.</strong> '+q.q+(q.f?' <span style="font-family:var(--mono);font-weight:700">'+q.f+'</span>':'')+'</div>'
+    +'<div class="sq-q"><strong class="sq-n">'+(idxLocal)+'.</strong> '+q.q+(q.f?' <span style="font-family:var(--mono);font-weight:700">'+q.f+'</span>':'')+'</div>'
     +(q.imgOps&&SI ? SI.opsImgHTML(q)
       : '<div class="sq-opts">'+barajadas.map((o,i)=>'<div class="sq-opt">'+letras[i]+') '+o.texto+'</div>').join('')+'</div>')
     +(SI?SI.creditoHTML(q):'')
@@ -849,7 +849,7 @@ function armarBloquesSaber(F, rngFn){
     ? SABER_ICFES.elegir(pool, F.saberCant, rngFn, {prioIcfes: F.prioIcfes!==false})
     : elegirN(pool, Math.min(F.saberCant, pool.length||F.saberCant), rngFn, x=>x.q);
   armarBloquesSaber.ultimas = elegidos;
-  return elegidos.map((q,i)=>({html:tarjetaSaber(q, i+1, rngFn), cols2:!(q.img||q.imgOps)}));
+  return elegidos.map((q,i)=>({html:tarjetaSaber(q, i+1, rngFn), cols2:true}));
 }
 
 function tarjetaAbierta(q, numero){
@@ -918,6 +918,8 @@ function construirVersion(F, numVersion, totalVersiones){
     numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
     var saberElegidas = armarBloquesSaber.ultimas || [];
+    // Crédito de las preguntas oficiales del Icfes, justo después de ellas.
+    if(window.SABER_ICFES){ const cr = SABER_ICFES.citaHTML(saberElegidas); if(cr) bloques.push({html:'<div>'+cr+'</div>', esMultiple:false}); }
     // La hoja de respuestas (burbujas) va AQUÍ, como bloques normales del
     // mismo documento -- no como un documento aparte con su propia primera
     // hoja (ver nota en construirTodas). Así fluye en lo que quede de
@@ -939,7 +941,6 @@ function construirVersion(F, numVersion, totalVersiones){
       bloques.push({html:'<h2 class="sec-tit">Cazar errores</h2>', esTitulo:true});
       bloques.push.apply(bloques, cazarBloques);
     }
-    if(window.SABER_ICFES){ const cr = SABER_ICFES.citaHTML(saberElegidas); if(cr) bloques.push({html:cr, esMultiple:false}); }
   }
 
   return {
@@ -947,6 +948,7 @@ function construirVersion(F, numVersion, totalVersiones){
     etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
     bloques: bloques,
     numSaberReal: numSaberReal,
+    reordenar: numSaberReal>0,
     saberElegidas: (typeof saberElegidas!=='undefined') ? saberElegidas : []
   };
 }
@@ -1150,7 +1152,30 @@ function paginar(doc){
   let cuerpo = hoja.querySelector('.hoja-cuerpo');
   let cols2 = null;
 
-  doc.bloques.forEach(function(blk){
+  if(typeof doc.bloques==='function') doc.bloques = doc.bloques();
+  const BL = doc.bloques;
+  for(let bi=0; bi<BL.length; bi++){
+    const blk = BL[bi];
+    // Preguntas tipo Saber seguidas: dos columnas reales que se llenan en
+    // orden (izquierda y luego derecha) con SABER_ICFES.colocar, para que una
+    // pregunta larga (tabla, figura) no deje la otra columna en blanco.
+    if(blk.cols2 && window.SABER_ICFES && !blk.nuevaHoja){
+      const nodos = [];
+      let bj = bi;
+      for(; bj<BL.length && BL[bj].cols2 && !BL[bj].nuevaHoja; bj++){
+        const w = document.createElement('div'); w.innerHTML = BL[bj].html; nodos.push(w.firstElementChild || w);
+      }
+      let pos = 0;
+      while(pos < nodos.length){
+        const r = SABER_ICFES.colocar(cuerpo, nodos, pos, !cuerpo.children.length, {reordenar: !!doc.reordenar});
+        if(!r){ hoja = crearHoja(doc, false); medidor.appendChild(hoja); cuerpo = hoja.querySelector('.hoja-cuerpo'); continue; }
+        pos += r;
+        if(pos < nodos.length){ hoja = crearHoja(doc, false); medidor.appendChild(hoja); cuerpo = hoja.querySelector('.hoja-cuerpo'); }
+      }
+      cols2 = null;
+      bi = bj - 1;
+      continue;
+    }
     if(blk.nuevaHoja && cuerpo.children.length){
       hoja = crearHoja(doc, false);
       medidor.appendChild(hoja);
@@ -1179,7 +1204,7 @@ function paginar(doc){
       if(blk.cols2){ cols2 = document.createElement('div'); cols2.className='cols2'; cuerpo.appendChild(cols2); destino2 = cols2; }
       destino2.appendChild(el);
     }
-  });
+  }
 
   // Red de seguridad: el paginado por bloque de arriba puede dejar un
   // desborde residual de pocos px (ej. por una variante de fuente que
@@ -1213,6 +1238,10 @@ function paginar(doc){
       idx--;
     }
   }
+
+  // Si se adelantaron preguntas cortas para llenar huecos de las columnas,
+  // se renumeran en el orden en que quedaron (la matriz usa doc.orden).
+  if(doc.reordenar && window.SABER_ICFES) doc.orden = SABER_ICFES.renumerar(medidor, '.sq[data-k]', '.sq-n', n=>n+'.');
 
   // El relleno (cuadrícula elástica / Notas) NO se hace aquí -- se hace al
   // final de generar(), sobre #vista y DESPUÉS de "subir" todo el
@@ -1365,7 +1394,7 @@ function construirTodas(F){
   // estudiantes).
   if(F.incluirMatriz && huboEvaluacion && window.SABER_ICFES){
     docs.filter(d=>d.saberElegidas&&d.saberElegidas.length).forEach(function(d){
-      docs.push({clase:'matriz', etiqueta:d.etiqueta, bloques:[{html:'<div><h2 class="sec-tit">Matriz de la evaluación (modelo basado en evidencias del Icfes)</h2>'+SABER_ICFES.matrizHTML(d.saberElegidas,1,'Q')+'</div>', esMultiple:false}]});
+      docs.push({clase:'matriz', etiqueta:d.etiqueta, bloques:function(){return SABER_ICFES.matrizBloques(SABER_ICFES.aplicarOrden(d.saberElegidas,d.orden),1,'Q',8).map(function(h,k){return {html:'<div>'+(k===0?'<h2 class="sec-tit">Matriz de la evaluación (modelo basado en evidencias del Icfes)</h2>':'')+h+'</div>', esMultiple:false};});}});
     });
   }
   docs.forEach(d => d.F = F);
@@ -1592,6 +1621,30 @@ async function generar(){
           const cSig = hs[idx+1].querySelector('.hoja-cuerpo');
           const candidato = cSig.firstElementChild;
           if(!candidato) break;
+          // Preguntas tipo Saber a doble columna: se suben de una en una
+          // (no el bloque entero de dos columnas), para aprovechar el
+          // espacio libre de la hoja anterior.
+          if(candidato.classList.contains('dcol') && window.SABER_ICFES){
+            const previo = cuerpo.lastElementChild;
+            const nodos = [];
+            if(previo && previo.classList.contains('dcol')){ previo.querySelectorAll(':scope>.dcol-c>*').forEach(n=>nodos.push(n)); previo.remove(); }
+            const nPrev = nodos.length;
+            candidato.querySelectorAll(':scope>.dcol-c>*').forEach(n=>nodos.push(n));
+            candidato.remove();
+            const puestos = SABER_ICFES.colocar(cuerpo, nodos, 0, false);
+            const resto = nodos.slice(puestos);
+            if(resto.length){
+              // lo que no cupo vuelve al comienzo de la hoja siguiente
+              const despues = Array.from(cSig.children); despues.forEach(n=>n.remove());
+              let pos = 0;
+              while(pos < resto.length){ const r = SABER_ICFES.colocar(cSig, resto, pos, !cSig.children.length); if(!r) break; pos += r; if(pos<resto.length){ /* no cupo todo: el resto se va con la red de abajo */ const box=document.createElement('div'); box.className='dcol'; const c=document.createElement('div'); c.className='dcol-c'; box.appendChild(c); resto.slice(pos).forEach(n=>c.appendChild(n)); cSig.appendChild(box); break; } }
+              despues.forEach(n=>cSig.appendChild(n));
+            }
+            if(puestos <= nPrev && resto.length) break;
+            if(!cSig.children.length){ hs[idx+1].remove(); hs.splice(idx+1, 1); }
+            if(resto.length) break;
+            continue;
+          }
           cuerpo.appendChild(candidato);
           if(cuerpo.scrollHeight > cuerpo.clientHeight + 1){
             cSig.insertBefore(candidato, cSig.firstElementChild);
