@@ -4,12 +4,24 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 12 de noviembre (15) — Estequiometría ya tiene su partida en el Juego
+
+El docente pidió que Estequiometría también esté en el juego (antes solo se jugaba «Química en la industria» y «Mol y masa molar»).
+
+- **`banco.js`:** nuevo `BANCO_ESTEQUIOMETRIA` con 46 preguntas: 40 de opción múltiple y 6 para calcular. Temas: razón molar, masa molar y moles, ruta gramos → moles → razón molar → gramos, factores de conversión, reactivo limitante (y cuánto sobra), rendimiento y pureza, y conservación de la masa. Siguen `estequiometria.html`: usan factores de conversión y no regla de tres. Opciones del mismo largo; ninguna correcta delatada por su tamaño.
+- **`juego.html`:** nuevo botón «Estequiometría» en el nivel de Cálculos (n = 4), con su consejo de estudio, y partida de 20 preguntas con los formatos interactivos. Cada partida suma además 5 preguntas tipo Saber del tema (43 en el banco, 2 oficiales del Icfes).
+- **`sw.js`:** caché `ionom-v95` (cambió `banco.js`).
+- **Verificación:** con Playwright, la partida arranca con 20 preguntas (opción múltiple, calcular y Saber) y sin errores; capturas revisadas.
+- **Pendiente:** el panel docente ya tenía el tema «Estequiometría»; no se tocó. `ionom-analytics.gs` no cambia.
+
+---
+
 ## 12 de noviembre (14) — Las preguntas tipo Saber también entran al juego
 
 El docente pidió que las preguntas tipo Saber 11 (con situación, tabla o figura) también salgan en el **juego**, en el tema que les corresponde.
 
 - **`assets/saber-juego.js` (nuevo)** y **`herramientas/generar-saber-juego.js` (nuevo):** el generador pasa las preguntas Saber de `docente-datos.js` a un archivo compacto (861 preguntas) para no cargar todo el banco docente en el celular. Si cambian las preguntas del panel docente, hay que volver a correr `node herramientas/generar-saber-juego.js`.
-- **`juego.html`:** en 20 de los 22 modos de juego (todos los temas; «todos» y «cazar errores» quedan igual a propósito), 5 de las 20 preguntas de cada partida son tipo Saber de ese tema, incluidas las oficiales del cuadernillo con su figura y crédito. Muestran la situación, tienen 120 s. Estequiometría no tiene partida en el juego, por eso no entra.
+- **`juego.html`:** en 20 de los 22 modos de juego (todos los temas; «todos» y «cazar errores» quedan igual a propósito), 5 de las 20 preguntas de cada partida son tipo Saber de ese tema, incluidas las oficiales del cuadernillo con su figura y crédito. Muestran la situación, tienen 120 s. (Estequiometría, que entonces no tenía partida, se agregó en la entrada (15).)
 - **`sw.js`:** caché `ionom-v94` y `saber-juego.js` en la lista.
 - **Verificación:** con Playwright, cada modo arranca con 5 preguntas Saber y sin errores; se revisaron capturas de una pregunta de indagación y de una oficial.
 - **Pendiente:** explicaciones y pistas del juego son generales por competencia; falta escribir explicaciones propias.
