@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 12 de noviembre (14) — Las preguntas tipo Saber también entran al juego
+
+El docente pidió que las preguntas tipo Saber 11 (con situación, tabla o figura) también salgan en el **juego**, en el tema que les corresponde.
+
+- **`assets/saber-juego.js` (nuevo)** y **`herramientas/generar-saber-juego.js` (nuevo):** el generador pasa las preguntas Saber de `docente-datos.js` a un archivo compacto (861 preguntas) para no cargar todo el banco docente en el celular. Si cambian las preguntas del panel docente, hay que volver a correr `node herramientas/generar-saber-juego.js`.
+- **`juego.html`:** en 20 de los 22 modos de juego (todos los temas; «todos» y «cazar errores» quedan igual a propósito), 5 de las 20 preguntas de cada partida son tipo Saber de ese tema, incluidas las oficiales del cuadernillo con su figura y crédito. Muestran la situación, tienen 120 s. Estequiometría no tiene partida en el juego, por eso no entra.
+- **`sw.js`:** caché `ionom-v94` y `saber-juego.js` en la lista.
+- **Verificación:** con Playwright, cada modo arranca con 5 preguntas Saber y sin errores; se revisaron capturas de una pregunta de indagación y de una oficial.
+- **Pendiente:** explicaciones y pistas del juego son generales por competencia; falta escribir explicaciones propias.
+
+---
+
 ## 12 de noviembre (13) — Contexto en todas las preguntas tipo Saber, más indagación y competencias bien marcadas
 
 El docente pidió continuar con lo que había quedado pendiente de la revisión con el modelo basado en evidencias del Icfes: subir la proporción de preguntas de **indagación** (la competencia con más preguntas en la prueba Saber 11 y la más débil en los tres sitios) y, en IonNom, darle **contexto** a las preguntas tipo Saber que no lo tenían.

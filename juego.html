@@ -11,6 +11,9 @@
 <script src="banco.js"></script>
 <script src="assets/bancos-extra.js"></script>
 <script src="assets/retos.js"></script>
+<script src="assets/saber-icfes.js"></script>
+<script src="assets/icfes-datos.js"></script>
+<script src="assets/saber-juego.js"></script>
 <link rel="stylesheet" href="assets/shared-tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -599,6 +602,7 @@ html{font-size:var(--base-fs)}
 }
 </style>
 <link rel="stylesheet" href="assets/ionom.css">
+<style>.saber-ctx{font-size:.88em;font-style:italic;color:#4b5b6b;margin-bottom:6px;line-height:1.4}.saber-q{font-weight:700}#q-prompt .icfes-fig img{max-width:100%;height:auto;max-height:240px}#q-prompt .icfes-tab{font-size:.8em;margin:6px 0}</style>
 </head>
 <body>
 
@@ -1783,6 +1787,7 @@ function timerFor(qtype){
   // los formatos interactivos de átomo y enlace necesitan más tiempo que la opción múltiple
   const q=ST.questions&&ST.questions[ST.idx];
   if(q&&q.isAtom&&q.tipo&&q.tipo!=='mc') return q.tipo==='calcular'?120:90;
+  if(q&&q.saber) return 120; // preguntas tipo Saber: leer la situación lleva más tiempo
   return TIMER_BY_TYPE[qtype]||TIMER_TOTAL;
 }
 function startTimer(){
@@ -2383,7 +2388,12 @@ function renderAtomMC(q){
   try{
     document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${(q.group==='modelos'&&q.tema==='modelos')?'🕰️ Modelos atómicos':(ATOM_TEMA[q.tema]||GROUP_LABELS[q.group]||'🪐 Teoría atómica')}</span>`;
     if(q.tipo&&q.tipo!=='mc'){ renderAtomX(q); return; }
-    document.getElementById('q-prompt').textContent=q.q;
+    const pr=document.getElementById('q-prompt');
+    if(q.saber){
+      const e=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const SI=window.SABER_ICFES;
+      pr.innerHTML='<div class="saber-ctx">'+e(q.ctx)+'</div>'+((SI&&q.icfes)?SI.extraHTML(q):'')+'<div class="saber-q">'+e(q.q)+'</div>'+((SI&&q.icfes)?SI.creditoHTML(q):'');
+    } else pr.textContent=q.q;
     const options=shuffle([q.ok,...q.d]);
     const mc=document.getElementById('q-mc-opts');
     mc.dataset.elCorrect=q.ok;
@@ -4599,6 +4609,46 @@ window.GROUP_LABELS = GROUP_LABELS;
 window.STUDY_TIPS = STUDY_TIPS;
 window.getOxidationStates = getOxidationStates;
 window.parseFormula = parseFormula;
+
+/* Preguntas tipo Saber 11 dentro del Juego (versión de noviembre de 2026).
+   Cada tema suma, por partida, 5 preguntas tipo Saber con su situación
+   (contexto) en lugar de 5 de las 20 que ya tenía, repartidas entre las tres
+   competencias de la prueba (uso, explicación e indagación) y con prioridad
+   a las preguntas oficiales del Icfes (con su figura y su crédito). Los datos
+   salen de assets/saber-juego.js (generado desde docente-datos.js) y de
+   assets/icfes-datos.js. Estequiometría no tiene partida propia en el Juego. */
+{
+  const GRUPO_TEMAS={'ox-anh':['ox-bas','anhid'],hidru:['hidru'],'ac-hid':['ac-hid'],base:['base'],'ac-ox':['ac-ox'],
+    'sal-bin':['sal-bin'],'sal-ox':['sal-ox'],'sal-ac':['sal-ac'],elemento:['elemento'],atomo:['atomo','config-e'],
+    enlace:['enlace'],modelos:['modelos'],acidobase:['acidobase'],industria:['industria'],gases:['gases'],
+    soluciones:['soluciones'],reaccion:['reaccion'],balanceo:['balanceo'],'mol-masa':['mol-masa'],reactividad:['reactividad']};
+  const N_SABER=5, SI=window.SABER_ICFES;
+  const NOMC={uso:'uso comprensivo del conocimiento científico',exp:'explicación de fenómenos',ind:'indagación'};
+  function poolSaber(group){
+    const temas=GRUPO_TEMAS[group];if(!temas||!SI)return [];
+    const gen=(window.SABER_JUEGO||[]).filter(x=>temas.includes(x.t)).map((x,i)=>({
+      saber:1,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,q:x.q+(x.f?' '+x.f:''),ok:x.o[0],d:x.o.slice(1),
+      x:'Pregunta tipo Saber 11 de la competencia de '+(NOMC[x.c]||NOMC.uso)+'. La respuesta correcta es «'+x.o[0]+'»: es la que se apoya en la situación y en lo que estudiaste en este tema.'}));
+    const ofi=SI.preguntas().filter(x=>temas.includes(x.t)&&!x.imgOps).map(x=>({
+      saber:1,icfes:x.icfes,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,q:x.q,ok:x.o[x.r],d:x.o.filter((o,i)=>i!==x.r),
+      img:x.img,tabla:x.tabla,x:(x.exp||'')+' (Pregunta '+x.icfes+' del cuadernillo Saber 11.º de Ciencias Naturales, Icfes 2026.)'}));
+    return gen.concat(ofi);
+  }
+  function mezclarSaber(group){
+    const pool=poolSaber(group);
+    if(!pool.length||!ST.questions||ST.questions.length<10)return;
+    const elegidas=SI.elegir(pool,N_SABER,Math.random,{prioIcfes:true});
+    const pos=[...ST.questions.keys()].sort(()=>Math.random()-0.5).slice(0,elegidas.length);
+    elegidas.forEach((a,k)=>{ST.questions[pos[k]]={...a,isAtom:true,qtype:'enlace-mc',group,formula:'saber-'+group+'-'+(a.icfes||k)+'-'+k,trad:[a.ok],stock:[],sist:[],hint:''};});
+  }
+  const baseStart=startGame, baseLoad=loadQuestion;
+  startGame=function(group){
+    let pendiente=false;
+    loadQuestion=function(){pendiente=true;};
+    try{baseStart(group);}finally{loadQuestion=baseLoad;}
+    if(pendiente){try{mezclarSaber(group);}catch(e){console.error('Saber en el juego:',e);}baseLoad();}
+  };
+}
 })();
 </script>
 
