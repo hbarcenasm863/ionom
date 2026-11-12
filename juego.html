@@ -2398,7 +2398,7 @@ function renderAtomMC(q){
     if(q.saber){
       const e=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       const SI=window.SABER_ICFES;
-      pr.innerHTML='<div class="saber-ctx">'+e(q.ctx)+'</div>'+((SI&&q.icfes)?SI.extraHTML(q):'')+'<div class="saber-q">'+e(q.q)+'</div>'+((SI&&q.icfes)?SI.creditoHTML(q):'');
+      pr.innerHTML='<div class="saber-ctx">'+e(q.ctx)+'</div>'+((SI&&(q.icfes||q.tabla||q.graf))?SI.extraHTML(q):'')+'<div class="saber-q">'+e(q.q)+'</div>'+((SI&&q.icfes)?SI.creditoHTML(q):'');
     } else pr.textContent=q.q;
     const options=shuffle([q.ok,...q.d]);
     const mc=document.getElementById('q-mc-opts');
@@ -4633,7 +4633,7 @@ window.parseFormula = parseFormula;
   function poolSaber(group){
     const temas=GRUPO_TEMAS[group];if(!temas||!SI)return [];
     const gen=(window.SABER_JUEGO||[]).filter(x=>temas.includes(x.t)).map((x,i)=>({
-      saber:1,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,q:x.q+(x.f?' '+x.f:''),ok:x.o[0],d:x.o.slice(1),
+      saber:1,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,tabla:x.tabla,graf:x.graf,q:x.q+(x.f?' '+x.f:''),ok:x.o[0],d:x.o.slice(1),
       x:'Pregunta tipo Saber 11 de la competencia de '+(NOMC[x.c]||NOMC.uso)+'. La respuesta correcta es «'+x.o[0]+'»: es la que se apoya en la situación y en lo que estudiaste en este tema.'}));
     const ofi=SI.preguntas().filter(x=>temas.includes(x.t)&&!x.imgOps).map(x=>({
       saber:1,icfes:x.icfes,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,q:x.q,ok:x.o[x.r],d:x.o.filter((o,i)=>i!==x.r),

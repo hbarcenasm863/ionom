@@ -14,7 +14,7 @@ const lim=s=>String(s==null?'':s).replace(/<[^>]+>/g,'');
 const out=[],vistos=new Set();
 c.DOCENTE_DATOS.SABER.forEach(q=>{
   if(yaEstan.has(q.q)||vistos.has(q.tema+'|'+q.q))return;vistos.add(q.tema+'|'+q.q);
-  out.push({t:q.tema,c:SI.competencia(q),af:SI.afirmacion(q).cod,ctx:lim(q.ctx),q:lim(q.q),f:q.f?lim(q.f):undefined,o:q.o.map(lim)});
+  out.push({t:q.tema,c:SI.competencia(q),af:SI.afirmacion(q).cod,ctx:lim(q.ctx),q:lim(q.q),f:q.f?lim(q.f):undefined,o:q.o.map(lim),tabla:q.tabla||undefined,graf:q.graf||undefined});
 });
 const txt='/* GENERADO por herramientas/generar-saber-juego.js: no editar a mano.\n   Preguntas tipo Saber 11 de IonNom para el Juego ('+out.length+'). */\nwindow.SABER_JUEGO='+JSON.stringify(out)+';\n';
 fs.writeFileSync('assets/saber-juego.js',txt);

@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (16) — Preguntas de indagación con tablas y gráficas
+
+El docente pidió seguir con las preguntas de indagación que traen sus datos en una tabla o una gráfica, como la prueba Saber 11, también en el juego.
+
+- **`assets/saber-icfes.js`:** nuevo dibujo de **gráficas** (líneas o barras) en SVG; una pregunta con `tabla` o `graf` se dibuja sola en la evaluación y en el juego.
+- **`assets/docente-datos.js`:** 13 preguntas nuevas con datos: ley de Boyle (gráfica), Charles (tabla), solubilidad del nitrato de potasio (gráfica) y de la sal (tabla), pH de ácidos y bases (tabla), pH de la lluvia (gráfica), proceso Haber, magnesio y óxido (gráfica), limitante, radio atómico, enlace metálico, experimento de Rutherford y punto de ebullición según la altitud. Opciones del mismo largo.
+- **`juego.html`, `assets/saber-juego.js`:** el generador las pasa al juego, que las muestra sobre la pregunta.
+- **`sw.js`:** caché `ionom-v96`.
+- **Verificación:** con Playwright, evaluación y juego muestran bien la tabla y la gráfica, sin errores.
+
+---
+
 ## 12 de noviembre (15) — Estequiometría ya tiene su partida en el Juego
 
 El docente pidió que Estequiometría también esté en el juego (antes solo se jugaba «Química en la industria» y «Mol y masa molar»).
