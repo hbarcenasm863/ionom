@@ -4,6 +4,36 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 12 de noviembre (12) — Doble columna sin huecos y distractores al estilo del Icfes
+
+El docente pidió dos cosas: (1) que las evaluaciones impresas no dejen columnas en blanco y aprovechen la doble columna aunque algunas preguntas sean largas por sus tablas, figuras o contexto; y (2) revisar los bancos de preguntas tipo Saber y los del juego con el modelo basado en evidencias del Icfes, inspirado en el cuadernillo de 2026, y hacer los ajustes necesarios.
+
+- **`saber-icfes.js` (el mismo archivo en los tres sitios): nuevo acomodador de doble columna** (`colocar`). Antes las preguntas iban en columnas CSS «balanceadas» (ChromaNom, BioNom) o en filas de a dos (IonNom), y una pregunta larga dejaba la otra columna vacía. Ahora:
+  - hay dos columnas reales que se llenan en orden: primero la izquierda hasta abajo y luego la derecha;
+  - si una pregunta no cabe en el hueco que queda, se adelanta una de las siguientes (hasta 6 más allá) que sí quepa, y al final se **renumeran** todas en el orden en que quedaron;
+  - la clave, la matriz de competencias y la hoja de respuestas usan ese mismo orden final (verificado: el número de cada pregunta coincide en examen, clave y matriz);
+  - una pregunta con figura que no cabe por poco reduce su figura (hasta el 60 %);
+  - una pregunta muy alta (tabla ancha o figura grande) se prueba a todo el ancho, donde ocupa menos alto;
+  - al terminar las preguntas, las dos columnas quedan parejas, y si sobra una sola pregunta va a todo el ancho;
+  - las tablas del cuadernillo se ajustan al ancho de la columna;
+  - la matriz de competencias se parte en tablas de 8 filas para que no se salga de la hoja.
+- **`assets/docente-app.js`:** la evaluación usa el acomodador y se renumera; las preguntas con figura ya no van a todo el ancho; el paso final que «sube» contenido a la hoja anterior ahora sube las preguntas de una en una y no el bloque de dos columnas entero; la cita de créditos va justo después de las preguntas tipo Saber (antes quedaba sola en una hoja).
+- **Revisión de los bancos con el modelo del Icfes.** El defecto más grave que se encontró fue que en muchas preguntas la opción correcta era la más larga y detallada, y las incorrectas eran cortas y obviamente falsas («No pasa nada», «Producen nieve»). Así el estudiante acierta por descarte sin usar la competencia. Las preguntas del Icfes tienen opciones del mismo largo y estructura, y cada distractor representa un error típico de razonamiento. Se reescribieron **los distractores de 595 preguntas** (no se tocó la correcta ni el enunciado) para que sean del mismo largo, tengan la misma forma («Sí, porque…/No, porque…», «Porque…») y sean errores plausibles:
+
+| | Saber: correcta delatada por su largo (antes → ahora) | Juego (antes → ahora) |
+|---|---|---|
+| BioNom | 242 → 0 | 94 → 0 |
+| ChromaNom | 96 → 0 | 53 → 0 |
+| IonNom | 63 → 0 (más 6 que vienen del juego) | 41 → 0 |
+
+  Se midió con la regla: la correcta es la más larga, mide más de 1,6 veces el promedio de las otras y les saca más de 15 caracteres. El cambio se aplicó directamente en los archivos de datos, buscando cada pregunta por su contexto y su enunciado.
+- **`assets/docente-datos.js`** (63 preguntas tipo Saber) y **`banco.js`** (41 preguntas de átomo, enlace, pH, soluciones y demás, que usan el juego y el panel docente).
+- **`sw.js`:** caché `ionom-v92` (cambió `banco.js`, que se sirve desde la caché).
+- **Verificación:** con Playwright, evaluaciones de 14 y 16 preguntas: las columnas quedan llenas, la última pregunta suelta va a todo el ancho y la numeración coincide con la matriz. El juego y el panel docente cargan sin errores.
+- **Pendiente:** 718 preguntas tipo Saber de IonNom siguen sin contexto (situación, tabla o gráfica). Son sobre todo preguntas de nomenclatura y de conceptos, y en la prueba real todas tienen contexto. Por eso las evaluaciones prefieren las que sí lo tienen. Escribirles contexto es el siguiente paso grande para acercar IonNom al modelo del Icfes.
+
+---
+
 ## 12 de noviembre (11) — Preguntas oficiales del Icfes y modelo basado en evidencias en las evaluaciones
 
 El docente compartió el *Cuadernillo de preguntas Saber 11.º, Prueba Ciencias Naturales* del Icfes (2026) y pidió usar sus preguntas, dando el crédito, y revisar que las preguntas del juego y sobre todo de las herramientas docentes sigan el **modelo basado en evidencias** de la prueba (competencias → afirmaciones → evidencias) para fortalecer esas competencias. También pidió decidir qué pregunta va en cuál de los tres sitios.
