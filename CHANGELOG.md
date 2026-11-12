@@ -4,6 +4,22 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 12 de noviembre (13) — Contexto en todas las preguntas tipo Saber, más indagación y competencias bien marcadas
+
+El docente pidió continuar con lo que había quedado pendiente de la revisión con el modelo basado en evidencias del Icfes: subir la proporción de preguntas de **indagación** (la competencia con más preguntas en la prueba Saber 11 y la más débil en los tres sitios) y, en IonNom, darle **contexto** a las preguntas tipo Saber que no lo tenían.
+
+- **Contexto para 718 preguntas** que no lo tenían (todas las tipo Saber de IonNom ahora tienen uno). Es una situación corta y real, casi siempre colombiana, que no revela la respuesta. Ejemplos: la cal viva de las fincas, el óxido rojo de los ladrillos de Bogotá, la siderúrgica de Paz de Río, las salinas de Manaure, el ácido muriático de las ferreterías, la planta de fertilizantes de Cartagena.
+  - En `assets/docente-datos.js` se llenó el campo `ctx`.
+  - En `banco.js` (preguntas de átomo, enlace, pH, gases, soluciones, modelos e industria) se agregó el campo `ctx`. El panel docente lo muestra; el juego lo ignora.
+- **Etiquetas de competencia corregidas:** de 102 preguntas marcadas como «indagación», 90 pedían un nombre, una fórmula, unos coeficientes o una masa molar (son de **uso comprensivo**), 9 pedían explicar (son de **explicación**) y solo 3 eran de verdad indagación. Por eso la cifra de indagación de la sesión (11) estaba inflada.
+- **166 preguntas nuevas de indagación** (98 en una primera parte y 68 en una segunda), para que **cada tema tenga al menos 8**, contando las oficiales del Icfes. Piden analizar datos, controlar variables, evaluar predicciones y reconocer cómo se construyó un conocimiento (Lavoisier, Priestley, Proust, Rutherford, Thomson, Boyle, Mendeléiev, Haber).
+- **Resultado:** 1010 preguntas tipo Saber, todas con contexto: uso 45 %, explicación 37 %, indagación **18 %** (la real antes era cerca del 1 %). Ninguna tiene la correcta delatada por su largo.
+- **`assets/docente-app.js`:** un título de sección («Cazar errores», «Preguntas abiertas») ya no queda solo al final de una hoja: pasa a la siguiente junto a su contenido.
+- **`sw.js`:** caché `ionom-v93` (cambió `banco.js`).
+- **Verificación:** con Playwright, evaluaciones de nomenclatura y de balanceo, reacciones y mol: los contextos salen en cada pregunta, la doble columna queda llena, la matriz coincide con el examen y el juego carga sin errores.
+
+---
+
 ## 12 de noviembre (12) — Doble columna sin huecos y distractores al estilo del Icfes
 
 El docente pidió dos cosas: (1) que las evaluaciones impresas no dejen columnas en blanco y aprovechen la doble columna aunque algunas preguntas sean largas por sus tablas, figuras o contexto; y (2) revisar los bancos de preguntas tipo Saber y los del juego con el modelo basado en evidencias del Icfes, inspirado en el cuadernillo de 2026, y hacer los ajustes necesarios.

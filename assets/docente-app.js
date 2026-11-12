@@ -1657,6 +1657,19 @@ async function generar(){
         }
       }
     });
+    // Un título de sección no se queda solo al final de una hoja: si es lo
+    // último de la hoja, pasa al comienzo de la siguiente, junto a su contenido.
+    Object.values(grupos).forEach(function(hs){
+      for(let idx=0; idx<hs.length-1; idx++){
+        const c = hs[idx].querySelector('.hoja-cuerpo');
+        const ult = c.lastElementChild;
+        if(ult && ult.matches('h2.sec-tit') && c.children.length>1){
+          const sig = hs[idx+1].querySelector('.hoja-cuerpo');
+          sig.insertBefore(ult, sig.firstElementChild);
+          if(sig.scrollHeight > sig.clientHeight + 1){ c.appendChild(ult); }
+        }
+      }
+    });
     // Último recurso: la(s) hoja(s) donde ya no quedó nada más que subir
     // (normalmente solo la última de cada documento) se rellena con la
     // cuadrícula elástica / bloque de Notas -- salvo la rúbrica, que es
