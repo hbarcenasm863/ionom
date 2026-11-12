@@ -4,6 +4,12 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (17) — Explicaciones propias en las preguntas con datos
+
+El docente pidió explicaciones propias para las preguntas tipo Saber del juego. Las 13 preguntas con tabla o gráfica ya las tienen (`assets/docente-datos.js`, campo `exp`): leen los datos, hacen la cuenta y explican por qué se descarta cada idea equivocada. `juego.html` y el generador las usan cuando existen. `sw.js`: `ionom-v97`. Pendiente: las demás (unas 860) siguen con la explicación general; se escribirán por tema.
+
+---
+
 ## 13 de noviembre (16) — Preguntas de indagación con tablas y gráficas
 
 El docente pidió seguir con las preguntas de indagación que traen sus datos en una tabla o una gráfica, como la prueba Saber 11, también en el juego.

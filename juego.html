@@ -4634,7 +4634,7 @@ window.parseFormula = parseFormula;
     const temas=GRUPO_TEMAS[group];if(!temas||!SI)return [];
     const gen=(window.SABER_JUEGO||[]).filter(x=>temas.includes(x.t)).map((x,i)=>({
       saber:1,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,tabla:x.tabla,graf:x.graf,q:x.q+(x.f?' '+x.f:''),ok:x.o[0],d:x.o.slice(1),
-      x:'Pregunta tipo Saber 11 de la competencia de '+(NOMC[x.c]||NOMC.uso)+'. La respuesta correcta es «'+x.o[0]+'»: es la que se apoya en la situación y en lo que estudiaste en este tema.'}));
+      x:x.exp||'Pregunta tipo Saber 11 de la competencia de '+(NOMC[x.c]||NOMC.uso)+'. La respuesta correcta es «'+x.o[0]+'»: es la que se apoya en la situación y en lo que estudiaste en este tema.'}));
     const ofi=SI.preguntas().filter(x=>temas.includes(x.t)&&!x.imgOps).map(x=>({
       saber:1,icfes:x.icfes,c:x.c,af:x.af,tema:'saber',temaOrigen:x.t,ctx:x.ctx,q:x.q,ok:x.o[x.r],d:x.o.filter((o,i)=>i!==x.r),
       img:x.img,tabla:x.tabla,x:(x.exp||'')+' (Pregunta '+x.icfes+' del cuadernillo Saber 11.º de Ciencias Naturales, Icfes 2026.)'}));
