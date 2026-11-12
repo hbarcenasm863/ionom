@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v97';
+const CACHE_NAME = 'ionom-v98';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -26,6 +26,10 @@ const ASSETS_TO_CACHE = [
   '/ionom/assets/sed10.css',
   '/ionom/assets/sed10.js',
   '/ionom/assets/sim10.js',
+  '/ionom/assets/simx.js',
+  '/ionom/assets/pantalla.js',
+  '/ionom/assets/fotos.js',
+  '/ionom/assets/fotos-datos.js',
   '/ionom/banco.js',
   '/ionom/assets/bancos-extra.js',
   '/ionom/assets/ahorcado.js',

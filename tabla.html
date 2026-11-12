@@ -712,6 +712,7 @@ html{font-size:var(--base-fs)}
     <div class="panel-wrap">
       <div class="sect">
         <h2>🧭 Periodos y grupos</h2>
+    <div data-foto="tabla_hmns" data-pie="Una tabla periódica con muestras reales de los elementos, en un museo de ciencias."></div>
         <p>La tabla ordena los elementos por <strong>número atómico (Z)</strong> creciente, de izquierda a derecha y de arriba abajo. Esa cuadrícula tiene dos direcciones, y cada una significa algo:</p>
         <ul>
           <li><strong>Periodos (filas horizontales, 1 a 7):</strong> el número del periodo es el número de <strong>niveles de energía</strong> que ocupan los electrones del átomo. El sodio (periodo 3) tiene electrones en los niveles 1, 2 y 3. Los periodos tienen 2, 8, 8, 18, 18, 32 y 32 elementos.</li>
@@ -729,6 +730,7 @@ html{font-size:var(--base-fs)}
 
       <div class="sect">
         <h2>🔢 Dos formas de numerar los grupos</h2>
+    <div data-foto="sodio" data-pie="Sodio metálico recién cortado: brillante, blando y muy reactivo; se oxida en pocos segundos al aire."></div>
         <p>En muchos textos escolares de Colombia se usa todavía la numeración tradicional con números romanos y las letras <strong>A</strong> (elementos representativos) y <strong>B</strong> (metales de transición). La IUPAC recomienda numerar del <strong>1 al 18</strong>. Las dos son correctas; conviene saber pasar de una a otra:</p>
         <div class="gtab-wrap"><table class="gtab">
           <tr><th>IUPAC</th><td class="s">1</td><td class="s">2</td><td class="d">3</td><td class="d">4</td><td class="d">5</td><td class="d">6</td><td class="d">7</td><td class="d">8</td><td class="d">9</td><td class="d">10</td><td class="d">11</td><td class="d">12</td><td class="p">13</td><td class="p">14</td><td class="p">15</td><td class="p">16</td><td class="p">17</td><td class="p">18</td></tr>
@@ -790,7 +792,7 @@ html{font-size:var(--base-fs)}
 
       <div class="prop-grid" id="prop-grid"></div>
 
-      <div class="sect">
+      <div class="sect" data-pantalla="Mapa de calor de propiedades periódicas">
         <h2>🌡️ Mapa de calor: compruébalo con datos reales</h2>
         <p>Elige una propiedad. Cada casilla se colorea según su valor: <strong>más oscuro = valor más alto</strong>. Toca un elemento para ver su valor y luego toca otro para <strong>compararlos</strong>.</p>
         <div class="seg" id="heat-mode" role="group" aria-label="Propiedad a mostrar">
@@ -2293,5 +2295,8 @@ if(h) showTab(h,false);
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>
+<script src="assets/fotos-datos.js"></script>
+<script src="assets/fotos.js"></script>
+<script src="assets/pantalla.js"></script>
 </body>
 </html>

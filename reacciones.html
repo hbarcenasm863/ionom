@@ -286,7 +286,23 @@ html{font-size:var(--base-fs)}
   </div>
 
   <!-- ── SEÑALES DE RECONOCIMIENTO ── -->
+    <div class="sect">
+    <h2>🔬 Simulación: pila galvánica (reacción redox que da corriente)</h2>
+    <div class="meta">Al terminar podrás identificar ánodo y cátodo y calcular el voltaje de una pila.</div>
+    <p class="sim-pregunta">si cambias el cobre por plata como cátodo, ¿el voltaje aumenta o disminuye? ¿Y si usas magnesio de ánodo?</p>
+    <div data-foto="daniell" data-pie="Esquema de la pila de Daniell: ánodo de cinc, cátodo de cobre y puente salino."></div>
+    <div data-simx="pila" data-titulo="Pila galvánica"></div>
+    <div class="warn-sim" style="font-size:.85rem;opacity:.85;margin-top:6px">⚠️ Es un modelo: los iones y electrones que se ven representan muchísimos reales; los potenciales son los estándar (1 M, 25 °C).</div>
+  </div>
+
   <div class="sect">
+    <h2>🔬 Simulación: ¿por qué unas reacciones son más rápidas?</h2>
+    <div class="meta">Al terminar podrás explicar con choques efectivos cómo influyen la temperatura, la concentración y el catalizador.</div>
+    <div data-simx="colisiones" data-titulo="Rapidez de reacción"></div>
+    <div class="warn-sim" style="font-size:.85rem;opacity:.85;margin-top:6px">⚠️ Es un modelo: la energía de activación es una cantidad relativa elegida para mostrar la idea.</div>
+  </div>
+
+<div class="sect">
     <h2>Señales visuales para identificar el tipo <button class="tts-btn" onclick="speakText(this)" data-text="Aquí está el algoritmo que usan los estudiantes que sacan cinco en química. No intentes memorizar todos los tipos al mismo tiempo: sigue el árbol de decisiones en orden de arriba hacia abajo. Los primeros pasos eliminan los casos más obvios, y lo que queda al final casi siempre es sustitución doble. Practica con tres ecuaciones distintas y verás que en quince minutos ya lo dominas.">🔊 Escuchar</button></h2>
     <div class="warn-box">⚠️ <strong>Truco del experto:</strong> primero cuenta los reactivos y los productos. Luego busca O₂ como reactivo (combustión) o H₂O como producto junto a una sal (neutralización).</div>
     <ol style="margin-left:20px;margin-top:12px">
@@ -464,5 +480,9 @@ renderQ();
 </script>
 <script src="assets/toc.js"></script>
 <script src="assets/ionom-ui.js"></script>
+<script src="assets/fotos-datos.js"></script>
+<script src="assets/fotos.js"></script>
+<script src="assets/pantalla.js"></script>
+<script src="assets/simx.js"></script>
 </body>
 </html>

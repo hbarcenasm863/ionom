@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (18) — Simulaciones nuevas, pantalla completa y fotos con cita APA
+
+El docente pidió animaciones y simulaciones como las de BioNom, con pantalla completa y fotos de bancos libres.
+
+- **`assets/pantalla.js` (nuevo):** botón «⛶ Pantalla completa» en todas las simulaciones (modelos del átomo, enlace, gases, pH, soluciones, Haber, cilindro, laboratorio de enlace, orbitales 3D y mapa de calor de la tabla periódica). Se sale con el botón o Esc.
+- **`assets/simx.js` (nuevo), 5 simulaciones:** titulación ácido-base (`ph.html`), pila galvánica y rapidez de reacción con choques efectivos (`reacciones.html`), curva de calentamiento del agua (`modelos.html`), cristal de NaCl en 3D (`enlace.html`).
+- **`assets/sim10.js`:** los canvas se agrandan en pantalla completa.
+- **`assets/fotos.js` y `fotos-datos.js`, 9 fotos** de Wikimedia Commons con cita APA: halita, sulfato de cobre, titulación, repollo morado, sodio, pila de Daniell, tabla periódica con muestras, hielo seco y amoníaco.
+- **`sw.js`:** caché `ionom-v98`.
+- **Pendiente:** el año de las fotos quedó «s. f.» (Wikimedia limitó la consulta); falta una foto de ensayo a la llama. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (17) — Explicaciones propias en las preguntas con datos
 
 El docente pidió explicaciones propias para las preguntas tipo Saber del juego. Las 13 preguntas con tabla o gráfica ya las tienen (`assets/docente-datos.js`, campo `exp`): leen los datos, hacen la cuenta y explican por qué se descarta cada idea equivocada. `juego.html` y el generador las usan cuando existen. `sw.js`: `ionom-v97`. Pendiente: las demás (unas 860) siguen con la explicación general; se escribirán por tema.

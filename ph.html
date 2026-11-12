@@ -271,9 +271,19 @@ html{font-size:var(--base-fs)}
   </div>
 
   <!-- ── EXPERIMENTO CONTROLADO ── -->
-  <div class="sect">
+    <div class="sect">
+    <h2>🔬 Simulación: titulación ácido-base</h2>
+    <div class="meta">Al terminar podrás explicar qué es el punto de equivalencia y elegir un indicador adecuado.</div>
+    <p class="sim-pregunta">si titulas vinagre (ácido débil) con NaOH, ¿el pH en la equivalencia será menor, igual o mayor que 7?</p>
+    <div data-foto="titulacion" data-pie="Montaje de una titulación: la bureta agrega la solución patrón, gota a gota, sobre el matraz con el ácido y el indicador."></div>
+    <div data-simx="titulacion" data-titulo="Titulación ácido-base"></div>
+    <div class="warn-sim" style="font-size:.85rem;opacity:.85;margin-top:6px">⚠️ Es un modelo: las concentraciones y volúmenes son los de un laboratorio de colegio (25,0 mL de ácido 0,100 M con NaOH 0,100 M).</div>
+  </div>
+
+<div class="sect">
     <h2>Diseña un experimento controlado con indicador de repollo <button class="tts-btn" onclick="speakText(this)" data-text="Para que un experimento sea confiable, hay que cambiar una sola cosa y mantener todo lo demás igual. Aquí vas a decidir qué cambiar, qué medir y qué mantener constante para comparar el pH de varias sustancias de tu casa.">🔊 Escuchar</button></h2>
     <div class="meta">Al terminar podrás identificar la variable independiente, la dependiente y las controladas de un experimento de pH.</div>
+    <div data-foto="repollo" data-pie="Extracto de repollo morado: cambia de color según el pH, por eso sirve de indicador casero."></div>
     <p>El agua morada del repollo cocido es un indicador natural: se pone <strong>roja o rosada en ácido</strong>, <strong>morada cerca de neutro</strong> y <strong>verde o amarilla en base</strong> (lo producen unos pigmentos llamados antocianinas). Pregunta de investigación: <em>¿cuál de estos productos de la casa es más ácido: limón, vinagre, gaseosa, leche o bicarbonato disuelto?</em></p>
     <div id="cl-var"></div>
     <div class="calc-out" id="cl-var-out" aria-live="polite">Clasifica cada elemento del experimento.</div>
@@ -500,5 +510,9 @@ document.getElementById('sue-ok').addEventListener('click',function(){var r=pars
 </script>
 <script src="assets/toc.js"></script>
 <script src="assets/ionom-ui.js"></script>
+<script src="assets/fotos-datos.js"></script>
+<script src="assets/fotos.js"></script>
+<script src="assets/pantalla.js"></script>
+<script src="assets/simx.js"></script>
 </body>
 </html>

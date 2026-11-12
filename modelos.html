@@ -237,7 +237,15 @@ html{font-size:var(--base-fs)}
     <div class="key">🔑 Aquí se ve la relación entre <strong>teoría</strong> y <strong>ley</strong>: el modelo de partículas (teoría cinético-molecular) <em>produce</em> los datos que cumplen la ley de Boyle.</div>
   </div>
 
-  <div class="sect">
+    <div class="sect">
+    <h2>🔬 Simulación: curva de calentamiento del agua</h2>
+    <div class="meta">Al terminar podrás explicar por qué la temperatura se queda quieta mientras el hielo se funde o el agua hierve.</div>
+    <div data-foto="hielo_seco" data-pie="Sublimación del hielo seco (CO₂ sólido): pasa directo de sólido a gas, sin fundirse, a presión de 1 atm."></div>
+    <div data-simx="cambioEstado" data-titulo="Curva de calentamiento del agua"></div>
+    <div class="warn-sim" style="font-size:.85rem;opacity:.85;margin-top:6px">⚠️ Es un modelo: cada esfera representa muchísimas moléculas; los valores de calor son los del agua a 1 atm.</div>
+  </div>
+
+<div class="sect">
     <h2>Un modelo para tu territorio: el agua no hierve igual en todo Colombia <button class="tts-btn" onclick="speakText(this)" data-text="En Cartagena el agua hierve a cien grados, pero en Bogotá hierve más o menos a noventa y uno. Con los datos de varias ciudades vas a construir un modelo matemático, usarlo para predecir el punto de ebullición en otros lugares y decidir cuándo esa predicción es confiable.">🔊 Escuchar</button></h2>
     <div class="meta">Construye un modelo lineal con datos de ciudades, úsalo para predecir y compara la predicción con una medida.</div>
     <p>Un líquido hierve cuando su presión de vapor iguala la presión del aire. Con la altura hay menos aire encima y la presión baja, así que el agua hierve a menor temperatura. La tabla muestra la altitud de varias ciudades y el punto de ebullición del agua calculado con la presión atmosférica típica de esa altura.</p>
@@ -441,5 +449,9 @@ document.getElementById('eb-ok').addEventListener('click',function(){var m=+docu
 </script>
 <script src="assets/toc.js"></script>
 <script src="assets/ionom-ui.js"></script>
+<script src="assets/fotos-datos.js"></script>
+<script src="assets/fotos.js"></script>
+<script src="assets/pantalla.js"></script>
+<script src="assets/simx.js"></script>
 </body>
 </html>

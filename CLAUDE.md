@@ -15,3 +15,17 @@ Antes de cerrar cualquier tarea que edite `banco.js`, verificar con `git log -1 
 ## ionom-analytics.gs — no se despliega solo
 
 A diferencia de los `.html`/`.js` del sitio (que GitHub Pages sirve directo desde el repo), `ionom-analytics.gs` es el código fuente del backend de Google Apps Script, pero el repo NO está conectado a ese proyecto (no hay `.clasp.json` ni despliegue automático). Editar y subir este archivo a `main` **no cambia nada en producción** hasta que alguien copie el contenido actualizado al editor de Apps Script (script.google.com) y vuelva a implementar la Web App (Implementar → Administrar implementaciones → Editar → Nueva versión). Avisar siempre al usuario de este paso manual cuando se modifique `ionom-analytics.gs`.
+
+- **Simulaciones, pantalla completa y fotos.** Las simulaciones
+  nuevas se escriben en `assets/simx.js` (`<div data-simx="nombre" data-titulo="…">`,
+  mismo esquema que `assets/sim10.js`, sin depender de `sed10.css`). **Toda simulación
+  nueva debe poder verse en pantalla completa**: `assets/pantalla.js` pone solo el
+  botón «⛶ Pantalla completa» en cada `.sim`, en cada `data-simx` y en lo que
+  declare `window.PANTALLA_EXTRA` (por ejemplo `['.lab']` o `['#v3d-grid']`); si no la detecta,
+  ponerle `data-pantalla="Nombre"`. Los canvas deben calcular su tamaño con
+  la clase `en-pantalla` (ver `lienzo()` en `sim10.js`/`simx.js`). Las fotos
+  reales van en `assets/fotos/` con su cita APA en `assets/fotos-datos.js`
+  (`<div data-foto="clave" data-pie="…"></div>`): solo bancos libres (Wikimedia
+  Commons, buscados con Openverse), licencias CC0, dominio público, CC BY o
+  CC BY-SA, y la cita siempre debajo. Wikimedia limita las descargas
+  automáticas (error 429): bajar las imágenes de a una y con pausas.
