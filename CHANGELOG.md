@@ -4,6 +4,33 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 12 de noviembre (11) — Preguntas oficiales del Icfes y modelo basado en evidencias en las evaluaciones
+
+El docente compartió el *Cuadernillo de preguntas Saber 11.º, Prueba Ciencias Naturales* del Icfes (2026) y pidió usar sus preguntas, dando el crédito, y revisar que las preguntas del juego y sobre todo de las herramientas docentes sigan el **modelo basado en evidencias** de la prueba (competencias → afirmaciones → evidencias) para fortalecer esas competencias. También pidió decidir qué pregunta va en cuál de los tres sitios.
+
+**Diagnóstico de los bancos tipo Saber (antes de esta sesión).** La competencia de cada pregunta se tomó de su marca (`c`) o, si no la tenía, se estimó por el enunciado:
+
+| Competencia (Icfes) | En la prueba real (cuadernillo 2026) | ChromaNom | IonNom | BioNom |
+|---|---|---|---|---|
+| Uso comprensivo del conocimiento científico | 26 % | 60 % | 39 % | 68 % |
+| Explicación de fenómenos | 36 % | 28 % | 46 % | 29 % |
+| Indagación | 38 % | 12 % → 19 % con las nuevas | 14 % | 3 % → 7 % con las nuevas |
+| Preguntas sin contexto (situación, tabla o gráfica) | 0 | 0 | 610 de 736 | 0 |
+
+La indagación (analizar datos, controlar variables, evaluar predicciones, sacar conclusiones) es la competencia con más preguntas en la prueba y la más débil en los tres sitios.
+
+- **Reparto de las 50 preguntas del cuadernillo:** biología → BioNom (17: preguntas 5, 10, 11, 12, 16, 20, 21, 24, 34, 36, 38, 39, 40, 44, 46, 47 y 49); química general e inorgánica → IonNom (17: 1, 2, 3, 4, 7, 8, 15, 18, 19, 23, 27, 28, 29, 30, 33, 35 y 37); química orgánica → ChromaNom (2: 41 y 50). Las 14 de física (6, 9, 13, 14, 17, 22, 25, 26, 31, 32, 42, 43, 45 y 48) no se usan porque ningún sitio trabaja física.
+- **`saber-icfes.js` (nuevo, el mismo archivo en los tres sitios):** guarda las tres competencias de la prueba y sus afirmaciones oficiales; da la competencia y la afirmación de cada pregunta (la que trae marcada o, si no la trae, una estimada por el tipo de tarea del enunciado); escoge las preguntas de la evaluación **repartidas entre las tres competencias** (meta cercana al cuadernillo: 30 % uso, 35 % explicación, 35 % indagación), con prioridad a las preguntas oficiales (hasta la mitad de la prueba) y a las que tienen contexto; y arma las figuras, el crédito de cada pregunta oficial y la **matriz de la evaluación** (número, competencia, afirmación, componente y fuente, sin respuestas).
+- **Preguntas oficiales:** se copian **sin cambios** (los términos de uso del Icfes prohíben transformarlas), con sus opciones en el orden original (no se barajan, así coinciden con la clave del Icfes), las figuras recortadas del cuadernillo y debajo el crédito «Pregunta N del Cuadernillo de preguntas Saber 11.º, Prueba Ciencias Naturales (Icfes, 2026). Uso académico, sin ánimo de lucro.». Al final de la evaluación sale la cita completa del cuadernillo.
+- **Figuras:** cada imagen lleva su tamaño fijo; sin eso, la paginación medía la hoja antes de que la imagen cargara y la figura se salía de la hoja (se vio en la prueba con Playwright).
+- **`assets/icfes-datos.js` (nuevo):** 17 preguntas oficiales repartidas en los temas: Teorías, leyes, modelos y datos (1, 4, 7, 29, 33, 35); Soluciones (3, 8, 15, 28, 30); Estequiometría (2, 18); Tipos de reacción (37); Configuración electrónica (23); Gases (27); Átomo (19). Cada una con explicación de IonNom (no es del Icfes). Imágenes en `assets/icfes/`.
+- **`assets/docente-app.js` y `docente.html`:** la evaluación usa la selección por competencias y prefiere las preguntas con contexto. Casillas nuevas en «4 · Evaluación»: **«Priorizar preguntas oficiales del Icfes»** (marcada) y **«Anexar matriz de competencias»** (sin marcar; hoja aparte, sin respuestas, porque los estudiantes también entran a esa página).
+- **`sw.js`:** caché `ionom-v91` y los dos archivos nuevos en la lista.
+- **Verificación:** con Playwright, evaluación de Modelos, Soluciones, Estequiometría y Gases con 12 preguntas: salen las oficiales con figuras y crédito, la matriz con competencia, afirmación y componente, y sin errores.
+- **Pendiente:** 610 de las 736 preguntas tipo Saber de IonNom no tienen contexto (son preguntas directas, sobre todo de nomenclatura), y en la prueba real todas lo tienen. Por eso, mientras no se escriban más preguntas con situación, tabla o gráfica, las evaluaciones de IonNom saldrán con muchas preguntas oficiales. Las preguntas del juego (nomenclatura) no se cambiaron.
+
+---
+
 ## 10 de noviembre (10) — `extras.js` y `retos.js` compartidos con BioNom
 
 Para completar el panel docente de BioNom, que ahora usa los mismos archivos:

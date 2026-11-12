@@ -177,8 +177,7 @@ function contarDisponiblesTema(id){
   else if(id==='enlace') nEj = PARES_ENLACE.length;
   else if(BANCO_SED[id]) nEj = BANCO_SED[id]().length;
   else nEj = poolPorGrupo([id]).length;
-  const saber = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
-  const nSaber = saber.filter(q=>q.tema===id).length;
+  const nSaber = bancoSaber().filter(q=>q.tema===id).length;
   return {nEj, nSaber};
 }
 
@@ -821,21 +820,36 @@ function armarBloquesPractica(F, rngFn, usados){
 
 /* ───────────────────────── 5. Saber 11 y abiertas ───────────────────────── */
 function tarjetaSaber(q, idxLocal, rngFn){
-  const opciones = q.o.map((texto,i)=>({texto, correcta:i===0}));
-  const barajadas = barajar(opciones, rngFn);
+  const SI = window.SABER_ICFES;
   const letras = ['A','B','C','D'];
+  // Las preguntas oficiales del Icfes (q.fijo) no barajan sus opciones; si
+  // las opciones son dibujos (q.imgOps), se muestra la figura con A-D.
+  const opciones = q.o.map((texto,i)=>({texto, correcta:q.fijo?i===q.r:i===0}));
+  const barajadas = q.fijo ? opciones : barajar(opciones, rngFn);
   return '<div class="sq">'
     +'<div class="sq-ctx">'+(q.ctx||'')+'</div>'
+    +(SI?SI.extraHTML(q):'')
     +'<div class="sq-q"><strong>'+(idxLocal)+'.</strong> '+q.q+(q.f?' <span style="font-family:var(--mono);font-weight:700">'+q.f+'</span>':'')+'</div>'
-    +'<div class="sq-opts">'+barajadas.map((o,i)=>'<div class="sq-opt">'+letras[i]+') '+o.texto+'</div>').join('')+'</div>'
+    +(q.imgOps&&SI ? SI.opsImgHTML(q)
+      : '<div class="sq-opts">'+barajadas.map((o,i)=>'<div class="sq-opt">'+letras[i]+') '+o.texto+'</div>').join('')+'</div>')
+    +(SI?SI.creditoHTML(q):'')
     +'</div>';
 }
 
+// Banco tipo Saber de IonNom + preguntas oficiales del Icfes (icfes-datos.js).
+function bancoSaber(){
+  const base = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
+  return base.concat(window.SABER_ICFES ? SABER_ICFES.preguntas() : []);
+}
 function armarBloquesSaber(F, rngFn){
-  const banco = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.SABER) || [];
-  const pool = banco.filter(q => F.temas.includes(q.tema));
-  const elegidos = elegirN(pool, Math.min(F.saberCant, pool.length||F.saberCant), rngFn, x=>x.q);
-  return elegidos.map((q,i)=>({html:tarjetaSaber(q, i+1, rngFn), cols2:true}));
+  const pool = bancoSaber().filter(q => F.temas.includes(q.tema));
+  // Repartidas entre las tres competencias de la prueba Saber 11
+  // (saber-icfes.js), primero las oficiales y las que tienen contexto.
+  const elegidos = window.SABER_ICFES
+    ? SABER_ICFES.elegir(pool, F.saberCant, rngFn, {prioIcfes: F.prioIcfes!==false})
+    : elegirN(pool, Math.min(F.saberCant, pool.length||F.saberCant), rngFn, x=>x.q);
+  armarBloquesSaber.ultimas = elegidos;
+  return elegidos.map((q,i)=>({html:tarjetaSaber(q, i+1, rngFn), cols2:!(q.img||q.imgOps)}));
 }
 
 function tarjetaAbierta(q, numero){
@@ -903,6 +917,7 @@ function construirVersion(F, numVersion, totalVersiones){
     const saberBloques = armarBloquesSaber(F, rngSaber);
     numSaberReal = saberBloques.length;
     if(saberBloques.length) bloques.push.apply(bloques, saberBloques);
+    var saberElegidas = armarBloquesSaber.ultimas || [];
     // La hoja de respuestas (burbujas) va AQUÍ, como bloques normales del
     // mismo documento -- no como un documento aparte con su propia primera
     // hoja (ver nota en construirTodas). Así fluye en lo que quede de
@@ -924,13 +939,15 @@ function construirVersion(F, numVersion, totalVersiones){
       bloques.push({html:'<h2 class="sec-tit">Cazar errores</h2>', esTitulo:true});
       bloques.push.apply(bloques, cazarBloques);
     }
+    if(window.SABER_ICFES){ const cr = SABER_ICFES.citaHTML(saberElegidas); if(cr) bloques.push({html:cr, esMultiple:false}); }
   }
 
   return {
     clase: F.tipoDoc,
     etiqueta: (totalVersiones>1 ? 'Versión '+numVersion+' de '+totalVersiones : ''),
     bloques: bloques,
-    numSaberReal: numSaberReal
+    numSaberReal: numSaberReal,
+    saberElegidas: (typeof saberElegidas!=='undefined') ? saberElegidas : []
   };
 }
 
@@ -1079,7 +1096,8 @@ const CUADRO = 18.9;
 // hoja es y cuál versión, sin tener que ir a buscar el pie de página.
 const TITULO_TIPODOC = {
   completa:'Guía completa', guia:'Guía de estudio', taller:'Taller de ejercicios',
-  evaluacion:'Evaluación', 'hoja-respuestas':'Hoja de respuestas', rubrica:'Rúbrica de evaluación'
+  evaluacion:'Evaluación', 'hoja-respuestas':'Hoja de respuestas', rubrica:'Rúbrica de evaluación',
+  matriz:'Matriz de competencias (para el docente)'
 };
 function tituloDocumento(doc){
   let titulo = TITULO_TIPODOC[doc.clase] || 'Documento';
@@ -1088,7 +1106,7 @@ function tituloDocumento(doc){
   // temas marcados ese listado vuelve el título 2-3 líneas largas justo en
   // la hoja con menos espacio de sobra (la primera, con el encabezado
   // completo) -- el tema ya se ve en cada pregunta, así que aquí se omite.
-  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica' && doc.clase!=='evaluacion'){
+  if(doc.clase!=='hoja-respuestas' && doc.clase!=='rubrica' && doc.clase!=='matriz' && doc.clase!=='evaluacion'){
     const temasData = (window.DOCENTE_DATOS && window.DOCENTE_DATOS.TEMAS) || [];
     const nombres = (doc.F.temas||[]).map(id=>{ const t=temasData.find(x=>x.id===id); return t?t.titulo:id; }).join(' · ');
     if(nombres) titulo += ': '+nombres;
@@ -1342,6 +1360,14 @@ function construirTodas(F){
   if(F.incluirRubricas && huboEvaluacion && F.abiertasCant>0){
     docs.push(construirRubrica(F));
   }
+  // Matriz de cada versión: competencia, afirmación y componente de cada
+  // pregunta tipo Saber (sin respuestas: esta página también la ven los
+  // estudiantes).
+  if(F.incluirMatriz && huboEvaluacion && window.SABER_ICFES){
+    docs.filter(d=>d.saberElegidas&&d.saberElegidas.length).forEach(function(d){
+      docs.push({clase:'matriz', etiqueta:d.etiqueta, bloques:[{html:'<div><h2 class="sec-tit">Matriz de la evaluación (modelo basado en evidencias del Icfes)</h2>'+SABER_ICFES.matrizHTML(d.saberElegidas,1,'Q')+'</div>', esMultiple:false}]});
+    });
+  }
   docs.forEach(d => d.F = F);
   return docs;
 }
@@ -1365,6 +1391,8 @@ function leerForm(){
     cazarCant: Math.max(0, Math.min(10, parseInt((document.getElementById('f-cazar')||{}).value,10)||0)),
     incluirHojaResp: !!document.getElementById('f-hoja-resp').checked,
     incluirRubricas: !!document.getElementById('f-rubricas').checked,
+    incluirMatriz: !!(document.getElementById('f-matriz')||{}).checked,
+    prioIcfes: !document.getElementById('f-icfes') || document.getElementById('f-icfes').checked,
     versiones: parseInt(document.getElementById('f-versiones').value,10)||1,
     acts: Array.from(document.querySelectorAll('.chk-act:checked')).map(c=>c.value),
     area: document.getElementById('f-area').value,
@@ -1584,7 +1612,7 @@ async function generar(){
     // sobra la mayor parte de su única hoja.
     Object.keys(grupos).forEach(function(g){
       const doc = documentos[parseInt(g,10)];
-      if(doc && doc.clase === 'rubrica') return;
+      if(doc && (doc.clase === 'rubrica' || doc.clase === 'matriz')) return;
       grupos[g].forEach(llenarHoja);
     });
     // Renumerar "página X de Y" por documento: compactar puede haber
