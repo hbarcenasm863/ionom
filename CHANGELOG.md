@@ -8,7 +8,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 El docente pidió el diagrama de Moeller completo y escogió el estilo clásico de círculos de colores con flecha en zigzag.
 
-- **`guia.html` (hoja «El átomo»):** diagrama en vectores con los 19 subniveles de 1s a 7p: s en rojo, p en verde, d en azul y f en naranja; el máximo de electrones (2, 6, 10, 14) sobre cada círculo y una flecha que baja por cada diagonal, da la vuelta a la izquierda y sigue con la siguiente. Al lado, cómo usarlo, la leyenda de colores y la regla n + l (por qué el 4s va antes del 3d).
+- **`guia.html` (hoja «El átomo»):** diagrama en vectores con los 19 subniveles de 1s a 7p: s en rojo, p en verde, d en azul y f en naranja; el máximo de electrones (2, 6, 10, 14) sobre cada círculo y una flecha en zigzag con más espacio entre filas: baja por cada diagonal, da la vuelta a la izquierda, regresa con línea punteada a media altura y da la vuelta a la derecha para empezar la siguiente. Al lado, cómo usarlo, la leyenda de colores y la regla n + l (por qué el 4s va antes del 3d).
 - **`assets/guia-atomo.pdf`:** regenerado; sigue en 3 páginas, sin hojas en blanco (probado en A4 y carta, horizontal y vertical).
 - **Pendiente:** no se tocó `ionom-analytics.gs`.
 
