@@ -4,6 +4,21 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (23) — Cuatro guías descargables nuevas: tabla periódica, enlace, reacciones y ácidos y pH
+
+El docente pidió generar todas las hojas de referencia que faltaban. Con las cinco anteriores, `guia.html` queda con **nueve guías**, ordenadas como el curso.
+
+- **Tabla periódica y propiedades periódicas** (`guia-tabla-periodica.pdf`): esquema de la tabla con bloques s, p, d y f y metaloides, periodos, grupos y familias, tendencias con flechas (radio, energía de ionización, electronegatividad, carácter metálico) y datos para recordar.
+- **Enlace químico** (`guia-enlace.pdf`): estructuras de Lewis dibujadas (H₂O, NH₃, CO₂, N₂), pasos para escribirlas, regla del octeto y excepciones, los tres tipos de enlace en una tabla, cómo decidir cuál se forma (ΔEN < 0,4 apolar, 0,4 a 1,7 polar, ≥ 1,7 iónico, igual que `enlace.html`) y polaridad.
+- **Reacciones y balanceo** (`guia-reacciones.pdf`): los seis tipos, balanceo por tanteo y algebraico con ejemplos, serie de reactividad, reglas de solubilidad y redox con el método ion-electrón.
+- **Ácidos, bases y pH** (`guia-acidos-bases.pdf`): escala de pH dibujada con ejemplos, teorías de Arrhenius y Brønsted-Lowry, cálculos de pH y pOH, fuertes y débiles, neutralización e indicadores.
+- **`guia.html`:** nueve pestañas; cada una con «Descargar PDF» e «Imprimir». **`herramientas/generar-guias-pdf.js`** genera los nueve PDF (hay que volver a correrlo si cambia `guia.html`).
+- **Portada, `README.md`, `sw.js`:** textos actualizados y caché `ionom-v102`.
+- **Verificación:** los cuatro PDF nuevos se revisaron como imagen; imprimiendo en A4 y carta, horizontal y vertical, cada uno sale en 2 páginas, sin hojas en blanco. Pantalla probada en computador y celular, sin errores ni desbordes.
+- **Pendiente:** no se tocó `ionom-analytics.gs`. Las guías de mol y masa molar y de funciones inorgánicas no se hicieron aparte (ya están dentro de estequiometría y nomenclatura).
+
+---
+
 ## 13 de noviembre (22) — Diagrama de Moeller completo en la guía del átomo
 
 El docente pidió el diagrama de Moeller completo y escogió el estilo clásico de círculos de colores con flecha en zigzag.
