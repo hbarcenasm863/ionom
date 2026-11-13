@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (21) — Dibujos de los modelos atómicos en la guía del átomo
+
+El docente pidió gráficas o dibujos de los modelos, mostrando las partículas.
+
+- **`guia.html`:** sobre la tabla de historia hay cinco dibujos en vectores (Dalton, Thomson, Rutherford, Bohr con niveles y fotón, cuántico con nube y orbitales), con leyenda de colores: protón rojo (+), neutrón gris y electrón azul (−). En «Partes del átomo» hay un esquema con núcleo, electrones y corteza rotulados.
+- **`assets/guia-atomo.pdf`:** regenerado; sigue en 3 páginas, sin hojas en blanco.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (20) — Quinta guía descargable: el átomo
 
 El docente pidió una hoja más con historia del modelo atómico, partes del átomo, configuración electrónica y los números A, Z y n.
