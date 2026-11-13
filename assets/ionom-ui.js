@@ -53,6 +53,7 @@
     {href:'enlace.html',ico:ICO.enlace,txt:'Enlace Químico'},
     {href:'modelos.html',ico:ICO.tabla,txt:'Modelos, Leyes y Datos'},
     {href:'funciones.html',ico:ICO.funciones,txt:'Funciones Inorgánicas'},
+    {href:'referencia.html',ico:ICO.guia,txt:'Referencia rápida'},
     {href:'guia.html',ico:ICO.guia,txt:'Guía descargable'},
     {href:'reacciones.html',ico:ICO.reaccion,txt:'Tipos de Reacción'},
     {href:'balanceo.html',ico:ICO.balanceo,txt:'Balanceo'},

@@ -22,6 +22,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `balanceo.html` | Balanceo | Balanceo de ecuaciones por tanteo |
 | `balanceo-avanzado.html` | Balanceo avanzado | Balanceo algebraico y por óxido-reducción |
 | `estequiometria.html` | Estequiometría | Cálculos estequiométricos con cadena de factores de conversión |
+| `referencia.html` | Referencia rápida | Resumen de fórmulas, constantes, pasos y errores frecuentes de estequiometría, gases y soluciones; con pestañas por tema y botón para imprimir |
 | `modelos.html` | Modelos, leyes y datos | Hipótesis, ley, teoría y modelo; laboratorio virtual de Boyle; modelo del punto de ebullición por altitud (SED 10.°) |
 | `ph.html` | Ácidos, bases y pH | Teorías ácido-base, escala de pH, estudios de casos del cuerpo y los alimentos, suelos, lluvia y mar (SED 10.°) |
 | `industria.html` | Química en la industria | Conservación de masa y carga, procesos industriales colombianos, limitante, pureza, rendimiento y experimento con cáscara de huevo (SED 10.°) |

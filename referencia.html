@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Referencia rápida: estequiometría, gases y soluciones</title>
+<meta name="description" content="Resumen de fórmulas, constantes, pasos y errores frecuentes de estequiometría, leyes de los gases y soluciones para repasar rápido.">
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.65}
+.app{max-width:100%;margin:0 auto;padding:0 18px 80px}
+
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+
+.page-hdr{padding:32px 0 24px;border-bottom:2px solid var(--brd);margin-bottom:28px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2)}
+.quick-practice{display:inline-flex;align-items:center;gap:6px;margin:-16px 0 24px;padding:9px 16px;background:var(--an);color:#fff;font-size:.84rem;font-weight:700;border:none;border-radius:var(--rs);box-shadow:var(--sh);cursor:pointer;text-decoration:none}
+.quick-practice:hover{filter:brightness(1.08)}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);text-decoration:none}
+.menu-float-btn:hover{filter:brightness(1.1)}
+
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:24px 28px;margin-bottom:20px;box-shadow:var(--sh)}
+.sect h2{font-size:1.15rem;font-weight:800;color:var(--tx);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.sect h3{font-size:.88rem;font-weight:800;color:var(--dimmer);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.sect p{font-size:.88rem;color:var(--tx2);line-height:1.72;margin-bottom:10px}
+.sect ul,.sect ol{margin-left:20px;margin-bottom:12px}
+.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65;margin-bottom:5px}
+.sect strong{color:var(--tx)}
+.sect code{background:var(--cat-b);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.82rem;color:var(--cat-t)}
+
+.info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--an-t)}
+.warn-box{background:var(--warn-b);border-left:4px solid var(--warn);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--warn-t)}
+.ok-box{background:var(--ok-b);border-left:4px solid var(--ok);border-radius:var(--rs);padding:12px 16px;margin:12px 0;font-size:.84rem;color:var(--ok-t)}
+
+/* BIG FORMULA */
+.big-formula{text-align:center;background:var(--an-b);border:2px solid var(--an);border-radius:var(--r);padding:22px;margin:16px 0}
+.big-formula .lhs{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--an-t)}
+.big-formula .sub{font-size:.8rem;color:var(--an-t);margin-top:6px}
+
+/* FACTOR CHAIN */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--mono);font-size:.85rem;margin:12px 0;padding:12px 16px;background:var(--surf2);border-radius:var(--rs);border:1.5px solid var(--brd2)}
+.chain-val{font-weight:700;color:var(--cat-t);background:var(--cat-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--cat)}
+.chain-factor{display:inline-flex;flex-direction:column;align-items:center;gap:1px;border:1.5px solid var(--an);border-radius:6px;padding:4px 10px;background:var(--an-b)}
+.chain-num{color:var(--an-t);font-weight:700;border-bottom:1.5px solid var(--an);padding-bottom:2px;width:100%;text-align:center}
+.chain-den{color:var(--an-t)}
+.chain-arrow{color:var(--dim);font-size:1.1rem}
+.chain-result{font-weight:800;color:var(--ok-t);background:var(--ok-b);padding:4px 9px;border-radius:6px;border:1.5px solid var(--ok)}
+
+/* MM TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.83rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--brd)}
+.tbl th{background:var(--an-b);font-weight:700;color:var(--an-t);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--surf2)}
+.tbl code{background:var(--cat-b);color:var(--cat-t);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.8rem}
+
+/* PROGRESS (mismo patrón visual que funciones.html) */
+.progress-bar{height:6px;background:var(--brd);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--an),var(--oh));border-radius:3px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--dimmer);text-align:right;margin-bottom:12px}
+
+/* QUIZ */
+.quiz-sect{border-top:3px solid var(--ok)!important}
+.mq-q{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:12px;line-height:1.5}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mq-btn{padding:10px 12px;border:2px solid var(--brd);border-radius:8px;background:var(--surf);color:var(--tx);font-family:var(--mono);font-size:.88rem;cursor:pointer;text-align:center;font-weight:700;transition:border-color .15s,background .15s}
+.mq-btn:hover:not(:disabled){border-color:var(--an);background:var(--an-b)}
+.mq-correct{background:var(--ok-b)!important;border-color:var(--ok)!important;color:var(--ok-t)!important}
+.mq-wrong{background:var(--err-b)!important;border-color:var(--err)!important;color:var(--err-t)!important}
+.mq-fb{font-size:.82rem;min-height:20px;color:var(--tx);margin-top:8px}
+.mq-next{margin-top:10px;padding:8px 16px;background:var(--an);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;display:none}
+
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:16px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+.tts-btn{background:none;border:1px solid #d0e6f5;border-radius:20px;padding:3px 10px;font-size:.72rem;color:#3a5568;cursor:pointer;margin-left:8px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.tts-btn:hover{background:rgba(0,0,0,.05)}
+
+/* ── Tamaño de letra adaptable ── */
+:root{--base-fs:16px}
+html{font-size:var(--base-fs)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── Referencia rápida ── */
+.ref-bar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;position:sticky;top:48px;z-index:20;background:var(--bg);padding:8px 0}
+.ref-bar button{font:700 .86rem/1.1 var(--sans);border:1.5px solid var(--brd);background:var(--surf);color:var(--tx);border-radius:999px;padding:9px 14px;min-height:40px;cursor:pointer}
+.ref-bar button.on{background:var(--nav);color:#fff;border-color:var(--nav)}
+.ref-bar .ref-print{margin-left:auto}
+.ref-sec h3{font-size:1rem;font-weight:800;margin:20px 0 8px;color:var(--tx)}
+.ref-sec.oculto{display:none}
+.ref-ruta{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:8px 0 12px}
+.ref-ruta span{flex:1 1 150px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:10px 12px;font-size:.88rem;text-align:center}
+.ref-ruta small{color:var(--tx2)}
+.ref-ruta b{align-self:center;color:var(--an)}
+.ref-lista{margin:8px 0 12px 1.3em}
+.ref-lista li{margin-bottom:6px;font-size:.92rem}
+@media print{.site-nav,.nav-drawer,.nav-overlay,.no-print,#menu-float-btn,#toc-fab,#toc-panel,.quick-practice{display:none!important}.ref-sec.oculto{display:block!important}.sect{break-inside:avoid-page;box-shadow:none}body{background:#fff}}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+<link rel="stylesheet" href="assets/sed10.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="referencia.html" class="active"><span class="dl-icon">📋</span><span class="dl-name">Referencia rápida</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="gases.html"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
+    <a href="soluciones.html"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>📋 Referencia rápida: estequiometría, gases y soluciones</h1>
+    <p>Todas las fórmulas, constantes y pasos en una sola página para repasar antes de una evaluación. Cada recuadro dice <strong>cuándo usarlo</strong> y qué error evitar. Para entender el porqué, entra al tema completo.</p>
+  </div>
+
+  <div class="ref-bar no-print" role="tablist" aria-label="Elige el tema">
+    <button class="on" role="tab" data-t="todo">📋 Todo</button>
+    <button role="tab" data-t="esteq">🧮 Estequiometría</button>
+    <button role="tab" data-t="gases">🎈 Gases</button>
+    <button role="tab" data-t="soluc">🧂 Soluciones</button>
+    <button class="ref-print" id="ref-print" type="button">🖨️ Imprimir o guardar PDF</button>
+  </div>
+
+  <!-- ═══ DATOS COMUNES ═══ -->
+  <div class="sect" id="comunes">
+    <h2>🔑 Constantes y equivalencias que siempre usarás</h2>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Dato</th><th>Valor</th><th>Se usa en</th></tr></thead>
+      <tbody>
+        <tr><td>Número de Avogadro</td><td><span class="eq">N<sub>A</sub> = 6,022 × 10²³ partículas/mol</span></td><td>Pasar entre moles y partículas</td></tr>
+        <tr><td>Constante de los gases</td><td><span class="eq">R = 0,082 atm·L/(mol·K)</span></td><td>PV = nRT con P en atm y V en L</td></tr>
+        <tr><td>Constante de los gases (otras unidades)</td><td>R = 62,4 mmHg·L/(mol·K) = 8,31 kPa·L/(mol·K)</td><td>Si la presión viene en mmHg o en kPa</td></tr>
+        <tr><td>Volumen molar (0 °C y 1 atm)</td><td><span class="eq">1 mol de gas = 22,4 L</span></td><td>Solo en esas condiciones</td></tr>
+        <tr><td>Presión</td><td>1 atm = 760 mmHg = 101,3 kPa</td><td>Gases</td></tr>
+        <tr><td>Temperatura</td><td><span class="eq">K = °C + 273</span></td><td>Siempre en las leyes de los gases</td></tr>
+        <tr><td>Volumen</td><td>1 L = 1000 mL = 1000 cm³; 1 m³ = 1000 L</td><td>Gases y soluciones</td></tr>
+        <tr><td>Agua</td><td>Densidad 1,00 g/mL (1 L pesa 1 kg)</td><td>ppm, molalidad, diluciones</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box">🧠 <strong>Idea central:</strong> el <strong>mol</strong> es el puente. Todo cálculo pasa por moles: masa ↔ mol ↔ partículas, volumen de gas ↔ mol, solución (M × L) ↔ mol.</div>
+  </div>
+
+  <!-- ═══ ESTEQUIOMETRÍA ═══ -->
+  <div class="sect ref-sec" id="esteq" data-t="esteq">
+    <h2>🧮 Estequiometría</h2>
+    <div class="meta">Tema completo: <a href="moles.html">Mol y masa molar</a> · <a href="estequiometria.html">Estequiometría</a> · <a href="industria.html">Química en la industria</a></div>
+
+    <h3>La ruta de siempre: cuatro pasos</h3>
+    <div class="ref-ruta" aria-label="Ruta: ecuación balanceada, gramos a moles, razón molar, moles a gramos">
+      <span>1. Ecuación <strong>balanceada</strong></span><b>→</b>
+      <span>2. g → mol<br><small>÷ masa molar</small></span><b>→</b>
+      <span>3. Razón molar<br><small>coef. buscado ÷ coef. dado</small></span><b>→</b>
+      <span>4. mol → g<br><small>× masa molar</small></span>
+    </div>
+    <div class="info-box">Cadena de factores para pasar de A a B:<br><span class="eq">g A × (1 mol A ÷ MM de A) × (coef. B mol B ÷ coef. A mol A) × (MM de B ÷ 1 mol B) = g B</span></div>
+
+    <h3>Fórmulas</h3>
+    <div class="proc">
+      <div class="card"><span class="tipo">Moles</span><h4>Masa ↔ mol</h4><span class="eq">n = m ÷ MM</span><p>m = n × MM. La masa molar (MM) sale de sumar las masas atómicas de la fórmula.</p></div>
+      <div class="card"><span class="tipo">Partículas</span><h4>Mol ↔ partículas</h4><span class="eq">N = n × N<sub>A</sub></span><p>Para contar átomos, moléculas o iones. Un mol de H₂O tiene 6,022 × 10²³ moléculas.</p></div>
+      <div class="card"><span class="tipo">Gases</span><h4>Volumen y moles</h4><span class="eq">V = n × 22,4 L</span><p>Solo a 0 °C y 1 atm. En otras condiciones usa PV = nRT.</p></div>
+      <div class="card"><span class="tipo">Composición</span><h4>Porcentaje de un elemento</h4><span class="eq">% = masa del elemento en 1 mol ÷ MM × 100</span><p>Ejemplo: en H₂O, % H = 2,0 ÷ 18,0 × 100 ≈ 11,1 %.</p></div>
+      <div class="card"><span class="tipo">Rendimiento</span><h4>% de rendimiento</h4><span class="eq">% = real ÷ teórico × 100</span><p>El teórico sale de la estequiometría; el real es lo que se pesó en el laboratorio. Nunca pasa de 100 %.</p></div>
+      <div class="card"><span class="tipo">Pureza</span><h4>% de pureza</h4><span class="eq">% = masa pura ÷ masa de la muestra × 100</span><p>Primero saca la masa pura (muestra × pureza) y solo entonces calcula moles.</p></div>
+    </div>
+
+    <h3>Reactivo limitante en tres pasos</h3>
+    <ol class="ref-lista">
+      <li>Pasa <strong>cada reactivo a moles</strong> (n = m ÷ MM).</li>
+      <li>Divide cada cantidad de moles entre <strong>su coeficiente</strong> de la ecuación balanceada.</li>
+      <li>El <strong>menor resultado</strong> es el limitante. El producto se calcula siempre desde él; el otro reactivo sobra.</li>
+    </ol>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido: 4,0 g de H₂ y 32 g de O₂ en 2 H₂ + O₂ → 2 H₂O</div>
+      <ol>
+        <li>n(H₂) = 4,0 ÷ 2,0 = 2,0 mol; n(O₂) = 32 ÷ 32 = 1,0 mol.</li>
+        <li>Entre coeficiente: H₂ → 2,0 ÷ 2 = 1,0; O₂ → 1,0 ÷ 1 = 1,0. Son iguales: <strong>proporción exacta, no sobra nada</strong>.</li>
+        <li>Producto: 2,0 mol H₂ × (2 mol H₂O ÷ 2 mol H₂) = 2,0 mol H₂O = <strong>36 g</strong>.</li>
+      </ol>
+    </div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> (1) calcular con la ecuación sin balancear; (2) usar los gramos directamente en la razón: la razón es entre <strong>moles</strong>; (3) comparar los gramos de los reactivos para decidir el limitante; (4) olvidar la pureza o el rendimiento cuando el problema los da.</div>
+  </div>
+
+  <!-- ═══ GASES ═══ -->
+  <div class="sect ref-sec" id="gases" data-t="gases">
+    <h2>🎈 Leyes de los gases</h2>
+    <div class="meta">Tema completo: <a href="gases.html">Leyes de los gases</a> · <a href="modelos.html">Modelos, leyes y datos</a></div>
+
+    <div class="warn-box">⚠️ <strong>Antes de reemplazar:</strong> la temperatura va <strong>siempre en kelvin</strong> (K = °C + 273) y P y V deben tener las mismas unidades a cada lado de la igualdad.</div>
+
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Ley</th><th>Qué se mantiene constante</th><th>Ecuación</th><th>Cómo se relacionan</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Boyle</strong></td><td>n y T</td><td><span class="eq">P₁V₁ = P₂V₂</span></td><td>Inversa: si V baja a la mitad, P se duplica</td></tr>
+        <tr><td><strong>Charles</strong></td><td>n y P</td><td><span class="eq">V₁ ÷ T₁ = V₂ ÷ T₂</span></td><td>Directa: más T, más V</td></tr>
+        <tr><td><strong>Gay-Lussac</strong></td><td>n y V</td><td><span class="eq">P₁ ÷ T₁ = P₂ ÷ T₂</span></td><td>Directa: más T, más P</td></tr>
+        <tr><td><strong>Avogadro</strong></td><td>P y T</td><td><span class="eq">V₁ ÷ n₁ = V₂ ÷ n₂</span></td><td>Directa: más moles, más V</td></tr>
+        <tr><td><strong>Combinada</strong></td><td>n</td><td><span class="eq">P₁V₁ ÷ T₁ = P₂V₂ ÷ T₂</span></td><td>Cuando cambian P, V y T a la vez</td></tr>
+        <tr><td><strong>Gas ideal</strong></td><td>Una sola condición</td><td><span class="eq">PV = nRT</span></td><td>Con ella se despejan P, V, n o T</td></tr>
+        <tr><td><strong>Dalton</strong></td><td>Mezcla de gases</td><td><span class="eq">P total = P₁ + P₂ + …</span></td><td>P<sub>i</sub> = X<sub>i</sub> × P total (X = fracción molar)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>¿Qué ley uso? Mira qué cambia y qué se queda quieto</h3>
+    <ol class="ref-lista">
+      <li>Si el problema no pide un cambio sino <strong>un solo estado</strong> (“¿cuántos moles hay?”, “¿qué volumen ocupa?”): <strong>PV = nRT</strong>.</li>
+      <li>Si el gas <strong>cambia</strong> de estado y la cantidad de gas no cambia: escoge la ley según la variable que no cambia, o usa la <strong>combinada</strong> y simplifica lo que no cambia.</li>
+      <li>Si se <strong>agrega o quita gas</strong>: Avogadro o PV = nRT.</li>
+      <li>Si hay <strong>varios gases mezclados</strong>: Dalton.</li>
+    </ol>
+
+    <h3>Despejes de PV = nRT</h3>
+    <div class="proc">
+      <div class="card"><span class="tipo">Moles</span><span class="eq">n = PV ÷ RT</span></div>
+      <div class="card"><span class="tipo">Volumen</span><span class="eq">V = nRT ÷ P</span></div>
+      <div class="card"><span class="tipo">Masa molar</span><span class="eq">MM = mRT ÷ PV</span><p>Con m = masa del gas en gramos.</p></div>
+      <div class="card"><span class="tipo">Densidad</span><span class="eq">d = P × MM ÷ RT</span><p>Un gas más denso que el aire (MM &gt; 29 g/mol) se queda abajo.</p></div>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido (combinada): 2,0 L de aire a 1,00 atm y 27 °C pasan a 0,74 atm y 14 °C</div>
+      <ol>
+        <li>Kelvin: T₁ = 300 K; T₂ = 287 K.</li>
+        <li>V₂ = P₁ × V₁ × T₂ ÷ (T₁ × P₂).</li>
+        <li>V₂ = 1,00 × 2,0 × 287 ÷ (300 × 0,74) ≈ <strong>2,6 L</strong>.</li>
+      </ol>
+    </div>
+    <div class="info-box">🇨🇴 <strong>Para recordar:</strong> la presión atmosférica baja con la altura: ≈ 1 atm en Cartagena y ≈ 0,74 atm en Bogotá. Por eso un paquete sellado llega inflado a la altura.</div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> usar °C en lugar de K; mezclar atm con mmHg; usar 22,4 L/mol cuando el gas no está a 0 °C y 1 atm; olvidar que Dalton suma <strong>presiones</strong>, no volúmenes.</div>
+  </div>
+
+  <!-- ═══ SOLUCIONES ═══ -->
+  <div class="sect ref-sec" id="soluc" data-t="soluc">
+    <h2>🧂 Soluciones y concentración</h2>
+    <div class="meta">Tema completo: <a href="soluciones.html">Soluciones y concentración</a> · <a href="ph.html">Ácidos, bases y pH</a></div>
+
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Unidad</th><th>Fórmula</th><th>Pista para recordarla</th></tr></thead>
+      <tbody>
+        <tr><td><strong>% m/m</strong></td><td><span class="eq">g soluto ÷ g solución × 100</span></td><td>Ambos en masa</td></tr>
+        <tr><td><strong>% m/v</strong></td><td><span class="eq">g soluto ÷ mL solución × 100</span></td><td>Suero: 0,9 % = 0,9 g en 100 mL</td></tr>
+        <tr><td><strong>% v/v</strong></td><td><span class="eq">mL soluto ÷ mL solución × 100</span></td><td>Alcohol antiséptico 70 % v/v</td></tr>
+        <tr><td><strong>ppm</strong></td><td><span class="eq">mg soluto ÷ L solución</span></td><td>En agua, 1 ppm = 1 mg/L</td></tr>
+        <tr><td><strong>Molaridad M</strong></td><td><span class="eq">mol soluto ÷ L solución</span></td><td>Litros de <strong>solución</strong> (no de solvente)</td></tr>
+        <tr><td><strong>Molalidad m</strong></td><td><span class="eq">mol soluto ÷ kg solvente</span></td><td>Kilogramos de <strong>solvente</strong>; no cambia con la temperatura</td></tr>
+        <tr><td><strong>Fracción molar X</strong></td><td><span class="eq">mol componente ÷ mol totales</span></td><td>La suma de todas las X es 1</td></tr>
+        <tr><td><strong>Normalidad N</strong></td><td><span class="eq">N = M × (H⁺ u OH⁻ que aporta)</span></td><td>H₂SO₄ 1 M = 2 N</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Cálculos que más se piden</h3>
+    <div class="proc">
+      <div class="card"><span class="tipo">Preparar</span><h4>Masa de soluto</h4><span class="eq">m = M × V(L) × MM</span><p>Gramos que se pesan para preparar V litros de solución de molaridad M.</p></div>
+      <div class="card"><span class="tipo">Diluir</span><h4>Dilución</h4><span class="eq">M₁V₁ = M₂V₂</span><p>Los moles de soluto no cambian al agregar agua. V₁ es el volumen de la solución concentrada que hay que tomar.</p></div>
+      <div class="card"><span class="tipo">Convertir</span><h4>% m/v → M</h4><span class="eq">M = % m/v × 10 ÷ MM</span><p>Un 0,9 % m/v de NaCl (MM = 58,5) da 0,9 × 10 ÷ 58,5 ≈ 0,15 M.</p></div>
+      <div class="card"><span class="tipo">Convertir</span><h4>ppm ↔ masa</h4><span class="eq">mg = ppm × L</span><p>1000 L de agua con 1,5 ppm de cloro contienen 1500 mg (1,5 g).</p></div>
+      <div class="card"><span class="tipo">Mezclar</span><h4>Mezcla de dos soluciones</h4><span class="eq">M = (M₁V₁ + M₂V₂) ÷ (V₁ + V₂)</span><p>Suma los moles de cada una y divide entre el volumen total.</p></div>
+      <div class="card"><span class="tipo">Neutralizar</span><h4>Titulación ácido-base</h4><span class="eq">N<sub>a</sub>V<sub>a</sub> = N<sub>b</sub>V<sub>b</sub></span><p>En el punto de equivalencia, los equivalentes de ácido y de base son iguales. Con ácido y base monopróticos, M = N.</p></div>
+    </div>
+
+    <h3>Solubilidad en una mirada</h3>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Tipo de solución</th><th>Qué pasa si agregas más soluto</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Insaturada</strong></td><td>Todavía se disuelve</td></tr>
+        <tr><td><strong>Saturada</strong></td><td>Ya no se disuelve: queda en el fondo</td></tr>
+        <tr><td><strong>Sobresaturada</strong></td><td>Inestable: basta un golpe o un cristalito para que el exceso cristalice</td></tr>
+      </tbody>
+    </table></div>
+    <p>La solubilidad de la <strong>mayoría de los sólidos aumenta</strong> con la temperatura; la de los <strong>gases disminuye</strong> (por eso una gaseosa tibia pierde el gas). Semejante disuelve a semejante: lo polar se disuelve en agua; lo apolar, en solventes apolares.</p>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido (dilución): ¿cómo preparar 250 mL de HCl 0,10 M desde HCl 2,0 M?</div>
+      <ol>
+        <li>V₁ = M₂V₂ ÷ M₁ = 0,10 × 250 ÷ 2,0 = <strong>12,5 mL</strong>.</li>
+        <li>Toma 12,5 mL de la solución concentrada y completa con agua hasta 250 mL (agrega siempre el ácido sobre el agua).</li>
+      </ol>
+    </div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir litros de solución con litros de solvente; usar mL en lugar de L en M × V; olvidar que % m/v usa <strong>mL</strong> de solución; pensar que al diluir cambian los moles (cambia el volumen, no el soluto).</div>
+  </div>
+
+  <footer>
+    <a href="juego.html">🎮 Practica en el Juego →</a> &nbsp;|&nbsp; <a href="index.html">IonNom</a> · Química para Colombia<br><br>
+    <p><a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Ionom</a> © 2026 by <a href="https://hbarcenasm863.github.io/ionom/index.html" style="color:var(--dim);text-decoration:none;font-weight:600">Harvey Barcenas</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--dim);text-decoration:none">Creative Commons Attribution-NonCommercial 4.0 International</a></p>
+  </footer>
+</div>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+<script>
+(function(){const saved=localStorage.getItem('ionom-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);})();
+document.getElementById('theme-btn').addEventListener('click',function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('ionom-theme',next);
+var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙');});
+
+// ── Hamburger nav ──
+(function(){
+  var ham=document.getElementById('ham-btn');
+  var drawer=document.getElementById('nav-drawer');
+  var overlay=document.getElementById('nav-overlay');
+  var closeBtn=document.getElementById('drawer-close');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham) ham.addEventListener('click',openDrawer);
+  if(closeBtn) closeBtn.addEventListener('click',closeDrawer);
+  if(overlay) overlay.addEventListener('click',closeDrawer);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeDrawer);});
+})();
+</script>
+<script>
+// ── Tamaño de letra persistente ──
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];
+  var idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);
+  function apply(){
+    document.documentElement.style.fontSize=STEPS[idx]+'px';document.documentElement.style.setProperty('--base-fs',STEPS[idx]+'px');
+    var d=document.getElementById('font-disp');
+    if(d)d.textContent='A'+STEPS[idx];
+  }
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.fontDec=function(){if(idx>0){idx--;localStorage.setItem('ionom-fsidx',idx);apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script>
+(function(){
+  var bar=document.querySelector('.ref-bar');if(!bar)return;
+  function mostrar(t){
+    bar.querySelectorAll('button[data-t]').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);b.setAttribute('aria-selected',b.dataset.t===t);});
+    document.querySelectorAll('.ref-sec').forEach(function(s){s.classList.toggle('oculto',t!=='todo'&&s.dataset.t!==t);});
+    try{history.replaceState(null,'','#'+(t==='todo'?'':t));}catch(e){}
+  }
+  bar.addEventListener('click',function(e){var b=e.target.closest('button[data-t]');if(b)mostrar(b.dataset.t);});
+  document.getElementById('ref-print').addEventListener('click',function(){window.print();});
+  var h=location.hash.replace('#','');if(['esteq','gases','soluc'].indexOf(h)>=0)mostrar(h);
+})();
+</script>
+<script src="assets/toc.js"></script>
+<script src="assets/ionom-ui.js"></script>
+<script src="assets/pantalla.js"></script>
+</body>
+</html>

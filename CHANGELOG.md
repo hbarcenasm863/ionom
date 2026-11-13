@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (19) — Referencia rápida: estequiometría, gases y soluciones
+
+El docente pidió una página de referencia para que los estudiantes repasen rápido estos tres temas.
+
+- **`referencia.html` (nueva):** constantes y equivalencias (N_A, R, 22,4 L, presiones, K = °C + 273); **estequiometría** (ruta de cuatro pasos, moles, partículas, composición porcentual, rendimiento, pureza y reactivo limitante con ejemplo); **gases** (tabla de las siete leyes, cuál usar, despejes de PV = nRT y ejemplo de la ley combinada); **soluciones** (las ocho unidades, preparar, diluir, convertir, mezclar, titular y solubilidad). Cada tema trae sus errores frecuentes y el enlace al tema completo. Pestañas Todo / Estequiometría / Gases / Soluciones y botón «Imprimir o guardar PDF».
+- **Menú:** enlace «📋 Referencia rápida» en las 22 páginas, en `assets/ionom-ui.js` y una tarjeta en la portada.
+- **`sw.js`:** caché `ionom-v99`. **`README.md`:** fila nueva.
+- **Verificación:** Playwright en computador y iPhone: sin errores ni desbordes; las pestañas filtran bien.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (18) — Simulaciones nuevas, pantalla completa y fotos con cita APA
 
 El docente pidió animaciones y simulaciones como las de BioNom, con pantalla completa y fotos de bancos libres.
