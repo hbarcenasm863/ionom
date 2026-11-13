@@ -4,6 +4,15 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (24) — Tabla periódica con símbolos en la guía
+
+El docente notó el esquema de la tabla periódica «muy colapsado» (era una versión anterior, con la leyenda encima de la tabla).
+
+- **`guia.html` y `assets/guia-tabla-periodica.pdf`:** la tabla ahora lleva el símbolo de los 118 elementos, la leyenda a la derecha sin tapar nada, lantánidos y actínidos rotulados (La y Ac en el grupo 3) y el dibujo más grande.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (23) — Cuatro guías descargables nuevas: tabla periódica, enlace, reacciones y ácidos y pH
 
 El docente pidió generar todas las hojas de referencia que faltaban. Con las cinco anteriores, `guia.html` queda con **nueve guías**, ordenadas como el curso.
