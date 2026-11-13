@@ -4,6 +4,15 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (25) — Guía del átomo: tabla que se salía en el celular
+
+Al revisar las últimas publicaciones se vio que en el celular la guía del átomo se podía mover hacia los lados (53 px de más) por la tabla «Partes del átomo».
+
+- **`guia.html`:** esa tabla ahora está dentro de un recuadro con desplazamiento horizontal, como las demás tablas de la página. El PDF no cambia.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (24) — Tabla periódica con símbolos en la guía
 
 El docente notó el esquema de la tabla periódica «muy colapsado» (era una versión anterior, con la leyenda encima de la tabla).
