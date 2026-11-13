@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0d4a73">
 <link rel="icon" type="image/png" href="assets/iononpwa.png">
 <link rel="apple-touch-icon" href="assets/iononpwa.png">
-<title>IonNom — Guía de Nomenclatura Inorgánica</title>
+<title>IonNom — Guías de referencia descargables</title>
 <link rel="stylesheet" href="assets/shared-tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,7 +173,72 @@ html{font-size:var(--base-fs)}
   .exc-section{column-count:2;column-gap:14px}
   .exc-item{break-inside:avoid;page-break-inside:avoid;margin-bottom:3px}
 
-  @page{size:landscape;margin:1cm}
+}
+
+/* ── Guías por hoja (nomenclatura, estequiometría, gases, soluciones) ── */
+.hoja{display:none}.hoja.activa{display:block}
+.hoja-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;position:sticky;top:48px;z-index:20;background:var(--bg);padding:8px 0}
+.hoja-tabs button{font:700 .86rem/1.1 var(--sans);border:1.5px solid var(--brd);background:var(--surf);color:var(--tx);border-radius:999px;padding:9px 14px;min-height:40px;cursor:pointer}
+.hoja-tabs button.on{background:var(--nav);color:#fff;border-color:var(--nav)}
+.hoja-top{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-bottom:16px}
+.hoja-logo{height:46px;width:auto}
+.hoja-tit{flex:1 1 260px}.hoja-tit h2{font-family:var(--serif);font-style:italic;font-size:1.35rem;margin-bottom:2px}.hoja-tit p{font-size:.86rem;color:var(--tx2)}
+.hoja-btns{display:flex;gap:10px;flex-wrap:wrap}
+.dl-btn.alt{background:var(--an)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.hoja .eq{font-family:var(--mono);font-size:.86rem;font-weight:700;color:var(--tx);background:var(--surf2);border:1px solid var(--brd);border-radius:6px;padding:5px 9px;display:inline-block;margin:3px 0}
+.hoja .proc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:10px 0}
+.hoja .proc .card{border:1.5px solid var(--brd);border-radius:var(--r);background:var(--surf);padding:12px 14px}
+.hoja .proc .card h4{font-size:.92rem;font-weight:800;margin-bottom:4px}
+.hoja .proc .card .tipo{display:inline-block;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--an-t);background:var(--an-b);border-radius:999px;padding:2px 8px;margin-bottom:6px}
+.hoja .proc .card p{font-size:.8rem;margin-bottom:4px}
+.hoja .info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.86rem}
+.hoja .warn-box{background:var(--warn-b,#fff7e0);border-left:4px solid var(--warn,#e8a200);border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.86rem}
+.hoja .pasos{border:1.5px solid var(--brd);border-radius:var(--r);background:var(--surf2);padding:10px 14px;margin:10px 0}
+.hoja .pasos-h{font-weight:800;font-size:.88rem;margin-bottom:6px}
+.hoja .pasos ol,.hoja .ref-lista{margin:6px 0 8px 1.3em}.hoja .pasos li,.hoja .ref-lista li{font-size:.86rem;margin-bottom:4px}
+.hoja .ref-ruta{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:8px 0 12px}
+.hoja .ref-ruta span{flex:1 1 140px;background:var(--surf2);border:1.5px solid var(--brd);border-radius:var(--rs);padding:8px 10px;font-size:.86rem;text-align:center}
+.hoja .ref-ruta b{align-self:center;color:var(--an)}
+.hoja .ref-ruta small{color:var(--tx2)}
+.hoja .ruta-svg{width:100%;height:auto;display:block;max-height:340px}
+.hoja .ruta-wrap{background:#fff;border:1.5px solid var(--brd);border-radius:var(--r);padding:8px}
+.hoja .ruta-nota{margin-top:8px}
+.pdf-wm,.pdf-foot{display:none}
+@media print{
+  .hoja-tabs,.hoja-btns{display:none!important}
+  .page-hdr{display:none!important}
+  .hoja:not(.activa){display:none!important}
+  .hoja-top{gap:8px;margin-bottom:5px;flex-wrap:nowrap;border-bottom:1px solid #999;padding-bottom:4px}
+  .hoja-logo{height:30px}
+  .hoja-tit h2{font-size:12pt;margin:0}.hoja-tit p{font-size:7.6pt;color:#333}
+  .pdf-wm{display:block;position:fixed;left:50%;top:50%;width:58%;transform:translate(-50%,-50%);opacity:.07;z-index:-1;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pdf-foot{display:block;position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:6.5pt;color:#555}
+  .sect{background:transparent!important}
+  .chips{gap:5px;margin-bottom:5px}.hoja .eq{font-size:7.2pt;padding:2px 6px;margin:1px 0;background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hoja-cols{display:block;column-count:2;column-gap:12px;column-fill:balance}.hoja-cols>.hcol{display:contents}
+  .hs{break-inside:avoid;page-break-inside:avoid;margin-bottom:6px!important}
+  .hs h2{font-size:9pt!important}
+  .hoja .proc{grid-template-columns:repeat(2,1fr);gap:5px;margin:4px 0}
+  .hoja .proc .card{padding:4px 7px;break-inside:avoid;border-width:1px}.hoja .proc .card h4{font-size:7.4pt;margin-bottom:2px}.hoja .proc .card p{font-size:6.8pt!important;margin-bottom:2px!important}
+  .hoja .proc .card .tipo{font-size:5.6pt;padding:1px 5px;margin-bottom:2px;background:#eee!important;color:#000!important}
+  .hoja .info-box,.hoja .warn-box{padding:3px 7px;margin:4px 0;font-size:7pt;background:#f3f3f3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hoja .pasos{padding:4px 8px;margin:4px 0;background:transparent;border-width:1px}.hoja .pasos-h{font-size:7.4pt;margin-bottom:2px}.hoja .pasos li,.hoja .ref-lista li{font-size:7.2pt;margin-bottom:1px;line-height:1.25}
+  .hoja .pasos ol,.hoja .ref-lista{margin:2px 0 3px 1.2em}
+  .hoja .ref-ruta{gap:3px;margin:3px 0 5px}.hoja .ref-ruta span{padding:3px 5px;font-size:7pt;flex:1 1 90px}
+  .hs .sect p,.hs p{font-size:7.4pt!important}
+  /* Hojas nuevas: letra más grande porque llevan menos contenido */
+  .mayor .hoja-tit h2{font-size:16pt}.mayor .hoja-tit p{font-size:10pt}.mayor .hoja-logo{height:38px}
+  .mayor .chips{gap:7px;margin-bottom:8px}.mayor .eq{font-size:10pt!important;padding:3px 8px!important}
+  .mayor .hs{margin-bottom:9px!important;padding:8px 12px!important}.mayor .hs h2{font-size:12.5pt!important;margin-bottom:6px!important}
+  .mayor .hs p,.mayor .hs li,.mayor .tbl,.mayor .tbl td,.mayor .tbl th{font-size:10pt!important;line-height:1.35}
+  .mayor .tbl th{font-size:8pt!important}.mayor .tbl th,.mayor .tbl td{padding:4px 6px!important}
+  .mayor .proc{gap:7px!important}.mayor .proc .card{padding:6px 9px!important}.mayor .proc .card h4{font-size:10.5pt!important}.mayor .proc .card p{font-size:9.5pt!important}.mayor .proc .card .tipo{font-size:7pt!important}
+  .mayor .info-box,.mayor .warn-box{font-size:10pt!important;padding:5px 9px!important}
+  .mayor .pasos-h{font-size:10.5pt!important}.mayor .pasos li,.mayor .ref-lista li{font-size:10pt!important;margin-bottom:3px}
+  .mayor .ruta-svg{max-height:5.2cm}.mayor .ruta-wrap{padding:3px}
+  .mayor .ref-ruta span{font-size:9pt!important;padding:5px 7px!important}
+  @page{size:A4 landscape;margin:1cm 1cm 1.3cm}
 }
 </style>
 <link rel="stylesheet" href="assets/ionom.css">
@@ -207,7 +272,7 @@ html{font-size:var(--base-fs)}
     <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
     <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
     <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
-    <a href="guia.html" class="active"><span class="dl-icon">📘</span><span class="dl-name">Guía descargable</span></a>
+    <a href="guia.html" class="active"><span class="dl-icon">📘</span><span class="dl-name">Guías descargables</span></a>
     <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
     <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
     <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
@@ -229,15 +294,30 @@ html{font-size:var(--base-fs)}
 <div class="app">
   <div class="page-hdr">
     <div>
-      <h1>📘 Guía de Nomenclatura Inorgánica</h1>
-      <p>Referencia completa de una página: las 9 funciones químicas, los tres sistemas de nomenclatura, las tablas de prefijos/sufijos y las excepciones más comunes. Guárdala o imprímela para consultarla sin conexión.</p>
-    </div>
-    <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="dl-btn" href="assets/guia-nomenclatura-inorganica.pdf" download style="text-decoration:none">⬇️ Descargar PDF</a>
-      <button class="dl-btn" style="background:var(--an)" onclick="window.print()">🖨️ Imprimir</button>
+      <h1>📘 Guías de referencia descargables</h1>
+      <p>Cuatro hojas de repaso rápido: nomenclatura, estequiometría, leyes de los gases y soluciones. Léelas aquí, imprímelas o descárgalas en PDF para estudiar sin conexión.</p>
     </div>
   </div>
 
+  <div class="hoja-tabs no-print" role="tablist" aria-label="Elige la guía">
+    <button type="button" class="on" role="tab" data-h="nomen">📘 Nomenclatura</button>
+    <button type="button" role="tab" data-h="esteq">🧮 Estequiometría</button>
+    <button type="button" role="tab" data-h="gases">🎈 Gases</button>
+    <button type="button" role="tab" data-h="soluc">🧂 Soluciones</button>
+  </div>
+
+  <img class="pdf-wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">
+  <div class="pdf-foot" aria-hidden="true">IonNom · Nombra con precisión. Comprende la química. · hbarcenasm863.github.io/ionom</div>
+
+  <div class="hoja activa" id="h-nomen" data-hoja="nomen">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>📘 Nomenclatura inorgánica</h2><p>Las 9 funciones químicas, los tres sistemas de nomenclatura, prefijos y sufijos y las excepciones más comunes.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-nomenclatura-inorganica.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
   <div class="sect">
     <h2>Cómo leer esta guía — el modelo de 4 colores</h2>
     <p>Cada compuesto inorgánico se arma combinando un <strong>catión</strong> (siempre primero) con un <strong>anión</strong> (siempre segundo). El color del anión te dice qué tipo de compuesto estás nombrando:</p>
@@ -490,6 +570,197 @@ html{font-size:var(--base-fs)}
   </div>
   </div><!-- /print-flow -->
 
+  </div>
+
+  <div class="hoja mayor" id="h-esteq" data-hoja="esteq">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>🧮 Estequiometría</h2><p>La ruta de cuatro pasos, las fórmulas, el reactivo limitante, el rendimiento y la pureza.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-estequiometria.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">n = m ÷ MM</span><span class="eq">N<sub>A</sub> = 6,022 × 10²³ /mol</span><span class="eq">1 mol de gas = 22,4 L (0 °C y 1 atm)</span><span class="eq">1 L = 1000 mL</span></div>
+<div class="sect hs hs-full"><h2>La ruta de siempre: de gramos de A a gramos de B</h2>
+<div class="ruta-wrap"><svg class="ruta-svg" viewBox="0 0 1000 270" role="img" aria-label="aA pasa a bB: gramos de A se multiplican por 1 mol A sobre masa molar A y dan moles de A; por coeficiente B sobre coeficiente A y dan moles de B; por masa molar B sobre 1 mol B y dan gramos de B" font-family="Outfit,sans-serif" font-weight="700" fill="#0d2d42">
+<text x="500" y="26" text-anchor="middle" font-size="26">aA <tspan font-size="22">⟹</tspan> bB</text>
+<g fill="#fff" stroke="#0d2d42" stroke-width="3">
+<rect x="5" y="120" width="150" height="130" rx="12"/><rect x="345" y="146" width="100" height="78" rx="12"/><rect x="595" y="146" width="100" height="78" rx="12"/><rect x="845" y="120" width="150" height="130" rx="12"/>
+<rect x="175" y="46" width="170" height="74" rx="10"/><rect x="450" y="46" width="170" height="74" rx="10"/><rect x="715" y="46" width="170" height="74" rx="10"/>
+</g>
+<g fill="#fff" stroke="#0d2d42" stroke-width="3" stroke-linejoin="round">
+<polygon points="165,172 305,172 305,156 335,185 305,214 305,198 165,198"/><polygon points="455,172 555,172 555,156 585,185 555,214 555,198 455,198"/><polygon points="705,172 805,172 805,156 835,185 805,214 805,198 705,198"/>
+</g>
+<g text-anchor="middle" font-size="19">
+<text x="80" y="214" font-size="21">Gramos de A</text><text x="80" y="238" font-size="15" font-weight="400">(masa conocida)</text>
+<text x="395" y="182">Moles</text><text x="395" y="206">de A</text><text x="645" y="182">Moles</text><text x="645" y="206">de B</text>
+<text x="920" y="214" font-size="21">Gramos de B</text><text x="920" y="238" font-size="15" font-weight="400">(masa desconocida)</text>
+<text x="260" y="76">1 mol A</text><text x="260" y="108">Masa Molar A</text><text x="535" y="76">Coeficiente B</text><text x="535" y="108">Coeficiente A</text><text x="800" y="76">Masa Molar B</text><text x="800" y="108">1 mol B</text>
+</g>
+<g stroke="#0d2d42" stroke-width="2.5"><line x1="190" y1="85" x2="330" y2="85"/><line x1="465" y1="85" x2="605" y2="85"/><line x1="730" y1="85" x2="870" y2="85"/></g>
+<g fill="#fff" stroke="#16a34a" stroke-width="3"><path d="M52 138h56v8h-6v28q0 6-6 6H64q-6 0-6-6v-28h-6z"/></g><path d="M58 158h44v14q0 6-6 6H64q-6 0-6-6z" fill="#22c55e"/>
+<g fill="#fff" stroke="#16a34a" stroke-width="3"><path d="M892 138h56v8h-6v28q0 6-6 6h-32q-6 0-6-6v-28h-6z"/></g><path d="M898 158h44v14q0 6-6 6h-32q-6 0-6-6z" fill="#22c55e"/>
+</svg></div>
+      <p class="ruta-nota">Son <strong>tres factores de conversión</strong> seguidos: el primero pasa de gramos a moles, el segundo cambia de sustancia con los coeficientes de la ecuación balanceada y el tercero vuelve a gramos.</p>
+    <div class="info-box">Cadena de factores para pasar de A a B:<br><span class="eq">g A × (1 mol A ÷ MM de A) × (coef. B mol B ÷ coef. A mol A) × (MM de B ÷ 1 mol B) = g B</span></div>
+</div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Fórmulas</h2>
+<div class="proc">
+      <div class="card"><span class="tipo">Moles</span><h4>Masa ↔ mol</h4><span class="eq">n = m ÷ MM</span><p>m = n × MM. La masa molar (MM) sale de sumar las masas atómicas de la fórmula.</p></div>
+      <div class="card"><span class="tipo">Partículas</span><h4>Mol ↔ partículas</h4><span class="eq">N = n × N<sub>A</sub></span><p>Para contar átomos, moléculas o iones. Un mol de H₂O tiene 6,022 × 10²³ moléculas.</p></div>
+      <div class="card"><span class="tipo">Gases</span><h4>Volumen y moles</h4><span class="eq">V = n × 22,4 L</span><p>Solo a 0 °C y 1 atm. En otras condiciones usa PV = nRT.</p></div>
+      <div class="card"><span class="tipo">Composición</span><h4>Porcentaje de un elemento</h4><span class="eq">% = masa del elemento en 1 mol ÷ MM × 100</span><p>Ejemplo: en H₂O, % H = 2,0 ÷ 18,0 × 100 ≈ 11,1 %.</p></div>
+      <div class="card"><span class="tipo">Rendimiento</span><h4>% de rendimiento</h4><span class="eq">% = real ÷ teórico × 100</span><p>El teórico sale de la estequiometría; el real es lo que se pesó en el laboratorio. Nunca pasa de 100 %.</p></div>
+      <div class="card"><span class="tipo">Pureza</span><h4>% de pureza</h4><span class="eq">% = masa pura ÷ masa de la muestra × 100</span><p>Primero saca la masa pura (muestra × pureza) y solo entonces calcula moles.</p></div>
+    </div>
+</div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Reactivo limitante en tres pasos</h2>
+<ol class="ref-lista">
+      <li>Pasa <strong>cada reactivo a moles</strong> (n = m ÷ MM).</li>
+      <li>Divide cada cantidad de moles entre <strong>su coeficiente</strong> de la ecuación balanceada.</li>
+      <li>El <strong>menor resultado</strong> es el limitante. El producto se calcula siempre desde él; el otro reactivo sobra.</li>
+    </ol>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido: 4,0 g de H₂ y 32 g de O₂ en 2 H₂ + O₂ → 2 H₂O</div>
+      <ol>
+        <li>n(H₂) = 4,0 ÷ 2,0 = 2,0 mol; n(O₂) = 32 ÷ 32 = 1,0 mol.</li>
+        <li>Entre coeficiente: H₂ → 2,0 ÷ 2 = 1,0; O₂ → 1,0 ÷ 1 = 1,0. Son iguales: <strong>proporción exacta, no sobra nada</strong>.</li>
+        <li>Producto: 2,0 mol H₂ × (2 mol H₂O ÷ 2 mol H₂) = 2,0 mol H₂O = <strong>36 g</strong>.</li>
+      </ol>
+    </div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> (1) calcular con la ecuación sin balancear; (2) usar los gramos directamente en la razón: la razón es entre <strong>moles</strong>; (3) comparar los gramos de los reactivos para decidir el limitante; (4) olvidar la pureza o el rendimiento cuando el problema los da.</div>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoja mayor" id="h-gases" data-hoja="gases">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>🎈 Leyes de los gases</h2><p>Las siete leyes, cómo escoger cuál usar y los despejes de PV = nRT.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-gases.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">R = 0,082 atm·L/(mol·K)</span><span class="eq">1 atm = 760 mmHg = 101,3 kPa</span><span class="eq">K = °C + 273</span><span class="eq">1 L = 1000 mL = 1000 cm³</span></div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Las leyes de un vistazo</h2>
+<div class="warn-box">⚠️ <strong>Antes de reemplazar:</strong> la temperatura va <strong>siempre en kelvin</strong> (K = °C + 273) y P y V deben tener las mismas unidades a cada lado de la igualdad.</div>
+
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Ley</th><th>Qué se mantiene constante</th><th>Ecuación</th><th>Cómo se relacionan</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Boyle</strong></td><td>n y T</td><td><span class="eq">P₁V₁ = P₂V₂</span></td><td>Inversa: si V baja a la mitad, P se duplica</td></tr>
+        <tr><td><strong>Charles</strong></td><td>n y P</td><td><span class="eq">V₁ ÷ T₁ = V₂ ÷ T₂</span></td><td>Directa: más T, más V</td></tr>
+        <tr><td><strong>Gay-Lussac</strong></td><td>n y V</td><td><span class="eq">P₁ ÷ T₁ = P₂ ÷ T₂</span></td><td>Directa: más T, más P</td></tr>
+        <tr><td><strong>Avogadro</strong></td><td>P y T</td><td><span class="eq">V₁ ÷ n₁ = V₂ ÷ n₂</span></td><td>Directa: más moles, más V</td></tr>
+        <tr><td><strong>Combinada</strong></td><td>n</td><td><span class="eq">P₁V₁ ÷ T₁ = P₂V₂ ÷ T₂</span></td><td>Cuando cambian P, V y T a la vez</td></tr>
+        <tr><td><strong>Gas ideal</strong></td><td>Una sola condición</td><td><span class="eq">PV = nRT</span></td><td>Con ella se despejan P, V, n o T</td></tr>
+        <tr><td><strong>Dalton</strong></td><td>Mezcla de gases</td><td><span class="eq">P total = P₁ + P₂ + …</span></td><td>P<sub>i</sub> = X<sub>i</sub> × P total (X = fracción molar)</td></tr>
+      </tbody>
+    </table></div>
+</div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>¿Qué ley uso? Mira qué cambia y qué se queda quieto</h2>
+<ol class="ref-lista">
+      <li>Si el problema no pide un cambio sino <strong>un solo estado</strong> (“¿cuántos moles hay?”, “¿qué volumen ocupa?”): <strong>PV = nRT</strong>.</li>
+      <li>Si el gas <strong>cambia</strong> de estado y la cantidad de gas no cambia: escoge la ley según la variable que no cambia, o usa la <strong>combinada</strong> y simplifica lo que no cambia.</li>
+      <li>Si se <strong>agrega o quita gas</strong>: Avogadro o PV = nRT.</li>
+      <li>Si hay <strong>varios gases mezclados</strong>: Dalton.</li>
+    </ol>
+</div>
+<div class="sect hs"><h2>Despejes de PV = nRT</h2>
+<div class="proc">
+      <div class="card"><span class="tipo">Moles</span><span class="eq">n = PV ÷ RT</span></div>
+      <div class="card"><span class="tipo">Volumen</span><span class="eq">V = nRT ÷ P</span></div>
+      <div class="card"><span class="tipo">Masa molar</span><span class="eq">MM = mRT ÷ PV</span><p>Con m = masa del gas en gramos.</p></div>
+      <div class="card"><span class="tipo">Densidad</span><span class="eq">d = P × MM ÷ RT</span><p>Un gas más denso que el aire (MM &gt; 29 g/mol) se queda abajo.</p></div>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido (combinada): 2,0 L de aire a 1,00 atm y 27 °C pasan a 0,74 atm y 14 °C</div>
+      <ol>
+        <li>Kelvin: T₁ = 300 K; T₂ = 287 K.</li>
+        <li>V₂ = P₁ × V₁ × T₂ ÷ (T₁ × P₂).</li>
+        <li>V₂ = 1,00 × 2,0 × 287 ÷ (300 × 0,74) ≈ <strong>2,6 L</strong>.</li>
+      </ol>
+    </div>
+    <div class="info-box">🇨🇴 <strong>Para recordar:</strong> la presión atmosférica baja con la altura: ≈ 1 atm en Cartagena y ≈ 0,74 atm en Bogotá. Por eso un paquete sellado llega inflado a la altura.</div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> usar °C en lugar de K; mezclar atm con mmHg; usar 22,4 L/mol cuando el gas no está a 0 °C y 1 atm; olvidar que Dalton suma <strong>presiones</strong>, no volúmenes.</div>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoja mayor" id="h-soluc" data-hoja="soluc">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>🧂 Soluciones y concentración</h2><p>Unidades de concentración, preparar, diluir, mezclar, titular y solubilidad.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-soluciones.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">1 L = 1000 mL</span><span class="eq">Agua: 1,00 g/mL</span><span class="eq">1 ppm = 1 mg/L (en agua)</span><span class="eq">n = m ÷ MM</span></div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Unidades de concentración</h2>
+<div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Unidad</th><th>Fórmula</th><th>Pista para recordarla</th></tr></thead>
+      <tbody>
+        <tr><td><strong>% m/m</strong></td><td><span class="eq">g soluto ÷ g solución × 100</span></td><td>Ambos en masa</td></tr>
+        <tr><td><strong>% m/v</strong></td><td><span class="eq">g soluto ÷ mL solución × 100</span></td><td>Suero: 0,9 % = 0,9 g en 100 mL</td></tr>
+        <tr><td><strong>% v/v</strong></td><td><span class="eq">mL soluto ÷ mL solución × 100</span></td><td>Alcohol antiséptico 70 % v/v</td></tr>
+        <tr><td><strong>ppm</strong></td><td><span class="eq">mg soluto ÷ L solución</span></td><td>En agua, 1 ppm = 1 mg/L</td></tr>
+        <tr><td><strong>Molaridad M</strong></td><td><span class="eq">mol soluto ÷ L solución</span></td><td>Litros de <strong>solución</strong> (no de solvente)</td></tr>
+        <tr><td><strong>Molalidad m</strong></td><td><span class="eq">mol soluto ÷ kg solvente</span></td><td>Kilogramos de <strong>solvente</strong>; no cambia con la temperatura</td></tr>
+        <tr><td><strong>Fracción molar X</strong></td><td><span class="eq">mol componente ÷ mol totales</span></td><td>La suma de todas las X es 1</td></tr>
+        <tr><td><strong>Normalidad N</strong></td><td><span class="eq">N = M × (H⁺ u OH⁻ que aporta)</span></td><td>H₂SO₄ 1 M = 2 N</td></tr>
+      </tbody>
+    </table></div>
+</div>
+<div class="sect hs"><h2>Solubilidad en una mirada</h2>
+<div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Tipo de solución</th><th>Qué pasa si agregas más soluto</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Insaturada</strong></td><td>Todavía se disuelve</td></tr>
+        <tr><td><strong>Saturada</strong></td><td>Ya no se disuelve: queda en el fondo</td></tr>
+        <tr><td><strong>Sobresaturada</strong></td><td>Inestable: basta un golpe o un cristalito para que el exceso cristalice</td></tr>
+      </tbody>
+    </table></div>
+    <p>La solubilidad de la <strong>mayoría de los sólidos aumenta</strong> con la temperatura; la de los <strong>gases disminuye</strong> (por eso una gaseosa tibia pierde el gas). Semejante disuelve a semejante: lo polar se disuelve en agua; lo apolar, en solventes apolares.</p>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo rápido (dilución): ¿cómo preparar 250 mL de HCl 0,10 M desde HCl 2,0 M?</div>
+      <ol>
+        <li>V₁ = M₂V₂ ÷ M₁ = 0,10 × 250 ÷ 2,0 = <strong>12,5 mL</strong>.</li>
+        <li>Toma 12,5 mL de la solución concentrada y completa con agua hasta 250 mL (agrega siempre el ácido sobre el agua).</li>
+      </ol>
+    </div>
+    <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir litros de solución con litros de solvente; usar mL en lugar de L en M × V; olvidar que % m/v usa <strong>mL</strong> de solución; pensar que al diluir cambian los moles (cambia el volumen, no el soluto).</div>
+</div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Cálculos que más se piden</h2>
+<div class="proc">
+      <div class="card"><span class="tipo">Preparar</span><h4>Masa de soluto</h4><span class="eq">m = M × V(L) × MM</span><p>Gramos que se pesan para preparar V litros de solución de molaridad M.</p></div>
+      <div class="card"><span class="tipo">Diluir</span><h4>Dilución</h4><span class="eq">M₁V₁ = M₂V₂</span><p>Los moles de soluto no cambian al agregar agua. V₁ es el volumen de la solución concentrada que hay que tomar.</p></div>
+      <div class="card"><span class="tipo">Convertir</span><h4>% m/v → M</h4><span class="eq">M = % m/v × 10 ÷ MM</span><p>Un 0,9 % m/v de NaCl (MM = 58,5) da 0,9 × 10 ÷ 58,5 ≈ 0,15 M.</p></div>
+      <div class="card"><span class="tipo">Convertir</span><h4>ppm ↔ masa</h4><span class="eq">mg = ppm × L</span><p>1000 L de agua con 1,5 ppm de cloro contienen 1500 mg (1,5 g).</p></div>
+      <div class="card"><span class="tipo">Mezclar</span><h4>Mezcla de dos soluciones</h4><span class="eq">M = (M₁V₁ + M₂V₂) ÷ (V₁ + V₂)</span><p>Suma los moles de cada una y divide entre el volumen total.</p></div>
+      <div class="card"><span class="tipo">Neutralizar</span><h4>Titulación ácido-base</h4><span class="eq">N<sub>a</sub>V<sub>a</sub> = N<sub>b</sub>V<sub>b</sub></span><p>En el punto de equivalencia, los equivalentes de ácido y de base son iguales. Con ácido y base monopróticos, M = N.</p></div>
+    </div>
+</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     IonNom — Guía de referencia · Colegio Rufino José Cuervo I.E.D. · Consulta la <a href="teoria.html">Teoría completa</a> o practica en el <a href="juego.html">Juego</a>.
   </footer>
@@ -530,5 +801,17 @@ document.getElementById('theme-btn').addEventListener('click',function(){
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>
+<script>
+(function(){
+  var tabs=document.querySelector('.hoja-tabs');if(!tabs)return;
+  function mostrar(h,hist){
+    tabs.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.h===h);b.setAttribute('aria-selected',b.dataset.h===h);});
+    document.querySelectorAll('.hoja').forEach(function(s){s.classList.toggle('activa',s.dataset.hoja===h);});
+    if(hist){try{history.replaceState(null,'','?hoja='+h);}catch(e){}}
+  }
+  tabs.addEventListener('click',function(e){var b=e.target.closest('button[data-h]');if(b)mostrar(b.dataset.h,true);});
+  var m=location.search.match(/hoja=(nomen|esteq|gases|soluc)/);if(m)mostrar(m[1],false);
+})();
+</script>
 </body>
 </html>

@@ -29,3 +29,5 @@ A diferencia de los `.html`/`.js` del sitio (que GitHub Pages sirve directo desd
   Commons, buscados con Openverse), licencias CC0, dominio público, CC BY o
   CC BY-SA, y la cita siempre debajo. Wikimedia limita las descargas
   automáticas (error 429): bajar las imágenes de a una y con pausas.
+
+- **Guías descargables (`guia.html`).** Los PDF de `assets/guia-*.pdf` son archivos fijos generados desde `guia.html` (A4 horizontal, con logo y marca de agua). Si se cambia el contenido de una guía, correr `node herramientas/generar-guias-pdf.js . assets` (con `FUENTES=<node_modules/@fontsource>` para la letra Outfit) y subir los PDF en el mismo commit.

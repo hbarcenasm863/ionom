@@ -4,15 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
-## 13 de noviembre (19) — Referencia rápida: estequiometría, gases y soluciones
+## 13 de noviembre (19) — Guías descargables en PDF: estequiometría, gases y soluciones
 
-El docente pidió una página de referencia para que los estudiantes repasen rápido estos tres temas.
+El docente pidió que lo de referencia no fuera una página web sino **hojas de repaso en PDF**, como la guía de nomenclatura, fusionadas en «Guía descargable» y con los logos y la marca de agua de IonNom.
 
-- **`referencia.html` (nueva):** constantes y equivalencias (N_A, R, 22,4 L, presiones, K = °C + 273); **estequiometría** (ruta de cuatro pasos, moles, partículas, composición porcentual, rendimiento, pureza y reactivo limitante con ejemplo); **gases** (tabla de las siete leyes, cuál usar, despejes de PV = nRT y ejemplo de la ley combinada); **soluciones** (las ocho unidades, preparar, diluir, convertir, mezclar, titular y solubilidad). Cada tema trae sus errores frecuentes y el enlace al tema completo. Pestañas Todo / Estequiometría / Gases / Soluciones y botón «Imprimir o guardar PDF».
-- **Menú:** enlace «📋 Referencia rápida» en las 22 páginas, en `assets/ionom-ui.js` y una tarjeta en la portada.
-- **`sw.js`:** caché `ionom-v99`. **`README.md`:** fila nueva.
-- **Verificación:** Playwright en computador y iPhone: sin errores ni desbordes; las pestañas filtran bien.
-- **Pendiente:** no se tocó `ionom-analytics.gs`.
+- **`guia.html` (ahora «Guías descargables»):** cuatro hojas con pestañas y su propio botón «⬇️ Descargar PDF» y «🖨️ Imprimir»: **Nomenclatura** (la que ya existía, intacta), **Estequiometría** (con el diagrama de gramos de A → moles de A → moles de B → gramos de B de la imagen que usa el docente en clase, redibujado en vectores; fórmulas, reactivo limitante, rendimiento, pureza), **Leyes de los gases** (las siete leyes, cuál usar, despejes de PV = nRT) y **Soluciones** (unidades, preparar, diluir, mezclar, titular, solubilidad).
+- **PDF nuevos en `assets/`:** `guia-estequiometria.pdf`, `guia-gases.pdf`, `guia-soluciones.pdf` y `guia-nomenclatura-inorganica.pdf` regenerado. Todos en A4 horizontal con el logo arriba, la marca de agua de IonNom en el centro y el pie «Nombra con precisión. Comprende la química.» (la marca de agua y el logo también salen al imprimir desde el navegador).
+- **`herramientas/generar-guias-pdf.js` (nuevo):** genera los cuatro PDF desde `guia.html`. **Hay que volver a correrlo cada vez que cambie `guia.html`**, porque los PDF son archivos fijos.
+- **Menú, portada y `README.md`:** «Guía descargable» pasa a «Guías descargables»; se quitó la página `referencia.html` que se había hecho antes (ya no existe).
+- **`sw.js`:** caché `ionom-v100`.
+- **Pendiente:** no se tocó `ionom-analytics.gs`. Si se cambia el texto de una guía, regenerar los PDF.
 
 ---
 
