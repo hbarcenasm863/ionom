@@ -296,12 +296,13 @@ html{font-size:var(--base-fs)}
   <div class="page-hdr">
     <div>
       <h1>📘 Guías de referencia descargables</h1>
-      <p>Cuatro hojas de repaso rápido: nomenclatura, estequiometría, leyes de los gases y soluciones. Léelas aquí, imprímelas o descárgalas en PDF para estudiar sin conexión.</p>
+      <p>Cinco hojas de repaso rápido: el átomo, nomenclatura, estequiometría, leyes de los gases y soluciones. Léelas aquí, imprímelas o descárgalas en PDF para estudiar sin conexión.</p>
     </div>
   </div>
 
   <div class="hoja-tabs no-print" role="tablist" aria-label="Elige la guía">
-    <button type="button" class="on" role="tab" data-h="nomen">📘 Nomenclatura</button>
+    <button type="button" class="on" role="tab" data-h="atomo">⚛️ Átomo</button>
+    <button type="button" role="tab" data-h="nomen">📘 Nomenclatura</button>
     <button type="button" role="tab" data-h="esteq">🧮 Estequiometría</button>
     <button type="button" role="tab" data-h="gases">🎈 Gases</button>
     <button type="button" role="tab" data-h="soluc">🧂 Soluciones</button>
@@ -310,7 +311,7 @@ html{font-size:var(--base-fs)}
   <img class="pdf-wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">
   <div class="pdf-foot" aria-hidden="true">IonNom · Nombra con precisión. Comprende la química. · hbarcenasm863.github.io/ionom</div>
 
-  <div class="hoja activa" id="h-nomen" data-hoja="nomen">
+  <div class="hoja" id="h-nomen" data-hoja="nomen">
     <div class="hoja-top">
       <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
       <div class="hoja-tit"><h2>📘 Nomenclatura inorgánica</h2><p>Las 9 funciones químicas, los tres sistemas de nomenclatura, prefijos y sufijos y las excepciones más comunes.</p></div>
@@ -762,6 +763,94 @@ html{font-size:var(--base-fs)}
     </div>
   </div>
 
+  <div class="hoja mayor activa" id="h-atomo" data-hoja="atomo">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>⚛️ El átomo</h2><p>Historia de los modelos atómicos, partes del átomo, los números A, Z y n⁰ y la configuración electrónica.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-atomo.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">A = Z + n⁰</span><span class="eq">e⁻ = Z − carga</span><span class="eq">s 2 · p 6 · d 10 · f 14</span><span class="eq">Máx. por nivel = 2n²</span></div>
+<div class="sect hs hs-full"><h2>Historia de los modelos atómicos</h2>
+<div style="overflow-x:auto"><table class="tbl">
+<thead><tr><th>Año</th><th>Científico y modelo</th><th>Qué propuso</th><th>Qué lo apoyó</th><th>Qué no pudo explicar</th></tr></thead>
+<tbody>
+<tr><td><strong>1808</strong></td><td><strong>Dalton</strong><br>«bola de billar»</td><td>Átomos indivisibles; los de un elemento son iguales; en una reacción solo se reorganizan.</td><td>Leyes de conservación de la masa y de las proporciones definidas.</td><td>El átomo sí se divide (electrón) y existen isótopos.</td></tr>
+<tr><td><strong>1897</strong></td><td><strong>Thomson</strong><br>«budín de pasas»</td><td>Esfera positiva con electrones incrustados; neutra en total.</td><td>Tubo de rayos catódicos: descubrió el electrón.</td><td>Los rebotes de partículas alfa en la lámina de oro.</td></tr>
+<tr><td><strong>1911</strong></td><td><strong>Rutherford</strong><br>nuclear</td><td>Núcleo diminuto, denso y positivo; electrones alrededor; casi todo es espacio vacío.</td><td>Lámina de oro (Geiger y Marsden). En 1919 identificó el protón.</td><td>Un electrón en órbita perdería energía y caería al núcleo; no explica los colores que emite cada elemento.</td></tr>
+<tr><td><strong>1913</strong></td><td><strong>Bohr</strong><br>niveles de energía</td><td>Electrones en órbitas con energía fija (n = 1, 2, 3…); al saltar emiten o absorben un fotón exacto.</td><td>Espectro de líneas del hidrógeno.</td><td>Solo funciona bien con un electrón; supone órbitas definidas.</td></tr>
+<tr><td><strong>1926</strong></td><td><strong>Schrödinger, Heisenberg, de Broglie</strong><br>cuántico (actual)</td><td>El electrón es onda y solo se conoce la <strong>probabilidad</strong> de hallarlo en un <strong>orbital</strong> (s, p, d, f).</td><td>Difracción de electrones y espectros de átomos grandes. En 1932 Chadwick descubrió el neutrón.</td><td>Es el modelo vigente.</td></tr>
+</tbody></table></div>
+</div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Partes del átomo</h2>
+<table class="tbl">
+<thead><tr><th>Partícula</th><th>Carga</th><th>Masa</th><th>Dónde está</th><th>Descubrimiento</th></tr></thead>
+<tbody>
+<tr><td><strong>Protón</strong> p⁺</td><td>+1</td><td>1 u</td><td>Núcleo</td><td>Rutherford, 1919</td></tr>
+<tr><td><strong>Neutrón</strong> n⁰</td><td>0</td><td>1 u</td><td>Núcleo</td><td>Chadwick, 1932</td></tr>
+<tr><td><strong>Electrón</strong> e⁻</td><td>−1</td><td>≈ 1/1836 u</td><td>Corteza (nube)</td><td>Thomson, 1897</td></tr>
+</tbody></table>
+<p>El <strong>núcleo</strong> (protones y neutrones, los nucleones) concentra casi toda la masa y es diminuto; la <strong>corteza</strong> es casi espacio vacío. Un átomo neutro tiene igual número de protones y de electrones. 1 u = unidad de masa atómica.</p>
+</div>
+<div class="sect hs"><h2>Los números A, Z y n⁰</h2>
+<p><strong>Cómo se escribe:</strong> el símbolo X con <strong>A</strong> arriba a la izquierda, <strong>Z</strong> abajo a la izquierda y la <strong>carga</strong> arriba a la derecha (solo si es un ion). Ejemplo: ³⁵₁₇Cl.</p>
+<div class="proc">
+<div class="card"><span class="tipo">Z</span><h4>Número atómico</h4><span class="eq">Z = p⁺</span><p>Define el elemento: Z = 6 siempre es carbono.</p></div>
+<div class="card"><span class="tipo">A</span><h4>Número de masa</h4><span class="eq">A = p⁺ + n⁰</span><p>Protones más neutrones.</p></div>
+<div class="card"><span class="tipo">n⁰</span><h4>Neutrones</h4><span class="eq">n⁰ = A − Z</span><p>Se despejan de los otros dos.</p></div>
+<div class="card"><span class="tipo">e⁻</span><h4>Electrones</h4><span class="eq">e⁻ = Z − carga</span><p>Catión: menos e⁻. Anión: más e⁻.</p></div>
+</div>
+<div class="pasos"><div class="pasos-h">Tres ejemplos</div><ol>
+<li>³⁵₁₇Cl (neutro): p⁺ = 17; n⁰ = 35 − 17 = 18; e⁻ = 17.</li>
+<li>⁵⁶₂₆Fe³⁺: p⁺ = 26; n⁰ = 56 − 26 = 30; e⁻ = 26 − 3 = 23.</li>
+<li>¹⁶₈O²⁻: p⁺ = 8; n⁰ = 16 − 8 = 8; e⁻ = 8 + 2 = 10.</li></ol></div>
+<p><strong>Isótopos:</strong> mismo Z y distinto A (¹²C y ¹⁴C). <strong>Isóbaros:</strong> mismo A y distinto Z. <strong>Isótonos:</strong> mismo número de neutrones.</p>
+<div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir A con Z; restar la carga al revés (un catión tiene <strong>menos</strong> electrones que protones); creer que al formar un ion cambia el número de protones: nunca cambia.</div>
+</div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Configuración electrónica: reglas y orden de llenado</h2>
+<div class="proc">
+<div class="card"><span class="tipo">Regla 1</span><h4>Aufbau</h4><p>Se llenan primero los subniveles de menor energía. Ojo: el 4s se llena antes que el 3d.</p></div>
+<div class="card"><span class="tipo">Regla 2</span><h4>Exclusión de Pauli</h4><p>Cada orbital admite máximo 2 electrones, con espines opuestos (↑↓).</p></div>
+<div class="card"><span class="tipo">Regla 3</span><h4>Hund</h4><p>En orbitales de igual energía, primero un electrón en cada uno y luego se aparean.</p></div>
+</div>
+<table class="tbl">
+<thead><tr><th>Subnivel</th><th>s</th><th>p</th><th>d</th><th>f</th></tr></thead>
+<tbody><tr><td>Orbitales</td><td>1</td><td>3</td><td>5</td><td>7</td></tr><tr><td><strong>Máx. electrones</strong></td><td>2</td><td>6</td><td>10</td><td>14</td></tr></tbody></table>
+<div class="info-box"><strong>Orden de llenado (diagrama de Moeller):</strong><br><span class="eq">1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → 5s → 4d → 5p → 6s → 4f → 5d → 6p → 7s → 5f → 6d → 7p</span><br>En cada nivel n caben como máximo <strong>2n²</strong> electrones (2, 8, 18, 32).</div>
+</div>
+<div class="sect hs"><h2>Cómo escribirla y leerla</h2>
+<div class="pasos"><div class="pasos-h">Ejemplos</div><ol>
+<li>Cl (Z = 17): 1s² 2s² 2p⁶ 3s² 3p⁵. Abreviada con gas noble: <strong>[Ne] 3s² 3p⁵</strong>.</li>
+<li>Fe (Z = 26): [Ar] 4s² 3d⁶. El catión Fe²⁺ pierde primero los 4s: <strong>[Ar] 3d⁶</strong>.</li>
+<li>Cl⁻ (anión, 18 e⁻): se agrega un electrón siguiendo el orden: <strong>[Ne] 3s² 3p⁶</strong>.</li></ol></div>
+<ul class="ref-lista">
+<li><strong>Periodo</strong> = el mayor nivel con electrones (Cl termina en 3p⁵: periodo 3).</li>
+<li><strong>Bloque</strong> = subnivel donde entra el último electrón (s, p, d o f).</li>
+<li><strong>Electrones de valencia</strong> = los del último nivel (Cl: 2 + 5 = 7). Son los que forman enlaces.</li>
+<li><strong>Grupo</strong>: bloque s = electrones s; bloque p = 10 + electrones s y p del último nivel (Cl: 10 + 2 + 5 = 17).</li></ul>
+<div class="warn-box">⚠️ <strong>Excepciones:</strong> el cromo es [Ar] 4s¹ 3d⁵ (no 4s² 3d⁴) y el cobre es [Ar] 4s¹ 3d¹⁰ (no 4s² 3d⁹): un subnivel d semilleno o lleno es más estable. Un catión siempre pierde electrones del nivel <strong>más alto</strong> primero.</div>
+</div>
+<div class="sect hs"><h2>Los cuatro números cuánticos</h2>
+<table class="tbl">
+<thead><tr><th>Número</th><th>Qué indica</th><th>Valores</th></tr></thead>
+<tbody>
+<tr><td><strong>n</strong></td><td>Nivel de energía (tamaño)</td><td>1, 2, 3, …</td></tr>
+<tr><td><strong>l</strong></td><td>Subnivel (forma)</td><td>0 a n − 1 (0 = s, 1 = p, 2 = d, 3 = f)</td></tr>
+<tr><td><strong>m<sub>l</sub></strong></td><td>Orbital (orientación)</td><td>de −l a +l</td></tr>
+<tr><td><strong>m<sub>s</sub></strong></td><td>Espín del electrón</td><td>+½ o −½</td></tr>
+</tbody></table>
+<p>Aquí <strong>n</strong> es el nivel de energía, no el número de neutrones (n⁰). Dos electrones de un mismo átomo nunca tienen los cuatro números iguales.</p>
+</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     IonNom — Guía de referencia · Colegio Rufino José Cuervo I.E.D. · Consulta la <a href="teoria.html">Teoría completa</a> o practica en el <a href="juego.html">Juego</a>.
   </footer>
@@ -811,7 +900,7 @@ document.getElementById('theme-btn').addEventListener('click',function(){
     if(hist){try{history.replaceState(null,'','?hoja='+h);}catch(e){}}
   }
   tabs.addEventListener('click',function(e){var b=e.target.closest('button[data-h]');if(b)mostrar(b.dataset.h,true);});
-  var m=location.search.match(/hoja=(nomen|esteq|gases|soluc)/);if(m)mostrar(m[1],false);
+  var m=location.search.match(/hoja=(atomo|nomen|esteq|gases|soluc)/);if(m)mostrar(m[1],false);
 })();
 </script>
 </body>

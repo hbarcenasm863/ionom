@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (20) — Quinta guía descargable: el átomo
+
+El docente pidió una hoja más con historia del modelo atómico, partes del átomo, configuración electrónica y los números A, Z y n.
+
+- **`guia.html`:** pestaña nueva «⚛️ Átomo» (ahora es la primera y la que se abre por defecto): tabla de los cinco modelos (Dalton, Thomson, Rutherford, Bohr y cuántico) con qué propuso, evidencia y límite; partes del átomo (carga, masa, ubicación, descubrimiento); A, Z y n⁰ con fórmulas, tres ejemplos e isótopos, isóbaros e isótonos; reglas de Aufbau, Pauli y Hund, capacidad de los subniveles, orden de Moeller, ejemplos, excepciones y los cuatro números cuánticos.
+- **`assets/guia-atomo.pdf` (nuevo):** 3 páginas A4 horizontal con logo y marca de agua. `herramientas/generar-guias-pdf.js` ahora genera los cinco PDF.
+- **Portada, `README.md`, `sw.js`:** textos actualizados y caché `ionom-v101`.
+- **Verificación:** el PDF se revisó página por página, sin hojas en blanco.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (19) — Guías descargables en PDF: estequiometría, gases y soluciones
 
 El docente pidió que lo de referencia no fuera una página web sino **hojas de repaso en PDF**, como la guía de nomenclatura, fusionadas en «Guía descargable» y con los logos y la marca de agua de IonNom.
