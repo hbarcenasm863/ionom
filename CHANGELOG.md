@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 13 de noviembre (22) — Diagrama de Moeller completo en la guía del átomo
+
+El docente pidió el diagrama de Moeller completo y escogió el estilo clásico de círculos de colores con flecha en zigzag.
+
+- **`guia.html` (hoja «El átomo»):** diagrama en vectores con los 19 subniveles de 1s a 7p: s en rojo, p en verde, d en azul y f en naranja; el máximo de electrones (2, 6, 10, 14) sobre cada círculo y una flecha que baja por cada diagonal, da la vuelta a la izquierda y sigue con la siguiente. Al lado, cómo usarlo, la leyenda de colores y la regla n + l (por qué el 4s va antes del 3d).
+- **`assets/guia-atomo.pdf`:** regenerado; sigue en 3 páginas, sin hojas en blanco (probado en A4 y carta, horizontal y vertical).
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (21) — Dibujos de los modelos atómicos en la guía del átomo
 
 El docente pidió gráficas o dibujos de los modelos, mostrando las partículas.
