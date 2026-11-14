@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 14 de noviembre (26) — Cada página de teoría enlaza su guía de referencia
+
+El docente pidió que cada sección enlace la guía de referencia que le corresponde.
+
+- **15 páginas** (`atomo`, `configuracion`, `enlace`, `estequiometria`, `moles`, `industria`, `balanceo`, `balanceo-avanzado`, `reacciones`, `gases`, `soluciones`, `ph`, `tabla`, `teoria`, `funciones`): recuadro «Guía de referencia» bajo el título con «Ver la guía →» (abre `guia.html` en la hoja correcta) y «⬇️ PDF». `configuracion` enlaza átomo y tabla periódica.
+- No se enlazó `modelos.html` (teorías y modelos científicos en general), `simulador.html` ni los juegos, porque ninguna guía les corresponde con exactitud.
+- **Pendiente:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 13 de noviembre (25) — Guía del átomo: tabla que se salía en el celular
 
 Al revisar las últimas publicaciones se vio que en el celular la guía del átomo se podía mover hacia los lados (53 px de más) por la tabla «Partes del átomo».
