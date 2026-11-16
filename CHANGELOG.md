@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 16 de noviembre (29) — Ajustes a termoquímica, cinética y equilibrio tras la auditoría
+
+Un auditor experto en química verificó todos los cálculos de las tres guías nuevas (sin errores de cálculo) y señaló imprecisiones y vacíos para Saber 11. Las guías pasan a 2 páginas cada una.
+
+- **Termoquímica:** entalpía bien definida (H es una propiedad; ΔH es el calor a presión constante), espontaneidad con los cuatro casos de signos y las condiciones de ΔG, ΔH «por mol de CH₄», NH₄NO₃ en las endotérmicas y nuevo recuadro de **calorimetría** (q ganado = −q cedido, con ejemplo de calor específico de un metal y ΔH por gramo).
+- **Cinética:** velocidad con valor absoluto y coeficiente; la regla de los 10 °C matizada; catalizador «se regenera» y no cambia la posición del equilibrio; diagrama de energía redibujado sin rótulos montados y con ΔH rotulado; nuevo recuadro para leer gráficas de concentración contra tiempo; catalizador homogéneo y heterogéneo; intermediarios.
+- **Equilibrio:** gráfica redibujada (A baja lo mismo que C sube, pero quedan distintas); Le Châtelier con Kc (sube o baja según sea endotérmica o exotérmica), igual número de moles de gas y gas inerte a presión constante; Kc de la reacción inversa y multiplicada, ejemplo heterogéneo, «en general» para Kc > 1; Haber con ~200 atm y catalizador de hierro; nueva **tabla ICE** con ejemplo (Kc = 64).
+- **Pendiente:** el auditor sugirió además la relación de Arrhenius (solo cualitativa, ya mencionada) y más ejemplos de ICE. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 16 de noviembre (28) — Tres guías nuevas y lo que faltaba de la auditoría
 
 Para completar lo que el auditor señaló como faltante en las guías de IonNom.
