@@ -4,6 +4,20 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 16 de noviembre (27) — Correcciones tras la auditoría de las guías
+
+Un auditor independiente revisó las 9 guías descargables. Se corrigió lo verificable, sin agregar páginas a ningún PDF.
+
+- **`guia.html` y `assets/guia-*.pdf`:**
+  - **Nomenclatura:** ácidos oxácidos de P, As y B (3 H₂O, ácido orto-); párrafo del manganeso corregido (manganoso +2, mangánico +3, MnO₂ sin nombre tradicional, Mn₂O₇ anhídrido permangánico); nuevo recuadro con peróxidos, hidruros con nombre propio, sales hidratadas y más valencias variables; aclaración de «valencia en romano».
+  - **Reacciones:** solubilidad de hidróxidos de Sr²⁺ y Ba²⁺ y sulfuros de alcalinotérreos (ya no contradice la hoja de ácidos); la neutralización da pH 7 solo con ácido y base fuertes; ejemplo redox en medio ácido (MnO₄⁻ y Fe²⁺) y cálculo de número de oxidación.
+  - **Enlace:** qué pasa si ΔEN &lt; 1,7 (AlCl₃); punto de fusión alto en redes covalentes.
+  - **Estequiometría:** fórmula empírica y molecular. **Gases:** R en mmHg. **Soluciones:** % m/m → M y propiedades coligativas; «masa (g)» en vez de «m» para no confundir con molalidad. **Ácidos:** pH de ácidos débiles con Ka, 25 °C y titulación con H⁺ que aporta. **Tabla:** bloque f como lantánidos y actínidos.
+- **Pendiente (no se agregó para no alargar las hojas):** teoría cinético-molecular, ley de Graham y gases húmedos; geometría molecular y fuerzas intermoleculares en la hoja de enlace; afinidad electrónica y grupo de los metales de transición; unificar los valores de electronegatividad; hojas de termoquímica, cinética y equilibrio.
+- No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 14 de noviembre (26) — Cada página de teoría enlaza su guía de referencia
 
 El docente pidió que cada sección enlace la guía de referencia que le corresponde.
