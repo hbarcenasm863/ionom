@@ -195,6 +195,7 @@ html{font-size:var(--base-fs)}
 .hoja .proc .card p{font-size:.8rem;margin-bottom:4px}
 .hoja .info-box{background:var(--an-b);border-left:4px solid var(--an);border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.86rem}
 .hoja .warn-box{background:var(--warn-b,#fff7e0);border-left:4px solid var(--warn,#e8a200);border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.86rem}
+@media screen{.hoja .sect{overflow-x:auto}}
 .hoja .pasos{border:1.5px solid var(--brd);border-radius:var(--r);background:var(--surf2);padding:10px 14px;margin:10px 0}
 .hoja .pasos-h{font-weight:800;font-size:.88rem;margin-bottom:6px}
 .hoja .pasos ol,.hoja .ref-lista{margin:6px 0 8px 1.3em}.hoja .pasos li,.hoja .ref-lista li{font-size:.86rem;margin-bottom:4px}
@@ -259,6 +260,16 @@ html{font-size:var(--base-fs)}
   .mayor .pasos-h{font-size:10.5pt!important}.mayor .pasos li,.mayor .ref-lista li{font-size:10pt!important;margin-bottom:3px}
   .mayor .ruta-svg{max-height:5.2cm}.mayor .ruta-wrap{padding:3px}
   .mayor .ref-ruta span{font-size:9pt!important;padding:5px 7px!important}
+  .medio .hoja-tit h2{font-size:16pt}.medio .hoja-tit p{font-size:10pt}.medio .hoja-logo{height:38px}
+  .medio .chips{gap:7px;margin-bottom:8px}.medio .eq{font-size:9.5pt!important;padding:3px 8px!important}
+  .medio .hs{margin-bottom:8px!important;padding:7px 11px!important}.medio .hs h2{font-size:12pt!important;margin-bottom:5px!important}
+  .medio .hs p,.medio .hs li,.medio .tbl,.medio .tbl td,.medio .tbl th{font-size:9.2pt!important;line-height:1.3}
+  .medio .tbl th{font-size:7.6pt!important}.medio .tbl th,.medio .tbl td{padding:3px 6px!important}
+  .medio .proc{gap:6px!important}.medio .proc .card{padding:5px 8px!important}.medio .proc .card h4{font-size:10pt!important}.medio .proc .card p{font-size:9pt!important}.medio .proc .card .tipo{font-size:7pt!important}
+  .medio .info-box,.medio .warn-box{font-size:9.2pt!important;padding:4px 8px!important;margin:5px 0!important}
+  .medio .pasos{padding:5px 9px!important;margin:6px 0!important}.medio .pasos-h{font-size:10pt!important}.medio .pasos li,.medio .ref-lista li{font-size:9.2pt!important;margin-bottom:2px}
+  .medio .fig-wrap svg{max-height:3.6cm;width:auto;max-width:100%}
+
   @page{size:A4 landscape;margin:1cm 1cm 1.3cm}
 }
 </style>
@@ -316,7 +327,7 @@ html{font-size:var(--base-fs)}
   <div class="page-hdr">
     <div>
       <h1>📘 Guías de referencia descargables</h1>
-      <p>Nueve hojas de repaso rápido: el átomo, tabla periódica, enlace químico, nomenclatura, reacciones, ácidos y pH, gases, soluciones y estequiometría. Léelas aquí, imprímelas o descárgalas en PDF para estudiar sin conexión.</p>
+      <p>Doce hojas de repaso rápido: el átomo, tabla periódica, enlace químico, nomenclatura, reacciones, ácidos y pH, gases, soluciones, estequiometría, termoquímica, cinética y equilibrio. Léelas aquí, imprímelas o descárgalas en PDF para estudiar sin conexión.</p>
     </div>
   </div>
 
@@ -330,6 +341,9 @@ html{font-size:var(--base-fs)}
     <button type="button" role="tab" data-h="gases">🎈 Gases</button>
     <button type="button" role="tab" data-h="soluc">🧂 Soluciones</button>
     <button type="button" role="tab" data-h="esteq">🧮 Estequiometría</button>
+    <button type="button" role="tab" data-h="termo">🔥 Termoquímica</button>
+    <button type="button" role="tab" data-h="cinet">⏱️ Cinética</button>
+    <button type="button" role="tab" data-h="equil">⚖️ Equilibrio</button>
   </div>
 
   <img class="pdf-wm" src="assets/marca-ionom.png" alt="" aria-hidden="true">
@@ -669,6 +683,99 @@ html{font-size:var(--base-fs)}
     </div>
   </div>
 
+  <div class="hoja medio" id="h-termo" data-hoja="termo">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>🔥 Termoquímica</h2><p>Calor, entalpía, exo y endotérmicas, calorimetría y ley de Hess.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-termoquimica.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">q = m·c·ΔT</span><span class="eq">c agua = 4,18 J/(g·°C)</span><span class="eq">ΔH &lt; 0 exotérmica</span><span class="eq">ΔH &gt; 0 endotérmica</span><span class="eq">1 kcal = 4,18 kJ</span></div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Calor, energía y entalpía</h2><ul class="ref-lista"><li><strong>Sistema:</strong> lo que estudias (la reacción). <strong>Entorno:</strong> todo lo demás.</li><li><strong>Calor (q):</strong> energía que pasa de lo caliente a lo frío. No es lo mismo que la <strong>temperatura</strong>, que mide qué tan caliente está.</li><li><strong>Entalpía (H):</strong> el calor de una reacción a presión constante. <strong>ΔH = H productos − H reactivos.</strong></li></ul><table class="tbl"><thead><tr><th></th><th>Exotérmica</th><th>Endotérmica</th></tr></thead><tbody><tr><td><strong>Calor</strong></td><td>Se libera</td><td>Se absorbe</td></tr><tr><td><strong>ΔH</strong></td><td>Negativo (−)</td><td>Positivo (+)</td></tr><tr><td><strong>El entorno</strong></td><td>Se calienta</td><td>Se enfría</td></tr><tr><td><strong>Ejemplos</strong></td><td>Combustión, neutralización, respiración</td><td>Fotosíntesis, fusión del hielo, evaporación</td></tr></tbody></table><div class="fig-wrap"><svg viewBox="0 0 520 170" role="img" aria-label="Perfiles de energía: en la reacción exotérmica los productos quedan por debajo de los reactivos; en la endotérmica, por encima" font-family="Outfit,sans-serif" style="width:100%;max-width:420px">
+<line x1="30" y1="15" x2="30" y2="150" stroke="#0d2d42" stroke-width="2"/><text x="14" y="85" font-size="11" font-weight="700" fill="#0d2d42" transform="rotate(-90 14 85)" text-anchor="middle">Energía (entalpía)</text>
+<text x="140" y="14" font-size="13" font-weight="800" text-anchor="middle" fill="#dc2626">Exotérmica: ΔH &lt; 0</text>
+<line x1="50" y1="40" x2="130" y2="40" stroke="#0d2d42" stroke-width="3"/><text x="90" y="33" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Reactivos</text>
+<line x1="170" y1="120" x2="250" y2="120" stroke="#0d2d42" stroke-width="3"/><text x="210" y="138" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Productos</text>
+<path d="M130 40 C150 40 150 120 170 120" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="150" y1="44" x2="150" y2="114" stroke="#dc2626" stroke-width="2.4"/><polygon points="150,118 145,108 155,108" fill="#dc2626"/><text x="157" y="84" font-size="11" font-weight="800" fill="#dc2626">ΔH</text>
+<text x="400" y="14" font-size="13" font-weight="800" text-anchor="middle" fill="#2563eb">Endotérmica: ΔH &gt; 0</text>
+<line x1="300" y1="120" x2="380" y2="120" stroke="#0d2d42" stroke-width="3"/><text x="340" y="138" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Reactivos</text>
+<line x1="420" y1="40" x2="500" y2="40" stroke="#0d2d42" stroke-width="3"/><text x="460" y="33" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Productos</text>
+<path d="M380 120 C400 120 400 40 420 40" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="400" y1="116" x2="400" y2="46" stroke="#2563eb" stroke-width="2.4"/><polygon points="400,42 395,52 405,52" fill="#2563eb"/><text x="407" y="84" font-size="11" font-weight="800" fill="#2563eb">ΔH</text>
+</svg></div></div>
+<div class="sect hs"><h2>Espontaneidad en una línea</h2><div class="info-box">Una reacción es <strong>espontánea</strong> si ΔG &lt; 0, donde <strong>ΔG = ΔH − T·ΔS</strong> (S = entropía, el desorden). Exotérmica no siempre significa espontánea: también cuenta el desorden y la temperatura.</div><div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> confundir calor con temperatura; olvidar cambiar el signo de ΔH al invertir una ecuación; no multiplicar ΔH cuando se multiplican los coeficientes; mezclar J con kJ; usar ΔHf distinto de 0 para un elemento puro (C grafito, O₂, H₂).</div></div>
+      </div>
+      <div class="hcol">
+<div class="proc"><div class="card"><span class="tipo">Calor</span><h4>Cambio de temperatura</h4><span class="eq">q = m × c × ΔT</span><p>100 g de agua pasan de 20 a 25 °C: q = 100 × 4,18 × 5 = 2090 J. (c del agua = 4,18 J/g·°C)</p></div><div class="card"><span class="tipo">Calor</span><h4>Cambio de estado</h4><span class="eq">q = m × L</span><p>Fundir 10 g de hielo: 10 × 334 = 3340 J. (L de fusión del agua = 334 J/g; de vaporización, 2260 J/g)</p></div><div class="card"><span class="tipo">ΔH</span><h4>Con entalpías de formación</h4><span class="eq">ΔH = ΣΔHf productos − ΣΔHf reactivos</span><p>Cada ΔHf se multiplica por su coeficiente. Los elementos puros tienen ΔHf = 0.</p></div><div class="card"><span class="tipo">ΔH</span><h4>Con energías de enlace</h4><span class="eq">ΔH ≈ Σ enlaces rotos − Σ enlaces formados</span><p>Romper enlaces cuesta energía (+); formarlos la libera (−).</p></div></div><div class="sect hs"><h2>Ley de Hess: la entalpía no depende del camino</h2><ul class="ref-lista"><li>Si una ecuación se <strong>invierte</strong>, ΔH cambia de signo; si se <strong>multiplica</strong>, ΔH se multiplica igual; si se <strong>suman</strong> ecuaciones, se suman sus ΔH.</li></ul><div class="pasos"><div class="pasos-h">Ejemplo: ΔH de C + ½ O₂ → CO</div><ol><li>C + O₂ → CO₂ &nbsp; ΔH = −393,5 kJ</li><li>CO + ½ O₂ → CO₂ &nbsp; ΔH = −283,0 kJ (se invierte: CO₂ → CO + ½ O₂, ΔH = +283,0 kJ)</li><li>Suma: ΔH = −393,5 + 283,0 = <strong>−110,5 kJ</strong>.</li></ol></div></div>
+<div class="sect hs"><h2>Ejemplo con entalpías de formación: combustión del metano</h2><div class="pasos"><div class="pasos-h">CH₄ + 2 O₂ → CO₂ + 2 H₂O(l)</div><ol><li>ΔHf: CH₄ = −74,8 · CO₂ = −393,5 · H₂O(l) = −285,8 kJ/mol.</li><li>Productos: −393,5 + 2(−285,8) = −965,1 kJ.</li><li>Reactivos: −74,8 + 0 = −74,8 kJ.</li><li><strong>ΔH = −965,1 − (−74,8) = −890,3 kJ</strong>: exotérmica.</li></ol></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoja medio" id="h-cinet" data-hoja="cinet">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>⏱️ Cinética química</h2><p>Velocidad de reacción, teoría de colisiones, factores, catalizadores y ley de velocidad.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-cinetica.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">v = Δ[X] ÷ Δt</span><span class="eq">v = k[A]ᵐ[B]ⁿ</span><span class="eq">Ea = energía de activación</span><span class="eq">Catalizador: baja Ea</span></div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Velocidad de reacción</h2><ul class="ref-lista"><li>Es cuánto cambia la <strong>concentración</strong> por unidad de tiempo: para A → P, <strong>v = −Δ[A] ÷ Δt = Δ[P] ÷ Δt</strong>. Se mide en mol/(L·s).</li><li>Ejemplo: [A] baja de 0,80 a 0,50 M en 30 s → v = 0,30 ÷ 30 = <strong>0,010 M/s</strong>.</li><li><strong>Teoría de colisiones:</strong> para reaccionar, las partículas deben chocar con una energía mayor o igual que la <strong>energía de activación (Ea)</strong> y con la orientación correcta.</li></ul><div class="fig-wrap"><svg viewBox="0 0 420 190" role="img" aria-label="Perfil de energía de una reacción con y sin catalizador: el catalizador baja la energía de activación" font-family="Outfit,sans-serif" style="width:100%;max-width:440px">
+<line x1="36" y1="12" x2="36" y2="168" stroke="#0d2d42" stroke-width="2"/><line x1="36" y1="168" x2="404" y2="168" stroke="#0d2d42" stroke-width="2"/>
+<text x="16" y="90" font-size="11" font-weight="700" fill="#0d2d42" transform="rotate(-90 16 90)" text-anchor="middle">Energía</text><text x="220" y="184" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Avance de la reacción</text>
+<path d="M40 130 C90 130 110 30 190 30 C270 30 290 150 380 150" fill="none" stroke="#0d2d42" stroke-width="2.6"/>
+<path d="M40 130 C90 130 110 80 190 80 C270 80 290 150 380 150" fill="none" stroke="#16a34a" stroke-width="2.6" stroke-dasharray="6 4"/>
+<text x="60" y="122" font-size="11" font-weight="700" fill="#0d2d42">Reactivos</text><text x="326" y="144" font-size="11" font-weight="700" fill="#0d2d42">Productos</text>
+<line x1="150" y1="130" x2="150" y2="34" stroke="#dc2626" stroke-width="2"/><polygon points="150,30 145,40 155,40" fill="#dc2626"/><text x="156" y="72" font-size="11" font-weight="800" fill="#dc2626">Ea sin catalizador</text>
+<line x1="232" y1="130" x2="232" y2="84" stroke="#16a34a" stroke-width="2"/><polygon points="232,80 227,90 237,90" fill="#16a34a"/><text x="238" y="110" font-size="11" font-weight="800" fill="#16a34a">Ea con catalizador</text>
+</svg></div></div>
+<div class="sect hs"><h2>Factores que cambian la velocidad</h2><table class="tbl"><thead><tr><th>Factor</th><th>Efecto</th><th>Por qué</th></tr></thead><tbody><tr><td><strong>Concentración</strong> (o presión en gases)</td><td>Más → más rápida</td><td>Más choques por segundo</td></tr><tr><td><strong>Temperatura</strong></td><td>Más → más rápida (en muchas reacciones se duplica cada 10 °C, regla aproximada)</td><td>Más partículas con energía ≥ Ea</td></tr><tr><td><strong>Superficie de contacto</strong></td><td>Más dividido → más rápida</td><td>Más partículas expuestas (polvo frente a trozo)</td></tr><tr><td><strong>Catalizador</strong></td><td>Más rápida</td><td>Baja la Ea; no se gasta, no cambia ΔH ni el rendimiento</td></tr><tr><td><strong>Naturaleza de los reactivos</strong></td><td>Depende</td><td>Cuántos enlaces hay que romper</td></tr></tbody></table></div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Ley de velocidad</h2><ul class="ref-lista"><li><strong>v = k [A]ᵐ [B]ⁿ</strong>, con k la constante de velocidad (sube con la temperatura) y m y n los <strong>órdenes</strong>, que se miden en el laboratorio: no son los coeficientes de la ecuación, salvo que sea un paso elemental. Orden global = m + n.</li><li>Si al duplicar [A] la velocidad se duplica, el orden en A es 1; si se cuadruplica, 2; si no cambia, 0.</li></ul><table class="tbl"><thead><tr><th>Exp.</th><th>[A] (M)</th><th>[B] (M)</th><th>v (M/s)</th></tr></thead><tbody><tr><td>1</td><td>0,10</td><td>0,10</td><td>2 × 10⁻³</td></tr><tr><td>2</td><td>0,20</td><td>0,10</td><td>4 × 10⁻³</td></tr><tr><td>3</td><td>0,10</td><td>0,20</td><td>8 × 10⁻³</td></tr></tbody></table><div class="pasos"><div class="pasos-h">Ejemplo: hallar la ley y k</div><ol><li>Exp. 1 → 2: [A] × 2 y v × 2 → orden 1 en A.</li><li>Exp. 1 → 3: [B] × 2 y v × 4 → orden 2 en B.</li><li><strong>v = k [A] [B]²</strong>; k = 2 × 10⁻³ ÷ (0,10 × 0,10²) = <strong>2 L²/(mol²·s)</strong>.</li></ol></div></div>
+<div class="sect hs"><h2>Mecanismos y errores comunes</h2><ul class="ref-lista"><li>Una reacción puede ocurrir por <strong>pasos</strong>; el paso más lento (<strong>paso determinante</strong>) fija la velocidad de toda la reacción.</li><li>Las <strong>enzimas</strong> son catalizadores biológicos: bajan la Ea en el cuerpo.</li></ul><div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> creer que los órdenes son siempre los coeficientes; pensar que el catalizador cambia ΔH o produce más producto (solo llega más rápido); confundir velocidad (qué tan rápido) con espontaneidad (si ocurre).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoja medio" id="h-equil" data-hoja="equil">
+    <div class="hoja-top">
+      <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
+      <div class="hoja-tit"><h2>⚖️ Equilibrio químico</h2><p>Reacciones reversibles, constante Kc, cociente Q y el principio de Le Châtelier.</p></div>
+      <div class="no-print hoja-btns">
+        <a class="dl-btn" href="assets/guia-equilibrio.pdf" download>⬇️ Descargar PDF</a>
+        <button type="button" class="dl-btn alt" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class="chips"><span class="eq">aA + bB ⇌ cC + dD</span><span class="eq">Kc = [C]ᶜ[D]ᵈ ÷ [A]ᵃ[B]ᵇ</span><span class="eq">Q &lt; Kc → hacia productos</span><span class="eq">Solo T cambia Kc</span></div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Reacciones reversibles y equilibrio dinámico</h2><ul class="ref-lista"><li>Una reacción <strong>reversible</strong> (⇌) ocurre en los dos sentidos. En el <strong>equilibrio</strong> la velocidad directa es igual a la inversa y las concentraciones <strong>dejan de cambiar</strong> (no tienen que ser iguales).</li><li>Es <strong>dinámico</strong>: las reacciones siguen ocurriendo, pero a la misma velocidad.</li></ul><div class="fig-wrap"><svg viewBox="0 0 420 190" role="img" aria-label="Concentración contra tiempo: el reactivo baja y el producto sube hasta que ambas se vuelven constantes cuando se alcanza el equilibrio" font-family="Outfit,sans-serif" style="width:100%;max-width:440px">
+<line x1="36" y1="12" x2="36" y2="162" stroke="#0d2d42" stroke-width="2"/><line x1="36" y1="162" x2="404" y2="162" stroke="#0d2d42" stroke-width="2"/>
+<text x="16" y="90" font-size="11" font-weight="700" fill="#0d2d42" transform="rotate(-90 16 90)" text-anchor="middle">Concentración</text><text x="220" y="182" font-size="11" font-weight="700" text-anchor="middle" fill="#0d2d42">Tiempo</text>
+<path d="M36 24 C90 70 140 96 200 100 L396 100" fill="none" stroke="#2563eb" stroke-width="2.8"/><text x="330" y="94" font-size="11" font-weight="800" fill="#2563eb">Reactivo A</text>
+<path d="M36 162 C90 130 140 112 200 108 L396 108" fill="none" stroke="#dc2626" stroke-width="2.8"/><text x="330" y="126" font-size="11" font-weight="800" fill="#dc2626">Producto C</text>
+<line x1="200" y1="20" x2="200" y2="162" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5 4"/><text x="204" y="34" font-size="11" font-weight="800" fill="#64748b">Equilibrio: v directa = v inversa</text>
+</svg></div></div>
+<div class="sect hs"><h2>La constante de equilibrio Kc</h2><ul class="ref-lista"><li>Para <strong>aA + bB ⇌ cC + dD</strong>: <strong>Kc = [C]ᶜ[D]ᵈ ÷ [A]ᵃ[B]ᵇ</strong> (productos arriba, reactivos abajo, con los coeficientes como exponentes).</li><li>Los <strong>sólidos y líquidos puros</strong> no aparecen. Kc solo cambia con la <strong>temperatura</strong>.</li><li><strong>Kc &gt; 1</strong>: predominan los productos · <strong>Kc &lt; 1</strong>: predominan los reactivos.</li><li>N₂ + 3 H₂ ⇌ 2 NH₃ → <strong>Kc = [NH₃]² ÷ ([N₂][H₂]³)</strong>.</li></ul><div class="pasos"><div class="pasos-h">Ejemplo numérico: A + B ⇌ C</div><ol><li>En el equilibrio: [A] = 0,20 M · [B] = 0,30 M · [C] = 0,60 M.</li><li>Kc = [C] ÷ ([A][B]) = 0,60 ÷ (0,20 × 0,30) = <strong>10</strong>: favorece al producto.</li></ol></div></div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Cociente de reacción Q: ¿hacia dónde va?</h2><ul class="ref-lista"><li>Se calcula igual que Kc, pero con las concentraciones de un momento cualquiera.</li><li><strong>Q &lt; Kc</strong>: avanza hacia los <strong>productos</strong> · <strong>Q &gt; Kc</strong>: avanza hacia los <strong>reactivos</strong> · <strong>Q = Kc</strong>: ya está en equilibrio.</li></ul></div>
+<div class="sect hs"><h2>Principio de Le Châtelier</h2><p>Si se perturba un sistema en equilibrio, este se desplaza para <strong>contrarrestar</strong> el cambio.</p><table class="tbl"><thead><tr><th>Perturbación</th><th>El equilibrio se desplaza…</th></tr></thead><tbody><tr><td>Aumentar [reactivo]</td><td>Hacia los productos</td></tr><tr><td>Quitar un producto</td><td>Hacia los productos</td></tr><tr><td>Aumentar la presión (menor volumen)</td><td>Hacia el lado con <strong>menos moles de gas</strong></td></tr><tr><td>Aumentar la temperatura</td><td>Hacia el sentido <strong>endotérmico</strong> (y Kc cambia)</td></tr><tr><td>Agregar un catalizador</td><td>No se desplaza: solo llega más rápido</td></tr><tr><td>Agregar un gas inerte a volumen constante</td><td>No se desplaza</td></tr></tbody></table></div>
+<div class="sect hs"><h2>Aplicaciones y errores comunes</h2><div class="info-box"><strong>Síntesis del amoníaco (Haber):</strong> N₂ + 3 H₂ ⇌ 2 NH₃, exotérmica y de 4 a 2 moles de gas. Alta presión y baja temperatura favorecen el NH₃; en la industria se usa ~450 °C con catalizador para que sea rápida.</div><ul class="ref-lista"><li>Las constantes <strong>Ka, Kb y Ksp</strong> son constantes de equilibrio (ver la guía de ácidos y bases).</li></ul><div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> creer que en el equilibrio las concentraciones son iguales; poner sólidos o líquidos puros en Kc; pensar que el catalizador mejora el rendimiento; olvidar que solo la temperatura cambia el valor de Kc.</div></div>
+      </div>
+    </div>
+  </div>
+
   <div class="hoja mayor" id="h-gases" data-hoja="gases">
     <div class="hoja-top">
       <img class="hoja-logo" src="assets/logo-ionom-hoja.png" alt="IonNom">
@@ -725,6 +832,16 @@ html{font-size:var(--base-fs)}
     <div class="info-box">🇨🇴 <strong>Para recordar:</strong> la presión atmosférica baja con la altura: ≈ 1 atm en Cartagena y ≈ 0,74 atm en Bogotá. Por eso un paquete sellado llega inflado a la altura.</div>
     <div class="warn-box">⚠️ <strong>Errores frecuentes:</strong> usar °C en lugar de K; mezclar atm con mmHg; usar 22,4 L/mol cuando el gas no está a 0 °C y 1 atm; olvidar que Dalton suma <strong>presiones</strong>, no volúmenes.</div>
 </div>
+      </div>
+    </div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Teoría cinético-molecular</h2><ul class="ref-lista"><li>Un gas son partículas <strong>muy separadas</strong> que se mueven al azar en línea recta y chocan sin perder energía.</li><li>Su <strong>energía cinética promedio</strong> depende solo de la temperatura (en K): a más T, más rápidas.</li><li>La presión es el resultado de los choques con las paredes; por eso sube si hay más partículas, más T o menos volumen.</li><li>Un <strong>gas ideal</strong> supone partículas sin volumen ni atracciones; funciona bien a baja presión y alta temperatura.</li></ul></div>
+<div class="sect hs"><h2>Ley de Graham: difusión</h2><ul class="ref-lista"><li>Los gases ligeros se difunden más rápido: <strong>v₁ ÷ v₂ = √(MM₂ ÷ MM₁)</strong>.</li></ul><div class="pasos"><div class="pasos-h">Ejemplo: ¿cuántas veces más rápido se difunde el H₂ que el O₂?</div><ol><li>MM del H₂ = 2 g/mol; MM del O₂ = 32 g/mol.</li><li>v(H₂) ÷ v(O₂) = √(32 ÷ 2) = √16 = <strong>4 veces</strong>.</li></ol></div></div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Gas recogido sobre agua</h2><ul class="ref-lista"><li>El gas sale mezclado con vapor de agua: <strong>P gas seco = P total − P de vapor del agua</strong> a esa temperatura.</li></ul><div class="pasos"><div class="pasos-h">Ejemplo</div><ol><li>Se recoge H₂ sobre agua a 25 °C; la presión total es 760 mmHg y la de vapor del agua, 24 mmHg.</li><li>P del H₂ = 760 − 24 = <strong>736 mmHg</strong>. Con ese valor se usa PV = nRT.</li></ol></div></div>
+<div class="sect hs"><h2>Densidad de un gas</h2><ul class="ref-lista"><li><strong>d = P × MM ÷ (R × T)</strong>, con P en atm, T en K y R = 0,082.</li></ul><div class="pasos"><div class="pasos-h">Ejemplo: densidad del CO₂ a 0 °C y 1 atm</div><ol><li>MM = 44 g/mol; T = 273 K.</li><li>d = 1 × 44 ÷ (0,082 × 273) = <strong>1,97 g/L</strong> (más denso que el aire, 1,29 g/L).</li></ol></div></div>
       </div>
     </div>
   </div>
@@ -924,6 +1041,14 @@ html{font-size:var(--base-fs)}
 </div>
       </div>
     </div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Afinidad electrónica y grupo de los metales de transición</h2><ul class="ref-lista"><li><strong>Afinidad electrónica:</strong> energía que se libera cuando un átomo neutro gana un electrón. En general <strong>crece hacia la derecha y arriba</strong>; el Cl la tiene mayor que el F (excepción: el F es tan pequeño que los electrones se repelen).</li><li><strong>Grupo de un metal de transición:</strong> suma los electrones de <em>ns</em> y de <em>(n−1)d</em>. Ejemplo: Fe, 4s² 3d⁶ → 2 + 6 = 8 → grupo 8.</li><li><strong>Electrones de valencia ≠ valencia:</strong> los de valencia se cuentan (último nivel); el estado de oxidación es una carga.</li></ul></div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Electronegatividad: dos tablas, un mismo criterio</h2><table class="tbl"><thead><tr><th>Elemento</th><th>H</th><th>C</th><th>N</th><th>O</th><th>Cl</th><th>Br</th></tr></thead><tbody><tr><td>Pauling clásico (esta guía)</td><td>2,1</td><td>2,5</td><td>3,0</td><td>3,5</td><td>3,0</td><td>2,8</td></tr><tr><td>Pauling moderno</td><td>2,20</td><td>2,55</td><td>3,04</td><td>3,44</td><td>3,16</td><td>2,96</td></tr></tbody></table><p>Los valores clásicos están redondeados; los modernos son más precisos. Los ΔEN cambian un poco según la tabla (Na–Cl: 2,1 con la clásica y 2,2 con la moderna) pero la <strong>clasificación del enlace no cambia</strong>. Usa siempre la tabla que te dé tu docente.</p></div>
+      </div>
+    </div>
   </div>
 
   <div class="hoja mayor" id="h-enlace" data-hoja="enlace">
@@ -955,6 +1080,14 @@ html{font-size:var(--base-fs)}
 <div class="sect hs"><h2>Polaridad</h2>
 <ul class="ref-lista"><li>En un enlace <strong>polar</strong> el átomo más electronegativo atrae más los electrones: queda δ− y el otro δ+.</li><li>Una <strong>molécula</strong> es polar solo si sus enlaces polares no se cancelan por la forma: el <strong>H₂O</strong> (angular) es polar; el <strong>CO₂</strong> (lineal) es apolar aunque sus enlaces C=O son polares.</li><li>Lo polar se disuelve en lo polar y lo apolar en lo apolar.</li><li>El <strong>puente de hidrógeno</strong> (H unido a F, O o N) explica el alto punto de ebullición del agua.</li></ul>
 </div>
+      </div>
+    </div>
+    <div class="hoja-cols">
+      <div class="hcol">
+<div class="sect hs"><h2>Geometría molecular (RPECV)</h2><ul class="ref-lista"><li>Las regiones de electrones (enlaces y pares libres) se <strong>repelen</strong> y se alejan lo más posible.</li></ul><table class="tbl"><thead><tr><th>Regiones</th><th>Pares libres</th><th>Geometría</th><th>Ejemplo</th><th>Ángulo</th></tr></thead><tbody><tr><td>2</td><td>0</td><td>Lineal</td><td>CO₂</td><td>180°</td></tr><tr><td>3</td><td>0</td><td>Trigonal plana</td><td>BF₃</td><td>120°</td></tr><tr><td>3</td><td>1</td><td>Angular</td><td>SO₂</td><td>&lt; 120°</td></tr><tr><td>4</td><td>0</td><td>Tetraédrica</td><td>CH₄</td><td>109,5°</td></tr><tr><td>4</td><td>1</td><td>Piramidal</td><td>NH₃</td><td>107°</td></tr><tr><td>4</td><td>2</td><td>Angular</td><td>H₂O</td><td>104,5°</td></tr></tbody></table><p>Una molécula es <strong>polar</strong> si tiene enlaces polares y su geometría no los cancela: el H₂O lo es; el CO₂ no.</p></div>
+      </div>
+      <div class="hcol">
+<div class="sect hs"><h2>Fuerzas entre moléculas</h2><table class="tbl"><thead><tr><th>Fuerza</th><th>Quién la tiene</th><th>Intensidad</th><th>Ejemplo</th></tr></thead><tbody><tr><td><strong>London</strong></td><td>Todas las moléculas (más fuerte con más electrones)</td><td>Débil</td><td>CH₄, O₂, I₂</td></tr><tr><td><strong>Dipolo–dipolo</strong></td><td>Moléculas polares</td><td>Media</td><td>HCl, SO₂</td></tr><tr><td><strong>Puente de hidrógeno</strong></td><td>H unido a F, O o N</td><td>Fuerte (entre las intermoleculares)</td><td>H₂O, NH₃, HF</td></tr></tbody></table><p>A más fuerza intermolecular, <strong>mayor punto de ebullición</strong>: por eso el H₂O (100 °C) hierve mucho más alto que el CH₄ (−162 °C), aunque sean moléculas de tamaño parecido.</p><p>Las <strong>redes covalentes</strong> (diamante, SiO₂) no son moléculas: son átomos unidos por enlaces covalentes en todo el cristal, con puntos de fusión muy altos.</p></div>
       </div>
     </div>
   </div>
@@ -1080,7 +1213,7 @@ document.getElementById('theme-btn').addEventListener('click',function(){
     if(hist){try{history.replaceState(null,'','?hoja='+h);}catch(e){}}
   }
   tabs.addEventListener('click',function(e){var b=e.target.closest('button[data-h]');if(b)mostrar(b.dataset.h,true);});
-  var m=location.search.match(/hoja=(atomo|tabla|enlace|nomen|reacc|acidos|esteq|gases|soluc)/);if(m)mostrar(m[1],false);
+  var m=location.search.match(/hoja=(atomo|tabla|enlace|nomen|reacc|acidos|esteq|gases|soluc|termo|cinet|equil)/);if(m)mostrar(m[1],false);
 })();
 </script>
 </body>

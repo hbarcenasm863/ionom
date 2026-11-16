@@ -5,7 +5,7 @@
 const {chromium}=require('playwright');const path=require('path');
 const FUENTES=process.env.FUENTES||'';
 const base=path.resolve(process.argv[2]||'.');const out=process.argv[3]||base+'/assets';
-const hojas={atomo:'guia-atomo.pdf',tabla:'guia-tabla-periodica.pdf',enlace:'guia-enlace.pdf',reacc:'guia-reacciones.pdf',acidos:'guia-acidos-bases.pdf',nomen:'guia-nomenclatura-inorganica.pdf',esteq:'guia-estequiometria.pdf',gases:'guia-gases.pdf',soluc:'guia-soluciones.pdf'};
+const hojas={atomo:'guia-atomo.pdf',tabla:'guia-tabla-periodica.pdf',enlace:'guia-enlace.pdf',reacc:'guia-reacciones.pdf',acidos:'guia-acidos-bases.pdf',nomen:'guia-nomenclatura-inorganica.pdf',esteq:'guia-estequiometria.pdf',gases:'guia-gases.pdf',soluc:'guia-soluciones.pdf',termo:'guia-termoquimica.pdf',cinet:'guia-cinetica.pdf',equil:'guia-equilibrio.pdf'};
 (async()=>{const b=await chromium.launch();
 for(const h in hojas){const p=await b.newPage();
  await p.goto('file://'+base+'/guia.html?hoja='+h);

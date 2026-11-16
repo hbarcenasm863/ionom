@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 16 de noviembre (28) — Tres guías nuevas y lo que faltaba de la auditoría
+
+Para completar lo que el auditor señaló como faltante en las guías de IonNom.
+
+- **Guías nuevas (1 página cada una, con logo y marca de agua):** `assets/guia-termoquimica.pdf` (calor, entalpía, exo y endotérmicas, calorimetría, entalpías de formación, ley de Hess), `assets/guia-cinetica.pdf` (velocidad, teoría de colisiones, factores, catalizadores, ley de velocidad con ejemplo) y `assets/guia-equilibrio.pdf` (equilibrio dinámico, Kc, Q, Le Châtelier, Haber). Cada una lleva su diagrama en SVG y ejemplos resueltos.
+- **Páginas extra al final de tres guías:** Gases (teoría cinético-molecular, Graham, gas sobre agua y densidad), Enlace (geometría molecular y fuerzas intermoleculares, redes covalentes) y Tabla periódica (afinidad electrónica, grupo de los metales de transición y las dos tablas de electronegatividad). Esas guías pasan a 2 y 3 páginas.
+- **`guia.html`:** ya son 12 pestañas y textos (también en `index.html`); `herramientas/generar-guias-pdf.js` incluye las nuevas; en celular las tablas se desplazan dentro de su recuadro (Enlace, Reacciones y Tabla se salían de la pantalla). Las páginas de Reacciones y de pH enlazan las guías nuevas.
+- **Pendiente:** las páginas extra de Gases, Enlace y Tabla quedan con la mitad en blanco. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 16 de noviembre (27) — Correcciones tras la auditoría de las guías
 
 Un auditor independiente revisó las 9 guías descargables. Se corrigió lo verificable, sin agregar páginas a ningún PDF.
