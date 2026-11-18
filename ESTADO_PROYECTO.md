@@ -1,7 +1,7 @@
 # IonNom — Estado del Proyecto
 
 **Colegio Rufino José Cuervo I.E.D. · Bogotá, Colombia**
-**Última actualización:** 2026-09-10
+**Última actualización:** 2026-11-18
 
 ---
 
@@ -116,6 +116,11 @@ Herramienta web de aprendizaje de nomenclatura química inorgánica para estudia
 - **Error de nomenclatura corregido** (`reacciones.html`): la tabla resumen de tipos de reacción listaba "Yodo de plata AgI" como ejemplo de sustitución doble — "yodo" es el elemento (I₂), no el anión que forma la sal; el nombre correcto de AgI es "yoduro de plata". Corregido.
 - Se verificaron todas las ecuaciones balanceadas de ambas páginas (18 en total entre ejemplos, tabla resumen, quiz de `reacciones.html` y ejercicios interactivos de `balanceo.html`, incluida la redox KMnO₄ + HCl): todas correctas.
 - Ambas páginas ya implementan bien los principios de Mayer (auto-narración de bienvenida etiquetada "Mayer P8", botones TTS por sección, ejemplos resueltos paso a paso con tabla de verificación de átomos) y Enseñanza para la Comprensión (quiz final con retroalimentación explicativa, ejercicio interactivo de balanceo con pistas y verificación por múltiplos válidos, no solo por el juego de coeficientes mínimo). No se encontraron otras referencias a MEN/DBA/Estándares Básicos; las menciones de "pruebas Saber" se conservaron por ser el nombre de un examen real (no una cita del currículo oficial).
+
+---
+
+### 7. Temas de los DBA (2026-11-18)
+Seis temas nuevos (materia, mezclas, fuerzas intermoleculares, precipitación y redox, energía en las reacciones y química del ambiente) con página, animación, banco del Juego y panel docente. Ver `CHANGELOG.md` y `DBA_COBERTURA.md`. No requiere redesplegar `ionom-analytics.gs`.
 
 ---
 

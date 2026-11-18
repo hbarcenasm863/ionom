@@ -6,6 +6,9 @@
    - cambioEstado  (modelos.html)    curva de calentamiento del agua con partículas
    - colisiones    (reacciones.html) choques efectivos, temperatura y catalizador
    - cristal       (enlace.html)     cristal de NaCl en 3D que se gira con el dedo
+   - separacion, estados, intermolecular, precipitacion, energia, invernadero:
+     simulaciones de los DBA (mezclas.html, materia.html, intermoleculares.html,
+     precipitacion.html, termoquimica.html, ambiente.html)
    Se pausan solas cuando no se ven y arrancan en pausa si el sistema pide «reducir movimiento».
    Son MODELOS: simplifican la realidad para mostrar la idea central. ═══ */
 (function(){
@@ -296,6 +299,265 @@ SIMX.cristal=function(box){
       'Los iones se alternan en las tres direcciones, así las cargas opuestas quedan cerca y las iguales lejos. Por eso el NaCl es <b>duro, frágil</b> y funde a 801 °C. Fórmula: <b>NaCl</b> es solo la proporción 1 : 1. Arrastra para girarlo.';
   }
   var A=animar(L,paso);
+};
+
+/* ═══ Simulaciones que cierran huecos frente a los DBA (ver DBA_COBERTURA.md) ═══
+   - separacion     (mezclas.html)          técnicas de separación de mezclas
+   - estados        (materia.html)          estados de la materia con T y P
+   - intermolecular (intermoleculares.html) fuerzas entre moléculas y punto de ebullición
+   - precipitacion  (precipitacion.html)    iones que forman un precipitado
+   - energia        (termoquimica.html)     diagrama de energía, ΔH, Ea y catalizador
+   - invernadero    (ambiente.html)         efecto invernadero y CO₂ */
+
+/* ── 6. Separación de mezclas (mezclas.html) ─────────────────────────────
+   Cada mezcla tiene los métodos que de verdad la separan. Si se elige otro,
+   la simulación lo dice y explica por qué no sirve. */
+SIMX.separacion=function(box){
+  var L=lienzo(box,0.56,'Una mezcla se separa en sus componentes con la técnica adecuada'),ctx=L.ctx;
+  var MEZ={
+    arena:{n:'Arena + agua',a:{n:'Arena',c:'#b45309',s:1},b:{n:'Agua',c:'#38bdf8'},ok:{filtracion:'La arena (sólido insoluble) queda retenida en el filtro y el agua pasa.',decantacion:'La arena se asienta en el fondo y se vierte el agua con cuidado.'}},
+    sal:{n:'Sal + agua',a:{n:'Sal',c:'#e2e8f0',s:1},b:{n:'Agua',c:'#38bdf8'},ok:{evaporacion:'El agua se evapora y la sal cristaliza en el recipiente.',destilacion:'El agua se evapora y se condensa aparte; queda la sal. Sirve, pero gasta mucha energía.'}},
+    aceite:{n:'Aceite + agua',a:{n:'Aceite',c:'#facc15'},b:{n:'Agua',c:'#38bdf8'},ok:{decantacion:'Los líquidos no se mezclan y forman capas: se abre la llave del embudo y sale primero el agua.'}},
+    hierro:{n:'Limaduras de hierro + arena',a:{n:'Hierro',c:'#475569',s:1},b:{n:'Arena',c:'#b45309',s:1},ok:{imantacion:'El imán atrae el hierro y la arena se queda: se aprovecha una propiedad magnética.'}},
+    harina:{n:'Harina + piedritas',a:{n:'Piedritas',c:'#78716c',s:1},b:{n:'Harina',c:'#fef3c7',s:1},ok:{tamizado:'Las partículas de harina pasan por los huecos del colador y las piedritas no, porque tienen distinto tamaño.'}},
+    etanol:{n:'Etanol + agua',a:{n:'Etanol',c:'#a78bfa'},b:{n:'Agua',c:'#38bdf8'},ok:{destilacion:'El etanol hierve a 78 °C, antes que el agua (100 °C): sale primero como vapor y se condensa en otro recipiente.'}}
+  };
+  var NO={filtracion:'La filtración solo sirve para separar un sólido insoluble de un líquido.',decantacion:'La decantación solo separa sólidos que se asientan o líquidos que no se mezclan (forman capas).',tamizado:'El tamizado necesita sólidos de distinto tamaño y aquí no se separaría nada.',evaporacion:'La evaporación solo recupera sólidos disueltos; aquí no sirve para separar ambos componentes.',destilacion:'La destilación separa líquidos de distinto punto de ebullición o un sólido disuelto, pero aquí no es la técnica adecuada.',imantacion:'El imán solo atrae materiales magnéticos como el hierro; esta mezcla no los tiene.'};
+  var TEC=[['filtracion','Filtración'],['decantacion','Decantación'],['tamizado','Tamizado'],['evaporacion','Evaporación'],['destilacion','Destilación'],['imantacion','Imán']];
+  var mez='arena',prog=0,tec=null,ok=false,sacud=0,P=[];
+  var c1=fila(box);pildoras(c1,Object.keys(MEZ).map(function(k){return [k,MEZ[k].n];}),mez,function(k){mez=k;reinicia();});
+  var c2=fila(box);var tl=el('span',{class:'sx-rng'},'<span>Técnica:</span>');c2.appendChild(tl);pildoras(c2,TEC,'',function(k){tec=k;ok=!!MEZ[mez].ok[k];prog=0;sacud=ok?0:1;aplica();});
+  boton(c2,'↺ Reiniciar',function(){reinicia();});
+  var msg=nota(box,'Elige una mezcla y luego una técnica para separarla.');
+  function reinicia(){tec=null;prog=0;ok=false;sacud=0;c2.querySelectorAll('.sx-seg button').forEach(function(b){b.classList.remove('on');});P=[];for(var i=0;i<60;i++)P.push({k:i<26?0:1,x:Math.random(),y:Math.random(),j:Math.random()*6.28});msg.innerHTML='Mezcla: <b>'+MEZ[mez].n+'</b>. Elige una técnica para separarla.';}
+  function aplica(){var m=MEZ[mez];msg.innerHTML=ok?'✅ <b>Funciona.</b> '+m.ok[tec]:'❌ <b>No sirve.</b> '+NO[tec];}
+  reinicia();
+  function paso(dt){
+    var W=L.W,H=L.H,m=MEZ[mez];if(ok&&prog<1)prog=Math.min(1,prog+dt*.5);if(sacud>0)sacud=Math.max(0,sacud-dt*1.4);
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,W,H);
+    var bw=W*.3,bh=H*.62,by=H*.2,x0=W*.06,x1=W*.6,bw2=W*.3,off=sacud?Math.sin(sacud*30)*4*sacud:0;
+    function vaso(x,y,w,h,tit){ctx.fillStyle='rgba(255,255,255,.9)';ctx.fillRect(x,y,w,h);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2.5;ctx.strokeRect(x,y,w,h);txt(ctx,tit,x+w/2,y-8,'#0d2d42','800 '+Math.max(11,Math.round(W/60))+'px sans-serif','center');}
+    vaso(x0+off,by,bw,bh,'Mezcla');vaso(x1,by,bw2,bh*.46,m.a.n);vaso(x1,by+bh*.54,bw2,bh*.46,m.b.n);
+    ctx.strokeStyle='#64748b';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x0+bw+W*.03,by+bh/2);ctx.lineTo(x1-W*.03,by+bh/2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x1-W*.03,by+bh/2);ctx.lineTo(x1-W*.05,by+bh/2-6);ctx.lineTo(x1-W*.05,by+bh/2+6);ctx.closePath();ctx.fillStyle='#64748b';ctx.fill();
+    txt(ctx,tec?TEC.filter(function(t){return t[0]===tec;})[0][1]:'…',(x0+bw+x1)/2,by+bh/2-12,'#0369a1','800 '+Math.max(12,Math.round(W/50))+'px sans-serif','center');
+    /* relleno de la mezcla (líquidos) */
+    var liq=!m.a.s||!m.b.s;
+    var r=Math.max(3,W/130),ea=ease(prog);
+    P.forEach(function(p,i){p.j+=dt*3;var c=p.k?m.b:m.a,mx,my,tx,ty;
+      mx=x0+off+r+(bw-2*r)*p.x+Math.sin(p.j)*2;my=by+r+(bh-2*r)*p.y+Math.cos(p.j*1.3)*2;
+      if(!c.s&&liq&&mez!=='sal'&&mez!=='arena'||(c.s&&false)){ }
+      var bx=p.k?x1:x1,hh=bh*.46,yy=p.k?by+bh*.54:by;
+      tx=x1+r+(bw2-2*r)*((i*37%100)/100);ty=yy+hh-r-(hh-2*r)*((i*53%100)/100)*.8;
+      var x=mx+(tx-mx)*ea,y=my+(ty-my)*ea;
+      if(c.s){ctx.fillStyle=c.c;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;ctx.strokeRect(x-r,y-r,r*2,r*2);}else{circ(ctx,x,y,r*1.15,c.c);}});
+    ctx.fillStyle='rgba(56,189,248,.10)';if(mez==='sal'||mez==='arena'||mez==='aceite'||mez==='etanol')ctx.fillRect(x0+off+2,by+bh*.35,bw-4,bh*.65-2);
+  };
+  function ease(t){return t*t*(3-2*t);}
+  var A=animar(L,paso);
+};
+
+/* ── 7. Estados de la materia con temperatura y presión (materia.html) ───
+   Agua: el punto de ebullición sale de Clausius-Clapeyron
+   1/Tb = 1/373,15 − (R/ΔHvap)·ln P, con ΔHvap = 40,66 kJ/mol. */
+SIMX.estados=function(box){
+  var L=lienzo(box,0.58,'Partículas de agua que cambian de estado al variar la temperatura y la presión'),ctx=L.ctx;
+  var T=25,Pa=1,N=56,P=[];
+  function tb(p){return 1/(1/373.15-(8.314/40660)*Math.log(p))-273.15;}
+  var c1=fila(box);
+  var rT=deslizador(c1,'Temperatura',-30,140,1,T,function(v){T=v;return Math.round(v)+' °C';});
+  var rP=deslizador(c1,'Presión',0.4,2.2,0.02,Pa,function(v){Pa=v;return coma(v,2)+' atm';});
+  var c2=fila(box);
+  [['Cartagena (1 atm)',1],['Bogotá (0,74 atm)',0.74],['Olla a presión (2 atm)',2]].forEach(function(o){boton(c2,o[0],function(){rP.value=o[1];rP._upd();});});
+  var msg=nota(box,'');
+  for(var i=0;i<N;i++)P.push({hx:i%8,hy:Math.floor(i/8),x:-1,y:0,vx:0,vy:0});
+  function paso(dt){
+    var W=L.W,H=L.H,tbp=tb(Pa),est=T<0?0:T<tbp?1:2;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,W,H);
+    var bx=W*.04,bw=W*.5,by=H*.15,bh=H*.7,r=Math.min(bw/22,9);
+    ctx.fillStyle='#fff';ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2.5;ctx.strokeRect(bx,by,bw,bh);
+    var sp=30+cl(T+30,0,170)*1.3,nivel=by+bh*.45;
+    P.forEach(function(p,i){
+      var tx=bx+bw*.14+p.hx*bw*.1,ty=by+bh-r*2-(6-p.hy)*bw*.085;
+      if(p.x<0){p.x=tx;p.y=ty;}
+      if(est===0){p.vx+=(tx-p.x)*60*dt+rnd(-1,1)*(25+T+30)*dt*3;p.vy+=(ty-p.y)*60*dt+rnd(-1,1)*(25+T+30)*dt*3;p.vx*=.86;p.vy*=.86;}
+      else if(est===1){p.vx+=rnd(-1,1)*500*dt;p.vy+=rnd(-1,1)*500*dt+160*dt;var v=Math.hypot(p.vx,p.vy),vm=sp*.9;if(v>vm){p.vx*=vm/v;p.vy*=vm/v;}if(p.y<nivel){p.vy+=260*dt;}}
+      else{p.vx+=rnd(-1,1)*300*dt;p.vy+=rnd(-1,1)*300*dt;var v2=Math.hypot(p.vx,p.vy),vg=sp*1.7;if(v2<vg*.6){p.vx*=1.05;p.vy*=1.05;}if(v2>vg){p.vx*=vg/v2;p.vy*=vg/v2;}}
+      p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(p.x<bx+r){p.x=bx+r;p.vx=Math.abs(p.vx);}if(p.x>bx+bw-r){p.x=bx+bw-r;p.vx=-Math.abs(p.vx);}if(p.y<by+r){p.y=by+r;p.vy=Math.abs(p.vy);}if(p.y>by+bh-r){p.y=by+bh-r;p.vy=-Math.abs(p.vy);}
+      bola(ctx,p.x,p.y,r,est===0?'#7dd3fc':est===1?'#3b82f6':'#94a3b8');});
+    /* pistón que muestra la presión */
+    var py=by-4-(2.2-Pa)*H*.012;ctx.fillStyle='#64748b';ctx.fillRect(bx-4,py-8,bw+8,10);txt(ctx,'Presión '+coma(Pa,2)+' atm',bx+bw/2,py-14,'#334155','700 '+Math.max(10,Math.round(W/62))+'px sans-serif','center');
+    for(var k=0;k<Math.round(Pa*3);k++){ctx.strokeStyle='#64748b';ctx.beginPath();ctx.moveTo(bx+bw*.2+k*bw*.07,py-8);ctx.lineTo(bx+bw*.2+k*bw*.07,py-24-k%2*4);ctx.stroke();}
+    txt(ctx,['Hielo (sólido)','Agua líquida','Vapor (gas)'][est],bx+bw/2,by+bh+H*.07,'#0d2d42','800 '+Math.max(11,Math.round(W/52))+'px sans-serif','center');
+    /* termómetro */
+    var tx2=W*.62,ty0=H*.1,th=H*.72;ctx.fillStyle='#e2e8f0';ctx.fillRect(tx2,ty0,W*.04,th);var fr=cl((T+30)/170,0,1);ctx.fillStyle='#dc2626';ctx.fillRect(tx2,ty0+th*(1-fr),W*.04,th*fr);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2;ctx.strokeRect(tx2,ty0,W*.04,th);
+    function Y(v){return ty0+th*(1-(v+30)/170);}
+    [[0,'0 °C · fusión','#0369a1'],[tbp,coma(tbp,0)+' °C · ebullición a '+coma(Pa,2)+' atm','#b91c1c']].forEach(function(m){ctx.strokeStyle=m[2];ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(tx2-6,Y(m[0]));ctx.lineTo(W*.97,Y(m[0]));ctx.stroke();ctx.setLineDash([]);txt(ctx,m[1],tx2+W*.06,Y(m[0])-5,m[2],'700 '+Math.max(10,Math.round(W/66))+'px sans-serif');});
+    txt(ctx,Math.round(T)+' °C',tx2+W*.02,ty0+th+18,'#b91c1c','800 '+Math.max(13,Math.round(W/46))+'px sans-serif','center');
+    msg.innerHTML=(est===0?'<b>Sólido:</b> las partículas vibran en posiciones fijas.':est===1?'<b>Líquido:</b> las partículas están juntas pero se deslizan.':'<b>Gas:</b> las partículas están muy separadas y se mueven libres por todo el recipiente.')+' A <b>'+coma(Pa,2)+' atm</b> el agua hierve a <b>'+coma(tbp,0)+' °C</b>'+(Pa<0.8?' (como en las ciudades de montaña: menos presión, menos temperatura).':Pa>1.5?' (como en la olla a presión: más presión, más temperatura).':'.');
+  }
+  var A=animar(L,paso);
+  [rT,rP].forEach(function(r){r.addEventListener('input',function(){A.dibujar();});});
+};
+
+/* ── 8. Fuerzas intermoleculares (intermoleculares.html) ─────────────────
+   Dinámica molecular 2D (Lennard-Jones). La profundidad del pozo ε de cada
+   sustancia es proporcional a su punto de ebullición real; la temperatura
+   efectiva es kT = 0,42·ε·T/Tb, así que cada sustancia ebulle justo a su Tb. */
+SIMX.intermolecular=function(box){
+  var L=lienzo(box,0.56,'Moléculas que se atraen con distinta fuerza según la sustancia y se separan al subir la temperatura'),ctx=L.ctx;
+  var SUS={ch4:{n:'Metano CH₄',tb:111,f:'Dispersión de London',c:'#64748b',col:'#94a3b8'},hcl:{n:'Cloruro de hidrógeno HCl',tb:188,f:'Dipolo-dipolo',c:'#d97706',col:'#fb923c'},h2o:{n:'Agua H₂O',tb:373,f:'Puentes de hidrógeno',c:'#2563eb',col:'#60a5fa'}};
+  var sus='h2o',T=300,N=34,S=1,X=[],Y=[],VX=[],VY=[],BW=15,BH=9;
+  var c1=fila(box);pildoras(c1,[['ch4','CH₄'],['hcl','HCl'],['h2o','H₂O']],sus,function(k){sus=k;});
+  var c2=fila(box);var rT=deslizador(c2,'Temperatura',100,450,1,T,function(v){T=v;return Math.round(v)+' K ('+Math.round(v-273)+' °C)';});
+  var msg=nota(box,'');
+  for(var i=0;i<N;i++){X.push(1.2+(i%6)*1.25+Math.random()*.1);Y.push(BH-1-Math.floor(i/6)*1.2+Math.random()*.1);VX.push(0);VY.push(0);}
+  var fr=0;
+  function paso(dt){
+    var W=L.W,H=L.H,s=SUS[sus],eps=s.tb/111,kT=0.42*eps*T/s.tb,h=0.004,pasos=Math.min(14,Math.max(1,Math.round(dt/0.016*8)));
+    for(var st=0;st<pasos;st++){
+      var FX=new Array(N).fill(0),FY=new Array(N).fill(0);
+      for(var i=0;i<N;i++)for(var j=i+1;j<N;j++){var dx=X[i]-X[j],dy=Y[i]-Y[j],r2=dx*dx+dy*dy;if(r2>6.25||r2<1e-6)continue;if(r2<.64)r2=.64;var ir6=1/(r2*r2*r2),f=24*eps*(2*ir6*ir6-ir6)/r2;if(f>60)f=60;FX[i]+=f*dx;FY[i]+=f*dy;FX[j]-=f*dx;FY[j]-=f*dy;}
+      var ke=0;for(i=0;i<N;i++){VX[i]+=FX[i]*h;VY[i]+=(FY[i]+0.6)*h;X[i]+=VX[i]*h*20;Y[i]+=VY[i]*h*20;ke+=VX[i]*VX[i]+VY[i]*VY[i];
+        if(X[i]<.5){X[i]=.5;VX[i]=Math.abs(VX[i]);}if(X[i]>BW-.5){X[i]=BW-.5;VX[i]=-Math.abs(VX[i]);}if(Y[i]<.5){Y[i]=.5;VY[i]=Math.abs(VY[i]);}if(Y[i]>BH-.5){Y[i]=BH-.5;VY[i]=-Math.abs(VY[i]);}}
+      var Tm=ke/(2*N)*0.5,lam=Math.sqrt(1+0.08*(kT/Math.max(Tm,1e-6)-1));if(lam>1.15)lam=1.15;if(lam<.88)lam=.88;for(i=0;i<N;i++){VX[i]*=lam;VY[i]*=lam;}
+    }
+    var bx=W*.04,bw=W*.58,by=H*.07,bh=bw*BH/BW,u=bw/BW;ctx.clearRect(0,0,W,H);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#fff';ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2.5;ctx.strokeRect(bx,by,bw,bh);
+    var vec=0,pares=0;
+    ctx.lineWidth=1.6;ctx.strokeStyle=s.c;
+    if(sus==='h2o')ctx.setLineDash([4,3]);else if(sus==='ch4')ctx.setLineDash([1,3]);else ctx.setLineDash([]);
+    for(i=0;i<N;i++){var nn=0;for(j=0;j<N;j++){if(i===j)continue;var dx2=X[i]-X[j],dy2=Y[i]-Y[j],d2=dx2*dx2+dy2*dy2;if(d2<2.4){nn++;if(j>i){ctx.globalAlpha=.7;ctx.beginPath();ctx.moveTo(bx+X[i]*u,by+Y[i]*u);ctx.lineTo(bx+X[j]*u,by+Y[j]*u);ctx.stroke();ctx.globalAlpha=1;pares++;}}}if(nn>=2)vec++;}
+    ctx.setLineDash([]);
+    for(i=0;i<N;i++){bola(ctx,bx+X[i]*u,by+Y[i]*u,u*.42,s.col);if(sus==='h2o'){circ(ctx,bx+X[i]*u+u*.3,by+Y[i]*u-u*.12,u*.16,'#f1f5f9');circ(ctx,bx+X[i]*u-u*.3,by+Y[i]*u-u*.12,u*.16,'#f1f5f9');}}
+    fr+=(vec/N-fr)*Math.min(1,dt*3);
+    var gx=W*.67,gw=W*.29;txt(ctx,s.n,gx,H*.1,'#0d2d42','800 '+Math.max(12,Math.round(W/46))+'px sans-serif');
+    txt(ctx,'Fuerza: '+s.f,gx,H*.17,s.c,'800 '+Math.max(11,Math.round(W/58))+'px sans-serif');
+    txt(ctx,'Punto de ebullición real: '+Math.round(s.tb-273)+' °C',gx,H*.23,'#334155','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    txt(ctx,'Moléculas agrupadas',gx,H*.33,'#334155','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');ctx.fillStyle='#e2e8f0';ctx.fillRect(gx,H*.36,gw,H*.045);ctx.fillStyle=s.c;ctx.fillRect(gx,H*.36,gw*fr,H*.045);txt(ctx,Math.round(fr*100)+' %',gx+gw+4,H*.395,'#334155','800 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    txt(ctx,'Escala de puntos de ebullición',gx,H*.51,'#334155','700 '+Math.max(10,Math.round(W/66))+'px sans-serif');
+    ['ch4','hcl','h2o'].forEach(function(k,ii){var yy=H*.55+ii*H*.085,w=gw*SUS[k].tb/400;ctx.fillStyle=SUS[k].c;ctx.globalAlpha=k===sus?1:.35;ctx.fillRect(gx,yy,w,H*.05);ctx.globalAlpha=1;txt(ctx,k==='ch4'?'CH₄':k==='hcl'?'HCl':'H₂O',gx+4,yy+H*.037,'#fff','800 '+Math.max(10,Math.round(W/62))+'px sans-serif');});
+    var xm=gx+gw*T/400;ctx.strokeStyle='#dc2626';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xm,H*.53);ctx.lineTo(xm,H*.82);ctx.stroke();txt(ctx,'T',xm,H*.85,'#dc2626','800 12px sans-serif','center');
+    var gas=T>=s.tb;
+    msg.innerHTML=(gas?'A <b>'+Math.round(T)+' K</b> las moléculas de <b>'+s.n+'</b> tienen tanta energía que vencen las atracciones y se mueven libres: es un <b>gas</b>.':'A <b>'+Math.round(T)+' K</b> las atracciones (<b>'+s.f.toLowerCase()+'</b>) mantienen las moléculas juntas: es un <b>líquido</b>.')+' Cuanto más fuertes son las fuerzas intermoleculares, más energía (más temperatura) hace falta para separarlas: por eso el agua hierve a '+Math.round(373-273)+' °C y el metano a −162 °C. Los enlaces dentro de cada molécula no se rompen al hervir.';
+  }
+  var A=animar(L,paso);rT.addEventListener('input',function(){A.dibujar();});
+};
+
+/* ── 9. Precipitación (precipitacion.html) ───────────────────────────────
+   Se mezclan dos soluciones; los iones se mueven y, si el par cation/anión
+   forma una sal insoluble, se juntan y se hunden como sólido. */
+SIMX.precipitacion=function(box){
+  var L=lienzo(box,0.58,'Dos soluciones de sales se mezclan y los iones que forman un sólido insoluble se depositan en el fondo'),ctx=L.ctx;
+  var PAR={
+    agcl:{n:'AgNO₃ + NaCl',A:{c:'Ag⁺',col:'#94a3b8',z:1,s:'NO₃⁻',sc:'#a3e635'},Bc:{c:'Na⁺',col:'#f59e0b',a:'Cl⁻',ac:'#16a34a'},sol:['Ag⁺','Cl⁻'],ppt:'AgCl',pcol:'#f8fafc',pn:'blanco',mol:'AgNO₃(ac) + NaCl(ac) → AgCl(s) + NaNO₃(ac)',neta:'Ag⁺(ac) + Cl⁻(ac) → AgCl(s)',pa:1,pb:1,esp:'Na⁺ y NO₃⁻'},
+    pbi2:{n:'Pb(NO₃)₂ + KI',A:{c:'Pb²⁺',col:'#475569',s:'NO₃⁻',sc:'#a3e635'},Bc:{c:'K⁺',col:'#f59e0b',a:'I⁻',ac:'#7c3aed'},ppt:'PbI₂',pcol:'#facc15',pn:'amarillo',mol:'Pb(NO₃)₂(ac) + 2 KI(ac) → PbI₂(s) + 2 KNO₃(ac)',neta:'Pb²⁺(ac) + 2 I⁻(ac) → PbI₂(s)',pa:1,pb:2,esp:'K⁺ y NO₃⁻'},
+    baso4:{n:'BaCl₂ + Na₂SO₄',A:{c:'Ba²⁺',col:'#0f766e',s:'Cl⁻',sc:'#16a34a'},Bc:{c:'Na⁺',col:'#f59e0b',a:'SO₄²⁻',ac:'#dc2626'},ppt:'BaSO₄',pcol:'#f8fafc',pn:'blanco',mol:'BaCl₂(ac) + Na₂SO₄(ac) → BaSO₄(s) + 2 NaCl(ac)',neta:'Ba²⁺(ac) + SO₄²⁻(ac) → BaSO₄(s)',pa:1,pb:1,esp:'Na⁺ y Cl⁻'},
+    cuoh:{n:'CuSO₄ + NaOH',A:{c:'Cu²⁺',col:'#0ea5e9',s:'SO₄²⁻',sc:'#dc2626'},Bc:{c:'Na⁺',col:'#f59e0b',a:'OH⁻',ac:'#ec4899'},ppt:'Cu(OH)₂',pcol:'#38bdf8',pn:'azul',mol:'CuSO₄(ac) + 2 NaOH(ac) → Cu(OH)₂(s) + Na₂SO₄(ac)',neta:'Cu²⁺(ac) + 2 OH⁻(ac) → Cu(OH)₂(s)',pa:1,pb:2,esp:'Na⁺ y SO₄²⁻'},
+    nada:{n:'NaCl + KNO₃',A:{c:'K⁺',col:'#fbbf24',s:'NO₃⁻',sc:'#a3e635'},Bc:{c:'Na⁺',col:'#f59e0b',a:'Cl⁻',ac:'#16a34a'},ppt:null,mol:'NaCl(ac) + KNO₃(ac) → NaNO₃(ac) + KCl(ac)',neta:'No hay ecuación neta: todos los iones siguen disueltos.',esp:'los cuatro iones'}
+  };
+  var k='agcl',mix=0,t=0,I=[];
+  var c1=fila(box);pildoras(c1,Object.keys(PAR).map(function(x){return [x,PAR[x].n];}),k,function(x){k=x;reset();});
+  var c2=fila(box);boton(c2,'⚗️ Mezclar',function(){if(!mix){mix=1;t=0;}});boton(c2,'↺ Reiniciar',function(){reset();});
+  var msg=nota(box,'');
+  function reset(){mix=0;t=0;I=[];var p=PAR[k];for(var i=0;i<12;i++){I.push({r:'ca',x:Math.random(),y:Math.random(),j:Math.random()*6.28,c:p.A.col,l:p.A.c});I.push({r:'aa',x:Math.random(),y:Math.random(),j:Math.random()*6.28,c:p.A.sc,l:p.A.s});I.push({r:'cb',x:Math.random(),y:Math.random(),j:Math.random()*6.28,c:p.Bc.col,l:p.Bc.c});I.push({r:'ab',x:Math.random(),y:Math.random(),j:Math.random()*6.28,c:p.Bc.ac||'#16a34a',l:p.Bc.a||p.A.s});}
+    msg.innerHTML='Solución 1: <b>'+p.A.c+'</b> y <b>'+p.A.s+'</b>. Solución 2: <b>'+p.Bc.c+'</b> y <b>'+(p.Bc.a||'')+'</b>. Pulsa «Mezclar».';
+    /* el nombre del anión B para NaCl, etc. */}
+  reset();
+  function paso(dt){
+    var W=L.W,H=L.H,p=PAR[k];if(mix)t=Math.min(1,t+dt*.35);
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,W,H);
+    var bh=H*.62,by=H*.2,bw=W*.28,xa=W*.05,xb=W*.67,xm=W*.35,wm=W*.3,e=t*t*(3-2*t);
+    function vaso(x,w,tit){ctx.fillStyle='rgba(186,230,253,.35)';ctx.fillRect(x,by+bh*.12,w,bh*.88);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2.5;ctx.strokeRect(x,by,w,bh);txt(ctx,tit,x+w/2,by-8,'#0d2d42','800 '+Math.max(10,Math.round(W/62))+'px sans-serif','center');}
+    if(!mix||t<1){vaso(xa,bw,'Solución 1');vaso(xb,bw,'Solución 2');}
+    vaso(xm+(1-e)*0,wm,'Mezcla');
+    ctx.fillStyle='rgba(186,230,253,.35)';
+    var r=Math.max(5,W/90),npp=0,cat=0,an=0;
+    I.forEach(function(q,i){q.j+=dt*2;var left=(q.r==='ca'||q.r==='aa'),sol=p.sol,esPpt=p.ppt&&((q.r==='ca'&&q.l===sol[0])||(q.r==='ab'&&q.l===sol[1]));
+      var sx,sy,mx,my;sx=(left?xa:xb)+r+(bw-2*r)*q.x;sy=by+bh*.15+(bh*.8-r)*q.y;
+      mx=xm+r+(wm-2*r)*q.x+Math.sin(q.j)*4;my=by+bh*.15+(bh*.8-r)*q.y+Math.cos(q.j*1.3)*4;
+      var x=sx+(mx-sx)*e,y=sy+(my-sy)*e;
+      if(esPpt&&mix&&t>=.6){var f=(t-.6)/.4,fs=f*f*(3-2*f),idx=(q.r==='ca'?cat++:an++),col=idx%6,row=Math.floor(idx/6);var tx=xm+wm*.18+col*r*2.1,ty=by+bh-r*1.2-row*r*2.1-(q.r==='ab'?r*1.1:0);x=mx+(tx-mx)*fs;y=my+(ty-my)*fs;npp++;
+        ctx.fillStyle=p.pcol;ctx.strokeStyle='#64748b';ctx.lineWidth=1;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.strokeRect(x-r,y-r,r*2,r*2);return;}
+      circ(ctx,x,y,r,q.c);ctx.fillStyle='#0d2d42';ctx.font='700 '+Math.max(8,Math.round(r*.95))+'px sans-serif';ctx.textAlign='center';ctx.fillText(q.l.replace('²','').replace('⁺','+').replace('⁻','−').replace('₃','3').replace('₄','4').replace('₂','2'),x,y+3);});
+    txt(ctx,'+',W*.355,H*.5,'#0d2d42','800 22px sans-serif');
+    if(mix&&t>=1){msg.innerHTML=p.ppt?'<b>Precipitado '+p.pn+' de '+p.ppt+'</b> en el fondo. Los iones '+p.esp+' (<b>espectadores</b>) siguen disueltos.<br>Ecuación molecular: '+p.mol+'<br><b>Ecuación iónica neta: '+p.neta+'</b>':'<b>No se forma precipitado.</b> '+p.mol+' Todos los productos son solubles en agua: los iones solo se mezclan.<br>'+p.neta;}
+    else if(mix)msg.innerHTML='Mezclando… los iones se mueven y se encuentran.';
+  }
+  var A=animar(L,paso);
+};
+
+/* ── 10. Diagrama de energía de una reacción (termoquimica.html) ─────── */
+SIMX.energia=function(box){
+  var L=lienzo(box,0.6,'Diagrama de energía de una reacción con la energía de activación, el calor liberado o absorbido y el efecto de un catalizador'),ctx=L.ctx;
+  var tipo='exo',dH=-60,Ea=90,cat=false,u=0;
+  var c1=fila(box);pildoras(c1,[['exo','Exotérmica'],['endo','Endotérmica']],tipo,function(k){tipo=k;dH=k==='exo'?-Math.abs(dH):Math.abs(dH);rH.value=Math.abs(dH);rH._upd();});
+  var rH=deslizador(c1,'|ΔH|',10,100,5,60,function(v){dH=tipo==='exo'?-v:v;return (tipo==='exo'?'−':'+')+v+' kJ';});
+  var c2=fila(box);var rE=deslizador(c2,'Energía de activación',30,150,5,Ea,function(v){Ea=v;return v+' kJ';});
+  var bC=boton(c2,'⚡ Catalizador: no',function(b){cat=!cat;b.textContent='⚡ Catalizador: '+(cat?'sí':'no');b.classList.toggle('on',cat);});
+  var msg=nota(box,'');
+  function curva(ea,x){var er=130,ep=er+dH,pk=er+Math.max(ea,Math.max(dH,0)+10),a=sm(0,.5,x),b=sm(.5,1,x),base=er+(ep-er)*sm(.35,.9,x);return base+(pk-base)*Math.exp(-Math.pow((x-.5)/.16,2))*(1);}
+  function paso(dt){
+    var W=L.W,H=L.H,eaE=cat?Ea*.55:Ea;u=(u+dt*.25)%1;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,W,H);
+    var gx=W*.1,gw=W*.62,gy=H*.9,gh=H*.8;function X(x){return gx+gw*x;}function Y(e){return gy-gh*e/330;}
+    ctx.strokeStyle='#64748b';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(gx,gy-gh);ctx.lineTo(gx,gy);ctx.lineTo(gx+gw,gy);ctx.stroke();
+    txt(ctx,'Energía',gx+4,gy-gh+12,'#475569','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');txt(ctx,'Avance de la reacción →',gx+gw,gy+H*.06,'#475569','700 '+Math.max(10,Math.round(W/62))+'px sans-serif','right');
+    var er=130,ep=er+dH;
+    function dib(ea,col,dash,w){ctx.setLineDash(dash||[]);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();for(var i=0;i<=100;i++){var x=i/100;i?ctx.lineTo(X(x),Y(curva(ea,x))):ctx.moveTo(X(x),Y(curva(ea,x)));}ctx.stroke();ctx.setLineDash([]);}
+    if(cat)dib(Ea,'#94a3b8',[6,4],2);dib(eaE,cat?'#16a34a':'#2563eb',null,3.5);
+    ctx.strokeStyle='#cbd5e1';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(gx,Y(er));ctx.lineTo(gx+gw,Y(er));ctx.moveTo(gx,Y(ep));ctx.lineTo(gx+gw,Y(ep));ctx.stroke();ctx.setLineDash([]);
+    var pk=er+Math.max(eaE,Math.max(dH,0)+10);
+    txt(ctx,'Reactivos',X(.02),Y(er)-6,'#0d2d42','800 '+Math.max(10,Math.round(W/60))+'px sans-serif');txt(ctx,'Productos',X(.98),Y(ep)-6,'#0d2d42','800 '+Math.max(10,Math.round(W/60))+'px sans-serif','right');
+    /* flecha Ea */
+    ctx.strokeStyle='#dc2626';ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(X(.26),Y(er));ctx.lineTo(X(.26),Y(pk));ctx.stroke();txt(ctx,'Ea = '+Math.round(eaE)+' kJ',X(.24),(Y(er)+Y(pk))/2,'#dc2626','800 '+Math.max(10,Math.round(W/60))+'px sans-serif','right');
+    ctx.strokeStyle='#16a34a';ctx.beginPath();ctx.moveTo(X(.78),Y(er));ctx.lineTo(X(.78),Y(ep));ctx.stroke();txt(ctx,'ΔH = '+(dH>0?'+':'−')+Math.abs(dH)+' kJ',X(.8),(Y(er)+Y(ep))/2,'#16a34a','800 '+Math.max(10,Math.round(W/60))+'px sans-serif');
+    var mx=u,my=curva(eaE,mx);circ(ctx,X(mx),Y(my),8,'#f59e0b');
+    /* termómetro del entorno */
+    var tx=W*.8,th=H*.55,ty=H*.18,f=cl(.5-dH/260*(1)+Math.sin(u*6.28)*.0,.05,.95);ctx.fillStyle='#e2e8f0';ctx.fillRect(tx,ty,W*.04,th);ctx.fillStyle=dH<0?'#dc2626':'#2563eb';ctx.fillRect(tx,ty+th*(1-f),W*.04,th*f);ctx.strokeStyle='#0d2d42';ctx.lineWidth=2;ctx.strokeRect(tx,ty,W*.04,th);
+    txt(ctx,'Entorno',tx+W*.02,ty-8,'#0d2d42','800 '+Math.max(10,Math.round(W/62))+'px sans-serif','center');txt(ctx,dH<0?'se calienta':'se enfría',tx+W*.02,ty+th+18,dH<0?'#dc2626':'#2563eb','800 '+Math.max(10,Math.round(W/62))+'px sans-serif','center');
+    var vel=cat?Math.exp((Ea-eaE)*1000/(8.314*298)):1;
+    msg.innerHTML=(dH<0?'<b>Exotérmica:</b> los productos tienen menos energía que los reactivos; la diferencia ('+Math.abs(dH)+' kJ) se libera como calor y el entorno se calienta.':'<b>Endotérmica:</b> los productos tienen más energía que los reactivos; la reacción absorbe '+dH+' kJ del entorno y este se enfría.')+' Para empezar hay que superar la barrera de <b>Ea = '+Math.round(eaE)+' kJ</b>.'+(cat?' <b>El catalizador baja la barrera (Ea menor), así la reacción es muchísimo más rápida (≈ ×'+(vel>1e6?'10⁶ o más':Math.round(vel))+'), pero ΔH y la cantidad de producto no cambian.</b>':' Prueba agregar un catalizador.');
+  }
+  var A=animar(L,paso);[rH,rE].forEach(function(r){r.addEventListener('input',function(){A.dibujar();});});
+};
+
+/* ── 11. Efecto invernadero (ambiente.html) ──────────────────────────────
+   Luz visible (amarilla) entra, calienta la superficie y vuelve como
+   infrarrojo (rojo). Las moléculas de CO₂ absorben parte del infrarrojo y lo
+   reemiten en cualquier dirección. Modelo cualitativo: ΔT ≈ 3 °C por cada
+   duplicación del CO₂ (sensibilidad típica de equilibrio). */
+SIMX.invernadero=function(box){
+  var L=lienzo(box,0.62,'Rayos del Sol calientan la Tierra y el infrarrojo que emite es absorbido en parte por las moléculas de CO₂ de la atmósfera'),ctx=L.ctx;
+  var co2=280,ph=[],mol=[],esc=0,ret=0,tm=0,tot=0,ab=0;
+  var c1=fila(box);var rC=deslizador(c1,'CO₂ en la atmósfera',280,800,10,co2,function(v){co2=v;return Math.round(v)+' ppm';});
+  var c2=fila(box);[['Antes de 1850',280],['Hoy (≈ 420)',420],['Escenario alto',700]].forEach(function(o){boton(c2,o[0],function(){rC.value=o[1];rC._upd();});});
+  var msg=nota(box,'');
+  for(var i=0;i<34;i++)mol.push({x:Math.random(),y:.18+Math.random()*.3,f:0,a:Math.random()*6.28});
+  function paso(dt){
+    var W=L.W,H=L.H,nM=Math.round(co2/28);tm+=dt;
+    ctx.clearRect(0,0,W,H);var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0f172a');g.addColorStop(.45,'#38bdf8');g.addColorStop(1,'#bae6fd');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(0,H*.16,W,H*.34);txt(ctx,'Atmósfera',W*.02,H*.2,'#e2e8f0','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    ctx.fillStyle='#166534';ctx.fillRect(0,H*.86,W,H*.14);ctx.fillStyle='#15803d';ctx.fillRect(0,H*.86,W,H*.02);txt(ctx,'Superficie de la Tierra',W*.02,H*.95,'#dcfce7','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    circ(ctx,W*.9,H*.08,Math.max(14,W/28),'#fde047');
+    if(Math.random()<dt*14)ph.push({t:'v',x:W*(.1+Math.random()*.55),y:H*.02,vx:W*.07,vy:H*.34});
+    ph.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(p.t==='v'&&p.y>=H*.86){p.t='i';p.z=0;p.y=H*.86;p.vx=(Math.random()-.5)*W*.05;p.vy=-H*.3;}
+      if(p.t==='i'&&p.y<H*.5&&p.y>H*.16&&!p.z){p.z=1;tot++;var pa=1-Math.exp(-nM/22);if(Math.random()<pa){ab++;p.abs=1;var m=mol[Math.floor(Math.random()*nM)];m.f=1;p.vy=(Math.random()<.5?1:-1)*H*.3*(Math.random()*.5+.5);p.vx=(Math.random()-.5)*W*.2;if(p.vy>0)ret++;else esc++;}}
+      if(p.t==='i'&&p.y<H*.02){p.dead=1;if(!p.abs)esc++;}if(p.y>H*.86&&p.t==='i'&&p.vy>0){p.t='v';p.vx=0;p.vy=0;p.y=H*.86;}
+      if(p.x<0||p.x>W)p.dead=1;});
+    for(var q=ph.length-1;q>=0;q--)if(ph[q].dead||ph.length>160&&q<ph.length-160)ph.splice(q,1);
+    ph.forEach(function(p){ctx.strokeStyle=p.t==='v'?'#fde047':'#ef4444';ctx.lineWidth=2.6;var l=Math.max(12,W/55),a=Math.atan2(p.vy,p.vx);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-Math.cos(a)*l,p.y-Math.sin(a)*l);ctx.stroke();});
+    for(var i=0;i<nM;i++){var m=mol[i];m.f=Math.max(0,m.f-dt*1.5);var x=m.x*W,y=m.y*H+Math.sin(tm*1.3+m.a)*5,r=Math.max(5,W/120);circ(ctx,x-r*1.5,y,r,'#cbd5e1');circ(ctx,x,y,r*1.15,m.f>0?'#fb923c':'#475569');circ(ctx,x+r*1.5,y,r,'#cbd5e1');}
+    var dT=3*Math.log(co2/280)/Math.log(2),Tm=14+dT;
+    ctx.fillStyle='rgba(15,23,42,.72)';ctx.fillRect(W*.62,H*.54,W*.36,H*.26);txt(ctx,'Temperatura media ≈ '+coma(Tm,1)+' °C',W*.64,H*.61,'#f8fafc','800 '+Math.max(11,Math.round(W/46))+'px sans-serif');txt(ctx,(dT>=0?'+':'')+coma(dT,1)+' °C frente a 1850',W*.64,H*.68,dT>0.1?'#fca5a5':'#bbf7d0','800 '+Math.max(10,Math.round(W/56))+'px sans-serif');
+    txt(ctx,'IR atrapado por el CO₂ en cada paso: '+Math.round((1-Math.exp(-nM/22))*100)+' %',W*.64,H*.76,'#e2e8f0','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    txt(ctx,'☀️ luz visible',W*.02,H*.1,'#fde047','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');txt(ctx,'infrarrojo (calor)',W*.02,H*.14,'#fca5a5','700 '+Math.max(10,Math.round(W/62))+'px sans-serif');
+    if(tot>300){tot*=.5;ab*=.5;}
+    msg.innerHTML='Con <b>'+Math.round(co2)+' ppm</b> de CO₂ hay '+nM+' moléculas dibujadas. Cada una puede absorber el infrarrojo (<b>rojo</b>) que sube de la superficie y reemitirlo en cualquier dirección: parte vuelve a la Tierra y la calienta. Más CO₂ → más calor retenido. Es un <b>modelo cualitativo</b> (≈ 3 °C por cada duplicación del CO₂); el efecto invernadero natural es necesario: sin él la Tierra estaría a unos −18 °C.';
+  }
+  var A=animar(L,paso);rC.addEventListener('input',function(){A.dibujar();});
 };
 
 function iniciar(){document.querySelectorAll('[data-simx]').forEach(function(b){if(b.dataset.listo)return;b.dataset.listo='1';b.classList.add('sx');

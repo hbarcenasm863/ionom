@@ -632,6 +632,12 @@ html{font-size:var(--base-fs)}
     <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
     <a href="gases.html"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
     <a href="soluciones.html"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
+    <a href="materia.html"><span class="dl-icon">🧊</span><span class="dl-name">Materia: estados y cambios</span></a>
+    <a href="mezclas.html"><span class="dl-icon">🧩</span><span class="dl-name">Mezclas y separación</span></a>
+    <a href="intermoleculares.html"><span class="dl-icon">🧲</span><span class="dl-name">Fuerzas intermoleculares</span></a>
+    <a href="precipitacion.html"><span class="dl-icon">⚪</span><span class="dl-name">Precipitación y redox</span></a>
+    <a href="termoquimica.html"><span class="dl-icon">🔥</span><span class="dl-name">Energía en las reacciones</span></a>
+    <a href="ambiente.html"><span class="dl-icon">🌍</span><span class="dl-name">Química del ambiente</span></a>
     <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
     <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
     <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
@@ -1411,16 +1417,22 @@ window.addEventListener('appinstalled', () => {
     {id:'soluciones.html',r:14,n:4,e:'🧂',t:'Soluciones y Concentración',d:'Disolución animada, solubilidad, %, ppm, M, m, X, N y dilución.',nuevo:true},
     {id:'estequiometria.html',r:15,n:4,e:'🧮',t:'Estequiometría',d:'Reactivo limitante y rendimiento con cadenas de factores.'},
     {id:'industria.html',r:16,n:4,e:'🏭',t:'Química en la Industria',d:'Masa y carga, limitante, pureza y rendimiento en procesos industriales colombianos.',nuevo:true},
-    {id:'balanceo-avanzado.html',r:17,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'}
+    {id:'balanceo-avanzado.html',r:17,n:4,e:'⚡',t:'Balanceo Algebraico y Redox',d:'La cumbre: método algebraico y semirreacciones.'},
+    {id:'materia.html',r:null,n:1,e:'🧊',t:'Materia: estados y cambios',d:'Sólido, líquido y gas, cambios de estado, T y P, y cambios físicos y químicos.',nuevo:true},
+    {id:'mezclas.html',r:null,n:1,e:'🧩',t:'Mezclas y separación',d:'Mezclas, coloides y la técnica que separa cada una.',nuevo:true},
+    {id:'intermoleculares.html',r:null,n:1,e:'🧲',t:'Fuerzas intermoleculares',d:'London, dipolo-dipolo y puentes de hidrógeno: ebullición y solubilidad.',nuevo:true},
+    {id:'precipitacion.html',r:null,n:3,e:'⚪',t:'Precipitación y redox',d:'Reglas de solubilidad, ecuación iónica neta, redox y neutralización.',nuevo:true},
+    {id:'termoquimica.html',r:null,n:3,e:'🔥',t:'Energía en las reacciones',d:'Exo y endotérmicas, energía de activación y catalizadores.',nuevo:true},
+    {id:'ambiente.html',r:null,n:4,e:'🌍',t:'Química del ambiente',d:'Efecto invernadero, lluvia ácida y ciclos del carbono, nitrógeno y agua.',nuevo:true}
   ];
   // El Juego no es una estación: tiene preguntas de todos los niveles. Cada
   // panel de nivel enlaza a sus temas con juego.html?g=<grupo>, que resalta
   // ese tema en la portada del Juego.
   var JUEGO={
-    1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico'],['modelos','🔭 Modelos y datos']],
+    1:[['atomo','🪐 Teoría atómica'],['elemento','⚛️ Tabla periódica'],['enlace','🧲 Enlace químico'],['modelos','🔭 Modelos y datos'],['materia','🧊 Materia'],['mezclas','🧩 Mezclas'],['intermoleculares','🧲 Fuerzas intermoleculares']],
     2:[['ox-anh','💨 Óxidos'],['sal-bin','🔵 Sales binarias'],['ac-ox','⚡ Ácidos oxácidos'],['sal-ox','🟠 Sales oxigenadas'],['all','🔬 Repaso: todos']],
-    3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo'],['acidobase','🧪 Ácidos y bases']],
-    4:[['mol-masa','🔢 Mol y masa molar'],['industria','🏭 Industria'],['gases','🎈 Gases'],['soluciones','🧂 Soluciones']]
+    3:[['reaccion','⚗️ Tipos de reacción'],['reactividad','🔗 Cadena de reactividad'],['balanceo','⚖️ Balanceo'],['acidobase','🧪 Ácidos y bases'],['precipitacion','⚪ Precipitación y redox'],['termo','🔥 Energía']],
+    4:[['mol-masa','🔢 Mol y masa molar'],['industria','🏭 Industria'],['gases','🎈 Gases'],['soluciones','🧂 Soluciones'],['ambiente','🌍 Ambiente']]
   };
   var visitas={};
   try{ visitas=JSON.parse(localStorage.getItem('ionom-visitas')||'{}')||{}; }catch(e){}

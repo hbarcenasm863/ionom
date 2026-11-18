@@ -4,6 +4,20 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 18 de noviembre — Cobertura de los DBA de química: 6 temas nuevos, 6 animaciones y 168 preguntas
+
+Revisión contra los DBA de Ciencias Naturales (MEN, 2016) de 1.° a 11.°; el informe completo está en `DBA_COBERTURA.md`. Se cerraron todos los huecos que había:
+
+- **Temas nuevos**, cada uno con página, animación, banco para el Juego (con «Cazar errores») y entrada en el panel docente (temas, evaluación tipo Saber con situación, abiertas): `materia.html`, `mezclas.html`, `intermoleculares.html`, `precipitacion.html`, `termoquimica.html` y `ambiente.html`.
+- **Animaciones nuevas** en `assets/simx.js`: `separacion`, `estados`, `intermolecular`, `precipitacion`, `energia` e `invernadero` (todas con pantalla completa).
+- **Preguntas** en `assets/bancos-dba.js` (archivo network-first): 30 de materia, 30 de mezclas, 30 de fuerzas intermoleculares, 22 de precipitación/redox, 22 de energía, 16 de ambiente, más 10 de Lewis y pOH (se suman a `BANCO_PH`) y 8 de propiedades periódicas (se suman a `BANCO_ATOMO`). Cada una trae `dba` (grado-número) y competencia/afirmación del Icfes. En el Juego las de opción múltiple salen como preguntas tipo Saber con su situación.
+- **`ph.html`**: sección nueva con la teoría de Lewis y una calculadora de pH ↔ pOH.
+- **`assets/sed10.js`**: la práctica de las páginas ahora muestra la situación (`ctx`) de cada pregunta.
+- **Portada, menú y `sw.js`** actualizados (`CACHE_NAME` `ionom-v104`). `ionom-analytics.gs` no cambió.
+- Las páginas se generan con `node herramientas/generar-paginas-dba.js` a partir de `gases.html`.
+
+---
+
 ## 16 de noviembre (29) — Ajustes a termoquímica, cinética y equilibrio tras la auditoría
 
 Un auditor experto en química verificó todos los cálculos de las tres guías nuevas (sin errores de cálculo) y señaló imprecisiones y vacíos para Saber 11. Las guías pasan a 2 páginas cada una.

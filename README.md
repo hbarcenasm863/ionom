@@ -28,8 +28,16 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `industria.html` | Química en la industria | Conservación de masa y carga, procesos industriales colombianos, limitante, pureza, rendimiento y experimento con cáscara de huevo (SED 10.°) |
 | `gases.html` | Leyes de los gases | Laboratorio de gases con Boyle, Charles, Gay-Lussac, Avogadro, gas ideal y Dalton; problemas al azar |
 | `soluciones.html` | Soluciones y concentración | Disolución animada, solubilidad, % m/m, % m/v, % v/v, ppm, M, m, X, N y dilución; problemas al azar |
+| `materia.html` | Materia: estados y cambios | Estados con modelo de partículas, cambios de estado, T y P (olla a presión, altura), cambio físico vs. químico y densidad |
+| `mezclas.html` | Mezclas y separación | Sustancias puras, mezclas, coloides y técnicas de separación con simulación |
+| `intermoleculares.html` | Fuerzas intermoleculares | London, dipolo-dipolo y puentes de hidrógeno; punto de ebullición, solubilidad y propiedades del agua |
+| `precipitacion.html` | Precipitación y redox | Reglas de solubilidad, ecuación iónica neta, redox, neutralización y descomposición |
+| `termoquimica.html` | Energía en las reacciones | Exo/endotérmicas, diagrama de energía, energía de activación y catalizadores |
+| `ambiente.html` | Química del ambiente | Efecto invernadero, lluvia ácida, eutrofización y ciclos del carbono, nitrógeno y agua |
 | `banco.js` | Banco | 681 compuestos y ejercicios (nomenclatura, reacciones, balanceo, mol/masa) + `BANCO_ATOMO` (49 preguntas de teoría atómica y configuración) + `BANCO_ENLACE` (47 preguntas de enlace químico) + `BANCO_PH`, `BANCO_INDUSTRIA`, `BANCO_MODELOS`, `BANCO_GASES` y `BANCO_SOLUCIONES` (135 preguntas de ampliación para 10.°) |
 | `ionom-analytics.gs` | Registro | Google Apps Script para registrar resultados del Modo Estudiante en Google Sheets |
+
+Cobertura de los DBA de Ciencias Naturales: ver [`DBA_COBERTURA.md`](DBA_COBERTURA.md). Los bancos de los temas nuevos viven en `assets/bancos-dba.js` y las páginas se regeneran con `node herramientas/generar-paginas-dba.js`.
 
 Detalle de la región «El átomo» (teoría atómica, configuración electrónica, menú átomo y tema del Juego): ver [`TEORIA_ATOMICA.md`](TEORIA_ATOMICA.md).
 

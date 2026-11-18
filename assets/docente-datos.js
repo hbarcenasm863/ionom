@@ -2708,9 +2708,13 @@ ABIERTAS: [
 (function(){
   var D=window.DOCENTE_DATOS;if(!D)return;
   var fuentes=[['gases',typeof BANCO_GASES!=='undefined'?BANCO_GASES:[]],['soluciones',typeof BANCO_SOLUCIONES!=='undefined'?BANCO_SOLUCIONES:[]],['modelos',typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:[]],['acidobase',typeof BANCO_PH!=='undefined'?BANCO_PH:[]],['industria',typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:[]]];
+  /* Temas que cierran los huecos frente a los DBA (assets/bancos-dba.js). */
+  if(window.BANCOS_DBA)['materia','mezclas','intermoleculares','precipitacion','termo','ambiente'].forEach(function(t){fuentes.push([t,window.BANCOS_DBA[t]||[]]);});
+  if(window.DBA_TEMAS)window.DBA_TEMAS.forEach(function(t){D.TEMAS.push(t);});
+  if(window.DBA_ABIERTAS)window.DBA_ABIERTAS.forEach(function(q){D.ABIERTAS.push(q);});
   var CTS={cuerpo:1,ambiente:1,procesos:1,dalton:1};
   fuentes.forEach(function(f){f[1].forEach(function(q){if(q.tipo&&q.tipo!=='mc')return;
-    D.SABER.push({tema:f[0],c:q.tema,k:CTS[q.tema]?'CTS':'Q',ctx:q.ctx||'',q:q.q,o:[q.ok].concat(q.d)});});});
+    D.SABER.push({tema:f[0],c:q.c||q.tema,af:q.af,dba:q.dba,k:(CTS[q.tema]||q.af==='E3')?'CTS':'Q',ctx:q.ctx||'',q:q.q,o:[q.ok].concat(q.d)});});});
 })();
 
 

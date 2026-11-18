@@ -10,6 +10,7 @@
 <title>IonNom — Juego</title>
 <script src="banco.js"></script>
 <script src="assets/bancos-extra.js"></script>
+<script src="assets/bancos-dba.js"></script>
 <script src="assets/retos.js"></script>
 <script src="assets/saber-icfes.js"></script>
 <script src="assets/icfes-datos.js"></script>
@@ -913,6 +914,42 @@ html{font-size:var(--base-fs)}
         <div class="gb-icon-wrap gic-mol">🧂</div>
         <span class="gb-name">Soluciones</span>
         <span class="gb-sub">Disolución, solubilidad, concentración y dilución</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('materia')">
+        <span class="gb-step">22</span>
+        <div class="gb-icon-wrap gic-mol">🧊</div>
+        <span class="gb-name">Materia: estados y cambios</span>
+        <span class="gb-sub">Estados, cambios de estado, físico o químico, T y P</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('mezclas')">
+        <span class="gb-step">23</span>
+        <div class="gb-icon-wrap gic-mol">🧩</div>
+        <span class="gb-name">Mezclas y separación</span>
+        <span class="gb-sub">Mezclas, coloides y técnicas de separación</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('intermoleculares')">
+        <span class="gb-step">24</span>
+        <div class="gb-icon-wrap gic-mol">🧲</div>
+        <span class="gb-name">Fuerzas intermoleculares</span>
+        <span class="gb-sub">London, dipolo-dipolo y puentes de hidrógeno</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('precipitacion')">
+        <span class="gb-step">25</span>
+        <div class="gb-icon-wrap gic-mol">⚪</div>
+        <span class="gb-name">Precipitación y redox</span>
+        <span class="gb-sub">Solubilidad, ecuación iónica, redox y neutralización</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('termo')">
+        <span class="gb-step">26</span>
+        <div class="gb-icon-wrap gic-mol">🔥</div>
+        <span class="gb-name">Energía en las reacciones</span>
+        <span class="gb-sub">Exo/endotérmicas, energía de activación y catalizadores</span>
+      </button>
+      <button class="group-btn" onclick="pickGroup('ambiente')">
+        <span class="gb-step">27</span>
+        <div class="gb-icon-wrap gic-mol">🌍</div>
+        <span class="gb-name">Química del ambiente</span>
+        <span class="gb-sub">Efecto invernadero, lluvia ácida y ciclos del C, N y agua</span>
       </button>
       <button class="group-btn" onclick="pickGroup('ahorcado')">
         <span class="gb-step">21</span>
@@ -1968,6 +2005,7 @@ function startGame(group){
   const BANCOS_MC={atomo:typeof BANCO_ATOMO!=='undefined'?BANCO_ATOMO:null,enlace:typeof BANCO_ENLACE!=='undefined'?BANCO_ENLACE:null,
     acidobase:typeof BANCO_PH!=='undefined'?BANCO_PH:null,industria:typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:null,modelos:typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:null,
     gases:typeof BANCO_GASES!=='undefined'?BANCO_GASES:null,soluciones:typeof BANCO_SOLUCIONES!=='undefined'?BANCO_SOLUCIONES:null,estequiometria:typeof BANCO_ESTEQUIOMETRIA!=='undefined'?BANCO_ESTEQUIOMETRIA:null};
+  if(window.BANCOS_DBA)['materia','mezclas','intermoleculares','precipitacion','termo','ambiente'].forEach(t=>{BANCOS_MC[t]=window.BANCOS_DBA[t];});
   if(group in BANCOS_MC){
     const banco=BANCOS_MC[group];
     const pool=banco||[];
@@ -1978,7 +2016,8 @@ function startGame(group){
     const inter=pool.filter(a=>a.tipo&&a.tipo!=='mc'), mcs=pool.filter(a=>!a.tipo||a.tipo==='mc');
     const nInter=Math.min(inter.length,6);
     const elegidas=(inter.length&&mcs.length>=20-nInter)?shuffle([...shuffle(inter).slice(0,nInter),...shuffle(mcs).slice(0,20-nInter)]):buildQuestionQueue(pool,20);
-    let lista=elegidas.map(a=>({...a,isAtom:true,qtype,group,formula:a.id,trad:[respuestaTexto(a)],stock:[],sist:[],hint:''}));
+    /* Las preguntas de los temas DBA (campo dba) traen una situación (ctx): se muestran como preguntas tipo Saber. */
+    let lista=elegidas.map(a=>({...a,...((a.dba&&a.ctx&&(!a.tipo||a.tipo==='mc'))?{saber:1}:{}),isAtom:true,qtype,group,formula:a.id,trad:[respuestaTexto(a)],stock:[],sist:[],hint:''}));
     // Tres «cazar errores» del mismo tema reemplazan tres de opción múltiple.
     const cz=preguntasCazar(group,3);
     if(cz.length){let k=0;lista=lista.map(q=>(k<cz.length&&(!q.tipo||q.tipo==='mc'))?cz[k++]:q);lista=shuffle(lista);}
@@ -2390,6 +2429,7 @@ const ATOM_TEMA={cazar:'🔎 Cazar errores',variables:'📏 Variables y unidades
   naturaleza:'🔭 Teorías, leyes y modelos',gases:'🎈 Leyes de los gases',datos:'📈 Datos, variables y predicción',
   modelos:'🕰️ Modelos atómicos',estructura:'⚛️ Estructura del átomo',config:'🧬 Configuración electrónica',tabla:'📊 Tabla periódica: historia y propiedades',cuanticos:'🔢 Números cuánticos',iones:'🧮 A, Z, neutrones e iones',
   lewis:'🔵 Octeto y estructuras de Lewis',ionico:'➕➖ Enlace iónico',covalente:'🤝 Enlace covalente',polaridad:'⚖️ Electronegatividad y polaridad',metalico:'🔩 Enlace metálico',propiedades:'🧪 Propiedades de las sustancias'};
+if(window.DBA_ETIQUETAS)Object.assign(ATOM_TEMA,window.DBA_ETIQUETAS);
 function renderAtomMC(q){
   try{
     document.getElementById('q-formula').innerHTML=`<span class="el-name-lg" style="font-size:1rem">${(q.group==='modelos'&&q.tema==='modelos')?'🕰️ Modelos atómicos':(ATOM_TEMA[q.tema]||GROUP_LABELS[q.group]||'🪐 Teoría atómica')}</span>`;
@@ -3559,6 +3599,8 @@ function endGame(){
 const GROUP_LABELS={all:'Todos los grupos',ahorcado:'Ahorcado',crucigrama:'Crucigrama',sopa:'Sopa de letras',cazar:'Cazar errores','ox-anh':'Óxidos y Anhídridos',hidru:'Hidruros','ac-hid':'Ácidos hídricos',base:'Bases','ac-ox':'Ácidos oxácidos','sal-bin':'Sales binarias','sal-ox':'Sales oxigenadas','sal-ac':'Sales ácidas',elemento:'Tabla periódica y configuración electrónica',atomo:'Teoría atómica y configuración electrónica',enlace:'Enlace químico',modelos:'Teorías, leyes, modelos y datos',acidobase:'Ácidos, bases y pH',industria:'Química en la industria',gases:'Leyes de los gases',soluciones:'Soluciones y concentración',reaccion:'Tipos de reacción',balanceo:'Balanceo de ecuaciones','mol-masa':'Mol y masa molar',estequiometria:'Estequiometría',reactividad:'Cadena de reactividad'};
 
 const STUDY_TIPS={'crucigrama':'Empieza por las palabras que ya sabes: sus letras te ayudan con las que se cruzan. Antes de comprobar, llena todas las casillas.','sopa':'Primero piensa la palabra con la pista y cuenta sus letras; luego busca su primera letra en la cuadrícula.','ahorcado':'Empieza por las vocales y por las letras más comunes (S, R, N, L, C). Pide la segunda pista antes de arriesgar: la tercera te deja solo 1 punto.','cazar':'Lee la afirmación completa y busca el único dato o la única palabra que está mal: un signo, una unidad, un número, un nombre o una relación invertida.','gases':'Temperatura siempre en K. Boyle P₁V₁ = P₂V₂; Charles V/T; Gay-Lussac P/T; combinada P₁V₁/T₁ = P₂V₂/T₂; ideal PV = nRT con R = 0,082.','soluciones':'% m/m divide entre g de solución; M = mol ÷ L de solución; m = mol ÷ kg de solvente; ppm = mg/L; al diluir C₁V₁ = C₂V₂.','acidobase':'Ácido dona H⁺ y base lo acepta (Brønsted-Lowry). Cada unidad de pH es un factor de 10. La sangre se mantiene entre 7,35 y 7,45 gracias a los amortiguadores.','estequiometria':'Ruta: gramos → moles → razón molar → gramos. El limitante es el reactivo que se acaba primero: compara moles, no gramos. Rendimiento = real ÷ teórico × 100.','industria':'Balancea masa y carga, pasa gramos a moles, usa la razón molar y vuelve a gramos. Pureza: multiplica por el %; rendimiento: real ÷ teórico × 100.','modelos':'Ley = describe (P·V = constante); teoría = explica (partículas en movimiento); modelo = representa. Cambia una sola variable y controla las demás.','ox-bas':'Metal + O. El EO del metal determina la fórmula y el nombre (nomenclatura Stock).','anhid':'No metal + O. En Colombia se llaman "óxidos ácidos". El EO del no metal varía según la fórmula.','hidru':'Metal + H⁻. El hidrógeno tiene estado de oxidación −1 en hidruros metálicos.','ac-hid':'HX sin oxígeno. Se nombran "ácido X-hídrico" (trad.) o "haluro/sulfuro de hidrógeno" (Stock).','base':'Metal + OH⁻. El número de grupos hidroxilo iguala la carga del catión.','ac-ox':'H + oxoanión. El EO del átomo central varía; más oxígenos implica mayor estado de oxidación.','sal-bin':'Metal + halógeno/S. Intercambio de valencias para balancear la fórmula.','sal-ox':'Metal + oxoanión. Identifica el anión, balancea cargas del catión con la carga del anión.','sal-ac':'El ácido poliprótico no cedió todos sus H⁺. El anión conserva H: HCO₃⁻, H₂PO₄⁻, HPO₄²⁻. Nombre trad: prefijo bi-. Nombre Stock: hidrogeno- + nombre del oxoanión.','elemento':'Repasa la tabla periódica: símbolos, nombres, número atómico, categorías y configuración electrónica.','atomo':'Repasa la línea del tiempo de los modelos atómicos (atomo.html) y las reglas de Aufbau, Pauli y Hund con el diagrama de Moeller (configuracion.html).','enlace':'Repasa en enlace.html cómo decidir el tipo de enlace con la ΔEN (apolar < 0,4; iónico ≥ 1,7 entre metal y no metal), las estructuras de Lewis y cómo las propiedades (fusión, conductividad, maleabilidad) delatan el enlace.','reaccion':'Recuerda los 5 tipos: síntesis (A+B→AB), descomposición (AB→A+B), sustitución simple (A+BC→AC+B), doble sustitución (AB+CD→AD+CB), combustión (compuesto orgánico+O₂→CO₂+H₂O).','balanceo':'Usa el método de tanteo: balancea primero los átomos que aparecen menos veces, deja H y O para el final. Los coeficientes deben ser los mínimos enteros posibles.'};
+Object.assign(GROUP_LABELS,{materia:'Materia: estados y cambios',mezclas:'Mezclas y separación',intermoleculares:'Fuerzas intermoleculares',precipitacion:'Precipitación y redox',termo:'Energía en las reacciones',ambiente:'Química del ambiente'});
+Object.assign(STUDY_TIPS,{materia:'Sólido: partículas fijas; líquido: juntas y deslizándose; gas: separadas y libres. En un cambio de estado la temperatura no sube. Cambio químico = aparece una sustancia nueva (gas, sólido, color, calor).',mezclas:'Filtración: sólido insoluble. Decantación: líquidos inmiscibles. Tamizado: distinto tamaño. Evaporación: sólido disuelto. Destilación: distinto punto de ebullición. Coloide: dispersa la luz y no sedimenta.',intermoleculares:'London (todas) < dipolo-dipolo (polares) < puente de hidrógeno (H con F, O o N). A mayor fuerza, mayor punto de ebullición. Semejante disuelve a semejante. Al hervir no se rompen los enlaces de la molécula.',precipitacion:'Nitratos y sales de Na⁺, K⁺, NH₄⁺ son solubles. Ag⁺, Pb²⁺ con Cl⁻; Ba²⁺ con SO₄²⁻ precipitan. La ecuación iónica neta omite los espectadores. Reductor: se oxida (pierde e⁻). Oxidante: se reduce (gana e⁻).',termo:'Exotérmica: libera calor, ΔH < 0. Endotérmica: absorbe calor, ΔH > 0. La energía de activación es la barrera. El catalizador baja Ea pero no cambia ΔH. Q = m·c·ΔT.',ambiente:'El efecto invernadero natural es necesario; el CO₂, el CH₄ y el vapor de agua retienen calor. La lluvia ácida viene de SO₂ y NOₓ. Fotosíntesis: CO₂ + H₂O → glucosa + O₂. Los fertilizantes en exceso causan eutrofización.'});
 
 function generateStudyFeedback(){
   const pct  = Math.round((ST.score/(ST.questions.length*2||40))*100);

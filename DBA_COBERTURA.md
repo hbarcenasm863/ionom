@@ -1,5 +1,7 @@
 # IonNom — Cobertura de los DBA de Ciencias Naturales (química)
 
+> **Actualización 18-11-2026:** todos los huecos de las secciones 1 y 2 quedaron cubiertos (ver `CHANGELOG.md`). Este informe se conserva como el diagnóstico original; la columna «Estado» describe la situación **antes** de ese trabajo.
+
 Revisión del repositorio contra los *Derechos Básicos de Aprendizaje, Ciencias Naturales, V.1* (MEN, 2016), grados 1.° a 11.°.
 Solo se consideran los DBA de **química** (materia, mezclas, átomo, enlace, reacciones, gases, soluciones, ácido-base). Los de física (luz, sonido, fuerzas, circuitos, ondas) y biología son de otros sitios o quedan fuera de IonNom; los de química **orgánica** (11.° DBA 4) corresponden a ChromaNom.
 

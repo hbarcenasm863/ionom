@@ -218,6 +218,29 @@ html{font-size:var(--base-fs)}
     <div class="calc-out" id="cl-acido-out" aria-live="polite">Responde las cuatro.</div>
   </div>
 
+  <!-- ── LEWIS Y pOH ── -->
+  <div class="sect">
+    <h2>Una tercera teoría (Lewis) y el pOH <button class="tts-btn" onclick="speakText(this)" data-text="Lewis propuso una teoría más general: un ácido es una especie que acepta un par de electrones y una base es una especie que dona un par de electrones. Además del pH existe el pOH, y siempre se cumple que pH más pOH es igual a catorce.">🔊 Escuchar</button></h2>
+    <div class="meta">Al terminar podrás clasificar ácidos y bases con las tres teorías y pasar entre pH, pOH, [H⁺] y [OH⁻].</div>
+    <div class="duo">
+      <div class="info-box"><strong>Lewis (1923)</strong><br>Ácido: <strong>acepta</strong> un par de electrones. Base: <strong>dona</strong> un par de electrones.<br><span class="eq">BF₃ + :NH₃ → F₃B–NH₃</span><br>No hay H⁺ ni agua: el BF₃ (ácido de Lewis) acepta el par del NH₃ (base de Lewis). Esta teoría incluye a las otras dos.</div>
+      <div class="ok-box"><strong>Las tres juntas</strong><br>Arrhenius: libera H⁺ / OH⁻ en agua. Brønsted-Lowry: dona / acepta H⁺. Lewis: acepta / dona un par de electrones. Cada una es <strong>más general</strong> que la anterior.</div>
+    </div>
+    <div class="pasos">
+      <div class="pasos-h">Ejemplo resuelto: del pH al pOH</div>
+      <ol>
+        <li><strong>Dato.</strong> El jugo de limón tiene pH = 2.</li>
+        <li><strong>Relación.</strong> pH + pOH = 14, así que pOH = 14 − 2 = <strong>12</strong>.</li>
+        <li><strong>Concentraciones.</strong> [H⁺] = 10⁻² = 0,01 M y [OH⁻] = 10⁻¹² M.</li>
+        <li><strong>Interpreta.</strong> Hay 10¹⁰ veces más H⁺ que OH⁻: es una solución <strong>muy ácida</strong>.</li>
+      </ol>
+    </div>
+    <div class="calc">
+      <div class="calc-row"><label for="lw-v">Escribe:</label><input id="lw-v" inputmode="decimal" value="3"><select id="lw-u"><option value="pH">pH</option><option value="pOH" selected>pOH</option></select></div>
+      <div class="calc-out" id="lw-out" aria-live="polite"></div>
+    </div>
+  </div>
+
   <!-- ── ESCALA DE pH ── -->
   <div class="sect">
     <h2>La escala de pH: cada número es diez veces <button class="tts-btn" onclick="speakText(this)" data-text="La escala de pH va de cero a catorce. Lo más importante es que es logarítmica: si el pH baja una unidad, hay diez veces más iones hidrógeno. Mueve el control y observa cómo cambia la concentración y qué sustancias de tu casa tienen ese pH.">🔊 Escuchar</button></h2>
@@ -416,6 +439,7 @@ var btn=document.getElementById('theme-btn');if(btn)btn.textContent=(document.do
 })();
 </script>
 <script src="banco.js"></script>
+<script src="assets/bancos-dba.js"></script>
 <script src="assets/sed10.js"></script>
 <script src="assets/sim10.js"></script>
 <script>
@@ -425,6 +449,13 @@ function coma(v,d){return (d==null?String(v):v.toFixed(d)).replace('.',',');}
 var NS='http://www.w3.org/2000/svg';
 function el(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);if(p)p.appendChild(x);return x;}
 function tx(p,x,y,s,a){var t=el('text',Object.assign({x:x,y:y},a||{}),p);t.textContent=s;return t;}
+/* Calculadora pH ↔ pOH */
+(function(){var v=document.getElementById('lw-v'),u=document.getElementById('lw-u'),o=document.getElementById('lw-out');if(!v)return;
+function f(x){return String(Math.round(x*100)/100).replace('.',',');}
+function e(x){var ex=Math.floor(Math.log10(x)+1e-9),m=x/Math.pow(10,ex);return (Math.abs(m-1)<0.005?'1':f(m))+' × 10<sup>'+ex+'</sup> M';}
+function calc(){var x=parseFloat(String(v.value).replace(',','.'));if(isNaN(x)||x<0||x>14){o.innerHTML='Escribe un número entre 0 y 14.';return;}
+var ph=u.value==='pH'?x:14-x,poh=14-ph;o.innerHTML='pH = <b>'+f(ph)+'</b> · pOH = <b>'+f(poh)+'</b><br>[H⁺] = '+e(Math.pow(10,-ph))+' · [OH⁻] = '+e(Math.pow(10,-poh))+'<br>'+(ph<6.95?'Solución <b>ácida</b>.':ph>7.05?'Solución <b>básica</b>.':'Solución <b>neutra</b>.');}
+v.addEventListener('input',calc);u.addEventListener('change',calc);calc();})();
 if(window.SED10&&typeof BANCO_PH!=='undefined')SED10.practica('prac-ph',BANCO_PH,8,'Practica: ácidos, bases y pH','acidobase');
 
 SED10.clasificador('cl-acido',[

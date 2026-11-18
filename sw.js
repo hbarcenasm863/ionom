@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v103';
+const CACHE_NAME = 'ionom-v104';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -23,6 +23,12 @@ const ASSETS_TO_CACHE = [
   '/ionom/modelos.html',
   '/ionom/gases.html',
   '/ionom/soluciones.html',
+  '/ionom/materia.html',
+  '/ionom/mezclas.html',
+  '/ionom/intermoleculares.html',
+  '/ionom/precipitacion.html',
+  '/ionom/termoquimica.html',
+  '/ionom/ambiente.html',
   '/ionom/assets/sed10.css',
   '/ionom/assets/sed10.js',
   '/ionom/assets/sim10.js',
@@ -32,6 +38,7 @@ const ASSETS_TO_CACHE = [
   '/ionom/assets/fotos-datos.js',
   '/ionom/banco.js',
   '/ionom/assets/bancos-extra.js',
+  '/ionom/assets/bancos-dba.js',
   '/ionom/assets/ahorcado.js',
   '/ionom/assets/sopa.js',
   '/ionom/assets/extras.js',
@@ -118,7 +125,7 @@ self.addEventListener('fetch', (event) => {
   // estos dos solo los usa la herramienta de la docente -- preferir
   // "siempre la versión más nueva cuando hay internet" es más importante
   // aquí que ahorrar una petición de red.
-  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
+  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/bancos-dba.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
