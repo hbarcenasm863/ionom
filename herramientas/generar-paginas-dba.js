@@ -48,6 +48,7 @@ ${s.glos.map(([t,d])=>`      <button type="button"><b>${t}</b><span class="hint"
   return h+'  </div>\n\n';
 }
 
+const NIVEL={materia:['Básico','grados 1.° a 9.°'],mezclas:['Básico','grados 4.° a 9.°'],intermoleculares:['Medio','grados 8.° a 11.°'],precipitacion:['Medio','grados 10.° y 11.°'],termoquimica:['Medio','grados 10.° y 11.°'],ambiente:['Medio','grados 7.° a 11.°']};
 const P=[];
 
 /* ═════════ MATERIA ═════════ */
@@ -182,6 +183,7 @@ P.forEach(p=>{
   <div class="page-hdr">
     <h1>${p.h1}</h1>
     <p>${p.intro}</p>
+    <p style="margin-top:8px"><span class="tipo" style="display:inline-block;padding:3px 10px;border-radius:999px;background:var(--an-b);color:var(--an-t);font-weight:700;font-size:.78rem">Nivel ${NIVEL[p.f.replace('.html','')][0].toLowerCase()} · ${NIVEL[p.f.replace('.html','')][1]}</span></p>
   </div>
 
   <a href="#practica" class="quick-practice" onclick="document.getElementById('practica').scrollIntoView({behavior:'smooth'});return false;">⬇️ Ir directo a la práctica</a>
