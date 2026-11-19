@@ -4,7 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
-## 18 de noviembre — Cobertura de los DBA de química: 6 temas nuevos, 6 animaciones y 168 preguntas
+## 19 de noviembre — Segunda revisión experta contra el PDF de los DBA
+
+Un agente revisor (química y didáctica) contrastó el contenido nuevo con el documento oficial de DBA del MEN. Se aplicaron todos sus hallazgos:
+
+- **Química:** la precipitación (lluvia) ya no se presenta como cambio de estado; reglas de solubilidad completas (bromuros, yoduros, fosfatos, hidróxidos de Ba²⁺ y Ca²⁺); «cloruro de sodio puro» en lugar de «sal de cocina» (la de cocina es yodada); la relación presión–ebullición ya no se llama «directa»; lluvia ácida distinguida de la lluvia normal (pH 5,6); coloide aclarado como mezcla heterogénea; fuerzas de Van der Waals incorporadas; «a igual tamaño de molécula» al ordenar las fuerzas; −18 °C y 1,2 °C en la simulación del invernadero.
+- **DBA y competencias Icfes:** reasignados los que no correspondían a la evidencia del PDF (viscosidad → 2.°·2, porcentaje en masa → 9.°·3, entre otros).
+- **Ítems:** contextos que daban la respuesta, distractores verdaderos por un lado o absurdos, y el sesgo de forma («porque» solo en los distractores).
+- **19 preguntas nuevas** para evidencias sin cubrir: materiales y sus usos (1.°·2), ductilidad, conductores y aislantes (5.°·2), viscosidad y temperatura (6.°·2), solubilidad de gases y sobresaturación (9.°·3), colorimetría con indicador (9.°·2), conservación de la masa y la carga en ecuaciones iónicas (10.°·3), naturaleza de los reactivos (11.°·4), drenaje ácido de mina y carreteras en bosques (11.°·5), microorganismos y uso responsable del agua (7.°·4), suspensiones en medicinas (6.°·3), entre otras.
+- Quedan sin cubrir por pertenecer a otros sitios o a la física: nutrición autótrofa y heterótrofa (BioNom), mecanismos orgánicos (ChromaNom) y circuitos eléctricos. La redacción de las preguntas de 2.° a 5.° sigue usando «partículas»; la etiqueta «Nivel básico» lo señala.
+
+---
+
+## 18 de noviembre — Cobertura de los DBA de química: 6 temas nuevos, 6 animaciones y 168 preguntas (187 tras la revisión del 19 de noviembre)
 
 Revisión contra los DBA de Ciencias Naturales (MEN, 2016) de 1.° a 11.°; el informe completo está en `DBA_COBERTURA.md`. Se cerraron todos los huecos que había:
 
