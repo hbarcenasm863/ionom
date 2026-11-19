@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (32) — Lote 2 de química (uso y explicación) y reauditoría del lote 1
+
+El docente pidió revisar de nuevo lo corregido, subir un segundo lote con las demás competencias y publicar en `main`.
+
+- **Reauditoría del lote 1** (agente independiente, resolución a ciegas): coincidió con la clave en 70 de 70; 55 aprobadas, 14 con ajuste menor y 1 por corregir (P23, dos secuencias defendibles). Se aplicaron todos sus reemplazos (P3, P20, P23, P25, P33, P34, P48, P49, P51, P52, P54, P56, P61, P65, P69).
+- **Lote 2 en `assets/docente-datos.js`:** 70 preguntas nuevas en los mismos cinco temas (gases, soluciones, ácido-base, enlace, estequiometría), **30 de uso comprensivo, 30 de explicación y 10 de indagación**, para equilibrar el banco (juntos, los dos lotes suman 44 de uso, 50 de explicación y 46 de indagación). Ocho son de ciencia, tecnología y sociedad. Auditoría independiente: coincidió con la clave en 70 de 70; se corrigieron 4 preguntas (Q7 aerosol, Q27, Q42 indicador, Q67) y 22 ajustes menores, y se cambió Q52 para que no adelantara la Q55. Opciones igualadas: la correcta es la más larga en 16 % de las preguntas.
+- **`assets/saber-juego.js`:** regenerado (1 013 preguntas). **`sw.js`:** `CACHE_NAME` de `ionom-v104` a `ionom-v105`.
+- **Pendiente:** llegar a 30 por competencia en cada tema (faltan sobre todo explicación e indagación: por ejemplo, gases tiene hoy 24 de uso, 15 de explicación y 19 de indagación); faltan evidencias del marco 6.1, 6.2, 8.2, 9.1 y 9.2, más preguntas de nivel 4 y modelos con figuras; y los demás temas (átomo, reacciones, cinética, equilibrio). No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 19 de noviembre (31) — Auditoría del lote 1 de química y correcciones
 
 Un auditor independiente (resolvió las 70 preguntas a ciegas y las contrastó con el Marco de referencia y el cuadernillo del Icfes) coincidió con la clave en las 70, pero encontró 13 preguntas para corregir, 23 con ajustes menores y 1 para descartar. Se aplicó el informe completo.
