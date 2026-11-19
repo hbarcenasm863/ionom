@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (30) — Banco Saber 11: lote 1 de química (70 preguntas, con más indagación)
+
+El docente pidió llegar a unas 30 preguntas por tema del examen y por competencia, y reforzar sobre todo la **indagación**, que es lo más débil en las instituciones. Se empezó por química con el modelo del Marco de referencia del Icfes (2019) y el estilo del cuadernillo de preguntas (2021).
+
+- **`assets/docente-datos.js` (bloque nuevo al final):** 70 preguntas originales tipo Saber en cinco temas: gases, soluciones, ácido-base, enlace y estequiometría. Por tema, 3 de uso comprensivo, 4 de explicación y 7 u 8 de indagación (en total 14 + 20 + 36). Cada una trae competencia, afirmación del Icfes, explicación y, en 25 casos, su tabla o su gráfica. Dos son de ciencia, tecnología y sociedad. Opciones del mismo largo y forma (la correcta es la más larga en 24 de 70, no en la mitad) y fórmulas sin paréntesis.
+- **`assets/saber-juego.js`:** regenerado con `node herramientas/generar-saber-juego.js`.
+- **`sw.js`:** `CACHE_NAME` de `ionom-v103` a `ionom-v104`.
+- **Revisión hecha:** estructura, duplicados con el banco actual, competencia que asigna el sitio y cuentas de cada pregunta (proporciones, titulación, rendimiento). Pendiente: que el docente revise una muestra, sobre todo las de indagación.
+- **Pendiente:** llegar a 30 por competencia en cada tema (faltan cerca de 12 de uso, 21 de explicación y 13 de indagación en gases, por ejemplo), y los demás temas de química (atómo, reacciones, mezclas y separación, cinética y equilibrio). No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 16 de noviembre (29) — Ajustes a termoquímica, cinética y equilibrio tras la auditoría
 
 Un auditor experto en química verificó todos los cálculos de las tres guías nuevas (sin errores de cálculo) y señaló imprecisiones y vacíos para Saber 11. Las guías pasan a 2 páginas cada una.
