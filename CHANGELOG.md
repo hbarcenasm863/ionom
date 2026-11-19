@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (30) — Aviso de uso de IA según la Directiva 002 de 2026
+
+El docente compartió la Directiva 002 de 2026 de la Secretaría General de Bogotá (uso de IA generativa en comunicaciones institucionales, radicada el 8 de octubre de 2026) y pidió aplicar a los sitios los arreglos que resultaran de revisarla. La directiva (numerales 3.4 y 4.1.8) pide declarar cuando la IA generó sustancialmente el texto de una pieza pública, y que en caso de duda se declare.
+
+- **`assets/ionom-ui.js`:** el `<footer>` de todas las páginas agrega «Parte de este contenido fue generado con apoyo de inteligencia artificial y revisado y aprobado por el docente Harvey Bárcenas Morales.»
+- **`sw.js`:** `CACHE_NAME` sube de `ionom-v103` a `ionom-v104` (el script está en la lista de archivos cacheados, así que sin subir la versión los celulares con la app instalada no lo verían). Probado con Playwright en cuatro páginas: aviso presente y sin errores.
+- **Pendiente:** preguntar a rectoría o a la SED si el material del aula cuenta como «comunicación institucional»; mientras tanto se declara. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 16 de noviembre (29) — Ajustes a termoquímica, cinética y equilibrio tras la auditoría
 
 Un auditor experto en química verificó todos los cálculos de las tres guías nuevas (sin errores de cálculo) y señaló imprecisiones y vacíos para Saber 11. Las guías pasan a 2 páginas cada una.
