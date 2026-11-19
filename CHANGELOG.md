@@ -4,7 +4,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
-## 19 de noviembre (32) — Lote 2 de química (uso y explicación) y reauditoría del lote 1
+## 19 de noviembre (33) — Lote 2 de química (uso y explicación) y reauditoría del lote 1
 
 El docente pidió revisar de nuevo lo corregido, subir un segundo lote con las demás competencias y publicar en `main`.
 
@@ -15,7 +15,7 @@ El docente pidió revisar de nuevo lo corregido, subir un segundo lote con las d
 
 ---
 
-## 19 de noviembre (31) — Auditoría del lote 1 de química y correcciones
+## 19 de noviembre (32) — Auditoría del lote 1 de química y correcciones
 
 Un auditor independiente (resolvió las 70 preguntas a ciegas y las contrastó con el Marco de referencia y el cuadernillo del Icfes) coincidió con la clave en las 70, pero encontró 13 preguntas para corregir, 23 con ajustes menores y 1 para descartar. Se aplicó el informe completo.
 
@@ -32,7 +32,7 @@ Un auditor independiente (resolvió las 70 preguntas a ciegas y las contrastó c
 
 ---
 
-## 19 de noviembre (30) — Banco Saber 11: lote 1 de química (70 preguntas, con más indagación)
+## 19 de noviembre (31) — Banco Saber 11: lote 1 de química (70 preguntas, con más indagación)
 
 El docente pidió llegar a unas 30 preguntas por tema del examen y por competencia, y reforzar sobre todo la **indagación**, que es lo más débil en las instituciones. Se empezó por química con el modelo del Marco de referencia del Icfes (2019) y el estilo del cuadernillo de preguntas (2021).
 
@@ -41,6 +41,13 @@ El docente pidió llegar a unas 30 preguntas por tema del examen y por competenc
 - **`sw.js`:** `CACHE_NAME` de `ionom-v103` a `ionom-v104`.
 - **Revisión hecha:** estructura, duplicados con el banco actual, competencia que asigna el sitio y cuentas de cada pregunta (proporciones, titulación, rendimiento). Pendiente: que el docente revise una muestra, sobre todo las de indagación.
 - **Pendiente:** llegar a 30 por competencia en cada tema (faltan cerca de 12 de uso, 21 de explicación y 13 de indagación en gases, por ejemplo), y los demás temas de química (atómo, reacciones, mezclas y separación, cinética y equilibrio). No se tocó `ionom-analytics.gs`.
+## 19 de noviembre (30) — Aviso de uso de IA según la Directiva 002 de 2026
+
+El docente compartió la Directiva 002 de 2026 de la Secretaría General de Bogotá (uso de IA generativa en comunicaciones institucionales, radicada el 8 de octubre de 2026) y pidió aplicar a los sitios los arreglos que resultaran de revisarla. La directiva (numerales 3.4 y 4.1.8) pide declarar cuando la IA generó sustancialmente el texto de una pieza pública, y que en caso de duda se declare.
+
+- **`assets/ionom-ui.js`:** el `<footer>` de todas las páginas agrega «Parte de este contenido fue generado con apoyo de inteligencia artificial y revisado y aprobado por el docente Harvey Bárcenas Morales.»
+- **`sw.js`:** `CACHE_NAME` sube de `ionom-v103` a `ionom-v104` (el script está en la lista de archivos cacheados, así que sin subir la versión los celulares con la app instalada no lo verían). Probado con Playwright en cuatro páginas: aviso presente y sin errores.
+- **Pendiente:** preguntar a rectoría o a la SED si el material del aula cuenta como «comunicación institucional»; mientras tanto se declara. No se tocó `ionom-analytics.gs`.
 
 ---
 
