@@ -4,6 +4,23 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (31) — Auditoría del lote 1 de química y correcciones
+
+Un auditor independiente (resolvió las 70 preguntas a ciegas y las contrastó con el Marco de referencia y el cuadernillo del Icfes) coincidió con la clave en las 70, pero encontró 13 preguntas para corregir, 23 con ajustes menores y 1 para descartar. Se aplicó el informe completo.
+
+- **`assets/docente-datos.js` (bloque «Lote 1»):**
+  - Errores críticos: P66 tenía el enunciado de otra pregunta; en P33 una opción decía «base» por Lewis (ahora los tres distractores son «ácido»).
+  - Fugas de la respuesta en el contexto (P5, P10, P21, P40, P41, P61): se quitaron.
+  - Distractores absurdos reemplazados por errores conceptuales reales (P12, P13, P26, P34, P39, P46, P49, P54, entre otras).
+  - P38: eje de la curva de titulación con puntos equiespaciados (antes se deformaba). P36: pH del bicarbonato 8 en vez de 9. P30: las soluciones se numeran para no confundirlas con las letras de las opciones.
+  - P65 descartada (repetía a P70) y sustituida por una de reactivo límite con tabla. P56 y P69 pasan a evidencias que faltaban (7.2 suficiencia de los datos y 9.1 hipótesis). P48 ahora usa datos de corriente. P14 y P60 se alejaron de las preguntas oficiales (otra redacción, 2Mg + O₂ → 2MgO).
+  - Reasignaciones: P45 a explicación, P62 a uso; las preguntas de «predecir el siguiente valor» pasan a la afirmación N2.
+  - Opciones igualadas: la correcta es la más larga en 19 de 70 (antes 34) y ninguna supera por más de 8 caracteres a la siguiente.
+- **`assets/saber-juego.js`:** regenerado. **`sw.js`:** sigue en `ionom-v104` (el lote aún no se publica en `main`).
+- **Pendiente:** el auditor sugiere que el próximo lote suba el peso de uso (30 %), baje indagación (40 %), añada más preguntas de nivel 3 y 4, modelos con figuras y las evidencias 5.6, 7.1, 8.2, 9.4 y 9.5. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 19 de noviembre (30) — Banco Saber 11: lote 1 de química (70 preguntas, con más indagación)
 
 El docente pidió llegar a unas 30 preguntas por tema del examen y por competencia, y reforzar sobre todo la **indagación**, que es lo más débil en las instituciones. Se empezó por química con el modelo del Marco de referencia del Icfes (2019) y el estilo del cuadernillo de preguntas (2021).
