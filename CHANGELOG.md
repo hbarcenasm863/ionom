@@ -4,6 +4,24 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (34) — Batalla periódica: modo de juego contra la IA y plantilla imprimible
+
+El docente vio una actividad de Battleship sobre la tabla periódica (los barcos van en el bloque s, p o d según la configuración electrónica en que termina cada elemento) y pidió llevarla a IonNom como un modo de juego contra una IA y como plantilla para imprimir en el generador docente.
+
+- **`batalla.html` (juego nuevo):** la tabla periódica es el tablero. Cada barco es una fila de casillas seguidas dentro de un solo bloque (s = 2, p = 3, d = 4, f = 5). Para disparar hay que resolver un reto del elemento; si se acierta, el disparo cuenta (✓ impacto o ✗ agua) y si se falla se pierde el turno y se muestra la respuesta.
+  - **Tres flotas:** bloques s y p (4 barcos, partida corta, la de inicio), s, p y d (6) y tabla completa con f (7).
+  - **Retos:** *configuración electrónica* (subnivel donde termina, bloque, periodo, grupo), *estados de oxidación* o *mixto*. Por decisión del docente, la nomenclatura quedó fuera por ahora (el código de `retoNom` sigue en el núcleo, desactivado). La terminación sigue el diagrama de Moeller; a los 20 elementos que no lo cumplen (Cr, Cu, Nb, Mo, Ru, Rh, Pd, Ag, La, Ce, Gd, Pt, Au, Ac, Th, Pa, U, Np, Cm, Lr) y a Z > 103 no se les pregunta la terminación.
+  - **IA con tres niveles:** fácil (al azar), normal (busca alrededor tras un impacto) y difícil (calcula en qué posiciones caben los barcos que le quedan, sabiendo que van en fila y dentro de un bloque). La IA también «responde» el reto con una probabilidad según el nivel (50, 75 y 92 %). En promedio, la IA difícil hunde una flota s+p en unos 18 tiros y la fácil en unos 46.
+  - **Ayudas del tablero:** los bloques en colores y los números de periodo se pueden apagar (jugar «sin ayudas», y entonces los retos de bloque no se regalan).
+  - Colocación manual o al azar, pestaña «Mi flota» con los tiros de la IA, tablero ampliable en celular, pantalla final con aciertos por tipo de reto y la lista de retos fallados para repasar.
+- **`assets/batalla-core.js` (núcleo compartido):** ubicación de los 118 elementos calculada con el diagrama de Moeller (La–Yb y Ac–No en el bloque f; Lu y Lr en el d, como en la hoja de papel), colocación de flotas con semilla, IA y generador de retos. Lo usan el juego y la plantilla.
+- **Generador docente, pestaña «⚓ Batalla periódica» (`assets/batalla-papel.js`):** hoja carta con la tabla de BOMBAS arriba y la de BARCOS abajo (línea de corte en medio), la caja de reglas en el hueco de la tabla y las letras s, p, d y f. Opciones: zona de juego y flota, casillas (símbolo, símbolo y número atómico, o vacías), bloques con contorno (gasta poca tinta), relleno suave o sin color, título y la regla de disparo (configuración, estado de oxidación o una escrita por el docente). Hojas opcionales: **tabla de verificación** (dónde termina cada elemento, con la configuración real de las excepciones, o sus estados de oxidación) y **flota del docente** con código, para jugar contra el grupo y volver a imprimirla otro día.
+- **Menús y portada:** enlace «⚓ Batalla periódica» en el menú de las 23 páginas, en «Más» de la barra inferior del celular (que se oculta durante la partida, como en el Juego) y una tarjeta en «Practica y enseña» de `index.html`.
+- **`sw.js`:** `CACHE_NAME` de `ionom-v105` a `ionom-v106` (cambió `assets/ionom-ui.js`); se agregan `batalla.html`, `assets/batalla-core.js` y `assets/batalla-papel.js` (este último, solo del docente, va network-first como `sopa.js`).
+- **Pendiente:** el modo no guarda resultados en Google Sheets (no se tocó `ionom-analytics.gs`); no hay reto de «escribir la fórmula» (todas son de opción múltiple) ni de nomenclatura; y no se probó la impresión en papel beige.
+
+---
+
 ## 19 de noviembre (33) — Lote 2 de química (uso y explicación) y reauditoría del lote 1
 
 El docente pidió revisar de nuevo lo corregido, subir un segundo lote con las demás competencias y publicar en `main`.

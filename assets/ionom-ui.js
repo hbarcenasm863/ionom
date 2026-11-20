@@ -64,6 +64,7 @@
     {href:'industria.html',ico:ICO.reaccion,txt:'Química en la Industria'},
     {href:'balanceo-avanzado.html',ico:ICO.balanceoAvanzado,txt:'Balanceo Avanzado'},
     {href:'nomenClash.html',ico:ICO.nomenclash,txt:'NomenClash'},
+    {href:'batalla.html',ico:ICO.nomenclash,txt:'Batalla periódica'},
     {href:'simulador.html',ico:ICO.simulador,txt:'Simulador'},
     {href:'docente.html',ico:ICO.docente,txt:'Generador Docente'}
   ];
@@ -196,7 +197,7 @@
 
     // Juego: ocultar la barra mientras hay una partida en pantalla (mismo
     // patrón .screen.active / s-portada que ya usa juego.html).
-    if(page==='juego.html'){
+    if(page==='juego.html'||page==='batalla.html'){
       var revisar=function(){
         var activa=document.querySelector('.screen.active');
         var enPortada=!activa||activa.id==='s-portada';

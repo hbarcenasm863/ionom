@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>/* iOS: con «Bloquear todas las cookies» o en modo privado, usar localStorage/sessionStorage lanza un error que detenía el script de la página. Si no funcionan, se reemplazan por un almacén en memoria. */(function(){function M(){var d={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){d={}},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}['localStorage','sessionStorage'].forEach(function(n){try{var s=window[n];s.setItem('__ionom','1');s.removeItem('__ionom')}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(e2){}}})})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d4a73">
+<link rel="icon" type="image/png" href="assets/iononpwa.png">
+<link rel="apple-touch-icon" href="assets/iononpwa.png">
+<title>IonNom — Batalla periódica</title>
+<link rel="stylesheet" href="assets/shared-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100vh;line-height:1.55}
+.app{max-width:100%;margin:0 auto;padding:0 10px 90px}
+/* ── HAMBURGER NAV ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;background:var(--nav);padding:0 16px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.nav-brand{color:#fff;font-weight:800;font-size:.95rem;font-style:italic;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-brand img{height:30px;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:6px}
+.theme-btn,.ham-btn{background:none;border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 9px;color:rgba(255,255,255,.85);cursor:pointer;font-size:1rem;line-height:1;transition:background .15s}
+.theme-btn:hover,.ham-btn:hover{background:rgba(255,255,255,.15)}
+/* Drawer overlay */
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;animation:fadeOverlay .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+/* Drawer panel */
+.nav-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--nav);z-index:301;transition:right .25s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.4)}
+.nav-drawer.open{right:0}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer-brand{color:#fff;font-weight:800;font-size:1rem;font-style:italic}
+.drawer-brand em{color:var(--gold);font-style:normal}
+.drawer-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.drawer-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.drawer-links{display:flex;flex-direction:column;padding:10px 8px;gap:2px;flex:1}
+.drawer-links a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;padding:10px 12px;border-radius:10px;transition:background .15s,color .15s}
+.drawer-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.drawer-links a.active{background:rgba(255,255,255,.18);color:#fff}
+.drawer-links a .dl-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.drawer-links a .dl-name{flex:1}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border-radius:8px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:800;padding:4px 8px;cursor:pointer;border-radius:6px;line-height:1;transition:background .15s;font-family:var(--sans,'Trebuchet MS',sans-serif)}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.page-hdr{padding:26px 0 18px;border-bottom:2px solid var(--brd);margin-bottom:20px}
+.page-hdr h1{font-family:var(--serif);font-size:1.7rem;font-weight:700;font-style:italic;letter-spacing:-.03em;margin-bottom:6px}
+.page-hdr p{font-size:.88rem;color:var(--tx2);max-width:760px}
+.menu-float-btn{position:fixed;bottom:18px;right:18px;z-index:50;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--nav);color:#fff;border-radius:50%;font-size:1.2rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+footer{text-align:center;padding:24px 0;border-top:1px solid var(--brd);font-size:.77rem;color:var(--dimmer);margin-top:22px}
+footer a{color:var(--an-t);text-decoration:none;font-weight:600}
+
+/* ── pantallas ── */
+.screen{display:none}.screen.active{display:block}
+.sect{background:var(--surf);border:2px solid var(--brd);border-radius:var(--r);padding:20px 22px;margin-bottom:16px;box-shadow:var(--sh)}
+.sect h2{font-size:1.05rem;font-weight:800;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--brd)}
+.sect p,.sect li{font-size:.86rem;color:var(--tx2);line-height:1.65}
+.sect ol{margin:6px 0 0 20px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--brd);border-radius:12px;padding:10px 12px;cursor:pointer;background:var(--surf);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--brd2)}
+.opt input{margin-top:4px;accent-color:var(--nav)}
+.opt:has(input:checked){border-color:var(--nav);background:var(--an-b)}
+.opt b{display:block;font-size:.92rem}
+.opt small{display:block;font-size:.76rem;color:var(--dimmer);line-height:1.4}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:var(--rs);border:2px solid var(--nav);background:var(--nav);color:#fff;font:700 .92rem var(--sans);cursor:pointer;text-decoration:none;min-height:44px}
+.btn:hover{filter:brightness(1.1)}
+.btn.sec{background:var(--surf);color:var(--nav)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;filter:none}
+.fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.chk{display:flex;gap:8px;align-items:center;font-size:.86rem;font-weight:600;margin-top:8px}
+
+/* ── tablero ── */
+.tb-wrap{overflow-x:auto;padding:4px 0 6px;-webkit-overflow-scrolling:touch}
+.tb{--c:clamp(18px,calc((100vw - 20px - 12px - 18px)/18),40px);display:grid;grid-template-columns:12px repeat(18,var(--c));grid-template-rows:repeat(7,var(--c)) calc(var(--c)*.35) repeat(2,var(--c));gap:1px;width:max-content;margin:0 auto;user-select:none;-webkit-user-select:none}
+.tb.grande{--c:36px}
+.tb .per{grid-column:1;display:flex;align-items:center;justify-content:center;font:700 calc(var(--c)*.36)/1 var(--mono);color:var(--dimmer)}
+.tb .c{position:relative;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:3px;background:var(--surf);color:var(--tx);font:700 calc(var(--c)*.4)/1 var(--sans);padding:0;cursor:default;overflow:hidden;touch-action:manipulation}
+.tb button.c{cursor:pointer}
+.tb.ayudas .c.b-s{background:#f8ecf3;border-color:#CC79A7}
+.tb.ayudas .c.b-p{background:#dbf1eb;border-color:#009E73}
+.tb.ayudas .c.b-d{background:#fcf2db;border-color:#E69F00}
+.tb.ayudas .c.b-f{background:#f6f1c4;border-color:#b59f00}
+.tb .c.inact{opacity:.28;pointer-events:none;background:var(--surf2)}
+.tb .c.apto{outline:2px solid var(--nav);outline-offset:-2px}
+.tb .c.nada{opacity:.4}
+.tb .c.barco{background:var(--nav);color:#fff;border-color:var(--nav)}
+.tb.ayudas .c.barco.b-s{background:#a8467c;border-color:#7f2f5c}
+.tb.ayudas .c.barco.b-p{background:#007a58;border-color:#005c42}
+.tb.ayudas .c.barco.b-d{background:#b87a00;border-color:#8a5c00}
+.tb.ayudas .c.barco.b-f{background:#8a7900;border-color:#665a00}
+.tb .c.agua{background:#e8edf2!important;color:#8a9bb0;border-color:#c5cfdb!important}
+.tb .c.agua::after{content:'✗';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--c)*.85);font-weight:900;color:#64748b;opacity:.55}
+.tb .c.imp{background:#dc2626!important;color:#fff!important;border-color:#991b1b!important}
+.tb .c.imp::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--c)*.85);font-weight:900;color:#fff;opacity:.5}
+.tb .c.hund{background:#7f1d1d!important;color:#fff!important;border-color:#450a0a!important}
+.tb .c.hund::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--c)*.85);font-weight:900;color:#fff;opacity:.45}
+.tb .c.ult{box-shadow:inset 0 0 0 3px #facc15}
+.tb button.c:not(:disabled):not(.agua):not(.imp):not(.hund):hover{background:var(--an-b);border-color:var(--an)}
+.tb button.c:focus-visible{outline:3px solid var(--nav);outline-offset:1px;z-index:2}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:.74rem;color:var(--dimmer);margin:8px 0 2px}
+.leyenda i{display:inline-block;width:12px;height:12px;border-radius:3px;border:2px solid;vertical-align:-2px;margin-right:4px}
+.zoom-btn{margin:0 auto;display:block}
+
+/* ── batalla ── */
+.estado{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.turno{font-weight:800;font-size:.95rem;padding:6px 14px;border-radius:100px;background:var(--an-b);color:var(--an-t)}
+.turno.ia{background:var(--cat-b);color:var(--cat-t)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:100px;border:1.5px solid var(--brd2);background:var(--surf);color:var(--tx2)}
+.tabs{display:flex;gap:6px;margin:6px 0 4px}
+.tab{flex:1;padding:9px 8px;border:2px solid var(--brd);background:var(--surf);border-radius:10px;font:700 .86rem var(--sans);color:var(--dimmer);cursor:pointer;min-height:44px;position:relative}
+.tab.on{border-color:var(--nav);color:var(--nav);background:var(--an-b)}
+.tab .pt{position:absolute;top:6px;right:8px;width:9px;height:9px;border-radius:50%;background:#dc2626;display:none}
+.tab.aviso .pt{display:block}
+.log{min-height:48px;margin:10px 0 4px;padding:10px 14px;border-radius:12px;background:var(--surf2);border:1.5px solid var(--brd);font-size:.86rem;line-height:1.5}
+.log div+div{margin-top:3px;color:var(--dimmer);font-size:.8rem}
+.log .bien{color:var(--ok-t);font-weight:700}.log .mal{color:var(--err-t);font-weight:700}
+.barcos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.barco-chip{border:2px solid var(--brd2);border-radius:10px;padding:7px 12px;font:700 .82rem var(--sans);background:var(--surf);cursor:pointer;min-height:40px}
+.barco-chip.sel{border-color:var(--nav);background:var(--an-b)}
+.barco-chip.puesto{opacity:.55}
+.barco-chip.puesto::after{content:' ✓'}
+.sw-s{color:#8d5373}.sw-p{color:#007253}.sw-d{color:#8a5f00}.sw-f{color:#665a00}
+
+/* ── reto (ventana) ── */
+.modal{position:fixed;inset:0;background:rgba(5,25,40,.55);z-index:var(--z-modal,400);display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal.on{display:flex}
+.reto{background:var(--surf);width:min(560px,100%);max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:14px 16px 18px;box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@media(min-width:640px){.modal{align-items:center;padding:20px}.reto{border-radius:20px}}
+.reto-cab{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.reto-el{width:54px;height:54px;flex-shrink:0;border-radius:12px;border:3px solid var(--brd2);display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--surf2);line-height:1}
+.reto-el b{font-size:1.4rem}.reto-el small{font-size:.62rem;color:var(--dimmer);margin-top:3px}
+.reto-el.b-s{border-color:#CC79A7;background:#f8ecf3}.reto-el.b-p{border-color:#009E73;background:#dbf1eb}.reto-el.b-d{border-color:#E69F00;background:#fcf2db}.reto-el.b-f{border-color:#b59f00;background:#f6f1c4}
+.reto-tag{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--dimmer)}
+.reto-q{font-size:1rem;line-height:1.4;margin-bottom:10px}
+.reto-q .fx,.fx{font-family:var(--mono);font-weight:700}
+.ops{display:grid;gap:6px}
+.op{display:flex;gap:10px;align-items:center;text-align:left;padding:9px 12px;border:2px solid var(--brd2);border-radius:12px;background:var(--surf);font:600 .98rem var(--sans);color:var(--tx);cursor:pointer;min-height:44px}
+.op:hover:not(:disabled){border-color:var(--nav);background:var(--an-b)}
+.op .n{width:24px;height:24px;border-radius:50%;background:var(--surf2);display:inline-flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:800;flex-shrink:0;color:var(--dimmer)}
+.op.ok{border-color:var(--ok);background:var(--ok-b);color:var(--ok-t)}
+.op.mal{border-color:var(--err);background:var(--err-b);color:var(--err-t)}
+.op:disabled{cursor:default}
+.expl{margin-top:10px;padding:10px 12px;border-radius:12px;font-size:.88rem;line-height:1.55;background:var(--surf2);border:1.5px solid var(--brd)}
+.expl.ok{background:var(--ok-b);border-color:var(--ok)}.expl.mal{background:var(--err-b);border-color:var(--err)}
+.res-box{text-align:center}
+.res-box .big{font-size:2.4rem;line-height:1.2}
+.res-box h2{border:none;font-family:var(--serif);font-style:italic;margin:4px 0}
+table.est{border-collapse:collapse;width:100%;font-size:.84rem;margin-top:6px}
+table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);text-align:left}
+.falla{padding:8px 10px;border-left:4px solid var(--err);background:var(--err-b);border-radius:6px;margin-top:8px;font-size:.84rem}
+@media(max-width:640px){.sect{padding:16px 14px}.page-hdr h1{font-size:1.45rem}}
+@media(prefers-reduced-motion:no-preference){.tb .c.ult{animation:pulso .9s ease 2}@keyframes pulso{50%{transform:scale(1.15)}}}
+</style>
+<link rel="stylesheet" href="assets/ionom.css">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/iononpwa.png" alt="IonNom">
+    Ion<em>Nom</em>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+    <button class="font-btn" onclick="fontDec()" aria-label="Reducir letra">A−</button>
+    <span class="font-btn" id="font-disp" style="pointer-events:none;opacity:.6;font-size:.72rem">A16</span>
+    <button class="font-btn" onclick="fontInc()" aria-label="Aumentar letra">A+</button>
+  </div>
+    <button class="ham-btn" id="ham-btn" aria-label="Menú" title="Menú">☰</button>
+  </div>
+</nav>
+<!-- Overlay + Drawer -->
+<div class="nav-overlay" id="nav-overlay"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Ion<em>Nom</em></span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="index.html"><span class="dl-icon">🏠</span><span class="dl-name">Inicio</span></a>
+    <a href="atomo.html"><span class="dl-icon">🪐</span><span class="dl-name">Teoría Atómica</span></a>
+    <a href="configuracion.html"><span class="dl-icon">🧬</span><span class="dl-name">Configuración Electrónica</span></a>
+    <a href="enlace.html"><span class="dl-icon">🔗</span><span class="dl-name">Enlace Químico</span></a>
+    <a href="modelos.html"><span class="dl-icon">🔭</span><span class="dl-name">Modelos, Leyes y Datos</span></a>
+    <a href="teoria.html"><span class="dl-icon">📖</span><span class="dl-name">Nomenclatura</span></a>
+    <a href="guia.html"><span class="dl-icon">📘</span><span class="dl-name">Guías descargables</span></a>
+    <a href="reacciones.html"><span class="dl-icon">⚗️</span><span class="dl-name">Tipos de Reacción</span></a>
+    <a href="balanceo.html"><span class="dl-icon">⚖️</span><span class="dl-name">Balanceo</span></a>
+    <a href="ph.html"><span class="dl-icon">🧪</span><span class="dl-name">Ácidos, Bases y pH</span></a>
+    <a href="moles.html"><span class="dl-icon">⚛️</span><span class="dl-name">Mol y Masa Molar</span></a>
+    <a href="gases.html"><span class="dl-icon">🎈</span><span class="dl-name">Leyes de los Gases</span></a>
+    <a href="soluciones.html"><span class="dl-icon">🧂</span><span class="dl-name">Soluciones y Concentración</span></a>
+    <a href="estequiometria.html"><span class="dl-icon">🧮</span><span class="dl-name">Estequiometría</span></a>
+    <a href="industria.html"><span class="dl-icon">🏭</span><span class="dl-name">Química en la Industria</span></a>
+    <a href="balanceo-avanzado.html"><span class="dl-icon">⚡</span><span class="dl-name">Balanceo Avanzado</span></a>
+    <a href="funciones.html"><span class="dl-icon">🧪</span><span class="dl-name">Funciones</span></a>
+    <a href="juego.html"><span class="dl-icon">🎮</span><span class="dl-name">Juego</span></a>
+    <a href="tabla.html"><span class="dl-icon">📊</span><span class="dl-name">Tabla Periódica</span></a>
+    <a href="nomenClash.html"><span class="dl-icon">⚔️</span><span class="dl-name">NomenClash</span></a>
+    <a href="batalla.html" class="active"><span class="dl-icon">⚓</span><span class="dl-name">Batalla periódica</span></a>
+    <a href="simulador.html"><span class="dl-icon">🔬</span><span class="dl-name">Simulador</span></a>
+    <a href="docente.html"><span class="dl-icon">🗂️</span><span class="dl-name">Generador Docente</span></a>
+  </nav>
+</div>
+
+<div class="app">
+  <div class="page-hdr">
+    <h1>⚓ Batalla periódica</h1>
+    <p>Battleship sobre la tabla periódica. Tus barcos ocupan casillas seguidas dentro de un mismo bloque (s = 2, p = 3, d = 4, f = 5). Para disparar tienes que resolver un reto del elemento: si aciertas, el disparo cuenta; si fallas, pierdes el turno. Gana quien hunda primero la flota rival.</p>
+  </div>
+
+  <!-- 1 · AJUSTES -->
+  <section id="s-portada" class="screen active">
+    <div class="sect">
+      <h2>1 · Tablero y flota</h2>
+      <div class="opts" id="o-flota">
+        <label class="opt"><input type="radio" name="flota" value="sp" checked><span><b>Bloques s y p</b><small>4 barcos · partida corta (unos 10 min). Ideal para empezar.</small></span></label>
+        <label class="opt"><input type="radio" name="flota" value="spd"><span><b>Bloques s, p y d</b><small>6 barcos · unos 20 min. Incluye los metales de transición.</small></span></label>
+        <label class="opt"><input type="radio" name="flota" value="spdf"><span><b>Tabla completa</b><small>7 barcos con el bloque f · partida larga.</small></span></label>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>2 · Retos para disparar</h2>
+      <div class="opts" id="o-tema">
+        <label class="opt"><input type="radio" name="tema" value="tabla" checked><span><b>Configuración electrónica</b><small>Subnivel donde termina, bloque, periodo y grupo.</small></span></label>
+        <label class="opt"><input type="radio" name="tema" value="ox"><span><b>Estados de oxidación</b><small>Cuál puede tener cada elemento. Los gases nobles llevan reto de ubicación.</small></span></label>
+        <label class="opt"><input type="radio" name="tema" value="mixto"><span><b>Mixto</b><small>Configuración y estados de oxidación.</small></span></label>
+      </div>
+    </div>
+    <div class="sect">
+      <h2>3 · Rival</h2>
+      <div class="opts" id="o-nivel">
+        <label class="opt"><input type="radio" name="nivel" value="facil"><span><b>IA fácil</b><small>Dispara al azar y falla bastantes retos.</small></span></label>
+        <label class="opt"><input type="radio" name="nivel" value="normal" checked><span><b>IA normal</b><small>Si acierta un barco, busca alrededor.</small></span></label>
+        <label class="opt"><input type="radio" name="nivel" value="dificil"><span><b>IA difícil</b><small>Sabe que los barcos van en fila y dentro de un bloque; calcula dónde caben.</small></span></label>
+      </div>
+      <label class="chk"><input type="checkbox" id="c-ayudas" checked> Mostrar los bloques en colores en el tablero (apágalo para jugar sin ayudas)</label>
+    </div>
+    <div class="fila">
+      <button type="button" class="btn" id="b-colocar">Colocar mi flota →</button>
+      <a class="btn sec" href="docente.html#batalla">🖨️ Versión en papel</a>
+    </div>
+    <div class="sect" style="margin-top:18px">
+      <h2>Cómo se juega</h2>
+      <ol>
+        <li>Coloca tus barcos (o deja que se pongan al azar). Cada barco es una fila de casillas seguidas del mismo bloque.</li>
+        <li>En tu turno toca una casilla del tablero de <b>Ataque</b> y resuelve el reto de ese elemento.</li>
+        <li>Si aciertas, se revela <b>✓ impacto</b> o <b>✗ agua</b>. Si fallas, el disparo se pierde y se muestra la respuesta.</li>
+        <li>La IA hace lo mismo contra tu flota: mira la pestaña <b>Mi flota</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2 · COLOCAR -->
+  <section id="s-colocar" class="screen">
+    <div class="sect">
+      <h2>Coloca tu flota</h2>
+      <p>Elige un barco y toca la casilla donde quieres que empiece (a la izquierda). Solo caben dentro de las casillas resaltadas de su bloque. Toca un barco ya puesto para quitarlo.</p>
+      <div class="barcos" id="paleta" style="margin-bottom:0"></div>
+    </div>
+    <div class="tb-wrap"><div class="tb" id="tb-colocar"></div></div>
+    <div class="fila">
+      <button type="button" class="btn sec" id="b-azar">🎲 Al azar</button>
+      <button type="button" class="btn sec" id="b-limpiar">🧹 Quitar todos</button>
+      <button type="button" class="btn" id="b-listo" disabled>⚓ ¡A la batalla!</button>
+      <button type="button" class="btn sec" id="b-atras">← Ajustes</button>
+    </div>
+  </section>
+
+  <!-- 3 · BATALLA -->
+  <section id="s-batalla" class="screen">
+    <div class="estado">
+      <span class="turno" id="turno">Tu turno</span>
+      <div class="chips"><span class="chip" id="ch-rival"></span><span class="chip" id="ch-mia"></span></div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab on" id="t-ataque" role="tab" aria-selected="true">🎯 Ataque</button>
+      <button type="button" class="tab" id="t-mia" role="tab" aria-selected="false">🛡️ Mi flota<span class="pt"></span></button>
+    </div>
+    <div class="tb-wrap"><div class="tb" id="tb-batalla"></div></div>
+    <div class="leyenda" id="leyenda"></div>
+    <button type="button" class="btn sec zoom-btn" id="b-zoom" style="margin-top:8px;min-height:36px;padding:6px 14px;font-size:.8rem">🔍 Ampliar tablero</button>
+    <div class="log" id="log" aria-live="polite"></div>
+    <div class="fila"><button type="button" class="btn sec" id="b-rendir" style="min-height:38px;padding:6px 14px;font-size:.82rem">🏳️ Rendirme</button></div>
+  </section>
+
+  <!-- 4 · FIN -->
+  <section id="s-fin" class="screen">
+    <div class="sect res-box" id="fin-box"></div>
+  </section>
+
+  <footer>
+    <a href="tabla.html">Tabla periódica</a> &nbsp;|&nbsp; <a href="configuracion.html">Configuración electrónica</a> &nbsp;|&nbsp; <a href="nomenClash.html">NomenClash</a><br><br>
+    <a href="index.html">IonNom</a> · Química inorgánica para Colombia<br><br>
+    <p>Ionom © 2026 by Harvey Bárcenas Morales · Licencia CC BY-NC 4.0</p>
+  </footer>
+</div>
+
+<!-- reto -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="reto-q">
+  <div class="reto">
+    <div class="reto-cab"><div class="reto-el" id="reto-el"></div><div><div class="reto-tag" id="reto-tag"></div><div id="reto-nombre" style="font-weight:800"></div></div></div>
+    <div class="reto-q" id="reto-q"></div>
+    <div class="ops" id="reto-ops"></div>
+    <div id="reto-expl"></div>
+    <div class="fila" id="reto-pie" style="display:none"><button type="button" class="btn" id="reto-sig">Continuar →</button></div>
+  </div>
+</div>
+
+<a href="index.html" id="menu-float-btn" class="menu-float-btn" title="Volver al menú principal" aria-label="Volver al menú principal">🏠</a>
+
+<script>
+(function(){
+  var ham=document.getElementById('ham-btn'),drawer=document.getElementById('nav-drawer'),overlay=document.getElementById('nav-overlay'),closeBtn=document.getElementById('drawer-close');
+  function openD(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeD(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(ham)ham.addEventListener('click',openD);if(closeBtn)closeBtn.addEventListener('click',closeD);if(overlay)overlay.addEventListener('click',closeD);
+  document.querySelectorAll('.drawer-links a').forEach(function(a){a.addEventListener('click',closeD);});
+})();
+(function(){
+  var STEPS=[13,14,15,16,17,18,20,22];var idx=3;try{idx=parseInt(localStorage.getItem('ionom-fsidx')||'3',10);}catch(e){}
+  function apply(){document.documentElement.style.fontSize=STEPS[idx]+'px';var d=document.getElementById('font-disp');if(d)d.textContent='A'+STEPS[idx];}
+  window.fontInc=function(){if(idx<STEPS.length-1){idx++;try{localStorage.setItem('ionom-fsidx',idx);}catch(e){}apply();}};
+  window.fontDec=function(){if(idx>0){idx--;try{localStorage.setItem('ionom-fsidx',idx);}catch(e){}apply();}};
+  window.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
+<script src="assets/batalla-core.js"></script>
+<script>
+(function(){
+'use strict';
+const B = window.BATALLA;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const PROB_IA = {facil:.5, normal:.75, dificil:.92};
+const NOM_BLK = {s:'Barco s (2)', p:'Barco p (3)', d:'Barco d (4)', f:'Barco f (5)'};
+let S = null;            // partida
+let cfg = {flota:'sp', tema:'tabla', nivel:'normal', ayudas:true};
+let colocando = null;    // {flota:[{id,blk,tam,cells|null}], sel:id}
+let grande = false;
+
+try{ const g = JSON.parse(localStorage.getItem('ionom-batalla') || 'null'); if(g) cfg = Object.assign(cfg, g); }catch(e){}
+if(['tabla','ox','mixto'].indexOf(cfg.tema) < 0) cfg.tema = 'tabla';
+function guardarCfg(){ try{ localStorage.setItem('ionom-batalla', JSON.stringify(cfg)); }catch(e){} }
+
+function pantalla(id){
+  $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+  window.scrollTo({top:0});
+  document.dispatchEvent(new Event('ionom-screen'));
+}
+
+/* ───────── tablero ───────── */
+function activosDe(f){
+  const bl = B.FLOTAS[f].bloques, out = [];
+  for(let z = 1; z <= 118; z++) if(bl.indexOf(B.POS[z].blk) >= 0) out.push(z);
+  return out;
+}
+/* opts: {modo:'colocar'|'ataque'|'mia', ocup:Map z→barco, tiros:Map, ult:z, apto:Set} */
+function pintar(el, o){
+  el.classList.toggle('ayudas', !!cfg.ayudas);
+  el.classList.toggle('grande', grande);
+  const act = S ? S.setAct : new Set(activosDe(cfg.flota));
+  let h = '';
+  for(let r = 1; r <= 7; r++) h += '<div class="per" style="grid-row:' + r + '">' + (cfg.ayudas ? r : '') + '</div>';
+  for(let z = 1; z <= 118; z++){
+    const q = B.POS[z], e = B.ELEM[z];
+    const row = q.r <= 7 ? q.r : q.r + 1;       // fila 8 de la rejilla = hueco antes del bloque f
+    let cl = 'c b-' + q.blk, extra = '', dis = false;
+    const t = o.tiros && o.tiros.get(z);
+    if(!act.has(z)){ cl += ' inact'; dis = true; }
+    if(o.modo === 'mia' || o.modo === 'colocar'){
+      if(o.ocup && o.ocup.has(z)) cl += ' barco';
+      if(o.modo === 'mia' && t){ cl += t === 'agua' ? ' agua' : t === 'hundido' ? ' hund' : ' imp'; }
+      if(o.modo === 'colocar' && o.apto){ if(o.apto.has(z)) cl += ' apto'; else if(act.has(z)) cl += ' nada'; }
+    }else if(o.modo === 'ataque' && t){
+      cl += t === 'agua' ? ' agua' : t === 'hundido' ? ' hund' : ' imp';
+    }
+    if(o.ult === z) cl += ' ult';
+    const interactivo = o.modo !== 'mia' && act.has(z) && !(o.modo === 'ataque' && t);
+    const tag = interactivo ? 'button type="button"' : 'div';
+    h += '<' + tag + ' class="' + cl + '" data-z="' + z + '" style="grid-row:' + row + ';grid-column:' + (q.c + 1) + '" aria-label="' + e.nombre + ' (' + e.sym + ')">' + e.sym + '</' + (interactivo ? 'button' : 'div') + '>';
+  }
+  el.innerHTML = h;
+}
+function leyenda(modo){
+  const b = '<span><i style="border-color:#CC79A7;background:#f8ecf3"></i>s</span><span><i style="border-color:#009E73;background:#dbf1eb"></i>p</span><span><i style="border-color:#E69F00;background:#fcf2db"></i>d</span><span><i style="border-color:#b59f00;background:#f6f1c4"></i>f</span>';
+  return (cfg.ayudas ? b : '') + '<span><i style="border-color:#991b1b;background:#dc2626"></i>✓ impacto</span><span><i style="border-color:#450a0a;background:#7f1d1d"></i>hundido</span><span><i style="border-color:#c5cfdb;background:#e8edf2"></i>✗ agua</span>';
+}
+
+/* ───────── ajustes ───────── */
+function leerCfg(){
+  ['flota','tema','nivel'].forEach(k => { const r = document.querySelector('input[name="' + k + '"]:checked'); if(r) cfg[k] = r.value; });
+  cfg.ayudas = $('#c-ayudas').checked;
+  guardarCfg();
+}
+function aplicarCfg(){
+  ['flota','tema','nivel'].forEach(k => { const r = document.querySelector('input[name="' + k + '"][value="' + cfg[k] + '"]'); if(r) r.checked = true; });
+  $('#c-ayudas').checked = !!cfg.ayudas;
+}
+
+/* ───────── colocar ───────── */
+function iniciarColocar(){
+  leerCfg();
+  const F = B.FLOTAS[cfg.flota];
+  S = {F, setAct:new Set(activosDe(cfg.flota)), act:activosDe(cfg.flota)};
+  colocando = {flota:F.barcos.map((b, i) => ({id:i, blk:b, tam:B.TAM[b], cells:null})), sel:0};
+  pantalla('s-colocar'); repintarColocar();
+}
+function ocupadas(){ const s = new Set(); colocando.flota.forEach(b => b.cells && b.cells.forEach(z => s.add(z))); return s; }
+function repintarColocar(){
+  const c = colocando, ocup = ocupadas();
+  if(c.sel === null || (c.flota[c.sel] && c.flota[c.sel].cells)){
+    const sig = c.flota.find(b => !b.cells); c.sel = sig ? sig.id : null;
+  }
+  $('#paleta').innerHTML = c.flota.map(b => '<button type="button" class="barco-chip sw-' + b.blk + (b.cells ? ' puesto' : '') + (c.sel === b.id ? ' sel' : '') + '" data-id="' + b.id + '">' + NOM_BLK[b.blk] + '</button>').join('');
+  let apto = null;
+  if(c.sel !== null){ apto = new Set(); B.colocaciones(c.flota[c.sel].blk).forEach(p => p.forEach(z => apto.add(z))); }
+  const mapa = new Map(); ocup.forEach(z => mapa.set(z, true));
+  pintar($('#tb-colocar'), {modo:'colocar', ocup:mapa, apto});
+  $('#b-listo').disabled = c.flota.some(b => !b.cells);
+}
+$('#paleta').addEventListener('click', e => {
+  const b = e.target.closest('.barco-chip'); if(!b) return;
+  const id = +b.dataset.id, bar = colocando.flota[id];
+  if(bar.cells){ bar.cells = null; colocando.sel = id; } else colocando.sel = id;
+  repintarColocar();
+});
+$('#tb-colocar').addEventListener('click', e => {
+  const t = e.target.closest('[data-z]'); if(!t) return;
+  const z = +t.dataset.z, c = colocando;
+  const dueno = c.flota.find(b => b.cells && b.cells.indexOf(z) >= 0);
+  if(dueno){ dueno.cells = null; c.sel = dueno.id; repintarColocar(); return; }
+  if(c.sel === null) return;
+  const bar = c.flota[c.sel], p = B.colocacionPara(bar.blk, z, ocupadas());
+  if(!p){ flash(t); return; }
+  bar.cells = p.slice(); repintarColocar();
+});
+function flash(el){ if(!el || !el.animate) return; el.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'none'}], {duration:200}); }
+$('#b-azar').addEventListener('click', () => {
+  const f = B.colocarAlAzar(S.F.barcos, Math.random);
+  colocando.flota.forEach((b, i) => { b.cells = f[i].cells.slice(); }); colocando.sel = null; repintarColocar();
+});
+$('#b-limpiar').addEventListener('click', () => { colocando.flota.forEach(b => b.cells = null); colocando.sel = 0; repintarColocar(); });
+$('#b-atras').addEventListener('click', () => pantalla('s-portada'));
+$('#b-listo').addEventListener('click', empezar);
+
+/* ───────── partida ───────── */
+function flotaDe(arr){ return arr.map(b => ({id:b.id, blk:b.blk, tam:b.tam, cells:b.cells.slice(), hits:new Set(), hundido:false})); }
+function empezar(){
+  const r = Math.random;
+  const rival = B.colocarAlAzar(S.F.barcos, r);
+  S.mia = flotaDe(colocando.flota);
+  S.rival = flotaDe(rival);
+  S.mapaMia = new Map(); S.mia.forEach(b => b.cells.forEach(z => S.mapaMia.set(z, b)));
+  S.mapaRival = new Map(); S.rival.forEach(b => b.cells.forEach(z => S.mapaRival.set(z, b)));
+  S.tirosYo = new Map(); S.tirosIA = new Map();
+  S.ia = B.crearIA(cfg.nivel, S.F.barcos, S.act, r);
+  S.turno = 'yo'; S.vista = 'ataque'; S.ult = {yo:null, ia:null};
+  S.stats = {tot:0, ok:0, tipos:{}, falladas:[], tiros:0, impactos:0, ini:Date.now()};
+  S.log = []; S.fin = false;
+  pantalla('s-batalla'); logear('¡Empieza la batalla! Toca una casilla del tablero de Ataque.'); repintarBatalla();
+}
+function logear(h){ S.log.unshift(h); S.log = S.log.slice(0, 3); $('#log').innerHTML = S.log.map(x => '<div>' + x + '</div>').join(''); }
+function vivos(f){ return f.filter(b => !b.hundido).length; }
+function repintarBatalla(){
+  $('#turno').textContent = S.turno === 'yo' ? 'Tu turno' : 'Turno de la IA…';
+  $('#turno').classList.toggle('ia', S.turno !== 'yo');
+  $('#ch-rival').textContent = '🎯 Flota rival: ' + vivos(S.rival) + '/' + S.rival.length;
+  $('#ch-mia').textContent = '🛡️ Mi flota: ' + vivos(S.mia) + '/' + S.mia.length;
+  $('#t-ataque').classList.toggle('on', S.vista === 'ataque'); $('#t-mia').classList.toggle('on', S.vista === 'mia');
+  $('#t-ataque').setAttribute('aria-selected', S.vista === 'ataque'); $('#t-mia').setAttribute('aria-selected', S.vista === 'mia');
+  if(S.vista === 'ataque') pintar($('#tb-batalla'), {modo:'ataque', tiros:S.tirosYo, ult:S.ult.yo});
+  else{ const m = new Map(); S.mapaMia.forEach((b, z) => m.set(z, true)); pintar($('#tb-batalla'), {modo:'mia', ocup:m, tiros:S.tirosIA, ult:S.ult.ia}); $('#t-mia').classList.remove('aviso'); }
+  $('#leyenda').innerHTML = leyenda();
+  $('#b-zoom').textContent = grande ? '🔍 Ajustar al ancho' : '🔍 Ampliar tablero';
+}
+$('#t-ataque').addEventListener('click', () => { S.vista = 'ataque'; repintarBatalla(); });
+$('#t-mia').addEventListener('click', () => { S.vista = 'mia'; repintarBatalla(); });
+$('#b-zoom').addEventListener('click', () => { grande = !grande; repintarBatalla(); });
+
+/* resuelve un disparo contra una flota: devuelve {res, barco, hundido} */
+function disparar(flota, mapa, tiros, z){
+  const b = mapa.get(z);
+  if(!b){ tiros.set(z, 'agua'); return {res:'agua'}; }
+  b.hits.add(z); tiros.set(z, 'impacto');
+  let hund = false;
+  if(b.hits.size === b.tam){ b.hundido = true; hund = true; b.cells.forEach(c => tiros.set(c, 'hundido')); }
+  return {res:'impacto', barco:b, hundido:hund};
+}
+function txtResultado(r, quien){
+  if(r.res === 'agua') return '🌊 <b>Agua</b>.';
+  if(r.hundido) return '💥 <b>¡Hundido!</b> ' + (quien === 'yo' ? 'Hundiste el ' : 'Hundió tu ') + NOM_BLK[r.barco.blk].toLowerCase() + '.';
+  return '🔥 <b>¡Impacto!</b>';
+}
+
+/* ───────── turno del jugador ───────── */
+$('#tb-batalla').addEventListener('click', e => {
+  const t = e.target.closest('button[data-z]'); if(!t || S.vista !== 'ataque' || S.turno !== 'yo' || S.fin) return;
+  abrirReto(+t.dataset.z);
+});
+let retoAct = null;
+function abrirReto(z){
+  const q = B.reto(z, cfg.tema, Math.random), el = B.ELEM[z];
+  retoAct = {z, q, resp:false};
+  $('#reto-el').className = 'reto-el' + (cfg.ayudas ? ' b-' + el.blk : ''); $('#reto-el').innerHTML = '<b>' + el.sym + '</b><small>Z = ' + z + '</small>';
+  $('#reto-tag').textContent = q.etiqueta; $('#reto-nombre').textContent = el.nombre;
+  $('#reto-q').innerHTML = q.pregunta; $('#reto-expl').innerHTML = ''; $('#reto-pie').style.display = 'none';
+  $('#reto-ops').innerHTML = q.opciones.map((o, i) => '<button type="button" class="op" data-i="' + i + '"><span class="n">' + (i + 1) + '</span><span>' + o + '</span></button>').join('');
+  $('#modal').classList.add('on'); document.body.style.overflow = 'hidden';
+  const p = $('#reto-ops button'); if(p) p.focus();
+}
+$('#reto-ops').addEventListener('click', e => { const b = e.target.closest('.op'); if(b) responder(+b.dataset.i); });
+document.addEventListener('keydown', e => {
+  if(!$('#modal').classList.contains('on') || !retoAct) return;
+  if(!retoAct.resp && e.key >= '1' && e.key <= '4') responder(+e.key - 1);
+  else if(retoAct.resp && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); continuar(); }
+});
+function responder(i){
+  if(!retoAct || retoAct.resp) return;
+  retoAct.resp = true;
+  const q = retoAct.q, bien = i === q.ok;
+  $$('#reto-ops .op').forEach((b, k) => { b.disabled = true; if(k === q.ok) b.classList.add('ok'); else if(k === i) b.classList.add('mal'); });
+  const st = S.stats; st.tot++; (st.tipos[q.etiqueta] = st.tipos[q.etiqueta] || [0, 0])[1]++;
+  if(bien){ st.ok++; st.tipos[q.etiqueta][0]++; }
+  else st.falladas.push({el:B.ELEM[retoAct.z], q});
+  retoAct.bien = bien;
+  $('#reto-expl').innerHTML = '<div class="expl ' + (bien ? 'ok' : 'mal') + '">' + (bien ? '✅ <b>¡Correcto!</b> Tu disparo cuenta. ' : '❌ <b>Casi.</b> Pierdes el disparo. ') + q.explica + '</div>';
+  $('#reto-sig').textContent = bien ? 'Disparar →' : 'Continuar →';
+  $('#reto-pie').style.display = 'flex';
+  const sh = $('.reto'); setTimeout(() => { sh.scrollTop = sh.scrollHeight; $('#reto-sig').focus({preventScroll:true}); }, 30);
+}
+$('#reto-sig').addEventListener('click', continuar);
+function continuar(){
+  if(!retoAct || !retoAct.resp) return;
+  const {z, bien} = retoAct; retoAct = null;
+  $('#modal').classList.remove('on'); document.body.style.overflow = '';
+  const el = B.ELEM[z];
+  if(bien){
+    S.stats.tiros++;
+    const r = disparar(S.rival, S.mapaRival, S.tirosYo, z); S.ult.yo = z;
+    if(r.res === 'impacto') S.stats.impactos++;
+    logear('Tú → <b>' + el.sym + '</b>: ' + txtResultado(r, 'yo'));
+    if(vivos(S.rival) === 0){ return terminar(true); }
+  }else{
+    logear('Tú → <b>' + el.sym + '</b>: <span class="mal">fallaste el reto, pierdes el disparo.</span>');
+  }
+  S.turno = 'ia'; repintarBatalla();
+  setTimeout(turnoIA, 900);
+}
+
+/* ───────── turno de la IA ───────── */
+function turnoIA(){
+  if(S.fin) return;
+  const z = S.ia.elegir(), el = B.ELEM[z];
+  const bien = Math.random() < PROB_IA[cfg.nivel];
+  if(!bien){
+    logear('🤖 La IA eligió <b>' + el.sym + '</b> pero <span class="bien">falló el reto</span>: pierde el disparo.');
+  }else{
+    const r = disparar(S.mia, S.mapaMia, S.tirosIA, z); S.ult.ia = z;
+    S.ia.registrar(z, r.res, r.hundido ? r.barco : null);
+    logear('🤖 La IA → <b>' + el.sym + '</b>: ' + txtResultado(r, 'ia'));
+    if(S.vista !== 'mia') $('#t-mia').classList.add('aviso');
+    if(vivos(S.mia) === 0){ S.turno = 'yo'; repintarBatalla(); return terminar(false); }
+  }
+  S.turno = 'yo'; repintarBatalla();
+}
+
+/* ───────── final ───────── */
+$('#b-rendir').addEventListener('click', () => { if(S && !S.fin && confirm('¿Seguro que quieres rendirte?')) terminar(false, true); });
+function terminar(gane, rendido){
+  S.fin = true; repintarBatalla();
+  const st = S.stats, seg = Math.round((Date.now() - st.ini) / 1000), min = Math.floor(seg / 60);
+  const pct = st.tot ? Math.round(100 * st.ok / st.tot) : 0;
+  const filas = Object.keys(st.tipos).map(k => '<tr><td>' + k + '</td><td>' + st.tipos[k][0] + ' de ' + st.tipos[k][1] + '</td></tr>').join('');
+  const fallas = st.falladas.slice(0, 8).map(f => '<div class="falla"><b>' + f.el.sym + '</b> · ' + f.q.pregunta + '<br><small>' + f.q.explica + '</small></div>').join('');
+  $('#fin-box').innerHTML =
+    '<div class="big">' + (gane ? '🏆' : rendido ? '🏳️' : '⚓') + '</div>' +
+    '<h2>' + (gane ? '¡Hundiste toda la flota rival!' : rendido ? 'Te rendiste' : 'La IA hundió tu flota') + '</h2>' +
+    '<p>Retos acertados: <b>' + st.ok + ' de ' + st.tot + '</b> (' + pct + ' %) · impactos: <b>' + st.impactos + '</b> de ' + st.tiros + ' disparos · tiempo: ' + min + ' min ' + (seg % 60) + ' s</p>' +
+    (filas ? '<table class="est"><tr><th>Tipo de reto</th><th>Aciertos</th></tr>' + filas + '</table>' : '') +
+    (fallas ? '<h2 style="margin-top:16px;text-align:left;font-size:1rem;font-style:normal;font-family:var(--sans)">Para repasar</h2><div style="text-align:left">' + fallas + '</div>' : '') +
+    '<div class="fila" style="justify-content:center"><button type="button" class="btn" id="f-otra">🔁 Otra partida</button><button type="button" class="btn sec" id="f-ajustes">Cambiar ajustes</button></div>';
+  setTimeout(() => {
+    pantalla('s-fin');
+    $('#f-otra').addEventListener('click', iniciarColocar);
+    $('#f-ajustes').addEventListener('click', () => pantalla('s-portada'));
+  }, gane || rendido ? 900 : 1400);
+}
+
+$('#b-colocar').addEventListener('click', iniciarColocar);
+aplicarCfg();
+})();
+</script>
+<script src="assets/ionom-ui.js"></script>
+</body>
+</html>

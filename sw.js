@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v105';
+const CACHE_NAME = 'ionom-v106';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -11,6 +11,7 @@ const ASSETS_TO_CACHE = [
   '/ionom/tabla.html',
   '/ionom/generador.html',
   '/ionom/nomenClash.html',
+  '/ionom/batalla.html',
   '/ionom/simulador.html',
   '/ionom/reacciones.html',
   '/ionom/balanceo.html',
@@ -43,6 +44,8 @@ const ASSETS_TO_CACHE = [
   '/ionom/assets/laberinto.js',
   '/ionom/assets/crucigrama.js',
   '/ionom/assets/retos.js',
+  '/ionom/assets/batalla-core.js',
+  '/ionom/assets/batalla-papel.js',
   '/ionom/manifest.json',
   '/ionom/assets/iononpwa.png',
   '/ionom/assets/logo.png',
@@ -118,7 +121,7 @@ self.addEventListener('fetch', (event) => {
   // estos dos solo los usa la herramienta de la docente -- preferir
   // "siempre la versión más nueva cuando hay internet" es más importante
   // aquí que ahorrar una petición de red.
-  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
+  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/batalla-papel.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
