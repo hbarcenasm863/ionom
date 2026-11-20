@@ -37,9 +37,9 @@ const REAL = {24:'3d⁵ 4s¹',29:'3d¹⁰ 4s¹',41:'4d⁴ 5s¹',42:'4d⁵ 5s¹',
   92:'5f³ 6d¹ 7s²',93:'5f⁴ 6d¹ 7s²',96:'5f⁷ 6d¹ 7s²',103:'5f¹⁴ 7s² 7p¹'};
 
 function getCfg(){
-  const flota = $('#ba-flota').value;
+  const flota = $('#ba-flota').value, orient = $('#ba-orient').value === 'col' ? 'col' : 'fila';
   const seedTxt = ($('#ba-seed').value || '').trim().toUpperCase();
-  return {flota, F:B.FLOTAS[flota], cont:$('#ba-cont').value, color:$('#ba-color').value, regla:$('#ba-regla').value,
+  return {flota, orient, F:B.flota(flota, orient), cont:$('#ba-cont').value, color:$('#ba-color').value, regla:$('#ba-regla').value,
     propia:($('#ba-propia').value || '').trim(), titulo:($('#ba-title').value || '').trim() || 'Batalla periódica',
     clave:$('#ba-clave').checked, flotaDoc:$('#ba-flotadoc').checked, seed:seedTxt || semilla};
 }
@@ -47,10 +47,11 @@ function activos(F){ const a = []; for(let z = 1; z <= 118; z++) if(F.bloques.in
 
 function listaBarcos(F){
   const n = {}; F.barcos.forEach(b => n[b] = (n[b] || 0) + 1);
-  return Object.keys(n).map(b => n[b] + (n[b] === 1 ? ' barco ' : ' barcos ') + '<b>' + b + '</b> (' + B.TAM[b] + ' casillas)').join(' · ');
+  return Object.keys(n).map(b => n[b] + (n[b] === 1 ? ' barco ' : ' barcos ') + '<b>' + (b[0] === 'v' ? 'de ' + B.TAM[b] : b) + '</b> (' + B.TAM[b] + ' casillas)').join(' · ');
 }
 function textoRegla(c){
   if(c.regla === 'ox') return 'Para disparar, di un <b>elemento</b> y uno de sus <b>estados de oxidación</b> (ej.: Fe, +3). Tu rival lo comprueba en la tabla de verificación: si es correcto, mira su hoja y responde ✓ o ✗; si no, pierdes el turno.';
+  if(c.regla === 'fam') return 'Para disparar, di un <b>elemento</b> y la <b>familia</b> a la que pertenece (ej.: Cl, halógenos). Tu rival lo comprueba en la tabla de verificación: si es correcto, mira su hoja y responde ✓ o ✗; si no, pierdes el turno.';
   if(c.regla === 'propia') return esc(c.propia || 'Escribe aquí la regla de disparo.');
   return 'Para disparar, di la <b>configuración electrónica en la que termina</b> un elemento (ej.: 3p⁴). Tu rival busca ese elemento en su tabla y responde ✓ (impacto) o ✗ (agua).';
 }
@@ -59,7 +60,7 @@ function textoRegla(c){
 function tablero(c, o){
   o = o || {};
   const act = new Set(activos(c.F));
-  let h = '<div class="ba-tb ' + (c.color === 'relleno' ? 'rell' : c.color === 'contorno' ? 'cont' : 'nocolor') + '">';
+  let h = '<div class="ba-tb ' + (c.orient === 'col' ? 'colm ' : '') + (c.color === 'relleno' ? 'rell' : c.color === 'contorno' ? 'cont' : 'nocolor') + '">';
   for(let r = 1; r <= 7; r++) h += '<div class="ba-per" style="grid-row:' + r + '">' + r + '</div>';
   for(let z = 1; z <= 118; z++){
     if(!act.has(z)) continue;
@@ -68,6 +69,7 @@ function tablero(c, o){
     const txt = c.cont === 'vacio' ? '' : esc(e.sym) + (c.cont === 'z' ? '<small>' + z + '</small>' : '');
     h += '<div class="ba-c b-' + q.blk + (nav ? ' nav' : '') + '" style="grid-row:' + row + ';grid-column:' + (q.c + 1) + '">' + txt + '</div>';
   }
+  if(c.orient === 'col') for(let g = 1; g <= 18; g++) h += '<div class="ba-gr" style="grid-row:11;grid-column:' + (g + 1) + '">' + g + '</div>';
   if(c.color !== 'no'){
     h += '<div class="ba-lb l-s" style="grid-row:1;grid-column:3">s</div><div class="ba-lb l-p" style="grid-row:1;grid-column:14/19">p</div>';
     if(c.F.bloques.indexOf('d') >= 0) h += '<div class="ba-lb l-d" style="grid-row:3;grid-column:4/14">d</div>';
@@ -80,7 +82,7 @@ function tablero(c, o){
 /* ───── hoja 1: bombas y barcos ───── */
 function hojaJuego(c){
   const bombas = '<b class="t">BOMBAS</b><span>Marca aquí los disparos a tu rival: <b>✓ = impacto</b>, <b>✗ = agua</b>.</span><span>' + textoRegla(c) + '</span>';
-  const barcos = '<b class="t">BARCOS</b><span>Pinta aquí tu flota: ' + listaBarcos(c.F) + '. Cada barco ocupa casillas <b>seguidas, en la misma fila y dentro de un solo bloque</b>; no se pueden superponer.</span>';
+  const barcos = '<b class="t">BARCOS</b><span>Pinta aquí tu flota: ' + listaBarcos(c.F) + '. ' + (c.orient === 'col' ? 'Cada barco ocupa casillas <b>seguidas, en la misma columna (grupo)</b>; no se pueden superponer.' : 'Cada barco ocupa casillas <b>seguidas, en la misma fila y dentro de un solo bloque</b>; no se pueden superponer.') + '</span>';
   return '<div class="ba-hoja">' + encabezadoHoja(c.titulo, 'Tabla periódica · ' + esc(c.F.nombre), 'Para 2 jugadores', true)
     + '<div class="ba-sec">' + tablero(c, {caja:bombas}) + '</div>'
     + '<div class="ba-corte"><span>✂</span></div>'
@@ -90,31 +92,32 @@ function hojaJuego(c){
 
 /* ───── hoja 2: tabla de verificación ───── */
 function hojaClave(c){
-  const act = activos(c.F), ox = c.regla === 'ox';
+  const act = activos(c.F), ox = c.regla === 'ox', fam = c.regla === 'fam';
   const cols = 3, por = Math.ceil(act.length / cols), tablas = [];
   for(let k = 0; k < cols; k++){
     const zs = act.slice(k * por, (k + 1) * por);
-    tablas.push('<table class="ba-kt"><thead><tr><th>Z</th><th>Sím.</th>' + (ox ? '<th class="l">Estados de oxidación</th>' : '<th>Per.</th><th>Gr.</th><th class="l">Termina en</th>') + '</tr></thead><tbody>'
+    tablas.push('<table class="ba-kt"><thead><tr><th>Z</th><th>Sím.</th>' + (ox ? '<th class="l">Estados de oxidación</th>' : fam ? '<th>Gr.</th><th class="l">Familia</th>' : '<th>Per.</th><th>Gr.</th><th class="l">Termina en</th>') + '</tr></thead><tbody>'
       + zs.map(z => {
         const e = B.ELEM[z], t = B.terminacion(z), g = B.grupo(z);
+        if(fam) return '<tr><td>' + z + '</td><td><b>' + e.sym + '</b></td><td>' + (g || '—') + '</td><td class="l">' + (B.familiaDe(z) || (z === 1 ? 'hidrógeno (sin familia)' : 'grupo 3 (' + (z === 71 ? 'lantánidos' : 'actínidos') + ')')) + '</td></tr>';
         if(ox) return '<tr><td>' + z + '</td><td><b>' + e.sym + '</b></td><td class="l">' + (e.ox.length ? e.ox.map(x => x.replace('-', '−')).join(', ') : '—') + '</td></tr>';
         const exc = REAL[z], term = exc ? exc + '*' : (z > 103 ? t.txt + '†' : t.txt);
         return '<tr><td>' + z + '</td><td><b>' + e.sym + '</b></td><td>' + e.p + '</td><td>' + (g || '—') + '</td><td class="l">' + term + '</td></tr>';
       }).join('') + '</tbody></table>');
   }
-  const nota = ox
+  const nota = fam ? 'Familias: alcalinos (1), alcalinotérreos (2), térreos (13), carbonoideos (14), nitrogenoideos (15), anfígenos (16), halógenos (17), gases nobles (18); grupos 3–12 = metales de transición; bloque f = lantánidos (periodo 6) y actínidos (periodo 7). El hidrógeno no pertenece a ninguna familia.' : ox
     ? 'Estados de oxidación más comunes del elemento; el rival acepta cualquiera de la lista. Los gases nobles no tienen.'
     : 'La terminación sigue el diagrama de Moeller (el último subnivel que se llena). <b>*</b> Excepción: se muestra la configuración real; se acepta también la terminación de Moeller. <b>†</b> Elemento sin datos experimentales: terminación predicha. En el bloque f no hay grupo (—).';
-  return '<div class="ba-hoja">' + encabezadoHoja(c.titulo + ': verificación', ox ? 'Estados de oxidación' : 'Dónde termina la configuración de cada elemento', 'Solo para el rival', false)
+  return '<div class="ba-hoja">' + encabezadoHoja(c.titulo + ': verificación', ox ? 'Estados de oxidación' : fam ? 'Familia de cada elemento' : 'Dónde termina la configuración de cada elemento', 'Solo para el rival', false)
     + '<p class="ba-nota">Úsala para comprobar los disparos de tu rival. ' + nota + '</p>'
     + '<div class="ba-kcols">' + tablas.join('') + '</div>' + pieHoja() + '</div>';
 }
 
 /* ───── hoja 3: flota del docente ───── */
 function hojaFlotaDoc(c){
-  const flota = B.colocarAlAzar(c.F.barcos, B.rng(c.seed + '|docente'));
+  const flota = B.colocarAlAzar(c.F.barcos, B.rng(c.seed + '|docente'), c.F.bloques);
   const ocup = new Set(); flota.forEach(b => b.cells.forEach(z => ocup.add(z)));
-  const lista = flota.map(b => '<li><b>Barco ' + b.blk + '</b> (' + b.tam + '): ' + b.cells.map(z => B.ELEM[z].sym).join(' – ') + '</li>').join('');
+  const lista = flota.map(b => '<li><b>Barco ' + (b.blk[0] === 'v' ? 'de ' + b.tam : b.blk) + '</b> (' + b.tam + '): ' + b.cells.map(z => B.ELEM[z].sym).join(' – ') + '</li>').join('');
   const caja = '<b class="t">FLOTA DEL DOCENTE</b><span>Código: <b class="fx">' + esc(c.seed) + '</b>. Los estudiantes cantan disparos; responde ✓ o ✗ según esta hoja.</span>';
   return '<div class="ba-hoja">' + encabezadoHoja(c.titulo + ': flota del docente', 'No la repartas: es la clave', 'Código ' + c.seed, false)
     + '<div class="ba-sec">' + tablero(c, {caja, ocup}) + '</div>'
@@ -148,7 +151,7 @@ function panelVisible(){ const p = $('#ba-app'); return !!(p && p.offsetParent !
 
 function init(){
   const app = $('#ba-app'); if(!app) return;
-  ['#ba-flota','#ba-cont','#ba-color','#ba-regla','#ba-clave','#ba-flotadoc'].forEach(s => $(s).addEventListener('change', render));
+  ['#ba-flota','#ba-orient','#ba-cont','#ba-color','#ba-regla','#ba-clave','#ba-flotadoc'].forEach(s => $(s).addEventListener('change', render));
   ['#ba-title','#ba-propia','#ba-seed'].forEach(s => $(s).addEventListener('input', render));
   $('#ba-btn-seed').addEventListener('click', () => { semilla = nuevaSemilla(); $('#ba-seed').value = ''; $('#ba-flotadoc').checked = true; render(); });
   $('#ba-btn-print').addEventListener('click', imprimir);

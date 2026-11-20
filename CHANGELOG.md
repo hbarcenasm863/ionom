@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 19 de noviembre (35) — Batalla periódica: familias y barcos en columna
+
+A partir de la idea «también podría ser con familia», la Batalla periódica gana dos cosas:
+
+- **Retos de familia (tema «Familias» y también en «Mixto»):** ¿a qué familia pertenece el elemento? (alcalinos, alcalinotérreos, térreos, carbonoideos, nitrogenoideos, anfígenos, halógenos, gases nobles, metales de transición, lantánidos, actínidos) y «¿cuál es de la misma familia que…?». El hidrógeno, el Lu y el Lr no llevan este reto porque su familia es discutible.
+- **Modo «Por familias (columnas)»:** los barcos van en columna dentro de un grupo (2, 3, 3 y 4 casillas en la flota corta; hasta 5 con el bloque f). El tablero de colocación, la IA (también la difícil) y el azar entienden las dos orientaciones.
+- **Plantilla imprimible (docente):** nuevo selector «Modo», regla «Elemento y familia», tabla de verificación con la familia de cada elemento y números de grupo bajo las columnas.
+- `assets/batalla-core.js`, `batalla.html`, `assets/batalla-papel.js`, `docente.html` y `sw.js` (**ionom-v107**).
+
+---
+
 ## 19 de noviembre (34) — Batalla periódica: modo de juego contra la IA y plantilla imprimible
 
 El docente vio una actividad de Battleship sobre la tabla periódica (los barcos van en el bloque s, p o d según la configuración electrónica en que termina cada elemento) y pidió llevarla a IonNom como un modo de juego contra una IA y como plantilla para imprimir en el generador docente.

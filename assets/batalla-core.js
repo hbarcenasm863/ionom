@@ -30,7 +30,7 @@ const SUPD = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶'
 const sup = n => String(n).split('').map(d => SUPD[d] || d).join('');
 /* orden de llenado (regla de Moeller) */
 const ORDEN = [[1,0],[2,0],[2,1],[3,0],[3,1],[4,0],[3,2],[4,1],[5,0],[4,2],[5,1],[6,0],[4,3],[5,2],[6,1],[7,0],[5,3],[6,2],[7,1]];
-const TAM = {s:2, p:3, d:4, f:5};
+const TAM = {s:2, p:3, d:4, f:5, v2:2, v3:3, v4:4, v5:5};
 const NOM_BLK = {s:'Barco s', p:'Barco p', d:'Barco d', f:'Barco f'};
 
 /* elementos cuya configuración real NO sigue el diagrama de Moeller: no se
@@ -75,26 +75,45 @@ const ELEM = [null].concat(E.map((e, i) => ({
 
 /* ───── flotas ───── */
 const FLOTAS = {
-  sp:  {id:'sp',  nombre:'Solo bloques s y p', bloques:'sp',   barcos:['s','s','p','p']},
-  spd: {id:'spd', nombre:'Bloques s, p y d',   bloques:'spd',  barcos:['s','s','p','p','d','d']},
-  spdf:{id:'spdf',nombre:'Tabla completa (s, p, d y f)', bloques:'spdf', barcos:['s','s','p','p','d','d','f']}
+  sp:  {id:'sp',  nombre:'Solo bloques s y p', bloques:'sp',   barcos:['s','s','p','p'], orient:'fila'},
+  spd: {id:'spd', nombre:'Bloques s, p y d',   bloques:'spd',  barcos:['s','s','p','p','d','d'], orient:'fila'},
+  spdf:{id:'spdf',nombre:'Tabla completa (s, p, d y f)', bloques:'spdf', barcos:['s','s','p','p','d','d','f'], orient:'fila'}
 };
+/* Variante «por familias»: los barcos van en COLUMNA (un grupo o familia),
+   de 2 a 5 casillas seguidas hacia abajo. */
+const FLOTAS_COL = {
+  sp:  {id:'sp',  nombre:'Familias de los bloques s y p', bloques:'sp',   barcos:['v2','v3','v3','v4'], orient:'col'},
+  spd: {id:'spd', nombre:'Familias de los bloques s, p y d', bloques:'spd',  barcos:['v2','v3','v3','v4','v4'], orient:'col'},
+  spdf:{id:'spdf',nombre:'Tabla completa por familias', bloques:'spdf', barcos:['v2','v3','v3','v4','v4','v5'], orient:'col'}
+};
+const flota = (id, orient) => (orient === 'col' ? FLOTAS_COL : FLOTAS)[id];
 
 /* todas las filas de casillas seguidas del mismo bloque donde cabe un barco */
 const _col = {};
-function colocaciones(blk){
-  if(_col[blk]) return _col[blk];
-  const tam = TAM[blk], out = [];
-  for(let r = 1; r <= 9; r++){
-    const cols = Object.keys(ARR[r] || {}).map(Number).filter(c => POS[ARR[r][c]].blk === blk).sort((a, b) => a - b);
-    let i = 0;
-    while(i < cols.length){
-      let j = i; while(j + 1 < cols.length && cols[j + 1] === cols[j] + 1) j++;
-      for(let s = i; s + tam - 1 <= j; s++){ const p = []; for(let k = 0; k < tam; k++) p.push(ARR[r][cols[s + k]]); out.push(p); }
-      i = j + 1;
+function colocaciones(key, zona){
+  zona = zona || 'spdf';
+  const ck = key + '|' + zona; if(_col[ck]) return _col[ck];
+  const tam = TAM[key], out = [];
+  if(key[0] === 'v'){
+    /* columnas: casillas seguidas hacia abajo dentro de la zona (las filas 8 y 9, el bloque f, van aparte) */
+    for(let c = 1; c <= 18; c++) [[1, 7], [8, 9]].forEach(([r0, r1]) => {
+      let run = [];
+      const cerrar = () => { for(let k = 0; k + tam <= run.length; k++) out.push(run.slice(k, k + tam)); run = []; };
+      for(let r = r0; r <= r1; r++){ const z = (ARR[r] || {})[c]; if(z && zona.indexOf(POS[z].blk) >= 0) run.push(z); else cerrar(); }
+      cerrar();
+    });
+  }else{
+    for(let r = 1; r <= 9; r++){
+      const cols = Object.keys(ARR[r] || {}).map(Number).filter(c => POS[ARR[r][c]].blk === key).sort((a, b) => a - b);
+      let i = 0;
+      while(i < cols.length){
+        let j = i; while(j + 1 < cols.length && cols[j + 1] === cols[j] + 1) j++;
+        for(let st = i; st + tam - 1 <= j; st++){ const p = []; for(let k = 0; k < tam; k++) p.push(ARR[r][cols[st + k]]); out.push(p); }
+        i = j + 1;
+      }
     }
   }
-  return (_col[blk] = out);
+  return (_col[ck] = out);
 }
 
 /* ───── azar con semilla (la misma de las hojas de papel) ───── */
@@ -108,14 +127,14 @@ const pick = (arr, r) => arr[Math.floor(r() * arr.length)];
 function barajar(arr, r){ const a = arr.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 /* Coloca toda la flota al azar. Devuelve [{id, blk, tam, cells:[z…]}] */
-function colocarAlAzar(barcos, r){
+function colocarAlAzar(barcos, r, zona){
   r = r || Math.random;
   for(let intento = 0; intento < 200; intento++){
     const ocup = new Set(), flota = []; let ok = true;
     // primero los barcos con menos opciones (los de mayor tamaño)
     const orden = barcos.map((b, i) => ({b, i})).sort((x, y) => TAM[y.b] - TAM[x.b]);
     for(const {b, i} of orden){
-      const libres = colocaciones(b).filter(p => !p.some(z => ocup.has(z)));
+      const libres = colocaciones(b, zona).filter(p => !p.some(z => ocup.has(z)));
       if(!libres.length){ ok = false; break; }
       const p = pick(libres, r); p.forEach(z => ocup.add(z));
       flota.push({id:i, blk:b, tam:TAM[b], cells:p.slice()});
@@ -126,10 +145,11 @@ function colocarAlAzar(barcos, r){
 }
 /* Colocación manual: el toque marca la casilla de la izquierda; si el barco
    no cabe ahí, se corre a la colocación válida más cercana que lo contenga. */
-function colocacionPara(blk, z, ocupadas){
-  const c = colocaciones(blk).filter(p => p.indexOf(z) >= 0 && !p.some(q => ocupadas.has(q)));
+function colocacionPara(blk, z, ocupadas, zona){
+  const c = colocaciones(blk, zona).filter(p => p.indexOf(z) >= 0 && !p.some(q => ocupadas.has(q)));
   if(!c.length) return null;
-  c.sort((a, b) => Math.abs(POS[a[0]].c - POS[z].c) - Math.abs(POS[b[0]].c - POS[z].c));
+  const dist = p => Math.abs(POS[p[0]].c - POS[z].c) + Math.abs(POS[p[0]].r - POS[z].r);
+  c.sort((a, b) => dist(a) - dist(b));
   return c[0];
 }
 
@@ -140,7 +160,7 @@ function colocacionPara(blk, z, ocupadas){
             los barcos que le quedan cabe (los barcos solo caben dentro de un
             bloque y en fila) y dispara donde más se repiten; si ya tiene un
             impacto, pesa mucho más las posiciones que lo cubren. */
-function crearIA(nivel, barcos, activos, r){
+function crearIA(nivel, barcos, activos, r, zona){
   r = r || Math.random;
   const tiros = new Map();             // z → 'agua' | 'impacto' | 'hundido'
   let restantes = barcos.slice();
@@ -160,7 +180,7 @@ function crearIA(nivel, barcos, activos, r){
     }
     const score = new Map();
     for(const b of restantes){
-      for(const p of colocaciones(b)){
+      for(const p of colocaciones(b, zona)){
         if(p.some(z => tiros.get(z) === 'agua' || tiros.get(z) === 'hundido' || activos.indexOf(z) < 0)) continue;
         const h = p.filter(z => tiros.get(z) === 'impacto').length;
         const w = h ? Math.pow(40, h) : 1;
@@ -298,7 +318,48 @@ function retoNom(z, r){
     opciones:o.opciones, ok:o.ok, explica:'<b class="fx">' + c.formula + '</b> = ' + nombres + '.' + hint};
 }
 
-/* tema: 'tabla' (configuración y ubicación) | 'ox' (estados de oxidación) | 'mixto' */
+
+/* ───── familias ───── */
+const FAMILIAS = {1:'alcalinos', 2:'alcalinotérreos', 13:'térreos', 14:'carbonoideos', 15:'nitrogenoideos', 16:'anfígenos', 17:'halógenos', 18:'gases nobles'};
+const TODAS_FAM = Object.keys(FAMILIAS).map(k => FAMILIAS[k]).concat(['metales de transición', 'lantánidos', 'actínidos']);
+function familiaDe(z){
+  const q = POS[z];
+  if(z === 1 || z === 71 || z === 103) return null;      // H, Lu y Lr: se prestan a discusión
+  if(q.blk === 'f') return z <= 70 ? 'lantánidos' : 'actínidos';
+  if(q.blk === 'd') return 'metales de transición';
+  return FAMILIAS[q.c] || null;
+}
+const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+function retoFamilia(z, r){
+  const fam = familiaDe(z); if(!fam) return null;
+  const el = ELEM[z], q = POS[z], g = grupo(z), esRep = (q.blk === 's' || q.blk === 'p');
+  const nom = e => e.nombre + ' (' + e.sym + ')';
+  if(esRep && r() < .45){
+    const mismos = ELEM.filter(e => e && e.z !== z && e.z !== 1 && e.c === q.c && (e.blk === 's' || e.blk === 'p'));
+    const otros = ELEM.filter(e => e && e.z !== 1 && (e.blk === 's' || e.blk === 'p') && e.c !== q.c);
+    if(mismos.length){
+      const buena = pick(mismos, r);
+      const malas = barajar(otros, r).filter((e, i, a) => a.findIndex(x => x.c === e.c) === i).slice(0, 3);
+      if(malas.length === 3){
+        const o = barajarOpciones(nom(buena), malas.map(nom), r);
+        return {tipo:'fam', etiqueta:'Familias',
+          pregunta:'¿Cuál de estos elementos pertenece a la <b>misma familia</b> que el <b>' + el.nombre + '</b> (' + el.sym + ')?',
+          opciones:o.opciones, ok:o.ok,
+          explica:'<b>' + el.sym + '</b> y <b>' + buena.sym + '</b> están en el grupo <b>' + g + '</b>: la familia de los <b>' + fam + '</b>.'};
+      }
+    }
+  }
+  const malas = tresDistintos(TODAS_FAM.filter(f => f !== fam).map(cap), cap(fam), r);
+  const o = barajarOpciones(cap(fam), malas, r);
+  const porque = q.blk === 'f' ? 'Están en el bloque f: el periodo 6 son los lantánidos y el periodo 7, los actínidos.'
+    : q.blk === 'd' ? 'Los grupos 3 a 12 (bloque d) forman los metales de transición.'
+    : '<b>' + el.sym + '</b> está en el grupo <b>' + g + '</b>.';
+  return {tipo:'fam', etiqueta:'Familias',
+    pregunta:'¿A qué <b>familia</b> pertenece el <b>' + el.nombre + '</b> (' + el.sym + ')?',
+    opciones:o.opciones, ok:o.ok, explica:porque + ' Familia: <b>' + fam + '</b>.'};
+}
+
+/* tema: 'tabla' (configuración y ubicación) | 'ox' (estados de oxidación) | 'fam' (familias) | 'mixto' */
 function reto(z, tema, r){
   r = r || Math.random;
   const el = ELEM[z];
@@ -309,6 +370,7 @@ function reto(z, tema, r){
     cand.push([2, retoBloque], [2, retoPeriodo]);
     if(el.blk !== 'f') cand.push([2, retoGrupo]);
   }
+  if(tema === 'fam' || tema === 'mixto'){ if(familiaDe(z)) cand.push([tema === 'fam' ? 9 : 2, retoFamilia]); }
   /* La nomenclatura (retoNom) queda desactivada por ahora: los retos son de
      configuración/ubicación y de estados de oxidación. */
   if(tema === 'ox' || tema === 'mixto'){
@@ -323,6 +385,6 @@ function reto(z, tema, r){
   return retoBloque(z, r);
 }
 
-window.BATALLA = {ELEM, POS, ARR, E, bloque, terminacion, config, grupo, periodo, FLOTAS, TAM, NOM_BLK, EXCEPCIONES,
+window.BATALLA = {ELEM, POS, ARR, E, bloque, terminacion, config, grupo, periodo, FLOTAS, FLOTAS_COL, flota, familiaDe, FAMILIAS, TAM, NOM_BLK, EXCEPCIONES,
   colocaciones, colocarAlAzar, colocacionPara, crearIA, reto, rng, barajar, pick, sup};
 })();

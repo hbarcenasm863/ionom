@@ -14,7 +14,7 @@ Herramienta web interactiva para el aprendizaje de nomenclatura química inorgá
 | `funciones.html` | Funciones | Ejercicios interactivos por función inorgánica con ejemplos en contexto colombiano |
 | `juego.html` | Juego | Preguntas cronometradas · Modo Libre y Modo Estudiante (registro automático a Google Sheets) · incluye los temas «Teoría atómica y configuración» y «Enlace químico» |
 | `nomenClash.html` | NomenClash | Juego de cartas por turnos, competencia entre estudiantes (con oponentes IA) |
-| `batalla.html` | Batalla periódica | Battleship sobre la tabla periódica contra la IA: los barcos van en un bloque (s, p, d, f) y para disparar se resuelve un reto de configuración, ubicación o estados de oxidación. La plantilla imprimible está en el Generador docente |
+| `batalla.html` | Batalla periódica | Battleship sobre la tabla periódica contra la IA: los barcos van en un bloque (fila) o en una familia (columna) y para disparar se resuelve un reto de configuración, oxidación o familia, ubicación o estados de oxidación. La plantilla imprimible está en el Generador docente |
 | `generador.html` | Generador | Generador de talleres para imprimir o proyectar en clase |
 | `simulador.html` | Simulador | Simulador de reacciones y de pH |
 | `tabla.html` | Tabla periódica | Tabla periódica interactiva con calculadora integrada |

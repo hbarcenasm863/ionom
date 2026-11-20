@@ -124,7 +124,7 @@ footer a{color:var(--an-t);text-decoration:none;font-weight:600}
 .barco-chip.sel{border-color:var(--nav);background:var(--an-b)}
 .barco-chip.puesto{opacity:.55}
 .barco-chip.puesto::after{content:' ✓'}
-.sw-s{color:#8d5373}.sw-p{color:#007253}.sw-d{color:#8a5f00}.sw-f{color:#665a00}
+.sw-s{color:#8d5373}.sw-p{color:#007253}.sw-d{color:#8a5f00}.sw-f{color:#665a00}.sw-v2,.sw-v3,.sw-v4,.sw-v5{color:#0072B2}
 
 /* ── reto (ventana) ── */
 .modal{position:fixed;inset:0;background:rgba(5,25,40,.55);z-index:var(--z-modal,400);display:none;align-items:flex-end;justify-content:center;padding:0}
@@ -211,11 +211,18 @@ table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);tex
 <div class="app">
   <div class="page-hdr">
     <h1>⚓ Batalla periódica</h1>
-    <p>Battleship sobre la tabla periódica. Tus barcos ocupan casillas seguidas dentro de un mismo bloque (s = 2, p = 3, d = 4, f = 5). Para disparar tienes que resolver un reto del elemento: si aciertas, el disparo cuenta; si fallas, pierdes el turno. Gana quien hunda primero la flota rival.</p>
+    <p>Battleship sobre la tabla periódica. Tus barcos ocupan casillas seguidas: <b>en fila</b> dentro de un bloque (s = 2, p = 3, d = 4, f = 5) o <b>en columna</b> dentro de una familia (2 a 5 elementos). Para disparar tienes que resolver un reto del elemento: si aciertas, el disparo cuenta; si fallas, pierdes el turno. Gana quien hunda primero la flota rival.</p>
   </div>
 
   <!-- 1 · AJUSTES -->
   <section id="s-portada" class="screen active">
+    <div class="sect">
+      <h2>0 · Modo de juego</h2>
+      <div class="opts" id="o-orient">
+        <label class="opt"><input type="radio" name="orient" value="fila" checked><span><b>Por bloques (filas)</b><small>Los barcos van en fila, dentro de un bloque: s=2, p=3, d=4, f=5.</small></span></label>
+        <label class="opt"><input type="radio" name="orient" value="col"><span><b>Por familias (columnas)</b><small>Los barcos van en columna: ocupan 2 a 5 elementos de un mismo grupo.</small></span></label>
+      </div>
+    </div>
     <div class="sect">
       <h2>1 · Tablero y flota</h2>
       <div class="opts" id="o-flota">
@@ -229,7 +236,8 @@ table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);tex
       <div class="opts" id="o-tema">
         <label class="opt"><input type="radio" name="tema" value="tabla" checked><span><b>Configuración electrónica</b><small>Subnivel donde termina, bloque, periodo y grupo.</small></span></label>
         <label class="opt"><input type="radio" name="tema" value="ox"><span><b>Estados de oxidación</b><small>Cuál puede tener cada elemento. Los gases nobles llevan reto de ubicación.</small></span></label>
-        <label class="opt"><input type="radio" name="tema" value="mixto"><span><b>Mixto</b><small>Configuración y estados de oxidación.</small></span></label>
+        <label class="opt"><input type="radio" name="tema" value="fam"><span><b>Familias</b><small>Alcalinos, halógenos, gases nobles… y quién es de la misma familia.</small></span></label>
+        <label class="opt"><input type="radio" name="tema" value="mixto"><span><b>Mixto</b><small>Configuración, estados de oxidación y familias.</small></span></label>
       </div>
     </div>
     <div class="sect">
@@ -237,7 +245,7 @@ table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);tex
       <div class="opts" id="o-nivel">
         <label class="opt"><input type="radio" name="nivel" value="facil"><span><b>IA fácil</b><small>Dispara al azar y falla bastantes retos.</small></span></label>
         <label class="opt"><input type="radio" name="nivel" value="normal" checked><span><b>IA normal</b><small>Si acierta un barco, busca alrededor.</small></span></label>
-        <label class="opt"><input type="radio" name="nivel" value="dificil"><span><b>IA difícil</b><small>Sabe que los barcos van en fila y dentro de un bloque; calcula dónde caben.</small></span></label>
+        <label class="opt"><input type="radio" name="nivel" value="dificil"><span><b>IA difícil</b><small>Sabe cómo son los barcos (fila o columna) y calcula dónde caben.</small></span></label>
       </div>
       <label class="chk"><input type="checkbox" id="c-ayudas" checked> Mostrar los bloques en colores en el tablero (apágalo para jugar sin ayudas)</label>
     </div>
@@ -248,7 +256,7 @@ table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);tex
     <div class="sect" style="margin-top:18px">
       <h2>Cómo se juega</h2>
       <ol>
-        <li>Coloca tus barcos (o deja que se pongan al azar). Cada barco es una fila de casillas seguidas del mismo bloque.</li>
+        <li>Coloca tus barcos (o deja que se pongan al azar). Cada barco es una línea de casillas seguidas: en fila, dentro de un bloque, o en columna, dentro de una familia.</li>
         <li>En tu turno toca una casilla del tablero de <b>Ataque</b> y resuelve el reto de ese elemento.</li>
         <li>Si aciertas, se revela <b>✓ impacto</b> o <b>✗ agua</b>. Si fallas, el disparo se pierde y se muestra la respuesta.</li>
         <li>La IA hace lo mismo contra tu flota: mira la pestaña <b>Mi flota</b>.</li>
@@ -337,14 +345,15 @@ table.est td,table.est th{padding:6px 8px;border-bottom:1px solid var(--brd);tex
 const B = window.BATALLA;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const PROB_IA = {facil:.5, normal:.75, dificil:.92};
-const NOM_BLK = {s:'Barco s (2)', p:'Barco p (3)', d:'Barco d (4)', f:'Barco f (5)'};
+const NOM_BLK = {s:'Barco s (2)', p:'Barco p (3)', d:'Barco d (4)', f:'Barco f (5)', v2:'Barco de 2', v3:'Barco de 3', v4:'Barco de 4', v5:'Barco de 5'};
 let S = null;            // partida
-let cfg = {flota:'sp', tema:'tabla', nivel:'normal', ayudas:true};
+let cfg = {flota:'sp', tema:'tabla', nivel:'normal', ayudas:true, orient:'fila'};
 let colocando = null;    // {flota:[{id,blk,tam,cells|null}], sel:id}
 let grande = false;
 
 try{ const g = JSON.parse(localStorage.getItem('ionom-batalla') || 'null'); if(g) cfg = Object.assign(cfg, g); }catch(e){}
-if(['tabla','ox','mixto'].indexOf(cfg.tema) < 0) cfg.tema = 'tabla';
+if(['tabla','ox','fam','mixto'].indexOf(cfg.tema) < 0) cfg.tema = 'tabla';
+if(cfg.orient !== 'col') cfg.orient = 'fila';
 function guardarCfg(){ try{ localStorage.setItem('ionom-batalla', JSON.stringify(cfg)); }catch(e){} }
 
 function pantalla(id){
@@ -355,7 +364,7 @@ function pantalla(id){
 
 /* ───────── tablero ───────── */
 function activosDe(f){
-  const bl = B.FLOTAS[f].bloques, out = [];
+  const bl = B.flota(f, cfg.orient).bloques, out = [];
   for(let z = 1; z <= 118; z++) if(bl.indexOf(B.POS[z].blk) >= 0) out.push(z);
   return out;
 }
@@ -393,20 +402,20 @@ function leyenda(modo){
 
 /* ───────── ajustes ───────── */
 function leerCfg(){
-  ['flota','tema','nivel'].forEach(k => { const r = document.querySelector('input[name="' + k + '"]:checked'); if(r) cfg[k] = r.value; });
+  ['flota','tema','nivel','orient'].forEach(k => { const r = document.querySelector('input[name="' + k + '"]:checked'); if(r) cfg[k] = r.value; });
   cfg.ayudas = $('#c-ayudas').checked;
   guardarCfg();
 }
 function aplicarCfg(){
-  ['flota','tema','nivel'].forEach(k => { const r = document.querySelector('input[name="' + k + '"][value="' + cfg[k] + '"]'); if(r) r.checked = true; });
+  ['flota','tema','nivel','orient'].forEach(k => { const r = document.querySelector('input[name="' + k + '"][value="' + cfg[k] + '"]'); if(r) r.checked = true; });
   $('#c-ayudas').checked = !!cfg.ayudas;
 }
 
 /* ───────── colocar ───────── */
 function iniciarColocar(){
   leerCfg();
-  const F = B.FLOTAS[cfg.flota];
-  S = {F, setAct:new Set(activosDe(cfg.flota)), act:activosDe(cfg.flota)};
+  const F = B.flota(cfg.flota, cfg.orient);
+  S = {F, zona:F.bloques, setAct:new Set(activosDe(cfg.flota)), act:activosDe(cfg.flota)};
   colocando = {flota:F.barcos.map((b, i) => ({id:i, blk:b, tam:B.TAM[b], cells:null})), sel:0};
   pantalla('s-colocar'); repintarColocar();
 }
@@ -418,7 +427,7 @@ function repintarColocar(){
   }
   $('#paleta').innerHTML = c.flota.map(b => '<button type="button" class="barco-chip sw-' + b.blk + (b.cells ? ' puesto' : '') + (c.sel === b.id ? ' sel' : '') + '" data-id="' + b.id + '">' + NOM_BLK[b.blk] + '</button>').join('');
   let apto = null;
-  if(c.sel !== null){ apto = new Set(); B.colocaciones(c.flota[c.sel].blk).forEach(p => p.forEach(z => apto.add(z))); }
+  if(c.sel !== null){ apto = new Set(); B.colocaciones(c.flota[c.sel].blk, S.zona).forEach(p => p.forEach(z => apto.add(z))); }
   const mapa = new Map(); ocup.forEach(z => mapa.set(z, true));
   pintar($('#tb-colocar'), {modo:'colocar', ocup:mapa, apto});
   $('#b-listo').disabled = c.flota.some(b => !b.cells);
@@ -435,13 +444,13 @@ $('#tb-colocar').addEventListener('click', e => {
   const dueno = c.flota.find(b => b.cells && b.cells.indexOf(z) >= 0);
   if(dueno){ dueno.cells = null; c.sel = dueno.id; repintarColocar(); return; }
   if(c.sel === null) return;
-  const bar = c.flota[c.sel], p = B.colocacionPara(bar.blk, z, ocupadas());
+  const bar = c.flota[c.sel], p = B.colocacionPara(bar.blk, z, ocupadas(), S.zona);
   if(!p){ flash(t); return; }
   bar.cells = p.slice(); repintarColocar();
 });
 function flash(el){ if(!el || !el.animate) return; el.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'none'}], {duration:200}); }
 $('#b-azar').addEventListener('click', () => {
-  const f = B.colocarAlAzar(S.F.barcos, Math.random);
+  const f = B.colocarAlAzar(S.F.barcos, Math.random, S.zona);
   colocando.flota.forEach((b, i) => { b.cells = f[i].cells.slice(); }); colocando.sel = null; repintarColocar();
 });
 $('#b-limpiar').addEventListener('click', () => { colocando.flota.forEach(b => b.cells = null); colocando.sel = 0; repintarColocar(); });
@@ -452,13 +461,13 @@ $('#b-listo').addEventListener('click', empezar);
 function flotaDe(arr){ return arr.map(b => ({id:b.id, blk:b.blk, tam:b.tam, cells:b.cells.slice(), hits:new Set(), hundido:false})); }
 function empezar(){
   const r = Math.random;
-  const rival = B.colocarAlAzar(S.F.barcos, r);
+  const rival = B.colocarAlAzar(S.F.barcos, r, S.zona);
   S.mia = flotaDe(colocando.flota);
   S.rival = flotaDe(rival);
   S.mapaMia = new Map(); S.mia.forEach(b => b.cells.forEach(z => S.mapaMia.set(z, b)));
   S.mapaRival = new Map(); S.rival.forEach(b => b.cells.forEach(z => S.mapaRival.set(z, b)));
   S.tirosYo = new Map(); S.tirosIA = new Map();
-  S.ia = B.crearIA(cfg.nivel, S.F.barcos, S.act, r);
+  S.ia = B.crearIA(cfg.nivel, S.F.barcos, S.act, r, S.zona);
   S.turno = 'yo'; S.vista = 'ataque'; S.ult = {yo:null, ia:null};
   S.stats = {tot:0, ok:0, tipos:{}, falladas:[], tiros:0, impactos:0, ini:Date.now()};
   S.log = []; S.fin = false;
