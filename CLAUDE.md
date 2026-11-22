@@ -1,5 +1,12 @@
 # IonNom — Notas para Claude Code
 
+## Push a `main`
+
+El docente estableció (22-11-2026) que hacer **push a `main` está autorizado**
+en este repositorio: cuando una tarea queda lista y probada, Claude hace commit y
+push a `main` (desde la rama de trabajo, fast-forward) sin volver a preguntar. Si
+en una sesión el docente indica otra cosa, se respeta lo que diga en esa sesión.
+
 ## Pruebas de Modo Estudiante
 
 Cuando se necesite probar el flujo de Modo Estudiante en `juego.html` (validación de código, panel de bienvenida, estadísticas, etc.), usar siempre el código de estudiante **`110106`** (grado 11°, curso 01, estudiante 06). No usar códigos inventados como `ABC123`.
