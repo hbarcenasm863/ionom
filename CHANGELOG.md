@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 22 de noviembre (36) — Lote 3 de química: 36 preguntas de explicación e indagación
+
+El docente pidió seguir con las preguntas pendientes de los tres sitios (un lote por sitio), llevando cada tema hacia ~30 por competencia y reforzando la indagación. En IonNom se escogieron los temas con menos explicación: gases, soluciones, ácido-base, átomo, configuración electrónica y reactividad.
+
+- **`assets/docente-datos.js`:** 36 preguntas Saber nuevas (6 por tema; 3 o 4 de explicación y 2 a 4 de indagación). 12 llevan tabla o gráfica y todas siguen las convenciones del sitio (cargas reales, «hierro (III)»). Cuentas nuevas (explicación / indagación): gases 13 / 22, soluciones 13 / 20, ácido-base 13 / 22, átomo 8 / 12, config. electrónica 11 / 12, reactividad 6 / 10.
+- **`assets/saber-juego.js`:** regenerado con `node herramientas/generar-saber-juego.js` (1047 preguntas).
+- **`sw.js`:** `CACHE_NAME` de `ionom-v107` a `ionom-v108` (cambió `assets/saber-juego.js`, que se sirve cache-first). Probado con Playwright: `juego.html` y `docente.html` cargan sin errores de página.
+- **Pendiente:** no hubo auditoría independiente a ciegas (la revisión la hizo el mismo autor): conviene que el docente revise una muestra, sobre todo indagación. Todos los temas siguen por debajo de 30 por competencia (reactividad, átomo y enlace son los más cortos en explicación) y faltan evidencias del marco 6.1, 6.2, 8.2, 9.1 y 9.2. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 19 de noviembre (35) — Batalla periódica: familias y barcos en columna
 
 A partir de la idea «también podría ser con familia», la Batalla periódica gana dos cosas:
