@@ -11,7 +11,8 @@ El docente pidió seguir con las preguntas pendientes de los tres sitios (un lot
 - **`assets/docente-datos.js`:** 36 preguntas Saber nuevas (6 por tema; 3 o 4 de explicación y 2 a 4 de indagación). 12 llevan tabla o gráfica y todas siguen las convenciones del sitio (cargas reales, «hierro (III)»). Cuentas nuevas (explicación / indagación): gases 13 / 22, soluciones 13 / 20, ácido-base 13 / 22, átomo 8 / 12, config. electrónica 11 / 12, reactividad 6 / 10.
 - **`assets/saber-juego.js`:** regenerado con `node herramientas/generar-saber-juego.js` (1047 preguntas).
 - **`sw.js`:** `CACHE_NAME` de `ionom-v107` a `ionom-v108` (cambió `assets/saber-juego.js`, que se sirve cache-first). Probado con Playwright: `juego.html` y `docente.html` cargan sin errores de página.
-- **Pendiente:** no hubo auditoría independiente a ciegas (la revisión la hizo el mismo autor): conviene que el docente revise una muestra, sobre todo indagación. Todos los temas siguen por debajo de 30 por competencia (reactividad, átomo y enlace son los más cortos en explicación) y faltan evidencias del marco 6.1, 6.2, 8.2, 9.1 y 9.2. No se tocó `ionom-analytics.gs`.
+- **Auditoría con agente experto (ciencias naturales, Saber 11/Icfes y MEN):** coincidió con la clave en 36 de 36; 8 aprobadas, 10 con ajuste menor y 18 corregidas. Se aplicó todo: la curva de titulación quedó con puntos equiespaciados, el ejemplo de cobre (I) pasó a hierro, el boro usa datos reales y se reemplazaron distractores absurdos. Caché `ionom-v109`.
+- **Pendiente:** que el docente revise una muestra, sobre todo indagación; en la pregunta de energías de ionización del Mg la correcta sigue siendo la más larga. Todos los temas siguen por debajo de 30 por competencia (reactividad, átomo y enlace son los más cortos en explicación) y faltan evidencias del marco 6.1, 6.2, 8.2, 9.1 y 9.2. No se tocó `ionom-analytics.gs`.
 
 ---
 
