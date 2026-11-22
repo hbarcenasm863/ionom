@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 22 de noviembre (37) — Lote 4 de química: 36 preguntas con tablas y gráficas, auditadas por tres expertos
+
+El docente pidió el siguiente lote con tablas y gráficas de libro de texto y que toda auditoría la hagan agentes expertos de cada categoría (regla nueva en `CLAUDE.md`).
+
+- **`assets/docente-datos.js`:** 36 preguntas Saber nuevas en enlace, estequiometría, balanceo, reacción, mol-masa y elemento; las 36 traen tabla o gráfica (datos de CRC, Brown, Shannon, Chang o rotulados «Datos de ejemplo»). Composición: uso comprensivo 6 (el primer lote no tenía ninguna), explicación 17 e indagación 13.
+- **Proceso:** (1) un agente redactó el lote; (2) un experto en química y datos corrigió 6 preguntas: energías de red del NaF a NaI (923, 787, 747 y 704 kJ/mol, según Brown), gráfica de Haber reetiquetada como % de NH₃ en el equilibrio, calor de formación por mol de O en la de Mg y CO₂, pH de precipitación recalculado con Ksp; (3) un experto en Saber/Icfes y MEN corrigió 8 ítems con defectos de calidad (distractores con «todos/ninguno», enunciado que regalaba la clave) y reemplazó 6 por preguntas de uso comprensivo; (4) un experto en datos verificó esas 6 y resolvió dos riesgos (Haber a 200 °C y el eje de protones que regalaba la clave). Coincidencia con la clave a ciegas: 36 de 36.
+- **`assets/saber-juego.js`:** regenerado. **`sw.js`:** `CACHE_NAME` de `ionom-v109` a `ionom-v110`. Probado con Playwright: sin errores.
+- **Pendiente:** faltan preguntas N1; los estándares del informe de la auditoría están redactados de memoria y hay que contrastarlos con los EBC 2004 (el repositorio no trae esa tabla); conviene que el docente revise a ojo las tablas. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 22 de noviembre (36) — Lote 3 de química: 36 preguntas de explicación e indagación
 
 El docente pidió seguir con las preguntas pendientes de los tres sitios (un lote por sitio), llevando cada tema hacia ~30 por competencia y reforzando la indagación. En IonNom se escogieron los temas con menos explicación: gases, soluciones, ácido-base, átomo, configuración electrónica y reactividad.
