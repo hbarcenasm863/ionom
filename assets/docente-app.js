@@ -830,7 +830,7 @@ function tarjetaSaber(q, idxLocal, rngFn){
     +'<div class="sq-ctx">'+(q.ctx||'')+'</div>'
     +(SI?SI.extraHTML(q):'')
     +'<div class="sq-q"><strong class="sq-n">'+(idxLocal)+'.</strong> '+q.q+(q.f?' <span style="font-family:var(--mono);font-weight:700">'+q.f+'</span>':'')+'</div>'
-    +(q.imgOps&&SI ? SI.opsImgHTML(q)
+    +((q.imgOps||q.opsGraf)&&SI ? SI.opsImgHTML(q)
       : '<div class="sq-opts">'+barajadas.map((o,i)=>'<div class="sq-opt">'+letras[i]+') '+o.texto+'</div>').join('')+'</div>')
     +(SI?SI.creditoHTML(q):'')
     +'</div>';
