@@ -867,6 +867,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="guia">📘 Guías</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-talleres" aria-controls="tab-guias" aria-selected="false" data-tab="talleres" data-panel="guias" data-tipo="taller">✏️ Talleres</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-evaluaciones" aria-controls="tab-guias" aria-selected="false" data-tab="evaluaciones" data-panel="guias" data-tipo="evaluacion">📝 Evaluaciones</button>
+    <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-banco" aria-controls="tab-banco" aria-selected="false" data-tab="banco">📚 Banco de preguntas<span id="bsel-insignia"></span></button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-laberintos" aria-controls="tab-laberintos" aria-selected="false" data-tab="laberintos">🧭 Laberintos</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-crucigramas" aria-controls="tab-crucigramas" aria-selected="false" data-tab="crucigramas">🔤 Crucigramas</button>
     <button type="button" class="doc-tab" role="tab" tabindex="-1" id="tabbtn-ahorcado" aria-controls="tab-ahorcado" aria-selected="false" data-tab="ahorcado">🪢 Ahorcado</button>
@@ -878,6 +879,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   </div>
 
   <div id="tab-guias" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-guias">
+  <div id="bsel-aviso" class="no-print"></div>
 
   <!-- ══════════════ FORMULARIO ══════════════ -->
   <div id="s-form" class="screen active">
@@ -1029,6 +1031,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
   </div><!-- /tab-guias -->
 
   <!-- ══════════════ LABERINTOS ══════════════ -->
+  <!-- ══ BANCO DE PREGUNTAS (assets/banco-sel.js) ══ -->
+  <div id="tab-banco" class="tab-panel no-print" role="tabpanel" aria-labelledby="tabbtn-banco"><div id="bs-app"></div></div>
+
   <div id="tab-laberintos" class="tab-panel no-print" role="tabpanel" aria-labelledby="tabbtn-laberintos">
    <div id="lab-app" data-mode="nom">
 
@@ -1388,6 +1393,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
 <script src="assets/docente-datos.js"></script>
 <script src="assets/saber-icfes.js"></script>
 <script src="assets/icfes-datos.js"></script>
+<script src="assets/referentes-men.js"></script>
+<script src="assets/banco-sel-cfg.js"></script>
+<script src="assets/banco-sel.js"></script>
 <script src="assets/docente-app.js"></script>
 <script src="assets/laberinto.js"></script>
 <script src="assets/ahorcado.js"></script>
@@ -1472,6 +1480,7 @@ document.getElementById('theme-btn').addEventListener('click',function(){
       p.classList.toggle('active', p.id === 'tab-' + panel);
     });
     try{ localStorage.setItem('ionom-docente-tab', id); }catch(e){}
+    if(id === 'banco' && window.BancoSel) window.BancoSel.montar(document.getElementById('bs-app'));
     if(id === 'laberintos' && window.LABERINTO) window.LABERINTO.ajustar();
     if(id === 'crucigramas' && window.CRUCIGRAMA) window.CRUCIGRAMA.render();
     if(id === 'ahorcado' && window.AHORCADO) window.AHORCADO.render();
