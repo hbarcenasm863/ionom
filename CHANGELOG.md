@@ -4,7 +4,7 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
-## 23 de noviembre (39) — «Banco de preguntas»: selector por grado, DBA, estándar y aprendizaje priorizado
+## 23 de noviembre (40) — «Banco de preguntas»: selector por grado, DBA, estándar y aprendizaje priorizado
 
 El docente preguntó si las preguntas nuevas llegaban a talleres, evaluaciones y guías (sí, por sorteo) y pidió poder escogerlas filtrando por grado, estándar y/o DBA, e implementar en los tres sitios los DBA, los estándares y los aprendizajes priorizados en ciencias, con una pestaña aparte. IonNom había retirado antes sus citas de DBA; ahora se ponen con los textos oficiales.
 
@@ -13,6 +13,14 @@ El docente preguntó si las preguntas nuevas llegaban a talleres, evaluaciones y
 - **Relaciones** de los 23 temas con DBA, estándares y priorizados: propuestas por un agente experto y **auditadas por otro independiente**, que corrigió un hallazgo grave: el DBA 10.3 (evidencia 3) sí nombra la nomenclatura inorgánica (óxidos, ácidos, hidróxidos, sales), así que los 9 temas de nomenclatura quedan con 10.3 directo y sin los 7.2 de relleno; balanceo y estequiometría pasan a 10.3 directo, átomo a 7.2 y configuración electrónica a 10.3. Se ajustó el grado de balanceo de 9.° a 10.°.
 - **`sw.js`:** `CACHE_NAME` a `ionom-v112`; los tres archivos nuevos van en «red primero» y en `ASSETS`. Probado con Playwright: la pestaña carga, filtra, muestra el texto oficial y una evaluación generada usa las preguntas elegidas.
 - **Pendiente:** gases, átomo y elementos quedan en grado 10 aunque su DBA principal es de 7.° o 8.° (cambiarlo si el docente los enseña en otro curso); «modelos» encaja con el priorizado PRI-10-01 pero el formato de temas no admite priorizados por tema. No se tocó `ionom-analytics.gs`.
+
+## 23 de noviembre (39) — Resumen de estándares, DBA y aprendizajes priorizados (`REFERENTES_CURRICULARES.md`)
+
+El docente subió los Estándares Básicos de Competencias (MEN 2004), los DBA de Ciencias Naturales (MEN 2016), los Aprendizajes priorizados de la SED Bogotá (2025) y la Guía del Diseño Centrado en Evidencias del Icfes, y pidió un resumen por grado (biología, química y física) contra el que se revise toda pregunta nueva, con las de opción múltiple hechas según el modelo basado en evidencias del Icfes.
+
+- **`REFERENTES_CURRICULARES.md`** (nuevo, igual en BioNom, ChromaNom e IonNom): estándares por grupo de grados copiados del documento del MEN (resuelve el pendiente de las sesiones 37 y 38, que tenían los estándares de memoria), DBA de 6.° a 11.° con sus evidencias, priorizados SED por grado, qué cubre cada sitio (IonNom: DBA 10.3 como eje, con repaso de 6.2, 6.3, 7.2, 8.2, 8.3, 9.2 y 9.3), progresión por eje, modelo DCE del Icfes con la equivalencia entre los códigos `af` y el Marco 2019, niveles de desempeño, reglas del ítem y listas de verificación.
+- **`CLAUDE.md`:** regla nueva «todo contenido se revisa contra `REFERENTES_CURRICULARES.md`».
+- **Pendiente:** el banco existente no se revisó contra el resumen; la regla se aplica a lo nuevo. No se tocó `ionom-analytics.gs` ni `banco.js` (no hace falta subir `CACHE_NAME`).
 
 ---
 
