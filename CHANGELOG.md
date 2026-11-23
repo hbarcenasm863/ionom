@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 23 de noviembre (39) — Resumen de estándares, DBA y aprendizajes priorizados (`REFERENTES_CURRICULARES.md`)
+
+El docente subió los Estándares Básicos de Competencias (MEN 2004), los DBA de Ciencias Naturales (MEN 2016), los Aprendizajes priorizados de la SED Bogotá (2025) y la Guía del Diseño Centrado en Evidencias del Icfes, y pidió un resumen por grado (biología, química y física) contra el que se revise toda pregunta nueva, con las de opción múltiple hechas según el modelo basado en evidencias del Icfes.
+
+- **`REFERENTES_CURRICULARES.md`** (nuevo, igual en BioNom, ChromaNom e IonNom): estándares por grupo de grados copiados del documento del MEN (resuelve el pendiente de las sesiones 37 y 38, que tenían los estándares de memoria), DBA de 6.° a 11.° con sus evidencias, priorizados SED por grado, qué cubre cada sitio (IonNom: DBA 10.3 como eje, con repaso de 6.2, 6.3, 7.2, 8.2, 8.3, 9.2 y 9.3), progresión por eje, modelo DCE del Icfes con la equivalencia entre los códigos `af` y el Marco 2019, niveles de desempeño, reglas del ítem y listas de verificación.
+- **`CLAUDE.md`:** regla nueva «todo contenido se revisa contra `REFERENTES_CURRICULARES.md`».
+- **Pendiente:** el banco existente no se revisó contra el resumen; la regla se aplica a lo nuevo. No se tocó `ionom-analytics.gs` ni `banco.js` (no hace falta subir `CACHE_NAME`).
+
+---
+
 ## 23 de noviembre (38) — Lote 5 de química: uso comprensivo, indagación N1 y nivel 4, auditado por tres expertos
 
 El docente pidió seguir con el siguiente lote, enfocado en lo que quedó corto: preguntas de uso comprensivo, de indagación N1 (las que evalúan cómo la investigación construye explicaciones) y de nivel 4.
