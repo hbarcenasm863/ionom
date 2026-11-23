@@ -4,6 +4,18 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 23 de noviembre (39) — «Banco de preguntas»: selector por grado, DBA, estándar y aprendizaje priorizado
+
+El docente preguntó si las preguntas nuevas llegaban a talleres, evaluaciones y guías (sí, por sorteo) y pidió poder escogerlas filtrando por grado, estándar y/o DBA, e implementar en los tres sitios los DBA, los estándares y los aprendizajes priorizados en ciencias, con una pestaña aparte. IonNom había retirado antes sus citas de DBA; ahora se ponen con los textos oficiales.
+
+- **Pestaña «📚 Banco de preguntas»** en `docente.html` (`assets/banco-sel.js`, `assets/banco-sel-cfg.js`, `assets/referentes-men.js`): filtra las 1288 preguntas Saber por grado, DBA, estándar, aprendizaje priorizado, tema, competencia, afirmación y datos; muestra el texto oficial de cada referente; se eligen con casillas y, con la selección activa, guías, talleres y evaluaciones usan las elegidas (completa al azar si piden más). Aviso y contador visibles.
+- **Textos oficiales:** 29 DBA V.1 (MEN, 2016) cotejados con el PDF oficial, 243 Estándares Básicos (MEN, 2004) cotejados con el libro oficial y 30 aprendizajes priorizados (SED Bogotá, 2025, CC BY-NC-ND 4.0, sin adaptar).
+- **Relaciones** de los 23 temas con DBA, estándares y priorizados: propuestas por un agente experto y **auditadas por otro independiente**, que corrigió un hallazgo grave: el DBA 10.3 (evidencia 3) sí nombra la nomenclatura inorgánica (óxidos, ácidos, hidróxidos, sales), así que los 9 temas de nomenclatura quedan con 10.3 directo y sin los 7.2 de relleno; balanceo y estequiometría pasan a 10.3 directo, átomo a 7.2 y configuración electrónica a 10.3. Se ajustó el grado de balanceo de 9.° a 10.°.
+- **`sw.js`:** `CACHE_NAME` a `ionom-v112`; los tres archivos nuevos van en «red primero» y en `ASSETS`. Probado con Playwright: la pestaña carga, filtra, muestra el texto oficial y una evaluación generada usa las preguntas elegidas.
+- **Pendiente:** gases, átomo y elementos quedan en grado 10 aunque su DBA principal es de 7.° o 8.° (cambiarlo si el docente los enseña en otro curso); «modelos» encaja con el priorizado PRI-10-01 pero el formato de temas no admite priorizados por tema. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 23 de noviembre (38) — Lote 5 de química: uso comprensivo, indagación N1 y nivel 4, auditado por tres expertos
 
 El docente pidió seguir con el siguiente lote, enfocado en lo que quedó corto: preguntas de uso comprensivo, de indagación N1 (las que evalúan cómo la investigación construye explicaciones) y de nivel 4.

@@ -31,6 +31,18 @@ versión corregida más un informe; Claude aplica el informe completo, regenera
 lo que dependa (p. ej. `saber-juego.js`) y deja constancia en el historial de
 cuántos agentes participaron y qué hallaron.
 
+## Banco de preguntas del panel docente (22-11-2026)
+
+La pestaña «📚 Banco de preguntas» (`banco-sel.js`, igual en los tres sitios) filtra las
+preguntas Saber por grado, DBA (MEN, 2016), estándar básico (MEN, 2004), aprendizaje
+priorizado (SED Bogotá, 2025), tema, competencia y afirmación, y deja elegir las que se
+usarán: con la selección activa, `SABER_ICFES.elegir` devuelve las elegidas en guías,
+talleres y evaluaciones (completa al azar si piden más). `referentes-men.js` (generado) trae
+los textos oficiales y ``assets/banco-sel-cfg.js`` (generado) la tabla tema → DBA → estándares y priorizados,
+auditada por un agente experto. Cada pregunta hereda sus referentes de su tema. Al agregar un
+tema o preguntas, revisar esa tabla; los priorizados de Bogotá se citan sin modificar (licencia
+CC BY-NC-ND 4.0).
+
 ## Pruebas de Modo Estudiante
 
 Cuando se necesite probar el flujo de Modo Estudiante en `juego.html` (validación de código, panel de bienvenida, estadísticas, etc.), usar siempre el código de estudiante **`110106`** (grado 11°, curso 01, estudiante 06). No usar códigos inventados como `ABC123`.
