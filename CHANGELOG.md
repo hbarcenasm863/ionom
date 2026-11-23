@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 23 de noviembre (41) — Preguntas Saber que se resuelven analizando una figura (lote 6) y motor de figuras nuevo
+
+El docente mostró una pregunta de ejemplo (esquema de tamaños de átomos en la tabla periódica y «¿cuál gráfica representa el radio atómico contra Z?») y pidió tener en los bancos más preguntas donde hay que analizar gráficas, imágenes o tablas. Hasta ahora solo había gráficas de barras y de líneas con eje por categorías.
+
+- **`assets/saber-icfes.js`** (igual en los tres sitios): campos nuevos de pregunta. `graf:{tipo:'xy'}` (curvas con eje numérico o cualitativo, con puntos, notas y leyenda con trazo); `esq:{tipo:'tp'}` (esquema de la tabla periódica, Z 1 a 54, con círculos del radio atómico de Clementi y col. 1967 o con celdas marcadas por letras); `esq:{svg}` (dibujo propio); `opsGraf` (cuatro opciones A–D dibujadas, con `fijo:true` y `r`). Se agregó la regla `white-space:nowrap` a las tablas y el signo menos real en los ejes.
+- **Integración:** `juego.html` (muestra las figuras y no baraja las opciones A–D), `assets/docente-app.js`, `assets/banco-sel.js` (filtro «Con tabla o gráfica» y clave de las preguntas `fijo`), `herramientas/generar-saber-juego.js` y `assets/saber-juego.js` (regenerado, 1134 preguntas).
+- **`assets/docente-datos.js`:** lote 6 de 19 preguntas con figura en elemento, config. electrónica, átomo, enlace, gases, soluciones, ácido-base, reacción y estequiometría. La primera reproduce el ejemplo del docente.
+- **Auditoría (3 agentes expertos independientes):** (1) química y datos: claves 19/19 correctas, todos los datos verificados; corrigió dos explicaciones (Boyle y CaCO₃) y señaló que la clave de la solubilidad coincidía con la del NaCl; (2) Saber/Icfes y MEN: 5 aprobadas, 9 con ajuste y 5 con corrección: igualó la longitud de las opciones, pasó «predecir» de N4 a N2 en tres preguntas, cambió la afirmación de gases y solubilidad a I2, reemplazó la del cloro (35,5 u se memoriza) por un elemento con masa no memorizable, la del cero absoluto por una de volumen a −73 °C y la de solubilidad por 120 g enfriados a 40 °C; (3) figuras y accesibilidad: etiquetas distintas para las opciones A–D, número partido en una tabla, rótulo pegado al eje, leyenda con trazo, signo menos y letra de las miniaturas. Se aplicó todo.
+- **`sw.js`:** `CACHE_NAME` de `ionom-v112` a `ionom-v114`. Probado con Playwright (juego, panel docente y las 19 figuras): sin errores.
+- **Pendiente:** el motor ya está copiado a ChromaNom y BioNom, pero esos sitios aún no tienen preguntas con figura; el radio atómico de Clementi (1967) conviene cotejarlo con la fuente impresa; marcar como profundización 10.°–11.° las de titulación, perfil de energía y energías de ionización sucesivas. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 23 de noviembre (40) — «Banco de preguntas»: selector por grado, DBA, estándar y aprendizaje priorizado
 
 El docente preguntó si las preguntas nuevas llegaban a talleres, evaluaciones y guías (sí, por sorteo) y pidió poder escogerlas filtrando por grado, estándar y/o DBA, e implementar en los tres sitios los DBA, los estándares y los aprendizajes priorizados en ciencias, con una pestaña aparte. IonNom había retirado antes sus citas de DBA; ahora se ponen con los textos oficiales.
