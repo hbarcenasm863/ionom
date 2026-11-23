@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 23 de noviembre (38) — Lote 5 de química: uso comprensivo, indagación N1 y nivel 4, auditado por tres expertos
+
+El docente pidió seguir con el siguiente lote, enfocado en lo que quedó corto: preguntas de uso comprensivo, de indagación N1 (las que evalúan cómo la investigación construye explicaciones) y de nivel 4.
+
+- **`assets/docente-datos.js`:** 36 preguntas Saber nuevas en gases, soluciones, ácido-base, átomo, configuración electrónica y reactividad (12 de uso comprensivo, 12 de explicación y 12 de indagación, con 6 N1). Las 36 traen tabla o gráfica (datos de CRC, Brown, Chang o rotulados «Datos de ejemplo»). 6 son de nivel 4.
+- **Proceso:** (1) un agente redactó el lote; (2) un experto en química y datos lo auditó y corrigió: los valores de energía del experimento de Chadwick no se sostenían, la tabla de CaCl₂ eran valores ideales y no medidos, un error en la explicación de las Ka («100 000 veces» pasó a «unas 37 000»), fuentes no respaldadas retiradas; (3) un experto en Saber/Icfes y MEN ajustó 8 ítems: cambió la pregunta del carbono-14 para que ya no se lea directo en la gráfica (nivel 1) y exija continuar el patrón a 5 vidas medias (cuentas verificadas), corrigió la historia de Stern-Gerlach, reformuló la N1 de Lavoisier y reclasificó la termita de N4 a N3. Coincidencia con la clave a ciegas: 36 de 36.
+- **`assets/saber-juego.js`:** regenerado. **`sw.js`:** `CACHE_NAME` de `ionom-v110` a `ionom-v111`. Probado con Playwright: sin errores.
+- **Pendiente:** cotejar con el documento del MEN los estándares del informe (están en paráfrasis, sin códigos); quedan sin cubrir las evidencias de varios temas de química; revisar a ojo las tablas. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 22 de noviembre (37) — Lote 4 de química: 36 preguntas con tablas y gráficas, auditadas por tres expertos
 
 El docente pidió el siguiente lote con tablas y gráficas de libro de texto y que toda auditoría la hagan agentes expertos de cada categoría (regla nueva en `CLAUDE.md`).
