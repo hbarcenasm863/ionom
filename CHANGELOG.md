@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 24 de noviembre (42) — Al menos 10 preguntas con figura por tema (lote 7: 121 preguntas en IonNom)
+
+El docente pidió «por lo menos 10 preguntas de este tipo por tema en cada repositorio» (preguntas cuya respuesta depende de analizar una gráfica, imagen, esquema o tabla). Con un conteo estricto (tabla, gráfica o esquema necesario para responder), a IonNom le faltaban 121 preguntas: óxidos básicos, anhídridos, hidruros, ácidos hídricos, bases, oxácidos y las tres clases de sales tenían 0; industria y modelos, 1; balanceo, reacción, mol-masa y reactividad entre 2 y 7.
+
+- **`assets/docente-datos.js`:** bloque «Lote 7» con 121 preguntas Saber con figura. Cada tema queda con 10 o más (elemento 15, estequiometría 16, gases 18, ácido-base 17…).
+- **`assets/saber-icfes.js`** (copiado a ChromaNom y BioNom): mejoras del motor por la auditoría de figuras: tablas con desplazamiento y texto que se parte en celular, barras con base en cero (también con valores negativos), `valores:true` para rotular las barras, `ymax` y `paso` en los ejes, hasta 4 series con trazos y marcadores distintos y leyenda en dos filas, `aria-label` con `alt`, rótulos de la tabla periódica a 9 px.
+- **`assets/saber-juego.js`** regenerado (1 252 preguntas). **`sw.js`:** `CACHE_NAME` de `ionom-v114` a `ionom-v115`.
+- **Proceso.** (1) Siete agentes redactaron los lotes por grupos de temas; (2) un validador automático revisó el formato (campos, competencia y afirmación coherentes, una sola clave, opciones de longitud parecida, sin «todas/ninguna», `alt` distinto en cada opción dibujada); (3) expertos en química (orgánica o inorgánica) o biología resolvieron cada pregunta a ciegas y verificaron los datos; (4) expertos en Saber 11/Icfes y MEN revisaron competencia, afirmación, nivel, necesidad de la figura, distractores y grado; (5) un experto en figuras y accesibilidad revisó las 171 preguntas a 760 y 390 px y sus hallazgos se aplicaron al motor y a las preguntas.
+- **Hallazgos graves corregidos:** un dato de pH de P₄O₁₀ mal calculado, «abono = ácido nítrico» (los abonos llevan nitratos), un contexto que daba 2 S + 3 O₂ → 2 SO₃ para la combustión del azufre, la solubilidad del Ca(HCO₃)₂ (solo existe disuelto) y preguntas cuya figura no hacía falta porque el enunciado ya daba el patrón. Las claves coincidieron a ciegas en todas.
+- **Pendiente:** probar a mano en `juego.html` una pregunta con opciones A–D dibujadas (la prueba automática solo comprobó que las figuras se dibujan sin errores); el docente debe revisar una muestra, sobre todo las marcadas «Datos de ejemplo»; varias preguntas de titulación, especiación y energías de ionización sucesivas son profundización de 10.°–11.°. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 23 de noviembre (41) — Preguntas Saber que se resuelven analizando una figura (lote 6) y motor de figuras nuevo
 
 El docente mostró una pregunta de ejemplo (esquema de tamaños de átomos en la tabla periódica y «¿cuál gráfica representa el radio atómico contra Z?») y pidió tener en los bancos más preguntas donde hay que analizar gráficas, imágenes o tablas. Hasta ahora solo había gráficas de barras y de líneas con eje por categorías.
