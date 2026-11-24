@@ -8,6 +8,7 @@ const c={console};c.window=c;vm.createContext(c);
 vm.runInContext(fs.readFileSync('assets/saber-icfes.js','utf8'),c);
 vm.runInContext(fs.readFileSync('banco.js','utf8')+';this.__B={BANCO_ATOMO,BANCO_ENLACE,BANCO_PH,BANCO_INDUSTRIA,BANCO_MODELOS,BANCO_GASES,BANCO_SOLUCIONES}',c);
 vm.runInContext(fs.readFileSync('assets/docente-datos.js','utf8'),c);
+vm.runInContext(fs.readFileSync('assets/revision-ref.js','utf8'),c);
 const SI=c.SABER_ICFES;
 const yaEstan=new Set();for(const k in c.__B)c.__B[k].forEach(q=>yaEstan.add(q.q));
 const lim=s=>String(s==null?'':s).replace(/<[^>]+>/g,'');

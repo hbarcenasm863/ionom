@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 24 de noviembre (43) — Revisión del banco contra los referentes curriculares: preparación
+
+El docente pidió revisar todo el banco de los tres sitios contra `REFERENTES_CURRICULARES.md` con agentes expertos. BioNom y parte de ChromaNom ya quedaron revisados (evaluación Icfes); los agentes de IonNom se detuvieron por el límite de uso antes de entregar, así que IonNom queda preparado para la siguiente parte.
+
+- **`assets/banco-sel.js`** (igual en los tres sitios): muestra la evidencia del Marco Saber 11.° y el nivel de desempeño de cada pregunta, filtro nuevo «Nivel de desempeño (Icfes)», y acepta `dba`/`curso` escritos en una pregunta (para las que tengan un DBA distinto del de su tema).
+- **`assets/revision-ref.js`** (nuevo, generado, por ahora vacío): ahí quedarán las etiquetas revisadas de cada pregunta Saber; se carga después de `assets/docente-datos.js` y lo usa `herramientas/generar-saber-juego.js`.
+- **`sw.js`:** `CACHE_NAME` a `ionom-v116`; el archivo nuevo va en `ASSETS` y en «red primero». Probado con Playwright: panel sin errores.
+- **Pendiente:** revisión Icfes de las 1290 preguntas Saber (6 lotes), currículo MEN y ciencias. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 24 de noviembre (42) — Al menos 10 preguntas con figura por tema (lote 7: 121 preguntas en IonNom)
 
 El docente pidió «por lo menos 10 preguntas de este tipo por tema en cada repositorio» (preguntas cuya respuesta depende de analizar una gráfica, imagen, esquema o tabla). Con un conteo estricto (tabla, gráfica o esquema necesario para responder), a IonNom le faltaban 121 preguntas: óxidos básicos, anhídridos, hidruros, ácidos hídricos, bases, oxácidos y las tres clases de sales tenían 0; industria y modelos, 1; balanceo, reacción, mol-masa y reactividad entre 2 y 7.
