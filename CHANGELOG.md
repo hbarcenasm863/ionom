@@ -4,6 +4,25 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (51) — MDEC sin halogenuros covalentes, contador y etiquetas de DBA
+
+El docente pidió hacer todos los pendientes de la revisión.
+
+- **`herramientas/generar-mdec.js` y `assets/mdec-compuestos.js`:** los halogenuros covalentes ya no se separan en iones. Son compuestos moleculares o poliméricos, como TiCl₄, SnCl₄, PbCl₄, PtCl₄, HgCl₂, BeCl₂, AlCl₃, AlBr₃, GaCl₃ y AuCl₃. Lo había señalado la auditoría química.
+  - Quedan fuera los de berilio, mercurio (II) y oro, los de carga 4 o más y los de aluminio y galio, salvo el fluoruro.
+  - Siguen sirviendo para nomenclatura, pero no para las preguntas de «separar en iones».
+  - Quedan 448 compuestos (antes 468). Las preguntas MDEC del Juego, del panel y del Banco se arman solas con la lista nueva.
+- **`assets/contador.js`** (el mismo archivo en los tres sitios, `?v=3`): en ChromaNom ahora suma las preguntas MDEC que arma el Juego al cargar.
+- **`assets/revision-ref.js`** (`?v=2`): las preguntas marcadas `mdec:true` nunca reciben DBA.
+- Caché `ionom-v123`; `mdec-compuestos.js?v=2` y `mdec-saber.js?v=2`.
+- Probado con Playwright:
+  - el Juego y el panel cargan sin errores;
+  - el Banco muestra las preguntas MDEC con su etiqueta «Método MDEC»;
+  - el contador de la portada funciona;
+  - ninguna pregunta usa un halogenuro covalente.
+
+---
+
 ## 26 de noviembre (50) — Regla: los colores del MDEC son solo los tonos predefinidos
 
 El docente pidió que todo el MDEC use solo los tonos ya definidos y que quede como regla escrita.

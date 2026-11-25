@@ -60,6 +60,11 @@ for(const b of BANCO){
     /* mercurio (I): el catión es el dímero Hg₂²⁺, no dos Hg⁺ */
     if(cat==='Hg'&&qCat===1&&nCat%2===0){cat='Hg2';nCat=nCat/2;qCat=2;}
     if(!Number.isInteger(qCat)||qCat<1||qCat>7)throw 'carga del catión '+qCat;
+    /* auditoría química (26-11-2026): halogenuros covalentes (moleculares o poliméricos), como TiCl₄, SnCl₄,
+       BeCl₂, HgCl₂, AlBr₃ o AuCl₃. Sirven para nomenclatura, pero no para «separar en iones». Se dejan fuera
+       los de berilio, mercurio (II) y oro, los de carga 4 o más y los de aluminio y galio salvo el fluoruro. */
+    if(b.group==='sal-bin'&&/^(F|Cl|Br|I)$/.test(an)&&(cat==='Be'||(cat==='Hg'&&qCat===2)||cat==='Au'||qCat>=4||((cat==='Al'||cat==='Ga')&&an!=='F')))
+      throw 'halogenuro covalente';
     if((b.group==='ac-hid'||b.group==='ac-ox')&&qCat!==1)throw 'H con carga '+qCat;
     const rom=(nombre.match(/\(([IV]+)\)/)||[])[1];if(rom&&ROM[rom]!==qCat&&!(cat==='Hg2'&&rom==='I'))throw 'Stock '+rom+' ≠ '+qCat;
     out.push({f:b.formula,g:b.group,n:{trad:(b.trad||[])[0]||'',stock:(b.stock||[])[0]||'',sist:(b.sist||[])[0]||''},

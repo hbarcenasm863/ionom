@@ -15,14 +15,14 @@ window.REVISION_REF={"ox-bas|t082ui":{"ev":"4.8","nd":2},"ox-bas|98w080":{"ev":"
   else Object.keys(S).forEach(function(t){(S[t]||[]).forEach(function(q){poner(q,t);});});
 })();
 /* DBA y curso de preguntas del juego y abiertas (experto en currículo MEN). Clave: hash del enunciado.
-   Los ejercicios MDEC (t:'mdec') no se enlazan a ningún DBA ni estándar: el método MDEC es un modelo
+   Los ejercicios MDEC (t:'mdec' o mdec:true) no se enlazan a ningún DBA ni estándar: el método MDEC es un modelo
    propio del docente. */
 window.REVISION_REF_OTRAS={"2w5rnx":{"dba":["7.2"],"curso":7},"16aihji":{"dba":["7.2"],"curso":7},"11stp0d":{"dba":["7.2"],"curso":7},"qquaz7":{"dba":["7.2"],"curso":7},"15jkkfw":{"dba":["sin"],"curso":11},"ljlvl9":{"dba":["sin"],"curso":10},"5g4fbf":{"dba":["sin"],"curso":10},"c14vd7":{"dba":["sin"],"curso":10},"vtevxw":{"dba":["sin"],"curso":10},"11jwzyb":{"dba":["sin"],"curso":10},"3bwq5z":{"dba":["10.3"],"curso":10},"gx1aow":{"dba":["10.3"],"curso":10},"z4crwv":{"dba":["10.3"],"curso":10},"jnx449":{"dba":["10.3"],"curso":10},"1l53q1e":{"dba":["10.3"],"curso":10},"15kjow6":{"dba":["sin"],"curso":10},"adxynx":{"dba":["sin"],"curso":10},"1p5s57b":{"dba":["sin"],"curso":10},"ypj7wn":{"dba":["sin"],"curso":10}};
 (function(){
   var R=window.REVISION_REF_OTRAS;if(!R)return;
   function hash(s){var h=5381;s=String(s);for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return h.toString(36);}
   function norm(t){return String(t==null?'':t).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();}
-  function poner(q){if(!q||typeof q!=='object'||q.t==='mdec'||!q.q)return;var a=R[hash(norm(q.q))];if(!a)return;for(var k in a)q[k]=a[k];}
+  function poner(q){if(!q||typeof q!=='object'||q.t==='mdec'||q.mdec||!q.q)return;var a=R[hash(norm(q.q))];if(!a)return;for(var k in a)q[k]=a[k];}
   function aplicar(){
     var D=window.DOCENTE_DATOS,A=D&&D.ABIERTAS;
     if(A){if(Array.isArray(A))A.forEach(poner);else Object.keys(A).forEach(function(t){(A[t]||[]).forEach(poner);});}
