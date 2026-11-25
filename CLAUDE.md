@@ -76,6 +76,23 @@ H₃PO₃, H₃PO₂ y H₃BO₃). Con esos datos:
   sin DBA ni estándar).
 - **Los colores del método son lo central**: catión ámbar, anión azul, OH⁻ rosado y oxoanión verde.
 
+## Regla: los colores del MDEC son solo los tonos predefinidos
+
+Establecida por el docente (26-11-2026). Los colores son la parte central del método MDEC y se usan **solo**
+los tonos definidos en `assets/shared-tokens.css`, sin inventar ni «mejorar» ninguno, en todo lo que muestre
+las partes de un compuesto (páginas, juego, panel docente, preguntas, fichas, hojas impresas):
+
+| Parte | Color | Base | Fondo claro (`-b`) | Texto (`-t`) |
+|---|---|---|---|---|
+| Catión (metal o H⁺ de un ácido) | ámbar | `--cat` `#E69F00` | `#fcf2db` | `#8a5f00` |
+| Anión simple (halogenuro, óxido, sulfuro, hidruro, HS⁻) | azul | `--an` `#0072B2` | `#dbebf4` | `#00659e` |
+| Hidróxido OH⁻ | rosado | `--oh` `#CC79A7` | `#f8ecf3` | `#8d5373` |
+| Oxoanión | verde | `--ox` `#009E73` | `#dbf1eb` | `#007253` |
+
+Usar las variables (`var(--cat)`, `var(--an-t)`…) siempre que se pueda; si hace falta escribir el valor
+(por ejemplo en datos generados), copiar exactamente estos. Si algún día se cambia un tono, se cambia en
+`shared-tokens.css` y en todo el sitio a la vez.
+
 ## Pruebas de Modo Estudiante
 
 Cuando se necesite probar el flujo de Modo Estudiante en `juego.html` (validación de código, panel de bienvenida, estadísticas, etc.), usar siempre el código de estudiante **`110106`** (grado 11°, curso 01, estudiante 06). No usar códigos inventados como `ABC123`.

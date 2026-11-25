@@ -4,6 +4,15 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (50) — Regla: los colores del MDEC son solo los tonos predefinidos
+
+El docente pidió que todo el MDEC use solo los tonos ya definidos y que quede como regla escrita.
+
+- **`CLAUDE.md`:** nueva regla «Los colores del MDEC son solo los tonos predefinidos». Trae la tabla de los colores de `assets/shared-tokens.css`: catión ámbar, anión azul, OH⁻ rosado y oxoanión verde, con su base, su fondo claro y su texto.
+- Se verificó que todo lo MDEC nuevo ya usa esos valores.
+
+---
+
 ## 26 de noviembre (49) — Preguntas MDEC en todo el banco: juego, talleres, evaluaciones y Banco, con los colores del método
 
 El docente pidió ampliar las preguntas MDEC (armar y reconocer partes) para que formen parte de todo el banco, con los colores del método, que son su parte central, y reforzar con ellas el modo juego.
