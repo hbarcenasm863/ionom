@@ -1,0 +1,1224 @@
+{
+ "lote": "men-ion-1",
+ "experto": "men",
+ "revisadas": 1129,
+ "coincidencias_a_ciegas": 0,
+ "ev": {},
+ "nd": {},
+ "hallazgos": [
+  {
+   "id": "reaccion|1gpcknf",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "Usa potenciales estándar de reducción (E°) para predecir el desplazamiento del H₂: electroquímica de 11.° que ningún DBA de 10.° nombra (10.3 habla de óxido-reducción, no de E°). Alternativa: reescribir con la serie de reactividad cualitativa y dejar curso 10."
+  },
+  {
+   "id": "reactividad|1ue2ifp",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "El enunciado exige leer y comparar potenciales estándar de reducción (electroquímica, 11.°). Ningún DBA de 10.° lo nombra. Alternativa: usar la serie de reactividad y dejar curso 10."
+  },
+  {
+   "id": "reactividad|1wz51rm",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "Exige potenciales de reducción y protección por metal de sacrificio (galvanizado frente a estañado): electroquímica de 11.°, sin DBA propio."
+  },
+  {
+   "id": "reactividad|9dvx3b",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "Compara potenciales de reducción de halógenos para predecir desplazamientos: contenido de 11.°. Alternativa: explicar con la reactividad decreciente del grupo 17 sin E°."
+  },
+  {
+   "id": "reactividad|nli7e6",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "Exige entalpías de formación y energía liberada por mol (termoquímica de 11.°). Ningún DBA de 10.° la nombra; 8.1 es física (máquinas térmicas), no entalpía de reacción."
+  },
+  {
+   "id": "reaccion|1711vvi",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 11
+   },
+   "motivo": "La energía de activación y el efecto del catalizador sobre ella (diagrama de energía) no están en ningún DBA hasta 10.°; es cinética/termoquímica de 11.° (el 11.4 solo menciona catalizadores en química orgánica)."
+  },
+  {
+   "id": "reaccion|gwok6x",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Clasificación exotérmica o endotérmica (diagrama de energía o cambio de temperatura): ningún DBA hasta 10.° lo nombra; va como profundización de 10.° (el 11.4 lo cita en química orgánica)."
+  },
+  {
+   "id": "reaccion|e1cnpq",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Clasificación exotérmica o endotérmica (diagrama de energía o cambio de temperatura): ningún DBA hasta 10.° lo nombra; va como profundización de 10.° (el 11.4 lo cita en química orgánica)."
+  },
+  {
+   "id": "ac-hid|14j1076",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Factores de la rapidez de reacción (concentración, temperatura): solo aparece como indagación en los priorizados SED de 9.°; ningún DBA lo nombra y 10.3 del tema no lo cubre. Se marca sin DBA propio."
+  },
+  {
+   "id": "ac-hid|axo1x7",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Factores de la rapidez de reacción (concentración, temperatura): solo aparece como indagación en los priorizados SED de 9.°; ningún DBA lo nombra y 10.3 del tema no lo cubre. Se marca sin DBA propio."
+  },
+  {
+   "id": "reaccion|1lruv8c",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Factores de la rapidez de reacción (concentración, temperatura): solo aparece como indagación en los priorizados SED de 9.°; ningún DBA lo nombra y 10.3 del tema no lo cubre. Se marca sin DBA propio."
+  },
+  {
+   "id": "hidru|vw5mvh",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Factores de la rapidez de reacción (concentración, temperatura): solo aparece como indagación en los priorizados SED de 9.°; ningún DBA lo nombra y 10.3 del tema no lo cubre. Se marca sin DBA propio."
+  },
+  {
+   "id": "hidru|1fe9fao",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "sin"
+    ],
+    "curso": 10
+   },
+   "motivo": "Factores de la rapidez de reacción (concentración, temperatura): solo aparece como indagación en los priorizados SED de 9.°; ningún DBA lo nombra y 10.3 del tema no lo cubre. Se marca sin DBA propio."
+  },
+  {
+   "id": "reaccion|woetx8",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.3"
+    ],
+    "curso": 10
+   },
+   "motivo": "La situación se apoya en solubilidad de hidróxidos (productos de solubilidad, equilibrio de 11.°) además de precipitación (10.3). La pregunta solo compara pH, pero conviene no nombrar el producto de solubilidad; se agrega 9.3 (solubilidad).",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "calculados con productos de solubilida",
+     "nuevo": "calculados a partir de datos de solubilida"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|ejb22l",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "9.3"
+    ],
+    "curso": 9
+   },
+   "motivo": "Solubilidad en 100 g de agua frente a la temperatura: DBA 9.3 (factores que afectan la formación de soluciones), no nomenclatura de sales."
+  },
+  {
+   "id": "sal-ox|tjajkk",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "9.3"
+    ],
+    "curso": 9
+   },
+   "motivo": "Solubilidad de una sal frente a la temperatura: DBA 9.3, grado 9."
+  },
+  {
+   "id": "base|n825qg",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "9.3"
+    ],
+    "curso": 9
+   },
+   "motivo": "Diseño experimental sobre el efecto de la temperatura en la solubilidad: DBA 9.3 (variables que afectan las soluciones), grado 9."
+  },
+  {
+   "id": "sal-bin|ptyy83",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "9.3"
+    ],
+    "curso": 9
+   },
+   "motivo": "Efecto de un soluto sobre el punto de congelación, con % en masa: DBA 9.3 (relaciones soluto-solvente) y 6.2 (puntos de fusión), no 10.3."
+  },
+  {
+   "id": "sal-bin|1tn29ay",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "9.3"
+    ],
+    "curso": 9
+   },
+   "motivo": "Efecto de un soluto sobre el punto de ebullición, con % en masa: DBA 9.3 (y 6.2), no 10.3."
+  },
+  {
+   "id": "sal-bin|z3jsh5",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.2"
+    ],
+    "curso": 6
+   },
+   "motivo": "Procedimiento de disolver y filtrar para separar impurezas de una sal: técnica de separación de mezclas (DBA 6.2 y 6.3), grado 6; no exige la nomenclatura de 10.3."
+  },
+  {
+   "id": "balanceo|jv5g2k",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "8.2",
+     "8.3"
+    ],
+    "curso": 10
+   },
+   "motivo": "Las razones de volúmenes de gases a igual presión y temperatura apoyan los coeficientes, pero también son gas ideal (DBA 8.3); se suma 8.3 como apoyo. El curso sigue en 10 por el balanceo."
+  },
+  {
+   "id": "balanceo|1rdx2ga",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "8.2",
+     "8.3"
+    ],
+    "curso": 10
+   },
+   "motivo": "Las razones de volúmenes de gases a igual presión y temperatura apoyan los coeficientes, pero también son gas ideal (DBA 8.3); se suma 8.3 como apoyo. El curso sigue en 10 por el balanceo."
+  },
+  {
+   "id": "mol-masa|1itknct",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "8.3"
+    ],
+    "curso": 10
+   },
+   "motivo": "Igual volumen y condiciones, igual número de moléculas (Avogadro): comportamiento del gas ideal, DBA 8.3; el cálculo de mol por densidad y masa molar mantiene 10.3."
+  },
+  {
+   "id": "ox-bas|j23g1k",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "ox-bas|y0n8l2",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "reactividad|fn6hbg",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "reactividad|i48h6e",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "reactividad|1k8fo6e",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "reactividad|1ayk2sl",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "reactividad|1vbb4p8",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "hidru|1wf13s2",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "hidru|1x6ode3",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "hidru|1erzpce",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": [
+     "10.3",
+     "9.2"
+    ],
+    "curso": 10
+   },
+   "motivo": "La tarea gira en torno a indicadores o pH (acidez y basicidad): el tema no declara 9.2, pero el contenido sí lo trabaja (9.2: indicadores, pH). El curso sigue en 10 por 10.3."
+  },
+  {
+   "id": "elemento|19n9ji7",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "8.2",
+     "10.3"
+    ],
+    "curso": 10
+   },
+   "motivo": "Tipo de enlace según la diferencia de electronegatividad (polar o iónico) es el DBA 8.2; en el tema 'elemento' (7.2, 10.3) falta 8.2. Curso 10 por la lectura de la gráfica y por 10.3."
+  },
+  {
+   "id": "elemento|gpsi7b",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1enjq0a",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1d2aa51",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|nrgqpy",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1njyx2a",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1cvkekb",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1prhq73",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|lkkd8b",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "6.3"
+    ],
+    "curso": 6
+   },
+   "motivo": "Solo pide asociar el nombre de un elemento con su símbolo: evidencia del DBA 6.3 (sustancias y símbolos), grado 6, no 10.3 ni la tabla periódica de 10.°."
+  },
+  {
+   "id": "elemento|1c0981w",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|5o6rsp",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1pffc5q",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|4ihk8p",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|18j2rld",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1qqro5w",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|5f2m84",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1enz7dm",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|17gyxs0",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|rj7cqc",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|31evev",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|e6l3rj",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|19m7vaw",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|vi8jv9",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|r9egl9",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|5zjr0n",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|142quy3",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|8pu8pz",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|9n6npg",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1f5bzcd",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|byr6qj",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1exgd6s",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|117hchz",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1djjvz6",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|tya975",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|f3m6h9",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1b0vfxd",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1hpu7y1",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1jy7tfc",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|cq4pxb",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1r6ayra",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1xozsu2",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1xagfou",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|693jm1",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1sa523t",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1yesnwk",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|46m0wo",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1h49yue",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|y7vbnm",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1lfvf10",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1awaq5m",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|1tjz76",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "elemento|5n5uog",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Contenido del DBA 7.2 (número atómico, grupos, periodos, familias, metales y no metales, historia de la tabla): se resuelve con lo visto hasta 7.°; no exige 10.3. El tema lo marca grado 10."
+  },
+  {
+   "id": "ion-a39",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a262",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a263",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a264",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a265",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a361",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a362",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a371",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a372",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a373",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a384",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-a389",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Pregunta de historia y clasificación de la tabla (tríadas, Mendeléiev, Moseley, metal/no metal/carácter metálico): DBA 7.2, resoluble con lo de 7.°."
+  },
+  {
+   "id": "ion-p17",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p18",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p19",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p20",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p21",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p23",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p96",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p97",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p98",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "7.2"
+    ],
+    "curso": 7
+   },
+   "motivo": "Vocabulario de la tabla periódica de 7.° (DBA 7.2); las pistas usan solo ideas de ese grado."
+  },
+  {
+   "id": "ion-p22",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": [
+     "8.2"
+    ],
+    "curso": 8
+   },
+   "motivo": "Electronegatividad: se introduce con el tipo de enlace (DBA 8.2, grado 8); las pistas son correctas."
+  },
+  {
+   "id": "ion-p99",
+   "gravedad": "baja",
+   "etiquetas": {},
+   "motivo": "La pista 1 contiene la raíz de la respuesta («queda como ion»), lo que delata IONIZACIÓN.",
+   "textos": [
+    {
+     "campo": "pista",
+     "original": "Proceso en que un átomo pierde un electrón y queda como ion.",
+     "nuevo": "Proceso en que un átomo pierde un electrón y queda con carga."
+    }
+   ]
+  }
+ ]
+}

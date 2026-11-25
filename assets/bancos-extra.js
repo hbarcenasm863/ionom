@@ -1201,7 +1201,7 @@ window.BANCO_AHORCADO=[
 "CUÁNTICOS",
 "config-e",
 "Números que describen a cada electrón del átomo.",
-"Son cuatro: n, l, mₗ y s.",
+"Son cuatro: n, l, mₗ y mₛ.",
 "Números ___."
 ],
 [
@@ -1235,7 +1235,7 @@ window.BANCO_AHORCADO=[
 [
 "IONIZACIÓN",
 "elemento",
-"Proceso en que un átomo pierde un electrón y queda como ion.",
+"Proceso en que un átomo pierde un electrón y queda con carga.",
 "Su energía aumenta hacia la derecha del periodo.",
 "Energía de ___."
 ],

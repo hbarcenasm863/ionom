@@ -1,0 +1,515 @@
+{
+ "lote": "men-ion-2",
+ "experto": "men",
+ "revisadas": 1223,
+ "coincidencias_a_ciegas": 0,
+ "ev": {},
+ "nd": {},
+ "hallazgos": [
+  {
+   "id": "acidobase|1t0z5f9",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "La constante de acidez Ka (equilibrio ácido-base) es contenido de 11.°; ningún DBA de 9.° ni 10.° la nombra (9.2 pide pH, pOH e indicadores). Subir a 11.° como profundización o reemplazar la tabla de Ka por pH de soluciones de igual concentración."
+  },
+  {
+   "id": "acidobase|12wzivz",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Exige pKa y relacionar energía de enlace H–X con fuerza ácida (equilibrio de ionización, 11.°). Fuera de 9.2 y 10.3."
+  },
+  {
+   "id": "acidobase|1s9q2dz",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "El pH 6,51 del agua pura a 60 °C implica la dependencia de Kw con la temperatura (equilibrio, 11.°); no está en 9.2 ni 10.3."
+  },
+  {
+   "id": "acidobase|jptzdl",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Elegir indicador para valorar ácido débil con base fuerte (pH de equivalencia 8,7, hidrólisis) es de 11.°; 10.3 solo cubre neutralización."
+  },
+  {
+   "id": "soluciones|19tllrw",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Descenso crioscópico con Kf y factor i de van 't Hoff: propiedad coligativa de 11.°. 9.3 llega solo a molaridad y molalidad."
+  },
+  {
+   "id": "soluciones|ddg08u",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Normalidad (equivalentes) no está en ningún DBA ni estándar de 9.°; 9.3 nombra % en masa, % en volumen, molaridad y molalidad. Ubicar en 11.° o reemplazar por molaridad."
+  },
+  {
+   "id": "ion-j324",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Normalidad: contenido de 11.° (fuera de 9.3). Ubicar en 11.° o reemplazar por molaridad."
+  },
+  {
+   "id": "ion-a522",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Normalidad y equivalentes: contenido de 11.° (fuera de 9.3)."
+  },
+  {
+   "id": "ion-p145",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Palabra NORMALIDAD (equivalentes por litro): vocabulario de 11.°, ningún DBA la nombra. Quitar del banco de 9.° o marcarla 11.°."
+  },
+  {
+   "id": "soluciones|1n245tm",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Fracción molar no figura en 9.3 (% m/m, % v/v, molaridad, molalidad); es profundización de 10.°."
+  },
+  {
+   "id": "ion-j323",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Fracción molar no figura en 9.3; profundización de 10.°."
+  },
+  {
+   "id": "soluciones|1usd038",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Elevación del punto de ebullición por soluto no volátil es propiedad coligativa; 9.3 no la nombra. Profundización de 10.°."
+  },
+  {
+   "id": "estequiometria|1dsi30n",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Lee el porcentaje de NH₃ en la mezcla en equilibrio según T y analiza compromiso rapidez-rendimiento: equilibrio químico (Le Chatelier) es de 11.°. 10.3 cubre relaciones molares, no equilibrio."
+  },
+  {
+   "id": "industria|14cxofl",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "10.3"
+   },
+   "motivo": "La clave usa «el equilibrio favorece al amoníaco» (Le Chatelier, 11.°). Basta dejar la lectura de datos sin el concepto de equilibrio.",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "a mayor presión, el equilibrio favorece al amoníaco",
+     "nuevo": "a mayor presión, el rendimiento de amoníaco aumenta"
+    }
+   ]
+  },
+  {
+   "id": "gases|192yjfe",
+   "gravedad": "alta",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 11
+   },
+   "motivo": "Constante a de van der Waals y gases reales: sobrepasa 8.3 (gas ideal, TCM) y 10.° (nivel universitario / profundización 11.°)."
+  },
+  {
+   "id": "gases|p2ztfe",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Velocidad de difusión 4 veces mayor (raíz de la razón de masas, ley de Graham) es cuantitativa; 8.3 pide difusión cualitativa desde la TCM."
+  },
+  {
+   "id": "gases|ljfso6",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Predecir tiempo de difusión con masa molar (ley de Graham) supera la lectura cualitativa de 8.3."
+  },
+  {
+   "id": "gases|1481drz",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Presiones parciales (ley de Dalton): presión parcial del O₂ en Bogotá. 8.3 nombra Boyle, Charles, Gay-Lussac, combinada y ecuación de estado, no Dalton; profundización de 10.°."
+  },
+  {
+   "id": "gases|1kk12iu",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Presiones parciales (ley de Dalton): presión parcial en mezcla He/Ne. 8.3 nombra Boyle, Charles, Gay-Lussac, combinada y ecuación de estado, no Dalton; profundización de 10.°."
+  },
+  {
+   "id": "gases|19kr31s",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Presiones parciales (ley de Dalton): presión parcial del O₂. 8.3 nombra Boyle, Charles, Gay-Lussac, combinada y ecuación de estado, no Dalton; profundización de 10.°."
+  },
+  {
+   "id": "gases|1oqaby3",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Presiones parciales (ley de Dalton): presión parcial con n, R, T y V. 8.3 nombra Boyle, Charles, Gay-Lussac, combinada y ecuación de estado, no Dalton; profundización de 10.°."
+  },
+  {
+   "id": "ion-j299",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Ley de Dalton / presión parcial: no está en las evidencias de 8.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-j300",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Ley de Dalton / presión parcial: no está en las evidencias de 8.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-a502",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Ley de Dalton / presión parcial: no está en las evidencias de 8.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-a487",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Ley de Dalton / presión parcial: no está en las evidencias de 8.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-p72",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Ley de Dalton / presión parcial: no está en las evidencias de 8.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-a496",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Fracción molar y presión parcial por mezcla de gases: profundización de 10.° (8.3 no las nombra)."
+  },
+  {
+   "id": "gases|h61r9c",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3",
+    "curso": 9
+   },
+   "motivo": "Solubilidad del O₂ en agua según temperatura corresponde a 9.3 (factores que afectan soluciones), no a 8.3."
+  },
+  {
+   "id": "ion-j15",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "10.3",
+    "curso": 10
+   },
+   "motivo": "Orbital del modelo mecánico-cuántico: concepto de 10.° (distribución electrónica); el tema atómico base es 7.2."
+  },
+  {
+   "id": "ion-j16",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "10.3",
+    "curso": 10
+   },
+   "motivo": "Principio de incertidumbre de Heisenberg y números cuánticos como distractor: 10.°."
+  },
+  {
+   "id": "ion-j17",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "10.3",
+    "curso": 10
+   },
+   "motivo": "Hipótesis de De Broglie (dualidad onda-partícula): 10.°."
+  },
+  {
+   "id": "ion-a323",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "10.3",
+    "curso": 10
+   },
+   "motivo": "Diferencia órbita (Bohr) y orbital cuántico: 10.° (config. electrónica)."
+  },
+  {
+   "id": "atomo|aunsy5",
+   "gravedad": "baja",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Vida media y decaimiento radiactivo del carbono-14 no están en 7.2 ni 10.3; profundización de 10.°."
+  },
+  {
+   "id": "ion-j69",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "10.3",
+    "curso": 10
+   },
+   "motivo": "Energía de ionización (kJ/mol) explicada con subnivel 2s lleno: propiedades periódicas por configuración electrónica, 10.°; 7.2 llega a ubicación en la tabla."
+  },
+  {
+   "id": "ion-j155",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Curva de energía potencial y energía de enlace en kJ/mol: contenido energético (termoquímica) que 8.2 no pide (tipos de enlace por electronegatividad). Profundización de 10.°."
+  },
+  {
+   "id": "ion-j156",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Curva de energía potencial y energía de enlace en kJ/mol: contenido energético (termoquímica) que 8.2 no pide (tipos de enlace por electronegatividad). Profundización de 10.°."
+  },
+  {
+   "id": "ion-j157",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Curva de energía potencial y energía de enlace en kJ/mol: contenido energético (termoquímica) que 8.2 no pide (tipos de enlace por electronegatividad). Profundización de 10.°."
+  },
+  {
+   "id": "ion-j158",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Curva de energía potencial y energía de enlace en kJ/mol: contenido energético (termoquímica) que 8.2 no pide (tipos de enlace por electronegatividad). Profundización de 10.°."
+  },
+  {
+   "id": "enlace|omphhu",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "sin",
+    "curso": 10
+   },
+   "motivo": "Energía de red y su relación con tamaño iónico: profundización; 8.2 llega a tipos de enlace y propiedades."
+  },
+  {
+   "id": "enlace|ik64t1",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (fuerzas entre iones frente a fuerzas débiles): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|5jk7k2",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno y ebullición): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|1fs9nh8",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno en hidruros): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|qxubue",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (fuerzas de dispersión y masa molar): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|my73uz",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno en hidruros): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|17xjtws",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (fuerzas intermoleculares débiles del I₂): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|h492o2",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno en etanol): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|1p2y6y5",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno y densidad del hielo): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "enlace|89gelh",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "9.3"
+   },
+   "motivo": "Fuerzas intermoleculares (puentes de hidrógeno y solubilidad): las nombra el DBA 9.3, no 8.2 (que trata enlaces intramoleculares)."
+  },
+  {
+   "id": "estequiometria|16p9048",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|1axdqo9",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|8wtim",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|wrvv6c",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|gwgow0",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|1qslwu5",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "estequiometria|g2ukx2",
+   "gravedad": "media",
+   "etiquetas": {
+    "dba": "8.2",
+    "curso": 8
+   },
+   "motivo": "Solo exige conservación de la masa y recombinación de átomos, sin moles ni cálculo: corresponde a 8.2 (priorizado 8.°: balanceo por conservación de la masa), no a 10.3."
+  },
+  {
+   "id": "ion-p94",
+   "gravedad": "baja",
+   "etiquetas": {},
+   "motivo": "Pista con notación inconsistente: el número de espín se escribe mₛ en el resto del banco.",
+   "textos": [
+    {
+     "campo": "pista",
+     "original": "Son cuatro: n, l, mₗ y s.",
+     "nuevo": "Son cuatro: n, l, mₗ y mₛ."
+    }
+   ]
+  }
+ ]
+}

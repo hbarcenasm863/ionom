@@ -4,6 +4,38 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 25 de noviembre (46) — Revisión contra los referentes (parte 3: currículo MEN, DBA y curso)
+
+Sigue la revisión del banco contra `REFERENTES_CURRICULARES.md`. Dos agentes expertos en currículo MEN revisaron **las 2352 entradas de IonNom** (Saber, abiertas, palabras y juego).
+
+- **Hallazgos altos (16), contenidos de 11.° o fuera de todo DBA.** Quedan «sin DBA», curso 11:
+  - potenciales de reducción, entalpía de formación y energía de activación;
+  - Ka, pKa, Kw, descenso crioscópico, normalidad, equilibrio de Haber y la constante de van der Waals.
+  - En la pregunta del amoníaco, «el equilibrio favorece al amoníaco» pasa a «el rendimiento de amoníaco aumenta».
+  - En otra pregunta, «productos de solubilidad» pasa a «datos de solubilidad».
+- **Hallazgos medios y bajos (148).** Muchas preguntas repasan contenidos de grados anteriores y ahora llevan el DBA que les corresponde:
+  - tabla periódica elemental, 7.2 (grado 7);
+  - símbolos de elementos, 6.3;
+  - separar una sal disolviendo y filtrando, 6.2;
+  - conservación de la masa, 8.2;
+  - fuerzas intermoleculares y solubilidad, 9.3;
+  - indicadores y pH, 9.2 junto con 10.3;
+  - gases, 8.3.
+  - Presión parcial, ley de Graham, fracción molar y energía de enlace quedan «sin DBA», curso 10.
+- **Pistas corregidas:** en la de ion, la pista 1 delataba la respuesta; en la de números cuánticos, «s» pasa a «mₛ».
+- **Archivos:**
+  - **`assets/revision-ref.js`:** `dba` y `curso` revisados en 121 preguntas Saber.
+  - **`assets/docente-datos.js` y `assets/bancos-extra.js`:** las correcciones de texto.
+  - **`sw.js`:** `CACHE_NAME` a `ionom-v119`.
+- **Pruebas:** con Playwright, el panel y el juego cargan sin errores.
+- **Informes:** están en `revision-referentes-2026-11/`.
+- **Pendiente:**
+  - Las preguntas del juego y las abiertas no tienen campo propio de DBA; sus etiquetas quedan en los informes.
+  - Falta la revisión de ciencias, que está en curso.
+  - No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 25 de noviembre (45) — Contador de preguntas en la portada y en el panel docente
 
 El docente pidió un **contador de preguntas** en la portada y en el panel docente que se calcule solo y cambie siempre que cambie el banco.
