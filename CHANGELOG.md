@@ -4,6 +4,29 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 25 de noviembre (47) — Revisión contra los referentes (parte 4: ciencias del juego, abiertas y palabras)
+
+Última parte de la revisión (entradas 43, 44 y 46). Un agente experto en química inorgánica revisó **1062 entradas** (juego, abiertas y palabras). Verificó las claves y los cálculos de las 341 preguntas que traen una clave comprobable, y no encontró ninguna equivocada.
+
+**Hallazgos aplicados:**
+- **CRISTALIZACIÓN:** con los datos del propio sitio (32 g y 110 g por 100 g de agua) cristalizan unos 78 g por cada 100 g de agua, no 48,4 g.
+- **EXCESO:** la pista decía «En el ejemplo del amoníaco era el H₂», que contradice los ejemplos del sitio, donde el que sobra es el N₂. Ahora dice: «En N₂ + 3 H₂ → 2 NH₃, si se agota el H₂, el N₂ queda en…».
+
+**Descartado:** el agente creyó truncada la explicación del pH de ion-j205, pero era el volcado el que había borrado los signos < y > (`revision-referentes-2026-11/descartes.json`).
+
+**Archivos:** `assets/bancos-extra.js`. `sw.js`: `CACHE_NAME` a `ionom-v120`. Probado con Playwright sin errores.
+
+**Resumen de toda la revisión contra los referentes (partes 1 a 4).** Se revisaron las tres bases completas con agentes expertos independientes de tres categorías:
+- **Evaluación Icfes:** 2794 preguntas Saber resueltas a ciegas, con evidencia del Marco y nivel de desempeño en todas.
+- **Currículo MEN:** DBA y curso de unas 6870 entradas.
+- **Ciencias:** juego, abiertas y palabras.
+
+Ninguna clave del juego estaba equivocada. Los problemas de fondo eran las etiquetas, las pistas que delataban la clave y los distractores débiles. El banco queda con pocas preguntas de nivel 4 y con mucho uso comprensivo frente a explicación e indagación: los próximos lotes deben ir en esa dirección.
+
+**Pendiente:** las preguntas de relacionar y las abiertas generadas no traían sus datos en el volcado y solo se revisó su enunciado. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 25 de noviembre (46) — Revisión contra los referentes (parte 3: currículo MEN, DBA y curso)
 
 Sigue la revisión del banco contra `REFERENTES_CURRICULARES.md`. Dos agentes expertos en currículo MEN revisaron **las 2352 entradas de IonNom** (Saber, abiertas, palabras y juego).

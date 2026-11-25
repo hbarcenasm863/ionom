@@ -1,0 +1,34 @@
+{
+ "lote": "cien-ion-1",
+ "experto": "ciencia",
+ "revisadas": 1062,
+ "coincidencias_a_ciegas": 341,
+ "ev": {},
+ "nd": {},
+ "hallazgos": [
+  {
+   "id": "ion-p83",
+   "gravedad": "alta",
+   "textos": [
+    {
+     "campo": "pista",
+     "original": "Al enfriar KNO₃ de 60 °C a 20 °C aparecen 48,4 g de cristales.",
+     "nuevo": "Al enfriar KNO₃ de 60 °C a 20 °C aparecen unos 78 g de cristales por cada 100 g de agua."
+    }
+   ],
+   "motivo": "Con los datos del sitio (32 g/100 g a 20 °C y 110 g a 60 °C; ion-j313 y ion-a517) cristalizan 110 − 32 = 78 g, no 48,4 g. La pista es la 3.ª (índice 2)."
+  },
+  {
+   "id": "ion-p130",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "pista",
+     "original": "En el ejemplo del amoníaco era el H₂.",
+     "nuevo": "En N₂ + 3 H₂ → 2 NH₃, si se agota el H₂, el N₂ queda en…"
+    }
+   ],
+   "motivo": "En todos los ejemplos de amoníaco del lote (ion-j239, ion-j359, ion-a472) el limitante es el H₂ y el que sobra es el N₂. Verificar contra el ejemplo de la página de estequiometría: si allí sobra H₂, dejar la pista como está. Es la pista 2 (índice 1)."
+  }
+ ]
+}

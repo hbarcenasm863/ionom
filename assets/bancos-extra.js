@@ -1125,7 +1125,7 @@ window.BANCO_AHORCADO=[
 "soluciones",
 "Formación de cristales al enfriar una solución saturada.",
 "Sirve para purificar sustancias.",
-"Al enfriar KNO₃ de 60 °C a 20 °C aparecen 48,4 g de cristales."
+"Al enfriar KNO₃ de 60 °C a 20 °C aparecen unos 78 g de cristales por cada 100 g de agua."
 ],
 [
 "HIPÓTESIS",
@@ -1453,7 +1453,7 @@ window.BANCO_AHORCADO=[
 "EXCESO",
 "estequiometria",
 "Reactivo que sobra al terminar la reacción.",
-"En el ejemplo del amoníaco era el H₂.",
+"En N₂ + 3 H₂ → 2 NH₃, si se agota el H₂, el N₂ queda en…",
 "Reactivo en ___."
 ],
 [
