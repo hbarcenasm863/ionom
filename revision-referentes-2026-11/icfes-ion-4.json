@@ -1,0 +1,852 @@
+{
+ "lote": "icfes-ion-4",
+ "experto": "icfes",
+ "revisadas": 187,
+ "coincidencias_a_ciegas": 187,
+ "ev": {
+  "estequiometria|11yyico": "4.6",
+  "estequiometria|lmhb8e": "4.6",
+  "estequiometria|1k59bj6": "4.6",
+  "estequiometria|1cvhtqj": "4.6",
+  "estequiometria|1v73ew2": "4.6",
+  "estequiometria|gewtrf": "4.6",
+  "estequiometria|tzh7z0": "4.6",
+  "estequiometria|1bhff1w": "4.6",
+  "estequiometria|15a7vx": "4.6",
+  "estequiometria|pwxc5a": "4.6",
+  "estequiometria|1hiqzcg": "4.6",
+  "estequiometria|1a1gcsa": "4.6",
+  "estequiometria|t61e13": "4.6",
+  "estequiometria|1f1axvx": "4.6",
+  "estequiometria|nxjsip": "4.6",
+  "estequiometria|1orsiju": "4.6",
+  "estequiometria|olpo7j": "4.6",
+  "estequiometria|1ms19fz": "4.6",
+  "estequiometria|v1eggr": "4.6",
+  "estequiometria|1qghhim": "4.6",
+  "estequiometria|9qipj5": "4.6",
+  "estequiometria|1anq6k8": "4.6",
+  "estequiometria|184l06": "4.6",
+  "estequiometria|lq3jj4": "4.6",
+  "estequiometria|egfoq1": "4.6",
+  "estequiometria|cqyr3h": "4.6",
+  "estequiometria|726jam": "2.1",
+  "estequiometria|lsmb2j": "4.6",
+  "estequiometria|1kjj9eb": "2.1",
+  "estequiometria|el3ztu": "4.6",
+  "estequiometria|a8kou2": "4.6",
+  "estequiometria|1mvxmab": "4.6",
+  "estequiometria|xp9r2n": "4.6",
+  "estequiometria|19mc7wd": "2.1",
+  "estequiometria|qxobbf": "2.1",
+  "estequiometria|1afni9a": "4.6",
+  "estequiometria|wyfhyp": "4.6",
+  "estequiometria|194xgv7": "4.6",
+  "estequiometria|g3hx56": "7.3",
+  "estequiometria|wrvv6c": "9.2",
+  "estequiometria|1kzx03n": "8.1",
+  "estequiometria|hma9mc": "9.2",
+  "estequiometria|1pumtnt": "6.2",
+  "estequiometria|c8unkj": "7.3",
+  "estequiometria|1vaghk": "7.4",
+  "estequiometria|1n3z4rb": "8.1",
+  "estequiometria|1u21plz": "4.6",
+  "estequiometria|xu4ksk": "4.6",
+  "estequiometria|1axdqo9": "2.1",
+  "estequiometria|1qslwu5": "3.2",
+  "estequiometria|19sg16u": "1.2",
+  "estequiometria|nm55kv": "4.6",
+  "estequiometria|73hqai": "8.1",
+  "estequiometria|89uyq2": "8.1",
+  "estequiometria|1lnq1u0": "7.3",
+  "estequiometria|gwgow0": "9.2",
+  "estequiometria|muvv32": "7.3",
+  "estequiometria|16p9048": "6.2",
+  "estequiometria|jnuxap": "9.1",
+  "estequiometria|voihxe": "7.4",
+  "estequiometria|arsisd": "4.6",
+  "estequiometria|wjj1tz": "4.6",
+  "estequiometria|in7uwg": "4.6",
+  "estequiometria|oertd5": "4.6",
+  "estequiometria|4u85hx": "4.6",
+  "estequiometria|13ivwjm": "4.6",
+  "estequiometria|8wtim": "2.1",
+  "estequiometria|196ktz6": "3.2",
+  "estequiometria|g2ukx2": "2.1",
+  "estequiometria|9uznno": "2.2",
+  "estequiometria|nbgxwv": "2.1",
+  "estequiometria|2gg6d8": "2.2",
+  "estequiometria|fywnn9": "7.3",
+  "estequiometria|q5wk9j": "8.1",
+  "estequiometria|kxjzaj": "1.2",
+  "estequiometria|1dsi30n": "3.2",
+  "estequiometria|r7pvil": "2.1",
+  "estequiometria|c88hn1": "7.3",
+  "estequiometria|18v8hx8": "4.6",
+  "estequiometria|3oce0s": "8.1",
+  "estequiometria|1586015": "7.4",
+  "atomo|1aqo43b": "5.6",
+  "atomo|17td0dr": "2.2",
+  "atomo|8ptvwj": "7.3",
+  "atomo|1p7hxuz": "3.2",
+  "atomo|6oivqx": "4.8",
+  "atomo|zcynsb": "5.6",
+  "atomo|1dffmsm": "5.6",
+  "atomo|1ey86ph": "3.2",
+  "atomo|1cj6tm6": "3.2",
+  "atomo|3emu01": "2.2",
+  "atomo|jiwmyz": "7.3",
+  "atomo|qfauxg": "5.6",
+  "atomo|m6rhw3": "5.6",
+  "atomo|eivtkb": "5.6",
+  "atomo|1s79tjp": "5.6",
+  "atomo|2f2auj": "5.6",
+  "atomo|e1dsrg": "5.6",
+  "atomo|xvdnf1": "4.8",
+  "atomo|uogi10": "5.6",
+  "atomo|12lmaeu": "5.6",
+  "atomo|1s92ngu": "4.8",
+  "atomo|s7u0rv": "4.8",
+  "atomo|idedug": "4.8",
+  "atomo|8o51w8": "4.8",
+  "atomo|1iytgv4": "4.8",
+  "atomo|1w1j4i1": "5.6",
+  "atomo|mjv0n4": "5.6",
+  "atomo|5nx6qt": "5.6",
+  "atomo|l0zz81": "5.6",
+  "atomo|1ytb00x": "5.6",
+  "atomo|aod3t": "2.2",
+  "atomo|1o0gf10": "5.6",
+  "atomo|1atdx5f": "7.3",
+  "atomo|dzd5y7": "6.2",
+  "atomo|a767kl": "8.1",
+  "atomo|hmdelo": "9.1",
+  "atomo|6iq0yo": "7.3",
+  "atomo|1d1ll6c": "9.2",
+  "atomo|aoqpyy": "7.3",
+  "atomo|1i5scvf": "2.2",
+  "atomo|ickr3j": "3.2",
+  "atomo|14065re": "1.2",
+  "atomo|1rl4px2": "7.3",
+  "atomo|labosa": "9.2",
+  "atomo|ekf7qf": "8.1",
+  "atomo|1mne4ch": "5.6",
+  "atomo|aunsy5": "7.4",
+  "atomo|m8k3b8": "2.2",
+  "atomo|quhle1": "3.2",
+  "atomo|19esjsw": "6.2",
+  "atomo|16a1ufm": "8.1",
+  "atomo|1v0zurf": "8.1",
+  "config-e|1hj9iw3": "5.6",
+  "config-e|afrbfx": "5.6",
+  "config-e|bunz8v": "5.6",
+  "config-e|1xhwp95": "5.6",
+  "config-e|9arzsq": "5.6",
+  "config-e|z94phx": "5.6",
+  "config-e|1vfrqfr": "2.2",
+  "config-e|p3lavw": "4.8",
+  "config-e|t8rg3n": "5.6",
+  "config-e|r3xdy": "2.2",
+  "config-e|11pn16": "5.6",
+  "config-e|1q418d": "5.6",
+  "config-e|j5qqir": "5.6",
+  "config-e|1pgl13q": "5.6",
+  "config-e|rsqqzp": "5.6",
+  "config-e|154j8v7": "5.6",
+  "config-e|1vwwyn1": "5.6",
+  "config-e|34f438": "2.2",
+  "config-e|d3v3h5": "5.6",
+  "config-e|2f56o": "5.6",
+  "config-e|15h0bdk": "5.6",
+  "config-e|1jpiogi": "5.6",
+  "config-e|1rr7gcl": "5.6",
+  "config-e|zoytxq": "5.6",
+  "config-e|1kfs3wt": "5.6",
+  "config-e|j573zv": "5.6",
+  "config-e|wmhuxt": "5.6",
+  "config-e|1jd5qbp": "5.6",
+  "config-e|1nxpb21": "5.6",
+  "config-e|1t6p3lc": "2.2",
+  "config-e|bmcnkz": "3.2",
+  "config-e|y9qr6i": "3.2",
+  "config-e|10oq1eq": "5.6",
+  "config-e|dafbz2": "7.3",
+  "config-e|xo1xwt": "9.2",
+  "config-e|1pq1geh": "8.1",
+  "config-e|1y0fgm2": "6.2",
+  "config-e|1c0zu57": "7.3",
+  "config-e|2z45ve": "9.2",
+  "config-e|1cktdii": "8.1",
+  "config-e|1pyvw05": "9.2",
+  "config-e|vfuwx1": "2.2",
+  "config-e|1jikxjk": "3.2",
+  "config-e|ny4bjs": "7.3",
+  "config-e|1ace6b": "9.1",
+  "config-e|11flxzp": "8.1",
+  "config-e|1d3sfdl": "7.2",
+  "config-e|tc1oqt": "2.2",
+  "config-e|19eps6e": "4.8",
+  "config-e|1k8zt4n": "2.2",
+  "config-e|598u7g": "3.2",
+  "config-e|14qvygp": "6.2",
+  "config-e|1i3uvgn": "8.1",
+  "config-e|j7ck6m": "4.8"
+ },
+ "nd": {
+  "estequiometria|11yyico": 2,
+  "estequiometria|lmhb8e": 2,
+  "estequiometria|1k59bj6": 2,
+  "estequiometria|1cvhtqj": 3,
+  "estequiometria|1v73ew2": 2,
+  "estequiometria|gewtrf": 2,
+  "estequiometria|tzh7z0": 2,
+  "estequiometria|1bhff1w": 2,
+  "estequiometria|15a7vx": 2,
+  "estequiometria|pwxc5a": 2,
+  "estequiometria|1hiqzcg": 2,
+  "estequiometria|1a1gcsa": 2,
+  "estequiometria|t61e13": 2,
+  "estequiometria|1f1axvx": 2,
+  "estequiometria|nxjsip": 2,
+  "estequiometria|1orsiju": 2,
+  "estequiometria|olpo7j": 2,
+  "estequiometria|1ms19fz": 2,
+  "estequiometria|v1eggr": 2,
+  "estequiometria|1qghhim": 2,
+  "estequiometria|9qipj5": 2,
+  "estequiometria|1anq6k8": 2,
+  "estequiometria|184l06": 2,
+  "estequiometria|lq3jj4": 2,
+  "estequiometria|egfoq1": 1,
+  "estequiometria|cqyr3h": 2,
+  "estequiometria|726jam": 2,
+  "estequiometria|lsmb2j": 2,
+  "estequiometria|1kjj9eb": 2,
+  "estequiometria|el3ztu": 1,
+  "estequiometria|a8kou2": 1,
+  "estequiometria|1mvxmab": 2,
+  "estequiometria|xp9r2n": 1,
+  "estequiometria|19mc7wd": 2,
+  "estequiometria|qxobbf": 2,
+  "estequiometria|1afni9a": 2,
+  "estequiometria|wyfhyp": 1,
+  "estequiometria|194xgv7": 2,
+  "estequiometria|g3hx56": 2,
+  "estequiometria|wrvv6c": 2,
+  "estequiometria|1kzx03n": 3,
+  "estequiometria|hma9mc": 2,
+  "estequiometria|1pumtnt": 2,
+  "estequiometria|c8unkj": 3,
+  "estequiometria|1vaghk": 2,
+  "estequiometria|1n3z4rb": 3,
+  "estequiometria|1u21plz": 2,
+  "estequiometria|xu4ksk": 1,
+  "estequiometria|1axdqo9": 2,
+  "estequiometria|1qslwu5": 2,
+  "estequiometria|19sg16u": 2,
+  "estequiometria|nm55kv": 2,
+  "estequiometria|73hqai": 2,
+  "estequiometria|89uyq2": 3,
+  "estequiometria|1lnq1u0": 4,
+  "estequiometria|gwgow0": 2,
+  "estequiometria|muvv32": 2,
+  "estequiometria|16p9048": 1,
+  "estequiometria|jnuxap": 3,
+  "estequiometria|voihxe": 2,
+  "estequiometria|arsisd": 2,
+  "estequiometria|wjj1tz": 2,
+  "estequiometria|in7uwg": 3,
+  "estequiometria|oertd5": 2,
+  "estequiometria|4u85hx": 1,
+  "estequiometria|13ivwjm": 3,
+  "estequiometria|8wtim": 2,
+  "estequiometria|196ktz6": 3,
+  "estequiometria|g2ukx2": 2,
+  "estequiometria|9uznno": 2,
+  "estequiometria|nbgxwv": 2,
+  "estequiometria|2gg6d8": 2,
+  "estequiometria|fywnn9": 3,
+  "estequiometria|q5wk9j": 3,
+  "estequiometria|kxjzaj": 3,
+  "estequiometria|1dsi30n": 4,
+  "estequiometria|r7pvil": 3,
+  "estequiometria|c88hn1": 3,
+  "estequiometria|18v8hx8": 3,
+  "estequiometria|3oce0s": 4,
+  "estequiometria|1586015": 2,
+  "atomo|1aqo43b": 1,
+  "atomo|17td0dr": 2,
+  "atomo|8ptvwj": 3,
+  "atomo|1p7hxuz": 2,
+  "atomo|6oivqx": 2,
+  "atomo|zcynsb": 2,
+  "atomo|1dffmsm": 1,
+  "atomo|1ey86ph": 2,
+  "atomo|1cj6tm6": 1,
+  "atomo|3emu01": 2,
+  "atomo|jiwmyz": 3,
+  "atomo|qfauxg": 1,
+  "atomo|m6rhw3": 1,
+  "atomo|eivtkb": 1,
+  "atomo|1s79tjp": 1,
+  "atomo|2f2auj": 1,
+  "atomo|e1dsrg": 2,
+  "atomo|xvdnf1": 2,
+  "atomo|uogi10": 1,
+  "atomo|12lmaeu": 1,
+  "atomo|1s92ngu": 1,
+  "atomo|s7u0rv": 1,
+  "atomo|idedug": 2,
+  "atomo|8o51w8": 2,
+  "atomo|1iytgv4": 1,
+  "atomo|1w1j4i1": 2,
+  "atomo|mjv0n4": 2,
+  "atomo|5nx6qt": 1,
+  "atomo|l0zz81": 2,
+  "atomo|1ytb00x": 2,
+  "atomo|aod3t": 2,
+  "atomo|1o0gf10": 2,
+  "atomo|1atdx5f": 3,
+  "atomo|dzd5y7": 3,
+  "atomo|a767kl": 3,
+  "atomo|hmdelo": 3,
+  "atomo|6iq0yo": 2,
+  "atomo|1d1ll6c": 2,
+  "atomo|aoqpyy": 3,
+  "atomo|1i5scvf": 2,
+  "atomo|ickr3j": 2,
+  "atomo|14065re": 3,
+  "atomo|1rl4px2": 3,
+  "atomo|labosa": 2,
+  "atomo|ekf7qf": 3,
+  "atomo|1mne4ch": 3,
+  "atomo|aunsy5": 4,
+  "atomo|m8k3b8": 3,
+  "atomo|quhle1": 4,
+  "atomo|19esjsw": 4,
+  "atomo|16a1ufm": 3,
+  "atomo|1v0zurf": 3,
+  "config-e|1hj9iw3": 1,
+  "config-e|afrbfx": 1,
+  "config-e|bunz8v": 2,
+  "config-e|1xhwp95": 1,
+  "config-e|9arzsq": 2,
+  "config-e|z94phx": 2,
+  "config-e|1vfrqfr": 3,
+  "config-e|p3lavw": 2,
+  "config-e|t8rg3n": 1,
+  "config-e|r3xdy": 2,
+  "config-e|11pn16": 1,
+  "config-e|1q418d": 2,
+  "config-e|j5qqir": 1,
+  "config-e|1pgl13q": 1,
+  "config-e|rsqqzp": 1,
+  "config-e|154j8v7": 2,
+  "config-e|1vwwyn1": 2,
+  "config-e|34f438": 2,
+  "config-e|d3v3h5": 3,
+  "config-e|2f56o": 2,
+  "config-e|15h0bdk": 1,
+  "config-e|1jpiogi": 2,
+  "config-e|1rr7gcl": 1,
+  "config-e|zoytxq": 1,
+  "config-e|1kfs3wt": 1,
+  "config-e|j573zv": 2,
+  "config-e|wmhuxt": 1,
+  "config-e|1jd5qbp": 3,
+  "config-e|1nxpb21": 2,
+  "config-e|1t6p3lc": 2,
+  "config-e|bmcnkz": 2,
+  "config-e|y9qr6i": 2,
+  "config-e|10oq1eq": 1,
+  "config-e|dafbz2": 3,
+  "config-e|xo1xwt": 2,
+  "config-e|1pq1geh": 3,
+  "config-e|1y0fgm2": 2,
+  "config-e|1c0zu57": 2,
+  "config-e|2z45ve": 3,
+  "config-e|1cktdii": 3,
+  "config-e|1pyvw05": 2,
+  "config-e|vfuwx1": 3,
+  "config-e|1jikxjk": 3,
+  "config-e|ny4bjs": 2,
+  "config-e|1ace6b": 3,
+  "config-e|11flxzp": 3,
+  "config-e|1d3sfdl": 4,
+  "config-e|tc1oqt": 3,
+  "config-e|19eps6e": 3,
+  "config-e|1k8zt4n": 4,
+  "config-e|598u7g": 3,
+  "config-e|14qvygp": 3,
+  "config-e|1i3uvgn": 4,
+  "config-e|j7ck6m": 2
+ },
+ "hallazgos": [
+  {
+   "id": "estequiometria|11yyico",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|lmhb8e",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1k59bj6",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1cvhtqj",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1v73ew2",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|gewtrf",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|tzh7z0",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1bhff1w",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|15a7vx",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|pwxc5a",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1hiqzcg",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1a1gcsa",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|t61e13",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1f1axvx",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|nxjsip",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1orsiju",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|olpo7j",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1ms19fz",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|v1eggr",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1qghhim",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|9qipj5",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1anq6k8",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|184l06",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|egfoq1",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|cqyr3h",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|lsmb2j",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|el3ztu",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1mvxmab",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|xp9r2n",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1afni9a",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|wyfhyp",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|194xgv7",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|1u21plz",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|nm55kv",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|18v8hx8",
+   "gravedad": "media",
+   "motivo": "Un cálculo estequiométrico (masa de producto, razón molar, reactivo límite) corresponde a la evidencia 4.6 del Marco (tipos de reacciones y cálculos con conservación de masa), afirmación 4 (I2), no a I1 (5.6: propiedades de elementos, compuestos y mezclas). El mismo lote ya usa I2 para 47 y 60 a 65.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|lmhb8e",
+   "gravedad": "media",
+   "motivo": "Es el mismo cálculo masa a masa de las preguntas 0, 2, 4..., sin modelo de partículas ni predicción: es uso comprensivo (I2, evidencia 4.6), no explicación E2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|lq3jj4",
+   "gravedad": "media",
+   "motivo": "Cálculo masa a masa idéntico en estructura a las demás del tema; no pide modelar (E2) sino calcular con la ecuación: uso, I2 (4.6).",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "estequiometria|726jam",
+   "gravedad": "media",
+   "motivo": "Pide explicar por qué se pasa a moles (evidencia 2.1), no derivar una conclusión de una investigación: no es indagación N2. Además la correcta es la más larga (88 caracteres frente a 61-63), pista por longitud: se acorta.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   },
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Porque la razón molar de la ecuación balanceada relaciona moles, no gramos, de cada especie",
+     "nuevo": "Porque la ecuación balanceada relaciona moles de cada especie, no gramos"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|lsmb2j",
+   "gravedad": "media",
+   "motivo": "La correcta era la más larga por mucho (96 caracteres frente a 58-62): se acorta para que no se adivine por longitud. Etiqueta I1 pasa a I2 (4.6).",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Los moles disponibles de cada reactivo contra la razón molar que exige la ecuación balanceada",
+     "nuevo": "Los moles de cada reactivo frente a la razón molar de la ecuación balanceada"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|el3ztu",
+   "gravedad": "media",
+   "motivo": "La correcta es la más larga y la única con aclaración entre paréntesis; se iguala con las demás. Etiqueta I1 pasa a I2 (4.6).",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "La ecuación química ya balanceada (con sus coeficientes correctos)",
+     "nuevo": "La ecuación química ya balanceada, con sus coeficientes"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|a8kou2",
+   "gravedad": "media",
+   "motivo": "No es indagación N2: pide reconocer qué dato necesita un cálculo estequiométrico (4.6, nivel 1). La correcta es la más larga (91 caracteres frente a 62-68) y los tres distractores (color y olor, fecha de vencimiento, proveedor) son evidentemente irrelevantes: el ítem discrimina poco. Solo se acorta la correcta; no se proponen distractores nuevos para no cambiar el nivel.",
+   "etiquetas": {
+    "af": "I2",
+    "c": "uso"
+   },
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "La ecuación balanceada de la reacción entre el amoníaco y los demás reactivos del proceso",
+     "nuevo": "La ecuación balanceada de la reacción entre el amoníaco y los demás reactivos"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|qxobbf",
+   "gravedad": "media",
+   "motivo": "La correcta es la más larga (93 caracteres frente a 58-66). Además la razón molar relaciona moles, no átomos; se ajusta.",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Porque los coeficientes sin balancear no reflejan la proporción real de átomos que reaccionan",
+     "nuevo": "Porque los coeficientes sin balancear no dan la proporción real en que reaccionan"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|1vaghk",
+   "gravedad": "media",
+   "motivo": "Predecir la masa de MgO para 3,6 g de Mg a partir de la recta es predecir con base en un patrón (evidencia 7.4, N2), no interpretar la gráfica (N4 8.1); regla del referente: «predecir el siguiente valor» es N2.",
+   "etiquetas": {
+    "af": "N2"
+   }
+  },
+  {
+   "id": "estequiometria|1n3z4rb",
+   "gravedad": "media",
+   "motivo": "En el ensayo 2 las cantidades son exactamente las estequiométricas (1 mol de Mg y 2 mol de HCl): ninguno de los dos está en exceso, así que decir que el Mg es «el limitante» en el 2 es impreciso (la propia explicación lo dice). La pregunta es solo por el ensayo 3. Paralelo con el distractor «En el ensayo 3 el ácido es el reactivo limitante».",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "En los ensayos 2 y 3 el magnesio es el reactivo limitante",
+     "nuevo": "En el ensayo 3 el magnesio se agota y sobra ácido"
+    }
+   ]
+  },
+  {
+   "id": "estequiometria|cqyr3h",
+   "gravedad": "baja",
+   "motivo": "«El error más común» es una opinión: confundir el coeficiente con el subíndice (B) o usar una ecuación sin balancear (D) también son errores frecuentes de la razón molar. La clave A es defendible (es el único que trata de la razón molar como cociente), pero la pregunta sería más sólida si preguntara «¿qué error invierte la razón molar?» reescribiendo opciones. No hay arreglo pequeño: se deja a criterio del docente."
+  },
+  {
+   "id": "atomo|1d1ll6c",
+   "gravedad": "media",
+   "motivo": "La correcta es la más larga (99 caracteres frente a 64-68); se acorta.",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Calentar cada sal conocida y cada muestra en la llama con un alambre limpio, y comparar los colores",
+     "nuevo": "Calentar cada sal y cada muestra en la llama con alambre limpio y comparar colores"
+    }
+   ]
+  },
+  {
+   "id": "atomo|aunsy5",
+   "gravedad": "media",
+   "motivo": "La gráfica llega solo a 22 920 años (6,25 %): el estudiante debe prolongar el patrón de reducción a la mitad un paso más para llegar a 3,125 %. Es predicción con base en un patrón (7.4, N2), no uso I2.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N2"
+   }
+  },
+  {
+   "id": "atomo|1v0zurf",
+   "gravedad": "media",
+   "motivo": "Los datos se leen de una gráfica de barras (abundancias de cada isótopo): evidencia 8.1 (interpretar datos en gráficas, N4). La versión sin gráfica (110) sí es uso.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   }
+  },
+  {
+   "id": "config-e|9arzsq",
+   "gravedad": "media",
+   "motivo": "Pide ubicar un elemento por su configuración (periodo y grupo), no analizar un recurso o tecnología (E3, CTS). El contexto del arsénico en el agua no interviene en la tarea.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "config-e|r3xdy",
+   "gravedad": "media",
+   "motivo": "La correcta es la más larga (113 caracteres frente a 79-81); se acorta.",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Porque sus electrones excitados regresan a niveles más bajos emitiendo energías exactas, propias de cada elemento",
+     "nuevo": "Porque sus electrones excitados bajan de nivel y emiten energías propias de cada elemento"
+    }
+   ]
+  },
+  {
+   "id": "config-e|11pn16",
+   "gravedad": "baja",
+   "motivo": "Clasificar un elemento por el subnivel de su último electrón es uso de conceptos (5.6), no explicación E1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "config-e|tc1oqt",
+   "gravedad": "media",
+   "motivo": "La tarea pide explicar por qué disminuye el radio en una serie isoelectrónica (carga nuclear creciente) leyendo la tabla: explicación (2.2), no solo uso I1.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  }
+ ]
+}

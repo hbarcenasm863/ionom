@@ -1,0 +1,2310 @@
+{
+ "lote": "icfes-ion-2",
+ "experto": "icfes",
+ "revisadas": 260,
+ "coincidencias_a_ciegas": 260,
+ "ev": {
+  "ac-ox|1jreagm": "4.8",
+  "ac-ox|1ibpnes": "4.8",
+  "ac-ox|152q3gq": "5.6",
+  "ac-ox|to58qv": "5.6",
+  "ac-ox|8ca9ax": "5.6",
+  "ac-ox|1n124ls": "5.6",
+  "ac-ox|310bt": "5.6",
+  "ac-ox|8jfkwg": "4.8",
+  "ac-ox|xatius": "4.8",
+  "ac-ox|mxo943": "4.8",
+  "ac-ox|1i71w5q": "5.6",
+  "ac-ox|s8tt5y": "5.6",
+  "ac-ox|14ekhm9": "4.8",
+  "ac-ox|4cfvxc": "4.8",
+  "ac-ox|m123bl": "5.6",
+  "ac-ox|12m7pu8": "5.6",
+  "ac-ox|uvhn83": "4.8",
+  "ac-ox|12o3cur": "4.8",
+  "ac-ox|mgjybz": "4.8",
+  "ac-ox|1rqni0t": "4.8",
+  "ac-ox|1v7enan": "4.8",
+  "ac-ox|1t632s3": "5.6",
+  "ac-ox|b71jcs": "4.8",
+  "ac-ox|df0dtq": "5.6",
+  "ac-ox|13r3zf4": "5.6",
+  "ac-ox|18l9caj": "4.8",
+  "ac-ox|11hrwqy": "5.6",
+  "ac-ox|80ba47": "5.6",
+  "ac-ox|18ez9nm": "5.6",
+  "ac-ox|1xee31i": "5.6",
+  "ac-ox|1ejy3qa": "5.6",
+  "ac-ox|1z0i1mr": "5.6",
+  "ac-ox|wilt8w": "5.6",
+  "ac-ox|9ulqv3": "4.8",
+  "ac-ox|1hrij06": "5.6",
+  "ac-ox|1fa9qde": "5.6",
+  "ac-ox|jqve7n": "5.6",
+  "ac-ox|xw2oki": "4.8",
+  "ac-ox|1ugk18p": "4.8",
+  "ac-ox|4vk03c": "2.1",
+  "ac-ox|1cgyb11": "5.6",
+  "ac-ox|r9742o": "7.3",
+  "ac-ox|vj0duq": "9.5",
+  "ac-ox|s263t5": "8.1",
+  "ac-ox|9ym5k6": "6.2",
+  "ac-ox|ff15sy": "9.2",
+  "ac-ox|tq0rnt": "7.3",
+  "ac-ox|1q9sqj7": "8.1",
+  "ac-ox|tb4q8x": "9.2",
+  "sal-bin|1q4dfyq": "4.8",
+  "sal-bin|ybozsf": "5.6",
+  "sal-bin|1y2ctu4": "5.6",
+  "sal-bin|16sguoh": "4.8",
+  "sal-bin|jey8vy": "4.8",
+  "sal-bin|1d5muhk": "5.6",
+  "sal-bin|1yxxtx5": "5.6",
+  "sal-bin|lthvs1": "5.6",
+  "sal-bin|1f3g3wk": "5.6",
+  "sal-bin|di1v3l": "5.6",
+  "sal-bin|1t3tswy": "5.6",
+  "sal-bin|1jqvzy5": "4.8",
+  "sal-bin|pc35pv": "5.6",
+  "sal-bin|tgfbza": "5.6",
+  "sal-bin|1g7seqk": "5.6",
+  "sal-bin|jyhtuc": "5.6",
+  "sal-bin|jh2iyw": "4.8",
+  "sal-bin|1fybr4y": "5.6",
+  "sal-bin|1awmow7": "5.6",
+  "sal-bin|vdzvm5": "5.6",
+  "sal-bin|5yh5or": "5.6",
+  "sal-bin|e4u4is": "5.6",
+  "sal-bin|15qxmxg": "5.6",
+  "sal-bin|1brg64f": "5.6",
+  "sal-bin|zpygwf": "5.6",
+  "sal-bin|qh8ibb": "5.6",
+  "sal-bin|1789b5x": "5.6",
+  "sal-bin|35swdk": "5.6",
+  "sal-bin|1qcr1c5": "5.6",
+  "sal-bin|1p6rchq": "4.8",
+  "sal-bin|1oydlre": "4.8",
+  "sal-bin|5xesd8": "4.8",
+  "sal-bin|15w9brh": "5.6",
+  "sal-bin|1h9n99b": "5.6",
+  "sal-bin|1gcfg9g": "5.6",
+  "sal-bin|1j54yfu": "4.8",
+  "sal-bin|10ofd9b": "4.8",
+  "sal-bin|v5j073": "5.6",
+  "sal-bin|gnr3qg": "2.2",
+  "sal-bin|prtt3w": "5.6",
+  "sal-bin|t3bb2u": "4.8",
+  "sal-bin|cwmhat": "5.6",
+  "sal-bin|e0xcb1": "5.6",
+  "sal-bin|xkzyyo": "5.6",
+  "sal-bin|1f1hdqe": "7.3",
+  "sal-bin|1wfqf10": "9.2",
+  "sal-bin|ptyy83": "8.1",
+  "sal-bin|1ca3znr": "6.2",
+  "sal-bin|ejb22l": "7.3",
+  "sal-bin|z3jsh5": "9.2",
+  "sal-bin|1tn29ay": "7.3",
+  "sal-bin|8yw5cg": "6.2",
+  "sal-ox|z7ic22": "4.8",
+  "sal-ox|d3gykp": "2.1",
+  "sal-ox|162rj53": "4.8",
+  "sal-ox|13ptotq": "4.8",
+  "sal-ox|1bczocb": "4.8",
+  "sal-ox|lnk1hz": "5.6",
+  "sal-ox|t0kiw2": "5.6",
+  "sal-ox|q5hxdu": "5.6",
+  "sal-ox|sir9da": "5.6",
+  "sal-ox|qpmn73": "5.6",
+  "sal-ox|nrm6ft": "5.6",
+  "sal-ox|1d4p00l": "5.6",
+  "sal-ox|goc4og": "5.6",
+  "sal-ox|1gzbkq6": "5.6",
+  "sal-ox|1d6hafr": "5.6",
+  "sal-ox|1hrog2z": "5.6",
+  "sal-ox|1mzo2cl": "5.6",
+  "sal-ox|i8z5cq": "5.6",
+  "sal-ox|1s2fhy0": "5.6",
+  "sal-ox|12tqrfo": "5.6",
+  "sal-ox|6ip37o": "5.6",
+  "sal-ox|1cjd2d1": "4.8",
+  "sal-ox|1me59c6": "2.1",
+  "sal-ox|1bxh9y3": "5.6",
+  "sal-ox|1jhlazd": "5.6",
+  "sal-ox|gugvl3": "5.6",
+  "sal-ox|1d3cgp8": "4.8",
+  "sal-ox|dm7dpp": "4.8",
+  "sal-ox|1yrumb3": "4.8",
+  "sal-ox|1suqt7r": "5.6",
+  "sal-ox|1d2sscu": "5.6",
+  "sal-ox|awo2mk": "4.8",
+  "sal-ox|rcsp7n": "5.6",
+  "sal-ox|6uu62r": "5.6",
+  "sal-ox|w61921": "5.6",
+  "sal-ox|18ssc3f": "4.8",
+  "sal-ox|1clbl2a": "5.6",
+  "sal-ox|fcxsd4": "5.6",
+  "sal-ox|xbn9d9": "5.6",
+  "sal-ox|13berm5": "4.8",
+  "sal-ox|4vteom": "5.6",
+  "sal-ox|dy5sgf": "5.6",
+  "sal-ox|1f8adza": "5.6",
+  "sal-ox|141kbd7": "4.8",
+  "sal-ox|1gvnbun": "5.6",
+  "sal-ox|1uvwtcj": "4.8",
+  "sal-ox|yc00wp": "7.3",
+  "sal-ox|1dz9il5": "9.2",
+  "sal-ox|1qjhe2s": "8.1",
+  "sal-ox|55vgqk": "7.3",
+  "sal-ox|1yqqtuf": "9.2",
+  "sal-ox|q9utv4": "8.1",
+  "sal-ox|tjajkk": "7.3",
+  "sal-ox|sgmqun": "1.2",
+  "sal-ac|fct7k": "4.8",
+  "sal-ac|15d0pho": "5.6",
+  "sal-ac|157o29m": "2.2",
+  "sal-ac|1ih2jme": "5.6",
+  "sal-ac|kc6rxp": "5.6",
+  "sal-ac|1wnrpdi": "5.6",
+  "sal-ac|1nva5rq": "5.6",
+  "sal-ac|y6fxj4": "5.6",
+  "sal-ac|1y8tm91": "5.6",
+  "sal-ac|19x413k": "5.6",
+  "sal-ac|15cyokz": "5.6",
+  "sal-ac|19ie6ho": "5.6",
+  "sal-ac|1y9rgb9": "5.6",
+  "sal-ac|1sngxsa": "5.6",
+  "sal-ac|9c5qw9": "5.6",
+  "sal-ac|d8m4kg": "5.6",
+  "sal-ac|10pz7bi": "5.6",
+  "sal-ac|1a5shyj": "5.6",
+  "sal-ac|6ja9j5": "5.6",
+  "sal-ac|cvrtet": "5.6",
+  "sal-ac|10mlnad": "5.6",
+  "sal-ac|yod6xc": "5.6",
+  "sal-ac|1xtp78v": "5.6",
+  "sal-ac|54qrak": "5.6",
+  "sal-ac|186p1vr": "5.6",
+  "sal-ac|b82xei": "4.8",
+  "sal-ac|11mfxvs": "5.6",
+  "sal-ac|6rj6mn": "5.6",
+  "sal-ac|1jxrofm": "5.6",
+  "sal-ac|mf5bw9": "5.6",
+  "sal-ac|135nmu8": "5.6",
+  "sal-ac|1eitu6n": "5.6",
+  "sal-ac|19wn4pw": "5.6",
+  "sal-ac|18vto3q": "4.8",
+  "sal-ac|1u8y1ri": "5.6",
+  "sal-ac|cchcq1": "5.6",
+  "sal-ac|48sppz": "5.6",
+  "sal-ac|pjc2wy": "5.6",
+  "sal-ac|1cfjm4d": "5.6",
+  "sal-ac|18q8uf4": "2.1",
+  "sal-ac|ctv1a0": "5.6",
+  "sal-ac|1lu2azg": "7.3",
+  "sal-ac|1pkkdrb": "9.2",
+  "sal-ac|1cyl1fe": "8.1",
+  "sal-ac|1kvzzun": "1.2",
+  "sal-ac|wr18k5": "7.3",
+  "sal-ac|ul4ykw": "8.1",
+  "sal-ac|qcd256": "9.2",
+  "sal-ac|x5xvse": "7.3",
+  "reaccion|1ce67on": "4.6",
+  "reaccion|qhs05b": "4.6",
+  "reaccion|13vq8s5": "4.6",
+  "reaccion|1dckctn": "4.6",
+  "reaccion|aodxf0": "4.6",
+  "reaccion|1qqfeh4": "4.6",
+  "reaccion|zq1aj9": "4.6",
+  "reaccion|i3iqmh": "4.6",
+  "reaccion|1thcjhz": "4.6",
+  "reaccion|1q75emy": "4.6",
+  "reaccion|1woznhl": "4.6",
+  "reaccion|1vq75z8": "4.6",
+  "reaccion|k6cps0": "4.6",
+  "reaccion|1rfvgw4": "4.6",
+  "reaccion|suxt63": "4.6",
+  "reaccion|15eqwpa": "4.6",
+  "reaccion|nipf3v": "4.6",
+  "reaccion|1akqv5o": "4.6",
+  "reaccion|1ip5k9p": "4.6",
+  "reaccion|193vt9d": "4.6",
+  "reaccion|1ois1t7": "4.6",
+  "reaccion|u7nxpi": "4.6",
+  "reaccion|1pot5qy": "4.6",
+  "reaccion|2mfclh": "4.6",
+  "reaccion|4wt1vt": "4.6",
+  "reaccion|16y5qhp": "4.6",
+  "reaccion|1t6xrtz": "4.6",
+  "reaccion|avlock": "4.6",
+  "reaccion|ias6d": "4.6",
+  "reaccion|jnw3ou": "4.6",
+  "reaccion|1vuceo1": "4.6",
+  "reaccion|mq0d94": "4.6",
+  "reaccion|1kx4ta4": "2.1",
+  "reaccion|y87y2s": "4.6",
+  "reaccion|opsqnl": "4.6",
+  "reaccion|fb5g6u": "4.6",
+  "reaccion|7ms95n": "4.6",
+  "reaccion|fybepd": "4.6",
+  "reaccion|tktrae": "4.6",
+  "reaccion|1yfi9q7": "4.6",
+  "reaccion|1csaed6": "7.3",
+  "reaccion|1falvuv": "9.1",
+  "reaccion|1206oni": "8.1",
+  "reaccion|uuj5j3": "7.3",
+  "reaccion|etauj1": "6.2",
+  "reaccion|1lruv8c": "9.2",
+  "reaccion|e1cnpq": "7.3",
+  "reaccion|e05hi1": "8.1",
+  "reaccion|woetx8": "8.1",
+  "reaccion|zpkk7h": "3.2",
+  "reaccion|8u8l8a": "2.1",
+  "reaccion|1gpcknf": "7.3",
+  "reaccion|c9db3b": "9.3",
+  "reaccion|ns7aqn": "8.1",
+  "reaccion|gwok6x": "8.1",
+  "reaccion|1711vvi": "8.1"
+ },
+ "nd": {
+  "ac-ox|1jreagm": 2,
+  "ac-ox|1ibpnes": 2,
+  "ac-ox|152q3gq": 1,
+  "ac-ox|to58qv": 2,
+  "ac-ox|8ca9ax": 2,
+  "ac-ox|1n124ls": 1,
+  "ac-ox|310bt": 1,
+  "ac-ox|8jfkwg": 2,
+  "ac-ox|xatius": 2,
+  "ac-ox|mxo943": 2,
+  "ac-ox|1i71w5q": 2,
+  "ac-ox|s8tt5y": 2,
+  "ac-ox|14ekhm9": 2,
+  "ac-ox|4cfvxc": 2,
+  "ac-ox|m123bl": 2,
+  "ac-ox|12m7pu8": 2,
+  "ac-ox|uvhn83": 2,
+  "ac-ox|12o3cur": 2,
+  "ac-ox|mgjybz": 2,
+  "ac-ox|1rqni0t": 2,
+  "ac-ox|1v7enan": 2,
+  "ac-ox|1t632s3": 2,
+  "ac-ox|b71jcs": 2,
+  "ac-ox|df0dtq": 1,
+  "ac-ox|13r3zf4": 2,
+  "ac-ox|18l9caj": 2,
+  "ac-ox|11hrwqy": 1,
+  "ac-ox|80ba47": 2,
+  "ac-ox|18ez9nm": 1,
+  "ac-ox|1xee31i": 2,
+  "ac-ox|1ejy3qa": 1,
+  "ac-ox|1z0i1mr": 2,
+  "ac-ox|wilt8w": 2,
+  "ac-ox|9ulqv3": 2,
+  "ac-ox|1hrij06": 1,
+  "ac-ox|1fa9qde": 2,
+  "ac-ox|jqve7n": 2,
+  "ac-ox|xw2oki": 2,
+  "ac-ox|1ugk18p": 2,
+  "ac-ox|4vk03c": 3,
+  "ac-ox|1cgyb11": 1,
+  "ac-ox|r9742o": 3,
+  "ac-ox|vj0duq": 2,
+  "ac-ox|s263t5": 3,
+  "ac-ox|9ym5k6": 2,
+  "ac-ox|ff15sy": 3,
+  "ac-ox|tq0rnt": 3,
+  "ac-ox|1q9sqj7": 3,
+  "ac-ox|tb4q8x": 3,
+  "sal-bin|1q4dfyq": 2,
+  "sal-bin|ybozsf": 1,
+  "sal-bin|1y2ctu4": 1,
+  "sal-bin|16sguoh": 2,
+  "sal-bin|jey8vy": 2,
+  "sal-bin|1d5muhk": 2,
+  "sal-bin|1yxxtx5": 2,
+  "sal-bin|lthvs1": 1,
+  "sal-bin|1f3g3wk": 2,
+  "sal-bin|di1v3l": 2,
+  "sal-bin|1t3tswy": 1,
+  "sal-bin|1jqvzy5": 2,
+  "sal-bin|pc35pv": 1,
+  "sal-bin|tgfbza": 1,
+  "sal-bin|1g7seqk": 2,
+  "sal-bin|jyhtuc": 1,
+  "sal-bin|jh2iyw": 2,
+  "sal-bin|1fybr4y": 2,
+  "sal-bin|1awmow7": 2,
+  "sal-bin|vdzvm5": 2,
+  "sal-bin|5yh5or": 2,
+  "sal-bin|e4u4is": 2,
+  "sal-bin|15qxmxg": 2,
+  "sal-bin|1brg64f": 2,
+  "sal-bin|zpygwf": 2,
+  "sal-bin|qh8ibb": 2,
+  "sal-bin|1789b5x": 2,
+  "sal-bin|35swdk": 1,
+  "sal-bin|1qcr1c5": 1,
+  "sal-bin|1p6rchq": 2,
+  "sal-bin|1oydlre": 2,
+  "sal-bin|5xesd8": 1,
+  "sal-bin|15w9brh": 2,
+  "sal-bin|1h9n99b": 2,
+  "sal-bin|1gcfg9g": 2,
+  "sal-bin|1j54yfu": 2,
+  "sal-bin|10ofd9b": 2,
+  "sal-bin|v5j073": 1,
+  "sal-bin|gnr3qg": 2,
+  "sal-bin|prtt3w": 1,
+  "sal-bin|t3bb2u": 2,
+  "sal-bin|cwmhat": 2,
+  "sal-bin|e0xcb1": 2,
+  "sal-bin|xkzyyo": 2,
+  "sal-bin|1f1hdqe": 3,
+  "sal-bin|1wfqf10": 2,
+  "sal-bin|ptyy83": 3,
+  "sal-bin|1ca3znr": 1,
+  "sal-bin|ejb22l": 2,
+  "sal-bin|z3jsh5": 3,
+  "sal-bin|1tn29ay": 2,
+  "sal-bin|8yw5cg": 2,
+  "sal-ox|z7ic22": 2,
+  "sal-ox|d3gykp": 2,
+  "sal-ox|162rj53": 2,
+  "sal-ox|13ptotq": 2,
+  "sal-ox|1bczocb": 2,
+  "sal-ox|lnk1hz": 2,
+  "sal-ox|t0kiw2": 2,
+  "sal-ox|q5hxdu": 2,
+  "sal-ox|sir9da": 1,
+  "sal-ox|qpmn73": 2,
+  "sal-ox|nrm6ft": 2,
+  "sal-ox|1d4p00l": 2,
+  "sal-ox|goc4og": 2,
+  "sal-ox|1gzbkq6": 2,
+  "sal-ox|1d6hafr": 2,
+  "sal-ox|1hrog2z": 1,
+  "sal-ox|1mzo2cl": 1,
+  "sal-ox|i8z5cq": 1,
+  "sal-ox|1s2fhy0": 1,
+  "sal-ox|12tqrfo": 1,
+  "sal-ox|6ip37o": 1,
+  "sal-ox|1cjd2d1": 2,
+  "sal-ox|1me59c6": 3,
+  "sal-ox|1bxh9y3": 1,
+  "sal-ox|1jhlazd": 2,
+  "sal-ox|gugvl3": 2,
+  "sal-ox|1d3cgp8": 1,
+  "sal-ox|dm7dpp": 1,
+  "sal-ox|1yrumb3": 2,
+  "sal-ox|1suqt7r": 2,
+  "sal-ox|1d2sscu": 2,
+  "sal-ox|awo2mk": 2,
+  "sal-ox|rcsp7n": 1,
+  "sal-ox|6uu62r": 1,
+  "sal-ox|w61921": 1,
+  "sal-ox|18ssc3f": 2,
+  "sal-ox|1clbl2a": 2,
+  "sal-ox|fcxsd4": 1,
+  "sal-ox|xbn9d9": 1,
+  "sal-ox|13berm5": 2,
+  "sal-ox|4vteom": 1,
+  "sal-ox|dy5sgf": 2,
+  "sal-ox|1f8adza": 1,
+  "sal-ox|141kbd7": 2,
+  "sal-ox|1gvnbun": 1,
+  "sal-ox|1uvwtcj": 2,
+  "sal-ox|yc00wp": 3,
+  "sal-ox|1dz9il5": 2,
+  "sal-ox|1qjhe2s": 4,
+  "sal-ox|55vgqk": 3,
+  "sal-ox|1yqqtuf": 3,
+  "sal-ox|q9utv4": 4,
+  "sal-ox|tjajkk": 2,
+  "sal-ox|sgmqun": 2,
+  "sal-ac|fct7k": 2,
+  "sal-ac|15d0pho": 2,
+  "sal-ac|157o29m": 3,
+  "sal-ac|1ih2jme": 2,
+  "sal-ac|kc6rxp": 2,
+  "sal-ac|1wnrpdi": 2,
+  "sal-ac|1nva5rq": 2,
+  "sal-ac|y6fxj4": 2,
+  "sal-ac|1y8tm91": 2,
+  "sal-ac|19x413k": 2,
+  "sal-ac|15cyokz": 2,
+  "sal-ac|19ie6ho": 2,
+  "sal-ac|1y9rgb9": 2,
+  "sal-ac|1sngxsa": 2,
+  "sal-ac|9c5qw9": 2,
+  "sal-ac|d8m4kg": 2,
+  "sal-ac|10pz7bi": 2,
+  "sal-ac|1a5shyj": 2,
+  "sal-ac|6ja9j5": 2,
+  "sal-ac|cvrtet": 2,
+  "sal-ac|10mlnad": 2,
+  "sal-ac|yod6xc": 2,
+  "sal-ac|1xtp78v": 2,
+  "sal-ac|54qrak": 2,
+  "sal-ac|186p1vr": 2,
+  "sal-ac|b82xei": 2,
+  "sal-ac|11mfxvs": 2,
+  "sal-ac|6rj6mn": 2,
+  "sal-ac|1jxrofm": 2,
+  "sal-ac|mf5bw9": 2,
+  "sal-ac|135nmu8": 2,
+  "sal-ac|1eitu6n": 2,
+  "sal-ac|19wn4pw": 2,
+  "sal-ac|18vto3q": 2,
+  "sal-ac|1u8y1ri": 2,
+  "sal-ac|cchcq1": 2,
+  "sal-ac|48sppz": 2,
+  "sal-ac|pjc2wy": 2,
+  "sal-ac|1cfjm4d": 2,
+  "sal-ac|18q8uf4": 3,
+  "sal-ac|ctv1a0": 2,
+  "sal-ac|1lu2azg": 3,
+  "sal-ac|1pkkdrb": 3,
+  "sal-ac|1cyl1fe": 3,
+  "sal-ac|1kvzzun": 2,
+  "sal-ac|wr18k5": 3,
+  "sal-ac|ul4ykw": 3,
+  "sal-ac|qcd256": 3,
+  "sal-ac|x5xvse": 3,
+  "reaccion|1ce67on": 1,
+  "reaccion|qhs05b": 1,
+  "reaccion|13vq8s5": 2,
+  "reaccion|1dckctn": 1,
+  "reaccion|aodxf0": 2,
+  "reaccion|1qqfeh4": 1,
+  "reaccion|zq1aj9": 2,
+  "reaccion|i3iqmh": 1,
+  "reaccion|1thcjhz": 1,
+  "reaccion|1q75emy": 1,
+  "reaccion|1woznhl": 1,
+  "reaccion|1vq75z8": 1,
+  "reaccion|k6cps0": 1,
+  "reaccion|1rfvgw4": 1,
+  "reaccion|suxt63": 1,
+  "reaccion|15eqwpa": 1,
+  "reaccion|nipf3v": 1,
+  "reaccion|1akqv5o": 1,
+  "reaccion|1ip5k9p": 1,
+  "reaccion|193vt9d": 1,
+  "reaccion|1ois1t7": 1,
+  "reaccion|u7nxpi": 1,
+  "reaccion|1pot5qy": 1,
+  "reaccion|2mfclh": 1,
+  "reaccion|4wt1vt": 1,
+  "reaccion|16y5qhp": 1,
+  "reaccion|1t6xrtz": 1,
+  "reaccion|avlock": 1,
+  "reaccion|ias6d": 1,
+  "reaccion|jnw3ou": 1,
+  "reaccion|1vuceo1": 2,
+  "reaccion|mq0d94": 1,
+  "reaccion|1kx4ta4": 3,
+  "reaccion|y87y2s": 1,
+  "reaccion|opsqnl": 2,
+  "reaccion|fb5g6u": 2,
+  "reaccion|7ms95n": 2,
+  "reaccion|fybepd": 1,
+  "reaccion|tktrae": 2,
+  "reaccion|1yfi9q7": 2,
+  "reaccion|1csaed6": 3,
+  "reaccion|1falvuv": 2,
+  "reaccion|1206oni": 3,
+  "reaccion|uuj5j3": 3,
+  "reaccion|etauj1": 3,
+  "reaccion|1lruv8c": 3,
+  "reaccion|e1cnpq": 2,
+  "reaccion|e05hi1": 3,
+  "reaccion|woetx8": 3,
+  "reaccion|zpkk7h": 3,
+  "reaccion|8u8l8a": 4,
+  "reaccion|1gpcknf": 3,
+  "reaccion|c9db3b": 3,
+  "reaccion|ns7aqn": 3,
+  "reaccion|gwok6x": 2,
+  "reaccion|1711vvi": 3
+ },
+ "hallazgos": [
+  {
+   "id": "ac-ox|1ibpnes",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|8ca9ax",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|8jfkwg",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|1i71w5q",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|s8tt5y",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|14ekhm9",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|4cfvxc",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|uvhn83",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|12o3cur",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|mgjybz",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|1rqni0t",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|1v7enan",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|b71jcs",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|80ba47",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|1xee31i",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|1z0i1mr",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|wilt8w",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. El oxoanión PO₂³⁻ es formal: el hipofosfito real es H₂PO₂⁻ y el ácido es monoprótico; es convención del sitio, no cambiar sin decisión del docente.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "ac-ox|9ulqv3",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|xw2oki",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|1ugk18p",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "ac-ox|4vk03c",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a exp/E1 según la evidencia 2.1 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  },
+  {
+   "id": "sal-bin|ybozsf",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|16sguoh",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|jey8vy",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|1d5muhk",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1yxxtx5",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|lthvs1",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1f3g3wk",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|di1v3l",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1t3tswy",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Cloruro de plata (I)",
+     "nuevo": "Cloruro de plata (II)"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|1jqvzy5",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|pc35pv",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|tgfbza",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|jyhtuc",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|jh2iyw",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|1fybr4y",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1awmow7",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|vdzvm5",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Cloruro de zinc (II)",
+     "nuevo": "Cloruro de zinc (III)"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|5yh5or",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|e4u4is",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|15qxmxg",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1brg64f",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|zpygwf",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|qh8ibb",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1789b5x",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|35swdk",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1p6rchq",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|1oydlre",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|5xesd8",
+   "gravedad": "media",
+   "motivo": "Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Fluoruro de sodio (I)",
+     "nuevo": "Fluoruro de sodio (II)"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|15w9brh",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1h9n99b",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. NiCl₃ no es un compuesto conocido estable; mejor usar una sal de níquel real (p. ej. cambiar el ejemplo a otro metal con dos valencias).",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1gcfg9g",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|1j54yfu",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|10ofd9b",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|v5j073",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|gnr3qg",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a exp/E1 según la evidencia 2.2 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  },
+  {
+   "id": "sal-bin|prtt3w",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|t3bb2u",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-bin|cwmhat",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|e0xcb1",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|xkzyyo",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-bin|ptyy83",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "on 10 % de sal, −6 °C.",
+     "nuevo": "on 10 % de sal, −6 °C. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|ejb22l",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": ", 40 g; a 60 °C, 46 g.",
+     "nuevo": ", 40 g; a 60 °C, 46 g. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-bin|1tn29ay",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": " 10 % de sal a 102 °C.",
+     "nuevo": " 10 % de sal a 102 °C. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ox|13ptotq",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|1bczocb",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|lnk1hz",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|t0kiw2",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|q5hxdu",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|sir9da",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|qpmn73",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|nrm6ft",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Sulfato de zinc (II)",
+     "nuevo": "Sulfato de zinc (III)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ox|1d4p00l",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|goc4og",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1gzbkq6",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1d6hafr",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1hrog2z",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1mzo2cl",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|i8z5cq",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1s2fhy0",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|12tqrfo",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|6ip37o",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1cjd2d1",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|1me59c6",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a exp/E1 según la evidencia 2.1 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  },
+  {
+   "id": "sal-ox|1bxh9y3",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|gugvl3",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1yrumb3",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|1suqt7r",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1d2sscu",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|awo2mk",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|rcsp7n",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|6uu62r",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I2 a uso/I1 según la evidencia 5.6 del Marco.",
+   "etiquetas": {
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|w61921",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|18ssc3f",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2. Casi duplicada con la 137 (fórmula del carbonato de litio): quitar una.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|fcxsd4",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|xbn9d9",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|13berm5",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|4vteom",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1f8adza",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|141kbd7",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|1gvnbun",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ox|1uvwtcj",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "sal-ox|1qjhe2s",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "secar, recupera 4,8 g.",
+     "nuevo": "secar, recupera 4,8 g. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ox|tjajkk",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": " 64 g; a 60 °C, 110 g.",
+     "nuevo": " 64 g; a 60 °C, 110 g. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ox|sgmqun",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de ind/N1 a exp/E3 según la evidencia 1.2 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E3"
+   }
+  },
+  {
+   "id": "sal-ac|15d0pho",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1ih2jme",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|kc6rxp",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E3 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1nva5rq",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Hidrogenocarbonato de amonio (I)",
+     "nuevo": "Hidrogenocarbonato de amonio (II)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ac|y6fxj4",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|19x413k",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|15cyokz",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|19ie6ho",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1y9rgb9",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1sngxsa",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I2 a uso/I1 según la evidencia 5.6 del Marco.",
+   "etiquetas": {
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|9c5qw9",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|d8m4kg",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|10pz7bi",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1a5shyj",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|6ja9j5",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|cvrtet",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|10mlnad",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|yod6xc",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1xtp78v",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|54qrak",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|186p1vr",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|11mfxvs",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|6rj6mn",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1jxrofm",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|mf5bw9",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|135nmu8",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1eitu6n",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|19wn4pw",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1u8y1ri",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|cchcq1",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|48sppz",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|pjc2wy",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|1cfjm4d",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   }
+  },
+  {
+   "id": "sal-ac|18q8uf4",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a exp/E1 según la evidencia 2.1 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  },
+  {
+   "id": "sal-ac|ctv1a0",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I1. Con metal de valencia fija, el numeral Stock es opcional: el distractor es también aceptable. Se cambia el numeral por uno imposible.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Hidrogenocarbonato de sodio (I)",
+     "nuevo": "Hidrogenocarbonato de sodio (II)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ac|1lu2azg",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "isulfato de sodio 1,5.",
+     "nuevo": "isulfato de sodio 1,5. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ac|1kvzzun",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de ind/N1 a exp/E3 según la evidencia 1.2 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E3"
+   }
+  },
+  {
+   "id": "sal-ac|ul4ykw",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "e descompuso a 400 °C.",
+     "nuevo": "e descompuso a 400 °C. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "sal-ac|x5xvse",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "osfato monosódico 4,5.",
+     "nuevo": "osfato monosódico 4,5. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|1ce67on",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2. La frase define la síntesis y delata la clave.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "q",
+     "original": ", sabiendo que dos sustancias simples forman un único producto",
+     "nuevo": ""
+    }
+   ]
+  },
+  {
+   "id": "reaccion|qhs05b",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1dckctn",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|aodxf0",
+   "gravedad": "alta",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2. Mg + O₂ → MgO es síntesis, pero también se llama combustión (el magnesio arde): dos opciones correctas. Se cambia el distractor «Combustión».",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Combustión",
+     "nuevo": "Doble sustitución"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|1qqfeh4",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|zq1aj9",
+   "gravedad": "alta",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2. C + O₂ → CO₂ (el contexto dice «arde») es síntesis y también combustión: dos correctas. Se cambia el distractor «Combustión».",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Combustión",
+     "nuevo": "Doble sustitución"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|1thcjhz",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1q75emy",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1woznhl",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|k6cps0",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1rfvgw4",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|suxt63",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco. «Desplazante» delata la sustitución simple.",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "usando hierro como agente desplazante",
+     "nuevo": "usando chatarra de hierro"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|15eqwpa",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1akqv5o",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1ip5k9p",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|193vt9d",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1ois1t7",
+   "gravedad": "media",
+   "motivo": "La frase define la doble sustitución y delata la clave.",
+   "textos": [
+    {
+     "campo": "q",
+     "original": ", donde dos sales intercambian iones y se forma un precipitado amarillo",
+     "nuevo": ""
+    }
+   ]
+  },
+  {
+   "id": "reaccion|u7nxpi",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1pot5qy",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|2mfclh",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|16y5qhp",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1t6xrtz",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2. El paréntesis nombra la clave (combustión).",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "q",
+     "original": " (combustión del propano de los cilindros de gas)",
+     "nuevo": ""
+    }
+   ]
+  },
+  {
+   "id": "reaccion|avlock",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|ias6d",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco. «Siempre» con «otro combustible» es falso (combustibles con N o S dan otros productos).",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "q",
+     "original": "un hidrocarburo u otro combustible con oxígeno",
+     "nuevo": "un combustible formado por C, H y O"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|1vuceo1",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1kx4ta4",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a exp/E1 según la evidencia 2.1 del Marco.",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   }
+  },
+  {
+   "id": "reaccion|y87y2s",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|opsqnl",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|fb5g6u",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|7ms95n",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|fybepd",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco. El contexto dice «descompone», que delata la clave.",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "descompone un óxido metálico en sus elementos al calentarlo",
+     "nuevo": "se obtiene al calentar el óxido rojo de mercurio"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|tktrae",
+   "gravedad": "baja",
+   "motivo": "Etiqueta ajustada de uso/I1 a uso/I2 según la evidencia 4.6 del Marco.",
+   "etiquetas": {
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1yfi9q7",
+   "gravedad": "media",
+   "motivo": "Nombrar o escribir fórmulas o clasificar reacciones es usar conceptos, no explicar un fenómeno: de exp/E1 a uso/I2.",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   }
+  },
+  {
+   "id": "reaccion|1csaed6",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": " al quemarla (0,40 g).",
+     "nuevo": " al quemarla (0,40 g). (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|e1cnpq",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": " 22 °C, después 18 °C.",
+     "nuevo": " 22 °C, después 18 °C. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|e05hi1",
+   "gravedad": "baja",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo».",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "balanza marca 152,4 g.",
+     "nuevo": "balanza marca 152,4 g. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|woetx8",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de exp/E3 a ind/N4 según la evidencia 8.1 del Marco.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   }
+  },
+  {
+   "id": "reaccion|8u8l8a",
+   "gravedad": "media",
+   "motivo": "Contenido de entalpía de formación (grado 11.° o superior) en una pregunta de 10.°; aceptable solo como pregunta de profundización."
+  },
+  {
+   "id": "reaccion|1gpcknf",
+   "gravedad": "media",
+   "motivo": "Datos numéricos sin fuente: la regla pide fuente o «Datos de ejemplo». Potencial estándar de reducción es contenido de electroquímica (11.°); en 10.° solo se sostiene porque la tabla lo da; revisar el curso.",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "ar H⁺/H₂ tiene 0,00 V.",
+     "nuevo": "ar H⁺/H₂ tiene 0,00 V. (Datos de ejemplo.)"
+    }
+   ]
+  },
+  {
+   "id": "reaccion|ns7aqn",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I1 a ind/N4 según la evidencia 8.1 del Marco.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   }
+  },
+  {
+   "id": "reaccion|gwok6x",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de uso/I2 a ind/N4 según la evidencia 8.1 del Marco.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   }
+  },
+  {
+   "id": "reaccion|1711vvi",
+   "gravedad": "media",
+   "motivo": "Etiqueta ajustada de exp/E2 a ind/N4 según la evidencia 8.1 del Marco.",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   }
+  }
+ ]
+}

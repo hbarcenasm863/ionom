@@ -1,0 +1,2450 @@
+{
+ "lote": "icfes-ion-1",
+ "experto": "icfes",
+ "revisadas": 300,
+ "coincidencias_a_ciegas": 299,
+ "ev": {
+  "ox-bas|t082ui": "4.8",
+  "ox-bas|98w080": "4.8",
+  "ox-bas|1ejz0af": "4.6",
+  "ox-bas|ebuc2a": "4.8",
+  "ox-bas|3crtvs": "4.8",
+  "ox-bas|1h88isx": "4.8",
+  "ox-bas|1aleww7": "4.8",
+  "ox-bas|z90hsr": "4.8",
+  "ox-bas|1jrdc3n": "4.8",
+  "ox-bas|1dfu6q0": "4.8",
+  "ox-bas|35s89q": "4.8",
+  "ox-bas|4rinit": "4.8",
+  "ox-bas|14g8dln": "4.8",
+  "ox-bas|1g8jyg8": "4.8",
+  "ox-bas|1ak1wzz": "4.8",
+  "ox-bas|1p23ivc": "4.8",
+  "ox-bas|134fibn": "4.8",
+  "ox-bas|1hh7wtn": "4.8",
+  "ox-bas|1kb67o4": "4.8",
+  "ox-bas|7uec58": "4.8",
+  "ox-bas|8vebvd": "4.8",
+  "ox-bas|gg2gu": "4.8",
+  "ox-bas|6hua5f": "4.8",
+  "ox-bas|v3j80n": "4.8",
+  "ox-bas|b7dx4o": "4.8",
+  "ox-bas|1hhgq0d": "4.8",
+  "ox-bas|eor1bx": "4.8",
+  "ox-bas|1kyy3bg": "4.8",
+  "ox-bas|mj0iym": "4.8",
+  "ox-bas|y6qoc9": "4.8",
+  "ox-bas|11t8gdb": "4.8",
+  "ox-bas|3vczhz": "4.8",
+  "ox-bas|obr22w": "4.8",
+  "ox-bas|1ewq0n8": "4.8",
+  "ox-bas|lsai7i": "4.8",
+  "ox-bas|lai2yl": "4.8",
+  "ox-bas|2d4m0": "4.8",
+  "ox-bas|2cmo5q": "4.8",
+  "ox-bas|1v0vnet": "4.8",
+  "ox-bas|1r4aj9l": "4.8",
+  "ox-bas|1pl38hp": "4.8",
+  "ox-bas|j23g1k": "7.3",
+  "ox-bas|b7ktba": "9.2",
+  "ox-bas|99jz7a": "8.1",
+  "ox-bas|4r1vhh": "6.2",
+  "ox-bas|1lgjkj2": "7.3",
+  "ox-bas|y0n8l2": "9.2",
+  "ox-bas|n65zv9": "8.1",
+  "ox-bas|19sd787": "6.2",
+  "balanceo|1qq4p8c": "4.6",
+  "balanceo|1oy5rzl": "2.1",
+  "balanceo|z24swp": "4.6",
+  "balanceo|1mi6h57": "4.6",
+  "balanceo|5jyvdh": "4.6",
+  "balanceo|1q7egp2": "4.6",
+  "balanceo|1kpjfmx": "4.6",
+  "balanceo|luam8j": "2.1",
+  "balanceo|amwh9o": "4.6",
+  "balanceo|aocu5n": "4.6",
+  "balanceo|46xdsc": "4.6",
+  "balanceo|txdfmb": "4.6",
+  "balanceo|18f85p5": "4.6",
+  "balanceo|1utxv8k": "4.6",
+  "balanceo|1cg15yu": "4.6",
+  "balanceo|107pjlo": "4.6",
+  "balanceo|exzclc": "4.6",
+  "balanceo|cs27lq": "4.6",
+  "balanceo|j6rxpj": "4.6",
+  "balanceo|1xgbrzn": "4.6",
+  "balanceo|16u2x66": "4.6",
+  "balanceo|1ugj26b": "4.6",
+  "balanceo|6dej5n": "4.6",
+  "balanceo|kjdlnu": "4.6",
+  "balanceo|12h3w1y": "4.6",
+  "balanceo|1l7w49v": "4.6",
+  "balanceo|1we5jr2": "4.6",
+  "balanceo|1aoqr2k": "2.1",
+  "balanceo|wnisbu": "4.6",
+  "balanceo|10mep5x": "4.6",
+  "balanceo|1gvbdj": "4.6",
+  "balanceo|cwkq0g": "4.6",
+  "balanceo|1wywlpv": "4.6",
+  "balanceo|6l5dke": "4.6",
+  "balanceo|4yxeoi": "4.6",
+  "balanceo|15wz35u": "4.6",
+  "balanceo|1vj75em": "4.6",
+  "balanceo|1wdh93r": "4.6",
+  "balanceo|19vsv3a": "4.6",
+  "balanceo|11pxbay": "4.6",
+  "balanceo|10d2ejl": "4.6",
+  "balanceo|14rg5cf": "9.2",
+  "balanceo|umfpev": "7.3",
+  "balanceo|jv5g2k": "8.1",
+  "balanceo|1nfpsql": "6.2",
+  "balanceo|c9dubf": "7.3",
+  "balanceo|58d7xf": "9.2",
+  "balanceo|ijo0cq": "8.1",
+  "balanceo|1nr5dr2": "7.3",
+  "balanceo|3j2898": "1.2",
+  "balanceo|1sg8ybu": "3.2",
+  "balanceo|18upclk": "7.3",
+  "balanceo|wskelw": "4.6",
+  "balanceo|1rdx2ga": "8.1",
+  "balanceo|1v5j1hj": "7.4",
+  "anhid|1mt9zpo": "4.8",
+  "anhid|1s7hjub": "5.6",
+  "anhid|188sthw": "4.8",
+  "anhid|fs8yhh": "4.6",
+  "anhid|pu77co": "4.8",
+  "anhid|pu6i7l": "4.8",
+  "anhid|1g7e9pt": "4.8",
+  "anhid|1l4zdo6": "4.8",
+  "anhid|1n7so": "4.8",
+  "anhid|1gpsvyc": "4.8",
+  "anhid|1idfzjg": "4.8",
+  "anhid|1hqpuv8": "4.8",
+  "anhid|1agkve1": "4.8",
+  "anhid|2kk7rn": "4.8",
+  "anhid|1dxwqrx": "4.8",
+  "anhid|symlje": "4.8",
+  "anhid|wtpik8": "4.8",
+  "anhid|1ui02t8": "4.8",
+  "anhid|1dkhgxu": "4.8",
+  "anhid|1x08q09": "4.8",
+  "anhid|1scxuxq": "4.8",
+  "anhid|yg9w2t": "4.8",
+  "anhid|l0jfjr": "4.8",
+  "anhid|udxprz": "4.8",
+  "anhid|1btlb3k": "4.8",
+  "anhid|1vlb97y": "4.8",
+  "anhid|1419ayi": "4.8",
+  "anhid|zddu2a": "4.8",
+  "anhid|1gbdguy": "4.8",
+  "anhid|1n7r31x": "4.8",
+  "anhid|bjol0m": "4.8",
+  "anhid|1x3zd1n": "4.8",
+  "anhid|1wehm5v": "4.8",
+  "anhid|1ey0d00": "4.8",
+  "anhid|1402plo": "4.8",
+  "anhid|ja6qa9": "4.8",
+  "anhid|1t54nvp": "4.8",
+  "anhid|1ivw6u5": "4.8",
+  "anhid|rmlux7": "4.8",
+  "anhid|kltvck": "4.8",
+  "anhid|1ynimgz": "4.6",
+  "anhid|1ld4vds": "7.3",
+  "anhid|1v9mdle": "9.2",
+  "anhid|1jq1632": "8.1",
+  "anhid|n2qigp": "6.2",
+  "anhid|1d7wlx4": "7.3",
+  "anhid|1bugja3": "9.2",
+  "anhid|3rlx4o": "8.1",
+  "anhid|ealthm": "7.3",
+  "hidru|piqev4": "4.8",
+  "hidru|10tn9eq": "4.8",
+  "hidru|1h0vsxr": "4.8",
+  "hidru|vxmifd": "4.8",
+  "hidru|pcjqgn": "4.8",
+  "hidru|uo78oh": "4.8",
+  "hidru|1nt9xmz": "4.8",
+  "hidru|tal3a": "4.8",
+  "hidru|ymlue": "4.8",
+  "hidru|1ipcn9l": "4.8",
+  "hidru|ip2vp4": "4.8",
+  "hidru|s4w34x": "4.8",
+  "hidru|nvzqaf": "4.8",
+  "hidru|17nheyc": "4.8",
+  "hidru|5wrsds": "4.8",
+  "hidru|1al733u": "4.8",
+  "hidru|1x1h9e3": "4.8",
+  "hidru|hawvp7": "4.8",
+  "hidru|idgb2z": "4.8",
+  "hidru|mmxi75": "4.8",
+  "hidru|1e4do2y": "4.8",
+  "hidru|6j0bzd": "4.8",
+  "hidru|yhwru2": "4.8",
+  "hidru|qszy7e": "4.8",
+  "hidru|x1cex": "4.8",
+  "hidru|1xkncr1": "4.8",
+  "hidru|19o80aa": "4.8",
+  "hidru|1dh1v9k": "4.8",
+  "hidru|1jtpmgn": "4.8",
+  "hidru|28qitg": "4.8",
+  "hidru|d0tiz9": "4.8",
+  "hidru|1h2511b": "4.8",
+  "hidru|1r7fkop": "4.8",
+  "hidru|r28jgw": "4.8",
+  "hidru|4bz6x": "4.8",
+  "hidru|1nvcqjb": "4.8",
+  "hidru|t2g5yl": "4.8",
+  "hidru|13ad4cg": "4.8",
+  "hidru|ths9ih": "4.8",
+  "hidru|ctnq7o": "4.8",
+  "hidru|1gouogf": "4.8",
+  "hidru|1wf13s2": "7.3",
+  "hidru|16xzhrm": "9.2",
+  "hidru|1erzpce": "8.1",
+  "hidru|ppveex": "7.3",
+  "hidru|e232dn": "6.2",
+  "hidru|vw5mvh": "9.3",
+  "hidru|1x6ode3": "7.3",
+  "hidru|1fe9fao": "8.1",
+  "ac-hid|12yqq95": "4.8",
+  "ac-hid|nsp793": "4.8",
+  "ac-hid|5e5scd": "5.6",
+  "ac-hid|1qe7m3g": "4.8",
+  "ac-hid|b94k1j": "4.8",
+  "ac-hid|17wwub2": "4.8",
+  "ac-hid|22s4kj": "5.6",
+  "ac-hid|tn2mex": "4.8",
+  "ac-hid|v206ai": "4.8",
+  "ac-hid|m3p4on": "4.8",
+  "ac-hid|8gr5aq": "4.8",
+  "ac-hid|1d1co90": "4.8",
+  "ac-hid|1o3xm8h": "4.8",
+  "ac-hid|yju2k4": "4.8",
+  "ac-hid|1yejbm5": "4.8",
+  "ac-hid|mu2qf0": "4.8",
+  "ac-hid|huv81p": "4.8",
+  "ac-hid|1rpg9bv": "4.8",
+  "ac-hid|1fxrs0r": "4.8",
+  "ac-hid|1yy7fsw": "5.6",
+  "ac-hid|1qcxr2m": "4.8",
+  "ac-hid|lfri31": "4.8",
+  "ac-hid|1kx6drd": "4.8",
+  "ac-hid|uwdx69": "4.8",
+  "ac-hid|1dy2n9f": "4.8",
+  "ac-hid|vk1upf": "4.8",
+  "ac-hid|108ex0c": "4.8",
+  "ac-hid|1whux4z": "4.8",
+  "ac-hid|3s2l6v": "4.8",
+  "ac-hid|18i2bqw": "4.8",
+  "ac-hid|gw8fbf": "4.8",
+  "ac-hid|1r540ed": "4.8",
+  "ac-hid|1ykni12": "4.8",
+  "ac-hid|1j575xy": "4.8",
+  "ac-hid|6adq2p": "4.8",
+  "ac-hid|gc2lwd": "4.8",
+  "ac-hid|1fn7uie": "4.8",
+  "ac-hid|g8x1ls": "4.8",
+  "ac-hid|18opyot": "4.8",
+  "ac-hid|1wtgk0w": "4.8",
+  "ac-hid|ler0fr": "4.8",
+  "ac-hid|31fyeh": "4.8",
+  "ac-hid|1wx0g6c": "7.3",
+  "ac-hid|i1n4dk": "9.2",
+  "ac-hid|oftt6l": "8.1",
+  "ac-hid|e7qdq2": "8.1",
+  "ac-hid|cfohxz": "7.3",
+  "ac-hid|14j1076": "9.2",
+  "ac-hid|1ej1fsa": "6.2",
+  "ac-hid|axo1x7": "7.3",
+  "base|1sulx6s": "4.8",
+  "base|1c8dzkl": "4.8",
+  "base|daf0jn": "4.8",
+  "base|1jqlh8n": "4.8",
+  "base|7qmk6l": "4.8",
+  "base|98i5rc": "4.8",
+  "base|bwvng": "4.8",
+  "base|1rqf8yi": "4.8",
+  "base|ftctsz": "4.8",
+  "base|1cbuck": "4.8",
+  "base|pmxfsn": "4.8",
+  "base|a7if91": "4.8",
+  "base|1qas0x5": "4.8",
+  "base|14nepaz": "4.8",
+  "base|v64wba": "4.8",
+  "base|a9uvvy": "4.8",
+  "base|1c05wfy": "4.8",
+  "base|m9tk95": "4.8",
+  "base|114khn9": "4.8",
+  "base|ibthxd": "4.8",
+  "base|q2sws0": "4.8",
+  "base|85yphh": "4.8",
+  "base|1vfbki7": "4.8",
+  "base|1jxwopl": "4.8",
+  "base|5a8oi9": "4.8",
+  "base|axgcjn": "4.8",
+  "base|1gqrhgj": "4.8",
+  "base|ly51to": "4.8",
+  "base|rfnlit": "4.8",
+  "base|y4c9wp": "4.8",
+  "base|1jmybb4": "4.8",
+  "base|1hz59gy": "4.8",
+  "base|h0y82m": "4.8",
+  "base|1cazeiv": "4.8",
+  "base|1pemyy6": "4.8",
+  "base|1k52b2u": "4.8",
+  "base|65otnk": "4.8",
+  "base|1rfo99g": "4.8",
+  "base|ak493f": "4.8",
+  "base|tqomdd": "4.8",
+  "base|1eztned": "7.3",
+  "base|155af6x": "9.2",
+  "base|1iirre4": "8.1",
+  "base|x6qqb": "6.2",
+  "base|n825qg": "9.2",
+  "base|1851rap": "7.3",
+  "base|2w4xyf": "8.1",
+  "base|14tyzy": "7.3"
+ },
+ "nd": {
+  "ox-bas|t082ui": 2,
+  "ox-bas|98w080": 1,
+  "ox-bas|1ejz0af": 2,
+  "ox-bas|ebuc2a": 2,
+  "ox-bas|3crtvs": 1,
+  "ox-bas|1h88isx": 1,
+  "ox-bas|1aleww7": 1,
+  "ox-bas|z90hsr": 1,
+  "ox-bas|1jrdc3n": 1,
+  "ox-bas|1dfu6q0": 2,
+  "ox-bas|35s89q": 1,
+  "ox-bas|4rinit": 1,
+  "ox-bas|14g8dln": 1,
+  "ox-bas|1g8jyg8": 2,
+  "ox-bas|1ak1wzz": 2,
+  "ox-bas|1p23ivc": 2,
+  "ox-bas|134fibn": 2,
+  "ox-bas|1hh7wtn": 2,
+  "ox-bas|1kb67o4": 2,
+  "ox-bas|7uec58": 2,
+  "ox-bas|8vebvd": 2,
+  "ox-bas|gg2gu": 2,
+  "ox-bas|6hua5f": 2,
+  "ox-bas|v3j80n": 2,
+  "ox-bas|b7dx4o": 2,
+  "ox-bas|1hhgq0d": 2,
+  "ox-bas|eor1bx": 2,
+  "ox-bas|1kyy3bg": 2,
+  "ox-bas|mj0iym": 2,
+  "ox-bas|y6qoc9": 2,
+  "ox-bas|11t8gdb": 2,
+  "ox-bas|3vczhz": 2,
+  "ox-bas|obr22w": 2,
+  "ox-bas|1ewq0n8": 2,
+  "ox-bas|lsai7i": 2,
+  "ox-bas|lai2yl": 2,
+  "ox-bas|2d4m0": 2,
+  "ox-bas|2cmo5q": 2,
+  "ox-bas|1v0vnet": 2,
+  "ox-bas|1r4aj9l": 2,
+  "ox-bas|1pl38hp": 1,
+  "ox-bas|j23g1k": 3,
+  "ox-bas|b7ktba": 3,
+  "ox-bas|99jz7a": 3,
+  "ox-bas|4r1vhh": 3,
+  "ox-bas|1lgjkj2": 3,
+  "ox-bas|y0n8l2": 3,
+  "ox-bas|n65zv9": 3,
+  "ox-bas|19sd787": 2,
+  "balanceo|1qq4p8c": 2,
+  "balanceo|1oy5rzl": 2,
+  "balanceo|z24swp": 1,
+  "balanceo|1mi6h57": 2,
+  "balanceo|5jyvdh": 2,
+  "balanceo|1q7egp2": 2,
+  "balanceo|1kpjfmx": 2,
+  "balanceo|luam8j": 3,
+  "balanceo|amwh9o": 2,
+  "balanceo|aocu5n": 2,
+  "balanceo|46xdsc": 2,
+  "balanceo|txdfmb": 2,
+  "balanceo|18f85p5": 2,
+  "balanceo|1utxv8k": 2,
+  "balanceo|1cg15yu": 2,
+  "balanceo|107pjlo": 3,
+  "balanceo|exzclc": 2,
+  "balanceo|cs27lq": 2,
+  "balanceo|j6rxpj": 2,
+  "balanceo|1xgbrzn": 2,
+  "balanceo|16u2x66": 2,
+  "balanceo|1ugj26b": 2,
+  "balanceo|6dej5n": 3,
+  "balanceo|kjdlnu": 3,
+  "balanceo|12h3w1y": 3,
+  "balanceo|1l7w49v": 2,
+  "balanceo|1we5jr2": 2,
+  "balanceo|1aoqr2k": 2,
+  "balanceo|wnisbu": 2,
+  "balanceo|10mep5x": 2,
+  "balanceo|1gvbdj": 1,
+  "balanceo|cwkq0g": 2,
+  "balanceo|1wywlpv": 1,
+  "balanceo|6l5dke": 1,
+  "balanceo|4yxeoi": 3,
+  "balanceo|15wz35u": 2,
+  "balanceo|1vj75em": 2,
+  "balanceo|1wdh93r": 2,
+  "balanceo|19vsv3a": 3,
+  "balanceo|11pxbay": 3,
+  "balanceo|10d2ejl": 3,
+  "balanceo|14rg5cf": 3,
+  "balanceo|umfpev": 3,
+  "balanceo|jv5g2k": 3,
+  "balanceo|1nfpsql": 3,
+  "balanceo|c9dubf": 3,
+  "balanceo|58d7xf": 3,
+  "balanceo|ijo0cq": 3,
+  "balanceo|1nr5dr2": 3,
+  "balanceo|3j2898": 3,
+  "balanceo|1sg8ybu": 3,
+  "balanceo|18upclk": 3,
+  "balanceo|wskelw": 2,
+  "balanceo|1rdx2ga": 3,
+  "balanceo|1v5j1hj": 3,
+  "anhid|1mt9zpo": 2,
+  "anhid|1s7hjub": 1,
+  "anhid|188sthw": 2,
+  "anhid|fs8yhh": 2,
+  "anhid|pu77co": 2,
+  "anhid|pu6i7l": 2,
+  "anhid|1g7e9pt": 2,
+  "anhid|1l4zdo6": 2,
+  "anhid|1n7so": 2,
+  "anhid|1gpsvyc": 2,
+  "anhid|1idfzjg": 2,
+  "anhid|1hqpuv8": 2,
+  "anhid|1agkve1": 2,
+  "anhid|2kk7rn": 2,
+  "anhid|1dxwqrx": 2,
+  "anhid|symlje": 2,
+  "anhid|wtpik8": 2,
+  "anhid|1ui02t8": 2,
+  "anhid|1dkhgxu": 2,
+  "anhid|1x08q09": 2,
+  "anhid|1scxuxq": 2,
+  "anhid|yg9w2t": 2,
+  "anhid|l0jfjr": 2,
+  "anhid|udxprz": 2,
+  "anhid|1btlb3k": 2,
+  "anhid|1vlb97y": 2,
+  "anhid|1419ayi": 2,
+  "anhid|zddu2a": 2,
+  "anhid|1gbdguy": 2,
+  "anhid|1n7r31x": 2,
+  "anhid|bjol0m": 2,
+  "anhid|1x3zd1n": 2,
+  "anhid|1wehm5v": 2,
+  "anhid|1ey0d00": 2,
+  "anhid|1402plo": 2,
+  "anhid|ja6qa9": 2,
+  "anhid|1t54nvp": 2,
+  "anhid|1ivw6u5": 2,
+  "anhid|rmlux7": 2,
+  "anhid|kltvck": 1,
+  "anhid|1ynimgz": 2,
+  "anhid|1ld4vds": 3,
+  "anhid|1v9mdle": 3,
+  "anhid|1jq1632": 3,
+  "anhid|n2qigp": 3,
+  "anhid|1d7wlx4": 3,
+  "anhid|1bugja3": 3,
+  "anhid|3rlx4o": 3,
+  "anhid|ealthm": 3,
+  "hidru|piqev4": 1,
+  "hidru|10tn9eq": 1,
+  "hidru|1h0vsxr": 2,
+  "hidru|vxmifd": 1,
+  "hidru|pcjqgn": 2,
+  "hidru|uo78oh": 1,
+  "hidru|1nt9xmz": 1,
+  "hidru|tal3a": 1,
+  "hidru|ymlue": 2,
+  "hidru|1ipcn9l": 1,
+  "hidru|ip2vp4": 2,
+  "hidru|s4w34x": 1,
+  "hidru|nvzqaf": 1,
+  "hidru|17nheyc": 2,
+  "hidru|5wrsds": 1,
+  "hidru|1al733u": 2,
+  "hidru|1x1h9e3": 1,
+  "hidru|hawvp7": 2,
+  "hidru|idgb2z": 1,
+  "hidru|mmxi75": 2,
+  "hidru|1e4do2y": 2,
+  "hidru|6j0bzd": 2,
+  "hidru|yhwru2": 2,
+  "hidru|qszy7e": 2,
+  "hidru|x1cex": 2,
+  "hidru|1xkncr1": 2,
+  "hidru|19o80aa": 2,
+  "hidru|1dh1v9k": 2,
+  "hidru|1jtpmgn": 2,
+  "hidru|28qitg": 2,
+  "hidru|d0tiz9": 2,
+  "hidru|1h2511b": 2,
+  "hidru|1r7fkop": 2,
+  "hidru|r28jgw": 2,
+  "hidru|4bz6x": 2,
+  "hidru|1nvcqjb": 2,
+  "hidru|t2g5yl": 2,
+  "hidru|13ad4cg": 2,
+  "hidru|ths9ih": 2,
+  "hidru|ctnq7o": 1,
+  "hidru|1gouogf": 2,
+  "hidru|1wf13s2": 3,
+  "hidru|16xzhrm": 3,
+  "hidru|1erzpce": 3,
+  "hidru|ppveex": 3,
+  "hidru|e232dn": 2,
+  "hidru|vw5mvh": 3,
+  "hidru|1x6ode3": 3,
+  "hidru|1fe9fao": 3,
+  "ac-hid|12yqq95": 2,
+  "ac-hid|nsp793": 2,
+  "ac-hid|5e5scd": 2,
+  "ac-hid|1qe7m3g": 2,
+  "ac-hid|b94k1j": 2,
+  "ac-hid|17wwub2": 1,
+  "ac-hid|22s4kj": 1,
+  "ac-hid|tn2mex": 2,
+  "ac-hid|v206ai": 2,
+  "ac-hid|m3p4on": 1,
+  "ac-hid|8gr5aq": 1,
+  "ac-hid|1d1co90": 2,
+  "ac-hid|1o3xm8h": 2,
+  "ac-hid|yju2k4": 2,
+  "ac-hid|1yejbm5": 1,
+  "ac-hid|mu2qf0": 2,
+  "ac-hid|huv81p": 2,
+  "ac-hid|1rpg9bv": 2,
+  "ac-hid|1fxrs0r": 1,
+  "ac-hid|1yy7fsw": 1,
+  "ac-hid|1qcxr2m": 1,
+  "ac-hid|lfri31": 2,
+  "ac-hid|1kx6drd": 2,
+  "ac-hid|uwdx69": 1,
+  "ac-hid|1dy2n9f": 2,
+  "ac-hid|vk1upf": 2,
+  "ac-hid|108ex0c": 2,
+  "ac-hid|1whux4z": 2,
+  "ac-hid|3s2l6v": 1,
+  "ac-hid|18i2bqw": 1,
+  "ac-hid|gw8fbf": 2,
+  "ac-hid|1r540ed": 2,
+  "ac-hid|1ykni12": 1,
+  "ac-hid|1j575xy": 2,
+  "ac-hid|6adq2p": 2,
+  "ac-hid|gc2lwd": 2,
+  "ac-hid|1fn7uie": 1,
+  "ac-hid|g8x1ls": 1,
+  "ac-hid|18opyot": 1,
+  "ac-hid|1wtgk0w": 2,
+  "ac-hid|ler0fr": 2,
+  "ac-hid|31fyeh": 2,
+  "ac-hid|1wx0g6c": 3,
+  "ac-hid|i1n4dk": 3,
+  "ac-hid|oftt6l": 3,
+  "ac-hid|e7qdq2": 3,
+  "ac-hid|cfohxz": 3,
+  "ac-hid|14j1076": 3,
+  "ac-hid|1ej1fsa": 2,
+  "ac-hid|axo1x7": 3,
+  "base|1sulx6s": 1,
+  "base|1c8dzkl": 1,
+  "base|daf0jn": 1,
+  "base|1jqlh8n": 1,
+  "base|7qmk6l": 1,
+  "base|98i5rc": 1,
+  "base|bwvng": 2,
+  "base|1rqf8yi": 2,
+  "base|ftctsz": 1,
+  "base|1cbuck": 2,
+  "base|pmxfsn": 2,
+  "base|a7if91": 2,
+  "base|1qas0x5": 2,
+  "base|14nepaz": 2,
+  "base|v64wba": 2,
+  "base|a9uvvy": 2,
+  "base|1c05wfy": 2,
+  "base|m9tk95": 2,
+  "base|114khn9": 2,
+  "base|ibthxd": 2,
+  "base|q2sws0": 2,
+  "base|85yphh": 2,
+  "base|1vfbki7": 2,
+  "base|1jxwopl": 2,
+  "base|5a8oi9": 1,
+  "base|axgcjn": 2,
+  "base|1gqrhgj": 1,
+  "base|ly51to": 1,
+  "base|rfnlit": 2,
+  "base|y4c9wp": 1,
+  "base|1jmybb4": 1,
+  "base|1hz59gy": 1,
+  "base|h0y82m": 1,
+  "base|1cazeiv": 1,
+  "base|1pemyy6": 1,
+  "base|1k52b2u": 1,
+  "base|65otnk": 2,
+  "base|1rfo99g": 2,
+  "base|ak493f": 2,
+  "base|tqomdd": 1,
+  "base|1eztned": 3,
+  "base|155af6x": 3,
+  "base|1iirre4": 3,
+  "base|x6qqb": 3,
+  "base|n825qg": 3,
+  "base|1851rap": 3,
+  "base|2w4xyf": 3,
+  "base|14tyzy": 3
+ },
+ "hallazgos": [
+  {
+   "id": "ox-bas|98w080",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|3crtvs",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1h88isx",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1aleww7",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "ox-bas|z90hsr",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1jrdc3n",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|35s89q",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|4rinit",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|14g8dln",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "ox-bas|1g8jyg8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1ak1wzz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1p23ivc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|134fibn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1hh7wtn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1kb67o4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|7uec58",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|8vebvd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|6hua5f",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|v3j80n",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|b7dx4o",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1hhgq0d",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|eor1bx",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1kyy3bg",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|y6qoc9",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|11t8gdb",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|3vczhz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1ewq0n8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|lsai7i",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|2d4m0",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|2cmo5q",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1v0vnet",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1r4aj9l",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1pl38hp",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "balanceo|1qq4p8c",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "q",
+     "original": "¿Cuáles son los coeficientes mínimos correctos para balancear 4Fe + 3O₂ → 2Fe₂O₃?",
+     "nuevo": "Un estudiante propone la ecuación 4Fe + 3O₂ → 2Fe₂O₃ para la herrumbre. Al contar los átomos de Fe y de O de cada lado, ¿cuáles son los coeficientes mínimos correctos?"
+    }
+   ],
+   "motivo": "El enunciado ya trae los coeficientes de la clave (4, 3, 2): se responde sin hacer la tarea. Se replantea como verificación por conteo de átomos. "
+  },
+  {
+   "id": "balanceo|1oy5rzl",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "E1"
+   },
+   "motivo": "Explicar por qué balancear (conservación de la masa): explicación E1, evidencia 2.1; no es CTS."
+  },
+  {
+   "id": "balanceo|z24swp",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1mi6h57",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|5jyvdh",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1q7egp2",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1kpjfmx",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|amwh9o",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|aocu5n",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|46xdsc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [],
+   "motivo": "El amoníaco para fertilizantes (Monómeros) se produce en Barranquilla, no en Cartagena (dato por verificar). "
+  },
+  {
+   "id": "balanceo|txdfmb",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|18f85p5",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1utxv8k",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1cg15yu",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "balanceo|107pjlo",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|exzclc",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|cs27lq",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|j6rxpj",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1xgbrzn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|16u2x66",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1ugj26b",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|6dej5n",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|kjdlnu",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|12h3w1y",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "se trata con ácido sulfúrico para producir superfosfato, un fertilizante agrícola.",
+     "nuevo": "se trata con ácido sulfúrico para producir ácido fosfórico, materia prima de fertilizantes agrícolas."
+    }
+   ],
+   "motivo": "La ecuación del ítem produce H₃PO₄ y CaSO₄; el superfosfato es Ca(H₂PO₄)₂, otro producto. "
+  },
+  {
+   "id": "balanceo|1we5jr2",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|1aoqr2k",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   },
+   "motivo": "Explica por qué no se cambian subíndices (identidad de la sustancia): E1, evidencia 2.1."
+  },
+  {
+   "id": "balanceo|wnisbu",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|10mep5x",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|1gvbdj",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|cwkq0g",
+   "gravedad": "alta",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "El sulfato de sodio formado en esta reacción se usa en detergentes y en la industria del papel en Colombia.",
+     "nuevo": "El sulfato de potasio formado en esta reacción se usa como fertilizante en cultivos de Colombia."
+    }
+   ],
+   "motivo": "Error científico en la situación: la ecuación produce K₂SO₄ (sulfato de potasio), no sulfato de sodio; el uso citado (detergentes, papel) es del sulfato de sodio. "
+  },
+  {
+   "id": "balanceo|1wywlpv",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|6l5dke",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|4yxeoi",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|15wz35u",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "balanceo|1vj75em",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1wdh93r",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|19vsv3a",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|11pxbay",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|10d2ejl",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|wskelw",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "balanceo|1v5j1hj",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "N2"
+   },
+   "motivo": "«Predecir el siguiente valor» es la evidencia 7.4 (N2), no N4 (leer datos)."
+  },
+  {
+   "id": "anhid|1mt9zpo",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1s7hjub",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I1"
+   },
+   "motivo": "Reasignación de etiqueta según el Marco 2019."
+  },
+  {
+   "id": "anhid|188sthw",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "anhid|fs8yhh",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|pu77co",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|pu6i7l",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1g7e9pt",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1l4zdo6",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1n7so",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1gpsvyc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "anhid|1idfzjg",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1hqpuv8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1agkve1",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|2kk7rn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1dxwqrx",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|symlje",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "anhid|wtpik8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1ui02t8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1x08q09",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|l0jfjr",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|udxprz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1btlb3k",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1vlb97y",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1419ayi",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|zddu2a",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1gbdguy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1n7r31x",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|bjol0m",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1x3zd1n",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1wehm5v",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1ey0d00",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|ja6qa9",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1t54nvp",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|kltvck",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "anhid|1ynimgz",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "hidru|piqev4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|10tn9eq",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "hidru|1h0vsxr",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|vxmifd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|uo78oh",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1nt9xmz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|tal3a",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|ymlue",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1ipcn9l",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|ip2vp4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|s4w34x",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|nvzqaf",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|17nheyc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|5wrsds",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1al733u",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1x1h9e3",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|hawvp7",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|idgb2z",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "hidru|mmxi75",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1e4do2y",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|6j0bzd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|yhwru2",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|qszy7e",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|x1cex",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|19o80aa",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1dh1v9k",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1jtpmgn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|28qitg",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|d0tiz9",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1h2511b",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1r7fkop",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|r28jgw",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|4bz6x",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|1nvcqjb",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|t2g5yl",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "hidru|ctnq7o",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "hidru|1gouogf",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|12yqq95",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1qe7m3g",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "se graba con un ácido que lo disuelve, el único que ataca al vidrio.",
+     "nuevo": "se graba con un ácido que lo disuelve, uno de los pocos que atacan al vidrio."
+    }
+   ],
+   "motivo": "«El único» es inexacto y contradice el ítem de HF que dice «de los pocos ácidos». "
+  },
+  {
+   "id": "ac-hid|b94k1j",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "ac-hid|tn2mex",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|m3p4on",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "ac-hid|1o3xm8h",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|yju2k4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|mu2qf0",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|huv81p",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1rpg9bv",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1fxrs0r",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "ac-hid|lfri31",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1kx6drd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1dy2n9f",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|vk1upf",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|108ex0c",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|18i2bqw",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|gw8fbf",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1r540ed",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|1j575xy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|6adq2p",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|gc2lwd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|g8x1ls",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|18opyot",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ac-hid|ler0fr",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "base|1sulx6s",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1c8dzkl",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|daf0jn",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|1jqlh8n",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|7qmk6l",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|98i5rc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "base|ftctsz",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|1cbuck",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|pmxfsn",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1qas0x5",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|14nepaz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|v64wba",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|a9uvvy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1c05wfy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|m9tk95",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|ibthxd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|q2sws0",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|85yphh",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|5a8oi9",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1gqrhgj",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|ly51to",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|y4c9wp",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1jmybb4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|1hz59gy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: no hay efecto de un recurso o tecnología sobre ambiente o salud (E3 = CTS); es nomenclatura, fórmula o balanceo (uso, I2)."
+  },
+  {
+   "id": "base|h0y82m",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|1cazeiv",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|1pemyy6",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|1k52b2u",
+   "gravedad": "media",
+   "etiquetas": {
+    "af": "I2"
+   },
+   "motivo": "La afirmación I1 (5.6, identificar características de fenómenos) no describe la tarea: es escribir, nombrar o balancear (I2, evidencias 4.8 o 4.6)."
+  },
+  {
+   "id": "base|65otnk",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|ak493f",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "base|tqomdd",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Mal etiquetada: nombrar un compuesto, escribir su fórmula o balancear con coeficientes es aplicar conceptos conocidos (uso comprensivo, I2), no explicar un fenómeno. Evidencia del Marco 4.8 (formación de iones y moléculas) o 4.6 (conservación de masa y carga)."
+  },
+  {
+   "id": "ox-bas|1dfu6q0",
+   "gravedad": "alta",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "óxido bárico",
+     "nuevo": "óxido baroso"
+    }
+   ],
+   "motivo": "Dos respuestas defendibles: «óxido bárico» es un nombre Tradicional admitido en muchos textos, y la convención del lote (ítems de bismuto, zinc, hidróxido de bario) es que un metal de valencia fija no lleva sufijo («óxido de bario»). Se cambia el distractor por uno claramente incorrecto (el bario no tiene valencia menor). "
+  },
+  {
+   "id": "base|bwvng",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "hidróxido bárico",
+     "nuevo": "hidróxido baroso"
+    }
+   ],
+   "motivo": "Igual que en el óxido de bario: «hidróxido bárico» se acepta en algunos textos y compite con la clave según la convención del sitio. Se cambia por un distractor claramente incorrecto. "
+  },
+  {
+   "id": "hidru|e232dn",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "Henry Cavendish recogió en 1766 el gas que se desprendía al echar metales en ácidos y vio que ardía y que al quemarse formaba agua.",
+     "nuevo": "Hacia 1766 Henry Cavendish recogió el gas que se desprendía al echar metales en ácidos y vio que ardía; en 1781 comprobó que al quemarse formaba agua."
+    }
+   ],
+   "motivo": "Imprecisión histórica: Cavendish aisló el «aire inflamable» en 1766, pero que al arder forma agua lo estableció en 1781. La clave sigue siendo válida. "
+  }
+ ]
+}

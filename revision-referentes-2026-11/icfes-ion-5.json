@@ -1,0 +1,715 @@
+{
+ "lote": "icfes-ion-5",
+ "experto": "icfes",
+ "revisadas": 199,
+ "coincidencias_a_ciegas": 198,
+ "ev": {
+  "enlace|1y46pm": "5.6",
+  "enlace|1qxo6gh": "4.8",
+  "enlace|1tptt4i": "4.8",
+  "enlace|1o45bq5": "2.2",
+  "enlace|1mat8xw": "2.2",
+  "enlace|aenfh6": "7.3",
+  "enlace|f9li85": "2.2",
+  "enlace|1s09kew": "5.6",
+  "enlace|1s4eyk6": "2.2",
+  "enlace|50ossg": "5.6",
+  "enlace|6z8iqa": "2.2",
+  "enlace|x5m4by": "2.2",
+  "enlace|1qkflit": "9.2",
+  "enlace|wsv70l": "7.3",
+  "enlace|1ikgwcz": "8.1",
+  "enlace|d2rahv": "6.2",
+  "enlace|1gmhy9y": "9.2",
+  "enlace|1l9gd49": "8.1",
+  "enlace|10xtnyc": "7.3",
+  "enlace|hzpnmw": "7.3",
+  "enlace|iwqy23": "5.6",
+  "enlace|l4z2x8": "4.8",
+  "enlace|ik64t1": "2.2",
+  "enlace|5jk7k2": "2.2",
+  "enlace|1o7h56x": "3.2",
+  "enlace|1pk5h4f": "1.3",
+  "enlace|1gqliuh": "2.2",
+  "enlace|1io3gzl": "7.3",
+  "enlace|1fs9nh8": "8.1",
+  "enlace|kb8u7t": "9.2",
+  "enlace|152tww2": "7.4",
+  "enlace|6931s1": "6.1",
+  "enlace|iy6lc9": "7.3",
+  "enlace|1syz1nw": "7.2",
+  "enlace|2f037v": "4.8",
+  "enlace|cnlssf": "4.8",
+  "enlace|163h9o3": "4.8",
+  "enlace|yg5esk": "4.8",
+  "enlace|1x2ioqx": "5.6",
+  "enlace|1rxya9w": "4.8",
+  "enlace|1p2y6y5": "2.2",
+  "enlace|17pghjx": "3.2",
+  "enlace|npypjw": "2.2",
+  "enlace|h492o2": "2.2",
+  "enlace|1710wiq": "2.2",
+  "enlace|89gelh": "2.2",
+  "enlace|qxubue": "7.3",
+  "enlace|vkqiqr": "9.5",
+  "enlace|17xjtws": "2.2",
+  "enlace|omphhu": "3.2",
+  "enlace|1aoqkqt": "1.2",
+  "enlace|qjsfmu": "7.3",
+  "enlace|1sdvirc": "9.5",
+  "enlace|1346lf": "4.8",
+  "enlace|my73uz": "2.2",
+  "gases|4zj04r": "2.3",
+  "gases|1vinjnv": "5.6",
+  "gases|1akq38p": "5.6",
+  "gases|eo9jwn": "5.6",
+  "gases|1ddz1sx": "4.7",
+  "gases|jyucnw": "4.7",
+  "gases|1epy13w": "4.7",
+  "gases|iklhmr": "2.3",
+  "gases|1id0zja": "4.7",
+  "gases|1bo5mq1": "5.6",
+  "gases|1tq4rrs": "2.3",
+  "gases|h70uii": "5.6",
+  "gases|3460l4": "2.3",
+  "gases|hz9tvk": "4.7",
+  "gases|1d5z35f": "4.7",
+  "gases|1rcraq1": "5.6",
+  "gases|i2c1q5": "5.6",
+  "gases|1ks6smv": "4.7",
+  "gases|1481drz": "4.7",
+  "gases|1kk12iu": "4.7",
+  "gases|zpacfg": "7.3",
+  "gases|fm53q": "9.2",
+  "gases|1xyuobu": "8.1",
+  "gases|f7pq1u": "6.2",
+  "gases|1ia0joc": "7.3",
+  "gases|1vldsc": "9.3",
+  "gases|oqgfox": "8.1",
+  "gases|10ab6dm": "7.3",
+  "gases|197oh8y": "8.1",
+  "gases|1ff62ri": "8.1",
+  "gases|lrfqc9": "4.7",
+  "gases|k5mfgx": "5.6",
+  "gases|13yb7x7": "4.7",
+  "gases|1z08y3s": "2.3",
+  "gases|10e7ira": "3.2",
+  "gases|1llpfb9": "1.3",
+  "gases|jzugce": "2.3",
+  "gases|15bkfde": "7.4",
+  "gases|cw121w": "9.2",
+  "gases|1c2jm4r": "7.3",
+  "gases|11moyuz": "7.4",
+  "gases|1ibj2wj": "6.2",
+  "gases|sbqlng": "7.3",
+  "gases|1j58wbw": "9.2",
+  "gases|1ez4nt9": "4.7",
+  "gases|19kr31s": "4.7",
+  "gases|1531ka9": "4.7",
+  "gases|p2ztfe": "4.7",
+  "gases|11idfqf": "4.7",
+  "gases|wxjtti": "5.6",
+  "gases|ltlday": "1.3",
+  "gases|1r6qudl": "2.3",
+  "gases|zs58yc": "3.2",
+  "gases|h4ocj9": "2.3",
+  "gases|yp4vq9": "2.3",
+  "gases|1iy300w": "2.3",
+  "gases|10fkxwi": "7.2",
+  "gases|ljfso6": "7.4",
+  "gases|or3eee": "2.3",
+  "gases|1twuei2": "3.2",
+  "gases|1x6lkgu": "1.1",
+  "gases|fcdks4": "8.1",
+  "gases|1gijhd8": "9.2",
+  "gases|h61r9c": "8.1",
+  "gases|wblmhv": "5.6",
+  "gases|1oqaby3": "4.7",
+  "gases|1jlinvl": "2.3",
+  "gases|192yjfe": "3.2",
+  "gases|1vt6h3a": "6.2",
+  "gases|1xpweuy": "8.1",
+  "gases|nl5oh0": "4.7",
+  "gases|1iws0fq": "7.4",
+  "gases|1v3mg3e": "2.3",
+  "soluciones|1u6vewx": "5.6",
+  "soluciones|1hmogen": "2.3",
+  "soluciones|g5g5d6": "5.6",
+  "soluciones|4ecije": "2.3",
+  "soluciones|k6wbii": "2.3",
+  "soluciones|1rwl2ak": "5.6",
+  "soluciones|1yzhoi1": "5.6",
+  "soluciones|dyukzy": "4.7",
+  "soluciones|jup91c": "5.6",
+  "soluciones|1d1l7ux": "2.3",
+  "soluciones|fvf3e3": "4.7",
+  "soluciones|9qu2w3": "4.7",
+  "soluciones|1tf2xcl": "4.7",
+  "soluciones|20rldu": "4.7",
+  "soluciones|1rvkjfi": "4.7",
+  "soluciones|20ngz2": "4.7",
+  "soluciones|a5zq54": "5.6",
+  "soluciones|1n245tm": "4.7",
+  "soluciones|ddg08u": "4.7",
+  "soluciones|eplp1z": "5.6",
+  "soluciones|hnmogc": "4.7",
+  "soluciones|1fpq67e": "2.3",
+  "soluciones|kk12z9": "7.3",
+  "soluciones|1of8yek": "9.2",
+  "soluciones|1ku7yd7": "8.1",
+  "soluciones|1ac9jc4": "6.2",
+  "soluciones|1adwijt": "9.2",
+  "soluciones|n1vjlv": "7.3",
+  "soluciones|gnacy5": "8.1",
+  "soluciones|hmapk6": "8.1",
+  "soluciones|84qoap": "4.7",
+  "soluciones|1y2xf41": "4.7",
+  "soluciones|15s4l2k": "4.7",
+  "soluciones|9lecns": "2.3",
+  "soluciones|1d3k0aq": "2.3",
+  "soluciones|141ym7z": "1.1",
+  "soluciones|pe8p7s": "3.2",
+  "soluciones|9o5o21": "8.1",
+  "soluciones|w8h27n": "9.2",
+  "soluciones|1lka1jq": "7.4",
+  "soluciones|1ulm0lo": "7.3",
+  "soluciones|1njrxiq": "6.1",
+  "soluciones|4wxuco": "9.3",
+  "soluciones|1pm7oci": "7.4",
+  "soluciones|kotyf1": "4.7",
+  "soluciones|15ph19m": "4.7",
+  "soluciones|aw0gao": "4.7",
+  "soluciones|1wy7y3q": "5.6",
+  "soluciones|vehn2p": "4.7",
+  "soluciones|ns6a4x": "5.6",
+  "soluciones|rl0czt": "1.2",
+  "soluciones|k05ftq": "2.3",
+  "soluciones|1c8vhu6": "3.2",
+  "soluciones|1clnon6": "1.2",
+  "soluciones|up95l2": "2.3",
+  "soluciones|jte2ym": "1.1",
+  "soluciones|5mqgaa": "7.3",
+  "soluciones|1vzc4xe": "9.4",
+  "soluciones|1n2j4h0": "2.3",
+  "soluciones|1usd038": "3.2",
+  "soluciones|1prnqdm": "1.1",
+  "soluciones|5lch5u": "7.3",
+  "soluciones|uiac1a": "9.2",
+  "soluciones|qm9bvm": "8.1",
+  "soluciones|1ddmg9p": "5.6",
+  "soluciones|16a50zl": "4.7",
+  "soluciones|1s6lgyn": "2.3",
+  "soluciones|19tllrw": "4.7",
+  "soluciones|1jpd0f3": "6.2",
+  "soluciones|oa17ak": "7.3",
+  "soluciones|17imrbg": "4.7"
+ },
+ "nd": {
+  "enlace|1y46pm": 2,
+  "enlace|1qxo6gh": 2,
+  "enlace|1tptt4i": 2,
+  "enlace|1o45bq5": 3,
+  "enlace|1mat8xw": 3,
+  "enlace|aenfh6": 3,
+  "enlace|f9li85": 3,
+  "enlace|1s09kew": 1,
+  "enlace|1s4eyk6": 3,
+  "enlace|50ossg": 2,
+  "enlace|6z8iqa": 2,
+  "enlace|x5m4by": 3,
+  "enlace|1qkflit": 3,
+  "enlace|wsv70l": 3,
+  "enlace|1ikgwcz": 3,
+  "enlace|d2rahv": 2,
+  "enlace|1gmhy9y": 2,
+  "enlace|1l9gd49": 3,
+  "enlace|10xtnyc": 3,
+  "enlace|hzpnmw": 3,
+  "enlace|iwqy23": 2,
+  "enlace|l4z2x8": 2,
+  "enlace|ik64t1": 3,
+  "enlace|5jk7k2": 3,
+  "enlace|1o7h56x": 2,
+  "enlace|1pk5h4f": 3,
+  "enlace|1gqliuh": 3,
+  "enlace|1io3gzl": 2,
+  "enlace|1fs9nh8": 3,
+  "enlace|kb8u7t": 3,
+  "enlace|152tww2": 3,
+  "enlace|6931s1": 2,
+  "enlace|iy6lc9": 3,
+  "enlace|1syz1nw": 3,
+  "enlace|2f037v": 1,
+  "enlace|cnlssf": 2,
+  "enlace|163h9o3": 2,
+  "enlace|yg5esk": 2,
+  "enlace|1x2ioqx": 2,
+  "enlace|1rxya9w": 2,
+  "enlace|1p2y6y5": 3,
+  "enlace|17pghjx": 3,
+  "enlace|npypjw": 2,
+  "enlace|h492o2": 3,
+  "enlace|1710wiq": 2,
+  "enlace|89gelh": 2,
+  "enlace|qxubue": 3,
+  "enlace|vkqiqr": 3,
+  "enlace|17xjtws": 3,
+  "enlace|omphhu": 3,
+  "enlace|1aoqkqt": 3,
+  "enlace|qjsfmu": 3,
+  "enlace|1sdvirc": 4,
+  "enlace|1346lf": 3,
+  "enlace|my73uz": 3,
+  "gases|4zj04r": 2,
+  "gases|1vinjnv": 2,
+  "gases|1akq38p": 1,
+  "gases|eo9jwn": 1,
+  "gases|1ddz1sx": 2,
+  "gases|jyucnw": 2,
+  "gases|1epy13w": 3,
+  "gases|iklhmr": 2,
+  "gases|1id0zja": 2,
+  "gases|1bo5mq1": 1,
+  "gases|1tq4rrs": 2,
+  "gases|h70uii": 1,
+  "gases|3460l4": 3,
+  "gases|hz9tvk": 2,
+  "gases|1d5z35f": 2,
+  "gases|1rcraq1": 1,
+  "gases|i2c1q5": 2,
+  "gases|1ks6smv": 1,
+  "gases|1481drz": 2,
+  "gases|1kk12iu": 2,
+  "gases|zpacfg": 2,
+  "gases|fm53q": 3,
+  "gases|1xyuobu": 3,
+  "gases|f7pq1u": 2,
+  "gases|1ia0joc": 3,
+  "gases|1vldsc": 3,
+  "gases|oqgfox": 3,
+  "gases|10ab6dm": 3,
+  "gases|197oh8y": 2,
+  "gases|1ff62ri": 3,
+  "gases|lrfqc9": 2,
+  "gases|k5mfgx": 2,
+  "gases|13yb7x7": 3,
+  "gases|1z08y3s": 3,
+  "gases|10e7ira": 2,
+  "gases|1llpfb9": 3,
+  "gases|jzugce": 2,
+  "gases|15bkfde": 3,
+  "gases|cw121w": 3,
+  "gases|1c2jm4r": 2,
+  "gases|11moyuz": 3,
+  "gases|1ibj2wj": 2,
+  "gases|sbqlng": 2,
+  "gases|1j58wbw": 3,
+  "gases|1ez4nt9": 3,
+  "gases|19kr31s": 2,
+  "gases|1531ka9": 2,
+  "gases|p2ztfe": 3,
+  "gases|11idfqf": 3,
+  "gases|wxjtti": 2,
+  "gases|ltlday": 3,
+  "gases|1r6qudl": 3,
+  "gases|zs58yc": 3,
+  "gases|h4ocj9": 3,
+  "gases|yp4vq9": 3,
+  "gases|1iy300w": 2,
+  "gases|10fkxwi": 3,
+  "gases|ljfso6": 4,
+  "gases|or3eee": 3,
+  "gases|1twuei2": 2,
+  "gases|1x6lkgu": 3,
+  "gases|fcdks4": 2,
+  "gases|1gijhd8": 3,
+  "gases|h61r9c": 2,
+  "gases|wblmhv": 3,
+  "gases|1oqaby3": 3,
+  "gases|1jlinvl": 3,
+  "gases|192yjfe": 3,
+  "gases|1vt6h3a": 4,
+  "gases|1xpweuy": 4,
+  "gases|nl5oh0": 3,
+  "gases|1iws0fq": 3,
+  "gases|1v3mg3e": 3,
+  "soluciones|1u6vewx": 1,
+  "soluciones|1hmogen": 1,
+  "soluciones|g5g5d6": 2,
+  "soluciones|4ecije": 2,
+  "soluciones|k6wbii": 1,
+  "soluciones|1rwl2ak": 2,
+  "soluciones|1yzhoi1": 1,
+  "soluciones|dyukzy": 2,
+  "soluciones|jup91c": 2,
+  "soluciones|1d1l7ux": 2,
+  "soluciones|fvf3e3": 2,
+  "soluciones|9qu2w3": 2,
+  "soluciones|1tf2xcl": 2,
+  "soluciones|20rldu": 2,
+  "soluciones|1rvkjfi": 2,
+  "soluciones|20ngz2": 3,
+  "soluciones|a5zq54": 1,
+  "soluciones|1n245tm": 2,
+  "soluciones|ddg08u": 2,
+  "soluciones|eplp1z": 2,
+  "soluciones|hnmogc": 3,
+  "soluciones|1fpq67e": 2,
+  "soluciones|kk12z9": 2,
+  "soluciones|1of8yek": 3,
+  "soluciones|1ku7yd7": 2,
+  "soluciones|1ac9jc4": 2,
+  "soluciones|1adwijt": 3,
+  "soluciones|n1vjlv": 3,
+  "soluciones|gnacy5": 2,
+  "soluciones|hmapk6": 3,
+  "soluciones|84qoap": 2,
+  "soluciones|1y2xf41": 2,
+  "soluciones|15s4l2k": 2,
+  "soluciones|9lecns": 2,
+  "soluciones|1d3k0aq": 2,
+  "soluciones|141ym7z": 3,
+  "soluciones|pe8p7s": 2,
+  "soluciones|9o5o21": 3,
+  "soluciones|w8h27n": 3,
+  "soluciones|1lka1jq": 3,
+  "soluciones|1ulm0lo": 3,
+  "soluciones|1njrxiq": 2,
+  "soluciones|4wxuco": 2,
+  "soluciones|1pm7oci": 3,
+  "soluciones|kotyf1": 2,
+  "soluciones|15ph19m": 2,
+  "soluciones|aw0gao": 3,
+  "soluciones|1wy7y3q": 2,
+  "soluciones|vehn2p": 3,
+  "soluciones|ns6a4x": 1,
+  "soluciones|rl0czt": 3,
+  "soluciones|k05ftq": 3,
+  "soluciones|1c8vhu6": 2,
+  "soluciones|1clnon6": 3,
+  "soluciones|up95l2": 2,
+  "soluciones|jte2ym": 3,
+  "soluciones|5mqgaa": 3,
+  "soluciones|1vzc4xe": 3,
+  "soluciones|1n2j4h0": 2,
+  "soluciones|1usd038": 3,
+  "soluciones|1prnqdm": 3,
+  "soluciones|5lch5u": 2,
+  "soluciones|uiac1a": 3,
+  "soluciones|qm9bvm": 3,
+  "soluciones|1ddmg9p": 3,
+  "soluciones|16a50zl": 3,
+  "soluciones|1s6lgyn": 3,
+  "soluciones|19tllrw": 4,
+  "soluciones|1jpd0f3": 4,
+  "soluciones|oa17ak": 4,
+  "soluciones|17imrbg": 3
+ },
+ "hallazgos": [
+  {
+   "id": "gases|1ddz1sx",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1epy13w",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1id0zja",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|hz9tvk",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1d5z35f",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1ks6smv",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1481drz",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|1kk12iu",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "gases|jyucnw",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Es un cálculo con la ley de Charles (dato inicial y final), no un modelo: debe ser uso comprensivo I2 (4.7), no E2. Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|dyukzy",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|fvf3e3",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|9qu2w3",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|1tf2xcl",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|20rldu",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|1rvkjfi",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|20ngz2",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|1n245tm",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|hnmogc",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|84qoap",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Los cálculos con la ecuación de los gases o con concentraciones corresponden a la evidencia 4.6/4.7 (afirmación I2, asociar con conceptos y cálculos); en este lote preguntas del mismo tipo (p. ej. 99-103, 172-176, 159-160) ya llevan I2 y estas quedaron en I1/E2."
+  },
+  {
+   "id": "soluciones|ddg08u",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "textos": [
+    {
+     "campo": "q",
+     "original": "¿Cuál es la normalidad de una solución 0,5 M de H₂SO₄?",
+     "nuevo": "¿Cuántos moles de H₂SO₄ hay en 2 L de una solución 0,5 M?"
+    },
+    {
+     "campo": "correcta",
+     "original": "1 N",
+     "nuevo": "1 mol"
+    },
+    {
+     "campo": "distractor",
+     "original": "0,5 N",
+     "nuevo": "0,5 mol"
+    },
+    {
+     "campo": "distractor",
+     "original": "2 N",
+     "nuevo": "4 mol"
+    },
+    {
+     "campo": "distractor",
+     "original": "0,25 N",
+     "nuevo": "0,25 mol"
+    }
+   ],
+   "motivo": "La normalidad no figura en el DBA 9.3 (que nombra % m/m, % v/v, molaridad y molalidad) ni en el Marco Saber 11; es profundización de 11.° o universitaria. Se propone un ítem de molaridad (n = M x V): distractores 0,5 mol (olvida el volumen), 4 mol (divide en vez de multiplicar) y 0,25 mol (divide la molaridad entre el volumen). Si el docente prefiere conservarla, marcar dba 'sin' y curso 11. Revisar la explicación en el banco."
+  },
+  {
+   "id": "gases|fcdks4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   },
+   "motivo": "'¿Qué relación muestran los datos?' pide leer un patrón en una tabla (evidencia 8.1, N4), igual que las preguntas 83, 118, 165 y 191; estaba en N2 (conclusión)."
+  },
+  {
+   "id": "soluciones|19tllrw",
+   "gravedad": "media",
+   "motivo": "Contenido posterior al grado 9.° (DBA 9.3): el cálculo del descenso crioscópico con Kf y el factor i de van't Hoff no figura en el DBA ni en los estándares de 6.°-9.°; es profundización de 10.°-11.° (dba 'sin'). Con grado 10 del sitio es aceptable; si se deja en grado 9, subir el curso."
+  },
+  {
+   "id": "enlace|1tptt4i",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Escribir la fórmula de un compuesto iónico a partir de las cargas de los iones es la misma tarea de la pregunta del CaCl₂ (I2, evidencia 4.8, iones y compuestos); aquí quedó en I1."
+  },
+  {
+   "id": "gases|nl5oh0",
+   "gravedad": "baja",
+   "motivo": "Las opciones repiten las letras de las gráficas con otro orden (A) C, B) B, C) A, D) D): confunde la letra de la opción con la de la figura. Conviene rotular las gráficas 1 a 4 o dejar las letras de las opciones iguales a las de las gráficas. Los datos del esquema no estaban en el lote; no se pudo resolver a ciegas (la explicación de la clave describe hipérbola, coherente con Boyle)."
+  },
+  {
+   "id": "gases|1v3mg3e",
+   "gravedad": "baja",
+   "motivo": "Pregunta con esquema de partículas que no estaba en el lote ciego: se resolvió por contenido (más partículas, igual volumen y temperatura: mayor presión en el recipiente con más partículas). Verificar que el esquema muestre más partículas en el recipiente 2."
+  },
+  {
+   "id": "enlace|1y46pm",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "El cloro cede un electrón al sodio",
+     "nuevo": "El cloro cede un electrón al sodio y se forman los iones Cl⁺ y Na⁻"
+    },
+    {
+     "campo": "distractor",
+     "original": "Los dos átomos pierden un electrón cada uno",
+     "nuevo": "Los dos átomos pierden un electrón cada uno y quedan positivos"
+    }
+   ],
+   "motivo": "La correcta es la más larga y la única que nombra los iones; se igualan los distractores con errores concretos (transferencia invertida; ambos pierden)."
+  },
+  {
+   "id": "enlace|1qkflit",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Mirar los sólidos con lupa y decidir por la forma de los granos",
+     "nuevo": "Probar solo si cada sólido se disuelve en agua, porque eso basta para saber su enlace"
+    }
+   ],
+   "motivo": "Los tres distractores eran absurdos (peso, color, forma) y la correcta es la más larga; se sustituye uno por un error plausible (prueba incompleta: sal y azúcar se disuelven y no se distinguen)."
+  },
+  {
+   "id": "enlace|10xtnyc",
+   "gravedad": "baja",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "La sal no se funde porque no tiene ningún tipo de enlace",
+     "nuevo": "La sal no se funde porque no tiene enlaces entre sus partículas, a diferencia del azúcar"
+    }
+   ],
+   "motivo": "La correcta es la más larga (95 contra 64 caracteres de promedio); se equilibra la longitud."
+  },
+  {
+   "id": "enlace|my73uz",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "El H₂O tiene mayor masa molar que el H₂Te",
+     "nuevo": "El H₂O tiene mayor masa molar que el H₂Te y por eso necesita más energía para hervir"
+    }
+   ],
+   "motivo": "La correcta es la más larga (112 contra 68 caracteres de promedio) y el distractor D es una sola frase seca; se alarga con la razón errónea."
+  },
+  {
+   "id": "enlace|1o45bq5",
+   "gravedad": "baja",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "pero no se disuelve bien en agua",
+     "nuevo": "pero se disuelve poco en agua"
+    }
+   ],
+   "motivo": "El CO₂ sí se disuelve en agua (1,7 g/L a 20 °C; ítems 94, 115 y 194 del mismo lote lo usan). 'No se disuelve bien' es ambiguo; 'poco' es exacto."
+  }
+ ]
+}

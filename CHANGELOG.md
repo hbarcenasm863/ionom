@@ -4,6 +4,47 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 25 de noviembre (44) — Revisión del banco Saber contra los referentes curriculares (parte 2: evaluación Icfes)
+
+El docente pidió revisar todo el banco de los tres sitios contra `REFERENTES_CURRICULARES.md` con agentes expertos (ver la entrada 43). Esta parte cubre **las 1290 preguntas Saber de IonNom**. Seis agentes expertos en evaluación Icfes (química inorgánica) las resolvieron **a ciegas**: **1286 de 1290** coinciden con la clave. De las 4 restantes, 3 dependen de gráficas que el lote no traía (se verificaron aparte) y 1 tenía dos respuestas.
+
+- **Hallazgos altos (5):**
+  - «óxido bárico» competía con «óxido de bario», y «hidróxido bárico» con la clave del hidróxido de bario: los distractores pasan a «-oso».
+  - En una pregunta de balanceo la situación decía sulfato de sodio y la ecuación formaba K₂SO₄.
+  - Dos clasificaciones de reacción tenían dos correctas (síntesis y combustión).
+  - Un enunciado de fertilizantes no identificaba un solo elemento.
+- **Hallazgos medios (513):** la mayoría son **etiquetas**. Unas 380 preguntas cambian de competencia: nombrar, escribir fórmulas, balancear y calcular estaban como explicación y son **uso comprensivo** (I1 o I2, evidencias 4.6, 4.7, 4.8 y 5.6). En total se corrigieron 478 afirmaciones.
+- **Calidad de ítem:**
+  - Distractores Stock «(I)» o «(II)» que eran válidos en metales de valencia fija.
+  - Pistas que delataban la clave y correctas más largas que el resto.
+  - Explicaciones que citaban «la segunda opción», cuando el juego baraja las opciones.
+  - Cavendish (1766 y 1781) y «uno de los pocos» ácidos que atacan el vidrio.
+  - 12 contextos con datos sin fuente ahora dicen «(Datos de ejemplo.)».
+  - La pregunta de normalidad, que no está en ningún DBA, se cambió por una de molaridad.
+- **Descartado:** el agente propuso cambiar Cartagena por Barranquilla en la producción de amoníaco, sin fuente. Abocol produce amoníaco en Cartagena, así que no se cambió (`revision-referentes-2026-11/descartes.json`).
+
+**Archivos**
+- **`assets/docente-datos.js` y `banco.js`:** correcciones de texto.
+- **`assets/revision-ref.js`:** ahora tiene las etiquetas de las 1290 preguntas (`c`, `af`, `ev` y `nd`).
+- **`assets/saber-juego.js`:** regenerado.
+- **`sw.js`:** `CACHE_NAME` a `ionom-v117`, porque cambió `banco.js`.
+- **Pruebas:** con Playwright, el panel y el juego cargan sin errores y la pestaña «Banco de preguntas» muestra la evidencia y el nivel de las 1290 preguntas.
+- **Informes:** están en `revision-referentes-2026-11/`.
+
+**Lo que muestra la revisión**
+- **Niveles:** el banco queda en 255 preguntas de nivel 1, 568 de nivel 2, 327 de nivel 3 y 43 de nivel 4.
+- **Reparto de competencias:** después del reetiquetado domina el uso comprensivo. Para acercarse al reparto 30/35/35 de la prueba hacen falta preguntas nuevas de explicación e indagación; volver a etiquetar no basta.
+
+**Pendiente**
+- **Para el experto en currículo:**
+  - Algunas preguntas tocan contenidos de 11.° (Ka, pKa, equilibrio, potenciales, entalpías, descenso crioscópico).
+  - Las preguntas de soluciones llevan grado 9.
+- **Datos locales sin verificar:** litio en Boyacá, Paz de Río, Monómeros y Cerrejón.
+- **Siguientes partes:** las revisiones de currículo MEN y de ciencias.
+- **Apps Script:** no se tocó `ionom-analytics.gs`.
+
+---
+
 ## 24 de noviembre (43) — Revisión del banco contra los referentes curriculares: preparación
 
 El docente pidió revisar todo el banco de los tres sitios contra `REFERENTES_CURRICULARES.md` con agentes expertos. BioNom y parte de ChromaNom ya quedaron revisados (evaluación Icfes); los agentes de IonNom se detuvieron por el límite de uso antes de entregar, así que IonNom queda preparado para la siguiente parte.

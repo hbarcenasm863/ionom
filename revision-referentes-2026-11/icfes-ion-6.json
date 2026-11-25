@@ -1,0 +1,653 @@
+{
+ "lote": "icfes-ion-6",
+ "experto": "icfes",
+ "revisadas": 127,
+ "coincidencias_a_ciegas": 127,
+ "ev": {
+  "modelos|1dvcxgz": "6.2",
+  "modelos|1vepn8s": "6.2",
+  "modelos|1itgiu7": "6.2",
+  "modelos|99jbbl": "3.2",
+  "modelos|1fc8a85": "9.1",
+  "modelos|bfyni8": "3.2",
+  "modelos|8hfvc4": "9.2",
+  "modelos|t0jd4r": "9.2",
+  "modelos|1ar4t7r": "2.3",
+  "modelos|1u2ugl1": "4.7",
+  "modelos|ijqrat": "2.3",
+  "modelos|1jcqzgq": "4.7",
+  "modelos|vgn0xd": "2.3",
+  "modelos|1ejxxsa": "7.4",
+  "modelos|172cs63": "7.2",
+  "modelos|1vtm4ro": "7.2",
+  "modelos|87ak3s": "3.2",
+  "modelos|1vsx3rb": "6.2",
+  "modelos|18r5sx1": "2.3",
+  "modelos|cnlaib": "4.7",
+  "modelos|1njxs56": "8.1",
+  "acidobase|yx4e6t": "3.2",
+  "acidobase|1ajpydk": "3.2",
+  "acidobase|10zvwgw": "3.2",
+  "acidobase|175qx0n": "3.2",
+  "acidobase|1d6ybh3": "4.6",
+  "acidobase|1v6xwsx": "4.8",
+  "acidobase|18vwkrq": "5.6",
+  "acidobase|q6ptym": "5.6",
+  "acidobase|1da8nja": "4.6",
+  "acidobase|ltl041": "4.6",
+  "acidobase|11ylm3h": "4.6",
+  "acidobase|1kvit1q": "5.6",
+  "acidobase|66t6bg": "5.6",
+  "acidobase|1bwmpsl": "5.6",
+  "acidobase|y0v8a0": "4.6",
+  "acidobase|wmsm26": "4.6",
+  "acidobase|tavkuh": "2.9",
+  "acidobase|34cppr": "5.5",
+  "acidobase|psz82p": "5.5",
+  "acidobase|1eabl35": "1.1",
+  "acidobase|snicq0": "2.9",
+  "acidobase|1w6okwk": "4.6",
+  "acidobase|13d8r89": "1.2",
+  "acidobase|1t6uk6r": "5.7",
+  "acidobase|yq2s42": "2.1",
+  "acidobase|1cwa4lt": "5.7",
+  "acidobase|2pgz9b": "7.3",
+  "acidobase|1rki2jc": "9.2",
+  "acidobase|1g6dlo9": "9.5",
+  "acidobase|mosmg0": "6.2",
+  "acidobase|170atv6": "7.3",
+  "acidobase|1kfy3aw": "9.2",
+  "acidobase|rqq644": "9.5",
+  "acidobase|609sjh": "7.3",
+  "acidobase|603zrp": "8.1",
+  "acidobase|1dru8n5": "8.1",
+  "acidobase|1826ph2": "4.6",
+  "acidobase|c3lvlr": "5.6",
+  "acidobase|lohig2": "4.6",
+  "acidobase|1ilxbik": "2.1",
+  "acidobase|1osu74b": "3.2",
+  "acidobase|1lp1flr": "1.2",
+  "acidobase|1z0s795": "1.1",
+  "acidobase|1p297tr": "8.1",
+  "acidobase|16lqitj": "9.3",
+  "acidobase|1jan8be": "8.1",
+  "acidobase|2x9n3d": "8.1",
+  "acidobase|ej9fdk": "6.2",
+  "acidobase|1d0qs9s": "7.4",
+  "acidobase|d4r914": "9.2",
+  "acidobase|1budd02": "4.6",
+  "acidobase|1g22bzt": "4.6",
+  "acidobase|wcc8qs": "2.1",
+  "acidobase|1yg51id": "4.6",
+  "acidobase|1g2yerb": "8.1",
+  "acidobase|t3ttp6": "4.6",
+  "acidobase|u1qepo": "2.9",
+  "acidobase|1jon499": "2.1",
+  "acidobase|19fxllt": "3.2",
+  "acidobase|gzmfv7": "2.1",
+  "acidobase|1j3cb1r": "2.1",
+  "acidobase|1gkeleo": "1.2",
+  "acidobase|tgkbgz": "9.3",
+  "acidobase|jptzdl": "9.3",
+  "acidobase|1qn3qf1": "2.6",
+  "acidobase|sq6vap": "3.2",
+  "acidobase|1dj8ivc": "1.1",
+  "acidobase|i7ifrl": "7.3",
+  "acidobase|n2uzz2": "9.2",
+  "acidobase|1ltuv8": "8.1",
+  "acidobase|1t0z5f9": "8.1",
+  "acidobase|1byfn9t": "4.6",
+  "acidobase|1s9q2dz": "3.2",
+  "acidobase|12wzivz": "3.2",
+  "acidobase|1ycjib5": "6.2",
+  "acidobase|6zk67r": "7.3",
+  "acidobase|66j2e8": "8.2",
+  "industria|lyjoxa": "2.1",
+  "industria|n92t6j": "2.1",
+  "industria|13tu4p0": "2.1",
+  "industria|aorvq0": "4.6",
+  "industria|plaxix": "4.6",
+  "industria|1ssmh4q": "4.6",
+  "industria|1x0lxit": "2.1",
+  "industria|fvyyxp": "4.6",
+  "industria|12t3t0e": "2.1",
+  "industria|16oot9q": "2.1",
+  "industria|1rwu719": "4.6",
+  "industria|t5i0oe": "4.6",
+  "industria|1xidb4x": "4.6",
+  "industria|jggpq6": "2.1",
+  "industria|ylkn7n": "2.1",
+  "industria|18ynq3y": "2.1",
+  "industria|1cxigrw": "4.6",
+  "industria|1g8sgra": "4.6",
+  "industria|19k4avv": "4.6",
+  "industria|14djn54": "2.1",
+  "industria|4rm2b7": "7.3",
+  "industria|1v8vxob": "9.2",
+  "industria|10y3xx3": "9.5",
+  "industria|xslefz": "6.2",
+  "industria|1j8pq65": "7.3",
+  "industria|1rkysze": "9.2",
+  "industria|14cxofl": "9.5",
+  "industria|zmor85": "7.3",
+  "industria|1u6mxfj": "8.1"
+ },
+ "nd": {
+  "modelos|1dvcxgz": 1,
+  "modelos|1vepn8s": 1,
+  "modelos|1itgiu7": 2,
+  "modelos|99jbbl": 1,
+  "modelos|1fc8a85": 2,
+  "modelos|bfyni8": 2,
+  "modelos|8hfvc4": 2,
+  "modelos|t0jd4r": 2,
+  "modelos|1ar4t7r": 2,
+  "modelos|1u2ugl1": 2,
+  "modelos|ijqrat": 2,
+  "modelos|1jcqzgq": 3,
+  "modelos|vgn0xd": 2,
+  "modelos|1ejxxsa": 2,
+  "modelos|172cs63": 3,
+  "modelos|1vtm4ro": 3,
+  "modelos|87ak3s": 1,
+  "modelos|1vsx3rb": 2,
+  "modelos|18r5sx1": 3,
+  "modelos|cnlaib": 1,
+  "modelos|1njxs56": 3,
+  "acidobase|yx4e6t": 1,
+  "acidobase|1ajpydk": 1,
+  "acidobase|10zvwgw": 1,
+  "acidobase|175qx0n": 2,
+  "acidobase|1d6ybh3": 2,
+  "acidobase|1v6xwsx": 1,
+  "acidobase|18vwkrq": 1,
+  "acidobase|q6ptym": 1,
+  "acidobase|1da8nja": 3,
+  "acidobase|ltl041": 2,
+  "acidobase|11ylm3h": 2,
+  "acidobase|1kvit1q": 1,
+  "acidobase|66t6bg": 2,
+  "acidobase|1bwmpsl": 3,
+  "acidobase|y0v8a0": 1,
+  "acidobase|wmsm26": 2,
+  "acidobase|tavkuh": 2,
+  "acidobase|34cppr": 1,
+  "acidobase|psz82p": 2,
+  "acidobase|1eabl35": 2,
+  "acidobase|snicq0": 2,
+  "acidobase|1w6okwk": 1,
+  "acidobase|13d8r89": 2,
+  "acidobase|1t6uk6r": 1,
+  "acidobase|yq2s42": 2,
+  "acidobase|1cwa4lt": 2,
+  "acidobase|2pgz9b": 2,
+  "acidobase|1rki2jc": 2,
+  "acidobase|1g6dlo9": 3,
+  "acidobase|mosmg0": 2,
+  "acidobase|170atv6": 3,
+  "acidobase|1kfy3aw": 3,
+  "acidobase|rqq644": 3,
+  "acidobase|609sjh": 3,
+  "acidobase|603zrp": 3,
+  "acidobase|1dru8n5": 2,
+  "acidobase|1826ph2": 2,
+  "acidobase|c3lvlr": 1,
+  "acidobase|lohig2": 1,
+  "acidobase|1ilxbik": 3,
+  "acidobase|1osu74b": 3,
+  "acidobase|1lp1flr": 2,
+  "acidobase|1z0s795": 2,
+  "acidobase|1p297tr": 2,
+  "acidobase|16lqitj": 2,
+  "acidobase|1jan8be": 3,
+  "acidobase|2x9n3d": 2,
+  "acidobase|ej9fdk": 3,
+  "acidobase|1d0qs9s": 3,
+  "acidobase|d4r914": 2,
+  "acidobase|1budd02": 2,
+  "acidobase|1g22bzt": 2,
+  "acidobase|wcc8qs": 3,
+  "acidobase|1yg51id": 2,
+  "acidobase|1g2yerb": 2,
+  "acidobase|t3ttp6": 2,
+  "acidobase|u1qepo": 3,
+  "acidobase|1jon499": 2,
+  "acidobase|19fxllt": 3,
+  "acidobase|gzmfv7": 2,
+  "acidobase|1j3cb1r": 3,
+  "acidobase|1gkeleo": 2,
+  "acidobase|tgkbgz": 3,
+  "acidobase|jptzdl": 4,
+  "acidobase|1qn3qf1": 2,
+  "acidobase|sq6vap": 3,
+  "acidobase|1dj8ivc": 2,
+  "acidobase|i7ifrl": 2,
+  "acidobase|n2uzz2": 3,
+  "acidobase|1ltuv8": 3,
+  "acidobase|1t0z5f9": 2,
+  "acidobase|1byfn9t": 4,
+  "acidobase|1s9q2dz": 4,
+  "acidobase|12wzivz": 4,
+  "acidobase|1ycjib5": 2,
+  "acidobase|6zk67r": 4,
+  "acidobase|66j2e8": 2,
+  "industria|lyjoxa": 1,
+  "industria|n92t6j": 2,
+  "industria|13tu4p0": 3,
+  "industria|aorvq0": 1,
+  "industria|plaxix": 1,
+  "industria|1ssmh4q": 2,
+  "industria|1x0lxit": 3,
+  "industria|fvyyxp": 2,
+  "industria|12t3t0e": 1,
+  "industria|16oot9q": 2,
+  "industria|1rwu719": 3,
+  "industria|t5i0oe": 3,
+  "industria|1xidb4x": 2,
+  "industria|jggpq6": 2,
+  "industria|ylkn7n": 2,
+  "industria|18ynq3y": 3,
+  "industria|1cxigrw": 2,
+  "industria|1g8sgra": 2,
+  "industria|19k4avv": 3,
+  "industria|14djn54": 2,
+  "industria|4rm2b7": 3,
+  "industria|1v8vxob": 3,
+  "industria|10y3xx3": 3,
+  "industria|xslefz": 1,
+  "industria|1j8pq65": 2,
+  "industria|1rkysze": 3,
+  "industria|14cxofl": 3,
+  "industria|zmor85": 3,
+  "industria|1u6mxfj": 2
+ },
+ "hallazgos": [
+  {
+   "id": "modelos|1vepn8s",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I1"
+   },
+   "motivo": "Definir qué es una teoría es reconocer un concepto (uso, I1), igual que la pregunta 'ley'; no se pide explicar un fenómeno."
+  },
+  {
+   "id": "modelos|8hfvc4",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N3"
+   },
+   "motivo": "Identificar la variable independiente es parte del diseño del experimento (evidencia 9.2, N3), no derivar una conclusión (N2)."
+  },
+  {
+   "id": "modelos|t0jd4r",
+   "gravedad": "baja",
+   "textos": [
+    {
+     "campo": "distractor",
+     "original": "Ninguna",
+     "nuevo": "El material de la jeringa"
+    }
+   ],
+   "motivo": "La opción 'Ninguna' es un distractor sin error conceptual concreto (regla 6.5: sin 'ninguna'); se cambia por una variable plausible."
+  },
+  {
+   "id": "modelos|1u2ugl1",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con la ley de Boyle: evidencia 4.7 (gases ideales), que en la tabla del Marco es I2 (asociar), no I1."
+  },
+  {
+   "id": "modelos|1jcqzgq",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Reconocer la gráfica P contra 1/V de un gas es evidencia 4.7 (gases ideales): I2."
+  },
+  {
+   "id": "modelos|1ejxxsa",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N2"
+   },
+   "motivo": "Usar la regla del modelo para predecir un valor es evidencia 7.4 (predicción con regularidades), N2, no E2."
+  },
+  {
+   "id": "modelos|cnlaib",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Asociar el fenómeno del globo con la ley de Charles es 'asociar fenómenos con conceptos' (4.7): I2."
+  },
+  {
+   "id": "modelos|1njxs56",
+   "gravedad": "baja",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "cerca de 83,5 °C",
+     "nuevo": "cerca de 83,3 °C"
+    }
+   ],
+   "motivo": "La pendiente de la gráfica es 3,33 °C por 1 000 m; a 5 000 m resultan 83,3 °C, no 83,5."
+  },
+  {
+   "id": "acidobase|34cppr",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I3"
+   },
+   "motivo": "El rango del pH sanguíneo es un proceso del organismo (evidencia 5.5): I3 y no I1."
+  },
+  {
+   "id": "acidobase|psz82p",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I3"
+   },
+   "motivo": "El amortiguador del pH sanguíneo es un proceso del organismo (5.5): I3."
+  },
+  {
+   "id": "acidobase|1eabl35",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E3"
+   },
+   "motivo": "Evaluar una afirmación de moda sobre la dieta con evidencia científica es CTS y salud (evidencia 1.1): E3, no I1."
+  },
+  {
+   "id": "acidobase|yq2s42",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   },
+   "motivo": "Explicar por qué la lluvia limpia es ácida es explicar un fenómeno (E1, 2.1); E3 es analizar efectos de un recurso o tecnología, y aquí no hay tal análisis."
+  },
+  {
+   "id": "acidobase|mosmg0",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Que un problema práctico puede llevar a crear una herramienta científica útil",
+     "nuevo": "Que un problema práctico puede llevar a una herramienta científica"
+    }
+   ],
+   "motivo": "La correcta es la opción más larga por mucho (77 frente a 61 y 43 caracteres): se acorta para que no se adivine por longitud."
+  },
+  {
+   "id": "acidobase|u1qepo",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   },
+   "motivo": "Se pide explicar el mecanismo del amortiguador (E1, 2.9), no analizar el uso de un recurso o tecnología (E3)."
+  },
+  {
+   "id": "acidobase|1t0z5f9",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción es el orden inverso (de más fuerte a más débil).",
+     "nuevo": "La opción HF, HCOOH, CH₃COOH, HCN es el orden inverso (de más fuerte a más débil)."
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera ubica el HCN después del CH₃COOH",
+     "nuevo": "La opción CH₃COOH, HCN, HCOOH, HF ubica el HCN después del CH₃COOH"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta pone al HF antes que al HCOOH",
+     "nuevo": "La opción HCN, HF, HCOOH, CH₃COOH pone al HF antes que al HCOOH"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|1byfn9t",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción ignora la base",
+     "nuevo": "La opción 1,00 ignora la base"
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera divide los 2,0 mmol",
+     "nuevo": "La opción 1,40 divide los 2,0 mmol"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta supone neutralización total",
+     "nuevo": "La opción 7,00 supone neutralización total"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|1s9q2dz",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción confunde neutralidad con pH 7",
+     "nuevo": "La opción que dice que el agua se vuelve ácida por tener pH menor que 7 confunde neutralidad con pH 7"
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera falla porque el agua no se descompone",
+     "nuevo": "La opción del exceso de oxígeno falla porque el agua no se descompone"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta, porque el CO₂ del aire se disuelve menos",
+     "nuevo": "La opción del CO₂ del aire falla porque este gas se disuelve menos"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|12wzivz",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción es falsa: la electronegatividad",
+     "nuevo": "La opción de la electronegatividad creciente es falsa: la electronegatividad"
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera invierte la tendencia de la tabla",
+     "nuevo": "La opción del enlace cada vez más fuerte invierte la tendencia de la tabla"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta falla porque el número de electrones",
+     "nuevo": "La opción de los menos electrones falla porque el número de electrones"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|1ycjib5",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción exagera",
+     "nuevo": "La opción de abandonar la explicación ante una sola excepción exagera"
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera es contraria a la ciencia",
+     "nuevo": "La opción de conservar la explicación del científico famoso es contraria a la ciencia"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta es falsa",
+     "nuevo": "La opción sobre los ácidos sin oxígeno es falsa"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|6zk67r",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "exp",
+     "original": "La segunda opción olvida la dilución",
+     "nuevo": "La opción 0,083 mol/L olvida la dilución"
+    },
+    {
+     "campo": "exp",
+     "original": "La tercera multiplica por un volumen",
+     "nuevo": "La opción 2,1 mol/L multiplica por un volumen"
+    },
+    {
+     "campo": "exp",
+     "original": "La cuarta divide los moles de una alícuota",
+     "nuevo": "La opción 0,21 mol/L divide los moles de una alícuota"
+    }
+   ],
+   "motivo": "Las explicaciones citan las opciones por su posición ('la segunda', 'la tercera', 'la cuarta'), pero el juego y el panel barajan las opciones, así que la referencia queda equivocada; se cita cada opción por su contenido."
+  },
+  {
+   "id": "acidobase|66j2e8",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "ind",
+    "af": "N4"
+   },
+   "motivo": "'¿Cuál gráfica representa los datos?' es la evidencia 8.2 (representar datos en gráficas): ind N4, no E2. (A ciegas no se ven las gráficas; verifiqué contra los datos de opsGraf en ionom/assets/docente-datos.js: la curva A es la correcta.)"
+  },
+  {
+   "id": "industria|16oot9q",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|1rwu719",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|t5i0oe",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|jggpq6",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|ylkn7n",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "exp",
+    "af": "E1"
+   },
+   "motivo": "Explicar por qué el rendimiento real es menor que 100 % es explicar un fenómeno químico (E1, 2.1), no una valoración CTS (E3)."
+  },
+  {
+   "id": "industria|1g8sgra",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|19k4avv",
+   "gravedad": "media",
+   "etiquetas": {
+    "c": "uso",
+    "af": "I2"
+   },
+   "motivo": "Cálculo con proporciones de reacción o conservación de la masa: evidencia 4.6, que corresponde a I2 y no a I1."
+  },
+  {
+   "id": "industria|1v8vxob",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Hacer la reacción con y sin el catalizador, en las mismas condiciones, y medir la rapidez",
+     "nuevo": "Hacer la reacción con y sin catalizador, en las mismas condiciones"
+    }
+   ],
+   "motivo": "La correcta es la más larga (89 frente a 70, 67 y 65 caracteres): se acorta."
+  },
+  {
+   "id": "industria|xslefz",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "Que la industria aplica el conocimiento científico mediante ensayos sistemáticos",
+     "nuevo": "Que la industria aplica la ciencia mediante ensayos sistemáticos"
+    }
+   ],
+   "motivo": "La correcta es la más larga (80 frente a 64, 64 y 62 caracteres): se acorta."
+  },
+  {
+   "id": "industria|14cxofl",
+   "gravedad": "baja",
+   "textos": [
+    {
+     "campo": "ctx",
+     "original": "N₂ + 3H₂ ⇌ 2NH₃",
+     "nuevo": "N₂ + 3 H₂ ⇌ 2 NH₃"
+    }
+   ],
+   "motivo": "Escribir '3 H₂' con espacio, como en el resto del banco."
+  },
+  {
+   "id": "industria|1u6mxfj",
+   "gravedad": "media",
+   "textos": [
+    {
+     "campo": "correcta",
+     "original": "A mayor temperatura, menor rendimiento de amoníaco con esa presión",
+     "nuevo": "A mayor temperatura, menor rendimiento de amoníaco"
+    }
+   ],
+   "motivo": "La correcta es la más larga (66 frente a 52, 51 y 50 caracteres) y repite 'con esa presión', que delata: se acorta."
+  }
+ ]
+}
