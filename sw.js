@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v125';
+const CACHE_NAME = 'ionom-v126';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',

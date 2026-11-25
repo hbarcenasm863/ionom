@@ -4,6 +4,35 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (54) — Lote 8: 16 preguntas Saber de explicación e indagación
+
+El banco tenía muchas preguntas de uso comprensivo frente a las de explicación e indagación. El docente pidió equilibrarlas.
+
+- **`assets/docente-datos.js`** (`?v=3`): bloque nuevo «Lote 8» con 16 preguntas.
+  - 10 son de explicación y 6 de indagación.
+  - Hay dos por tema: enlace, reactividad, ácido-base, soluciones, gases, estequiometría, configuración electrónica y elemento.
+  - Por nivel: 2 de nivel 4 (deshidratación del CuSO₄·5H₂O y momentos magnéticos con la regla de Hund) y el resto de nivel 3 o 2.
+  - Cada pregunta trae `c`, `af`, `ev`, `nd`, `dba` y `curso`.
+- **Auditoría con 4 agentes en cadena** (informes en `revision-lote8-2026-11/`):
+  - **Autor:** siguió REFERENTES_CURRICULARES.md.
+  - **Química:** resolvió las 16 a ciegas y todas coincidieron con la clave. Verificó radios de Shannon, afinidades electrónicas, momentos magnéticos, la ley de Graham y la masa del CuSO₄. Corrigió tres preguntas:
+    - Una conclusión del zinc y el hierro que se podía responder de memoria, sin mirar los datos.
+    - Un distractor sobre el flúor que era verdadero.
+    - «Cloro sólido» pasó a «a 25 °C».
+  - **Evaluación Icfes, datos y tablas:**
+    - En 12 preguntas la clave era la opción más larga; igualó el largo de las opciones.
+    - Bajó 3 preguntas de nivel 4 a 3.
+    - Corrigió la afirmación de una pregunta.
+  - **Currículo MEN:**
+    - Dio DBA propio a 9 preguntas que venían como «sin DBA».
+    - Pasó la de momentos magnéticos a 11.° como profundización.
+    - Volvió a resolver las 16 a ciegas y no halló errores.
+- **`assets/saber-juego.js`** (`?v=3`): se generó de nuevo.
+- Caché `ionom-v126`.
+- Probado con Playwright: el panel y el Juego cargan sin errores.
+
+---
+
 ## 26 de noviembre (53) — Palabras con DBA y curso
 
 El docente pidió que las palabras de crucigramas, sopas, ahorcados y criptogramas también tengan su DBA.
