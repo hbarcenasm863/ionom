@@ -4,6 +4,19 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (53) — Palabras con DBA y curso
+
+El docente pidió que las palabras de crucigramas, sopas, ahorcados y criptogramas también tengan su DBA.
+
+- **`assets/palabras-dba-datos.js`** (nuevo, generado): un agente experto en currículo MEN le asignó a cada una de las 162 palabras su DBA y su curso mínimo.
+  - Por curso: 6.° = 5, 7.° = 25, 8.° = 23, 9.° = 22, 10.° = 86 y 11.° = 1 (NORMALIDAD).
+  - Respetó las 14 etiquetas de la revisión anterior.
+  - Las palabras de método científico (HIPÓTESIS, VARIABLE…) quedaron «sin DBA», en 10.°. El docente puede bajarlas de curso si quiere.
+- **`assets/palabras-dba.js`** (nuevo, el mismo archivo en los tres sitios): agrega el selector **«Palabras hasta el curso»** en las pestañas de Crucigramas, Ahorcado, Sopa de letras y Criptograma. Por ejemplo, «Hasta 9.°» deja 75 de 162 palabras.
+- Caché `ionom-v125`. Probado con Playwright: el selector aparece en las cuatro pestañas, filtra bien y no hay errores.
+
+---
+
 ## 26 de noviembre (52) — Datos de Colombia verificados
 
 En la revisión quedaron cuatro datos de Colombia por confirmar. Se dejaron solo los seguros:
