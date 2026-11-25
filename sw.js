@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ionom-v117';
+const CACHE_NAME = 'ionom-v118';
 const SCOPE = '/ionom/';
 const ASSETS_TO_CACHE = [
   '/ionom/index.html',
@@ -38,6 +38,7 @@ const ASSETS_TO_CACHE = [
   '/ionom/assets/extras.js',
   '/ionom/assets/docente-datos.js',
   '/ionom/assets/revision-ref.js',
+  '/ionom/assets/contador.js',
   '/ionom/assets/banco-sel.js',
   '/ionom/assets/banco-sel-cfg.js',
   '/ionom/assets/referentes-men.js',
@@ -125,7 +126,7 @@ self.addEventListener('fetch', (event) => {
   // estos dos solo los usa la herramienta de la docente -- preferir
   // "siempre la versión más nueva cuando hay internet" es más importante
   // aquí que ahorrar una petición de red.
-  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/batalla-papel.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/revision-ref.js') || url.pathname.endsWith('/assets/banco-sel.js') || url.pathname.endsWith('/assets/banco-sel-cfg.js') || url.pathname.endsWith('/assets/referentes-men.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
+  if (url.pathname.endsWith('/assets/bancos-extra.js') || url.pathname.endsWith('/assets/ahorcado.js') || url.pathname.endsWith('/assets/sopa.js') || url.pathname.endsWith('/assets/batalla-papel.js') || url.pathname.endsWith('/assets/extras.js') || url.pathname.endsWith('/assets/docente-app.js') || url.pathname.endsWith('/assets/docente-datos.js') || url.pathname.endsWith('/assets/revision-ref.js') || url.pathname.endsWith('/assets/contador.js') || url.pathname.endsWith('/assets/banco-sel.js') || url.pathname.endsWith('/assets/banco-sel-cfg.js') || url.pathname.endsWith('/assets/referentes-men.js') || url.pathname.endsWith('/assets/laberinto.js') || url.pathname.endsWith('/assets/crucigrama.js') || url.pathname.endsWith('/assets/retos.js')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {

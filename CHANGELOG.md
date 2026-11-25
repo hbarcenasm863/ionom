@@ -4,6 +4,17 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 25 de noviembre (45) — Contador de preguntas en la portada y en el panel docente
+
+El docente pidió un **contador de preguntas** en la portada y en el panel docente que se calcule solo y cambie siempre que cambie el banco.
+
+- **`assets/contador.js`** (nuevo, el mismo archivo en los tres sitios): cada vez que se abre la página, después de que termina de cargar, carga los bancos en un marco invisible y cuenta el banco completo: preguntas del juego, tipo Saber 11, abiertas, palabras con pistas y compuestos para nomenclatura. No hay que actualizar ningún número a mano.
+- **`index.html`** y **`docente.html`**: recuadro `#contador-preguntas` debajo del encabezado.
+- Hoy muestra 2 311 (378 del juego, 1 411 tipo Saber 11 y 522 abiertas), más 162 palabras y 783 compuestos. Probado con Playwright en las dos páginas (mismo número en ambas, sin errores).
+- **`sw.js`:** `CACHE_NAME` a `ionom-v118`; el archivo nuevo va en `ASSETS` y en «red primero». No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 25 de noviembre (44) — Revisión del banco Saber contra los referentes curriculares (parte 2: evaluación Icfes)
 
 El docente pidió revisar todo el banco de los tres sitios contra `REFERENTES_CURRICULARES.md` con agentes expertos (ver la entrada 43). Esta parte cubre **las 1290 preguntas Saber de IonNom**. Seis agentes expertos en evaluación Icfes (química inorgánica) las resolvieron **a ciegas**: **1286 de 1290** coinciden con la clave. De las 4 restantes, 3 dependen de gráficas que el lote no traía (se verificaron aparte) y 1 tenía dos respuestas.

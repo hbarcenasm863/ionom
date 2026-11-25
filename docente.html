@@ -862,6 +862,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sans);min-height:100
     <h1>🗂️ Generador para Docentes</h1>
     <p>Arma guías, talleres, evaluaciones, laberintos, crucigramas y la batalla periódica imprimibles a partir de los bancos reales del sitio, con versiones reproducibles por semilla para evitar copia entre estudiantes.</p>
   </div>
+  <div id="contador-preguntas" aria-live="polite"></div>
 
   <div class="doc-tabs no-print" role="tablist" aria-label="Tipo de material">
     <button type="button" class="doc-tab active" role="tab" id="tabbtn-guias" aria-controls="tab-guias" aria-selected="true" data-tab="guias" data-panel="guias" data-tipo="guia">📘 Guías</button>
@@ -1563,5 +1564,6 @@ if ('serviceWorker' in navigator) {
     <button class="update-banner-btn" id="update-banner-btn">Actualizar</button>
   </div>
 </div>
+<script src="assets/contador.js" data-sitio="ionom" defer></script>
 </body>
 </html>

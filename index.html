@@ -673,6 +673,7 @@ html{font-size:var(--base-fs)}
     <button class="narr-btn" onclick="openWelcomeModal()">👋 ¿Qué es IonNom?</button>
   </div>
 </div>
+<div id="contador-preguntas" aria-live="polite"></div>
 
 <!-- ===== MODAL DE PRESENTACIÓN ===== -->
 <div id="welcome-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:250;align-items:center;justify-content:center;padding:20px">
@@ -1574,5 +1575,6 @@ window.addEventListener('appinstalled', () => {
 })();
 </script>
 <script src="assets/ionom-ui.js"></script>
+<script src="assets/contador.js" data-sitio="ionom" defer></script>
 </body>
 </html>
