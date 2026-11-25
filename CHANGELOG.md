@@ -4,6 +4,22 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (52) — Datos de Colombia verificados
+
+En la revisión quedaron cuatro datos de Colombia por confirmar. Se dejaron solo los seguros:
+
+- **Litio en Boyacá** (`assets/docente-datos.js`, sesión de hidruros y una pregunta Saber): no hay fuente que confirme que «Colombia explora depósitos de litio en Boyacá». Ahora el texto dice que el litio es clave en las baterías recargables y que el hidruro de litio (LiH) se estudia para almacenar hidrógeno.
+- **Cerrejón** (`assets/docente-datos.js`, `tabla.html`, `juego.html`): el puesto de Colombia entre los exportadores de carbón cambia de un año a otro (5.° o 6.°). Ahora dice «uno de los mayores exportadores de carbón del mundo». Se mantiene que El Cerrejón es la mayor mina de carbón a cielo abierto de América Latina.
+- **Monómeros** (`estequiometria.html`): Monómeros, en Barranquilla, fabrica fertilizantes con amoníaco, pero no hay certeza de que produzca el NH₃. Ahora el texto dice que el NH₃ es la materia prima de los fertilizantes nitrogenados que se fabrican en Colombia, por ejemplo en Barranquilla y Cartagena.
+- **Paz de Río** (varios archivos): se confirmó y queda igual. Es la única siderúrgica integrada de Colombia, abierta en 1954, y reduce hematita (Fe₂O₃) con CO en su alto horno.
+- **Manganeso** (`tabla.html`): se quitó «depósitos en Chocó y Córdoba, explotados para exportación», que no tenía fuente.
+- Las dos preguntas Saber cuyo texto cambió conservan sus etiquetas de la revisión (`assets/revision-ref.js`, `?v=3`).
+  - `assets/saber-juego.js` se generó de nuevo (`?v=2`).
+  - `revision-ref.js` ya se puede cargar fuera del navegador (lo usa el generador).
+- Caché `ionom-v124`. Probado con Playwright: el Juego, el panel, la tabla y estequiometría cargan sin errores.
+
+---
+
 ## 26 de noviembre (51) — MDEC sin halogenuros covalentes, contador y etiquetas de DBA
 
 El docente pidió hacer todos los pendientes de la revisión.

@@ -152,7 +152,7 @@ TEMAS: [
       'El hidruro de calcio (CaH₂) reacciona violentamente con el agua liberando gas hidrógeno, por lo que se ha usado históricamente como fuente portátil de H₂ en globos meteorológicos y balsas salvavidas de emergencia.'
     ],
     contexto: [
-      {amb:'Nacional', t:'Colombia explora depósitos de litio en Boyacá; compuestos de litio como el hidruro de litio (LiH) son estudiados en investigación de almacenamiento de energía e hidrógeno.'}
+      {amb:'Nacional', t:'El litio es clave en las baterías recargables de celulares y carros eléctricos; compuestos de litio como el hidruro de litio (LiH) son estudiados en investigación de almacenamiento de energía e hidrógeno.'}
     ],
     cotidianos: [
       'Aunque los hidruros metálicos no son de uso doméstico común, el mismo principio (metal + hidrógeno con carga negativa) es la base de las baterías experimentales de "hidruro metálico" (NiMH) que se usan en pilas recargables.'
@@ -539,7 +539,7 @@ TEMAS: [
       'La configuración electrónica de un elemento (cómo se distribuyen sus electrones) determina casi todo su comportamiento químico: cuántos enlaces puede formar y con qué carga.'
     ],
     contexto: [
-      {amb:'Nacional', t:'El carbón extraído en El Cerrejón (La Guajira), el mayor yacimiento de carbón a cielo abierto de América Latina, convierte a Colombia en el 5° exportador mundial de este elemento.'},
+      {amb:'Nacional', t:'El carbón extraído en El Cerrejón (La Guajira), el mayor yacimiento de carbón a cielo abierto de América Latina, hace de Colombia uno de los mayores exportadores de carbón del mundo.'},
       {amb:'Local', t:'Los equipos de resonancia magnética (MRI) en hospitales colombianos como la Clínica del Country y el Hospital Militar usan helio líquido para enfriar sus imanes superconductores.'}
     ],
     cotidianos: [
@@ -1053,7 +1053,7 @@ SABER: [
  q:'El calcio tiene valencia fija +2. ¿Cuál es la fórmula correcta de su hidruro?',
  o:['CaH₂','CaH','Ca₂H','CaH₃']},
 {tema:'hidru', c:'exp', k:'CTS',
- ctx:'Colombia explora depósitos de litio en Boyacá, un metal cuyos compuestos (como el hidruro de litio, LiH) se estudian en investigación de almacenamiento de hidrógeno.',
+ ctx:'El litio, un metal clave en las baterías recargables, forma compuestos, como el hidruro de litio (LiH), que se estudian para almacenar hidrógeno.',
  q:'¿Por qué el nombre del hidruro de litio es prácticamente igual en los sistemas Tradicional, Stock y Sistemática?',
  o:['Porque el litio tiene valencia fija (+1), no necesita sufijo ni número romano que distinga valencias','Porque el hidrógeno de los hidruros siempre tiene EO +1 y eso fija el nombre en los tres sistemas','Porque los hidruros no tienen nomenclatura Stock ni Sistemática, solo un nombre tradicional','Porque el litio es un no metal y los no metales se nombran igual en todos los sistemas'] },
 
@@ -1168,7 +1168,7 @@ SABER: [
  q:'¿Qué determina principalmente el número atómico de un elemento?',
  o:['La cantidad de protones en el núcleo','La cantidad de neutrones en el núcleo','La masa atómica total','La cantidad de electrones de valencia solamente']},
 {tema:'elemento', c:'uso', k:'CTS',
- ctx:'El carbón extraído en El Cerrejón (La Guajira) convierte a Colombia en el 5° exportador mundial de este elemento, clasificado como no metal.',
+ ctx:'El carbón extraído en El Cerrejón (La Guajira) hace de Colombia uno de los mayores exportadores de carbón del mundo. El carbono se clasifica como no metal.',
  q:'¿Qué comportamiento químico general se espera de un no metal como el carbono, a diferencia de un metal?',
  o:['Tiende a ganar electrones y formar aniones','Tiende a perder electrones y formar cationes','No forma ningún tipo de ion','Siempre tiene estado de oxidación 0']},
 {tema:'elemento', c:'uso', k:'Q',
