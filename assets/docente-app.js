@@ -235,6 +235,7 @@ function contarDisponiblesTipo(temasMarcados){
   const nCompuestos = poolPorGrupo(gruposCompuestos).length;
   return {
     'a-nombrar': nCompuestos, 'b-formula': nCompuestos, 'c-tabla': nCompuestos, 'ox-estado': nCompuestos,
+    'm-partes': poolMdec(gruposCompuestos).length, 'm-armar': poolMdec(gruposCompuestos).length,
     'x-errores': poolPorGrupo(gruposCompuestos).filter(c => introducirError(c, ()=>0)).length + temasMarcados.reduce((n,t)=>n+erroresTema(t, TEMAS_SIN_COMPUESTOS.includes(t)).length,0),
     'd-reaccion': temasMarcados.includes('reaccion') ? poolPorGrupo(['reaccion']).length : 0,
     'd-balanceo': temasMarcados.includes('balanceo') ? poolPorGrupo(['balanceo']).length : 0,
@@ -288,7 +289,9 @@ const TIPO_ROTULO = {
   'd-enlace':'Tipo de enlace (ΔEN)',
   'd-sed':'Preguntas y problemas (modelos, pH, industria, gases, soluciones)',
   'x-errores':'Cazar errores',
-  'ox-estado':'Estado de oxidación'
+  'ox-estado':'Estado de oxidación',
+  'm-partes':'Partes del compuesto: iones (MDEC)',
+  'm-armar':'Armar la fórmula con los iones (MDEC)'
 };
 
 // "Cazar errores": toma una entrada real del banco y le introduce un error
@@ -514,6 +517,29 @@ function tarjetaBalanceo(b, numero){
     +'<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--an-t);background:var(--an-b);border-radius:8px;padding:10px 14px;margin:10px 0">'+b.ecuacion_sin_coef+'</div>'
     +'<p style="font-size:.88rem;margin:6px 0">Completa los coeficientes para balancear la ecuación (usa mínimos enteros).</p>'
     +'<div class="cuad" style="height:56.7px"></div>'
+    +'</div>';
+}
+/* ── Método MDEC (modelo propio del docente; no se enlaza a DBA ni estándar) ──
+   assets/mdec-compuestos.js trae cada compuesto iónico separado en sus iones con su carga. */
+function poolMdec(grupos){ return (window.MDEC_COMP||[]).filter(c => grupos.includes(c.g)); }
+const MDEC_PARTE = {cat:'Catión', an:'Anión', oh:'Hidróxido (OH⁻)', ox:'Oxoanión'};
+function chipIon(t, cls){ return '<span style="font-family:var(--mono);font-weight:700;padding:2px 8px;border-radius:6px;margin-right:6px;border:1.5px solid var(--'+cls+');background:var(--'+cls+'-b);color:var(--'+cls+'-t)">'+t+'</span>'; }
+function tarjetaMdecPartes(c, numero){
+  const fila = (cls) => '<tr><td style="border:1px solid #999;padding:4px 8px;color:var(--'+cls+'-t);font-weight:700;white-space:nowrap">'+MDEC_PARTE[cls]+'</td><td style="border:1px solid #999;width:34%"></td><td style="border:1px solid #999;width:26%"></td></tr>';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.88rem;margin:8px 0">Separa <strong style="font-family:var(--mono)">'+c.f+'</strong> en sus iones: escribe cada ion con su carga y cuántos hay en la fórmula.</p>'
+    +'<table style="border-collapse:collapse;width:100%;font-size:.85rem"><thead><tr><th style="border:1px solid #999;padding:3px">Parte</th><th style="border:1px solid #999;padding:3px">Ion con su carga</th><th style="border:1px solid #999;padding:3px">¿Cuántos hay?</th></tr></thead><tbody>'
+    +fila('cat')+fila(c.an[3])+'</tbody></table>'
+    +'</div>';
+}
+function tarjetaMdecArmar(c, numero, sistema){
+  const sis = sistema==='stock' ? 'Stock' : sistema==='sist' ? 'sistemático' : sistema==='trad' ? 'tradicional' : 'que prefieras';
+  return '<div class="exercise-card">'
+    +'<div class="ex-num">Ejercicio '+numero+'</div>'
+    +'<p style="font-size:.88rem;margin:8px 0">Con estos iones arma la fórmula del compuesto neutro (cruza las cargas y simplifica si se puede) y escribe su nombre en el sistema '+sis+'.</p>'
+    +'<div style="margin:6px 0">'+chipIon(c.cat[0],'cat')+chipIon(c.an[0],c.an[3])+'</div>'
+    +'<div style="font-size:.85rem;margin-top:6px">Fórmula: ____________________ &nbsp; Nombre: ________________________________________</div>'
     +'</div>';
 }
 function tarjetaMolMasa(m, numero){
@@ -750,6 +776,13 @@ function armarBloquesPractica(F, rngFn, usados){
           bloques.push({html: card.outerHTML, esMultiple:false});
         });
       }
+    } else if(tipo==='m-partes' || tipo==='m-armar'){
+      const gruposCompuestos = temas.filter(t => !TEMAS_SIN_COMPUESTOS.includes(t));
+      const pool = poolMdec(gruposCompuestos).filter(c => !usados.has(c.f));
+      elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.f).forEach(c=>{
+        usados.add(c.f);
+        bloques.push({html: tipo==='m-partes' ? tarjetaMdecPartes(c, numero++) : tarjetaMdecArmar(c, numero++, sistema), esMultiple:false});
+      });
     } else if(tipo==='d-reaccion'){
       let pool = poolPorGrupo(['reaccion']).filter(c => !usados.has(c.id));
       elegirN(pool, Math.min(cantidad, pool.length||cantidad), rngFn, x=>x.id).forEach(r=>{

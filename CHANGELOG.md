@@ -4,6 +4,31 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (49) — Preguntas MDEC en todo el banco: juego, talleres, evaluaciones y Banco, con los colores del método
+
+El docente pidió ampliar las preguntas MDEC (armar y reconocer partes) para que formen parte de todo el banco, con los colores del método, que son su parte central, y reforzar con ellas el modo juego.
+
+- **`herramientas/generar-mdec.js` y `assets/mdec-compuestos.js`** (nuevos): 468 compuestos iónicos del banco separados en sus iones con su carga. Todos quedan neutros y coinciden con su nombre Stock.
+  - Tras la auditoría química, Hg₂Cl₂ se separa como Hg₂²⁺ y el HS⁻ cuenta como anión, no como oxoanión.
+  - Solo se separan en iones los hidruros de los grupos 1 y 2.
+  - Se excluyen H₃PO₃, H₃PO₂ y H₃BO₃ (no sueltan todos sus H como H⁺) y los compuestos que no existen o no son iónicos (Hg₂O, PbS₂, Pb(OH)₄, Pd(OH)₄, AuI₃…).
+- **Juego (`juego.html`):** dos tipos nuevos por compuesto, en todos los grupos de nomenclatura.
+  - **«MDEC — separar en iones»**: la fórmula pintada con los colores del método. Los distractores son otras cargas de ese mismo elemento y aniones reales parecidos (SO₃²⁻ frente a SO₄²⁻).
+  - **«MDEC — armar la fórmula»**: iones en sus colores; se pide la fórmula más sencilla.
+- **Panel docente:**
+  - Ejercicios imprimibles **«Partes del compuesto: iones»** y **«Armar la fórmula con los iones»**.
+  - **`assets/mdec-saber.js`**: 70 preguntas MDEC de selección múltiple, cada una con un compuesto distinto y con colores: iones, H⁺ que libera como máximo un ácido y fórmula más sencilla.
+- **`assets/banco-sel.js`**: marca «Método MDEC» y no pone DBA a estas preguntas.
+- **`assets/contador.js`**: cuenta también las preguntas MDEC.
+- **`sw.js`**: `CACHE_NAME` a `ionom-v122`, con los archivos nuevos en `ASSETS` y en «red primero».
+- **Pruebas**: con Playwright, el panel, el juego y el contador cargan sin errores.
+- **Auditoría (4 agentes expertos independientes).** Química orgánica, química inorgánica y evaluación revisaron las primeras versiones; un cuarto agente verificó las rehechas (144 preguntas: ningún hallazgo alto). Informes en `revision-mdec-2026-11/`.
+- **Pendiente:**
+  - Varios haluros covalentes (TiCl₄, SnCl₄, BeCl₂…) se presentan como iónicos, que es el convenio escolar del sitio.
+  - No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 26 de noviembre (48) — DBA propio en preguntas del juego y abiertas; el MDEC no se enlaza a DBA
 
 El docente pidió hacer los cambios pendientes y aclaró que el método MDEC es un modelo propio que no se enlaza a ningún DBA ni estándar.

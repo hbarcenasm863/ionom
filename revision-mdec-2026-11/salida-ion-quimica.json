@@ -1,0 +1,969 @@
+{
+ "lote": "lote-mdec-ion",
+ "experto": "quimica",
+ "revisadas": 86,
+ "preguntas": [
+  {
+   "id": "mdec-ion-3",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-6",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-9",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-12",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-14",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-16",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-18",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-20",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-23",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-26",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-29",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-32",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-34",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-36",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-38",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-41",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-44",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-47",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-50",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-53",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-56",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-59",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-62",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-65",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-68",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-71",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-74",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-77",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-80",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-83",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-85",
+   "gravedad": "media",
+   "problema": "El enunciado dice «compuesto neutro», pero varios distractores (p. ej. el múltiplo Al₄O₆, Ba₂(HCO₃)₄, H₈(SiO₄)₂) también son neutros; la clave solo es única si se pide la fórmula más sencilla.",
+   "propuesta": "Cambiar el enunciado a «¿cuál es la fórmula más sencilla (la proporción mínima de iones) del compuesto neutro?»."
+  },
+  {
+   "id": "mdec-ion-32",
+   "gravedad": "media",
+   "problema": "Enunciado redundante y confuso: «el hidróxido (OH⁻) OH⁻» repite el ion.",
+   "propuesta": "Escribir «el ion hidróxido OH⁻»."
+  },
+  {
+   "id": "mdec-ion-34",
+   "gravedad": "media",
+   "problema": "Enunciado redundante y confuso: «el hidróxido (OH⁻) OH⁻» repite el ion.",
+   "propuesta": "Escribir «el ion hidróxido OH⁻»."
+  },
+  {
+   "id": "mdec-ion-36",
+   "gravedad": "media",
+   "problema": "Enunciado redundante y confuso: «el hidróxido (OH⁻) OH⁻» repite el ion.",
+   "propuesta": "Escribir «el ion hidróxido OH⁻»."
+  },
+  {
+   "id": "mdec-ion-38",
+   "gravedad": "media",
+   "problema": "Enunciado redundante y confuso: «el hidróxido (OH⁻) OH⁻» repite el ion.",
+   "propuesta": "Escribir «el ion hidróxido OH⁻»."
+  },
+  {
+   "id": "mdec-ion-85",
+   "gravedad": "alta",
+   "problema": "El enunciado llama «oxoanión» al HS⁻, que no tiene oxígeno (es el hidrogenosulfuro, anión).",
+   "propuesta": "«Con el catión Ba²⁺ y el anión HS⁻…». El generador debe usar «anión» si el ion no contiene O."
+  },
+  {
+   "id": "mdec-ion-49",
+   "gravedad": "alta",
+   "problema": "La clave «3» es incorrecta químicamente: el ácido bórico es monoprótico (actúa como ácido de Lewis, B(OH)₃ + H₂O → B(OH)₄⁻ + H⁺); no libera 3 H⁺. Con «puede liberar» y 3 como única correcta, un estudiante con buena química la discutiría.",
+   "propuesta": "Retirar la pregunta y H₃BO₃ de los ítems de conteo de H⁺ (usar H₂SO₄, H₃PO₄, H₂CO₃); o reformular a «¿cuántos H⁺ tiene la fórmula?»."
+  },
+  {
+   "id": "mdec-ion-48",
+   "gravedad": "media",
+   "problema": "H₃BO₃ como «H⁺ ×3 + BO₃³⁻» no representa la disociación real del ácido bórico (borato BO₃³⁻ solo en sales).",
+   "propuesta": "Reemplazar por H₃PO₄/H₃PO₃ o mantener solo en la nomenclatura de sales (Na₃BO₃) con nota."
+  },
+  {
+   "id": "mdec-ion-50",
+   "gravedad": "media",
+   "problema": "Misma objeción que la 48: la fórmula se arma bien, pero se presenta H₃BO₃ como ácido triprótico.",
+   "propuesta": "Reemplazar por H₃PO₄ o aclarar «fórmula, no disociación real»."
+  },
+  {
+   "id": "mdec-ion-43",
+   "gravedad": "media",
+   "problema": "«Puede liberar 3 H⁺» para H₃AsO₃: en agua actúa casi como monoprótico (As(OH)₃, pKa₁ ≈ 9,2); la clave solo vale en el modelo escolar de «H⁺ de la fórmula».",
+   "propuesta": "Enunciar «¿cuántos H⁺ tiene la fórmula del ácido?» o cambiar a H₂SO₄/H₃PO₄."
+  },
+  {
+   "id": "mdec-ion-40",
+   "gravedad": "baja",
+   "problema": "H₄SiO₄ libera 4 H⁺ solo en modelo ideal (ácido muy débil, pKa₁ ≈ 9,8).",
+   "propuesta": "Igual: «cuántos H⁺ tiene la fórmula»."
+  },
+  {
+   "id": "mdec-ion-22",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-25",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-28",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-30",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-40",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-43",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-46",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-49",
+   "gravedad": "baja",
+   "problema": "tipo «cation» pero la pregunta es de conteo de H⁺; la explicación repite el balance de cargas y no explica por qué cuenta H⁺ (cada H de la fórmula del ácido pasa a H⁺).",
+   "propuesta": "Tipo propio («cuenta») y explicación: «cada H de la fórmula sale como H⁺; el número de H⁺ iguala la carga del anión»."
+  },
+  {
+   "id": "mdec-ion-21",
+   "gravedad": "media",
+   "problema": "H₂S, H₂Se, H₂Te son moléculas covalentes (gases); «en el compuesto H₂S… se separa en 2 H⁺ y S²⁻» solo es cierto en disolución acuosa (ácido sulfhídrico, no sulfuro de hidrógeno).",
+   "propuesta": "Enunciado: «En el ácido H₂S (disuelto en agua), ¿cuál es el anión…?»; explicación con «al disolverse en agua»."
+  },
+  {
+   "id": "mdec-ion-24",
+   "gravedad": "media",
+   "problema": "H₂S, H₂Se, H₂Te son moléculas covalentes (gases); «en el compuesto H₂S… se separa en 2 H⁺ y S²⁻» solo es cierto en disolución acuosa (ácido sulfhídrico, no sulfuro de hidrógeno).",
+   "propuesta": "Enunciado: «En el ácido H₂S (disuelto en agua), ¿cuál es el anión…?»; explicación con «al disolverse en agua»."
+  },
+  {
+   "id": "mdec-ion-27",
+   "gravedad": "media",
+   "problema": "H₂S, H₂Se, H₂Te son moléculas covalentes (gases); «en el compuesto H₂S… se separa en 2 H⁺ y S²⁻» solo es cierto en disolución acuosa (ácido sulfhídrico, no sulfuro de hidrógeno).",
+   "propuesta": "Enunciado: «En el ácido H₂S (disuelto en agua), ¿cuál es el anión…?»; explicación con «al disolverse en agua»."
+  },
+  {
+   "id": "mdec-ion-15",
+   "gravedad": "alta",
+   "problema": "PtH₄ no es un compuesto conocido ni iónico (Pt⁴⁺/H⁻ no existe); enseña química falsa.",
+   "propuesta": "Sustituir por un hidruro iónico real: CaH₂, MgH₂, NaH, LiH, BaH₂, SrH₂, CsH."
+  },
+  {
+   "id": "mdec-ion-16",
+   "gravedad": "alta",
+   "problema": "PtH₄ no es un compuesto conocido ni iónico (Pt⁴⁺/H⁻ no existe); enseña química falsa.",
+   "propuesta": "Sustituir por un hidruro iónico real: CaH₂, MgH₂, NaH, LiH, BaH₂, SrH₂, CsH."
+  },
+  {
+   "id": "mdec-ion-13",
+   "gravedad": "media",
+   "problema": "PbH₄ y SnH₄ son hidruros covalentes moleculares y volátiles (plumbano, estannano), no sales con Pb⁴⁺/Sn⁴⁺ y H⁻.",
+   "propuesta": "Sustituir por hidruros iónicos del grupo 1 o 2 (CaH₂, SrH₂, KH, BaH₂)."
+  },
+  {
+   "id": "mdec-ion-14",
+   "gravedad": "media",
+   "problema": "PbH₄ y SnH₄ son hidruros covalentes moleculares y volátiles (plumbano, estannano), no sales con Pb⁴⁺/Sn⁴⁺ y H⁻.",
+   "propuesta": "Sustituir por hidruros iónicos del grupo 1 o 2 (CaH₂, SrH₂, KH, BaH₂)."
+  },
+  {
+   "id": "mdec-ion-17",
+   "gravedad": "media",
+   "problema": "PbH₄ y SnH₄ son hidruros covalentes moleculares y volátiles (plumbano, estannano), no sales con Pb⁴⁺/Sn⁴⁺ y H⁻.",
+   "propuesta": "Sustituir por hidruros iónicos del grupo 1 o 2 (CaH₂, SrH₂, KH, BaH₂)."
+  },
+  {
+   "id": "mdec-ion-18",
+   "gravedad": "media",
+   "problema": "PbH₄ y SnH₄ son hidruros covalentes moleculares y volátiles (plumbano, estannano), no sales con Pb⁴⁺/Sn⁴⁺ y H⁻.",
+   "propuesta": "Sustituir por hidruros iónicos del grupo 1 o 2 (CaH₂, SrH₂, KH, BaH₂)."
+  },
+  {
+   "id": "mdec-ion-19",
+   "gravedad": "media",
+   "problema": "AlH₃ es un sólido polimérico covalente (alano); la separación Al³⁺ + 3 H⁻ es un modelo iónico forzado.",
+   "propuesta": "Sustituir por CaH₂/MgH₂ o añadir nota de «modelo iónico»."
+  },
+  {
+   "id": "mdec-ion-20",
+   "gravedad": "media",
+   "problema": "AlH₃ es un sólido polimérico covalente (alano); la separación Al³⁺ + 3 H⁻ es un modelo iónico forzado.",
+   "propuesta": "Sustituir por CaH₂/MgH₂ o añadir nota de «modelo iónico»."
+  },
+  {
+   "id": "mdec-ion-33",
+   "gravedad": "baja",
+   "problema": "Pb(OH)₄ no existe como compuesto aislado (se conoce PbO₂·xH₂O); Pb⁴⁺ libre es muy oxidante.",
+   "propuesta": "Sustituir por Sn(OH)₄, Ce(OH)₄ o Fe(OH)₃."
+  },
+  {
+   "id": "mdec-ion-34",
+   "gravedad": "baja",
+   "problema": "Pb(OH)₄ no existe como compuesto aislado (se conoce PbO₂·xH₂O); Pb⁴⁺ libre es muy oxidante.",
+   "propuesta": "Sustituir por Sn(OH)₄, Ce(OH)₄ o Fe(OH)₃."
+  },
+  {
+   "id": "mdec-ion-35",
+   "gravedad": "baja",
+   "problema": "Pd(OH)₄ es un hidrato poco definido; Pd⁴⁺ es raro.",
+   "propuesta": "Sustituir por Ce(OH)₄ o Sn(OH)₄."
+  },
+  {
+   "id": "mdec-ion-36",
+   "gravedad": "baja",
+   "problema": "Pd(OH)₄ es un hidrato poco definido; Pd⁴⁺ es raro.",
+   "propuesta": "Sustituir por Ce(OH)₄ o Sn(OH)₄."
+  },
+  {
+   "id": "mdec-ion-79",
+   "gravedad": "baja",
+   "problema": "Distractores NH₄²⁺, NH₄³⁺, NH₄⁴⁺ son iones imposibles; se descartan sin razonar (pista: nadie los conoce).",
+   "propuesta": "Usar distractores plausibles: «NH₃⁺», «N³⁻», «NH₄⁻» (error de signo) o «H⁺»."
+  },
+  {
+   "id": "mdec-ion-78",
+   "gravedad": "baja",
+   "problema": "Distractor HP²⁻ es implausible (el estudiante lo descarta por forma).",
+   "propuesta": "Usar «H₂PO₄⁻», «PO₄³⁻», «H₂PO₄²⁻»."
+  },
+  {
+   "id": "mdec-ion-81",
+   "gravedad": "baja",
+   "problema": "Distractor HC⁻ es implausible.",
+   "propuesta": "Usar «CO₃²⁻», «H₂CO₃⁻», «HCO₃²⁻»."
+  },
+  {
+   "id": "mdec-ion-4",
+   "gravedad": "baja",
+   "problema": "Au₂O₃ es un óxido poco común y de carácter anfótero/inestable; no es el ejemplo típico de 10.°.",
+   "propuesta": "Mantener solo como enriquecimiento."
+  },
+  {
+   "id": "mdec-ion-5",
+   "gravedad": "baja",
+   "problema": "Au₂O₃ es un óxido poco común y de carácter anfótero/inestable; no es el ejemplo típico de 10.°.",
+   "propuesta": "Mantener solo como enriquecimiento."
+  },
+  {
+   "id": "mdec-ion-6",
+   "gravedad": "baja",
+   "problema": "Au₂O₃ es un óxido poco común y de carácter anfótero/inestable; no es el ejemplo típico de 10.°.",
+   "propuesta": "Mantener solo como enriquecimiento."
+  },
+  {
+   "id": "mdec-ion-1",
+   "gravedad": "baja",
+   "problema": "Las explicaciones usan el signo «-» (guion) en «(-2)» y «−» en otras: inconsistencia tipográfica.",
+   "propuesta": "Usar siempre el signo menos «−» o «−2»."
+  },
+  {
+   "id": "mdec-ion-2",
+   "gravedad": "baja",
+   "problema": "Distractores de carga (Al⁺, Al²⁺, Al⁴⁺) son siempre «una unidad menos/más»: se pueden resolver por descarte sin balance de cargas.",
+   "propuesta": "Incluir un distractor que nazca de un error concreto (usar la carga del anión: Al²⁺, o invertir los subíndices: Al²⁺ y Al³⁺)."
+  }
+ ],
+ "particiones": [
+  {
+   "item": "Hg₂Cl₂",
+   "gravedad": "alta",
+   "problema": "El mercurio (I) no existe como Hg⁺: es el ion dimérico Hg₂²⁺ (enlace Hg–Hg). La fila lo separa como «Hg⁺ ×2», lo que contradice el catión real y, al arrastrar «Hg⁺», genera ítems falsos.",
+   "correccion": "Hg₂²⁺ ×1 | Cl⁻ ×2"
+  },
+  {
+   "item": "Hg₂I₂",
+   "gravedad": "alta",
+   "problema": "El mercurio (I) no existe como Hg⁺: es el ion dimérico Hg₂²⁺ (enlace Hg–Hg). La fila lo separa como «Hg⁺ ×2», lo que contradice el catión real y, al arrastrar «Hg⁺», genera ítems falsos.",
+   "correccion": "Hg₂²⁺ ×1 | I⁻ ×2"
+  },
+  {
+   "item": "Hg₂O",
+   "gravedad": "alta",
+   "problema": "El mercurio (I) no existe como Hg⁺: es el ion dimérico Hg₂²⁺ (enlace Hg–Hg). La fila lo separa como «Hg⁺ ×2», lo que contradice el catión real y, al arrastrar «Hg⁺», genera ítems falsos.",
+   "correccion": "Hg₂²⁺ ×1 | O²⁻ ×1 (Hg₂O además es inestable: se desproporciona en HgO + Hg; sustituir por Hg₂Br₂ o Hg₂SO₄)"
+  },
+  {
+   "item": "PtH₂",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "PtH₄",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "AuH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "CuH₂",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "NiH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "CoH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "MnH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "FeH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "CrH₃",
+   "gravedad": "alta",
+   "problema": "Compuesto inexistente o no iónico; se presenta como sal con catión metálico y H⁻, lo que es falso (los hidruros de metales de transición son intersticiales/covalentes o no se conocen).",
+   "correccion": "Eliminar; dejar solo hidruros iónicos de grupos 1 y 2 (LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂, MgH₂)."
+  },
+  {
+   "item": "FeH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "CuH",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "NiH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "CoH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "MnH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "CrH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "PbH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "PbH₄",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "ZnH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "AgH",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "CdH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "SnH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "SnH₄",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "AlH₃",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "BeH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "GaH₃",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "AuH",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "HgH₂",
+   "gravedad": "media",
+   "problema": "Hidruro covalente, polimérico, inestable o intersticial; no se separa en M^n+ y H⁻ (modelo iónico forzado).",
+   "correccion": "Eliminar o marcar «modelo»; conservar solo para nomenclatura, no para separación iónica."
+  },
+  {
+   "item": "NaHS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "KHS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "LiHS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "RbHS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "CsHS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "NH₄HS",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "Ca(HS)₂",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "Ba(HS)₂",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "Mg(HS)₂",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "Sr(HS)₂",
+   "gravedad": "media",
+   "problema": "El anión HS⁻ (hidrogenosulfuro) está marcado [ox] pero no contiene oxígeno: no es oxoanión.",
+   "correccion": "Marcar [an] (anión) y que los ítems digan «anión», no «oxoanión»."
+  },
+  {
+   "item": "H₃BO₃",
+   "gravedad": "media",
+   "problema": "Separado como H⁺ ×3 + BO₃³⁻; el ácido bórico es B(OH)₃, monoprótico por aceptar OH⁻.",
+   "correccion": "Mantener solo la nomenclatura; no usarlo en ejercicios de cantidad de H⁺."
+  },
+  {
+   "item": "H₃AsO₃",
+   "gravedad": "baja",
+   "problema": "Como H₃BO₃: en agua es prácticamente monoprótico.",
+   "correccion": "Idem."
+  },
+  {
+   "item": "PbS₂",
+   "gravedad": "media",
+   "problema": "El sulfuro de plomo (IV) no existe: Pb⁴⁺ oxida a S²⁻.",
+   "correccion": "Sustituir por SnS₂."
+  },
+  {
+   "item": "CoBr₃",
+   "gravedad": "baja",
+   "problema": "Haluro inexistente o muy inestable (Co³⁺/Ni³⁺ oxidan al halogenuro; AuI₃ se descompone).",
+   "correccion": "Sustituir por FeBr₃, CrBr₃, AuCl₃."
+  },
+  {
+   "item": "NiCl₃",
+   "gravedad": "baja",
+   "problema": "Haluro inexistente o muy inestable (Co³⁺/Ni³⁺ oxidan al halogenuro; AuI₃ se descompone).",
+   "correccion": "Sustituir por FeBr₃, CrBr₃, AuCl₃."
+  },
+  {
+   "item": "AuI₃",
+   "gravedad": "baja",
+   "problema": "Haluro inexistente o muy inestable (Co³⁺/Ni³⁺ oxidan al halogenuro; AuI₃ se descompone).",
+   "correccion": "Sustituir por FeBr₃, CrBr₃, AuCl₃."
+  },
+  {
+   "item": "CoCl₃",
+   "gravedad": "baja",
+   "problema": "Haluro inexistente o muy inestable (Co³⁺/Ni³⁺ oxidan al halogenuro; AuI₃ se descompone).",
+   "correccion": "Sustituir por FeBr₃, CrBr₃, AuCl₃."
+  },
+  {
+   "item": "NH₄OH",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "AgOH",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "AuOH",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "Pb(OH)₄",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "Pd(OH)₄",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "Au(OH)₃",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "Ni(OH)₃",
+   "gravedad": "baja",
+   "problema": "Hidróxido que no existe como compuesto definido (NH₃(ac); Ag₂O; óxidos hidratados).",
+   "correccion": "Mantener solo con nota, o sustituir por Ca(OH)₂, Fe(OH)₃, Cu(OH)₂."
+  },
+  {
+   "item": "H₂SO₂",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂SeO₂",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂TeO₂",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂SnO₂",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂PbO₂",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂SnO₃",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂PbO₃",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂MnO₃",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂TeO₄",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₃SbO₄",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₃SbO₃",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂WO₄",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "H₂MoO₄",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "HVO₃",
+   "gravedad": "baja",
+   "problema": "Ácido hipotético o que existe como hidrato/polioxoanión (p. ej. H₆TeO₆, H[Sb(OH)₆]); la separación en oxoanión simple es de modelo, poco común para 10.°.",
+   "correccion": "Marcar como enriquecimiento; no usar en ítems de armar fórmulas."
+  },
+  {
+   "item": "TiCl₄",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "SnCl₄",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "PbCl₄",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "PtCl₄",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "HgCl₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "HgBr₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "SnBr₄",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "BeF₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "BeCl₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "BeBr₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "BeI₂",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "AlBr₃",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "AlI₃",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "GaCl₃",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "AuCl₃",
+   "gravedad": "baja",
+   "problema": "Halogenuro covalente (líquido molecular o polimérico); la separación en iones es modelo.",
+   "correccion": "Aceptable para nomenclatura; evitar en preguntas sobre «iones presentes»."
+  },
+  {
+   "item": "Fe₂S₃",
+   "gravedad": "baja",
+   "problema": "Sólido inestable; típico ejemplo escolar, pero poco real.",
+   "correccion": "Mantener como ejemplo de carga 3+, aclarando que es didáctico."
+  },
+  {
+   "item": "HCN",
+   "gravedad": "baja",
+   "problema": "CN⁻ marcado [an]: aceptable, pero es poliatómico; coherente con SCN⁻.",
+   "correccion": "Mantener; anotar que el pseudohaluro actúa como anión simple."
+  },
+  {
+   "item": "HSCN",
+   "gravedad": "baja",
+   "problema": "Nombre «ácido sulfocianhídrico» es anticuado (tiociánico).",
+   "correccion": "Usar «ácido tiociánico»."
+  }
+ ],
+ "patrones": [
+  "Hg₂²⁺: el generador usa «Hg⁺ ×2» para mercurio (I). Regla: M⁺ ×2 con M=Hg debe ser Hg₂²⁺ ×1 (3 filas: Hg₂Cl₂, Hg₂I₂, Hg₂O). Revisar también cualquier fórmula M₂X con Hg.",
+  "Hidruros: el generador separa en M^n+ y H⁻ cualquier hidruro de metal. Restringir la separación iónica a LiH, NaH, KH, RbH, CsH, CaH₂, SrH₂, BaH₂ (y MgH₂); el resto (de transición, p-block, Be, Al) es covalente o no existe. Ítems 13-20 afectados.",
+  "Ion HS⁻ y ácidos hídricos: HS⁻ se marca [ox] y se llama «oxoanión»; debe ser [an]/«anión» (10 compuestos e ítems 84-85). Regla: oxoanión solo si el ion contiene O.",
+  "Ítems «armar»: el enunciado debe pedir la fórmula más sencilla (proporción mínima); distractores que son múltiplos son también neutros. Corregir plantilla (31 ítems).",
+  "Conteo de H⁺: no usar H₃BO₃ ni H₃AsO₃ (no triprótico en agua); mejor H₂SO₄, H₃PO₄, H₂CO₃. Cambiar tipo «cation» por «cuenta» y explicar que cada H de la fórmula pasa a H⁺.",
+  "Ácidos hídricos H₂S/H₂Se/H₂Te: decir «disuelto en agua» al hablar de H⁺ y anión; en estado gas son moléculas covalentes.",
+  "Distractores de carga monótonos (±1 unidad) o imposibles (NH₄²⁺, HC⁻, HP²⁻): construirlos desde errores concretos (carga del anión, subíndice como carga, olvidar cuántos H).",
+  "Compuestos inexistentes o inestables (PbS₂, CoBr₃, NiCl₃, AuI₃, Pb(OH)₄, Pd(OH)₄, Hg₂O): filtrar con una lista blanca de compuestos reales/conocidos en textos de 10.°.",
+  "Sin peróxidos/superóxidos en el lote; si se agregan (Na₂O₂, BaO₂, H₂O₂), el anión es O₂²⁻ ×1 (no O⁻ ×2), y KO₂ es O₂⁻ (revisar el generador para no simplificar subíndices).",
+  "Neutralidad, cargas y conteo de átomos de las 503 filas verificados por script: sin errores; los números romanos de Stock y las terminaciones oso/ico, cuproso etc. coinciden con la carga. Estilo: usar «−» tipográfico en explicaciones."
+ ]
+}

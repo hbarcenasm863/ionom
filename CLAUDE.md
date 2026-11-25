@@ -63,6 +63,19 @@ el modelo basado en evidencias del Icfes (DCE, Marco Saber 11.° 2019).
   contra él; el historial deja constancia de lo que encontraron.
 - Si se cambia el archivo en un repositorio, se copia igual a los otros dos.
 
+## Preguntas MDEC en todo el banco (26-11-2026)
+
+`herramientas/generar-mdec.js` genera `assets/mdec-compuestos.js`: cada compuesto iónico de `banco.js` separado
+en sus iones con su carga (catión, anión, OH⁻ u oxoanión). Solo entran los que quedan neutros y coinciden con
+su nombre Stock; se excluyen los que no son iónicos o no existen (lista `NO_IONICOS`, hidruros no salinos,
+H₃PO₃, H₃PO₂ y H₃BO₃). Con esos datos:
+- **Juego** (`juego.html`): tipos `mdec-iones` (separar en iones) y `mdec-armar` (armar la fórmula más
+  sencilla con los iones), con los colores del método.
+- **Panel docente**: ejercicios imprimibles «Partes del compuesto: iones» y «Armar la fórmula con los iones»
+  (`m-partes`, `m-armar`) y `assets/mdec-saber.js` (selección múltiple `mdec:true` con `q.html` en colores,
+  sin DBA ni estándar).
+- **Los colores del método son lo central**: catión ámbar, anión azul, OH⁻ rosado y oxoanión verde.
+
 ## Pruebas de Modo Estudiante
 
 Cuando se necesite probar el flujo de Modo Estudiante en `juego.html` (validación de código, panel de bienvenida, estadísticas, etc.), usar siempre el código de estudiante **`110106`** (grado 11°, curso 01, estudiante 06). No usar códigos inventados como `ABC123`.

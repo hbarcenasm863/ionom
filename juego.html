@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="assets/iononpwa.png">
 <title>IonNom — Juego</title>
 <script src="banco.js"></script>
+<script src="assets/mdec-compuestos.js"></script>
 <script src="assets/bancos-extra.js"></script>
 <script src="assets/retos.js"></script>
 <script src="assets/saber-icfes.js"></script>
@@ -1570,7 +1571,7 @@ let ST={group:'all',questions:[],idx:0,score:0,correct:0,totalAttempts:0,attempt
 // (recarga, cerrar pestaña, botón/gesto "atrás") en modo-libre y estudiante
 // por igual, ya que ambos pierden el progreso de la partida sin este aviso.
 let _gameActive=false;
-const TYPE_POOL_BASE=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance'];
+const TYPE_POOL_BASE=['mc','mc','mc','write-any','write-any','write-any','write-stock','write-stock','write-sist','write-sist','ox-state','ox-state','ox-assign','ox-assign','drag','drag','invert','invert','balance','balance','mdec-iones','mdec-iones','mdec-armar','mdec-armar'];
 const TYPE_POOL_EL=['el-sym2name','el-name2sym','el-z2name','el-sym2type','el-config2val','el-config2el','el-metal','el-block','el-valence','el-property'];
 // TYPE_POOL kept for legacy references
 const TYPE_POOL=[...TYPE_POOL_BASE,...TYPE_POOL_EL];
@@ -1860,6 +1861,7 @@ function validTypesFor(q, pool){
   if(extractEO(q)) v.add('ox-state');
   if(buildDrag(q,pool)) v.add('drag');
   if(pool.length>=4) v.add('invert');
+  if(mdecDe(q)){ v.add('mdec-iones'); if(mdecArmarOps(mdecDe(q))) v.add('mdec-armar'); }
   if(extractBalance(q)) v.add('balance');
   if(getOxidationStates(q)) v.add('ox-assign');
   return v;
@@ -2067,7 +2069,7 @@ function loadQuestion(){
   document.getElementById('g-pts').textContent=ST.score+' / 40 pts';
   document.getElementById('g-qnum').textContent='Q '+(ST.idx+1)+'/20';
   updateStats();
-  const typeLabels={mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','el-metal':'Tabla — Metal / No metal / Metaloide','el-block':'Tabla — Bloque s/p/d/f','el-valence':'Tabla — Electrones de valencia','el-property':'Tabla — Propiedades periódicas','atom-mc':'Teoría atómica y configuración','enlace-mc':'Enlace químico','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
+  const typeLabels={'mdec-iones':'MDEC — separar en iones','mdec-armar':'MDEC — armar la fórmula',mc:'Opción múltiple','write-any':'Escritura — cualquier sistema','write-stock':'Escritura — nomenclatura Stock','write-sist':'Escritura — nomenclatura Sistemática','ox-state':'Estado de oxidación','ox-assign':'Asignar estados de oxidación','drag':'Completar nombre','invert':'Nombre → Fórmula','balance':'Equilibrio de cargas','el-sym2name':'Tabla — Símbolo → Nombre','el-name2sym':'Tabla — Nombre → Símbolo','el-z2name':'Tabla — Número → Nombre','el-sym2type':'Tabla — Tipo de elemento','el-config2val':'Config. electrónica → Valencia','el-config2el':'Config. electrónica → Elemento','el-metal':'Tabla — Metal / No metal / Metaloide','el-block':'Tabla — Bloque s/p/d/f','el-valence':'Tabla — Electrones de valencia','el-property':'Tabla — Propiedades periódicas','atom-mc':'Teoría atómica y configuración','enlace-mc':'Enlace químico','react-chain':'Cadena de reactividad','classify-rx':'Clasificar tipo de reacción','balance-eq':'Balanceo por tanteo','mol-calc':'Cálculo mol / masa molar'};
   document.getElementById('q-meta').textContent=`Pregunta ${ST.idx+1} de 20 · ${(q.isAtom&&q.group&&q.group!=='atomo'&&q.group!=='enlace'&&GROUP_LABELS[q.group])||typeLabels[q.qtype]||''}`;
   document.getElementById('q-formula').textContent=q.isElement?'':q.formula;
   ST.answered=false;
@@ -2094,6 +2096,7 @@ function loadQuestion(){
     else if(q.qtype==='ox-state') renderOx(q);
     else if(q.qtype==='drag') renderDrag(q);
     else if(q.qtype==='invert') renderInvert(q);
+    else if(q.qtype==='mdec-iones'||q.qtype==='mdec-armar') renderMdec(q);
     else if(q.qtype==='balance') renderBalance(q);
     else if(q.qtype==='ox-assign') renderOxAssign(q);
     else if(q.qtype==='react-chain') renderReactChain(q);
@@ -3407,6 +3410,85 @@ function checkInvert(el,chosen,correct){
   updateStats();
 }
 
+// ── Método MDEC (modelo propio del docente): separar en iones y armar la fórmula con los iones ──
+// assets/mdec-compuestos.js trae cada compuesto iónico del banco separado en sus iones con su carga.
+const _MDEC_SUP={'1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷'},_MDEC_SUB='₀₁₂₃₄₅₆₇₈₉';
+const _MDEC_PARTE={cat:'catión',an:'anión',oh:'hidróxido',ox:'oxoanión'};
+let _MDEC_IDX=null;
+function _mdecIdx(){if(_MDEC_IDX)return _MDEC_IDX;const cargas={},aniones={};(window.MDEC_COMP||[]).forEach(c=>{const b=_mdecBase(c.cat[0]);(cargas[b]=cargas[b]||new Set()).add(c.cat[2]);aniones[c.an[0]]=c.an[3];});return _MDEC_IDX={cargas,aniones};}
+const _mdecElem=b=>(b.replace(/^H[₀-₉]*/,'').match(/[A-Z][a-z]?/)||[''])[0];
+/* fórmula pintada con los colores del método: catión en ámbar y el resto con el color del anión */
+function _mdecFormColor(f,cat,cls){let bc=_mdecBase(cat);if(f.indexOf('('+bc+')')===0)bc='('+bc+')';const m=f.slice(bc.length).match(/^[₀-₉]*/)[0],pc=f.slice(0,bc.length+m.length);
+  return `<span style="color:var(--cat-t);font-weight:800">${pc}</span><span style="color:var(--${cls}-t);font-weight:800">${f.slice(pc.length)}</span>`;}
+function mdecDe(q){const L=window.MDEC_COMP;return L?L.find(c=>c.f===q.formula)||null:null;}
+function _mdecCarga(n){return (Math.abs(n)===1?'':String(Math.abs(n)).replace(/\d/g,d=>_MDEC_SUP[d]))+(n>0?'⁺':'⁻');}
+function _mdecBase(t){return t.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+$/,'');}
+function _mdecForm(cat,nc,an,na){const sb=n=>n>1?String(n).replace(/\d/g,d=>_MDEC_SUB[d]):'';const poli=b=>/[₀-₉]|[A-Z].*[A-Z]/.test(b);
+  const bc=_mdecBase(cat),ba=_mdecBase(an);return (poli(bc)&&nc>1?'('+bc+')'+sb(nc):bc+sb(nc))+(poli(ba)&&na>1?'('+ba+')'+sb(na):ba+sb(na));}
+function mdecArmarOps(c){
+  const cat=c.cat[0],an=c.an[0],out=[];
+  [[1,1],[c.an[1],c.cat[1]],[-c.an[2],c.cat[2]],[c.cat[1]*2,c.an[1]*2]].forEach(p=>{const f=_mdecForm(cat,p[0],an,p[1]);
+    if(f.replace(/[()]/g,'')!==c.f.replace(/[()]/g,'')&&!out.includes(f))out.push(f);});
+  return out.length>=3?out.slice(0,3):null;
+}
+function _mdecChip(t,cls){return `<span class="ion-chip ${cls}" style="display:inline-block;font-family:var(--mono,monospace);font-weight:700;padding:3px 10px;border-radius:8px;border:2px solid var(--${cls});background:var(--${cls}-b);color:var(--${cls}-t);margin:0 4px">${t}</span>`;}
+function renderMdec(q){
+  const c=mdecDe(q);if(!c){renderMC(q);return;}
+  document.getElementById('area-mc').style.display='';
+  let opts,correct,prompt,expl;
+  if(q.qtype==='mdec-armar'){
+    document.getElementById('q-formula').textContent='?';
+    prompt=`Arma la fórmula más sencilla del compuesto neutro con estos iones:<br>${_mdecChip(c.cat[0],'cat')} ${_mdecChip(c.an[0],c.an[3])}`;
+    correct=c.f;opts=[c.f,...mdecArmarOps(c)];
+    expl=`${c.cat[1]} × (${c.cat[2]>0?'+':''}${c.cat[2]}) + ${c.an[1]} × (${c.an[2]}) = 0 → ${c.f}`;
+  }else{
+    // se pregunta por el catión o por el anión (en los ácidos, siempre por el anión)
+    const acido=(q.group==='ac-hid'||q.group==='ac-ox'),poli=/[₀-₉]/.test(_mdecBase(c.cat[0]))||_mdecBase(c.cat[0])==='NH₄';
+    const porAnion=acido||poli||Math.random()<.5;
+    const [ion,cls,carga]=porAnion?[c.an[0],c.an[3],c.an[2]]:[c.cat[0],'cat',c.cat[2]];
+    const b=_mdecBase(ion),I=_mdecIdx();
+    const fc=_mdecFormColor(q.formula,c.cat[0],c.an[3]);
+    document.getElementById('q-formula').innerHTML=fc;
+    prompt=acido?`Disuelto en agua, el ácido ${fc} se separa en iones al liberar todos sus H⁺: ¿cuál es el <strong style="color:var(--${cls}-t)">${_MDEC_PARTE[cls]}</strong>, con su carga?`
+      :`Separa ${fc} en sus iones: ¿cuál es el <strong style="color:var(--${cls}-t)">${_MDEC_PARTE[cls]}</strong>, con su carga?`;
+    correct=ion;
+    let malas=[];
+    if(porAnion){
+      // iones reales parecidos (mismo elemento central) y el mismo ion con otra carga
+      Object.keys(I.aniones).forEach(x=>{if(x!==ion&&_mdecElem(_mdecBase(x))===_mdecElem(b)&&_mdecElem(b)!=='O')malas.push(x);});
+      malas=shuffle(malas).slice(0,2);[carga-1,carga+1].forEach(n=>{if(n<0&&n!==carga)malas.push(b+_mdecCarga(n));});
+    }else{
+      // otras cargas que ese elemento tiene en otros compuestos, y la del subíndice del anión
+      const qs=[...(I.cargas[b]||[])].filter(n=>n!==carga);[c.an[1],carga+1,carga-1].forEach(n=>{if(n>0&&n<=4&&n!==carga&&!qs.includes(n))qs.push(n);});
+      malas=qs.map(n=>b+_mdecCarga(n));
+    }
+    opts=[ion,...[...new Set(malas)].filter(x=>x!==ion).slice(0,3)];
+    expl=`${q.formula} = ${c.cat[1]} ${c.cat[0]} + ${c.an[1]} ${c.an[0]}`;
+  }
+  q._mdec={correct,expl,fc:_mdecFormColor(q.formula,c.cat[0],c.an[3])};
+  document.getElementById('q-prompt').innerHTML=prompt;
+  // en «armar» cada opción lleva los colores del método (catión ámbar, anión con su color)
+  document.getElementById('q-mc-opts').innerHTML=shuffle(opts).map(o=>`<button class="mc-opt" data-v="${o}" onclick="checkMdec(this,'${esc(o)}')">${q.qtype==='mdec-armar'?_mdecFormColor(o,c.cat[0],c.an[3]):o}</button>`).join('');
+}
+function checkMdec(el,chosen){
+  if(ST.answered||el.disabled)return;
+  const q=ST.questions[ST.idx],correct=q._mdec.correct;
+  ST.attempts++;ST.totalAttempts++;
+  if(chosen!==correct&&_ionReintento(q,_ionMaxOpc('#q-mc-opts'),chosen+' no es correcto.',el,chosen)){updateStats();return;}
+  document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>b.classList.add('disabled'));
+  document.getElementById('q-formula').innerHTML=q._mdec.fc;
+  if(chosen===correct){
+    el.classList.add('correct');const pts=_ionPts();ST.score+=pts;ST.correct++;
+    showFeedback('ok',`✓ ¡Correcto! ${q._mdec.expl}. +${pts} punto${pts!==1?'s':''}`,q);scheduleNext(2000);
+  }else{
+    el.classList.add('wrong');
+    document.querySelectorAll('#q-mc-opts .mc-opt').forEach(b=>{if((b.dataset.v||b.textContent)===correct)b.classList.add('correct');});
+    if(!ST.errors.find(e=>e.formula===q.formula)) ST.errors.push({group:q.group,formula:q.formula,name:(q.trad&&q.trad[0])||'',qtype:ST.qtype});
+    showFeedback('err',`✗ Era ${correct}: ${q._mdec.expl}.`,q);_ionNota(false);scheduleNext(3200);
+  }
+  updateStats();
+}
+
 // ── isCorrect ──
 function isCorrect(input,q,mode){
   const ni=normNom(input);
@@ -4603,6 +4685,7 @@ window.clickSlot = clickSlot;
 window.clickChip = clickChip;
 window.checkBalance = checkBalance;
 window.checkInvert = checkInvert;
+window.checkMdec = checkMdec;
 window.checkClassifyRx = checkClassifyRx;
 window.checkBalanceEq = checkBalanceEq;
 window.showBalanceAnswer = showBalanceAnswer;
