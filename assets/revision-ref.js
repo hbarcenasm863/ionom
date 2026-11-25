@@ -1,5 +1,5 @@
 /* revision-ref.js — GENERADO. Etiquetas de cada pregunta Saber según la revisión del banco contra
-   REFERENTES_CURRICULARES.md (revisión del 24 y 25-11-2026), hecha por agentes expertos independientes (evaluación Icfes y currículo MEN).
+   REFERENTES_CURRICULARES.md (revisión del 24 al 26-11-2026), hecha por agentes expertos independientes (evaluación Icfes y currículo MEN).
    Clave: la del «Banco de preguntas» (tema|hash del contexto y el enunciado). Campos: c (competencia), af (afirmación),
    ev (evidencia del Marco Saber 11.° 2019), nd (nivel de desempeño 1-4), dba (DBA del MEN 2016) y curso.
    Se carga después de docente-datos.js. Si cambia el texto de una pregunta, su clave cambia y la etiqueta deja de
@@ -13,4 +13,22 @@ window.REVISION_REF={"ox-bas|t082ui":{"ev":"4.8","nd":2},"ox-bas|98w080":{"ev":"
   var S=D.SABER;
   if(Array.isArray(S))S.forEach(function(q){poner(q,q.tema);});
   else Object.keys(S).forEach(function(t){(S[t]||[]).forEach(function(q){poner(q,t);});});
+})();
+/* DBA y curso de preguntas del juego y abiertas (experto en currículo MEN). Clave: hash del enunciado.
+   Los ejercicios MDEC (t:'mdec') no se enlazan a ningún DBA ni estándar: el método MDEC es un modelo
+   propio del docente. */
+window.REVISION_REF_OTRAS={"2w5rnx":{"dba":["7.2"],"curso":7},"16aihji":{"dba":["7.2"],"curso":7},"11stp0d":{"dba":["7.2"],"curso":7},"qquaz7":{"dba":["7.2"],"curso":7},"15jkkfw":{"dba":["sin"],"curso":11},"ljlvl9":{"dba":["sin"],"curso":10},"5g4fbf":{"dba":["sin"],"curso":10},"c14vd7":{"dba":["sin"],"curso":10},"vtevxw":{"dba":["sin"],"curso":10},"11jwzyb":{"dba":["sin"],"curso":10},"3bwq5z":{"dba":["10.3"],"curso":10},"gx1aow":{"dba":["10.3"],"curso":10},"z4crwv":{"dba":["10.3"],"curso":10},"jnx449":{"dba":["10.3"],"curso":10},"1l53q1e":{"dba":["10.3"],"curso":10},"15kjow6":{"dba":["sin"],"curso":10},"adxynx":{"dba":["sin"],"curso":10},"1p5s57b":{"dba":["sin"],"curso":10},"ypj7wn":{"dba":["sin"],"curso":10}};
+(function(){
+  var R=window.REVISION_REF_OTRAS;if(!R)return;
+  function hash(s){var h=5381;s=String(s);for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return h.toString(36);}
+  function norm(t){return String(t==null?'':t).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();}
+  function poner(q){if(!q||typeof q!=='object'||q.t==='mdec'||!q.q)return;var a=R[hash(norm(q.q))];if(!a)return;for(var k in a)q[k]=a[k];}
+  function aplicar(){
+    var D=window.DOCENTE_DATOS,A=D&&D.ABIERTAS;
+    if(A){if(Array.isArray(A))A.forEach(poner);else Object.keys(A).forEach(function(t){(A[t]||[]).forEach(poner);});}
+    var J=[];try{J=[typeof BANCO_ATOMO!=='undefined'?BANCO_ATOMO:[],typeof BANCO_ENLACE!=='undefined'?BANCO_ENLACE:[],typeof BANCO_PH!=='undefined'?BANCO_PH:[],typeof BANCO_INDUSTRIA!=='undefined'?BANCO_INDUSTRIA:[],typeof BANCO_MODELOS!=='undefined'?BANCO_MODELOS:[],typeof BANCO_GASES!=='undefined'?BANCO_GASES:[],typeof BANCO_SOLUCIONES!=='undefined'?BANCO_SOLUCIONES:[],typeof BANCO_ESTEQUIOMETRIA!=='undefined'?BANCO_ESTEQUIOMETRIA:[]];}catch(e){}
+    J.forEach(function(L){(L||[]).forEach(poner);});
+  }
+  aplicar();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',aplicar);
 })();

@@ -4,6 +4,16 @@ Resumen de todo lo trabajado entre el **14 y el 21 de septiembre de 2026**, agru
 
 ---
 
+## 26 de noviembre (48) — DBA propio en preguntas del juego y abiertas; el MDEC no se enlaza a DBA
+
+El docente pidió hacer los cambios pendientes y aclaró que el método MDEC es un modelo propio que no se enlaza a ningún DBA ni estándar.
+
+- `REFERENTES_CURRICULARES.md` (igual en los tres sitios): nota nueva en la sección 3 que dice que el método MDEC es un modelo propio del docente y que sus ejercicios no se enlazan a ningún DBA ni estándar; la lista de verificación 7.1 lo excluye del requisito de DBA.
+- **`assets/revision-ref.js`:** ahora también pone `dba` y `curso` en las preguntas del juego (`BANCO_*` de `banco.js`) y en las abiertas, con las etiquetas del experto en currículo MEN de la revisión. Quedaron aplicadas 18 de 19. Las abiertas de tipo `mdec` (10) se saltan siempre.
+- **`sw.js`:** `CACHE_NAME` a `ionom-v121`. Probado con Playwright: el panel carga sin errores. No se tocó `ionom-analytics.gs`.
+
+---
+
 ## 25 de noviembre (47) — Revisión contra los referentes (parte 4: ciencias del juego, abiertas y palabras)
 
 Última parte de la revisión (entradas 43, 44 y 46). Un agente experto en química inorgánica revisó **1062 entradas** (juego, abiertas y palabras). Verificó las claves y los cálculos de las 341 preguntas que traen una clave comprobable, y no encontró ninguna equivocada.
